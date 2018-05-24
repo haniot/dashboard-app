@@ -1,26 +1,13 @@
 <div class="wrapper">
-
-  <haniot-header></haniot-header>
-  
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-    <div class="container">
-
-      <!-- <router-outlet></router-outlet> -->
-      <haniot-login></haniot-login>
-
+    <div class="sidebar" data-color="danger" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+        <app-sidebar></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(../assets/img/sidebar-4.jpg)"></div>
     </div>
-  </div>
-
-  <!-- <haniot-snackbar></haniot-snackbar> -->
-
-
-  <footer class="main-footer">
-    <div class="container">
-      <div class="pull-right hidden-xs">
-        <b>Version</b> 1.0.0
-      </div>
-      <strong>HANIoT</strong> Dashboard Application
+    <div class="main-panel">
+        <app-navbar></app-navbar>
+        <router-outlet></router-outlet>
+        <div *ngIf="isMaps('maps')">
+            <app-footer></app-footer>
+        </div>
     </div>
-  </footer>
 </div>
