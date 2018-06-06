@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -11,13 +11,8 @@ import {
   MatTooltipModule,
 } from '@angular/material';
 
-import { AppRoutingModule } from './app.routing';
-import { ComponentsModule } from './components/components.module';
-
 import { AppComponent } from './app.component';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TableListComponent } from './table-list/table-list.component';
 import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
@@ -27,18 +22,24 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
 import {
   AgmCoreModule
 } from '@agm/core';
+import { AdminComponent } from './admin/admin.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { AdminModule } from './admin/admin.module';
+import { AuthGuard } from './guards/auth.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { RefreshTokenInterceptor } from './interceptors/refresh-token.interceptor';
+import { AplicationErrorHandle } from './app.error-handle';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    ComponentsModule,
     RouterModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatInputModule,
-    MatTooltipModule,
+    AuthModule,
+    AdminModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
@@ -46,17 +47,14 @@ import {
   ],
   declarations: [
     AppComponent,
-    DashboardComponent,
-    UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
-
+  
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
+    {provide: ErrorHandler, useClass: AplicationErrorHandle }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
