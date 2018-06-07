@@ -1,34 +1,15 @@
-<div class="card">
-    <div class="card-header card-header-danger">
-                                    <h4 class="card-title ">{{title}}</h4>
-                                    <p class="card-category"> {{subtitle}}</p>
-                                </div>
-                                <div class="card-body">
-                                      <div class="component-style table-component">
-                              
-                                              <div class="component-tag">
-                                                <span>app-table</span>
-                                              </div>
-                                            
-                                
-                                            
-                                              <table class="table">
-                                                <thead>
-                                                  <th *ngFor="let c of columns">{{c}}</th>
-                                                </thead>                                            
-                                                  <tbody >
-                                                      <tr *ngFor="let ch of characters">
-                                                          <td *ngFor="let col of columns">
-                                                                  {{ ch[col] }}
-                                                          </td>
-                                                       </tr>
-                                                   
-                                                      <!-- <haniot-table-row [character]="characters" [columns]="columns"></haniot-table-row> -->
-                                                   
-                                                  </tbody>
-                                                    <!-- <tr *ngFor="let ch of characters" haniot-table-row [character]="ch" [columns]="columns">
-                                                    </tr> --> 
-                                              </table>
-                     
-            </div>
-      
+<div class="component-style table-component">
+  <table class="table">
+    <thead>
+      <th *ngFor="let c of columns">{{c}}</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ch of characters">
+        <td *ngFor="let col of columns">
+          {{ ch[col] }}
+        </td>
+      </tr>
+      <!-- <haniot-table-row [character]="characters" [columns]="columns"></haniot-table-row> -->
+    </tbody>
+  </table>
+</div>

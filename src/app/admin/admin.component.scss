@@ -1,0 +1,14 @@
+
+.sidebar-background{
+    &:after{
+            position: absolute;
+            z-index: 3;
+            width: 100%;
+            height: 100%;
+            content: "";
+            display: block;
+            background: #00a594;
+            opacity: 1;
+        }
+
+}

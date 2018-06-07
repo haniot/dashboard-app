@@ -8,16 +8,10 @@ import { Title } from '@angular/platform-browser';
 })
 export class HaniotTableComponent implements OnInit {
 
-  // @Input() character: any;
-  @Input() title : string = "Titulo da tabela"
-  @Input() subtitle : string = "Subtitulo da tabela"
   @Input() characters: any;
   @Input() columns: any;
 
-  constructor() {
-   
-    
-   }
+  constructor() {}
 
   ngOnInit() {
   }
