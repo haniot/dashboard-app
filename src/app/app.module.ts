@@ -40,10 +40,7 @@ import { AuthModule } from './auth/auth.module';
     RouterModule,
     AuthModule,
     AdminModule,
-    AppRoutingModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
-    })
+    AppRoutingModule
   ],
   declarations: [
     AppComponent,

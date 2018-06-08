@@ -15,11 +15,18 @@ export class UsersComponent implements OnInit {
 
   constructor(public usersService: UsersService) {
     this.getAllUsers();
+
    }
 
   ngOnInit() {
-   
+  //  this.postDiag();
   }
+
+  // postDiag(){
+  //   this.usersService.postDiag().subscribe((res) =>{
+  //       console.log(res)
+  //   })
+  // }
 
   getAllUsers(){
     this.usersService.getAll().subscribe((users) => {

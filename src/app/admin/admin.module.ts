@@ -12,6 +12,7 @@ import { HaniotTableComponent } from '../shared/haniot-table/haniot-table.compon
 import { HaniotCardComponent } from '../shared/haniot-card/haniot-card.component';
 import { UsersService } from '../services/users.service';
 import { HaniotTableRowComponent } from '../shared/haniot-table-row/haniot-table-row.component';
+import { echartsDirective } from '../directives/echarts';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { HaniotTableRowComponent } from '../shared/haniot-table-row/haniot-table
     HaniotTableComponent,
     HaniotTableRowComponent,
     HaniotCardComponent,
+    echartsDirective
   ], 
   providers:[
     UsersService
