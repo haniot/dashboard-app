@@ -11,7 +11,11 @@ export class TokenInterceptor implements HttpInterceptor {
     const token = localStorage.getItem('token');
 
     if (token && (requestUrl[2] === apiUrl[2])) {
-      const newRequest = request.clone({ setHeaders: {'Authorization': `JWT ${token}`} });
+      const newRequest = request.clone({ setHeaders: {
+        'Authorization': `JWT ${token}`,
+        'Content-Type': 'application/json'
+      } 
+      });
       return next.handle(newRequest);
     } else {
       return next.handle(request);

@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -8,19 +8,24 @@ import 'rxjs/add/operator/toPromise';
 
 import { User } from './../interfaces/user.model';
 
+
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+ 
+  constructor(private http: HttpClient, private router: Router) {
+ 
+
+  }
 
   check(): boolean {
     return localStorage.getItem('user') ? true : false;
   }
 
+
   login(credentials: { email: string, password: string }): Observable<boolean> {
     return this.http.post<any>(`${environment.api_url}/users/authenticate`, credentials)
       .do(data => {
-        console.log(data.token);
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', btoa(JSON.stringify(data.user)));
       });
