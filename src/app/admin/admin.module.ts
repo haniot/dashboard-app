@@ -13,6 +13,8 @@ import { HaniotCardComponent } from '../shared/haniot-card/haniot-card.component
 import { UsersService } from '../services/users.service';
 import { HaniotTableRowComponent } from '../shared/haniot-table-row/haniot-table-row.component';
 import { echartsDirective } from '../directives/echarts';
+import { PatientsComponent } from './patients/patients.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   imports: [
@@ -23,6 +25,7 @@ import { echartsDirective } from '../directives/echarts';
     MatInputModule,
     MatTooltipModule,
     AdminRoutingModule,
+    DataTablesModule,
     ComponentsModule
   ],
   exports: [
@@ -36,7 +39,8 @@ import { echartsDirective } from '../directives/echarts';
     HaniotTableComponent,
     HaniotTableRowComponent,
     HaniotCardComponent,
-    echartsDirective
+    echartsDirective,
+    PatientsComponent
   ], 
   providers:[
     UsersService

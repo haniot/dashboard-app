@@ -8,11 +8,16 @@ import { Title } from '@angular/platform-browser';
 })
 export class HaniotTableComponent implements OnInit {
 
+  dtOptions: DataTables.Settings = {};
+
   @Input() characters: any;
   @Input() columns: any;
 
   constructor() {}
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers'
+    };
   }
 }

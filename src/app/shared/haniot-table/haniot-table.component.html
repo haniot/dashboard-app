@@ -1,7 +1,9 @@
 <div class="component-style table-component">
-  <table class="table">
+  <table datatable [dtOptions]="dtOptions" class="row-border hover table">
     <thead>
-      <th *ngFor="let c of columns">{{c}}</th>
+      <tr>
+        <th *ngFor="let c of columns">{{c}}</th>
+      </tr>
     </thead>
     <tbody>
       <tr *ngFor="let ch of characters">
@@ -9,7 +11,6 @@
           {{ ch[col] }}
         </td>
       </tr>
-      <!-- <haniot-table-row [character]="characters" [columns]="columns"></haniot-table-row> -->
     </tbody>
   </table>
 </div>

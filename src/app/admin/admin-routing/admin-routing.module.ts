@@ -7,6 +7,7 @@ import { AdminComponent } from './../admin.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { UsersComponent } from '../users/users.component';
+import { PatientsComponent } from '../patients/patients.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { UsersComponent } from '../users/users.component';
           },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'user-profile', component: UserProfileComponent },
-          { path: 'users', component: UsersComponent }
+          { path: 'users', component: UsersComponent },
+          { path: 'patients', component: PatientsComponent }
         ]
       }
     ])
