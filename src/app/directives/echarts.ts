@@ -30,6 +30,7 @@ export class echartsDirective implements OnChanges, OnInit, OnDestroy {
 
     ngOnChanges(changes) {
         if (this.options) {
+            console.log('Options', this.options)
             this.chart.setOption(this.options);
         }
     }

@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
 import ECharts = echarts.ECharts;
 import EChartOption = echarts.EChartOption;
+import { MeasurementService } from '../../services/measurements.service';
+import { count } from 'rxjs/operators';
 
+import * as _ from "lodash"; 
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +13,12 @@ import EChartOption = echarts.EChartOption;
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+  measurements;
+
+  dataArr = []
+
+  result = []
 
   option = {
     title: {
@@ -149,13 +158,7 @@ export class DashboardComponent implements OnInit {
         type: 'pie',
         radius: '55%',
         center: ['50%', '50%'],
-        data: [
-          { value: 335, name: 'Teste1' },
-          { value: 310, name: 'Teste2' },
-          { value: 274, name: 'Teste3' },
-          { value: 235, name: 'Teste4' },
-          { value: 400, name: 'Teste5' }
-        ].sort(function (a, b) { return a.value - b.value; }),
+        data: this.dataArr.sort(function (a, b) { return a.value - b.value; }),
         roseType: 'radius',
         label: {
           normal: {
@@ -196,14 +199,9 @@ export class DashboardComponent implements OnInit {
       trigger: 'item',
       formatter: "{a} <br/>{b}: {c} ({d}%)"
     },
-    legend: {
-      orient: 'vertical',
-      x: 'left',
-      data: ['dado1', 'dado2', 'dado3', 'dado4', 'dado5', 'dado6', 'dado7', 'dado8', 'dado9', 'dado10']
-    },
     series: [
       {
-        name: 'Var1',
+        name: 'Medida',
         type: 'pie',
         selectedMode: 'single',
         radius: [0, '30%'],
@@ -219,13 +217,13 @@ export class DashboardComponent implements OnInit {
           }
         },
         data: [
-          { value: 335, name: 'teste1', selected: true },
-          { value: 679, name: 'teste2' },
-          { value: 1548, name: 'teste3' }
+          { value: [10, 10, 10, 10, 10].reduce((a, n) => n += a), name: "°C" },
+          { value: [20, 20, 0, 5, 5].reduce((a, n) => n += a), name: "mmHg" },
+          { value: 100, name: "bpm" },
         ]
       },
       {
-        name: 'Var1',
+        name: 'Medida',
         type: 'pie',
         radius: ['40%', '55%'],
         label: {
@@ -235,7 +233,7 @@ export class DashboardComponent implements OnInit {
             borderColor: '#aaa',
             borderWidth: 1,
             borderRadius: 4,
-            shadowBlur:3,
+            shadowBlur: 3,
             shadowOffsetX: 2,
             shadowOffsetY: 2,
             shadowColor: '#999',
@@ -266,25 +264,58 @@ export class DashboardComponent implements OnInit {
           }
         },
         data: [
-          { value: 335, name: 'teste1' },
-          { value: 310, name: 'teste2' },
-          { value: 234, name: 'teste3' },
-          { value: 135, name: 'teste4' },
-          { value: 1048, name: 'teste5' },
-          { value: 251, name: 'teste6' },
-          { value: 147, name: 'teste7' },
-          { value: 102, name: 'teste8' }
+
+          { value: [20, 20, 0, 5, 5].reduce((a, n) => n += a), name: "°C" },
+
+          { value: [20, 20, 0, 5, 5].reduce((a, n) => n += a), name: "mmHg" },
+          { value: 100, name: "bpm" },
+
+
+
+
         ]
       }
     ]
   };
 
 
-  constructor() { }
-  
+  constructor(public measurementService: MeasurementService) { }
+
+  renderData(data: Array<any>) {
+
+    console.log(data)
+    // for (let i in data) {
+    //   console.log('oi ', data[i])
+    //   // var item = { value: data.value[i], name: data.name[i] };
+    // }
+  }
 
   ngOnInit() {
+    this.measurementService.getAll().subscribe((measurements) => {
+      this.measurements = measurements.measurements;
+      console.log('aqui', this.measurements)
+
+      for (var teste in this.measurements) {
+        this.dataArr.push({ value: this.measurements[teste].value, name: this.measurements[teste].unit });
+      }
+
+      let count = 0
+      var result = _(this.dataArr)
+        .groupBy(x => x.name)
+        .toArray()
+        .forEach(n => {
+
+          let ne = n.map(m => 
+            m.name
+         )
+          console.log(_.uniq(ne))
+        })
       
+        console.log("OP", this.result)
+    });
+
+
+
   }
 
 }
