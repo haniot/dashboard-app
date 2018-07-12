@@ -1,5 +1,30 @@
 <div class="component-style table-component">
-  <table datatable [dtOptions]="dtOptions" class="row-border hover table">
+  <mat-table #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let user"> {{user}} </td>
+      </ng-container>
+      <!--
+      <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let user"> {{user.height}} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+      </ng-container>
+      -->
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+    
+  </mat-table>
+  
+  
+  
+  
+  <!--
+  <table datatable="ng" [dtOptions]="dtOptions"  class="row-border hover">
     <thead>
       <tr>
         <th *ngFor="let c of columns">{{c}}</th>
@@ -11,6 +36,18 @@
           {{ ch[col] }}
         </td>
       </tr>
+      <tr *ngFor="let ch of characters">
+        <td>
+            {{ ch.name }}
+        </td>
+        <td>
+            {{ ch.height }}
+        </td>
+        <td>
+            {{ ch.email }}
+        </td>
+      </tr>
     </tbody>
   </table>
+  -->
 </div>

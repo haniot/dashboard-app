@@ -16,6 +16,13 @@ export class MeasurementService {
       });
   }
 
+  getMeasurementsByUser(userId : string): Observable<any> {
+    return this.http
+      .get(`${environment.api_url}/measurements/users/${userId}`)
+      .map(response => {
+        return response;
+      });
+  }
 
   // postDiag():  Observable<any>{
   //   return this.http

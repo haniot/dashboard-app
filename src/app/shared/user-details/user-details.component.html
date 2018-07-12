@@ -1,0 +1,22 @@
+
+  <div class="xs-6 md-4">
+    <div class="card card-profile">
+        <div class="card-avatar ">
+           
+          <img class="img" src="../assets/img/haniot/generic_user_2.png" />
+        </div>
+        <div class="card-body padding-top-edit">
+            <h6 class="card-category text-gray">Nascimento em: {{selectedUser?.dateOfBirth | date}}</h6>
+            <h4 class="card-title">{{selectedUser?.name}}</h4>
+            <h6 class="card-category text-gray">{{selectedUser?.email}}</h6>
+            <h6 *ngIf="selectedUser?.gender==1"class="card-category text-gray">Gênero masculino</h6>
+            <h6 *ngIf="selectedUser?.gender==2"class="card-category text-gray">Gênero feminino</h6>
+            <h6 class="card-category text-gray">Altura(cm): {{selectedUser?.height}} </h6>
+            
+            <!--<p class="card-description">
+                Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+            </p>-->
+            <button (click)="backButtonPushed()" class="btn btn-round button-color">Voltar</button>
+        </div>
+    </div>
+  </div>

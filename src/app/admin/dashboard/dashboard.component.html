@@ -2,21 +2,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
+                <div class="card card-stats ">
+                    <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">content_copy</i>
+                            <i class="material-icons">perm_identity</i>
                         </div>
-                        <p class="card-category">Used Space</p>
-                        <h3 class="card-title">49/50
-                            <small>GB</small>
+                        <p class="card-category">Total de pacientes</p>
+                        <h3 class="card-title">{{dashboardData?.totalPatients}}
+                            
                         </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-danger">warning</i>
-                            <a href="#pablo">Get More Space...</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -24,67 +18,57 @@
                 <div class="card card-stats">
                     <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">store</i>
+                            <i class="material-icons">equalizer</i>
                         </div>
-                        <p class="card-category">Revenue</p>
-                        <h3 class="card-title">$34,245</h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">date_range</i> Last 24 Hours
-                        </div>
+                        <p class="card-category">Total de medições</p>
+                        <h3 class="card-title">{{dashboardData?.totalMeasurement}}</h3>
+                        
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
+                
                 <div class="card card-stats">
-                    <div class="card-header card-header-danger card-header-icon">
+                    <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">info_outline</i>
+                            <i class="material-icons">date_range</i>
                         </div>
-                        <p class="card-category">Fixed Issues</p>
-                        <h3 class="card-title">75</h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">local_offer</i> Tracked from Github
-                        </div>
+                        <p class="card-category">Média de idade</p>
+                        <h3 class="card-title">{{dashboardData?.averageAge}}</h3>
                     </div>
                 </div>
             </div>
+            
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header card-header-info card-header-icon">
+                    <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
                             <i class="fa fa-twitter"></i>
                         </div>
-                        <p class="card-category">Followers</p>
+                        <p class="card-category">Genero</p>
                         <h3 class="card-title">+245</h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">update</i> Just Updated
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">
+        <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6" [ts-chart]="option"></div>
                 <div class="col-lg-6 col-md-6 col-sm-6" [ts-chart]="option2"></div>
             </div>
             <div [ts-chart]="option3"></div>
             <div [ts-chart]="option4"></div>
-        </haniot-card> -->
+        </haniot-card>
+
+
 
         <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6" [ts-chart]="option"></div>
                 <div class="col-lg-6 col-md-6 col-sm-6" [ts-chart]="option2"></div>
             </div>
-            <div [ts-chart]="option3"></div> -->
+            <div [ts-chart]="option3"></div>
             <div [ts-chart]="option4"></div>
         </haniot-card>
     </div>

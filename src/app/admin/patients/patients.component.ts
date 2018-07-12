@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
-import { Users } from '../../models/users';
+import { User } from '../../models/users';
+import {ColumnsEasyTable} from '../../models/columns-easy-table';
 
 @Component({
   selector: 'app-patients',
@@ -9,8 +10,14 @@ import { Users } from '../../models/users';
 })
 export class PatientsComponent implements OnInit {
 
-  users: Users
-  columns = ['name', 'email', 'gender', 'height']
+  users: User;
+  //columns = ['name', 'email', 'gender', 'height']
+  
+  columns : ColumnsEasyTable[] =  [
+    { key: 'name', title: 'Nome' },
+    { key: 'height', title: 'Altura(cm)' },
+    { key: 'email', title: 'E-mail' }
+  ]
 
   constructor(public usersService: UsersService) {
     this.getAllUsers();

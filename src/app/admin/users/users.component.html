@@ -4,10 +4,23 @@
       <!-- <div class="col-md-12">
         
       </div> -->
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="!openUserDetails">
         <haniot-card title="Tabela de usuários" subtitle="Usuários do HANIoT">
-          <haniot-table   [columns]="columns" [characters]="users"></haniot-table>
+          <!--<haniot-table   [columns]="columns" [characters]="users"></haniot-table>-->
+          <!--<app-table-material></app-table-material>-->
+          <haniot-easy-table [users]="users" [columns]="columns" (selectedUser)="setLocalUser($event)"></haniot-easy-table>
         </haniot-card>
+
+
+        <!-- <material-dialog></material-dialog>-->
+      </div>
+      <div class="col-md-12" *ngIf="openUserDetails">
+        <haniot-card title="Detalhes usuário" subtitle="">
+          <app-user-details (closeDetais)=hideUserDetails() [selectedUser]="selectedUser"></app-user-details>
+        </haniot-card>
+
+
+        <!-- <material-dialog></material-dialog>-->
       </div>
     </div>
   </div>

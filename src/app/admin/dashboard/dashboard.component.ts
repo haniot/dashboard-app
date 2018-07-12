@@ -3,9 +3,10 @@ import * as echarts from 'echarts';
 import ECharts = echarts.ECharts;
 import EChartOption = echarts.EChartOption;
 import { MeasurementService } from '../../services/measurements.service';
+import {UsersService} from '../../services/users.service';
 import { count } from 'rxjs/operators';
 
-import * as _ from "lodash";
+import * as _ from "lodash"; 
 
 @Component({
   selector: 'app-dashboard',
@@ -216,7 +217,11 @@ export class DashboardComponent implements OnInit {
             show: false
           }
         },
-        data: this.result
+        data: [
+          { value: [10, 10, 10, 10, 10].reduce((a, n) => n += a), name: "°C" },
+          { value: [20, 20, 0, 5, 5].reduce((a, n) => n += a), name: "mmHg" },
+          { value: 100, name: "bpm" },
+        ]
       },
       {
         name: 'Medida',
@@ -259,42 +264,100 @@ export class DashboardComponent implements OnInit {
             }
           }
         },
-        data: this.result
+        data: [
+
+          { value: [20, 20, 0, 5, 5].reduce((a, n) => n += a), name: "°C" },
+
+          { value: [20, 20, 0, 5, 5].reduce((a, n) => n += a), name: "mmHg" },
+          { value: 100, name: "bpm" },
+        ]
       }
     ]
   };
 
+  users: any;
 
-  constructor(public measurementService: MeasurementService) { 
+  dashboardData : DashboardData;
 
+  constructor(public measurementService: MeasurementService, public usersService : UsersService) { }
 
-    
+  renderData(data: Array<any>) {
+
+    console.log(data)
+    // for (let i in data) {
+    //   console.log('oi ', data[i])
+    //   // var item = { value: data.value[i], name: data.name[i] };
+    // }
   }
 
-  renderData() {
-    var arrayTest = []
+  getAllUsers() {
+    this.usersService.getAll().subscribe((users) => {
+      this.users = users.users;
+      console.log(users);
+      this.prepareDashboardData();
+    });
+  }
+
+  ngOnInit() {
+    this.init();
+  }
+
+  init(){
     this.measurementService.getAll().subscribe((measurements) => {
       this.measurements = measurements.measurements;
+      this.getAllUsers();
+      
+      //console.log('aqui', this.measurements)
 
       for (var teste in this.measurements) {
         this.dataArr.push({ value: this.measurements[teste].value, name: this.measurements[teste].unit });
       }
 
-      _(this.dataArr)
+      let count = 0
+      var result = _(this.dataArr)
         .groupBy(x => x.name)
         .toArray()
         .forEach(n => {
-          let ne = n.map(m => m.name)
-          let soma = n.map(m => m.value)
-          arrayTest.push({ name: _.uniq(ne), value: _.sum(soma) })
+
+          let ne = n.map(m => 
+            m.name
+         )
+          console.log(_.uniq(ne))
         })
+      
+        console.log("OP", this.result)
     });
-
-    console.log("oi",arrayTest)
   }
 
-  ngOnInit() {
-    this.renderData()
-    console.log(this.result)
+  prepareDashboardData(){
+    let data : DashboardData = {
+      totalPatients : this.users.length,
+      totalMeasurement : this.measurements.length,
+      averageAge: this.getAverageAge()
+    }
+    this.dashboardData = data;
   }
+
+  getAverageAge(){
+
+    if (this.users){
+      return (this.users.map(user=>{
+        console.log(new Date(Date.now()).getFullYear() - new Date(user.dateOfBirth).getFullYear());
+        return(new Date(Date.now()).getFullYear() - new Date(user.dateOfBirth).getFullYear());
+      })
+      .reduce((acumulator, current)=>{
+          return current + acumulator;
+      }) / this.users.length).toFixed(0);
+    }
+
+  }
+
 }
+
+export interface DashboardData{
+  totalPatients : number,
+  totalMeasurement: number,
+  averageAge: string
+}
+
+
