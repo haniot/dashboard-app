@@ -5,7 +5,7 @@ import EChartOption = echarts.EChartOption;
 import { MeasurementService } from '../../services/measurements.service';
 import { count } from 'rxjs/operators';
 
-import * as _ from "lodash"; 
+import * as _ from "lodash";
 
 @Component({
   selector: 'app-dashboard',
@@ -216,11 +216,7 @@ export class DashboardComponent implements OnInit {
             show: false
           }
         },
-        data: [
-          { value: [10, 10, 10, 10, 10].reduce((a, n) => n += a), name: "°C" },
-          { value: [20, 20, 0, 5, 5].reduce((a, n) => n += a), name: "mmHg" },
-          { value: 100, name: "bpm" },
-        ]
+        data: this.result
       },
       {
         name: 'Medida',
@@ -263,59 +259,42 @@ export class DashboardComponent implements OnInit {
             }
           }
         },
-        data: [
-
-          { value: [20, 20, 0, 5, 5].reduce((a, n) => n += a), name: "°C" },
-
-          { value: [20, 20, 0, 5, 5].reduce((a, n) => n += a), name: "mmHg" },
-          { value: 100, name: "bpm" },
-
-
-
-
-        ]
+        data: this.result
       }
     ]
   };
 
 
-  constructor(public measurementService: MeasurementService) { }
+  constructor(public measurementService: MeasurementService) { 
 
-  renderData(data: Array<any>) {
 
-    console.log(data)
-    // for (let i in data) {
-    //   console.log('oi ', data[i])
-    //   // var item = { value: data.value[i], name: data.name[i] };
-    // }
+    
   }
 
-  ngOnInit() {
+  renderData() {
+    var arrayTest = []
     this.measurementService.getAll().subscribe((measurements) => {
       this.measurements = measurements.measurements;
-      console.log('aqui', this.measurements)
 
       for (var teste in this.measurements) {
         this.dataArr.push({ value: this.measurements[teste].value, name: this.measurements[teste].unit });
       }
 
-      let count = 0
-      var result = _(this.dataArr)
+      _(this.dataArr)
         .groupBy(x => x.name)
         .toArray()
         .forEach(n => {
-
-          let ne = n.map(m => 
-            m.name
-         )
-          console.log(_.uniq(ne))
+          let ne = n.map(m => m.name)
+          let soma = n.map(m => m.value)
+          arrayTest.push({ name: _.uniq(ne), value: _.sum(soma) })
         })
-      
-        console.log("OP", this.result)
     });
 
-
-
+    console.log("oi",arrayTest)
   }
 
+  ngOnInit() {
+    this.renderData()
+    console.log(this.result)
+  }
 }
