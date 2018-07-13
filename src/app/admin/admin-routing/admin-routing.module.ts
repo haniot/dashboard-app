@@ -8,8 +8,6 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { UsersComponent } from '../users/users.component';
 import { PatientsComponent } from '../patients/patients.component';
-import { MeasurementsComponent } from '../measurements/measurements.component';
-
 
 @NgModule({
   imports: [
@@ -27,7 +25,6 @@ import { MeasurementsComponent } from '../measurements/measurements.component';
           { path: 'user-profile', component: UserProfileComponent },
           { path: 'users', component: UsersComponent },
           { path: 'patients', component: PatientsComponent },
-          { path: 'measurements', component: MeasurementsComponent }
         ]
       }
     ])
