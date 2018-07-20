@@ -24,6 +24,14 @@ export class MeasurementService {
       });
   }
 
+  getMeasurementsBydeviceAndUser(userId: string, deviceId: number): Observable<any> {
+    return this.http
+      .get(`${environment.api_url}/measurements/types/${deviceId}/users/${userId}`)
+      .map(response => {
+        return response;
+      });
+  }
+
   // postDiag():  Observable<any>{
   //   return this.http
   //     .post<any>(`http://192.168.92.70:33/diabetes`,{

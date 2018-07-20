@@ -9,7 +9,7 @@
                         </div>
                         <p class="card-category">Total de pacientes</p>
                         <h3 class="card-title">{{dashboardData?.totalPatients}}
-                            
+
                         </h3>
                     </div>
                 </div>
@@ -22,12 +22,12 @@
                         </div>
                         <p class="card-category">Total de medições</p>
                         <h3 class="card-title">{{dashboardData?.totalMeasurement}}</h3>
-                        
+
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
-                
+
                 <div class="card card-stats">
                     <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
                     <div class="card-header card-header-success card-header-icon">
@@ -57,19 +57,17 @@
                 <div class="col-lg-6 col-md-6 col-sm-6" [ts-chart]="option"></div>
                 <div class="col-lg-6 col-md-6 col-sm-6" [ts-chart]="option2"></div>
             </div>
-            <div [ts-chart]="option3"></div>
+            <div [ts-chart]="option7"></div>
             <div [ts-chart]="option4"></div>
         </haniot-card>
-
-
 
         <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6" [ts-chart]="option"></div>
                 <div class="col-lg-6 col-md-6 col-sm-6" [ts-chart]="option2"></div>
             </div>
-            <div [ts-chart]="option3"></div>
-            <div [ts-chart]="option4"></div>
+            <div [ts-chart]="option7"></div>
+            <div [ts-chart]="option2"></div>
         </haniot-card>
     </div>
 </div>
