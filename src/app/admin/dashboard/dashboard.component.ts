@@ -294,6 +294,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('body').css('background-color', '#ececec')
     this.init();
   }
 

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    $('body').css('background-color', '#00a594')
+    console.log()
     this.f = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]]
