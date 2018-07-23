@@ -33,7 +33,8 @@ export class HaniotEasyTableComponent implements OnInit {
   }
 
   event(event){
-    this.selectedUser.emit({user: event.value.row })
-    console.log(JSON.stringify(event.value.row));
+    if(event.event === 'onClick'){
+      this.selectedUser.emit({user: event.value.row });
+    }
   }
 }

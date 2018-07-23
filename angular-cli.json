@@ -22,7 +22,9 @@
         "../node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
         "./assets/scss/material-dashboard.scss",
         "./assets/css/demo.css",
-        "../node_modules/ngx-easy-table/style.scss"
+        "./assets/datatables.net-dt/css/jquery.dataTables.css",
+        "../node_modules/ngx-easy-table/style.scss",
+        "./assets/css/ng2-select.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
@@ -32,7 +34,8 @@
         "../node_modules/moment/moment.js",
         "../node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
         "../node_modules/bootstrap-notify/bootstrap-notify.js",
-        "../node_modules/chartist/dist/chartist.js"
+        "../node_modules/chartist/dist/chartist.js",
+        "../node_modules/datatables.net/js/jquery.dataTables.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

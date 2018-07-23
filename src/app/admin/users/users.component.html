@@ -15,11 +15,16 @@
         <!-- <material-dialog></material-dialog>-->
       </div>
       <div class="col-md-12" *ngIf="openUserDetails">
-        <haniot-card title="Detalhes usuário" subtitle="">
+       <!-- <haniot-card title="Detalhes usuário" subtitle="">
           <app-user-details (closeDetais)=hideUserDetails() [selectedUser]="selectedUser"></app-user-details>
         </haniot-card>
-
-
+       -->
+        <haniot-card title="Informações" subtitle="">
+          <app-user-measurements-tabs [selectedUser]="selectedUser" ></app-user-measurements-tabs>
+        </haniot-card>
+        <div class="card-body">
+          <button (click)="hideUserDetails()" class="btn btn-round button-color">Voltar</button>
+        </div>
         <!-- <material-dialog></material-dialog>-->
       </div>
     </div>

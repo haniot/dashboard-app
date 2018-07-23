@@ -1,10 +1,16 @@
+
 <ngx-table (event)="event($event)" [configuration]="configuration" [data]="users" [columns]="columns">
+
         <ng-template let-row>
                 <td>{{row.name}}</td>
                 <td>{{row.height}}</td>
                 <td>{{row.email}}</td>
                 <td class="align-center">
-                        <i class="material-icons">info</i>
+                        <i class="material-icons">
+                                info
+                        </i>
+
                 </td>
+
         </ng-template>
 </ngx-table>

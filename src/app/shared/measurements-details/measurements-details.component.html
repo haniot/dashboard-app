@@ -1,0 +1,25 @@
+<!--
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{getMeasurementTypes()[selectedIndex].name}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2" >
+      <button (click)="setSelectedIndex(i)" class="dropdown-item" type="button" *ngFor="let type of getMeasurementTypes();let i = index"> {{type.name}}</button>
+    </div>
+
+  </div>
+-->
+
+<div class="selected-item">
+  <ng-select  [multiple]="true"
+              [items]="types"
+              [disabled]="disabled"
+              (data)="currentValues($event)"
+              placeholder="Selecione o tipo de medição para mostrar"></ng-select>
+
+
+</div>
+
+<app-temperature-graph [hidden]="showMeasurementById(1)<0" [measurements]="mapMeasurementsData(1)"></app-temperature-graph>
+
+<app-glucose-graph [hidden]="showMeasurementById(2)<0"></app-glucose-graph>

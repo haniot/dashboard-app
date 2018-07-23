@@ -13,6 +13,8 @@ import {
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
+
+import { TableListComponent } from './table-list/table-list.component';
 import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
@@ -31,6 +33,7 @@ import { RefreshTokenInterceptor } from './interceptors/refresh-token.intercepto
 import { AplicationErrorHandle } from './app.error-handle';
 import { AuthModule } from './auth/auth.module';
 
+
 //import { UserDetailsComponent } from './shared/user-details/user-details.component';
 
 @NgModule({
@@ -45,6 +48,13 @@ import { AuthModule } from './auth/auth.module';
   ],
   declarations: [
     AppComponent,
+    //DatePickerComponent,
+  //GlucoseGraphComponent
+    //MeasurementsDetailsComponent,
+    //MeasurementsTabsComponent,
+    //MaterialDialogComponent,
+    //NgxEasyTableComponent
+  
   ],
   providers: [
     AuthGuard,

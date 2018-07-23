@@ -34,12 +34,7 @@ export class DashboardComponent implements OnInit {
     },
     toolbox: {
       show: true,
-      feature: {
-        dataView: { show: true, readOnly: false },
-        magicType: { show: true, type: ['line', 'bar'] },
-        restore: { show: true },
-        saveAsImage: { show: true }
-      }
+      
     },
     calculable: true,
     xAxis: [
@@ -275,78 +270,6 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
-  option7 = {
-    title: {
-      text: 'Gráfico de barras'
-    },
-    tooltip: {},
-    legend: {
-      data: ['Medidas de dispersão']
-    },
-    xAxis: {
-      data: ["data 1", "data 2", "data 3", "data 4", "data 5", "data 6"]
-    },
-    yAxis: {},
-    series: [{
-      name: 'Medidas de dispersão',
-      type: 'bar',
-      data: [5, 20, 36, 10, 10, 20]
-    }]
-  };
-
-  chartdata = [
-    {
-      name: 'Oranges',
-      type: 'bar',
-      data: [20, 20, 36, 12, 15]
-    },
-    {
-      name: 'Apples',
-      type: 'bar',
-      data: [8, 5, 25, 10, 10]
-    }
-  ];
-
-
-option8 = {
-  grid: {
-    top: '6',
-    right: '0',
-    bottom: '17',
-    left: '25',
-  },
-  xAxis: {
-    data: ['2006', '2008', '2010', '2012', '2014'],
-    axisLine: {
-      lineStyle: {
-        color: '#ccc'
-      }
-    },
-    axisLabel: {
-      fontSize: 10,
-      color: '#666'
-    }
-  },
-  yAxis: {
-    splitLine: {
-      lineStyle: {
-        color: '#ddd'
-      }
-    },
-    axisLine: {
-      lineStyle: {
-        color: '#ccc'
-      }
-    },
-    axisLabel: {
-      fontSize: 10,
-      color: '#666'
-    }
-  },
-  series: this.chartdata
-};
-
-
   users: any;
 
   dashboardData : DashboardData;
@@ -414,7 +337,6 @@ option8 = {
 
     if (this.users){
       return (this.users.map(user=>{
-        console.log(new Date(Date.now()).getFullYear() - new Date(user.dateOfBirth).getFullYear());
         return(new Date(Date.now()).getFullYear() - new Date(user.dateOfBirth).getFullYear());
       })
       .reduce((acumulator, current)=>{

@@ -1,0 +1,62 @@
+{
+  "_from": "datatables.net-dt",
+  "_id": "datatables.net-dt@1.10.18",
+  "_inBundle": false,
+  "_integrity": "sha512-fAH0Y4oSDz099FK50ZrAirz7Am4ccHsD686rjGYGmcUmgQdgGVa+VB3FMzUrTqWtREhw+alGvo8TD8XjtvEIKA==",
+  "_location": "/datatables.net-dt",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "datatables.net-dt",
+    "name": "datatables.net-dt",
+    "escapedName": "datatables.net-dt",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-dt/-/datatables.net-dt-1.10.18.tgz",
+  "_shasum": "fa1bfa0867321dd92828d537eaa9aa712e3cb5fb",
+  "_spec": "datatables.net-dt",
+  "_where": "C:\\dev\\HANIoT-Dashboard",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net": "1.10.18",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "DataTables for jQuery ",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "filter",
+    "sort",
+    "DataTables",
+    "jQuery",
+    "table",
+    "DataTables"
+  ],
+  "license": "MIT",
+  "main": "js/dataTables.dataTables.js",
+  "name": "datatables.net-dt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-DataTables.git"
+  },
+  "style": "css/dataTables.dataTables.css",
+  "version": "1.10.18"
+}
