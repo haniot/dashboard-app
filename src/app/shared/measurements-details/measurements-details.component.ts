@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import {measurementTypes} from '../../global/measurements-types';
 
+import{OutputDate} from '../../models/output-date';
+
 @Component({
   selector: 'app-measurements-details',
   templateUrl: './measurements-details.component.html',
@@ -12,6 +14,9 @@ export class MeasurementsDetailsComponent implements OnInit {
   types = [];
 
   selectedTypes = [];
+
+  selectedRangeDate : OutputDate; 
+
 
   @Input() measurements;
   
@@ -37,6 +42,10 @@ export class MeasurementsDetailsComponent implements OnInit {
     this.selectedTypes = event;
   }
 
+  setRangeDate(event){
+    this.selectedRangeDate = event;
+  }
+
 
   /**
    * Used to check if the type of the measurement is selected or not
@@ -51,6 +60,7 @@ export class MeasurementsDetailsComponent implements OnInit {
   }
 
   mapMeasurementsData(id:number):Array<any>{
+    
     if (this.measurements){
       return this.measurements.measurements.filter(measurement=>{
         return measurement.typeId == id;

@@ -40,6 +40,13 @@ import { ConfigService } from '../services/easy-table.service';
 import { MeasurementsComponent } from './measurements/measurements.component';
 import { DatePickerComponent } from '../shared/date-picker/date-picker.component';
 
+import { NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatePTParserFormatter } from '../services/ngb-date-ptparser-formatter.service';
+import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { CustomDatepickerI18n, I18n } from '../services/custom-datepicker-i18n.service';
+
+import {MeasurementsFilterService} from '../services/measurements-filter.service';
+
 
 
 @NgModule({
@@ -83,9 +90,12 @@ import { DatePickerComponent } from '../shared/date-picker/date-picker.component
     DatePickerComponent
   ], 
   providers:[
+    [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }],
+    [{provide: NgbDateParserFormatter, useClass: NgbDatePTParserFormatter}],
     UsersService,
     MeasurementService,
-    ConfigService
+    ConfigService,
+    MeasurementsFilterService
 
   ]
 })

@@ -1,5 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import {MeasurementsFilterService} from '../../services/measurements-filter.service';
+
+import {OutputDate} from '../../models/output-date';
+
 @Component({
   selector: 'app-temperature-graph',
   templateUrl: './temperature-graph.component.html',
@@ -7,10 +11,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TemperatureGraphComponent implements OnInit {
 
+  constructor( public filterService : MeasurementsFilterService ) { }
+
+
   @Input() measurements = [];
 
+  @Input() inputRangeDate: OutputDate;
+
   /**
-   * Dara range picker settings
+   * Data range picker settings
    */
   public daterange: any = {};
 
@@ -37,24 +46,25 @@ export class TemperatureGraphComponent implements OnInit {
         type: 'line'
     }]
 };
-
-startDate : Date;
-endDate : Date;
-
-  constructor() { }
-
+  
   ngOnInit() {
+    this.init();
+  }
+
+  init(){
+
+    console.log('newmeasurements');
+    console.log(this.measurements);
+    this.measurements = this.filterService.sortByDate(this.measurements);
+    console.log(this.measurements);
+  }
+
+  filterByDateRange(){
+    console.log(this.inputRangeDate);
+    console.log(this.filterService.filterByDateRange(this.measurements, this.inputRangeDate));
   }
 
   update(){
-    console.log("A");
-    this.option.series = [{
-      data : [40, 50, 60, 70, 80, 90, 100],
-      type : 'line'
-    }]
-
-
-
     this.option = {
       tooltip: {
         trigger: 'axis'
@@ -81,8 +91,6 @@ endDate : Date;
   result = [];
   sort(){
     this.result = this.measurements.sort(function(a,b){
-      // Turn your strings into dates, and then subtract them
-      // to get a value that is either negative, positive, or zero.
       return a.registrationDate -  b.registrationDate;
     });
   }
@@ -94,62 +102,11 @@ endDate : Date;
     this.result.forEach(element => {
       this.dataXaxis.push(new Date(element.registrationDate).getDate().toString() +"/"+ (new Date(element.registrationDate).getMonth() + 1).toString()  );
       this.seriesChart.push(element.value.toFixed(1));
-
-
-
-      console.log(new Date(element.registrationDate))
     });
   }
 
-
-
-  setChart(){
-    this.option = {
-      tooltip: {
-        trigger: 'axis'
-      },
-      xAxis: {
-          type: 'category',
-          data: this.dataXaxis
-      },
-      yAxis: {
-          type: 'value'
-      },
-      series: [{
-        data : this.seriesChart,
-        type : 'line'
-      }]
-    };
+  getRangeDate(){
+    console.log(this.inputRangeDate);
   }
-
-
-  changeChart(){
-    this.seriesChart = this.seriesChart.map(e=>{
-      return 0;
-    })
-  }
-
-
-  /*
-    Data range picker function
-  */ 
-
- 
-
- public selectedDate(value: any, datepicker?: any) {
-     // this is the date the iser selected
-     console.log(value);
-
-     // any object can be passed to the selected event and it will be passed back here
-     datepicker.start = value.start;
-     datepicker.end = value.end;
-
-     // or manupulat your own internal property
-     this.daterange.start = value.start;
-     this.daterange.end = value.end;
-     this.daterange.label = value.label;
- }
-  
-
 
 }
