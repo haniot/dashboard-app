@@ -1,5 +1,6 @@
 .app-login .row{
     margin-top: 20vh;
+    align-items: center;
     margin-left: 32%;
 }
 .app-login .panel-body{
@@ -22,3 +23,15 @@
     border-color: #999999;
 
 }
+
+
+
+
+/* max-width  */
+@media screen and (max-width: 990px) {
+    .app-login .row{
+        margin-top: 20vh;
+        margin-left: -6%;
+    }
+}
+
