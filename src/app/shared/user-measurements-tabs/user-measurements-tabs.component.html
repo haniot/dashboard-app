@@ -13,7 +13,7 @@
                         <app-user-details [selectedUser]="selectedUser"></app-user-details>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="Section2">
-                        <app-measurements-details [measurements]="measurements"></app-measurements-details>
+                        <app-measurements-details *ngIf="measurements" [selectedUser]="selectedUser"></app-measurements-details>
                     </div>
                 </div>
             </div>

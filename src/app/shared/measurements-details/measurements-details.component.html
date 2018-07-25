@@ -30,7 +30,7 @@
             <app-date-picker (outPutDate)="setRangeDate($event)"></app-date-picker>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn button-color" data-dismiss="modal">Ok</button>
+          <button type="button" class="btn button-color" (click)="applyRangeDate()" data-dismiss="modal">Ok</button>
         </div>
       </div>
     </div>
@@ -48,6 +48,6 @@
 
 </div>
 
-<app-temperature-graph [inputRangeDate] = "selectedRangeDate" [hidden]="showMeasurementById(1)<0" [measurements]="mapMeasurementsData(1)"></app-temperature-graph>
+<app-temperature-graph *ngIf="measurements"  [hidden]="showMeasurementById(1)<0" [graphType]="1" [measurements]="measurements"></app-temperature-graph>
 
 <app-glucose-graph [hidden]="showMeasurementById(2)<0"></app-glucose-graph>

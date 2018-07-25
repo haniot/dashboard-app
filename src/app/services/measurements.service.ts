@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import {Observable} from "rxjs/Observable";
 import { environment } from 'environments/environment';
 
+import {OutputDate} from '../models/output-date';
+
 @Injectable()
 export class MeasurementService {
 
@@ -19,6 +21,25 @@ export class MeasurementService {
   getMeasurementsByUser(userId : string): Observable<any> {
     return this.http
       .get(`${environment.api_url}/measurements/users/${userId}`)
+      .map(response => {
+        return response;
+      });
+  }
+
+  getMeasurementsByUserRangeDate(userId : string, selectedRangeDate : OutputDate ): Observable<any> {
+    let requestQuery : string;
+    if(selectedRangeDate.fromDate && selectedRangeDate.toDate ){
+      const dateStart : string = `${selectedRangeDate.fromDate.year}-${selectedRangeDate.fromDate.month}-${selectedRangeDate.fromDate.day}`;
+      const dateEnd : string = `${selectedRangeDate.toDate.year}-${selectedRangeDate.toDate.month}-${selectedRangeDate.toDate.day}`
+      
+      requestQuery = `${environment.api_url}/measurements/users/${userId}?dateStart=${dateStart}&dateEnd=${dateEnd}`
+      
+    }else{
+      const dateStart : string = `${selectedRangeDate.fromDate.year}-${selectedRangeDate.fromDate.month}-${selectedRangeDate.fromDate.day}`;
+      requestQuery = `${environment.api_url}/measurements/users/${userId}?dateStart=${dateStart}`
+    }
+    return this.http
+      .get(requestQuery)
       .map(response => {
         return response;
       });

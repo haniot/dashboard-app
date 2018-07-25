@@ -27,4 +27,8 @@ export class UserMeasurementsTabsComponent implements OnInit {
       })
   }
 
+  /*getMeasurementsByRangeDate(){
+    this.measurementsService.getMeasurementsByUserRangeDate(this.selectedUser._id, )
+  }*/
+
 }

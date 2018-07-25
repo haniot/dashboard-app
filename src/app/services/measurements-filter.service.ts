@@ -26,4 +26,15 @@ export class MeasurementsFilterService {
       return new Date(m.registrationDate) >= from && new Date(m.registrationDate) <= toDate;   
     });
   }
+/**
+ * 
+ * @param measurementsArr the measurements 
+ * @param id measurement type
+ * returns an array of measurements by typeId
+ */
+  mapMeasurementsDataByTypeId(measurementsArr, id:number):Array<any>{
+      return measurementsArr.measurements.filter(measurement=>{
+        return measurement.typeId == id;
+      });
+  }
 }

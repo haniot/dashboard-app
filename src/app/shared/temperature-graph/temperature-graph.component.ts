@@ -1,22 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import {MeasurementsFilterService} from '../../services/measurements-filter.service';
-
-import {OutputDate} from '../../models/output-date';
 
 @Component({
   selector: 'app-temperature-graph',
   templateUrl: './temperature-graph.component.html',
   styleUrls: ['./temperature-graph.component.scss']
 })
-export class TemperatureGraphComponent implements OnInit {
+export class TemperatureGraphComponent implements OnChanges {
 
   constructor( public filterService : MeasurementsFilterService ) { }
 
 
-  @Input() measurements = [];
+  @Input() measurements;
 
-  @Input() inputRangeDate: OutputDate;
+  @Input() graphType; 
 
   /**
    * Data range picker settings
@@ -47,22 +45,27 @@ export class TemperatureGraphComponent implements OnInit {
     }]
 };
   
-  ngOnInit() {
+  /*ngOnInit() {
+    this.init();
+  }*/
+
+  ngOnChanges(){
     this.init();
   }
+  
 
   init(){
-
-    console.log('newmeasurements');
-    console.log(this.measurements);
-    this.measurements = this.filterService.sortByDate(this.measurements);
-    console.log(this.measurements);
+    this.measurements = this.filterService.mapMeasurementsDataByTypeId(this.measurements, this.graphType);
   }
 
+  getMeasurements(){
+    console.log(this.measurements);
+  }
+  /*
   filterByDateRange(){
     console.log(this.inputRangeDate);
     console.log(this.filterService.filterByDateRange(this.measurements, this.inputRangeDate));
-  }
+  }*/
 
   update(){
     this.option = {
@@ -103,10 +106,6 @@ export class TemperatureGraphComponent implements OnInit {
       this.dataXaxis.push(new Date(element.registrationDate).getDate().toString() +"/"+ (new Date(element.registrationDate).getMonth() + 1).toString()  );
       this.seriesChart.push(element.value.toFixed(1));
     });
-  }
-
-  getRangeDate(){
-    console.log(this.inputRangeDate);
   }
 
 }

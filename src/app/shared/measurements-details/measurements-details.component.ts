@@ -4,6 +4,8 @@ import {measurementTypes} from '../../global/measurements-types';
 
 import{OutputDate} from '../../models/output-date';
 
+import {MeasurementService} from '../../services/measurements.service';
+
 @Component({
   selector: 'app-measurements-details',
   templateUrl: './measurements-details.component.html',
@@ -15,17 +17,26 @@ export class MeasurementsDetailsComponent implements OnInit {
 
   selectedTypes = [];
 
+  @Input() selectedUser;
+
   selectedRangeDate : OutputDate; 
-
-
-  @Input() measurements;
   
-  constructor() { }
+  measurements;
+  
+  constructor(public measurementsService : MeasurementService) { }
 
   ngOnInit() {
     this.types = this.getMeasurementTypes();
     console.log("measurements-detais");
     console.log(this.measurements);
+  }
+
+  getMeasurementsByRangeDate(){
+    this.measurementsService
+    .getMeasurementsByUserRangeDate(this.selectedUser._id, this.selectedRangeDate )
+    .subscribe((measurements)=>{
+      this.measurements = measurements;
+    })
   }
 
   getMeasurementTypes(){
@@ -43,9 +54,12 @@ export class MeasurementsDetailsComponent implements OnInit {
   }
 
   setRangeDate(event){
-    this.selectedRangeDate = event;
+    this.selectedRangeDate = event;    
   }
 
+  applyRangeDate(): void{
+    this.getMeasurementsByRangeDate();
+  }
 
   /**
    * Used to check if the type of the measurement is selected or not
@@ -60,13 +74,16 @@ export class MeasurementsDetailsComponent implements OnInit {
   }
 
   mapMeasurementsData(id:number):Array<any>{
-    
     if (this.measurements){
       return this.measurements.measurements.filter(measurement=>{
         return measurement.typeId == id;
       });
     }
     else return []; 
+  }
+
+  showMapMea(){
+    console.log(this.mapMeasurementsData(1));
   }
 
   
