@@ -16,6 +16,8 @@ export class TemperatureGraphComponent implements OnChanges {
 
   @Input() graphType; 
 
+  option;
+
   /**
    * Data range picker settings
    */
@@ -27,30 +29,10 @@ export class TemperatureGraphComponent implements OnChanges {
      locale: { format: 'YYYY-MM-DD' },
      alwaysShowCalendars: false,
  };
-
-  option = {
-    tooltip: {
-      trigger: 'axis'
-    },
-    xAxis: {
-        type: 'category',
-        data: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data: [19, 30, 23, 30, 31, 28, 29],
-        type: 'line'
-    }]
-};
   
-  /*ngOnInit() {
-    this.init();
-  }*/
-
   ngOnChanges(){
     this.init();
+    this.setGraph();
   }
   
 
@@ -58,53 +40,42 @@ export class TemperatureGraphComponent implements OnChanges {
     this.measurements = this.filterService.mapMeasurementsDataByTypeId(this.measurements, this.graphType);
   }
 
+
+
   getMeasurements(){
     console.log(this.measurements);
-  }
-  /*
-  filterByDateRange(){
-    console.log(this.inputRangeDate);
-    console.log(this.filterService.filterByDateRange(this.measurements, this.inputRangeDate));
-  }*/
-
-  update(){
-    this.option = {
-      tooltip: {
-        trigger: 'axis'
-      },
-      xAxis: {
-          type: 'category',
-          data: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
-      },
-      yAxis: {
-          type: 'value'
-      },
-      series: [{
-        data : [40, 50, 60, 70, 80, 90, 100],
-        type : 'line'
-      }]
-    };
   }
 
   showMeasurementsData(){
     console.log(this.measurements);
   }
 
-  //option to sort the array by data
-  result = [];
-  sort(){
-    this.result = this.measurements.sort(function(a,b){
-      return a.registrationDate -  b.registrationDate;
-    });
-  }
-
-  dataXaxis = [];
-  seriesChart = [];
-  getResult(){
+ 
+  
+  setGraph(){
     
-    this.result.forEach(element => {
-      this.dataXaxis.push(new Date(element.registrationDate).getDate().toString() +"/"+ (new Date(element.registrationDate).getMonth() + 1).toString()  );
-      this.seriesChart.push(element.value.toFixed(1));
+    this.filterService.getGraphData(this.measurements)
+    .then(graphData=>{
+        this.option = {
+          tooltip: {
+            trigger: 'axis'
+          },
+          xAxis: {
+              type: 'category',
+              data: graphData.dataXaxis 
+          },
+          yAxis: {
+              type: 'value'
+          },
+          series: [{
+              data: graphData.seriesChart,
+              type: 'line'
+          }]
+        };
+      
+    })
+    .catch(err=>{
+      this.option = undefined;
     });
   }
 

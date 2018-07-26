@@ -1,8 +1,18 @@
 <haniot-card title="Medições temperatura" subtitle="">
-    <div [ts-chart]="option"></div>
-
-    <button (click)="filterByDateRange()"> filterByDateRange</button>
-
-    <button (click)="getMeasurements()"> getMeasurements</button>
     
+    <div *ngIf="!option||(option&&(!option.xAxis.data.length||option.xAxis.data.length==0))" class="card-body padding-top-edit">
+       <!-- <h6 class="card-category text-gray">Nascimento em</h6> -->
+        <h4 class="card-title">Sem medições no período selecionado</h4>
+        <!--<h6 class="card-category text-gray">text h6</h6>-->
+        
+        
+        <!--<p class="card-description">
+            Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+            <button class="button-color center-elements" (click)="backButtonPushed()" class="btn btn-round button-color">Voltar</button>
+        </p>-->
+    </div>
+    <div *ngIf="(option&&option.xAxis.data.length>0)" [ts-chart]="option"></div>
+
+
+
 </haniot-card>

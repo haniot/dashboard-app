@@ -27,8 +27,6 @@ export class MeasurementsDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.types = this.getMeasurementTypes();
-    console.log("measurements-detais");
-    console.log(this.measurements);
   }
 
   getMeasurementsByRangeDate(){
@@ -54,7 +52,11 @@ export class MeasurementsDetailsComponent implements OnInit {
   }
 
   setRangeDate(event){
-    this.selectedRangeDate = event;    
+    this.selectedRangeDate = event;
+    if(!this.measurements){
+      this.applyRangeDate();
+    }
+    
   }
 
   applyRangeDate(): void{
