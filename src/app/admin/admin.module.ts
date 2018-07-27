@@ -39,6 +39,11 @@ import { MeasurementService } from '../services/measurements.service';
 import { ConfigService } from '../services/easy-table.service';
 import { MeasurementsComponent } from './measurements/measurements.component';
 import { DatePickerComponent } from '../shared/date-picker/date-picker.component';
+import { LineGraphComponent } from '../shared/line-graph/line-graph.component';
+import { AreaGraphComponent } from '../shared/area-graph/area-graph.component';
+import { BarGraphComponent } from '../shared/bar-graph/bar-graph.component';
+import { PieGraphComponent } from '../shared/pie-graph/pie-graph.component';
+import { ScatterGraphComponent } from '../shared/scatter-graph/scatter-graph.component';
 
 import { NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatePTParserFormatter } from '../services/ngb-date-ptparser-formatter.service';
@@ -87,7 +92,13 @@ import {MeasurementsFilterService} from '../services/measurements-filter.service
     MeasurementsDetailsComponent,
     TemperatureGraphComponent,
     GlucoseGraphComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    LineGraphComponent,
+    AreaGraphComponent,
+    BarGraphComponent,
+    PieGraphComponent,
+    ScatterGraphComponent
+
   ], 
   providers:[
     [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }],

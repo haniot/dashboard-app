@@ -277,18 +277,12 @@ export class DashboardComponent implements OnInit {
   constructor(public measurementService: MeasurementService, public usersService : UsersService) { }
 
   renderData(data: Array<any>) {
-
     console.log(data)
-    // for (let i in data) {
-    //   console.log('oi ', data[i])
-    //   // var item = { value: data.value[i], name: data.name[i] };
-    // }
   }
 
   getAllUsers() {
     this.usersService.getAll().subscribe((users) => {
       this.users = users.users;
-      console.log(users);
       this.prepareDashboardData();
     });
   }
@@ -303,8 +297,6 @@ export class DashboardComponent implements OnInit {
       this.measurements = measurements.measurements;
       this.getAllUsers();
       
-      //console.log('aqui', this.measurements)
-
       for (var teste in this.measurements) {
         this.dataArr.push({ value: this.measurements[teste].value, name: this.measurements[teste].unit });
       }
@@ -318,7 +310,7 @@ export class DashboardComponent implements OnInit {
           let ne = n.map(m => 
             m.name
          )
-          console.log(_.uniq(ne))
+          console.log('Test uniq',_.uniq(ne))
         })
       
         console.log("OP", this.result)

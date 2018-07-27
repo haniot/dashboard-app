@@ -33,9 +33,6 @@ import { RefreshTokenInterceptor } from './interceptors/refresh-token.intercepto
 import { AplicationErrorHandle } from './app.error-handle';
 import { AuthModule } from './auth/auth.module';
 
-
-//import { UserDetailsComponent } from './shared/user-details/user-details.component';
-
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -48,13 +45,6 @@ import { AuthModule } from './auth/auth.module';
   ],
   declarations: [
     AppComponent,
-    //DatePickerComponent,
-  //GlucoseGraphComponent
-    //MeasurementsDetailsComponent,
-    //MeasurementsTabsComponent,
-    //MaterialDialogComponent,
-    //NgxEasyTableComponent
-  
   ],
   providers: [
     AuthGuard,
