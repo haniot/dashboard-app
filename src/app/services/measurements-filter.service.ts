@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { OutputDate } from '../models/output-date';
 
-import {GraphData} from '../models/graph-date';
+import {GraphData} from '../models/graph-data';
+import {Measurement} from '../models/measurement';
 
 @Injectable()
 export class MeasurementsFilterService {
@@ -33,13 +34,13 @@ export class MeasurementsFilterService {
  * @param id measurement type
  * returns an array of measurements by typeId
  */
-  mapMeasurementsDataByTypeId(measurementsArr, id:number):Array<any>{
+  mapMeasurementsDataByTypeId(measurementsArr, id:number):Array<Measurement>{
       return measurementsArr.measurements.filter(measurement=>{
         return measurement.typeId == id;
       });
   }
 
-  getGraphData(measurementsArr) : Promise<GraphData>{
+  getGraphData(measurementsArr : Array<Measurement>) : Promise<GraphData>{
     return new Promise((resolve, reject)=>{
       const dataXaxis = [];
       const seriesChart = [];

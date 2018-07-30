@@ -38,6 +38,7 @@ export class TemperatureGraphComponent implements OnChanges {
 
   init(){
     this.measurements = this.filterService.mapMeasurementsDataByTypeId(this.measurements, this.graphType);
+    console.log(this.measurements);
   }
 
 
