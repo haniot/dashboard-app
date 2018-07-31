@@ -17,18 +17,6 @@ export class TemperatureGraphComponent implements OnChanges {
   @Input() graphType; 
 
   option;
-
-  /**
-   * Data range picker settings
-   */
-  public daterange: any = {};
-
- // see original project for full list of options
- // can also be setup using the config service to apply to multiple pickers
- public options: any = {
-     locale: { format: 'YYYY-MM-DD' },
-     alwaysShowCalendars: false,
- };
   
   ngOnChanges(){
     this.init();
