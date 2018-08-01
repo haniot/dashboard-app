@@ -9,7 +9,30 @@
     background-color: #00a594;
 }
 
-selected-item:active { 
+/*
+.ng-select.custom {
+    border:0px!important;
+    min-height: 0px!important;
+    border-radius: 0!important;
+}
+.ng-select.custom .ng-select-container  {            
+    min-height: 0px!important;
+    border-radius: 0!important;
+}
+
+.ng-value-label.custom{
+    background-color: #00a59433!important;
+}
+
+.ng-value.custom {
+    
+    background-color: #f5faff;
+    border-radius: 2px;
+    border: 1px solid #026359f1;
+}
+*/
+
+.selected-item:active { 
     background-color: #00a594;
 }
 

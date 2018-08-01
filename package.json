@@ -26,6 +26,7 @@
     "@angular/platform-server": "5.2.9",
     "@angular/router": "5.2.9",
     "@ng-bootstrap/ng-bootstrap": "2.0.0",
+    "@ng-select/ng-select": "^1.4.1",
     "@types/jquery": "^3.2.12",
     "@types/lodash": "^4.14.110",
     "ajv": "6.4.0",

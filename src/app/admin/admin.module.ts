@@ -32,7 +32,9 @@ import { DataTablesModule } from 'angular-datatables';
 import {MatTableModule} from '@angular/material';
 import {TableModule} from 'ngx-easy-table';
 
-import {SelectModule} from 'ng2-select';
+//import {SelectModule} from 'ng2-select';
+
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { UsersService } from '../services/users.service';
 import { MeasurementService } from '../services/measurements.service';
@@ -67,7 +69,8 @@ import {MeasurementsFilterService} from '../services/measurements-filter.service
     ComponentsModule,
     MatTableModule,
     TableModule,
-    SelectModule,
+    //SelectModule,
+    NgSelectModule,
     NgbModule.forRoot()
     
   ],

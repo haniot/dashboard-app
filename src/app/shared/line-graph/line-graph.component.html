@@ -1,3 +1,24 @@
-<div [ts-chart]="option"></div>
+<div *ngIf="!option||(option&&(!option.xAxis.data.length||option.xAxis.data.length==0))" class="card-body padding-top-edit">
+        
+         <h4 class="card-title">Sem medições no período selecionado</h4>
+         
+     </div>
+<div *ngIf="(option&&option.xAxis.data.length>0)" [ts-chart]="option">
+
+   
+
+   <div class="btn-group button-color" role="group">
+        <button type="button" class="btn btn-round button-color">
+            <i class="material-icons">
+                arrow_back
+            </i>
+            </button>
+        <button type="button" class="btn btn-round button-color">
+            <i class="material-icons">
+                arrow_forward
+            </i>
+        </button>
+    </div>
+</div>
 
 

@@ -12,7 +12,7 @@
 
 
 <!-- Button trigger modal -->
-<button type="button" class="btn button-color" data-toggle="modal" data-target="#exampleModalCenter">
+<button type="button" class="btn button-color float-right" data-toggle="modal" data-target="#exampleModalCenter">
     Selecionar período
   </button>
   
@@ -37,8 +37,10 @@
   </div>
 
 
-
-<div class="selected-item">
+<br>
+<br>
+<!--
+<div class="custom">
   <ng-select  [multiple]="true"
               [items]="types"
               [disabled]="disabled"
@@ -47,7 +49,24 @@
 
 
 </div>
+-->
 
-<app-temperature-graph *ngIf="measurements"  [hidden]="showMeasurementById(1)<0" [graphType]="1" [measurements]="measurements"></app-temperature-graph>
+<div >
+  <ng-select class="ng-value-label.custom"  [multiple]="true"
+              [items]="types"
+              placeholder="Selecione o tipo de medição para mostrar"
+              bindLabel="text"         
+              (change)=currentValues($event)
+              >
+  </ng-select>
+</div>
+
+<!--
+  <app-temperature-graph *ngIf="measurements"  [hidden]="showMeasurementById(1)<0" [graphType]="1" [measurements]="measurements"></app-temperature-graph>
+-->
+<haniot-card *ngIf="measurements" [hidden]="showMeasurementById(1)<0" title="Medições temperatura" subtitle="">
+  <line-graph [measurementType]="1" [measurements]="measurements"  ></line-graph>
+</haniot-card>
+
 
 <app-glucose-graph [hidden]="showMeasurementById(2)<0"></app-glucose-graph>
