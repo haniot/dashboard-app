@@ -47,6 +47,25 @@ export class MeasurementService {
       });
   }
 
+  getMeasurementsByTypeAndRangeDate(userId : string, selectedRangeDate : OutputDate, measurementType : number, skip ?: number ): Observable<any> {
+    let requestQuery : string;
+    if(selectedRangeDate.fromDate && selectedRangeDate.toDate ){
+      const dateStart : string = `${selectedRangeDate.fromDate.year}-${selectedRangeDate.fromDate.month}-${selectedRangeDate.fromDate.day}`;
+      const dateEnd : string = `${selectedRangeDate.toDate.year}-${selectedRangeDate.toDate.month}-${selectedRangeDate.toDate.day}`
+      
+      requestQuery = `${environment.api_url}/measurements/types/${measurementType}/users/${userId}?dateStart=${dateStart}&dateEnd=${dateEnd}&skip=${(skip ? skip : 0)}`
+      console.log(requestQuery);
+    }else{
+      const dateStart : string = `${selectedRangeDate.fromDate.year}-${selectedRangeDate.fromDate.month}-${selectedRangeDate.fromDate.day}`;
+      requestQuery = `${environment.api_url}/measurements/types/${measurementType}/users/${userId}?dateStart=${dateStart}&skip=${(skip ? skip : 0)}`
+    }
+    return this.http
+      .get(requestQuery)
+      .map(response => {
+        return response;
+      });
+  }
+
   // postDiag():  Observable<any>{
   //   return this.http
   //     .post<any>(`http://192.168.92.70:33/diabetes`,{

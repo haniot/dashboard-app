@@ -65,7 +65,7 @@
   <app-temperature-graph *ngIf="measurements"  [hidden]="showMeasurementById(1)<0" [graphType]="1" [measurements]="measurements"></app-temperature-graph>
 -->
 <haniot-card *ngIf="measurements" [hidden]="showMeasurementById(1)<0" title="Medições temperatura" subtitle="">
-  <line-graph [measurementType]="1" [measurements]="measurements"  ></line-graph>
+  <line-graph [userId]="selectedUser._id" [date]="selectedRangeDate" [measurementType]="1"  ></line-graph>
 </haniot-card>
 
 

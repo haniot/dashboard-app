@@ -40,18 +40,32 @@ export class MeasurementsFilterService {
       });
   }
 
-  getGraphData(measurementsArr : Array<Measurement>) : Promise<GraphData>{
+  getGraphData(measurementsArr : Array<Measurement>, begin : number, end : number) : Promise<GraphData>{
+    
+    
     return new Promise((resolve, reject)=>{
       const dataXaxis = [];
       const seriesChart = [];
-      if(measurementsArr.length===0){
+      if(measurementsArr.length===0 ){
         return reject({dataXaxis : [], seriesChart : []});
       }
-      measurementsArr.forEach(element => {
-        dataXaxis.push(new Date(element.registrationDate).getDate().toString() +"/"+ (new Date(element.registrationDate).getMonth() + 1).toString()  );
-        seriesChart.push(element.value.toFixed(1));
-        if(dataXaxis.length === measurementsArr.length){
-          return resolve( {dataXaxis : dataXaxis, seriesChart : seriesChart})
+      else if (begin >= end || end <= 0){
+        return resolve({dataXaxis : [], seriesChart : []});
+      }
+      /**
+       * Verificar se elemento está dentro do range passado como parâmetro
+       * begin, end
+       */
+      begin = ((end-10 < 0) ? 0 : begin)
+      end = ((begin+10 > measurementsArr.length) ? (measurementsArr.length - end) + end : end)
+      measurementsArr.forEach((element, index) => {
+      
+        if(index >= begin && index < end){
+          dataXaxis.push(new Date(element.registrationDate).getDate().toString() +"/"+ (new Date(element.registrationDate).getMonth() + 1).toString()  );
+          seriesChart.push(element.value.toFixed(1));
+          if(dataXaxis.length === (end - begin)){
+            return resolve( {dataXaxis : dataXaxis, seriesChart : seriesChart})
+          }
         }
       });
     })

@@ -18,7 +18,7 @@ import { UserDetailsComponent } from '../shared/user-details/user-details.compon
 import { UserMeasurementsTabsComponent } from '../shared/user-measurements-tabs/user-measurements-tabs.component';
 
 import { MeasurementsDetailsComponent } from '../shared/measurements-details/measurements-details.component';
-import { TemperatureGraphComponent } from '../shared/temperature-graph/temperature-graph.component';
+
 import { GlucoseGraphComponent } from '../shared/glucose-graph/glucose-graph.component';
 
 import { MaterialDialogComponent } from '../shared//material-dialog/material-dialog.component';
@@ -93,7 +93,6 @@ import {MeasurementsFilterService} from '../services/measurements-filter.service
     UserDetailsComponent,
     UserMeasurementsTabsComponent,
     MeasurementsDetailsComponent,
-    TemperatureGraphComponent,
     GlucoseGraphComponent,
     DatePickerComponent,
     LineGraphComponent,
