@@ -1,5 +1,5 @@
 export const environment = {
 
   production: true,
-  api_url: 'http://haniot-api.herokuapp.com/api/v1'
+  api_url: 'http://localhost/api/v1'
 };

@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   declarations: [
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    RegisterComponent,
+    ChangePasswordComponent
   ],
   providers: [
     AuthService

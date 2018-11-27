@@ -2,11 +2,12 @@ import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Observable } from 'rxjs/Rx';
+import { Router } from '../../../node_modules/@angular/router';
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
 
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector, private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -23,6 +24,11 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
 
             return next.handle(cloneRequest);
           });
+      }
+
+      if (errorResponse.status === 403) {
+        const http = this.injector.get(HttpClient);
+        this.router.navigate(['auth/change'], { queryParams: { redirect_link: error.redirect_link } });
       }
 
       return Observable.throw(errorResponse);
