@@ -68,7 +68,7 @@ import {MeasurementsFilterService} from '../services/measurements-filter.service
     DataTablesModule,
     ComponentsModule,
     MatTableModule,
-    TableModule,
+    //TableModule,
     //SelectModule,
     NgSelectModule,
     NgbModule.forRoot()

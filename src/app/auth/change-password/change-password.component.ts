@@ -38,14 +38,15 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('redirect_link', this.redirect_link)
+    this.errorCredentials = false;
     this.authService.changePassowrd(this.f.value, this.redirect_link).subscribe(
       (resp) => {
-        this.router.navigate(['']);
+        console.log(resp)
       },
       (errorResponse: HttpErrorResponse) => {
-        if (errorResponse.status === 401) {
+        if (errorResponse.status === 400) {
           this.errorCredentials = true;
+          console.log(errorResponse)
         }
       }
     );

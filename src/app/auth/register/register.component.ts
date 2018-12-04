@@ -28,6 +28,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  login() {
+    this.router.navigate(['/auth/login'])
+  }
+
   onSubmit() {
     this.authService.register(this.f.value).subscribe(
       (resp) => {

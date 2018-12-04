@@ -11,8 +11,6 @@ import { User } from './../interfaces/user.model';
 
 @Injectable()
 export class AuthService {
-
-
   constructor(private http: HttpClient, private router: Router) {
 
   }
@@ -23,11 +21,11 @@ export class AuthService {
 
 
   login(credentials: { email: string, password: string }): Observable<boolean> {
+
     return this.http.post<any>(`${environment.api_url}/users/auth`, credentials)
       .do(data => {
-        console.log(data)
         if (data.redirect_link) {
-          localStorage.setItem('redirect', data.redirect_link);
+          localStorage.setItem("emailTemp", credentials.email)
           this.router.navigate(['auth/change'], { queryParams: { redirect_link: data.redirect_link } });
         }else {
           localStorage.setItem('token', data.token);
@@ -39,11 +37,7 @@ export class AuthService {
   register(credentials: { name: string, email: string, password: string }): Observable<boolean> {
     return this.http.post<any>(`${environment.api_url}/users/admin`, credentials)
       .do(data => {
-        console.log(data)
         this.router.navigate(['auth/login']);
-        // Loga
-        // localStorage.setItem('token', data.token);
-        // localStorage.setItem('user', btoa(JSON.stringify(data.user)));
       });
   }
 
@@ -70,12 +64,11 @@ export class AuthService {
   }
 
   changePassowrd(credentials: { name: string, email: string, password: string }, redirect_link): Observable<boolean> {
-    console.log('redirect_link2', redirect_link)
 
     return this.http.patch<any>(`${environment.api_url}/${redirect_link.slice(8)}`, credentials)
       .do(data => {
-        console.log(data)
-        this.router.navigate(['auth/login']);
+        console.log(data, credentials.email)
+        // this.router.navigate(['auth/login']);
       });
   }
 
