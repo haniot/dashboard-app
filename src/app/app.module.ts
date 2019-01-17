@@ -14,16 +14,9 @@ import {
 
 import { AppComponent } from './app.component';
 
-import { TableListComponent } from './table-list/table-list.component';
-import { TypographyComponent } from './typography/typography.component';
-import { IconsComponent } from './icons/icons.component';
-import { MapsComponent } from './maps/maps.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { UpgradeComponent } from './upgrade/upgrade.component';
 import {
   AgmCoreModule
 } from '@agm/core';
-import { AdminComponent } from './admin/admin.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthGuard } from './guards/auth.guard';

@@ -9,7 +9,7 @@ export class AreaGraphComponent implements OnInit {
 
   option = {
     title: {
-      text: '堆叠区域图'
+      text: 'Olaaa'
     },
     tooltip: {
       trigger: 'axis',
@@ -21,7 +21,7 @@ export class AreaGraphComponent implements OnInit {
       }
     },
     legend: {
-      data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+      data: ['1', '2', '3', '4', '5']
     },
     toolbox: {
       feature: {
@@ -38,7 +38,7 @@ export class AreaGraphComponent implements OnInit {
       {
         type: 'category',
         boundaryGap: false,
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        data: ['1', '2', '3', '4', '5', '6', '7']
       }
     ],
     yAxis: [

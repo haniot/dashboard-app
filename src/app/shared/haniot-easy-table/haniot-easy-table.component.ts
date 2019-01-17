@@ -1,7 +1,5 @@
-import { Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
-import {ConfigService} from '../../services/easy-table.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../../models/users';
-import { ColumnsEasyTable } from '../../models/columns-easy-table';
 
 
 @Component({
@@ -11,30 +9,10 @@ import { ColumnsEasyTable } from '../../models/columns-easy-table';
 })
 export class HaniotEasyTableComponent implements OnInit {
 
-  @Input() users : User[];
-  configuration;
-  @Input () columns : ColumnsEasyTable[];
+  @Input() users: User[];
 
-  @Output() selectedUser = new EventEmitter();
-
-  data = [{
-    email: "test@test.com",
-    height: 175,
-    name: 'Joana'
-  }, {
-    email: "test2@test2.com",
-    height: 180,
-    name: 'Maria'
-  }];
-  constructor() {}
+  constructor() { }
   ngOnInit() {
-    this.configuration = ConfigService.config;
-    //this.data = data;
-  }
-
-  event(event){
-    if(event.event === 'onClick'){
-      this.selectedUser.emit({user: event.value.row });
-    }
+    
   }
 }

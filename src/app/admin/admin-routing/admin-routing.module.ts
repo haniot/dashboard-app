@@ -1,14 +1,10 @@
-import { NgModule, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AuthGuard } from './../../guards/auth.guard';
 import { AdminComponent } from './../admin.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { UserProfileComponent } from '../user-profile/user-profile.component';
-import { UsersComponent } from '../users/users.component';
 import { PatientsComponent } from '../patients/patients.component';
-import { MeasurementsComponent } from '../measurements/measurements.component';
 
 
 @NgModule({
@@ -24,10 +20,7 @@ import { MeasurementsComponent } from '../measurements/measurements.component';
             pathMatch: 'full'
           },
           { path: 'dashboard', component: DashboardComponent },
-          { path: 'user-profile', component: UserProfileComponent },
-          { path: 'users', component: UsersComponent },
           { path: 'patients', component: PatientsComponent },
-          { path: 'measurements', component: MeasurementsComponent }
         ]
       }
     ])

@@ -10,12 +10,12 @@
     </div>
    
     <div class="btn-group float-right" role="group">
-            <button class="button-color buttons" [disabled]="currentBegin<=0 && this.skipValue===0" type="button" (click)="back()"  class="btn btn-round button-color">
+            <button class="button-color buttons" [disabled]="currentBegin<=0 && this.skipValue===0" type="button"  class="btn btn-round button-color">
                 <i class="material-icons">
                     arrow_back
                 </i>
                 </button>
-            <button class="button-color buttons" [disabled]="currentEnd>=measurements.length && measurements.length<100 " type="button" (click)="next()" class="btn btn-round button-color">
+            <button class="button-color buttons" [disabled]="currentEnd>=measurements.length && measurements.length<100 " type="button" class="btn btn-round button-color">
                 <i class="material-icons">
                     arrow_forward
                 </i>
