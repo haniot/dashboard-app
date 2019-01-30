@@ -27,6 +27,8 @@ export class DashboardComponent implements OnInit {
   getAllUsers() {
     this.usersService.getAll().subscribe((users) => {
       this.users = users.users;
+
+      console.log("nada", users)
       this.prepareDashboardData();
     });
   }

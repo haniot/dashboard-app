@@ -1,52 +1,73 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            
+            <card-top></card-top>
+
+
+            <div class="col-lg-2 col-md-6 col-sm-6">
                 <div class="card card-stats ">
                     <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">perm_identity</i>
                         </div>
+                        <br>
                         <p class="card-category">Total de pacientes</p>
-                        <h3 class="card-title">{{dashboardData?.totalPatients}}
+                        <h3 class="card-title">236{{dashboardData?.totalPatients}}
 
                         </h3>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-2 col-md-6 col-sm-6">
                 <div class="card card-stats">
                     <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">equalizer</i>
                         </div>
+                        <br>
                         <p class="card-category">Total de medições</p>
-                        <h3 class="card-title">{{dashboardData?.totalMeasurement}}</h3>
+                        <h3 class="card-title">400{{dashboardData?.totalMeasurement}}</h3>
 
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-2 col-md-6 col-sm-6">
 
                 <div class="card card-stats">
                     <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">date_range</i>
                         </div>
+                        <br>
                         <p class="card-category">Média de idade</p>
-                        <h3 class="card-title">{{dashboardData?.averageAge}}</h3>
+                        <h3 class="card-title">13,6{{dashboardData?.averageAge}}</h3>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-2 col-md-6 col-sm-6">
                 <div class="card card-stats">
                     <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
                             <i class="fa fa-twitter"></i>
                         </div>
-                        <p class="card-category">Genero</p>
-                        <h3 class="card-title">+245</h3>
+                        <br>
+                        <p class="card-category">Meninas</p>
+                        <h3 class="card-title">240</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="fa fa-twitter"></i>
+                        </div>
+                        <br>
+                        <p class="card-category">Meninos</p>
+                        <h3 class="card-title">160</h3>
                     </div>
                 </div>
             </div>
@@ -94,7 +115,7 @@
         </haniot-card>
 
         <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">
-        
+
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <bar-graph></bar-graph>

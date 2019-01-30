@@ -5,8 +5,6 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { AdminRoutingModule } from './admin-routing/admin-routing.module';
-
-import { HaniotEasyTableComponent } from '../shared/haniot-easy-table/haniot-easy-table.component';
 import { HaniotCardComponent } from '../shared/haniot-card/haniot-card.component';
 
 import { GlucoseGraphComponent } from '../shared/glucose-graph/glucose-graph.component';
@@ -23,6 +21,8 @@ import { LineGraphComponent } from '../shared/line-graph/line-graph.component';
 import { AreaGraphComponent } from '../shared/area-graph/area-graph.component';
 import { BarGraphComponent } from '../shared/bar-graph/bar-graph.component';
 import { ScatterGraphComponent } from '../shared/scatter-graph/scatter-graph.component';
+import { CardTopComponent } from '../shared/card-top/card-top.component';
+import { HaniotTableComponent } from '../shared/haniot-table/haniot-table.component';
 
 
 @NgModule({
@@ -41,15 +41,17 @@ import { ScatterGraphComponent } from '../shared/scatter-graph/scatter-graph.com
   declarations: [
     AdminComponent,
     DashboardComponent,
+    CardTopComponent,
     HaniotCardComponent,
     echartsDirective,
     PatientsComponent,
-    HaniotEasyTableComponent,
     GlucoseGraphComponent,
     LineGraphComponent,
     AreaGraphComponent,
     BarGraphComponent,
-    ScatterGraphComponent
+    ScatterGraphComponent,
+    HaniotTableComponent
+    
 
   ], 
   providers:[

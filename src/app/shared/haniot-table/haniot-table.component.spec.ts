@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HaniotEasyTableComponent } from './haniot-easy-table.component';
+import { HaniotTableComponent } from './haniot-table.component';
 
-describe('NgxEasyTableComponent', () => {
-  let component: HaniotEasyTableComponent;
-  let fixture: ComponentFixture<HaniotEasyTableComponent>;
+describe('HaniotTableComponent', () => {
+  let component: HaniotTableComponent;
+  let fixture: ComponentFixture<HaniotTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HaniotEasyTableComponent ]
+      declarations: [ HaniotTableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HaniotEasyTableComponent);
+    fixture = TestBed.createComponent(HaniotTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

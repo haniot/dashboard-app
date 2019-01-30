@@ -68,7 +68,7 @@ export class AuthService {
     return this.http.patch<any>(`${environment.api_url}/${redirect_link.slice(8)}`, credentials)
       .do(data => {
         console.log(data, credentials.email)
-        // this.router.navigate(['auth/login']);
+        this.router.navigate(['auth/login']);
       });
   }
 
