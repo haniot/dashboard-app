@@ -23,6 +23,7 @@ import { BarGraphComponent } from '../shared/bar-graph/bar-graph.component';
 import { ScatterGraphComponent } from '../shared/scatter-graph/scatter-graph.component';
 import { CardTopComponent } from '../shared/card-top/card-top.component';
 import { HaniotTableComponent } from '../shared/haniot-table/haniot-table.component';
+import { CaregiverComponent } from './caregiver/caregiver.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { HaniotTableComponent } from '../shared/haniot-table/haniot-table.compon
     AreaGraphComponent,
     BarGraphComponent,
     ScatterGraphComponent,
-    HaniotTableComponent
+    HaniotTableComponent,
+    CaregiverComponent
     
 
   ], 

@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -67,7 +67,6 @@ export class AuthService {
 
     return this.http.patch<any>(`${environment.api_url}/${redirect_link.slice(8)}`, credentials)
       .do(data => {
-        console.log(data, credentials.email)
         this.router.navigate(['auth/login']);
       });
   }

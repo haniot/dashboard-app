@@ -5,6 +5,7 @@ import { AuthGuard } from './../../guards/auth.guard';
 import { AdminComponent } from './../admin.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { PatientsComponent } from '../patients/patients.component';
+import { CaregiverComponent } from '../caregiver/caregiver.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { PatientsComponent } from '../patients/patients.component';
           },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'patients', component: PatientsComponent },
+          { path: 'caregiver', component: CaregiverComponent },
         ]
       }
     ])

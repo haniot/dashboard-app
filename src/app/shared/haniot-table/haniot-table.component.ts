@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { User } from 'app/auth/interfaces/user.model';
 
 @Component({
   selector: 'haniot-table',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./haniot-table.component.scss']
 })
 export class HaniotTableComponent implements OnInit {
+  @Input() list: Array<User>;
 
   constructor() { }
 

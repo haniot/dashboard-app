@@ -12,7 +12,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     if (token && (requestUrl[2] === apiUrl[2])) {
       const newRequest = request.clone({ setHeaders: {
-        'Authorization': `JWT ${token}`,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       } 
       });

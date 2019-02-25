@@ -41,7 +41,6 @@ export class ChangePasswordComponent implements OnInit {
     this.errorCredentials = false;
     this.authService.changePassowrd(this.f.value, this.redirect_link).subscribe(
       (resp) => {
-        console.log(resp)
       },
       (errorResponse: HttpErrorResponse) => {
         if (errorResponse.status === 400) {

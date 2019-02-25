@@ -27,8 +27,14 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       }
 
       if (errorResponse.status === 403) {
-        const http = this.injector.get(HttpClient);
-        this.router.navigate(['auth/change'], { queryParams: { redirect_link: error.redirect_link } });
+        const redirectlink: string = error.redirect_link;
+        let temp = redirectlink.split('/');
+        if(temp[temp.length-1] === 'password'){
+          this.router.navigate(['auth/change'], { queryParams: { redirect_link: error.redirect_link } });
+        }else{
+          localStorage.clear();
+          this.router.navigate(['auth/login']);
+        }
       }
 
       return Observable.throw(errorResponse);
