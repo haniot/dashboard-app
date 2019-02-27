@@ -24,16 +24,24 @@ import { ScatterGraphComponent } from '../shared/scatter-graph/scatter-graph.com
 import { CardTopComponent } from '../shared/card-top/card-top.component';
 import { HaniotTableComponent } from '../shared/haniot-table/haniot-table.component';
 import { CaregiverComponent } from './caregiver/caregiver.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { CaregiverService } from './caregiver/caregiver.service';
+
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 
 @NgModule({
   imports: [
+    BrowserModule,
+    FormsModule,
     RouterModule,
     CommonModule,
     AdminRoutingModule,
     DataTablesModule,
     ComponentsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ToastModule.forRoot() 
     
   ],
   exports: [
@@ -58,6 +66,7 @@ import { CaregiverComponent } from './caregiver/caregiver.component';
   ], 
   providers:[
     UsersService,
+    CaregiverService
   ]
 })
 export class AdminModule { }

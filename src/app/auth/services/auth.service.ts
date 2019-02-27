@@ -2,15 +2,17 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
+import * as JWT_decode from "jwt-decode";
 
 import { User } from './../interfaces/user.model';
 
-
 @Injectable()
 export class AuthService {
+
   constructor(private http: HttpClient, private router: Router) {
 
   }
@@ -21,13 +23,12 @@ export class AuthService {
 
 
   login(credentials: { email: string, password: string }): Observable<boolean> {
-
     return this.http.post<any>(`${environment.api_url}/users/auth`, credentials)
       .do(data => {
         if (data.redirect_link) {
           localStorage.setItem("emailTemp", credentials.email)
           this.router.navigate(['auth/change'], { queryParams: { redirect_link: data.redirect_link } });
-        }else {
+        } else {
           localStorage.setItem('token', data.token);
           localStorage.setItem('user', btoa(JSON.stringify(data.user)));
         }
@@ -52,8 +53,6 @@ export class AuthService {
       });
   }
 
-
-
   logout(): void {
     localStorage.clear();
     this.router.navigate(['auth/login']);
@@ -64,7 +63,6 @@ export class AuthService {
   }
 
   changePassowrd(credentials: { name: string, email: string, password: string }, redirect_link): Observable<boolean> {
-
     return this.http.patch<any>(`${environment.api_url}/${redirect_link.slice(8)}`, credentials)
       .do(data => {
         this.router.navigate(['auth/login']);
@@ -80,6 +78,18 @@ export class AuthService {
         }
         return false;
       });
+  }
+
+  getScopeUser(): String {
+    const token = localStorage.getItem('token');
+    let decodedToken: {sub: string, iss: string, iat: number, exp: number, scope: string};
+    try {
+      decodedToken =  JWT_decode(token);
+    }
+    catch (Error) {
+      decodedToken =  null;
+    } 
+    return decodedToken.scope;
   }
 
 }

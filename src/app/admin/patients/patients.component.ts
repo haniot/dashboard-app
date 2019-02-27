@@ -1,28 +1,51 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, NgForm } from '../../../../node_modules/@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+
+import { OnDestroy } from "@angular/core";
+import { ISubscription } from "rxjs/Subscription";
+
+import { AuthService } from 'app/auth/services/auth.service';
 import { UsersService } from '../../services/users.service';
-import { User } from '../../models/users';
+import { IUser } from '../../models/users';
 
 @Component({
   selector: 'app-patients',
   templateUrl: './patients.component.html',
   styleUrls: ['./patients.component.scss']
 })
-export class PatientsComponent implements OnInit {
+export class PatientsComponent{
+  nome: string;
+  email: string;
+  users: Array<IUser> = [];
+  errorCredentials = false;
 
-  users: Array<User> = [];
-
-  constructor(private usersService: UsersService) {
+  constructor(
+    private usersService: UsersService,
+    private formBuilder: FormBuilder,
+    private authService: AuthService) {
     this.getAllUsers();
-   }
-
-  ngOnInit() {
   }
 
+
   getAllUsers() {
-    this.usersService.getAll().subscribe((users) => {
-      console.log(users);
-      this.users = users;
-    });
+    this.usersService.getAll().subscribe(
+      (users) => {
+        this.users = users;
+      });
+  }
+
+  onSubmit(form: NgForm) {
+    this.authService.register(form.value).subscribe(
+      (resp) => {
+
+      },
+      (errorResponse: HttpErrorResponse) => {
+        if (errorResponse.status === 401) {
+          this.errorCredentials = true;
+        }
+      }
+    );
   }
 
 }

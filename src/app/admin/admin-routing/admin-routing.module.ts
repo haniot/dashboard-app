@@ -22,7 +22,7 @@ import { CaregiverComponent } from '../caregiver/caregiver.component';
           },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'patients', component: PatientsComponent },
-          { path: 'caregiver', component: CaregiverComponent },
+          { path: 'caregiver', component: CaregiverComponent }
         ]
       }
     ])

@@ -25,6 +25,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
   ],
   providers: [
     AuthService
-  ]
+  ],
+  exports: [RegisterComponent]
 })
 export class AuthModule { }

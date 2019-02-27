@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { LoginComponent } from './../auth/login/login.component';
 import { RegisterComponent } from '../auth/register/register.component';
 import { ChangePasswordComponent } from '../auth/change-password/change-password.component';
+import { NotfoundComponent } from 'app/template/page-not-found/page-not-found.component';
+import { AcessDeniedComponent } from 'app/template/acess-denied/acess-denied.component';
+
 
 @NgModule({
   imports: [
@@ -13,6 +15,9 @@ import { ChangePasswordComponent } from '../auth/change-password/change-password
       { path: 'auth/login', component: LoginComponent },
       { path: 'auth/register', component: RegisterComponent },
       { path: 'auth/change', component: ChangePasswordComponent },
+      { path: 'acess-denied', component: AcessDeniedComponent },
+      { path: 'page-not-found', component: NotfoundComponent },
+      { path: '**', redirectTo: 'page-not-found' }
     ])
   ],
   declarations: [],

@@ -25,6 +25,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { RefreshTokenInterceptor } from './interceptors/refresh-token.interceptor';
 import { AplicationErrorHandle } from './app.error-handle';
 import { AuthModule } from './auth/auth.module';
+import { ChangePasswordInterceptor } from './interceptors/change-password.interceptor';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { AuthModule } from './auth/auth.module';
     AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: ChangePasswordInterceptor, multi: true },
     {provide: ErrorHandler, useClass: AplicationErrorHandle }
   ],
   bootstrap: [AppComponent]

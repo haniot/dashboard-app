@@ -2,8 +2,45 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <haniot-card title="List of Caregiver" subtitle="Caregiver">
+        <haniot-card title="List of Caregiver" subtitle="">
           <haniot-table [list]="caregivers"></haniot-table>
+        </haniot-card>
+      </div>
+
+      <div class="col-md-12">
+        <haniot-card title="Create New Caregiver" subtitle="">
+          <form #formPatient="ngForm" (ngSubmit)="onSubmit(formPatient)">
+
+            <div class="form-group has-feedback" [ngClass]="{'has-success': nomeModel.valid,
+                            'has-error': formPatient.invalid && (nomeModel.touched || nomeModel.dirty)}">
+              <input type="text" class="form-control" id="nome" required minlength="4" class="form-control" type="text" name="name" #nomeModel="ngModel"
+              [(ngModel)]="nome" placeholder="Name">
+              <span *ngIf="nomeModel.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+              <span *ngIf="nomeModel.invalid && (nomeModel.touched || nomeModel.dirty)">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">Nome inválido.</span>
+              </span>
+            </div>
+
+          <div class="form-group has-feedback" [ngClass]="{'has-success': emailModel.valid,
+              'has-error': emailModel.invalid && (emailModel.touched || emailModel.dirty)}">
+            <input type="email" class="form-control" id="email" required minlength="4" class="form-control" type="text" name="email" #emailModel="ngModel"
+            [(ngModel)]="email"  placeholder="Email">
+            <span *ngIf="emailModel.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+            <span *ngIf="emailModel.invalid && (emailModel.touched || emailModel.dirty)">
+              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+              <span class="text-danger">E-mail inválido.</span>
+            </span>
+          </div>
+
+          <div class="form-group" [ngClass]="{'has-success': passwordModel.valid,
+               'has-error': passwordModel.invalid && (passwordModel.touched || passwordModel.dirty)}">
+            <input type="password" class="form-control" id="password" required minlength="4" class="form-control" type="text" name="password" #passwordModel="ngModel"
+            [(ngModel)]="password" placeholder="Password">
+            <span class="text-danger" *ngIf="passwordModel.invalid && (passwordModel.touched || passwordModel.dirty)">Campo obrigatório.</span>
+          </div>
+          <button type="submit" class="btn btn-default" [disabled]="formPatient.invalid">Create</button>
+        </form>
         </haniot-card>
       </div>
     </div>

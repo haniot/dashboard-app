@@ -1,8 +1,7 @@
-export interface User{
+export interface IUser{
+    id: number,
     name: string;
-    height: number;
     email: string;
-    gender : number;
-    groupId: number;
-    dateOfBirth: number;
+    type: number,
+    created_at: Date
 }
