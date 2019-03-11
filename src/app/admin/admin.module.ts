@@ -10,12 +10,10 @@ import { HaniotCardComponent } from '../shared/haniot-card/haniot-card.component
 import { GlucoseGraphComponent } from '../shared/glucose-graph/glucose-graph.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { echartsDirective } from '../directives/echarts';
-import { PatientsComponent } from './patients/patients.component';
+import { AdministratorsComponent } from './administrators/administrators.component';
 import { DataTablesModule } from 'angular-datatables';
-
-import { UsersService } from '../services/users.service';
 
 import { LineGraphComponent } from '../shared/line-graph/line-graph.component';
 import { AreaGraphComponent } from '../shared/area-graph/area-graph.component';
@@ -26,9 +24,10 @@ import { HaniotTableComponent } from '../shared/haniot-table/haniot-table.compon
 import { CaregiverComponent } from './caregiver/caregiver.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { CaregiverService } from './caregiver/caregiver.service';
-
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import { UserService } from './services/users.service';
+import { ModalUserComponent } from './modal-user/modal-user.component';
+import { ModalUserEditComponent } from './modal-user-edit/modal-user-edit.component';
+import { MyprofileComponent } from './myprofile/myprofile.component';
 
 
 @NgModule({
@@ -41,7 +40,7 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
     DataTablesModule,
     ComponentsModule,
     NgbModule.forRoot(),
-    ToastModule.forRoot() 
+    MatSlideToggleModule
     
   ],
   exports: [
@@ -53,20 +52,22 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
     CardTopComponent,
     HaniotCardComponent,
     echartsDirective,
-    PatientsComponent,
+    AdministratorsComponent,
     GlucoseGraphComponent,
     LineGraphComponent,
     AreaGraphComponent,
     BarGraphComponent,
     ScatterGraphComponent,
     HaniotTableComponent,
-    CaregiverComponent
+    CaregiverComponent,
+    ModalUserComponent,
+    ModalUserEditComponent,
+    MyprofileComponent
     
 
   ], 
   providers:[
-    UsersService,
-    CaregiverService
+    UserService
   ]
 })
 export class AdminModule { }

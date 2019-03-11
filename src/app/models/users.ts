@@ -1,7 +1,22 @@
 export interface IUser{
-    id: number,
+    id: string,
     name: string;
     email: string;
-    type: number,
+    password?: string;
+    type: number;
     created_at: Date
+}
+export class User implements IUser{
+
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    type: number;
+    created_at: Date;
+
+    constructor() {
+
+    }
+
 }

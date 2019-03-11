@@ -4,8 +4,10 @@ import { RouterModule } from '@angular/router';
 import { AuthGuard } from './../../guards/auth.guard';
 import { AdminComponent } from './../admin.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { PatientsComponent } from '../patients/patients.component';
+import { AdministratorsComponent } from '../administrators/administrators.component';
 import { CaregiverComponent } from '../caregiver/caregiver.component';
+import { ScopeGuard } from 'app/guards/scope.guard';
+import { MyprofileComponent } from '../myprofile/myprofile.component';
 
 
 @NgModule({
@@ -13,16 +15,20 @@ import { CaregiverComponent } from '../caregiver/caregiver.component';
     RouterModule.forChild([
       {
         path: '',
-        component: AdminComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard],
+        component: AdminComponent, canActivate: [AuthGuard, ScopeGuard], canActivateChild: [AuthGuard, ScopeGuard],
         children: [
-          {
-            path: '',
-            redirectTo: 'dashboard',
-            pathMatch: 'full'
-          },
-          { path: 'dashboard', component: DashboardComponent },
-          { path: 'patients', component: PatientsComponent },
-          { path: 'caregiver', component: CaregiverComponent }
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+          { path: 'dashboard', component: DashboardComponent, data: {}},
+          { path: 'myprofile', component: MyprofileComponent, data: {}},
+          { 
+            path: 'administrators',
+            component: AdministratorsComponent,
+            data: { scope: "adminAccount:create adminAccount:deleteAll adminAccount:readAll adminAccount:updateAll"} },
+          { 
+            path: 'caregiver',
+            component: CaregiverComponent,
+            data: { scope: "caregiverAccount:create caregiverAccount:deleteAll caregiverAccount:readAll caregiverAccount:updateAll"}
+          }
         ]
       }
     ])

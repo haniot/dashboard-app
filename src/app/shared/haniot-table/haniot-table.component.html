@@ -1,19 +1,30 @@
-<table datatable class="row-border hover">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th colspan="2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of list; index as i">
-      <td>{{i+1}}</td>
-      <td>{{user.name}}</td>
-      <td>{{user.email}}</td>
-      <td><a class="nav-link" (click)="removeCaregiver(user.id)" title="Edit..."><i class="material-icons">more_horiz</i></a></td>
-      <td><a class="nav-link" (click)="removeCaregiver(user.id)" title="Remove..."><i class="material-icons">close</i></a></td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <div class="input-group no-border">
+    <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search" placeholder="Pesquisar usuário..." (keyup)="searchOnSubmit()">    
+    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
+      <i class="material-icons">search</i>
+      <div class="ripple-container"></div>
+    </button>
+  </div>
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th colspan="2">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of list; index as i" title="Clique para mais detalhes...">
+        <td>{{i+1}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td><a class="nav-link" (click)="editUser(user.id)" title="Editar usuário..." data-toggle="modal"
+            data-target="#modalUserEdit"><i class="material-icons">more_horiz</i></a></td>
+        <td *ngIf="!verifySameUser(user)"><a class="nav-link" (click)="removeUser(user.id)"
+            title="Excluir usuário..."><i class="material-icons">close</i></a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

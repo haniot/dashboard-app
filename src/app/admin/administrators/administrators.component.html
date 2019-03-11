@@ -1,0 +1,21 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <haniot-card title="Lista de usuário administradores" subtitle="">
+          <haniot-table [list]="admins" (onremove)="getAllAdministrators()" (onedit)="editUser($event)" [userType]="1"></haniot-table>
+        </haniot-card>
+      </div>
+      <div class="col-md">
+        <button type="submit" class="btn btn-default" data-toggle="modal" data-target="#modalUser" (click)="cleanUserEdit()">
+          Adicionar
+          <i class="material-icons">add</i>
+        </button>
+      </div>      
+    </div>
+  </div>
+</div>
+
+<app-modal-user [title]="'Criar usuário administrador'" (oncreate)="createAdmin($event)"></app-modal-user>
+
+<app-modal-user-edit [title]="'Editar usuário administrador'" (onedit)="editAdmin($event)" [user]="userEdit"></app-modal-user-edit> -->

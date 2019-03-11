@@ -1,18 +1,35 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'app/auth/services/auth.service';
+import { VerifyScopeService } from 'app/services/verify-scope.service';
+import { UserService } from 'app/admin/services/users.service';
 
 declare const $: any;
 
 declare interface RouteInfo {
-    path: string;
-    title: string;
-    icon: string;
-    class: string;
+  path: string;
+  title: string;
+  icon: string;
+  class: string;
+  scopes: Array<String>;
+  children?: Array<any>;
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
-    { path: '/patients', title: 'Patients', icon: 'person', class: '' },
-    { path: '/caregiver', title: 'Caregiver', icon: 'accessibility', class: '' },
+  { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '', scopes: [] },
+  {
+    path: '/administrators',
+    title: 'Administrators',
+    icon: 'supervisor_account',
+    class: '',
+    scopes: ['adminAccount:create', 'adminAccount:deleteAll', 'adminAccount:readAll', 'adminAccount:updateAll']
+  },
+  {
+    path: '/caregiver',
+    title: 'Caregiver',
+    icon: 'accessibility',
+    class: '',
+    scopes: ['caregiverAccount:create', 'caregiverAccount:deleteAll', 'caregiverAccount:readAll', 'caregiverAccount:updateAll']
+  }
 ];
 
 @Component({
@@ -21,18 +38,48 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  menuItems: any[];
+  private menuItems: any[];
+  private userName: String = "";
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private verifyScopesService: VerifyScopeService,
+    private userService: UserService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.getUserName();
   }
 
   isMobileMenu() {
-      if ($(window).width() > 991) {
-          return false;
-      }
-      return true;
+    if ($(window).width() > 991) {
+      return false;
+    }
+    return true;
   };
+
+  verifyScopes(routerScopes: Array<String>): boolean {
+    const userScopes: Array<String> = this.authService.getScopeUser().split(' ');
+    return this.verifyScopesService.verifyScopes(routerScopes, userScopes);
+  }
+
+  getUserName() {
+    this.userService.getUserById(atob(localStorage.getItem('user')))
+      .then(user => {
+        if (user && user.name) {
+          this.userName = user.name;
+        }
+      })
+      .catch(error => {
+        console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
+      });
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  myProfile(){
+    
+  }
 }

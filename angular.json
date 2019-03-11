@@ -28,7 +28,7 @@
               "node_modules/ngx-easy-table/style.scss",
               "src/assets/css/ng2-select.css",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
-              "node_modules/ng2-toastr/bundles/ng2-toastr.min.css"
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -39,8 +39,7 @@
               "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
               "node_modules/bootstrap-notify/bootstrap-notify.js",
               "node_modules/chartist/dist/chartist.js",
-              "src/assets/datatables.net/js/jquery.dataTables.js",
-              "node_modules/ng2-toastr/bundles/ng2-toastr.min.js"
+              "src/assets/datatables.net/js/jquery.dataTables.js"
             ]
           },
           "configurations": {

@@ -1,55 +1,68 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { NgForm } from '@angular/forms';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 
-import { IUser } from 'app/models/users';
-import { CaregiverService } from './caregiver.service';
-
+import { IUser, User } from 'app/models/users';
+import { UserService } from '../services/users.service';
 @Component({
   selector: 'app-caregiver',
   templateUrl: './caregiver.component.html',
   styleUrls: ['./caregiver.component.scss']
 })
 export class CaregiverComponent {
+  private userEdit: IUser = new User();
+  private caregivers: Array<IUser> = [];
 
-  caregivers: Array<IUser> = [];
-
-  constructor(
-    private caregiverService: CaregiverService,
-    private toastr: ToastsManager,
-    private vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
-    this.getAllUsers();
+  constructor(private userService: UserService, private toastr: ToastrService) {    
+    this.getAllCaregiver();
   }
 
 
-  getAllUsers() {
-    this.caregiverService.getAll()
+  getAllCaregiver() {
+    this.userService.getAllCaregiver()
       .then(caregivers => {
         this.caregivers = caregivers;
       })
       .catch();
   }
 
-  onSubmit(form: NgForm) {
-    this.caregiverService.create(form.value)
+  createCaregiver(event) {
+    this.userService.createCaregiver(event)
       .then(date => {
         if (date) {
-          this.getAllUsers();
-          form.reset();
-          this.toastr.info('Caregiver created!', 'Sucess');
+          this.getAllCaregiver();          
+          this.toastr.info('Cuidador criado!');
         } else {
-          this.toastr.error('Unable to create caregiver!', 'Error');
+          this.toastr.error('Não foi possível criar cuidador!');
         }
       })
       .catch(error => {
         console.log(error);
+        this.toastr.error('Não foi possível criar cuidador!');
       });
   }
 
-  removeCaregiver(id: string){
-    console.log('Remover caregiver id: ',id);
+  editCaregiver(event) {
+    this.userService.updateUser(event)
+      .then(date => {
+        if (date) {
+          this.getAllCaregiver();          
+          this.toastr.info('Cuidador atualizado!');
+        } else {
+          this.toastr.error('Não foi possível atualizar cuidador!');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        this.toastr.error('Não foi possível atualizar cuidador!');
+      });
   }
 
+  cleanUserEdit(){
+    this.userEdit = new User();
+  }
+
+  editUser(event){
+    this.userEdit = event;
+  }
 }
