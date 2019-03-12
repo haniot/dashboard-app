@@ -16,21 +16,13 @@ export class UserService {
       .toPromise();
   }
 
-  getAllCaregiver(): Promise<IUser[]> {
-    
-    return this.http.get<any>(`${environment.api_url}/users`)
-      .toPromise()
-      .then(users => {
-        
-        if(users && users.length) {
-          return users.filter(user => {
-              return user.type === this.TYPE_CARIGIVER;  
-          });
-        }             
-      })
-      .catch(error => {
-        return null;
-      });
+  getAllCaregiver(page?: number, limit?: number): Promise<IUser[]> {
+    let url = `${environment.api_url}/users?type=${this.TYPE_CARIGIVER}`;
+    if (page && limit) {
+      url = `${environment.api_url}/users?type=${this.TYPE_CARIGIVER}&page=${page}&limit=${limit}&sort=created_a`;
+    }
+    return this.http.get<any>(url)
+      .toPromise();
   }
 
 
@@ -47,31 +39,23 @@ export class UserService {
       .toPromise();
   }
 
-  getAllAdministrator(): Promise<IUser[]> {
-    
-    return this.http.get<any>(`${environment.api_url}/users`)
-      .toPromise()
-      .then(users => {
-        
-        if(users && users.length) {
-          return users.filter(user => {
-              return user.type === this.TYPE_ADMINISTRATOR;  
-          });
-        }             
-      })
-      .catch(error => {
-        return null;
-      });
+  getAllAdministrator(page?: number, limit?: number): Promise<IUser[]> {
+    let url = `${environment.api_url}/users?type=${this.TYPE_ADMINISTRATOR}`;
+    if (page && limit) {
+      url = `${environment.api_url}/users?type=${this.TYPE_ADMINISTRATOR}&page=${page}&limit=${limit}&sort=created_a`;
+    }
+    return this.http.get<any>(url)
+      .toPromise();
   }
 
-  removeUser(id:string): Promise<any> {    
+  removeUser(id: string): Promise<any> {
     return this.http.delete<any>(`${environment.api_url}/users/${id}`)
-      .toPromise();      
+      .toPromise();
   }
 
-  getUserById(id:string): Promise<any> {    
+  getUserById(id: string): Promise<any> {
     return this.http.get<any>(`${environment.api_url}/users/${id}`)
-      .toPromise();      
+      .toPromise();
   }
 
 }

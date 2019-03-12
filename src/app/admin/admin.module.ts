@@ -8,7 +8,7 @@ import { AdminRoutingModule } from './admin-routing/admin-routing.module';
 import { HaniotCardComponent } from '../shared/haniot-card/haniot-card.component';
 
 import { GlucoseGraphComponent } from '../shared/glucose-graph/glucose-graph.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { echartsDirective } from '../directives/echarts';
@@ -40,7 +40,8 @@ import { MyprofileComponent } from './myprofile/myprofile.component';
     DataTablesModule,
     ComponentsModule,
     NgbModule.forRoot(),
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatPaginatorModule
     
   ],
   exports: [

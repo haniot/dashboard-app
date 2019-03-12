@@ -17,6 +17,14 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
   { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '', scopes: [] },
   {
+    path: '/usuarios',
+    title: 'Usuários',
+    icon: 'arrow_drop_down',
+    class: '',
+    scopes: ['adminAccount:create', 'adminAccount:deleteAll', 'adminAccount:readAll', 'adminAccount:updateAll',
+      'caregiverAccount:create', 'caregiverAccount:deleteAll', 'caregiverAccount:readAll', 'caregiverAccount:updateAll']
+  },
+  {
     path: '/administrators',
     title: 'Administrators',
     icon: 'supervisor_account',
@@ -32,13 +40,27 @@ export const ROUTES: RouteInfo[] = [
   }
 ];
 
+const configSideBar = [
+  { title: 'Dashboard', scopes: [] },
+  {
+    title: 'Usuários', scopes: ['adminAccount:create', 'adminAccount:deleteAll', 'adminAccount:readAll', 'adminAccount:updateAll',
+      'caregiverAccount:create', 'caregiverAccount:deleteAll', 'caregiverAccount:readAll', 'caregiverAccount:updateAll']
+  },
+  { title: 'Administradores', scopes: ['adminAccount:create', 'adminAccount:deleteAll', 'adminAccount:readAll', 'adminAccount:updateAll'] },
+  { title: 'Cuidadores', scopes: ['caregiverAccount:create', 'caregiverAccount:deleteAll', 'caregiverAccount:readAll', 'caregiverAccount:updateAll'] },
+];
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  private menuItems: any[];
+  /* Configurações de cada menu e submenu do sidebar*/
+  //private menuItems: any[];
+
+  private configSideBar: { title: string, scopes: any[] }[];
+
   private userName: String = "";
 
   constructor(
@@ -47,7 +69,8 @@ export class SidebarComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    //this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.configSideBar = configSideBar;
     this.getUserName();
   }
 
@@ -58,7 +81,11 @@ export class SidebarComponent implements OnInit {
     return true;
   };
 
-  verifyScopes(routerScopes: Array<String>): boolean {
+  verifyScopes(title: string): boolean {
+    const configRouter = this.configSideBar.filter((element)=>{
+      return element.title === title;
+    });
+    const routerScopes = configRouter[0].scopes;
     const userScopes: Array<String> = this.authService.getScopeUser().split(' ');
     return this.verifyScopesService.verifyScopes(routerScopes, userScopes);
   }
@@ -79,7 +106,7 @@ export class SidebarComponent implements OnInit {
     this.authService.logout();
   }
 
-  myProfile(){
-    
+  myProfile() {
+
   }
 }

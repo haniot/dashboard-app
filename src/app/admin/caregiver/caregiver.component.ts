@@ -13,31 +13,40 @@ export class CaregiverComponent {
   private userEdit: IUser = new User();
   private caregivers: Array<IUser> = [];
 
-  constructor(private userService: UserService, private toastr: ToastrService) {    
+  /* Controles de paginação */
+  private page: number = 1;
+  private limit: number = 5;
+  private length: number;
+
+  constructor(private userService: UserService, private toastr: ToastrService) {
     this.getAllCaregiver();
+    /* Verificando a quantidade total de cuidadores cadastrados */
+    this.calcLengthCaregivers();
   }
 
-
   getAllCaregiver() {
-    this.userService.getAllCaregiver()
+    this.userService.getAllCaregiver(this.page, this.limit)
       .then(caregivers => {
         this.caregivers = caregivers;
+        this.calcLengthCaregivers();
       })
-      .catch();
+      .catch( error => {
+        console.log('Erro ao buscar caregivers: ',error);
+      });
   }
 
   createCaregiver(event) {
     this.userService.createCaregiver(event)
       .then(date => {
         if (date) {
-          this.getAllCaregiver();          
+          this.getAllCaregiver();
           this.toastr.info('Cuidador criado!');
         } else {
           this.toastr.error('Não foi possível criar cuidador!');
         }
       })
       .catch(error => {
-        console.log(error);
+        console.log('Erro ao criar caregivers: ', error);
         this.toastr.error('Não foi possível criar cuidador!');
       });
   }
@@ -46,23 +55,38 @@ export class CaregiverComponent {
     this.userService.updateUser(event)
       .then(date => {
         if (date) {
-          this.getAllCaregiver();          
+          this.getAllCaregiver();
           this.toastr.info('Cuidador atualizado!');
         } else {
           this.toastr.error('Não foi possível atualizar cuidador!');
         }
       })
       .catch(error => {
-        console.log(error);
+        console.log('Erro ao editar caregivers: ', error);
         this.toastr.error('Não foi possível atualizar cuidador!');
       });
   }
 
-  cleanUserEdit(){
+  cleanUserEdit() {
     this.userEdit = new User();
   }
 
-  editUser(event){
+  editUser(event) {
     this.userEdit = event;
+  }
+
+  paginationEvent(event){
+    this.page = event.page;
+    this.limit = event.limit;
+    this.getAllCaregiver();
+  }
+
+  calcLengthCaregivers(){
+    /** Verificando quantidade de cuidadores cadastrados */
+    this.userService.getAllCaregiver()
+      .then(caregivers => {
+        this.length = caregivers.length;
+      })
+      .catch();
   }
 }

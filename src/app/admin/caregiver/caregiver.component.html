@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-12">
         <haniot-card title="Lista de usuário cuidadores" subtitle="">
-          <haniot-table [list]="caregivers" (onremove)="getAllCaregiver()" (onedit)="editUser($event)" [userType]="2"></haniot-table>
+          <haniot-table [list]="caregivers" (onremove)="getAllCaregiver()" (onedit)="editUser($event)" [userType]="2" (pagination)="paginationEvent($event)" [(length)]="length" [pageSize]="limit"></haniot-table>
         </haniot-card>
       </div>
       <div class="col-md">

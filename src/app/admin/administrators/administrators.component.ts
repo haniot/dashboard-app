@@ -16,17 +16,25 @@ export class AdministratorsComponent {
   private admins: Array<IUser> = [];
   private errorCredentials = false;
 
+  /* Controles de paginação */
+  private page: number = 1;
+  private limit: number = 5;
+  private length: number;
+
   constructor(
     private userService: UserService,
     private toastr: ToastrService) {
     this.getAllAdministrators();
+    /* Verificando a quantidade total de cuidadores cadastrados */
+    this.calcLengthAdministrators();
   }
 
 
   getAllAdministrators() {
-    this.userService.getAllAdministrator()
+    this.userService.getAllAdministrator(this.page, this.limit)
       .then( admins => {
         this.admins = admins;
+        this.calcLengthAdministrators();
       })
       .catch((errorResponse: HttpErrorResponse) => {        
         if (errorResponse.status === 401) {
@@ -72,5 +80,20 @@ export class AdministratorsComponent {
 
   editUser(event){
     this.userEdit = event;
+  }
+
+  paginationEvent(event){
+    this.page = event.page;
+    this.limit = event.limit;
+    this.getAllAdministrators();
+  }
+
+  calcLengthAdministrators(){
+    /** Verificando quantidade de cuidadores cadastrados */
+    this.userService.getAllAdministrator()
+      .then(caregivers => {
+        this.length = caregivers.length;
+      })
+      .catch();
   }
 }

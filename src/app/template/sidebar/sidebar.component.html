@@ -40,12 +40,12 @@
     </div>
     <ul class="nav">
         <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" [routerLink]="['/dashboard']" *ngIf="verifyScopes(menuItems[0].scopes)">
+            <a class="nav-link" [routerLink]="['/dashboard']" *ngIf="verifyScopes('Dashboard')">
                 <i class="material-icons">dashboard</i>
                 <p>Dashboard</p>
             </a>
         </li>
-        <li routerLinkActive="active" class="nav-item">
+        <li routerLinkActive="active" class="nav-item" *ngIf="verifyScopes('Usuários')">
             <a class="nav-link" href="#pageSubmenu"  data-toggle="collapse" aria-expanded="false">
                 <p>
                     Usuários
@@ -55,13 +55,13 @@
             </a>
             <ul class="collapse list-unstyled submenu" id="pageSubmenu">
                 <li routerLinkActive="active" class="nav-subitem">
-                    <a class="nav-link" [routerLink]="['/administrators']" *ngIf="verifyScopes(menuItems[1].scopes)">
+                    <a class="nav-link" [routerLink]="['/administrators']" *ngIf="verifyScopes('Administradores')">
                         <i class="material-icons">supervisor_account</i>
                         <p>Administradores</p>
                     </a>
                 </li>
                 <li routerLinkActive="active" class="nav-subitem">
-                        <a class="nav-link" [routerLink]="['/caregiver']" *ngIf="verifyScopes(menuItems[2].scopes)">
+                        <a class="nav-link" [routerLink]="['/caregiver']" *ngIf="verifyScopes('Cuidadores')">
                             <i class="material-icons">accessibility</i>
                             <p>Cuidadores</p>
                         </a>
