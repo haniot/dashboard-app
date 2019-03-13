@@ -29,10 +29,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  register(){
-    this.router.navigate(['/auth/register'])
-  }
-
   onSubmit() {
     this.errorCredentials = false;
     this.authService.login(this.f.value).subscribe(

@@ -21,14 +21,16 @@ import { BarGraphComponent } from '../shared/bar-graph/bar-graph.component';
 import { ScatterGraphComponent } from '../shared/scatter-graph/scatter-graph.component';
 import { CardTopComponent } from '../shared/card-top/card-top.component';
 import { HaniotTableComponent } from '../shared/haniot-table/haniot-table.component';
-import { CaregiverComponent } from './caregiver/caregiver.component';
+import { HealthProfessionalComponent } from './health-professionals/health-professionals.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { UserService } from './services/users.service';
 import { ModalUserComponent } from './modal-user/modal-user.component';
 import { ModalUserEditComponent } from './modal-user-edit/modal-user-edit.component';
 import { MyprofileComponent } from './myprofile/myprofile.component';
-
+import { AdminService } from './services/admin.service';
+import { UserService } from './services/users.service';
+import { HealthProfessionalService } from './services/health-professional.service';
+import { HealthAreaPipe } from './pipes/health-area.pipe';
 
 @NgModule({
   imports: [
@@ -60,15 +62,18 @@ import { MyprofileComponent } from './myprofile/myprofile.component';
     BarGraphComponent,
     ScatterGraphComponent,
     HaniotTableComponent,
-    CaregiverComponent,
+    HealthProfessionalComponent,
     ModalUserComponent,
     ModalUserEditComponent,
-    MyprofileComponent
+    MyprofileComponent,
+    HealthAreaPipe
     
 
   ], 
   providers:[
-    UserService
+    UserService,
+    AdminService,
+    HealthProfessionalService
   ]
 })
 export class AdminModule { }

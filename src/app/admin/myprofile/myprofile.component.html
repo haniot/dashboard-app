@@ -6,14 +6,32 @@
           <form #formMyProfile="ngForm" (ngSubmit)="onSubmit(formMyProfile)">
 
             <div class="form-group has-feedback"
+              [ngClass]="{'has-success': nomeDeUsuarioModel.valid,
+                            'has-error': nomeDeUsuarioModel.invalid && (nomeDeUsuarioModel.touched || nomeDeUsuarioModel.dirty)}">
+              <label for="username">Nome de usuário:</label>
+              <input type="text" class="form-control" id="username" required minlength="4" class="form-control"
+                type="text" name="username" #nomeDeUsuarioModel="ngModel"
+                [(ngModel)]="user==undefined?username:user.username" placeholder="Nome de usuário..." [disabled]="visibilityButtonSave?disabled:'enabled'">
+              <span *ngIf="nomeDeUsuarioModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                aria-hidden="true"></span>
+              <span *ngIf="nomeDeUsuarioModel.invalid && (nomeDeUsuarioModel.touched || nomeDeUsuarioModel.dirty)">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">Nome de usuário inválido.</span>
+              </span>
+            </div>
+
+            <div class="form-group has-feedback"
               [ngClass]="{'has-success': nomeModelEdit.valid,
-                                  'has-error': nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)}">
+                                  'has-error': nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)}"
+              *ngIf="typeUser == 'HealthProfessional'">
               <label for="name">Nome:</label>
               <input type="text" class="form-control" id="nomeEdit" required minlength="4" type="text" name="name"
-                #nomeModelEdit="ngModel" [(ngModel)]="user==undefined?name:user.name" placeholder="Nome" [(readonly)]="!visibilityButtonSave">
+                #nomeModelEdit="ngModel" [(ngModel)]="user==undefined?name:user.name" placeholder="Nome"
+                [disabled]="visibilityButtonSave?disabled:'enabled'">
               <span *ngIf="nomeModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
                 aria-hidden="true"></span>
-              <span *ngIf="nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)">
+              <span
+                *ngIf="nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty) && visibilityButtonSave">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 <span class="text-danger">Nome inválido.</span>
               </span>
@@ -23,18 +41,37 @@
                     'has-error': emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty)}">
               <label for="email">Email:</label>
               <input type="email" class="form-control" id="emailEdit" required minlength="4" type="text" name="email"
-                #emailModelEdit="ngModel" [(ngModel)]="user==undefined?email:user.email" placeholder="Email" [(readonly)]="!visibilityButtonSave">
+                #emailModelEdit="ngModel" [(ngModel)]="user==undefined?email:user.email" placeholder="Email"
+                [disabled]="visibilityButtonSave?disabled:'enabled'">
               <span *ngIf="emailModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
                 aria-hidden="true"></span>
-              <span *ngIf="emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty)">
+              <span
+                *ngIf="emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty) && visibilityButtonSave">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 <span class="text-danger">E-mail inválido.</span>
               </span>
             </div>
 
+            <div class="form-group has-feedback" [ngClass]="{'has-success': healthAreaModel.valid,
+            'has-error': healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)}"
+              *ngIf="typeUser == 'HealthProfessional'">
+              <label for="healthArea">Área: </label>
+              <select name="healthArea" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel"
+                [(ngModel)]="user==undefined?health_area:user.health_area" [disabled]="visibilityButtonSave?disabled:'enabled'">
+                <option *ngFor="let area of healthAreaOptions; index as i" [value]="area">{{area | healthArea}}</option>
+              </select>
+              <span *ngIf="healthAreaModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                aria-hidden="true"></span>
+              <span *ngIf="healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">Área inválida.</span>
+              </span>
+            </div>
+
             <div class="row container-fluid">
               <div class="col-md">
-                <button type="button" class="btn btn-default" (click)="enabledEdit()" [disabled]="disabledButtonEdit">Habilitar edição</button>
+                <button type="button" class="btn btn-default" (click)="enabledEdit(formMyProfile)"
+                  [disabled]="disabledButtonEdit">Habilitar edição</button>
               </div>
               <div class="col-md" *ngIf="visibilityButtonSave">
                 <button type="submit" class="btn btn-default" [disabled]="!formMyProfile.valid">Salvar</button>

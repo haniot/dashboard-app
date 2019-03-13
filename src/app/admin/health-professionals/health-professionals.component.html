@@ -1,0 +1,22 @@
+<div class="main-content">
+  <div class="container-fluid">
+      
+    <div class="row">
+      <div class="col-md-12">
+        <haniot-card title="Lista de profissionais de saúde" subtitle="">
+          <haniot-table [list]="healthProfessionals" (onremove)="getAllHealthProfessionals()" (onedit)="editUser($event)" [userType]="'HealthProfessional'" (pagination)="paginationEvent($event)" [(length)]="length" [pageSize]="limit"></haniot-table>
+        </haniot-card>
+      </div>
+      <div class="col-md">
+          <button type="submit" class="btn btn-default" data-toggle="modal" data-target="#modalUser" (click)="cleanUserEdit()">
+            Adicionar
+            <i class="material-icons">add</i>
+          </button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-user [title]="'Criar profissional de saúde'" (oncreate)="createHealthProfessinal($event)" [typeUser]="'HealthProfessional'"></app-modal-user>
+
+<app-modal-user-edit [title]="'Editar profissional de saúde'" (onedit)="editHealthProfessinal($event)" [user]="userEdit" [typeUser]="'HealthProfessional'"></app-modal-user-edit>

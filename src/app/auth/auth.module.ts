@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
-import { RegisterComponent } from './register/register.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
@@ -20,12 +19,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
   declarations: [
     LoginComponent,
     ProfileComponent,
-    RegisterComponent,
     ChangePasswordComponent
   ],
   providers: [
     AuthService
-  ],
-  exports: [RegisterComponent]
+  ]
 })
 export class AuthModule { }

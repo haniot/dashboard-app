@@ -1,11 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'app/auth/services/auth.service';
 
-
-import { UserService } from 'app/admin/services/users.service';
 import { ToastrService } from 'ngx-toastr';
-import { IUser } from 'app/models/users';
 import { PageEvent } from '@angular/material/paginator';
+import { AdminService } from 'app/admin/services/admin.service';
+import { HealthProfessionalService } from 'app/admin/services/health-professional.service';
+import { IUser } from 'app/admin/models/users.models';
+import { UserService } from 'app/admin/services/users.service';
 
 @Component({
   selector: 'haniot-table',
@@ -24,7 +25,7 @@ export class HaniotTableComponent {
 
   @Input() list: Array<IUser>;
   @Output() onremove = new EventEmitter();
-  @Input() userType: number;
+  @Input() userType: string;// Admin or HealthProfessional
   @Output() onedit = new EventEmitter();
   @Output() pagination = new EventEmitter();
 
@@ -33,6 +34,8 @@ export class HaniotTableComponent {
 
   constructor(
     private authService: AuthService,
+    private adminService: AdminService,
+    private healthService: HealthProfessionalService,
     private userService: UserService,
     private toastr: ToastrService) { }
 
@@ -44,10 +47,10 @@ export class HaniotTableComponent {
     this.userService.removeUser(id)
       .then(() => {
         this.onremove.emit();
-        this.toastr.info('User successfully removed!', 'Sucess');
+        this.toastr.info('Usuário excluido com sucesso!');
       })
       .catch(error => {
-        this.toastr.error('Unable to remove user!', 'Error');
+        this.toastr.error('Não foi possível excluir usuário!');
       });
 
   }
@@ -58,7 +61,7 @@ export class HaniotTableComponent {
         this.onedit.emit(user);
       })
       .catch(error => {
-        this.toastr.error('Unable to edit user!', 'Error');
+        this.toastr.error('Não foi possível buscar usuário!');
       });
 
   }
@@ -83,18 +86,18 @@ export class HaniotTableComponent {
       const page = this.pageEvent && this.pageEvent.pageIndex ? this.pageEvent.pageIndex : 0;
       const limit = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : 5;
       switch (this.userType) {
-        case 1:
-          return this.userService.getAllAdministrator(page + 1, limit);
-        case 2:
-          return this.userService.getAllCaregiver(page + 1, limit);
+        case 'Admin':
+          return this.adminService.getAll(page + 1, limit);
+        case 'HealthProfessional':
+          return this.healthService.getAll(page + 1, limit);
       }
     }
 
     switch (this.userType) {
-      case 1:
-        return this.userService.getAllAdministrator();
-      case 2:
-        return this.userService.getAllCaregiver();
+      case 'Admin':
+        return this.adminService.getAll();
+      case 'HealthProfessional':
+        return this.healthService.getAll();
     }
 
   }

@@ -3,8 +3,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastrService } from 'ngx-toastr';
 
-import { IUser, User } from '../../models/users';
-import { UserService } from '../services/users.service';
+import { AdminService } from '../services/admin.service';
+import { IUser, Admin } from '../models/users.models';
 
 @Component({
   selector: 'app-administrators',
@@ -12,7 +12,7 @@ import { UserService } from '../services/users.service';
   styleUrls: ['./administrators.component.scss']
 })
 export class AdministratorsComponent {
-  private userEdit: IUser = new User();
+  private userEdit: IUser = new Admin();
   private admins: Array<IUser> = [];
   private errorCredentials = false;
 
@@ -22,7 +22,7 @@ export class AdministratorsComponent {
   private length: number;
 
   constructor(
-    private userService: UserService,
+    private adminService: AdminService,
     private toastr: ToastrService) {
     this.getAllAdministrators();
     /* Verificando a quantidade total de cuidadores cadastrados */
@@ -31,7 +31,7 @@ export class AdministratorsComponent {
 
 
   getAllAdministrators() {
-    this.userService.getAllAdministrator(this.page, this.limit)
+    this.adminService.getAll(this.page, this.limit)
       .then( admins => {
         this.admins = admins;
         this.calcLengthAdministrators();
@@ -45,7 +45,7 @@ export class AdministratorsComponent {
   }
 
   createAdmin(event) {
-    this.userService.createAdministrator(event)
+    this.adminService.create(event)
       .then(() => {
         this.getAllAdministrators();
         this.toastr.success('Administrator criado!');
@@ -60,7 +60,7 @@ export class AdministratorsComponent {
   }
 
   editAdmin(event) {
-    this.userService.updateUser(event)
+    this.adminService.update(event)
       .then(() => {
         this.getAllAdministrators();
         this.toastr.success('Administrator atualizado!');
@@ -75,7 +75,7 @@ export class AdministratorsComponent {
   }
 
   cleanUserEdit(){
-    this.userEdit = new User();
+    this.userEdit = new Admin();
   }
 
   editUser(event){
@@ -90,7 +90,7 @@ export class AdministratorsComponent {
 
   calcLengthAdministrators(){
     /** Verificando quantidade de cuidadores cadastrados */
-    this.userService.getAllAdministrator()
+    this.adminService.getAll()
       .then(caregivers => {
         this.length = caregivers.length;
       })

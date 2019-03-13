@@ -14,27 +14,20 @@ import { User } from 'app/models/users';
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router) {
-
-  }
+  constructor(private http: HttpClient, private router: Router) {  }
 
   check(): boolean {
-
     const token = this.decodeToken();
     if (!token) {
       return false;
-    }
-    
+    }    
     const user = atob(localStorage.getItem('user'));
-
     return user === token.sub;
-
-
   }
 
 
   login(credentials: { email: string, password: string }): Observable<boolean> {
-    return this.http.post<any>(`${environment.api_url}/users/auth`, credentials)
+    return this.http.post<any>(`${environment.api_url}/auth`, credentials)
       .pipe(
         tap(data => {
           if (data.redirect_link) {
@@ -51,34 +44,10 @@ export class AuthService {
               return false;
             }
             localStorage.setItem('user', btoa(decodedToken.sub));
-
-
           }
         })
       );
   }
-
-  register(credentials: { name: string, email: string, password: string }): Observable<boolean> {
-    return this.http.post<any>(`${environment.api_url}/users/admin`, credentials)
-      .pipe(
-        tap(data => {
-          this.router.navigate(['auth/login']);
-        })
-      );
-  }
-
-  // getUserApi(id): Promise<boolean> {
-  //   return this.http.get<any>(`${environment.api_url}/users/${id}`)
-  //   .pipe(
-  //     tap(data => {
-  //       if (data.user) {
-  //         localStorage.setItem('user', btoa(JSON.stringify(data.user)));
-  //         return observableOf(true);
-  //       }
-  //       return observableOf(false);
-  //     })
-  //   );
-  // }
 
   logout(): void {
     localStorage.clear();
@@ -99,20 +68,7 @@ export class AuthService {
       );
 
   }
-
-  // setUser(): Promise<boolean> {
-  //   return this.http.get<any>(`${environment.api_url}/auth/me`)
-  //     .pipe(
-  //       tap(data => {
-  //         if (data.user) {
-  //           localStorage.setItem('user', btoa(JSON.stringify(data.user)));
-  //           return observableOf(true);
-  //         }
-  //         return observableOf(false);
-  //       })
-  //     );
-  // }
-
+ 
   getScopeUser(): String {
     return this.decodeToken().scope;
   }

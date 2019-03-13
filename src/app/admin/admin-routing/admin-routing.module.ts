@@ -5,7 +5,7 @@ import { AuthGuard } from './../../guards/auth.guard';
 import { AdminComponent } from './../admin.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { AdministratorsComponent } from '../administrators/administrators.component';
-import { CaregiverComponent } from '../caregiver/caregiver.component';
+import { HealthProfessionalComponent } from '../health-professionals/health-professionals.component';
 import { ScopeGuard } from 'app/guards/scope.guard';
 import { MyprofileComponent } from '../myprofile/myprofile.component';
 
@@ -26,7 +26,7 @@ import { MyprofileComponent } from '../myprofile/myprofile.component';
             data: { scope: "adminAccount:create adminAccount:deleteAll adminAccount:readAll adminAccount:updateAll"} },
           { 
             path: 'caregiver',
-            component: CaregiverComponent,
+            component: HealthProfessionalComponent,
             data: { scope: "caregiverAccount:create caregiverAccount:deleteAll caregiverAccount:readAll caregiverAccount:updateAll"}
           }
         ]

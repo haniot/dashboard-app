@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import * as $ from 'jquery';
+import { IUser, HealtArea } from '../models/users.models';
 
 @Component({
   selector: 'app-modal-user-edit',
@@ -9,11 +10,13 @@ import * as $ from 'jquery';
 })
 export class ModalUserEditComponent{
 
-  @Input() user: {id:string, name:string, email:string, password:string};
+  @Input() user: IUser;
   @Input() title: string;
   @Input() subtitle: string;
   @Output() onedit = new EventEmitter();
-
+  @Input() typeUser: string;// Admin or HealthProfessional
+  private healthAreaOptions = Object.keys(HealtArea);
+  
   constructor() {   }
 
 

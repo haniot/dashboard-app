@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'app/models/users';
-import { UserService } from '../services/users.service';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { AdminService } from '../services/admin.service';
+import { HealthProfessionalService } from '../services/health-professional.service';
+import { HealtArea } from '../models/users.models';
 
 @Component({
   selector: 'app-myprofile',
@@ -14,39 +16,67 @@ export class MyprofileComponent implements OnInit {
   private visibilityButtonSave: boolean = false;
   private disabledButtonEdit: boolean = false;
   private user: User;
-
-  constructor(private userService: UserService,private toastr: ToastrService) {   }
+  private typeUser: string;// Admin or HealthProfessional
+  private healthAreaOptions = Object.keys(HealtArea);
+  
+  constructor(
+    private adminService: AdminService,
+    private healthService: HealthProfessionalService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
-    this.userService.getUserById(atob(localStorage.getItem('user')))
-        .then(user => {
-            if(user){
+    this.adminService.getById(atob(localStorage.getItem('user')))
+      .then(user => {
+        if (user) {
+          this.user = user;
+          this.typeUser = 'Admin';
+        } else {
+          this.healthService.getById(atob(localStorage.getItem('user')))
+            .then(user => {
+              if (user) {
                 this.user = user;
-            }
-        })
-        .catch( error => {
-            console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
-        });
+                this.typeUser = 'HealthProfessional'
+              }
+            })
+            .catch(error => {
+              console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
+            });
+        }
+      })
+      .catch(error => {
+        console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
+      });
   }
 
-  enabledEdit(){
+  enabledEdit(form) {    
     this.disabledButtonEdit = true;
     this.visibilityButtonSave = true;
   }
 
-  onSubmit(form){
-    const user: User = new User();
-    user.name = form.value.name;
-    user.email = form.value.email;
-    user.id = atob(localStorage.getItem('user'));
-    
-    this.userService.updateUser(user)
-      .then(() => {
-        this.ngOnInit();
-        this.toastr.success('Informações atualizadas!');
-      })
-      .catch((errorResponse: HttpErrorResponse) => {
-        this.toastr.error('Não foi possível atualizar informações!');        
-      });
+  onSubmit(form) {
+    if (this.typeUser == 'Admin') {
+      const admin = form.value;
+      admin.id = atob(localStorage.getItem('user'));
+      this.adminService.update(admin)
+        .then(() => {
+          this.ngOnInit();
+          this.toastr.success('Informações atualizadas!');
+        })
+        .catch((errorResponse: HttpErrorResponse) => {
+          this.toastr.error('Não foi possível atualizar informações!');
+        });
+    } else if (this.typeUser == 'HealthProfessional') {
+      const healthProfessional = form.value;
+      healthProfessional.id = atob(localStorage.getItem('user'));
+      this.healthService.update(healthProfessional)
+        .then(() => {
+          this.ngOnInit();
+          this.toastr.success('Informações atualizadas!');
+        })
+        .catch((errorResponse: HttpErrorResponse) => {
+          this.toastr.error('Não foi possível atualizar informações!');
+        });
+    }
   }
 }
