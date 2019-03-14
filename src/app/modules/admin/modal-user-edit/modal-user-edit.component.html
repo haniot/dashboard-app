@@ -1,0 +1,77 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modalUserEdit">
+  <div class="modal-dialog" role="document">
+    <div class="modal-haniot">
+      <haniot-card [title]="title" [subtitle]="subtitle">
+
+        <form #formUserEdit="ngForm" (ngSubmit)="onSubmit(formUserEdit)">
+
+          <div class="form-group has-feedback"
+            [ngClass]="{'has-success': nomeDeUsuarioModel.valid,
+                          'has-error': nomeDeUsuarioModel.invalid && (nomeDeUsuarioModel.touched || nomeDeUsuarioModel.dirty)}">
+            <label for="username">Nome de usuário:</label>
+            <input type="text" class="form-control" id="usernameEdit" required minlength="4" class="form-control"
+              type="text" name="username" #nomeDeUsuarioModel="ngModel" [(ngModel)]="user==undefined?username:user.username">
+            <span *ngIf="nomeDeUsuarioModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
+              aria-hidden="true"></span>
+            <span *ngIf="nomeDeUsuarioModel.invalid && (nomeDeUsuarioModel.touched || nomeDeUsuarioModel.dirty)">
+              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+              <span class="text-danger">Nome de usuário inválido.</span>
+            </span>
+          </div>
+
+          <div class="form-group has-feedback" [ngClass]="{'has-success': nomeModelEdit.valid,
+                            'has-error': nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)}" *ngIf="typeUser == 'HealthProfessional'">
+            <label for="name">Nome e sobrenome:</label>
+            <input type="text" class="form-control" id="nomeEdit" required minlength="4" class="form-control"
+              type="text" name="name" #nomeModelEdit="ngModel" [(ngModel)]="user==undefined?name:user.name">
+            <span *ngIf="nomeModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
+              aria-hidden="true"></span>
+            <span *ngIf="nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)">
+              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+              <span class="text-danger">Nome inválido.</span>
+            </span>
+          </div>
+
+          <div class="form-group has-feedback" [ngClass]="{'has-success': emailModelEdit.valid,
+              'has-error': emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty)}">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="emailEdit" required minlength="4" class="form-control"
+              type="text" name="email" #emailModelEdit="ngModel" [(ngModel)]="user==undefined?email:user.email">
+            <span *ngIf="emailModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
+              aria-hidden="true"></span>
+            <span *ngIf="emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty)">
+              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+              <span class="text-danger">E-mail inválido.</span>
+            </span>
+          </div>
+
+          <div class="form-group has-feedback" [ngClass]="{'has-success': healthAreaModel.valid,
+            'has-error': healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)}" *ngIf="typeUser == 'HealthProfessional'">
+            <label for="healthArea">Área: </label>
+            <select name="healthArea" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel" [(ngModel)]="user==undefined?health_area:user.health_area">
+              <option *ngFor="let area of healthAreaOptions; index as i" [value]="area">{{area | healthArea}}</option>
+            </select>
+            <span *ngIf="healthAreaModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
+              aria-hidden="true"></span>
+            <span *ngIf="healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)">
+              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+              <span class="text-danger">Área inválida.</span>
+            </span>
+          </div>
+
+          <div class="row container-fluid">
+            <div class="col-md">
+              <button type="submit" class="btn btn-default" [disabled]="formUserEdit.invalid">Salvar</button>
+            </div>
+            <div class="col-md">
+              <button type="button" class="btn btn-danger" data-dismiss="modal" id="buttonFechar">Fechar</button>
+            </div>
+          </div>
+        </form>
+      </haniot-card>
+
+
+
+    </div>
+  </div>
+</div>
