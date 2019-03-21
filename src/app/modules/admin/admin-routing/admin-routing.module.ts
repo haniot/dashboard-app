@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AdminComponent } from './../admin.component';
+
 import { AdministratorsComponent } from '../administrators/administrators.component';
 import { HealthProfessionalComponent } from '../health-professionals/health-professionals.component';
 
@@ -9,6 +9,9 @@ import { MyprofileComponent } from '../myprofile/myprofile.component';
 import { ScopeGuard } from 'app/security/guards/scope.guard';
 import { AuthGuard } from 'app/security/guards/auth.guard';
 import { DashboardComponent } from 'app/modules/dashboard/dashboard-component/dashboard.component';
+import { PilotStudyFormComponent } from 'app/modules/pilot-study/pilot-study-form/pilot-study-form.component';
+import { PilotStudyComponentComponent } from 'app/modules/pilot-study/pilot-study-component/pilot-study-component.component';
+import { TemplateComponent } from 'app/core/template/template-component/template.component';
 
 
 @NgModule({
@@ -16,7 +19,7 @@ import { DashboardComponent } from 'app/modules/dashboard/dashboard-component/da
     RouterModule.forChild([
       {
         path: '',
-        component: AdminComponent, canActivate: [AuthGuard, ScopeGuard], canActivateChild: [AuthGuard, ScopeGuard],
+        component: TemplateComponent, canActivate: [AuthGuard, ScopeGuard], canActivateChild: [AuthGuard, ScopeGuard],
         children: [
           { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
           { path: 'dashboard', component: DashboardComponent, data: {}},
@@ -34,8 +37,7 @@ import { DashboardComponent } from 'app/modules/dashboard/dashboard-component/da
             data: { scope: "healthprofessional:create healthprofessional:deleteAll healthprofessional:readAll healthprofessional:updateAll"}
           }
         ]
-      },
-      { path: '**', redirectTo: 'page-not-found' }
+      }
     ])
   ],
   exports: [

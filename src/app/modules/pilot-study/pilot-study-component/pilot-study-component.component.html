@@ -1,0 +1,19 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <haniot-card title="Lista de estudos piloto" subtitle="">
+          <pilot-study-table (onedit)="editPilotStudy($event)"></pilot-study-table>
+        </haniot-card>
+      </div>
+      <div class="col-md">
+        <button type="submit" class="btn btn-default" data-toggle="modal" data-target="#modalStudy" (click)="cleanStudyId()">
+          Adicionar
+          <i class="material-icons">add</i>
+        </button>
+      </div>      
+    </div>
+  </div>
+</div>
+
+<!-- <pilot-study-form [pilotStudyId]="pilotStudyId"></pilot-study-form> -->

@@ -27,8 +27,12 @@ export class UserService {
         }
         return this.healthService.getById(id);
       })
-      .catch(error => {
-        console.log('| users.service | Não foi possível buscar usuário!', error);        
+      .catch(httpError => {
+        if(httpError.error.code == 404 && httpError.error.message == 'Admin not found!'){
+          return this.healthService.getById(id);
+        }else{
+          console.log('| users.service | Não foi possível buscar usuário!', httpError);
+        }      
       });
   }
 

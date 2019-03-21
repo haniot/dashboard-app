@@ -7,10 +7,10 @@ export class HealthAreaPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     switch(value){
-      case 'NUTRITION':
+      case 'nutrition':
        return 'NUTRIÇÃO';
       
-      case 'DENTISTRY':
+      case 'dentistry':
        return 'DENTISTA';
 
       default:

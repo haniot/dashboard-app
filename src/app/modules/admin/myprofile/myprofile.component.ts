@@ -13,12 +13,15 @@ import { IUser } from 'app/shared/shared-models/users.models'
   styleUrls: ['./myprofile.component.scss']
 })
 export class MyprofileComponent implements OnInit {
-  private visibilityButtonSave: boolean;
-  private disabledButtonEdit: boolean;
-  private user: IUser;
-  private typeUser: string;// Admin or HealthProfessional
-  private healthAreaOptions = Object.keys(HealtArea);
+  visibilityButtonSave: boolean;
+  disabledButtonEdit: boolean;
+  user: IUser;
+  typeUser: string;// Admin or HealthProfessional
+  healthAreaOptions = Object.keys(HealtArea);
 
+  username: string;
+  email:string;
+  
   constructor(
     private adminService: AdminService,
     private healthService: HealthProfessionalService,

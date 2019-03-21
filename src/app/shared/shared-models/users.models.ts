@@ -18,8 +18,8 @@ export class Admin implements IUser {
 }
 
 export enum HealtArea {
-    NUTRITION = 'NUTRITION',
-    DENTISTRY = 'DENTISTRY'
+    nutrition = 'nutrition',
+    dentistry = 'dentistry'
 
 }
 

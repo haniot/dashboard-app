@@ -6,12 +6,15 @@ import { HaniotTableComponent } from './haniot-table/haniot-table.component';
 import { FormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { SharedPipesModule } from '../shared-pipes/shared-pipes.module';
+import { HaniotModalComponent } from './haniot-modal/haniot-modal.component';
+import { ModalService } from './haniot-modal/service/modal.service';
 
 @NgModule({
   declarations: [
     CardTopComponent,
     HaniotCardComponent,
     HaniotTableComponent,
+    HaniotModalComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +25,11 @@ import { SharedPipesModule } from '../shared-pipes/shared-pipes.module';
   exports: [
     CardTopComponent,
     HaniotCardComponent,
-    HaniotTableComponent
+    HaniotTableComponent,
+    HaniotModalComponent
+  ], 
+  providers: [
+    ModalService
   ]
 })
 export class SharedComponentsModule { }

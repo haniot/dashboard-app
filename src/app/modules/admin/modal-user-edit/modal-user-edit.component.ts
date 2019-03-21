@@ -16,13 +16,25 @@ export class ModalUserEditComponent{
   @Input() subtitle: string;
   @Output() onedit = new EventEmitter();
   @Input() typeUser: string;// Admin or HealthProfessional
-  private healthAreaOptions = Object.keys(HealtArea);
-  
+  healthAreaOptions = Object.keys(HealtArea);
+  username: string;
+  email:string;
   constructor() {   }
 
 
-  onSubmit(form) { 
-    this.onedit.emit(this.user);
+  onSubmit(form) {
+    const userForm = form.value ;
+    console.log(userForm);
+    let userSubmit = {};
+    Object.keys(userForm).forEach(key => {
+      console.log(key);
+      if(userForm[key] != this.user[key]){
+        userSubmit[key] = userForm[key];
+        console.log(key);
+      }
+    });
+    console.log('userSumit: ',userSubmit);
+    this.onedit.emit(userSubmit);
     form.reset();
     setTimeout(()=>{
       $("#buttonFechar").trigger('click');

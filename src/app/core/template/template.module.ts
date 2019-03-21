@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NotfoundComponent } from './page-not-found/page-not-found.component';
 import { AcessDeniedComponent } from './acess-denied/acess-denied.component';
+import { TemplateComponent } from './template-component/template.component';
 
 @NgModule({
   imports: [
@@ -18,12 +19,14 @@ import { AcessDeniedComponent } from './acess-denied/acess-denied.component';
     NavbarComponent,
     SidebarComponent,
     NotfoundComponent,
-    AcessDeniedComponent
+    AcessDeniedComponent,
+    TemplateComponent
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    TemplateComponent
   ]
 })
 export class TemplateModule { }

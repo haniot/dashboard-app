@@ -30,8 +30,8 @@ export class HaniotTableComponent {
   @Output() onedit = new EventEmitter();
   @Output() pagination = new EventEmitter();
 
-  private search: string;
-  private searchTime;
+  search: string;
+  searchTime;
 
   constructor(
     private authService: AuthService,
@@ -73,9 +73,15 @@ export class HaniotTableComponent {
       this.getAllUsers().
         then(users => {
           this.list = users;
-          this.list = this.list.filter((user) => {
-            return user.name.search(this.search) != -1;
-          });
+          try{
+            this.list = this.list.filter((user) => {
+              return user.name.search(this.search) != -1;
+            });
+          }catch(error){
+            this.list = this.list.filter((user) => {
+              return user.username.search(this.search) != -1;
+            });
+          }
         })
         .catch();
     }, 200);

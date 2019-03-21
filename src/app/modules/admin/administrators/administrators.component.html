@@ -3,19 +3,29 @@
     <div class="row">
       <div class="col-md-12">
         <haniot-card title="Lista de usuário administradores" subtitle="">
-          <haniot-table [list]="admins" (onremove)="getAllAdministrators()" (onedit)="editUser($event)" [userType]="'Admin'" (pagination)="paginationEvent($event)" [(length)]="length" [pageSize]="limit"></haniot-table>
+          <haniot-table [list]="admins" (onremove)="getAllAdministrators()" (onedit)="editUser($event)"
+            [userType]="'Admin'" (pagination)="paginationEvent($event)" [(length)]="length" [pageSize]="limit">
+          </haniot-table>
         </haniot-card>
       </div>
       <div class="col-md">
-        <button type="submit" class="btn btn-default" data-toggle="modal" data-target="#modalUser" (click)="cleanUserEdit()">
+        <button type="submit" class="btn btn-default" (click)="openModal()">
           Adicionar
           <i class="material-icons">add</i>
         </button>
-      </div>      
+      </div>
     </div>
   </div>
 </div>
 
-<app-modal-user [title]="'Criar usuário administrador'" (oncreate)="createAdmin($event)" [typeUser]="'Admin'"></app-modal-user>
+<haniot-modal [modalId]="'modalUser'">
+  <app-modal-user [title]="'Criar usuário administrador'" (onsubmit)="createAdmin($event)" [typeUser]="'Admin'">
+  </app-modal-user>
+</haniot-modal>
 
-<app-modal-user-edit [title]="'Editar usuário administrador'" (onedit)="editAdmin($event)" [user]="userEdit" [typeUser]="'Admin'"></app-modal-user-edit>
+<haniot-modal [modalId]="'modalUserEdit'">
+    <app-modal-user [title]="'Editar usuário administrador'" (onsubmit)="editAdmin($event)" [userId]="userEdit.id" [typeUser]="'Admin'"></app-modal-user>
+</haniot-modal>
+
+
+

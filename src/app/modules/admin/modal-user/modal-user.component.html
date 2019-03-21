@@ -1,87 +1,87 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="modalUser">
-  <div class="modal-dialog" role="document">
-    <div class="modal-haniot">
+<div class="modal-haniot">
 
-      <haniot-card [title]="title" [subtitle]="subtitle">
-        <form #formUser="ngForm" (ngSubmit)="onSubmit(formUser)">
-          <div class="form-group has-feedback"
-            [ngClass]="{'has-success': nomeDeUsuarioModel.valid,
-                          'has-error': nomeDeUsuarioModel.invalid && (nomeDeUsuarioModel.touched || nomeDeUsuarioModel.dirty)}">
-            <label for="username">Nome de usuário:</label>
-            <input type="text" class="form-control" id="username" required minlength="4" class="form-control"
-              type="text" name="username" #nomeDeUsuarioModel="ngModel" [(ngModel)]="username"
-              >
-            <span *ngIf="nomeDeUsuarioModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
-              aria-hidden="true"></span>
-            <span *ngIf="nomeDeUsuarioModel.invalid && (nomeDeUsuarioModel.touched || nomeDeUsuarioModel.dirty)">
-              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-              <span class="text-danger">Nome de usuário inválido.</span>
-            </span>
-          </div>
+  <haniot-card [title]="title" [subtitle]="subtitle">
+    <form [formGroup]="userForm">
+      <div class="form-group has-feedback"
+        [ngClass]="{'has-success': userForm.controls.username.valid,
+                          'has-error': userForm.controls.username.invalid && (userForm.controls.username.touched || userForm.controls.username.dirty)}">
+        <label for="username">Nome de usuário:</label>
+        <input type="text" class="form-control" formControlName="username" >
+        <span *ngIf="userForm.controls.username.valid" class="glyphicon glyphicon-ok form-control-feedback"
+          aria-hidden="true"></span>
+        <span
+          *ngIf="userForm.controls.username.invalid && (userForm.controls.username.touched || userForm.controls.username.dirty)">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          <span class="text-danger">Nome de usuário inválido.</span>
+        </span>
+      </div>
 
-          <div class="form-group has-feedback"
-            [ngClass]="{'has-success': nomeModel.valid,
-                          'has-error': nomeModel.invalid && (nomeModel.touched || nomeModel.dirty)}" *ngIf="typeUser == 'HealthProfessional'">
-            <label for="name">Nome:</label>
-            <input type="text" class="form-control" id="name" required minlength="4" class="form-control"
-              type="text" name="name" #nomeModel="ngModel" [(ngModel)]="name"
-              >
-            <span *ngIf="nomeModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
-              aria-hidden="true"></span>
-            <span *ngIf="nomeModel.invalid && (nomeModel.touched || nomeModel.dirty)">
-              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-              <span class="text-danger">Nome inválido.</span>
-            </span>
-          </div>
+      <div class="form-group has-feedback"
+        [ngClass]="{'has-success': userForm.controls.name.valid,
+                          'has-error': userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)}"
+        *ngIf="typeUser == 'HealthProfessional'">
+        <label for="name">Nome:</label>
+        <input type="text" class="form-control" formControlName="name" >
+        <span *ngIf="userForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback"
+          aria-hidden="true"></span>
+        <span
+          *ngIf="userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          <span class="text-danger">Nome inválido.</span>
+        </span>
+      </div>
 
-          <div class="form-group has-feedback" [ngClass]="{'has-success': emailModel.valid,
-            'has-error': emailModel.invalid && (emailModel.touched || emailModel.dirty)}">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" required minlength="4" class="form-control" type="text"
-              name="email" #emailModel="ngModel" [(ngModel)]="email" >
-            <span *ngIf="emailModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
-              aria-hidden="true"></span>
-            <span *ngIf="emailModel.invalid && (emailModel.touched || emailModel.dirty)">
-              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-              <span class="text-danger">E-mail inválido.</span>
-            </span>
-          </div>
-         
-          <div class="form-group has-feedback" [ngClass]="{'has-success': healthAreaModel.valid,
-            'has-error': healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)}" *ngIf="typeUser == 'HealthProfessional'">
-            <label for="healthArea">Área: </label>
-            <select name="healthArea" id="healthArea" class="form-control" required #healthAreaModel="ngModel" [(ngModel)]="health_area">
-              <option *ngFor="let area of healthAreaOptions; index as i" [value]="area">{{area | healthArea}}</option>
-            </select>
-            <span *ngIf="healthAreaModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
-              aria-hidden="true"></span>
-            <span *ngIf="healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)">
-              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-              <span class="text-danger">Área inválida.</span>
-            </span>
-          </div>
+      <div class="form-group has-feedback"
+        [ngClass]="{'has-success': userForm.controls.email.valid,
+            'has-error': userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)}">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" formControlName="email" >
+        <span *ngIf="userForm.controls.email.valid" class="glyphicon glyphicon-ok form-control-feedback"
+          aria-hidden="true"></span>
+        <span
+          *ngIf="userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          <span class="text-danger">E-mail inválido.</span>
+        </span>
+      </div>
 
-          <div class="form-group" [ngClass]="{'has-success': passwordModel.valid,
-             'has-error': passwordModel.invalid && (passwordModel.touched || passwordModel.dirty)}">
-             <label for="password">Senha:</label>
-            <input type="password" class="form-control" id="password" required minlength="4" name="password"
-              #passwordModel="ngModel" [(ngModel)]="password" >
-            <span class="text-danger"
-              *ngIf="passwordModel.invalid && (passwordModel.touched || passwordModel.dirty)">Campo obrigatório.</span>
-          </div>
-          <div class="row container-fluid">
-            <div class="col-md">
-              <button type="submit" class="btn btn-default" [disabled]="formUser.invalid">Salvar</button>
-            </div>
-            <div class="col-md">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-            </div>
-          </div>
-        </form>
-      </haniot-card>
+      <div class="form-group has-feedback"
+        [ngClass]="{'has-success': userForm.controls.health_area.valid,
+            'has-error': userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)}"
+        *ngIf="typeUser == 'HealthProfessional'">
+        <label for="healthArea">Área: </label>
+        <select class="form-control" formControlName="health_area" >
+          <option *ngFor="let area of healthAreaOptions; index as i" [value]="area">{{area | healthArea}}</option>
+        </select>
+        <span *ngIf="userForm.controls.health_area.valid" class="glyphicon glyphicon-ok form-control-feedback"
+          aria-hidden="true"></span>
+        <span
+          *ngIf="userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          <span class="text-danger">Área inválida.</span>
+        </span>
+      </div>
 
+      <div class="form-group"
+        [ngClass]="{'has-success': userForm.controls.password.valid,
+             'has-error': userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)}"
+             *ngIf="!userId">
+        <label for="password">Senha:</label>
+        <input type="password" class="form-control" formControlName="password" >
+        <span class="text-danger"
+          *ngIf="userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)">Campo
+          obrigatório.</span>
+      </div>
+      <div class="row container-fluid">
+        <div class="col-md">
+          <button type="submit" class="btn btn-default" [disabled]="!userForm.valid"
+            (click)="onSubmit()">Salvar</button>
+        </div>
+        <div class="col-md">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </form>
+  </haniot-card>
 
-
-    </div>
-  </div>
 </div>

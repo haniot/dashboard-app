@@ -13,7 +13,11 @@ import { NotfoundComponent } from 'app/core/template/page-not-found/page-not-fou
       { path: 'auth/login', component: LoginComponent },
       { path: 'auth/change', component: ChangePasswordComponent },
       { path: 'acess-denied', component: AcessDeniedComponent },
-      { path: 'page-not-found', component: NotfoundComponent }
+      { path: 'page-not-found', component: NotfoundComponent },
+      // {
+      //   path: 'pilotstudies',
+      //   loadChildren: 'app/modules/pilot-study/pilot-study.module#PilotStudyModule'
+      // }
     ])
   ],
   declarations: [],

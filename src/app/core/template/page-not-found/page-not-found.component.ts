@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./page-not-found.component.scss']
 })
 export class NotfoundComponent implements OnInit {
-  private time = 5000;  
+  time = 5000;  
 
   constructor(private router: Router) { }
 

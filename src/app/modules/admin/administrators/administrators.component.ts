@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from '../services/admin.service';
 import { IUser, Admin } from 'app/shared/shared-models/users.models';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 
 
 @Component({
@@ -13,18 +14,19 @@ import { IUser, Admin } from 'app/shared/shared-models/users.models';
   styleUrls: ['./administrators.component.scss']
 })
 export class AdministratorsComponent {
-  private userEdit: IUser = new Admin();
-  private admins: Array<IUser> = [];
-  private errorCredentials = false;
+  userEdit: IUser = new Admin();
+  admins: Array<IUser> = [];
+  errorCredentials = false;
 
   /* Controles de paginação */
-  private page: number = 1;
-  private limit: number = 5;
-  private length: number;
+  page: number = 1;
+  limit: number = 5;
+  length: number;
 
   constructor(
     private adminService: AdminService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private modalService: ModalService) {
     this.getAllAdministrators();
     /* Verificando a quantidade total de cuidadores cadastrados */
     this.calcLengthAdministrators();
@@ -49,7 +51,8 @@ export class AdministratorsComponent {
     this.adminService.create(event)
       .then(() => {
         this.getAllAdministrators();
-        this.toastr.success('Administrator criado!');
+        this.toastr.info('Administrator criado!');
+        this.modalService.close('modalUser');
       })
       .catch((errorResponse: HttpErrorResponse) => {
         this.toastr.error('Não foi possível criar administrador!');
@@ -64,9 +67,11 @@ export class AdministratorsComponent {
     this.adminService.update(event)
       .then(() => {
         this.getAllAdministrators();
-        this.toastr.success('Administrator atualizado!');
+        this.toastr.info('Administrator atualizado!');
+        this.modalService.close('modalUserEdit');
       })
       .catch((errorResponse: HttpErrorResponse) => {
+        this.modalService.actionNotExecuted('modalUserEdit',event);
         this.toastr.error('Não foi possível atualizar administrador!');
           if (errorResponse.status === 401) {
             this.errorCredentials = true;
@@ -75,11 +80,13 @@ export class AdministratorsComponent {
       });
   }
 
-  cleanUserEdit(){
+  openModal(){
+    this.modalService.open('modalUser');
     this.userEdit = new Admin();
   }
 
   editUser(event){
+    this.modalService.open('modalUserEdit');
     this.userEdit = event;
   }
 
@@ -92,9 +99,11 @@ export class AdministratorsComponent {
   calcLengthAdministrators(){
     /** Verificando quantidade de cuidadores cadastrados */
     this.adminService.getAll()
-      .then(caregivers => {
-        this.length = caregivers.length;
+      .then(healthprofessionals => {
+        this.length = healthprofessionals.length;
       })
-      .catch();
+      .catch(error => {
+        console.log('Error ao buscar profissionais de saúde!', error);
+      });
   }
 }

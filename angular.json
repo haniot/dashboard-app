@@ -24,22 +24,20 @@
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/demo.css",
-              "src/assets/datatables.net-dt/css/jquery.dataTables.css",
-              "node_modules/ngx-easy-table/style.scss",
-              "src/assets/css/ng2-select.css",
-              "node_modules/@ng-select/ng-select/themes/default.theme.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
               "node_modules/popper.js/dist/umd/popper.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
               "node_modules/arrive/src/arrive.js",
               "node_modules/moment/moment.js",
               "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
-              "node_modules/bootstrap-notify/bootstrap-notify.js",
-              "node_modules/chartist/dist/chartist.js",
-              "src/assets/datatables.net/js/jquery.dataTables.js"
+              "node_modules/bootstrap-notify/bootstrap-notify.js"
             ]
           },
           "configurations": {
@@ -98,18 +96,12 @@
               "node_modules/arrive/src/arrive.js",
               "node_modules/moment/moment.js",
               "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
-              "node_modules/bootstrap-notify/bootstrap-notify.js",
-              "node_modules/chartist/dist/chartist.js",
-              "src/assets/datatables.net/js/jquery.dataTables.js"
+              "node_modules/bootstrap-notify/bootstrap-notify.js"
             ],
             "styles": [
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "src/assets/scss/material-dashboard.scss",
-              "src/assets/css/demo.css",
-              "src/assets/datatables.net-dt/css/jquery.dataTables.css",
-              "node_modules/ngx-easy-table/style.scss",
-              "src/assets/css/ng2-select.css",
-              "node_modules/@ng-select/ng-select/themes/default.theme.css"
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "assets": [
               "src/assets",

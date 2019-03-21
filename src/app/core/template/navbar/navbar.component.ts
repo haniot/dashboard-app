@@ -12,12 +12,12 @@ import { UserService } from 'app/modules/admin/services/users.service';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    private listTitles: any[];
+    listTitles: any[];
     location: Location;
     mobile_menu_visible: any = 0;
-    private toggleButton: any;
-    private sidebarVisible: boolean;
-    private userName: String = "";
+    toggleButton: any;
+    sidebarVisible: boolean;
+    userName: String = "";
 
     constructor(
         location: Location,
@@ -137,8 +137,8 @@ export class NavbarComponent implements OnInit {
     getUserName(){
         this.userService.getUserById(atob(localStorage.getItem('user')))
             .then(user => {
-                if(user && user.name){
-                    this.userName = user.name;
+                if(user){
+                    this.userName = user.name?user.name:user.username;
                 }
             })
             .catch( error => {

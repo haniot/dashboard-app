@@ -48,6 +48,7 @@ const configSideBar = [
   },
   { title: 'Administradores', scopes: ['admin:create', 'admin:deleteAll', 'admin:readAll', 'admin:updateAll'] },
   { title: 'P. de Saúde', scopes: ['healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll' , 'healthprofessional:updateAll'] },
+  { title: 'Estudos Pilotos', scopes: []},//scopes: ['pilotstudy:create', 'pilotstudy:readAll', 'pilotstudy:updateAll' , 'pilotstudy:deleteAll'] 
 ];
 
 @Component({

@@ -11,7 +11,7 @@
               <label for="username">Nome de usuário:</label>
               <input type="text" class="form-control" id="username" required minlength="4" class="form-control"
                 type="text" name="username" #nomeDeUsuarioModel="ngModel"
-                [(ngModel)]="user==undefined?username:user.username" placeholder="Nome de usuário..." [disabled]="visibilityButtonSave?disabled:'enabled'">
+                [(ngModel)]="user==undefined?username:user.username" placeholder="Nome de usuário..." [disabled]="visibilityButtonSave?'disabled':'enabled'">
               <span *ngIf="nomeDeUsuarioModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
                 aria-hidden="true"></span>
               <span *ngIf="nomeDeUsuarioModel.invalid && (nomeDeUsuarioModel.touched || nomeDeUsuarioModel.dirty)">
@@ -42,7 +42,7 @@
               <label for="email">Email:</label>
               <input type="email" class="form-control" id="emailEdit" required minlength="4" type="text" name="email"
                 #emailModelEdit="ngModel" [(ngModel)]="user==undefined?email:user.email" placeholder="Email"
-                [disabled]="visibilityButtonSave?disabled:'enabled'">
+                [disabled]="visibilityButtonSave?'disabled':'enabled'">
               <span *ngIf="emailModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
                 aria-hidden="true"></span>
               <span
