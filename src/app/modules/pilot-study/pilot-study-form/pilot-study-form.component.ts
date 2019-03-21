@@ -52,7 +52,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         .then(res => {
           this.pilotStudyForm.setValue(res);
         }).catch(error => {
-          console.error(error);
+          console.error('Não foi possível buscar estudo piloto!',error);
         })
     }
   }
@@ -82,14 +82,12 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     } else {
       this.pilotStudyService.update(form)
         .then(pilotStudy => {
-          console.log('Retorno: ', pilotStudy);
           this.toastService.info('Estudo Piloto atualizado!');
         })
         .catch(error => {
           this.toastService.error('Não foi possível atualizar estudo piloto!');
         });
     }
-    console.log(form);
   }
 
   ngOnChanges() {//Caso o componente recba o id ele carrega o form com o estudo piloto correspondente.

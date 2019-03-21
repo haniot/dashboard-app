@@ -39,7 +39,15 @@ export class HealthProfessionalService {
   }
 
   update(healthprofessionals: HealthProfessional): Promise<boolean> {
-    return this.http.patch<any>(`${environment.api_url}/users/healthprofessionals/${healthprofessionals.id}`, healthprofessionals)
-      .toPromise();
+    return this.getById(healthprofessionals.id)
+      .then(healthprofessionalsOld => {
+        Object.keys(healthprofessionalsOld).forEach(key => {
+          if (healthprofessionalsOld[key] == healthprofessionals[key] && key != 'id') {
+            delete healthprofessionals[key];
+          }
+        });
+        return this.http.patch<any>(`${environment.api_url}/users/healthprofessionals/${healthprofessionals.id}`, healthprofessionals)
+          .toPromise();
+      });
   }
 }

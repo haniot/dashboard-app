@@ -16,17 +16,17 @@ export class AdminService {
 
   getAll(page?: number, limit?: number): Promise<IUser[]> {
     let myParams = new HttpParams();
-    
-    if(page && limit){
+
+    if (page && limit) {
       myParams = new HttpParams()
-      .set("page", String(page))
-      .set("limit", String(limit))
-      .set("sort", 'created_a');
-    }   
+        .set("page", String(page))
+        .set("limit", String(limit))
+        .set("sort", 'created_a');
+    }
 
     const url = `${environment.api_url}/users/admins`;
 
-    return this.http.get<any>(url,{params: myParams})
+    return this.http.get<any>(url, { params: myParams })
       .toPromise();
   }
 
@@ -36,7 +36,15 @@ export class AdminService {
   }
 
   update(administrator: Admin): Promise<boolean> {
-    return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
-      .toPromise();
+    return this.getById(administrator.id)
+      .then(adminOld => {
+        Object.keys(adminOld).forEach(key => {
+          if (adminOld[key] == administrator[key] && key != 'id') {
+            delete administrator[key];
+          }
+        });
+        return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
+          .toPromise();
+      });
   }
 }

@@ -16,17 +16,17 @@ export class PilotStudyService {
 
   getAll(page?: number, limit?: number): Promise<PilotStudy[]> {
     let myParams = new HttpParams();
-    
-    if(page && limit){
+
+    if (page && limit) {
       myParams = new HttpParams()
-      .set("page", String(page))
-      .set("limit", String(limit))
-      .set("sort", 'created_a');
-    } 
+        .set("page", String(page))
+        .set("limit", String(limit))
+        .set("sort", 'created_a');
+    }
 
     const url = `${environment.api_url}/pilotstudies`;
 
-    return this.http.get<any>(url, {params: myParams})
+    return this.http.get<any>(url, { params: myParams })
       .toPromise();
   }
 
@@ -36,8 +36,16 @@ export class PilotStudyService {
   }
 
   update(pilotstudy: PilotStudy): Promise<boolean> {
-    return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudy.id}`, pilotstudy)
-      .toPromise();
+    return this.getById(pilotstudy.id)
+      .then(pilotstudyOld => {
+        Object.keys(pilotstudyOld).forEach(key => {
+          if (pilotstudyOld[key] == pilotstudy[key] && key != 'id') {
+            delete pilotstudy[key];
+          }
+        });
+        return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudy.id}`, pilotstudy)
+          .toPromise();
+      });
   }
 
   remove(pilotstudyId: string): Promise<boolean> {

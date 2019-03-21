@@ -8,7 +8,7 @@
               [ngClass]="{'has-success': pilotStudyForm.controls.name.valid,
           'has-error': pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)}">
               <label for="name">
-                Nome
+                Nome:
               </label>
               <input class="form-control" type="text" formControlName="name" id="name">
               <span *ngIf="pilotStudyForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback"

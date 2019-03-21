@@ -48,7 +48,6 @@ export class ModalUserComponent implements OnInit, OnChanges {
   onSubmit() {
     const form = this.userForm.getRawValue();
     this.onsubmit.emit(form);
-    this.userForm.reset();
   }
 
   createForm() {
