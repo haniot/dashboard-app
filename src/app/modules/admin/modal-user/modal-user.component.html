@@ -3,20 +3,6 @@
   <haniot-card [title]="title" [subtitle]="subtitle">
     <form [formGroup]="userForm">
       <div class="form-group has-feedback"
-        [ngClass]="{'has-success': userForm.controls.username.valid,
-                          'has-error': userForm.controls.username.invalid && (userForm.controls.username.touched || userForm.controls.username.dirty)}">
-        <label for="username">Nome de usuário:</label>
-        <input type="text" class="form-control" formControlName="username" >
-        <span *ngIf="userForm.controls.username.valid" class="glyphicon glyphicon-ok form-control-feedback"
-          aria-hidden="true"></span>
-        <span
-          *ngIf="userForm.controls.username.invalid && (userForm.controls.username.touched || userForm.controls.username.dirty)">
-          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-          <span class="text-danger">Nome de usuário inválido.</span>
-        </span>
-      </div>
-
-      <div class="form-group has-feedback"
         [ngClass]="{'has-success': userForm.controls.name.valid,
                           'has-error': userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)}"
         *ngIf="typeUser == 'HealthProfessional'">
@@ -78,7 +64,7 @@
             (click)="onSubmit()">Salvar</button>
         </div>
         <div class="col-md">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="close()">Fechar</button>
         </div>
       </div>
     </form>

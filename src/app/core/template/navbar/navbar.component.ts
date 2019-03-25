@@ -138,7 +138,7 @@ export class NavbarComponent implements OnInit {
         this.userService.getUserById(atob(localStorage.getItem('user')))
             .then(user => {
                 if(user){
-                    this.userName = user.name?user.name:user.username;
+                    this.userName = user.name?user.name:user.email;
                 }
             })
             .catch( error => {

@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
-import { HealtArea } from 'app/shared/shared-models/users.models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health-professional.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { HealtArea } from '../models/users.models';
 
 @Component({
   selector: 'app-modal-user',
@@ -20,7 +20,6 @@ export class ModalUserComponent implements OnInit, OnChanges {
   userForm: FormGroup;
   @Input() userId: string;
 
-  username: string = '';
   name: string = '';
   email: string = '';
   password: string = '';
@@ -38,23 +37,23 @@ export class ModalUserComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.createForm();
     this.loadUserInForm();
-    this.modalService.eventActionNotExecuted.subscribe((user) => {
-      this.userId = user.id;
-      this.createForm();
-      this.loadUserInForm();
+    this.modalService.eventActionNotExecuted.subscribe((res) => {
+      this.createFormForUser(res.user);
+      this.userForm.setValue(res.user);
+      console.log(res.error);
     });
   }
 
   onSubmit() {
     const form = this.userForm.getRawValue();
     this.onsubmit.emit(form);
+    this.userForm.reset();
   }
 
   createForm() {
     this.userForm = this.fb.group({
       id: [''],
       name: ['', Validators.required],
-      username: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
       health_area: ['', Validators.required]
@@ -68,7 +67,13 @@ export class ModalUserComponent implements OnInit, OnChanges {
     }
   }
 
-  loadUserInForm() {
+  createFormForUser(user: any){
+    this.userId = user.id;
+    this.typeUser =  user.health_area?'HealthProfessional':'Admin';
+    this.createForm();
+  }
+
+  loadUserInForm(user?: any) {
     if (this.userId) {
       switch (this.typeUser) {
         case 'Admin':
@@ -96,5 +101,9 @@ export class ModalUserComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.createForm();
     this.loadUserInForm();
+  }
+
+  close(){
+    
   }
 }

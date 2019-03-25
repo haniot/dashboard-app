@@ -30,17 +30,18 @@ const routes = [{
   children: [
     {
       path: 'pilotstudies',
-      component: PilotStudyComponentComponent
+      component: PilotStudyComponentComponent,
+      data: { scope: "pilotstudy:readAll pilotstudy:delete pilotstudy:deleteAll"}
     },
     { 
       path: 'pilotstudies/new',
       component: PilotStudyFormComponent,
-      data: { scope: ""}
+      data: { scope: "pilotstudy:create"}
     },
     { 
       path: 'pilotstudies/:pilotStudyId',
       component: PilotStudyFormComponent,
-      data: { scope: ""}
+      data: { scope: "pilotstudy:update pilotstudy:updateAll"}
     }
   ]
 }];

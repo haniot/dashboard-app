@@ -74,6 +74,12 @@
                 <p>Estudos Pilotos</p>
             </a>
         </li>
+        <li routerLinkActive="active" class="nav-item">
+            <a class="nav-link" [routerLink]="['/patients']" *ngIf="verifyScopes('Pacientes')">
+                <i class="material-icons">face</i>
+                <p>Pacientes</p>
+            </a>
+        </li>
     </ul>
 
 </div>

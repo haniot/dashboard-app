@@ -3,10 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 
-import { HealthProfessional } from 'app/shared/shared-models/users.models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PilotStudyService } from '../services/pilot-study.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
+import { HealthProfessional } from 'app/modules/admin/models/users.models';
 
 @Component({
   selector: 'pilot-study-form',

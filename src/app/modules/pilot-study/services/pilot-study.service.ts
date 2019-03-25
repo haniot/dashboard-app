@@ -9,7 +9,7 @@ export class PilotStudyService {
   constructor(private http: HttpClient) { }
 
 
-  getById(id: string): Promise<any> {
+  getById(id: string): Promise<PilotStudy> {
     return this.http.get<any>(`${environment.api_url}/pilotstudies/${id}`)
       .toPromise();
   }
@@ -39,10 +39,12 @@ export class PilotStudyService {
     return this.getById(pilotstudy.id)
       .then(pilotstudyOld => {
         Object.keys(pilotstudyOld).forEach(key => {
-          if (pilotstudyOld[key] == pilotstudy[key] && key != 'id') {
+          
+          if (pilotstudyOld[key].toString() == pilotstudy[key].toString() && key != 'id') {
             delete pilotstudy[key];
           }
         });
+        console.log('PilotStudyUpdate: ', pilotstudy);
         return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudy.id}`, pilotstudy)
           .toPromise();
       });

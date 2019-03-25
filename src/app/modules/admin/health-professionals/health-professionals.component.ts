@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { HealthProfessionalService } from '../services/health-professional.service';
-import { IUser, HealthProfessional } from 'app/shared/shared-models/users.models';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { IUser, HealthProfessional } from '../models/users.models';
 
 @Component({
   selector: 'health-professionals',
@@ -25,7 +25,7 @@ export class HealthProfessionalComponent {
     private toastr: ToastrService,
     private modalService: ModalService) {
     this.getAllHealthProfessionals();
-    /* Buscando todos profissionais de saúde cadastrados para saber a quantidade total */
+    /* Buscando todos profissionais de saúde cadastrados para saber a quantidade total, o length é utilizado na paginação */
     this.getLengthHealthProfessionals();
   }
 
@@ -49,11 +49,13 @@ export class HealthProfessionalComponent {
           this.modalService.close('modalUser');
         } else {
           this.toastr.error('Não foi possível criar profissional de saúde!');
+          this.modalService.actionNotExecuted('modalUser',event);
         }
       })
       .catch(error => {
-        console.log('Erro ao criar profissional de saúde: ', error);
         this.toastr.error('Não foi possível criar profissional de saúde!');
+        this.modalService.actionNotExecuted('modalUser',event,error.error);
+        console.log('Erro ao criar profissional de saúde: ', error);
       });
   }
 
@@ -66,12 +68,13 @@ export class HealthProfessionalComponent {
           this.modalService.close('modalUserEdit');          
         } else {
           this.toastr.error('Não foi possível atualizar profissional de saúde!');
+          this.modalService.actionNotExecuted('modalUserEdit',event);
         }
       })
       .catch(error => {
-        this.modalService.actionNotExecuted('modalUserEdit',event);
-        console.log('Erro ao atualizar profissional de saúde: ', error);
+        this.modalService.actionNotExecuted('modalUserEdit',event,error.error);
         this.toastr.error('Não foi possível atualizar profissional de saúde!');
+        console.log('Erro ao atualizar profissional de saúde: ', error);
       });
   }
 

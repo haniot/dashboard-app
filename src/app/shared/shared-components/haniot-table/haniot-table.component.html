@@ -10,7 +10,6 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Nome de usuário</th>
         <th *ngIf="userType == 'HealthProfessional'">Nome</th>
         <th>Email</th>
         <th *ngIf="userType == 'HealthProfessional'">Área</th>
@@ -20,7 +19,6 @@
     <tbody>
       <tr *ngFor="let user of list; index as i">
         <td>{{getIndex(i)}}</td>
-        <td>{{user.username}}</td>
         <td *ngIf="userType == 'HealthProfessional'">{{user.name}}</td>
         <td>{{user.email}}</td>
         <td *ngIf="userType == 'HealthProfessional'">{{user.health_area | healthArea}}</td>

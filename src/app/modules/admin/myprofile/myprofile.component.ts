@@ -4,8 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health-professional.service';
-import { HealtArea } from 'app/shared/shared-models/users.models';
-import { IUser } from 'app/shared/shared-models/users.models'
+import { IUser, HealtArea } from '../models/users.models';
+
 
 @Component({
   selector: 'app-myprofile',

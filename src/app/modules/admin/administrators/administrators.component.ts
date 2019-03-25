@@ -4,8 +4,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from '../services/admin.service';
-import { IUser, Admin } from 'app/shared/shared-models/users.models';
+
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { IUser, Admin } from '../models/users.models';
 
 
 @Component({
@@ -35,16 +36,16 @@ export class AdministratorsComponent {
 
   getAllAdministrators() {
     this.adminService.getAll(this.page, this.limit)
-      .then( admins => {
+      .then(admins => {
         this.admins = admins;
         this.calcLengthAdministrators();
       })
-      .catch((errorResponse: HttpErrorResponse) => {        
+      .catch((errorResponse: HttpErrorResponse) => {
         if (errorResponse.status === 401) {
           this.errorCredentials = true;
-        }      
-    });
-      
+        }
+      });
+
   }
 
   createAdmin(event) {
@@ -55,11 +56,12 @@ export class AdministratorsComponent {
         this.modalService.close('modalUser');
       })
       .catch((errorResponse: HttpErrorResponse) => {
+        this.modalService.actionNotExecuted('modalUser',event,errorResponse.error);
         this.toastr.error('Não foi possível criar administrador!');
-          if (errorResponse.status === 401) {
-            this.errorCredentials = true;
-          }
-        
+        if (errorResponse.status === 401) {
+          this.errorCredentials = true;
+        }
+
       });
   }
 
@@ -71,32 +73,32 @@ export class AdministratorsComponent {
         this.modalService.close('modalUserEdit');
       })
       .catch((errorResponse: HttpErrorResponse) => {
-        this.modalService.actionNotExecuted('modalUserEdit',event);
+        this.modalService.actionNotExecuted('modalUserEdit', event,errorResponse.error);
         this.toastr.error('Não foi possível atualizar administrador!');
-          if (errorResponse.status === 401) {
-            this.errorCredentials = true;
-          }
-        
+        if (errorResponse.status === 401) {
+          this.errorCredentials = true;
+        }
+
       });
   }
 
-  openModal(){
+  openModal() {
     this.modalService.open('modalUser');
     this.userEdit = new Admin();
   }
 
-  editUser(event){
+  editUser(event) {
     this.modalService.open('modalUserEdit');
     this.userEdit = event;
   }
 
-  paginationEvent(event){
+  paginationEvent(event) {
     this.page = event.page;
     this.limit = event.limit;
     this.getAllAdministrators();
   }
 
-  calcLengthAdministrators(){
+  calcLengthAdministrators() {
     /** Verificando quantidade de cuidadores cadastrados */
     this.adminService.getAll()
       .then(healthprofessionals => {

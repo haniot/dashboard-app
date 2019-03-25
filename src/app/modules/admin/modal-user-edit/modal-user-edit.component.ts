@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import * as $ from 'jquery';
-import { IUser, HealtArea } from 'app/shared/shared-models/users.models';
+import { IUser, HealtArea } from '../models/users.models';
 
 
 @Component({

@@ -14,7 +14,6 @@ import { SharedModule } from 'app/shared/shared.module';
 import { PilotStudyService } from './services/pilot-study.service';
 import { PilotStudyTableComponent } from './pilot-study-table/pilot-study-table.component';
 import { PilotStudyComponentComponent } from './pilot-study-component/pilot-study-component.component';
-import { ModalEventService } from './services/modal-event.service';
 import { RouterModule } from '@angular/router';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PilotStudyRoutingModule } from './pilot-study-routing/pilot-study-routing.module';
@@ -44,7 +43,6 @@ import { ViewHealthProfessionalComponent } from './view-health-professional/view
   ],
   providers:[
     PilotStudyService,
-    ModalEventService,
     MatDatepickerModule
   ]
 })

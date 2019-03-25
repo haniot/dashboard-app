@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { HealthProfessional } from 'app/shared/shared-models/users.models';
+
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import { PilotStudyService } from '../services/pilot-study.service';
+import { HealthProfessional } from 'app/modules/admin/models/users.models';
 
 @Component({
   selector: 'view-health-professional',
@@ -10,7 +11,7 @@ import { PilotStudyService } from '../services/pilot-study.service';
 })
 export class ViewHealthProfessionalComponent implements OnChanges{
 
-  @Input() pilotstudyId: string;
+  @Input() pilotstudyid: string;
   healthProfessionals: Array<HealthProfessional>;
 
   constructor(
@@ -22,7 +23,7 @@ export class ViewHealthProfessionalComponent implements OnChanges{
   }
 
   ngOnChanges(){
-    this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotstudyId)
+    this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotstudyid)
       .then( healthprofessionals => {
         this.healthProfessionals = healthprofessionals;
       })

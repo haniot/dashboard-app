@@ -46,7 +46,7 @@
                 </span>
               </div>
 
-              
+
 
               <div class="form-group has-feedback col-md"
                 [ngClass]="{'has-success': pilotStudyForm.controls.end.valid,
@@ -111,7 +111,10 @@
               </div>
 
               <div class="col-md">
-                <button type="button" class="btn btn-danger" (click)="onBack()">Voltar</button>
+                <button type="button" class="btn btn-danger" (click)="onBack()">
+                  <i class="material-icons">arrow_back</i>
+                  Voltar
+                </button>
               </div>
             </div>
           </form>

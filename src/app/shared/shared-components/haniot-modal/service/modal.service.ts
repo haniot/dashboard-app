@@ -1,4 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
+
+import { Error } from 'app/shared/shared-models/error'
 declare var $ : any;
 
 @Injectable()
@@ -16,8 +18,8 @@ export class ModalService {
     $('#'+id).modal('hide');
   }
 
-  actionNotExecuted(id: string,user: any){
+  actionNotExecuted(id: string,user: any, error?: Error){
     $('#'+id).modal('show');
-    this.eventActionNotExecuted.emit(user);
+    this.eventActionNotExecuted.emit({user, error});
   }
 }

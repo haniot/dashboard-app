@@ -1,20 +1,14 @@
 export interface IUser {
-
     id: string;
-    username: string;
     email: string;
     name?: string;
     //health_area?: HealtArea;
     health_area?: string;
-
 }
 
 export class Admin implements IUser {
-
     id: string;
-    username: string;
     email: string;
-
 }
 
 export enum HealtArea {
@@ -25,9 +19,8 @@ export enum HealtArea {
 
 export class HealthProfessional implements IUser {
     id: string;
-    username: string;
-    email: string;
     name: string;
+    email: string;
     //health_area: HealtArea;
     health_area: string;
 

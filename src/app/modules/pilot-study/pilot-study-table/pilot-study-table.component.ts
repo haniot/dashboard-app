@@ -21,9 +21,7 @@ export class PilotStudyTableComponent implements OnInit {
   page: number = 1;
   limit: number = 5;
   length: number;
-
-  @Output() onedit = new EventEmitter();
-    
+   
   list: Array<PilotStudy>;
   search: string;
   searchTime;
@@ -81,10 +79,6 @@ export class PilotStudyTableComponent implements OnInit {
     else {
       return index + Math.pow(size, 1 - 1);
     }
-  }
-
-  editStudy(id: string){
-    this.onedit.emit(id);
   }
 
   removeStudy(id: string){

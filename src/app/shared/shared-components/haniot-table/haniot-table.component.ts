@@ -7,7 +7,8 @@ import { AuthService } from 'app/security/auth/services/auth.service';
 import { AdminService } from 'app/modules/admin/services/admin.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
 import { UserService } from 'app/modules/admin/services/users.service';
-import { IUser } from 'app/shared/shared-models/users.models';
+import { IUser } from 'app/modules/admin/models/users.models';
+
 
 @Component({
   selector: 'haniot-table',
@@ -79,7 +80,7 @@ export class HaniotTableComponent {
             });
           }catch(error){
             this.list = this.list.filter((user) => {
-              return user.username.search(this.search) != -1;
+              return user.email.search(this.search) != -1;
             });
           }
         })

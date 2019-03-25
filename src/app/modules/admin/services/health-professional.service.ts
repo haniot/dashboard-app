@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
-import { HealthProfessional } from 'app/shared/shared-models/users.models';
+import { HealthProfessional } from '../models/users.models';
+
 @Injectable()
 
 export class HealthProfessionalService {
@@ -17,18 +18,17 @@ export class HealthProfessionalService {
 
   getAll(page?: number, limit?: number): Promise<HealthProfessional[]> {
     let myParams = new HttpParams();
-    let options = {};
-
+    
     if (page && limit) {
-      myParams.set("page", String(page));
-      myParams.set("limit", String(limit));
-      myParams.set("sort", 'created_a');
-      options = { params: myParams };
+      myParams = new HttpParams()
+        .set("page", String(page))
+        .set("limit", String(limit))
+        .set("sort", 'created_a');
     }
 
     const url = `${environment.api_url}/users/healthprofessionals`;
 
-    return this.http.get<any>(url, options)
+    return this.http.get<any>(url, { params: myParams })
       .toPromise();
 
   }

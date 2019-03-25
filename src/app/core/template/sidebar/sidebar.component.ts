@@ -43,12 +43,25 @@ export const ROUTES: RouteInfo[] = [
 const configSideBar = [
   { title: 'Dashboard', scopes: [] },
   {
-    title: 'Usuários', scopes: ['admin:create', 'admin:deleteAll', 'admin:readAll', 'admin:updateAll',
+    title: 'Usuários',
+    scopes: ['admin:create', 'admin:deleteAll', 'admin:readAll', 'admin:updateAll',
       'healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll', 'healthprofessional:updateAll']
   },
-  { title: 'Administradores', scopes: ['admin:create', 'admin:deleteAll', 'admin:readAll', 'admin:updateAll'] },
-  { title: 'P. de Saúde', scopes: ['healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll' , 'healthprofessional:updateAll'] },
-  { title: 'Estudos Pilotos', scopes: []},//scopes: ['pilotstudy:create', 'pilotstudy:readAll', 'pilotstudy:updateAll' , 'pilotstudy:deleteAll'] 
+  {
+    title: 'Administradores',
+    scopes: ['admin:create', 'admin:deleteAll', 'admin:readAll', 'admin:updateAll']
+  },
+  {
+    title: 'P. de Saúde',
+    scopes: ['healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll' , 'healthprofessional:updateAll'] },
+  {
+    title: 'Estudos Pilotos',
+    scopes: ['pilotstudy:create', 'pilotstudy:readAll', 'pilotstudy:updateAll' , 'pilotstudy:deleteAll']
+  },
+  {
+    title: 'Pacientes',
+    scopes: []//'patient:create', 'patient:readAll', 'patient:updateAll' , 'patient:deleteAll'
+  }
 ];
 
 @Component({
