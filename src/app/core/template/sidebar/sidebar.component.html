@@ -1,0 +1,85 @@
+<div class="logo">
+    <a [routerLink]="['/dashboard']" class="simple-text">
+        <div class="logo-img">
+            <img src="/assets/img/haniot/silhueta.png" />
+        </div>
+    </a>
+</div>
+<div class="sidebar-wrapper">
+    <div *ngIf="isMobileMenu()">
+        <form class="navbar-form">
+            <span class="bmd-form-group">
+                <div class="input-group no-border">
+                    <input type="text" value="" class="form-control" placeholder="Search...">
+                    <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </span>
+        </form>
+        <ul class="nav navbar-nav nav-mobile-menu">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span id="userName">{{userName}}.</span><i class="material-icons">settings</i>
+
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+
+                    <a class="dropdown-item background-green" href="javascript:void(0);"
+                        [routerLink]="['/myprofile']">Meus
+                        dados</a>
+
+                    <a class="dropdown-item background-green" href="javascript:void(0);" (click)="logout()">Sair</a>
+
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <ul class="nav">
+        <li routerLinkActive="active" class="nav-item">
+            <a class="nav-link" [routerLink]="['/dashboard']" *ngIf="verifyScopes('Dashboard')">
+                <i class="material-icons">dashboard</i>
+                <p>Dashboard</p>
+            </a>
+        </li>
+        <li routerLinkActive="active" class="nav-item" *ngIf="verifyScopes('Usuários')">
+            <a class="nav-link" href="#pageSubmenu"  data-toggle="collapse" aria-expanded="false" (click)="onclickMenuUser()">
+                <p>
+                    Usuários
+                    <i class="material-icons">{{iconUserMenu}}</i>
+                </p>
+                
+            </a>
+            <ul class="collapse list-unstyled submenu" id="pageSubmenu" >
+                <li routerLinkActive="active" class="nav-subitem">
+                    <a class="nav-link" [routerLink]="['/administrators']" *ngIf="verifyScopes('Administradores')">
+                        <i class="material-icons">supervisor_account</i>
+                        <p>Administradores</p>
+                    </a>
+                </li>
+                <li routerLinkActive="active" class="nav-subitem">
+                        <a class="nav-link" [routerLink]="['/healthprofessionals']" *ngIf="verifyScopes('P. de Saúde')">
+                            <i class="material-icons">accessibility</i>
+                            <p>Profissionais de Saúde</p>
+                        </a>
+                    </li>
+            </ul>
+        </li>
+        <li routerLinkActive="active" class="nav-item">
+            <a class="nav-link" [routerLink]="['/pilotstudies']" *ngIf="verifyScopes('Estudos Pilotos')">
+                <i class="material-icons">find_replace</i>
+                <p>Estudos Pilotos</p>
+            </a>
+        </li>
+        <li routerLinkActive="active" class="nav-item">
+            <a class="nav-link" [routerLink]="['/patients']" *ngIf="verifyScopes('Pacientes')">
+                <i class="material-icons">face</i>
+                <p>Pacientes</p>
+            </a>
+        </li>
+    </ul>
+
+</div>

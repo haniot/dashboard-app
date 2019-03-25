@@ -1,0 +1,16 @@
+.background-green:hover{  
+  background-color: #00a594;    
+}
+#navbarDropdownMenuLink i{
+  padding: 20px 5px;
+}
+
+#userName{
+  font-size: 14px;
+  font-style: italic;
+}
+
+#userName:hover{
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+}
