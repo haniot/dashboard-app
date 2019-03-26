@@ -9,7 +9,7 @@ app.get('/*', function(req,res){
     res.sendFile(__dirname + '/dist/index.html')
 });
 
-const port = process.env.DASHBOARD_PORT || 4200
+const port = process.env.PORT_HTTP || 8080
 app.listen(port, function(){
-    console.log('App runing in PORT ' + port)
+    console.log('Dashboard runing in PORT ' + port)
 })
