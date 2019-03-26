@@ -12,13 +12,13 @@ import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.
   templateUrl: './patient-form.component.html',
   styleUrls: ['./patient-form.component.scss']
 })
-export class PatientFormComponent implements OnInit, OnChanges {
+export class PatientFormComponent implements OnInit {
   patientForm: FormGroup;
   optionsGender: Array<string> = Object.keys(Gender);
   listPilots: Array<PilotStudy>;
 
-  @Input() patientId: string;
-  @Input() pilotStudyId: string;
+  patientId: string;
+  pilotStudyId: string;
 
   constructor(
     private fb: FormBuilder,
@@ -64,15 +64,9 @@ export class PatientFormComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges() {//Caso o componente recba o id ele carrega o form com o paciente correspondente.
-    this.createForm();
-    this.loadPatientInForm();
-  }
-
-  onSubimt() {
+   onSubimt() {
     const form = this.patientForm.getRawValue();
     form.birth_date = new Date(form.birth_date).toISOString().split('T')[0];
-    console.log(form);
     if (!this.patientId) {
       this.patientService.create(form.pilotstudy_id, form)
         .then(patient => {

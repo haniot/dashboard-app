@@ -1,0 +1,17 @@
+#externa {
+    position: relative;
+    width:100%;
+    height:200px;
+}
+img{
+    width: 50%;
+}
+#interna {
+    left:50%;
+    top:50%;
+    margin-left:-100px; /* Metade do valor da Largura */
+    margin-top:-50px; /* Metade da valor da Altura */
+    position:absolute;
+    width:200px; /* Valor da Largura */
+    height:100px; /* Valor da Altura */
+}

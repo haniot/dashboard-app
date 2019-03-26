@@ -8,13 +8,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { SharedPipesModule } from '../shared-pipes/shared-pipes.module';
 import { HaniotModalComponent } from './haniot-modal/haniot-modal.component';
 import { ModalService } from './haniot-modal/service/modal.service';
+import { LoadingComponentComponent } from './loading-component/loading-component.component';
 
 @NgModule({
   declarations: [
     CardTopComponent,
     HaniotCardComponent,
     HaniotTableComponent,
-    HaniotModalComponent
+    HaniotModalComponent,
+    LoadingComponentComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { ModalService } from './haniot-modal/service/modal.service';
     CardTopComponent,
     HaniotCardComponent,
     HaniotTableComponent,
-    HaniotModalComponent
+    HaniotModalComponent,
+    LoadingComponentComponent
   ], 
   providers: [
     ModalService

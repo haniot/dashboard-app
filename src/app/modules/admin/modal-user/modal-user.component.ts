@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health-professional.service';
@@ -19,7 +19,7 @@ export class ModalUserComponent implements OnInit, OnChanges {
 
   userForm: FormGroup;
   @Input() userId: string;
-
+  error_in_email: boolean = false;
   name: string = '';
   email: string = '';
   password: string = '';
@@ -40,7 +40,9 @@ export class ModalUserComponent implements OnInit, OnChanges {
     this.modalService.eventActionNotExecuted.subscribe((res) => {
       this.createFormForUser(res.user);
       this.userForm.setValue(res.user);
-      console.log(res.error);
+      if (res.error.code == 400 && res.error.message == "Invalid email address!") {
+        this.userForm.get('email').setErrors({email:true});
+      }
     });
   }
 
@@ -54,7 +56,7 @@ export class ModalUserComponent implements OnInit, OnChanges {
     this.userForm = this.fb.group({
       id: [''],
       name: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],//, Validators.email, this.checkValidEmail
       password: ['', Validators.required],
       health_area: ['', Validators.required]
     });
@@ -67,9 +69,9 @@ export class ModalUserComponent implements OnInit, OnChanges {
     }
   }
 
-  createFormForUser(user: any){
+  createFormForUser(user: any) {
     this.userId = user.id;
-    this.typeUser =  user.health_area?'HealthProfessional':'Admin';
+    this.typeUser = user.health_area ? 'HealthProfessional' : 'Admin';
     this.createForm();
   }
 
@@ -103,7 +105,7 @@ export class ModalUserComponent implements OnInit, OnChanges {
     this.loadUserInForm();
   }
 
-  close(){
-    
+  close() {
+
   }
 }

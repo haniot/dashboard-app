@@ -2,23 +2,8 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <haniot-card title="Meus dados" subtitle="">
+        <haniot-card title="Meus dados" subtitle="Clique no botão habilitar edição para alterar suas informações">
           <form #formMyProfile="ngForm" (ngSubmit)="onSubmit(formMyProfile)">
-
-            <div class="form-group has-feedback"
-              [ngClass]="{'has-success': nomeDeUsuarioModel.valid,
-                            'has-error': nomeDeUsuarioModel.invalid && (nomeDeUsuarioModel.touched || nomeDeUsuarioModel.dirty)}">
-              <label for="username">Nome de usuário:</label>
-              <input type="text" class="form-control" id="username" required minlength="4" class="form-control"
-                type="text" name="username" #nomeDeUsuarioModel="ngModel"
-                [(ngModel)]="user==undefined?username:user.username" placeholder="Nome de usuário..." [disabled]="visibilityButtonSave?'disabled':'enabled'">
-              <span *ngIf="nomeDeUsuarioModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                aria-hidden="true"></span>
-              <span *ngIf="nomeDeUsuarioModel.invalid && (nomeDeUsuarioModel.touched || nomeDeUsuarioModel.dirty)">
-                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                <span class="text-danger">Nome de usuário inválido.</span>
-              </span>
-            </div>
 
             <div class="form-group has-feedback"
               [ngClass]="{'has-success': nomeModelEdit.valid,
@@ -27,7 +12,7 @@
               <label for="name">Nome:</label>
               <input type="text" class="form-control" id="nomeEdit" required minlength="4" type="text" name="name"
                 #nomeModelEdit="ngModel" [(ngModel)]="user==undefined?name:user.name" placeholder="Nome"
-                [disabled]="visibilityButtonSave?disabled:'enabled'">
+                [disabled]="visibilityButtonSave?null:'disabled'">
               <span *ngIf="nomeModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
                 aria-hidden="true"></span>
               <span
@@ -42,7 +27,7 @@
               <label for="email">Email:</label>
               <input type="email" class="form-control" id="emailEdit" required minlength="4" type="text" name="email"
                 #emailModelEdit="ngModel" [(ngModel)]="user==undefined?email:user.email" placeholder="Email"
-                [disabled]="visibilityButtonSave?'disabled':'enabled'">
+                [disabled]="visibilityButtonSave?null:'disabled'">
               <span *ngIf="emailModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
                 aria-hidden="true"></span>
               <span
@@ -57,7 +42,7 @@
               *ngIf="typeUser == 'HealthProfessional'">
               <label for="healthArea">Área: </label>
               <select name="healthArea" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel"
-                [(ngModel)]="user==undefined?health_area:user.health_area" [disabled]="visibilityButtonSave?disabled:'enabled'">
+                [(ngModel)]="user==undefined?health_area:user.health_area" [disabled]="visibilityButtonSave?null:'disabled'">
                 <option *ngFor="let area of healthAreaOptions; index as i" [value]="area">{{area | healthArea}}</option>
               </select>
               <span *ngIf="healthAreaModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
@@ -70,11 +55,54 @@
 
             <div class="row container-fluid">
               <div class="col-md">
-                <button type="button" class="btn btn-default" (click)="enabledEdit(formMyProfile)"
+                <button type="button" class="btn btn-default" (click)="enabledEdit()"
                   [disabled]="disabledButtonEdit">Habilitar edição</button>
               </div>
               <div class="col-md" *ngIf="visibilityButtonSave">
                 <button type="submit" class="btn btn-default" [disabled]="!formMyProfile.valid">Salvar</button>
+              </div>
+            </div>
+          </form>
+        </haniot-card>
+      </div>
+      <div class="col-md-12">
+        <haniot-card title="Configurações de acesso" subtitle="Para mudar sua senha de acesso preencha as informações abaixo e clique em alterar">
+          <form #formPassword="ngForm" (ngSubmit)="onChangePassword(formPassword)">
+
+            <div class="form-group has-feedback"
+              [ngClass]="{'has-success': passwordOldModel.valid,
+                                  'has-error': passwordOldModel.invalid && (passwordOldModel.touched || passwordOldModel.dirty)}">
+              <label for="old_password">Senha antiga:</label>
+              <input type="password" class="form-control" id="old_password" required minlength="4" name="old_password"
+                #passwordOldModel="ngModel" [(ngModel)]="old_password">
+              <span *ngIf="passwordOldModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                aria-hidden="true"></span>
+              <span
+                *ngIf="passwordOldModel.invalid && (passwordOldModel.touched || passwordOldModel.dirty)">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">Senha incorreta.</span>
+              </span>
+            </div>  
+
+            <div class="form-group has-feedback"
+              [ngClass]="{'has-success': passwordNewModel.valid,
+                                  'has-error': passwordNewModel.invalid && (passwordNewModel.touched || passwordNewModel.dirty)}">
+              <label for="new_password">Nova senha:</label>
+              <input type="password" class="form-control" id="new_password" required minlength="4" name="new_password"
+                #passwordNewModel="ngModel" [(ngModel)]="new_password">
+              <span *ngIf="passwordNewModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                aria-hidden="true"></span>
+              <span
+                *ngIf="passwordNewModel.invalid && (passwordNewModel.touched || passwordNewModel.dirty)">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">Senha inválida.</span>
+              </span>
+            </div>            
+           
+
+            <div class="row container-fluid">
+              <div class="col-md">
+                <button type="submit" class="btn btn-default" [disabled]="!formPassword.valid">Alterar senha</button>
               </div>
             </div>
           </form>
