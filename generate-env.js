@@ -2,7 +2,12 @@ const fs = require('fs');
 const dotenv = require('dotenv');
 dotenv.load();
 
-const envsPath = "src/environments";
+const envsPath = "./src/environments";
+
+/*Create the env dir if it doesn't exist */
+if (!fs.existsSync(envsPath)) {
+    fs.mkdirSync(envsPath)
+}
 
 const api_url = process.env.API_GATEWAY_SERVICE;
 
