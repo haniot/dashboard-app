@@ -36,4 +36,9 @@ export class UserService {
       });
   }
 
+  changePassword(userId: string, credentials :{old_password: string, new_password:string} ): Promise<boolean>{
+    return this.http.patch<any>(`${environment.api_url}/users/${userId}/password`, credentials)
+      .toPromise();
+  }
+
 }

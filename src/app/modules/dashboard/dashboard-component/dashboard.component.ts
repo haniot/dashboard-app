@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 
+import * as $ from 'jquery';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,7 +19,7 @@ export class DashboardComponent implements OnInit {
 
   dashboardData : DashboardData;
 
-  constructor() { }
+  constructor(private modalService: ModalService) { }
 
   renderData(data: Array<any>) {
 //    console.log(data)
@@ -25,7 +27,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     $('body').css('background-color', '#ececec')
-    this.init();
+    this.init();    
   }
 
   init(){

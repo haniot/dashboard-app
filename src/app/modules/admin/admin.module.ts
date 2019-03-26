@@ -9,7 +9,6 @@ import { AdminRoutingModule } from './admin-routing/admin-routing.module';
 
 import { AdministratorsComponent } from './administrators/administrators.component';
 import { HealthProfessionalComponent } from './health-professionals/health-professionals.component';
-import { ModalUserEditComponent } from './modal-user-edit/modal-user-edit.component';
 import { ModalUserComponent } from './modal-user/modal-user.component';
 import { MyprofileComponent } from './myprofile/myprofile.component';
 import { AdminService } from './services/admin.service';
@@ -24,21 +23,19 @@ import { PilotStudyModule } from '../pilot-study/pilot-study.module';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    CommonModule,
+    CommonModule,    
+    
     AdminRoutingModule,
     TemplateModule,
-    MatSlideToggleModule,
     SharedModule,
-    PilotStudyModule    
-  ],
-  exports: [
-    AdminRoutingModule
+    PilotStudyModule,
+
+    MatSlideToggleModule,
   ],
   declarations: [
     AdministratorsComponent,   
     HealthProfessionalComponent,
     ModalUserComponent,
-    ModalUserEditComponent,
     MyprofileComponent    
 
   ], 

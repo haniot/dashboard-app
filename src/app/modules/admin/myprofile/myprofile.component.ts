@@ -1,41 +1,47 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health-professional.service';
 import { IUser, HealtArea } from '../models/users.models';
-
-
+import { UserService } from '../services/users.service';
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',
   styleUrls: ['./myprofile.component.scss']
 })
 export class MyprofileComponent implements OnInit {
+  userId: string;
+
   visibilityButtonSave: boolean;
   disabledButtonEdit: boolean;
   user: IUser;
   typeUser: string;// Admin or HealthProfessional
   healthAreaOptions = Object.keys(HealtArea);
 
-  username: string;
   email:string;
+  password:string;
+
+  old_password: string;
+  new_password: string;
   
   constructor(
     private adminService: AdminService,
     private healthService: HealthProfessionalService,
+    private userService: UserService,
     private toastr: ToastrService
   ) { }
 
   ngOnInit() {
-    this.adminService.getById(atob(localStorage.getItem('user')))
+    this.userId = atob(localStorage.getItem('user'));
+    this.adminService.getById(this.userId)
       .then(user => {
         if (user) {
           this.user = user;
           this.typeUser = 'Admin';
         } else {
-          this.healthService.getById(atob(localStorage.getItem('user')))
+          this.healthService.getById(this.userId)
             .then(user => {
               if (user) {
                 this.user = user;
@@ -53,7 +59,7 @@ export class MyprofileComponent implements OnInit {
       });
   }
 
-  enabledEdit(form) {
+  enabledEdit() {
     this.disabledButtonEdit = true;
     this.visibilityButtonSave = true;
   }
@@ -86,5 +92,20 @@ export class MyprofileComponent implements OnInit {
           this.toastr.error('Não foi possível atualizar informações!');
         });
     }
+  }
+  onChangePassword(form){
+    
+    this.userService.changePassword(this.userId, form.value)
+      .then(() => {
+        this.toastr.info('Senha modificada com sucesso!');
+        form.reset();
+      })
+      .catch(HttpError => {
+        console.log('Não foi possível mudar a senha!', HttpError);
+        this.toastr.error('Não foi posível mudar sua senha!');
+        if(HttpError.error.code == 400 && HttpError.error.message == "Password does not match"){
+          form.controls['old_password'].setErrors({'incorrect': true});
+        }
+      });
   }
 }
