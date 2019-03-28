@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   changePassowrd(credentials: { name: string, email: string, password: string }, redirect_link): Observable<boolean> {
-    return this.http.patch<any>(`${environment.api_url}/${redirect_link}`, credentials)
+    return this.http.patch<any>(`${environment.api_url}${redirect_link}`, credentials)
       .pipe(
         tap(data => {
           this.router.navigate(['auth/login']);
