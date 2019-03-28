@@ -20,20 +20,25 @@ export class UserService {
   }
 
   getUserById(id: string): Promise<any> {
-    return this.adminService.getById(id)
-      .then(admin => {
-        if(admin){
-          return Promise.resolve(admin);
+    return this.healthService.getById(id)    
+      .then(healthprofessional => {
+        if(healthprofessional){
+          return Promise.resolve(healthprofessional);
         }
-        return this.healthService.getById(id);
+        return this.adminService.getById(id);
       })
       .catch(httpError => {
-        if(httpError.error.code == 404 && httpError.error.message == 'Admin not found!'){
-          return this.healthService.getById(id);
+        if(httpError.error.code == 404 && httpError.error.message == 'Health Professional not found!'){
+          return this.adminService.getById(id);
         }else{
           console.log('| users.service | Não foi possível buscar usuário!', httpError);
         }      
       });
+  }
+
+  changePassword(userId: string, credentials :{old_password: string, new_password:string} ): Promise<boolean>{
+    return this.http.patch<any>(`${environment.api_url}/users/${userId}/password`, credentials)
+      .toPromise();
   }
 
 }

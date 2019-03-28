@@ -54,8 +54,9 @@ export class AdministratorsComponent {
         this.getAllAdministrators();
         this.toastr.info('Administrator criado!');
         this.modalService.close('modalUser');
+        this.modalService.close('modalLoading');
       })
-      .catch((errorResponse: HttpErrorResponse) => {
+      .catch((errorResponse: HttpErrorResponse) => {        
         this.modalService.actionNotExecuted('modalUser',event,errorResponse.error);
         this.toastr.error('Não foi possível criar administrador!');
         if (errorResponse.status === 401) {

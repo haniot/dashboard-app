@@ -3,10 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PilotStudyService } from '../services/pilot-study.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
 import { HealthProfessional } from 'app/modules/admin/models/users.models';
+import { PilotStudy } from '../models/pilot.study';
 
 @Component({
   selector: 'pilot-study-form',
@@ -17,13 +18,16 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
 
   pilotStudyForm: FormGroup;
   listProf: Array<HealthProfessional>;
+  listProfNaoAssociados: Array<HealthProfessional>;
   multiSelectProfissionais: Array<any> = new Array<any>();
   multiSelectProfissionaisSelected: Array<any> = new Array<any>();
   color = 'accent';
   checked = false;
   disabled = false;
 
-  @Input() pilotStudyId: string; 
+  health_professionals_id_add: string;
+
+  @Input() pilotStudyId: string;
 
   constructor(
     private fb: FormBuilder,
@@ -52,20 +56,32 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         .then(res => {
           this.pilotStudyForm.setValue(res);
         }).catch(error => {
-          console.error('Não foi possível buscar estudo piloto!',error);
+          console.error('Não foi possível buscar estudo piloto!', error);
         })
     }
   }
 
   createForm() {
-    this.pilotStudyForm = this.fb.group({
-      id: [''],
-      name: ['', Validators.required],
-      start: ['', Validators.required],
-      end: ['', Validators.required],
-      health_professionals_id: ['', Validators.required],
-      is_active: [true, Validators.required]
-    });
+    if (this.pilotStudyId) {// Caso seja a tela de edição
+      this.pilotStudyForm = this.fb.group({
+        id: [''],
+        name: ['', Validators.required],
+        start: ['', Validators.required],
+        end: ['', Validators.required],
+        health_professionals_id: [{ value: '', disabled: true }, Validators.required],
+        is_active: [true, Validators.required]
+      });
+    }
+    else {//Caso seja a tela de inserção
+      this.pilotStudyForm = this.fb.group({
+        id: [''],
+        name: ['', Validators.required],
+        start: ['', Validators.required],
+        end: ['', Validators.required],
+        health_professionals_id: ['', Validators.required],
+        is_active: [true, Validators.required]
+      });
+    }
   }
 
   onSubimt() {
@@ -81,11 +97,12 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         });
     } else {
       this.pilotStudyService.update(form)
-        .then(pilotStudy => {
+        .then(() => {
           this.toastService.info('Estudo Piloto atualizado!');
         })
         .catch(error => {
           this.toastService.error('Não foi possível atualizar estudo piloto!');
+          console.log('Não foi possível atualizar estudo!', error);
         });
     }
   }
@@ -109,4 +126,37 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
       });
   }
 
+  getProfessional(id: string): HealthProfessional {
+    return this.listProf.filter((prof) => {
+      return prof.id == id;
+    })[0];
+  }
+
+  dissociateHealthProfessional(health_professionals_id: string) {
+    this.pilotStudyService.dissociateHealthProfessionalsFromPilotStudy(this.pilotStudyId, health_professionals_id)
+      .then(() => {
+        this.createForm();
+        this.getPilotStudy();
+        this.toastService.info("Profissional removido com sucesso!");
+      })
+      .catch(HttpError => {
+        this.toastService.error('Não foi possível remover professional!');
+        console.log('Não foi possível adicionar remover!', HttpError);
+      });
+  }
+
+  addProfessionalInStudy() {
+    console.log(this.health_professionals_id_add);
+    this.pilotStudyService.addHealthProfessionalsToPilotStudy(this.pilotStudyId, this.health_professionals_id_add)
+      .then((healthProfessional) => {
+        this.health_professionals_id_add = '';
+        this.createForm();
+        this.getPilotStudy();
+        this.toastService.info("Profissional adicionado com sucesso!");
+      })
+      .catch(HttpError => {
+        this.toastService.error('Não foi possível adicionar professional!');
+        console.log('Não foi possível adicionar professional!', HttpError);
+      });
+  }
 }

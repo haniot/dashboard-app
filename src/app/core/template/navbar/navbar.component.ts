@@ -135,6 +135,7 @@ export class NavbarComponent implements OnInit {
     }
 
     getUserName(){
+        const username = atob(localStorage.getItem('user'))
         this.userService.getUserById(atob(localStorage.getItem('user')))
             .then(user => {
                 if(user){

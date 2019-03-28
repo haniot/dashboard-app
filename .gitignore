@@ -72,3 +72,6 @@ dist
 docs
 
 /assets/css/material-dashboard.css.map
+
+# dotenv environment variables file
+.env

@@ -14,6 +14,22 @@ export class PilotStudyService {
       .toPromise();
   }
 
+  getAllByUserId(userId: string, page?: number, limit?: number): Promise<PilotStudy[]> {
+    let myParams = new HttpParams();
+
+    if (page && limit) {
+      myParams = new HttpParams()
+        .set("page", String(page))
+        .set("limit", String(limit))
+        .set("sort", 'created_a');
+    }
+
+    const url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
+
+    return this.http.get<any>(url, { params: myParams })
+      .toPromise();
+  }
+
   getAll(page?: number, limit?: number): Promise<PilotStudy[]> {
     let myParams = new HttpParams();
 
@@ -36,15 +52,17 @@ export class PilotStudyService {
   }
 
   update(pilotstudy: PilotStudy): Promise<boolean> {
+    const health_professionals_id = pilotstudy.health_professionals_id;
     return this.getById(pilotstudy.id)
       .then(pilotstudyOld => {
         Object.keys(pilotstudyOld).forEach(key => {
-          
-          if (pilotstudyOld[key].toString() == pilotstudy[key].toString() && key != 'id') {
+          if (pilotstudyOld[key].toString() == pilotstudy[key].toString() && key != 'id' || key == 'health_professionals_id') {
             delete pilotstudy[key];
           }
         });
-        console.log('PilotStudyUpdate: ', pilotstudy);
+        if (Object.keys(pilotstudy).length == 1 && pilotstudy.id) {
+          return Promise.resolve(true);
+        }
         return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudy.id}`, pilotstudy)
           .toPromise();
       });
@@ -55,8 +73,20 @@ export class PilotStudyService {
       .toPromise();
   }
 
+  /** Estudos piloto associados */
+
   getHealthProfessionalsByPilotStudyId(pilotStudyId: string) {
     return this.http.get<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/healthprofessionals`)
+      .toPromise();
+  }
+
+  addHealthProfessionalsToPilotStudy(pilotStudyId: string, healthprofessinalId: string): Promise<PilotStudy>{
+    return this.http.post<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/healthprofessionals/${healthprofessinalId}`, {})
+      .toPromise();
+  }
+
+  dissociateHealthProfessionalsFromPilotStudy(pilotStudyId: string, healthprofessinalId: string): Promise<boolean> {
+    return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/healthprofessionals/${healthprofessinalId}`)
       .toPromise();
   }
 }

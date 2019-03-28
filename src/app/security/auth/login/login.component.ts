@@ -4,6 +4,9 @@ import { AuthService } from './../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import * as $ from 'jquery';
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

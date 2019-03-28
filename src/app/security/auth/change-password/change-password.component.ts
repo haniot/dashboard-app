@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-change-password',
