@@ -61,6 +61,10 @@ const configSideBar = [
   {
     title: 'Pacientes',
     scopes: []//'patient:create', 'patient:readAll', 'patient:updateAll' , 'patient:deleteAll'
+  },
+  {
+    title: 'Meus estudos',
+    scopes: []
   }
 ];
 
@@ -72,6 +76,8 @@ const configSideBar = [
 export class SidebarComponent implements OnInit {
   /* Configurações de cada menu e submenu do sidebar*/
   //private menuItems: any[];
+
+  userId: string;
 
   private configSideBar: { title: string, scopes: any[] }[];
 
@@ -107,7 +113,8 @@ export class SidebarComponent implements OnInit {
   }
 
   getUserName() {
-    this.userService.getUserById(atob(localStorage.getItem('user')))
+    this.userId = atob(localStorage.getItem('user'));
+    this.userService.getUserById(this.userId)
       .then(user => {
         if (user && user.name) {
           this.userName = user.name;

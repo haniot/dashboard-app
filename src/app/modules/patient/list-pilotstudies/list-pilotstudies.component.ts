@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-list-pilotstudies',
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-pilotstudies.component.scss']
 })
 export class ListPilotstudiesComponent implements OnInit {
-
+  userId: string;
   // MatPaginator Inputs
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
@@ -28,21 +28,37 @@ export class ListPilotstudiesComponent implements OnInit {
 
   constructor(
     private pilotStudyService: PilotStudyService,
+    private activeRouter: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.activeRouter.paramMap.subscribe((params) => {
+      this.userId = params.get('userId');
+      this.getAllPilotStudies();
+      this.getLengthPilotStudies();
+    });
     this.getAllPilotStudies();
     this.getLengthPilotStudies();
   }
 
   getAllPilotStudies() {
-    this.pilotStudyService.getAll(this.page, this.limit)
-      .then(studies => {
-        this.list = studies;
-      })
-      .catch(error => {
-        console.log('Erro ao buscar pilot-studies: ', error);
-      });
+    if (this.userId) {
+      this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
+        .then(studies => {
+          this.list = studies;
+        })
+        .catch(error => {
+          console.log('Erro ao buscar pilot-studies: ', error);
+        });
+    } else {
+      this.pilotStudyService.getAll(this.page, this.limit)
+        .then(studies => {
+          this.list = studies;
+        })
+        .catch(error => {
+          console.log('Erro ao buscar pilot-studies: ', error);
+        });
+    }
   }
 
   searchOnSubmit() {
@@ -82,13 +98,23 @@ export class ListPilotstudiesComponent implements OnInit {
   }
 
   getLengthPilotStudies() {
-    this.pilotStudyService.getAll()
-      .then(studies => {
-        this.length = studies.length;
-      })
-      .catch(error => {
-        console.log('Erro ao buscar pilot-studies: ', error);
-      });
+    if (this.userId) {
+      this.pilotStudyService.getAllByUserId(this.userId)
+        .then(studies => {
+          this.length = studies.length;
+        })
+        .catch(error => {
+          console.log('Erro ao buscar pilot-studies: ', error);
+        });
+    } else {
+      this.pilotStudyService.getAll()
+        .then(studies => {
+          this.length = studies.length;
+        })
+        .catch(error => {
+          console.log('Erro ao buscar pilot-studies: ', error);
+        });
+    }
   }
 
 }

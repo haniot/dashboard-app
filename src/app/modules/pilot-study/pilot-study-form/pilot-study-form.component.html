@@ -86,12 +86,14 @@
 
             <div class="form-group has-feedback"
               [ngClass]="{'has-success': pilotStudyForm.controls.health_professionals_id.valid,
-          'has-error': pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)}">
+          'has-error': pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)}"
+              *ngIf="!pilotStudyId">
               <mat-form-field>
                 <mat-label>Profissionais:</mat-label>
                 <mat-select formControlName="health_professionals_id" name="health_professionals_id"
                   id="health_professionals_id" multiple>
-                  <mat-option *ngFor="let prof of listProf" [value]="prof.id">{{prof.name}}</mat-option>
+                  <mat-option *ngFor="let prof of listProf" [value]="prof.id">{{prof.name}},
+                    {{prof.health_area | healthArea}}</mat-option>
                 </mat-select>
               </mat-form-field>
               <span *ngIf="pilotStudyForm.controls.health_professionals_id.valid"
@@ -103,7 +105,6 @@
               </span>
             </div>
 
-
             <div class="row container">
               <div class="col-md">
                 <button type="button" class="btn btn-default" (click)="onSubimt()"
@@ -112,12 +113,65 @@
 
               <div class="col-md">
                 <button type="button" class="btn btn-danger" (click)="onBack()">
-                  <i class="material-icons">arrow_back</i>
+                  <i class="material-icons" id="iconBack">arrow_back</i>
                   Voltar
                 </button>
               </div>
             </div>
           </form>
+        </haniot-card>
+      </div>
+      <div class="col-md-12" *ngIf="pilotStudyId">
+        <haniot-card [title]="'Gerenciar professionais'" subtitle=''>
+          <div class="row container">
+            <div class="form-group has-feedback col-md-10">
+              <mat-form-field>
+                <mat-label>Adiconar novo profissional:</mat-label>
+                <mat-select [(value)]="health_professionals_id_add" name="health_professionals_id_add"
+                  id="health_professionals_id_add">
+                  <mat-option *ngFor="let prof of listProf" [value]="prof.id">{{prof.name}},
+                    {{prof.health_area | healthArea}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <span *ngIf="pilotStudyForm.controls.health_professionals_id.valid"
+                class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+              <span
+                *ngIf="pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">Selecione profissionais.</span>
+              </span>
+            </div>
+
+            <div class="col-md-2">
+              <button type="button" class="btn btn-default" (click)="addProfessionalInStudy()">Adicionar</button>
+            </div>
+
+          </div>
+
+          <!-- Form para gerenciar profissionais de saude no estudo piloto -->
+          <div class="form-group table-responsive" id="listProfessionals">
+            <label for="">Profissionais associados:</label>
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Área</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let health_professionalId of pilotStudyForm.controls.health_professionals_id.value; index as i">
+                  <td>{{getProfessional(health_professionalId).name}}</td>
+                  <td>{{getProfessional(health_professionalId).health_area | healthArea}}</td>
+                  <td><a class="nav-link" (click)="dissociateHealthProfessional(health_professionalId)"
+                      title="Desassociar profissional..."><i class="material-icons">close</i></a></td>
+                </tr>
+              </tbody>
+            </table>
+
+
+          </div>
         </haniot-card>
       </div>
     </div>

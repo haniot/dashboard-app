@@ -6,6 +6,7 @@ import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health-professional.service';
 import { IUser, HealtArea } from '../models/users.models';
 import { UserService } from '../services/users.service';
+
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',
@@ -35,27 +36,15 @@ export class MyprofileComponent implements OnInit {
 
   ngOnInit() {
     this.userId = atob(localStorage.getItem('user'));
-    this.adminService.getById(this.userId)
-      .then(user => {
-        if (user) {
-          this.user = user;
-          this.typeUser = 'Admin';
-        } else {
-          this.healthService.getById(this.userId)
-            .then(user => {
-              if (user) {
-                this.user = user;
-                this.typeUser = 'HealthProfessional'
-              }
-            })
-            .catch(error => {
-              console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
-            });
+    this.userService.getUserById(this.userId)
+      .then( user => {
+        this.user = user;
+        if(this.user.health_area){
+          this.typeUser = 'HealthProfessional';
         }
-
       })
-      .catch(error => {
-        console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
+      .catch(HttpError => {
+        console.log('Não foi possível carregar usuário logado!', HttpError);
       });
   }
 
