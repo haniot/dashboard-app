@@ -92,7 +92,8 @@ export class PatientFormComponent implements OnInit {
   }
 
   getAllPilotStudies() {
-    this.pilotStudiesService.getAll()
+    const userId = atob(localStorage.getItem('user'));
+    this.pilotStudiesService.getAllByUserId(userId)
       .then(pilots => {
         this.listPilots = pilots;
       })

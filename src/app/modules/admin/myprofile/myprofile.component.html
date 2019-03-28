@@ -41,7 +41,7 @@
             'has-error': healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)}"
               *ngIf="typeUser == 'HealthProfessional'">
               <label for="healthArea">Área: </label>
-              <select name="healthArea" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel"
+              <select name="health_area" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel"
                 [(ngModel)]="user==undefined?health_area:user.health_area" [disabled]="visibilityButtonSave?null:'disabled'">
                 <option *ngFor="let area of healthAreaOptions; index as i" [value]="area">{{area | healthArea}}</option>
               </select>

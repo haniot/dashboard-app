@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
     mobile_menu_visible: any = 0;
     toggleButton: any;
     sidebarVisible: boolean;
-    userName: String = "";
+    userName: string = "";
 
     constructor(
         location: Location,
@@ -134,17 +134,22 @@ export class NavbarComponent implements OnInit {
         return 'Dashboard';
     }
 
-    getUserName(){
-        const username = atob(localStorage.getItem('user'))
-        this.userService.getUserById(atob(localStorage.getItem('user')))
-            .then(user => {
-                if(user){
-                    this.userName = user.name?user.name:user.email;
-                }
-            })
-            .catch( error => {
-                console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
-            });
+    getUserName(){        
+        const username = atob(localStorage.getItem('username'));
+        if(localStorage.getItem('username')){
+            this.userName = username;
+        }else{
+            this.userService.getUserById(atob(localStorage.getItem('user')))
+                .then(user => {
+                    if(user){
+                        this.userName = user.name?user.name:user.email;
+                        localStorage.setItem('username',btoa(this.userName))
+                    }
+                })
+                .catch( error => {
+                    console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
+                });
+        }
     }
 
     logout() {

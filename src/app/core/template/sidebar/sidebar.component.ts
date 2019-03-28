@@ -53,14 +53,15 @@ const configSideBar = [
   },
   {
     title: 'P. de Saúde',
-    scopes: ['healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll' , 'healthprofessional:updateAll'] },
+    scopes: ['healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll', 'healthprofessional:updateAll']
+  },
   {
     title: 'Estudos Pilotos',
-    scopes: ['pilotstudy:create', 'pilotstudy:readAll', 'pilotstudy:updateAll' , 'pilotstudy:deleteAll']
+    scopes: ['pilotstudy:create', 'pilotstudy:readAll', 'pilotstudy:updateAll', 'pilotstudy:deleteAll']
   },
   {
     title: 'Pacientes',
-    scopes: []//'patient:create', 'patient:readAll', 'patient:updateAll' , 'patient:deleteAll'
+    scopes: ['patient:create', 'patient:readAll', 'patient:updateAll' , 'patient:deleteAll']
   },
   {
     title: 'Meus estudos',
@@ -104,7 +105,7 @@ export class SidebarComponent implements OnInit {
   };
 
   verifyScopes(title: string): boolean {
-    const configRouter = this.configSideBar.filter((element)=>{
+    const configRouter = this.configSideBar.filter((element) => {
       return element.title === title;
     });
     const routerScopes = configRouter[0].scopes;
@@ -114,22 +115,31 @@ export class SidebarComponent implements OnInit {
 
   getUserName() {
     this.userId = atob(localStorage.getItem('user'));
-    this.userService.getUserById(this.userId)
-      .then(user => {
-        if (user && user.name) {
-          this.userName = user.name;
-        }
-      })
-      .catch(error => {
-        console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
-      });
+    const username = atob(localStorage.getItem('username'));
+    if (localStorage.getItem('username')) {
+      this.userName = username;
+    } else {
+      this.userService.getUserById(this.userId)
+        .then(user => {
+          if (user && user.name) {
+            this.userName = user.name;
+          }
+        })
+        .catch(error => {
+          console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
+        });
+    }
   }
 
   logout() {
     this.authService.logout();
   }
 
-  onclickMenuUser(){
-    this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down'?'keyboard_arrow_right':'keyboard_arrow_down';
+  onclickMenuUser() {
+    this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
+  }
+
+  showMyStudies():boolean{
+    return localStorage.getItem('typeUser') === 'HealthProfessional';
   }
 }

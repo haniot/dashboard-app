@@ -23,12 +23,15 @@ export class UserService {
     return this.healthService.getById(id)    
       .then(healthprofessional => {
         if(healthprofessional){
+          localStorage.setItem('typeUser','HealthProfessional');
           return Promise.resolve(healthprofessional);
         }
+        localStorage.setItem('typeUser','Admin');
         return this.adminService.getById(id);
       })
       .catch(httpError => {
         if(httpError.error.code == 404 && httpError.error.message == 'Health Professional not found!'){
+          localStorage.setItem('typeUser','Admin');
           return this.adminService.getById(id);
         }else{
           console.log('| users.service | Não foi possível buscar usuário!', httpError);

@@ -42,23 +42,14 @@ export class ListPilotstudiesComponent implements OnInit {
   }
 
   getAllPilotStudies() {
-    if (this.userId) {
-      this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
-        .then(studies => {
-          this.list = studies;
-        })
-        .catch(error => {
-          console.log('Erro ao buscar pilot-studies: ', error);
-        });
-    } else {
-      this.pilotStudyService.getAll(this.page, this.limit)
-        .then(studies => {
-          this.list = studies;
-        })
-        .catch(error => {
-          console.log('Erro ao buscar pilot-studies: ', error);
-        });
-    }
+    this.userId = atob(localStorage.getItem('user'));
+    this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
+      .then(studies => {
+        this.list = studies;
+      })
+      .catch(error => {
+        console.log('Erro ao buscar pilot-studies: ', error);
+      });
   }
 
   searchOnSubmit() {
