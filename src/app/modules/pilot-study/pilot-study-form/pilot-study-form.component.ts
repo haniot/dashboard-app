@@ -44,14 +44,15 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.activeRouter.paramMap.subscribe((params) => {
       this.pilotStudyId = params.get('pilotStudyId');
-      this.createForm();
-      this.getPilotStudy();
-      this.loadProfessinalsAssociated();
-      this.getListProfissonals();
+      if (this.pilotStudyId) {
+        this.createForm();
+        this.getPilotStudy();
+        this.loadProfessinalsAssociated();
+        this.getListProfissonals();
+      }
     });
     this.createForm();
     this.getPilotStudy();
-    this.loadProfessinalsAssociated();
     this.getListProfissonals();
   }
 

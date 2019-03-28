@@ -3,6 +3,7 @@ import { PilotStudyService } from '../services/pilot-study.service';
 import { PilotStudy } from '../models/pilot.study';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 
 @Component({
   selector: 'pilot-study-table',
@@ -10,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./pilot-study-table.component.scss']
 })
 export class PilotStudyTableComponent implements OnInit {
-
+  pilotStudy_id: string;
   // MatPaginator Inputs
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
@@ -28,7 +29,8 @@ export class PilotStudyTableComponent implements OnInit {
 
   constructor(
     private pilotStudyService: PilotStudyService,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private modalService: ModalService
     ) { }
 
   ngOnInit() {
@@ -98,6 +100,11 @@ export class PilotStudyTableComponent implements OnInit {
         this.length = pilots.length;
       })
       .catch();
+  }
+
+  openModalhealthProfessionals(pilotStudy_id:string){
+    this.pilotStudy_id = pilotStudy_id;
+    this.modalService.open('healthProfessionals');
   }
 
 }

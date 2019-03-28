@@ -31,18 +31,22 @@
           </span>
         </td>
         <td>
-          <view-health-professional [pilotstudyid]="study.id"></view-health-professional>
+          <button type="button" class="btn btn-default btn-sm button_view" (click)="openModalhealthProfessionals(study.id)" >
+            Visualizar
+            <i class="material-icons">drag_indicator</i>
+          </button>
         </td>
         <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id]" title="Editar estudo..."><i
-              class="material-icons">more_horiz</i></a></td>
-        <td><a class="nav-link" (click)="removeStudy(study.id)" title="Excluir estudo..."><i
-              class="material-icons">close</i></a></td>
-      </tr>
-    </tbody>
-  </table>
-
-</div>
-
-<mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
-  (page)="clickPagination($event)">
-</mat-paginator>
+          class="material-icons">more_horiz</i></a></td>
+          <td><a class="nav-link" (click)="removeStudy(study.id)" title="Excluir estudo..."><i
+            class="material-icons">close</i></a></td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+    
+    <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+    (page)="clickPagination($event)">
+  </mat-paginator>
+  <view-health-professional [pilotstudyid]="pilotStudy_id"></view-health-professional>
