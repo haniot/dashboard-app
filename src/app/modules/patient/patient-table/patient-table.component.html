@@ -29,7 +29,7 @@
           </a>
         </td>
         <td>
-          <a class="nav-link" (click)="removePatient(patient.pilotstudy_id,patient.id)" title="Excluir paciente...">
+          <a class="nav-link" (click)="openModalConfirmation(patient.pilotstudy_id,patient.id)" title="Excluir paciente...">
             <i class="material-icons">close</i>
           </a>
         </td>
@@ -42,3 +42,5 @@
 <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
   (page)="clickPagination($event)">
 </mat-paginator>
+
+<modal-confirmation [message]="'Tem certeza que deseja remover paciente?'" (confirmation)="removePatient()" (noconfirmation)="closeModalComfimation()"></modal-confirmation>

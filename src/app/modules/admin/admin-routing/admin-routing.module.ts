@@ -8,6 +8,7 @@ import { ScopeGuard } from 'app/security/guards/scope.guard';
 import { AuthGuard } from 'app/security/guards/auth.guard';
 import { DashboardComponent } from 'app/modules/dashboard/dashboard-component/dashboard.component';
 import { TemplateComponent } from 'app/core/template/template-component/template.component';
+import { MypilotstudiesComponent } from '../mypilotstudies/mypilotstudies.component';
 
 const routes = [
   {
@@ -15,19 +16,26 @@ const routes = [
     component: TemplateComponent, canActivate: [AuthGuard, ScopeGuard], canActivateChild: [AuthGuard, ScopeGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent, data: {}},
-      { 
+      { path: 'dashboard', component: DashboardComponent, data: {} },
+      {
         path: 'myprofile',
         component: MyprofileComponent,
-        data: { scope: "admin:readAll admin:updateAll healthprofessional:read healthprofessional:update"}},
-      { 
+        data: { scope: "admin:readAll admin:updateAll healthprofessional:read healthprofessional:update" }
+      },
+      {
         path: 'administrators',
         component: AdministratorsComponent,
-        data: { scope: "admin:create admin:deleteAll admin:readAll admin:updateAll"} },
-      { 
+        data: { scope: "admin:create admin:deleteAll admin:readAll admin:updateAll" }
+      },
+      {
         path: 'healthprofessionals',
         component: HealthProfessionalComponent,
-        data: { scope: "healthprofessional:create healthprofessional:deleteAll healthprofessional:readAll healthprofessional:updateAll"}
+        data: { scope: "healthprofessional:create healthprofessional:deleteAll healthprofessional:readAll healthprofessional:updateAll" }
+      },
+      {
+        path: 'mystudies/:userId',
+        component: MypilotstudiesComponent,
+        data: { scope: "" }
       }
     ]
   }

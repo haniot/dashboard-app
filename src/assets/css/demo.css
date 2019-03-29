@@ -34,13 +34,6 @@
   border-color: #00675c;
 }
 
-.btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle {
-  color: #ffffff;
-  background-color: #00a594;
-  border-color: #00a594;
-}
-
-
 /* .tim-typo{
   padding-left: 25%;
   margin-bottom: 40px;

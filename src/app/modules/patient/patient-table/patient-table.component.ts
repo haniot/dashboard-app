@@ -4,6 +4,7 @@ import { Patient } from '../models/patient';
 import { PatientService } from '../services/patient.service';
 import { ToastrService } from 'ngx-toastr';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 
 @Component({
   selector: 'patient-table',
@@ -27,11 +28,14 @@ export class PatientTableComponent implements OnInit {
   searchTime;
 
   @Input() pilotStudyId;
+  
+  cacheIdPatientRemove: string;
 
   constructor(
     private patientService: PatientService,
     private pilotstudyService: PilotStudyService,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -72,13 +76,27 @@ export class PatientTableComponent implements OnInit {
     this.getAllPacients();
   }
 
-  removePatient(pilotstudy_id: string, patientId: string) {
-    this.patientService.remove(pilotstudy_id, patientId)
+  openModalConfirmation(pilotstudy_id: string, patientId: string){
+    this.cacheIdPatientRemove = patientId;
+    this.pilotStudyId = pilotstudy_id;
+    this.modalService.open('modalConfirmation');
+  }
+
+  closeModalComfimation(){
+    this.cacheIdPatientRemove = '';
+    this.modalService.close('modalConfirmation');
+  }
+
+  removePatient() {
+    this.patientService.remove(this.pilotStudyId,this.cacheIdPatientRemove)
       .then(() => {
         this.getAllPacients();
+        this.toastService.info('Paciente removido com suecesso!');
+        this.closeModalComfimation();
       })
       .catch(error => {
-        console.log('Não foi possível remover paciente!', error);
+        this.toastService.error('Não foi possível remover usuário!');
+        //console.log('Não foi possível remover paciente!', error);
       });
   }
 

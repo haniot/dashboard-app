@@ -112,7 +112,7 @@
               </div>
 
               <div class="col-md">
-                <button type="button" class="btn btn-danger" (click)="onBack()">
+                <button type="button" class="btn btn-secondary" (click)="onBack()">
                   <i class="material-icons" id="iconBack">arrow_back</i>
                   Voltar
                 </button>
@@ -121,7 +121,7 @@
           </form>
         </haniot-card>
       </div>
-      <div class="col-md-12" *ngIf="pilotStudyId">
+      <div class="col-md-12" *ngIf="pilotStudyId && showManagerProfessionals()" >
         <haniot-card [title]="'Gerenciar professionais'" subtitle=''>
           <form [formGroup]="professionalsForm">
             <div class="row container">

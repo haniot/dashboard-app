@@ -5,42 +5,7 @@ import { VerifyScopeService } from 'app/security/services/verify-scope.service';
 
 declare const $: any;
 
-declare interface RouteInfo {
-  path: string;
-  title: string;
-  icon: string;
-  class: string;
-  scopes: Array<String>;
-  children?: Array<any>;
-}
-
-export const ROUTES: RouteInfo[] = [
-  { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '', scopes: [] },
-  {
-    path: '/usuarios',
-    title: 'Usuários',
-    icon: 'arrow_drop_down',
-    class: '',
-    scopes: ['adminAccount:create', 'adminAccount:deleteAll', 'adminAccount:readAll', 'adminAccount:updateAll',
-      'caregiverAccount:create', 'caregiverAccount:deleteAll', 'caregiverAccount:readAll', 'caregiverAccount:updateAll']
-  },
-  {
-    path: '/administrators',
-    title: 'Administradores',
-    icon: 'supervisor_account',
-    class: '',
-    scopes: ['adminAccount:create', 'adminAccount:deleteAll', 'adminAccount:readAll', 'adminAccount:updateAll']
-  },
-  {
-    path: '/healthprofessionals',
-    title: 'P. de Saúde',
-    icon: 'accessibility',
-    class: '',
-    scopes: ['caregiverAccount:create', 'caregiverAccount:deleteAll', 'caregiverAccount:readAll', 'caregiverAccount:updateAll']
-  }
-];
-
-const configSideBar = [
+export const configSideBar = [
   { title: 'Dashboard', scopes: [] },
   {
     title: 'Usuários',
@@ -139,7 +104,7 @@ export class SidebarComponent implements OnInit {
     this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
   }
 
-  showMyStudies():boolean{
-    return localStorage.getItem('typeUser') === 'HealthProfessional';
+  showMyStudies():boolean{    
+    return localStorage.getItem('typeUser') == 'HealthProfessional';
   }
 }

@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { PilotStudyService } from '../services/pilot-study.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
 import { HealthProfessional } from 'app/modules/admin/models/users.models';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'pilot-study-form',
@@ -36,7 +37,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     private healthService: HealthProfessionalService,
     private toastService: ToastrService,
     private router: Router,
-    private activeRouter: ActivatedRoute
+    private activeRouter: ActivatedRoute,
+    private location: Location
   ) {
 
   }
@@ -122,17 +124,20 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
   }
 
   onBack() {
-    this.router.navigate(['pilotstudies']);
+    this.location.back();
   }
 
   getListProfissonals(): Promise<any> {
-    return this.healthService.getAll()
+    if(localStorage.getItem('typeUser') == 'Admin'){
+      return this.healthService.getAll()
       .then(healthProfessionals => {
         this.listProf = healthProfessionals;
       })
       .catch(error => {
         console.log('Erro ao carregar lista de profisionais!', error);
       });
+    }
+    return Promise.resolve([]);
   }
 
   dissociateHealthProfessional(health_professionals_id: string) {
@@ -184,5 +189,9 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     return listProf.find(prof => {
       return prof.id == professional.id;
     }) ? true : false;
+  }
+
+  showManagerProfessionals(): boolean{
+    return localStorage.getItem('typeUser')=='Admin';
   }
 }

@@ -9,6 +9,7 @@ import { SharedPipesModule } from '../shared-pipes/shared-pipes.module';
 import { HaniotModalComponent } from './haniot-modal/haniot-modal.component';
 import { ModalService } from './haniot-modal/service/modal.service';
 import { LoadingComponentComponent } from './loading-component/loading-component.component';
+import { ModalConfirmationComponent } from './modal-confirmation/modal-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { LoadingComponentComponent } from './loading-component/loading-component
     HaniotCardComponent,
     HaniotTableComponent,
     HaniotModalComponent,
-    LoadingComponentComponent
+    LoadingComponentComponent,
+    ModalConfirmationComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { LoadingComponentComponent } from './loading-component/loading-component
     HaniotCardComponent,
     HaniotTableComponent,
     HaniotModalComponent,
-    LoadingComponentComponent
+    LoadingComponentComponent,
+    ModalConfirmationComponent
   ], 
   providers: [
     ModalService

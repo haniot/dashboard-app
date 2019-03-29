@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import * as $ from 'jquery';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -15,13 +16,12 @@ import * as $ from 'jquery';
 export class LoginComponent implements OnInit {
 
   f: FormGroup;
-  errorCredentials = false;
 
-  message: string
-
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private toastr: ToastrService,) { }
 
   ngOnInit() {
     $('body').css('background-color', '#00a594')
@@ -33,22 +33,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.errorCredentials = false;
     this.authService.login(this.f.value).subscribe(
       (resp) => {
         this.router.navigate(['']);
       },
       (error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.errorCredentials = true;
-          this.message = "Não Autorizado"
-        }
-
-        if (error.status === 404) {
-          this.errorCredentials = true;
-          this.message = "Usuário Inexistente"
-
-        }
+        if (error.status === 401) this.toastr.error('Dados inválidos','Não foi possível entar');
       }
     );
   };

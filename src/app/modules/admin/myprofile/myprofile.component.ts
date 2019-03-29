@@ -40,16 +40,23 @@ export class MyprofileComponent implements OnInit {
 
   getUser() {
     this.userId = atob(localStorage.getItem('user'));
-    this.userService.getUserById(this.userId)
-      .then(user => {
-        this.user = user;
-        if (this.user.health_area) {
-          this.typeUser = 'HealthProfessional';
-        }
-      })
-      .catch(HttpError => {
-        console.log('Não foi possível carregar usuário logado!', HttpError);
-      });
+    this.typeUser = localStorage.getItem('typeUser');
+    if (this.typeUser == 'Admin') {
+      this.adminService.getById(this.userId)
+        .then(admin => this.user = admin)
+        .catch(HttpError => {
+          console.log('Não foi possível carregar usuário logado!', HttpError);
+        });
+    } else if (this.typeUser == 'HealthProfessional') {
+      this.healthService.getById(this.userId)
+        .then(healthprofessional => this.user = healthprofessional)
+        .catch(HttpError => {
+          console.log('Não foi possível carregar usuário logado!', HttpError);
+        });
+    } else {
+      this.userService.getTypeUserAndSetLocalStorage(this.userId);
+      this.getUser();
+    }
   }
 
   enabledEdit() {

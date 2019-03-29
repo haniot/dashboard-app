@@ -32,11 +32,6 @@ const routes = [
         path: 'patients/:patientId/:pilotstudy_id',
         component: PatientFormComponent,
         data: { scope: ""}//patient:update patient:updateAll
-      },
-      { 
-        path: 'mystudies/:userId',
-        component: ListPilotstudiesComponent,
-        data: { scope: ""}//patient:readAll patient:delete patient:deleteAll
       }
     ]
   }

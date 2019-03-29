@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:dev": "ng serve --proxy-config proxy.config.json --port 4242",
+    "start:dev": "ng serve",
     "start:prod": "npm run build && node server.js",
     "build": "npm run env && ng build --prod",
     "test": "ng test",

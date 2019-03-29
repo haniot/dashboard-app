@@ -6,6 +6,7 @@ import { Gender } from '../models/patient';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'patient-form',
@@ -26,7 +27,8 @@ export class PatientFormComponent implements OnInit {
     private pilotStudiesService: PilotStudyService,
     private toastService: ToastrService,
     private router: Router,
-    private activeRouter: ActivatedRoute
+    private activeRouter: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -88,7 +90,7 @@ export class PatientFormComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['patients', this.pilotStudyId]);
+    this.location.back();
   }
 
   getAllPilotStudies() {

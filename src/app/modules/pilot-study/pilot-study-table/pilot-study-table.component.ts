@@ -27,6 +27,8 @@ export class PilotStudyTableComponent implements OnInit {
   search: string;
   searchTime;
 
+  cacheStudyIdRemove; string;
+
   constructor(
     private pilotStudyService: PilotStudyService,
     private toastService: ToastrService,
@@ -83,15 +85,20 @@ export class PilotStudyTableComponent implements OnInit {
     }
   }
 
-  removeStudy(id: string){
-    this.pilotStudyService.remove(id)
-      .then(() => {
-        this.toastService.info('Estudo removido com sucesso!');
-        this.getAllPilotStudies();
-      })
-      .catch(error => {
-        this.toastService.error('Não foi possível remover estudo!');
-      });
+  removeStudy(){
+    if(this.cacheStudyIdRemove){
+      this.pilotStudyService.remove(this.cacheStudyIdRemove)
+        .then(() => {
+          this.toastService.info('Estudo removido com sucesso!');
+          this.getAllPilotStudies();
+          this.closeModalConfirmation();
+        })
+        .catch(error => {
+          this.toastService.error('Não foi possível remover estudo!');
+        });
+    }else{
+      this.toastService.error('Não foi possível remover estudo!');
+    }
   }
 
   calcLengthAdministrators(){
@@ -105,6 +112,16 @@ export class PilotStudyTableComponent implements OnInit {
   openModalhealthProfessionals(pilotStudy_id:string){
     this.pilotStudy_id = pilotStudy_id;
     this.modalService.open('healthProfessionals');
+  }
+
+  openModalConfirmation(id:string){
+    this.cacheStudyIdRemove = id;
+    this.modalService.open('modalConfirmation');
+  }
+  
+  closeModalConfirmation(){
+    this.cacheStudyIdRemove = '';
+    this.modalService.close('modalConfirmation');
   }
 
 }

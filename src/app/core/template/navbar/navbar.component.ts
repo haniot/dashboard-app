@@ -1,23 +1,37 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ROUTES } from '../sidebar/sidebar.component';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { UserService } from 'app/modules/admin/services/users.service';
 
+export declare interface RouteInfo {
+    path: string;
+    title: string;
+}
+
+export const ROUTES: RouteInfo[] = [
+    { path: '/dashboard', title: 'Dashboard' },
+    { path: '/administrators', title: 'Usuários - Administradores' },
+    { path: '/healthprofessionals', title: 'Usuários - Profissionais de Saúde' },
+    { path: '/pilotstudies', title: 'Estudos Pilotos' },
+    { path: '/patients', title: 'Pacientes' },
+    { path: '/mystudies', title: 'Meus estudos' },
+    { path: '/myprofile', title: 'Meus dados' }
+];
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    listTitles: any[];
+    listTitles: RouteInfo[];
     location: Location;
     mobile_menu_visible: any = 0;
     toggleButton: any;
     sidebarVisible: boolean;
     userName: string = "";
+    title: string;
 
     constructor(
         location: Location,
@@ -30,8 +44,9 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getTypeUser();
         this.getUserName();
-        this.listTitles = ROUTES.filter(listTitle => listTitle);
+        this.listTitles = ROUTES;
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
         this.router.events.subscribe((event) => {
@@ -41,7 +56,9 @@ export class NavbarComponent implements OnInit {
                 $layer.remove();
                 this.mobile_menu_visible = 0;
             }
+            this.getTitle();
         });
+        this.getTitle();
     }
 
     sidebarOpen() {
@@ -121,34 +138,36 @@ export class NavbarComponent implements OnInit {
 
     getTitle() {
         var titlee = this.location.prepareExternalUrl(this.location.path());
-        if (titlee.charAt(0) === '#') {
-            titlee = titlee.slice(2);
-        }
-        titlee = titlee.split('/').pop();
-
-        for (var item = 0; item < this.listTitles.length; item++) {
-            if (this.listTitles[item].path === titlee) {
-                return this.listTitles[item].title;
+        titlee = '/'+titlee.split('/')[1];
+        this.listTitles.forEach(element => {
+            if (element.path == titlee) {
+                this.title = element.title;
             }
-        }
-        return 'Dashboard';
+        });
     }
 
-    getUserName(){        
+    getUserName() {
         const username = atob(localStorage.getItem('username'));
-        if(localStorage.getItem('username')){
+        if (localStorage.getItem('username')) {
             this.userName = username;
-        }else{
+        } else {
             this.userService.getUserById(atob(localStorage.getItem('user')))
                 .then(user => {
-                    if(user){
-                        this.userName = user.name?user.name:user.email;
-                        localStorage.setItem('username',btoa(this.userName))
+                    if (user) {
+                        this.userName = user.name ? user.name : user.email;
+                        localStorage.setItem('username', btoa(this.userName))
                     }
                 })
-                .catch( error => {
+                .catch(error => {
                     console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
                 });
+        }
+    }
+
+    getTypeUser(){
+        const typeUser = localStorage.getItem('typeUser');
+        if(!typeUser){
+            this.userService.getTypeUserAndSetLocalStorage(atob(localStorage.getItem('user')));
         }
     }
 
