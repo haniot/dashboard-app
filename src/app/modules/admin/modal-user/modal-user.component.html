@@ -51,7 +51,7 @@
       <div class="form-group"
         [ngClass]="{'has-success': userForm.controls.password.valid,
              'has-error': userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)}"
-             *ngIf="!userId">
+             *ngIf="!userId && userForm.controls.password">
         <label for="password">Senha:</label>
         <input type="password" class="form-control" formControlName="password" >
         <span class="text-danger"
@@ -59,18 +59,15 @@
           obrigatório.</span>
       </div>
 
-      <!-- <div class="form-group"
+      <div class="form-group"
         [ngClass]="{'has-success': userForm.controls.password_confirm.valid,
              'has-error': userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty)}"
-             *ngIf="!userId">
+             *ngIf="!userId && userForm.controls.password_confirm">
         <label for="password_confirm">Confirme a senha:</label>
         <input type="password" class="form-control" formControlName="password_confirm" (keyup)="verifyMatchPassword()">
         <span class="text-danger"
-          *ngIf="userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty)">Campo
-          obrigatório.</span>
-          <span class="text-danger"
-          *ngIf="passwordNotMatch">Informe a mesma senha.</span>
-      </div> -->
+          *ngIf="userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty) || passwordNotMatch">Informe a mesma senha.</span>
+      </div>
       <div class="row container-fluid">
         <div class="col-md">
           <button type="submit" class="btn btn-default" [disabled]="!userForm.valid"

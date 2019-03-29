@@ -49,15 +49,14 @@ export class ModalUserComponent implements OnInit, OnChanges {
     const form = this.userForm.getRawValue();
     const password = form.password;
     const password_confirm = form.password_confirm;
-    this.onsubmit.emit(form);
     
-    this.userForm.reset();
-    // if(password === password_confirm){
-    //   this.onsubmit.emit(form);
-    //   this.userForm.reset();
-    // }else{
-    //   this.passwordNotMatch = true;
-    // }
+    if(password === password_confirm){
+      this.onsubmit.emit(form);
+      this.userForm.reset();
+      this.userId = undefined;
+    }else{
+      this.passwordNotMatch = true;
+    }
   }
 
   createForm(user?) {
@@ -66,7 +65,7 @@ export class ModalUserComponent implements OnInit, OnChanges {
       name: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.required],
-      
+      password_confirm: ['', Validators.required],
       health_area: ['', Validators.required]
     });
     if (this.typeUser == 'Admin') {
@@ -75,6 +74,7 @@ export class ModalUserComponent implements OnInit, OnChanges {
     }
     if (this.userId) {
       this.userForm.removeControl("password");
+      this.userForm.removeControl("password_confirm");
     }
   }
 
@@ -115,7 +115,9 @@ export class ModalUserComponent implements OnInit, OnChanges {
   }
 
   close() {
-    this.userForm.reset();
+    if(!this.userId){
+      this.userForm.reset();
+    }
     this.passwordNotMatch = false;
   }
   cleanNotMatch(){

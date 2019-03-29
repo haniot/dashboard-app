@@ -66,8 +66,8 @@ export class HealthProfessionalComponent {
       });
   }
 
-  editHealthProfessinal(event) {
-    this.healthService.update(event)
+  editHealthProfessinal(healthProfessional) {
+    this.healthService.update(healthProfessional)
       .then(date => {
         if (date) {
           this.getAllHealthProfessionals();
@@ -75,7 +75,7 @@ export class HealthProfessionalComponent {
           this.modalService.close('modalUserEdit');
         } else {
           this.toastr.error('Não foi possível atualizar profissional de saúde!');
-          this.modalService.actionNotExecuted('modalUserEdit', event);
+          this.modalService.actionNotExecuted('modalUserEdit', healthProfessional);
         }
       })
       .catch(errorResponse => {
@@ -86,7 +86,7 @@ export class HealthProfessionalComponent {
         }else{
           this.toastr.error('Não foi possível atualizar profissional de saúde!');
         }
-        this.modalService.actionNotExecuted('modalUserEdit', event, errorResponse.error);
+        this.modalService.actionNotExecuted('modalUserEdit', healthProfessional);
         //console.log('Não foi possível atualizar profissional de saúde!', errorResponse);
       });
   }
