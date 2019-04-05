@@ -32,8 +32,8 @@ export class PatientComponentComponent implements OnInit {
       .then(pilot => {
         this.subtitle = 'Estudo selecionado: '+pilot.name;
       })
-      .catch(error => {
-        console.log('Não foi possível buscar estudo piloto!', error);
+      .catch(errorResponse => {
+        console.log('Não foi possível buscar estudo piloto!', errorResponse);
       });
   }
 

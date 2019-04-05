@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-list-pilotstudies',
@@ -47,8 +47,8 @@ export class ListPilotstudiesComponent implements OnInit {
       .then(studies => {
         this.list = studies;
       })
-      .catch(error => {
-        console.log('Erro ao buscar pilot-studies: ', error);
+      .catch(errorResponse => {
+        console.log('Erro ao buscar pilot-studies: ', errorResponse);
       });
   }
 
@@ -61,8 +61,8 @@ export class ListPilotstudiesComponent implements OnInit {
             return study.name.search(this.search) != -1;
           });
         })
-        .catch(error => {
-          console.log('Erro ao buscar pilot-studies: ', error);
+        .catch(errorResponse => {
+          console.log('Erro ao buscar pilot-studies: ', errorResponse);
         });
     }, 200);
   }
@@ -94,16 +94,16 @@ export class ListPilotstudiesComponent implements OnInit {
         .then(studies => {
           this.length = studies.length;
         })
-        .catch(error => {
-          console.log('Erro ao buscar pilot-studies: ', error);
+        .catch(errorResponse => {
+          console.log('Erro ao buscar pilot-studies: ', errorResponse);
         });
     } else {
       this.pilotStudyService.getAll()
         .then(studies => {
           this.length = studies.length;
         })
-        .catch(error => {
-          console.log('Erro ao buscar pilot-studies: ', error);
+        .catch(errorResponse => {
+          console.log('Erro ao buscar pilot-studies: ', errorResponse);
         });
     }
   }

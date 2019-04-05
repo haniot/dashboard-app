@@ -60,8 +60,8 @@ export class PatientFormComponent implements OnInit {
       this.patientService.getById(this.pilotStudyId, this.patientId)
         .then(patient => {
           this.patientForm.setValue(patient);
-        }).catch(error => {
-          console.error('Não foi possível buscar paciente!', error);
+        }).catch(errorResponse => {
+          console.error('Não foi possível buscar paciente!', errorResponse);
         })
     }
   }
@@ -75,7 +75,7 @@ export class PatientFormComponent implements OnInit {
           this.patientForm.reset();
           this.toastService.info('Paciente criado!');
         })
-        .catch(error => {
+        .catch(errorResponse => {
           this.toastService.error('Não foi possível criar paciente!');
         });
     } else {
@@ -83,7 +83,7 @@ export class PatientFormComponent implements OnInit {
         .then(patient => {
           this.toastService.info('Paciente atualizado!');
         })
-        .catch(error => {
+        .catch(errorResponse => {
           this.toastService.error('Não foi possível atualizar paciente!');
         });
     }
@@ -99,8 +99,8 @@ export class PatientFormComponent implements OnInit {
       .then(pilots => {
         this.listPilots = pilots;
       })
-      .catch(error => {
-        console.log('Não foi possivel buscar estudos pilotos!', error);
+      .catch(errorResponse => {
+        console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
       });
   }
 }

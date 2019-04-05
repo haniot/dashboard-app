@@ -6,21 +6,23 @@ import { ChangePasswordComponent } from 'app/security/auth/change-password/chang
 import { AcessDeniedComponent } from 'app/core/template/acess-denied/acess-denied.component';
 import { NotfoundComponent } from 'app/core/template/page-not-found/page-not-found.component';
 
+const routes = [
+  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: 'auth/login', component: LoginComponent },
+  { path: 'auth/change', component: ChangePasswordComponent },
+  { path: 'acess-denied', component: AcessDeniedComponent },
+  { path: 'page-not-found', component: NotfoundComponent },
+  { path: '**', redirectTo: 'page-not-found' },
+  // {
+  //   path: 'admin',
+  //   loadChildren: 'app/modules/admin/admin.modules#AdminRoutingModule'
+  // }
+];
 @NgModule({
   imports: [
-    RouterModule.forRoot([
-      { path: '', redirectTo: '', pathMatch: 'full' },
-      { path: 'auth/login', component: LoginComponent },
-      { path: 'auth/change', component: ChangePasswordComponent },
-      { path: 'acess-denied', component: AcessDeniedComponent },
-      { path: 'page-not-found', component: NotfoundComponent },
-      // {
-      //   path: 'admin',
-      //   loadChildren: 'app/modules/admin/admin.modules#AdminRoutingModule'
-      // }
-    ])
+    RouterModule.forRoot(routes)
   ],
   declarations: [],
-  exports: [ RouterModule]
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

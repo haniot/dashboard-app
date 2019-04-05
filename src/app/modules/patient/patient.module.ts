@@ -16,13 +16,16 @@ import { PatientService } from './services/patient.service';
 import { PatientRoutingModule } from './patient-routing/patient-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { ListPilotstudiesComponent } from './list-pilotstudies/list-pilotstudies.component';
+import { ViewHabitsComponent } from './view-habits/view-habits.component';
+import { HabitsModule } from '../habits/habits.module';
 
 @NgModule({
   declarations: [
     PatientFormComponent,
     PatientTableComponent,
     PatientComponentComponent,
-    ListPilotstudiesComponent
+    ListPilotstudiesComponent,
+    ViewHabitsComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import { ListPilotstudiesComponent } from './list-pilotstudies/list-pilotstudies
     MatNativeDateModule,
     MatFormFieldModule,
     MultiSelectModule,
-    PatientRoutingModule
+    PatientRoutingModule,
+    HabitsModule
   ],
   providers: [
     PatientService,

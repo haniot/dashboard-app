@@ -36,7 +36,8 @@ const routes = [
         path: 'mystudies/:userId',
         component: MypilotstudiesComponent,
         data: { scope: "" }
-      }
+      },
+      { path: '**', redirectTo: 'page-not-found' },
     ]
   }
 ];

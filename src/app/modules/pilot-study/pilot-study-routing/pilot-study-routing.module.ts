@@ -43,7 +43,8 @@ const routes = [{
       path: 'pilotstudies/:pilotStudyId',
       component: PilotStudyFormComponent,
       data: { scope: "pilotstudy:update pilotstudy:updateAll"}
-    }
+    },
+    { path: '**', redirectTo: 'page-not-found' },
   ]
 }];
 

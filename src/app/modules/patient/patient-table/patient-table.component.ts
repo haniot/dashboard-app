@@ -53,8 +53,8 @@ export class PatientTableComponent implements OnInit {
           });
           this.listOfPatients = pacientsReturned;
         })
-        .catch(error => {
-          console.log('Erro ao buscar pacientes: ', error);
+        .catch(errorResponse => {
+          console.log('Erro ao buscar pacientes: ', errorResponse);
         });
     }, 200);
   }
@@ -64,8 +64,8 @@ export class PatientTableComponent implements OnInit {
       .then(patients => {
         this.listOfPatients = patients;
       })
-      .catch(error => {
-        console.log('Erro ao buscar pacientes: ', error);
+      .catch(errorResponse => {
+        console.log('Erro ao buscar pacientes: ', errorResponse);
       });
   }
 
@@ -94,9 +94,9 @@ export class PatientTableComponent implements OnInit {
         this.toastService.info('Paciente removido com suecesso!');
         this.closeModalComfimation();
       })
-      .catch(error => {
+      .catch(errorResponse => {
         this.toastService.error('Não foi possível remover usuário!');
-        //console.log('Não foi possível remover paciente!', error);
+        //console.log('Não foi possível remover paciente!', errorResponse);
       });
   }
 
@@ -119,7 +119,9 @@ export class PatientTableComponent implements OnInit {
       .then(patients => {
         this.length = patients.length;
       })
-      .catch();
+      .catch(errorResponse => {
+        //console.log('Não foi possível buscar todos os pacientes',errorResponse);
+      });
   }
 
 }
