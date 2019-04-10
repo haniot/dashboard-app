@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as $ from 'jquery';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-change-password',
@@ -17,10 +18,13 @@ export class ChangePasswordComponent implements OnInit {
   errorCredentials = false;
   redirect_link;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private toastr: ToastrService
+    ) { }
 
   ngOnInit() {
     $('body').css('background-color', '#00a594')
@@ -42,11 +46,14 @@ export class ChangePasswordComponent implements OnInit {
     this.errorCredentials = false;
     this.authService.changePassowrd(this.f.value, this.redirect_link).subscribe(
       (resp) => {
+        this.toastr.info("Senha alterada com sucesso!");
       },
       (errorResponse: HttpErrorResponse) => {
-        if (errorResponse.status === 400) {
-          this.errorCredentials = true;
-          console.log(errorResponse)
+        // console.log(errorResponse)        
+        if (errorResponse.status == 400 && errorResponse.error.code == 400 && errorResponse.error.message == 'Password does not match!') {
+          this.toastr.error("Senha antiga informada incorreta!");
+        }else{
+          this.toastr.error("Não foi possível mudar a senha!");
         }
       }
     );

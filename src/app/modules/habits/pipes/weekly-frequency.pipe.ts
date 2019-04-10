@@ -14,13 +14,13 @@ export class WeeklyFrequencyPipe implements PipeTransform {
         return 'No dia';
 
       case 'one_two_days':
-        return 'Entre um e dois por dia';
+        return 'Entre uma e duas vezes';
 
       case 'three_four_days':
-        return 'Entre três e quatro por dia';
+        return 'Entre três e quatro vezes';
 
       case 'five_six_days':
-        return 'Entre cinco e seis por dia';
+        return 'Entre cinco e seis vezes';
 
       case 'all_days':
         return 'Todos os dias';
