@@ -9,7 +9,7 @@ export class AreaGraphComponent implements OnInit {
 
   option = {
     title: {
-      text: 'Olaaa'
+      text: ''
     },
     tooltip: {
       trigger: 'axis',

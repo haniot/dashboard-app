@@ -21,6 +21,8 @@ import { WeeklyActivityPipe } from './pipes/weekly-activities.pipe';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { MedicalRecordService } from './services/medical-record.service';
 import { ChronicDiseasePipe } from './pipes/chronic-disease.pipe';
+import { DiseaseHistoryPipe } from './pipes/disease-history.pipe';
+import { WeeklyFoodPipe } from './pipes/weekly-food.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,10 @@ import { ChronicDiseasePipe } from './pipes/chronic-disease.pipe';
     FoodAllergyPipe,
     WeeklyFrequencyPipe,
     WeeklyActivityPipe,
-    ChronicDiseasePipe
+    ChronicDiseasePipe,
+    DiseaseHistoryPipe,
+    WeeklyFoodPipe,
+    PhysicalActivityPipe
   ],
   imports: [
     CommonModule,
@@ -61,6 +66,8 @@ import { ChronicDiseasePipe } from './pipes/chronic-disease.pipe';
     PhysicalActivityPipe,
     WeeklyActivityPipe,
     ChronicDiseasePipe,
+    DiseaseHistoryPipe,
+    WeeklyFoodPipe,
     /**services */
     FeedingRecordService,
     SleepRecordService,

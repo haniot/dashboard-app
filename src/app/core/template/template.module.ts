@@ -26,7 +26,9 @@ import { TemplateComponent } from './template-component/template.component';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    TemplateComponent
+    TemplateComponent,
+    AcessDeniedComponent,
+    NotfoundComponent
   ]
 })
 export class TemplateModule { }

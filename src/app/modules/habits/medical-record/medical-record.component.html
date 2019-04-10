@@ -1,21 +1,58 @@
-<haniot-card [title]="'Hábitos de sono do paciente'" subtitle=''>
+<haniot-card [title]="'Histórico de doenças do paciente'" subtitle=''>
 
   <form [formGroup]="medicalForm">
 
-    <div class="row container">
-      <label for="">
-        Lista de doenças crônicas:
-      </label>
-      <div class="row container">
-        <div class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
+    <label for="">
+      Lista de doenças crônicas:
+    </label>
+
+    <div class="container">
+
+      <!-- <div class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
           <span class="disease-type">
             {{disease.type | chronicDisease}}
           </span>
-          <span class="disease-history">{{disease.disease_history}}</span>
+          <span class="disease-history">{{disease.disease_history | diseaseHistory}}</span>
           
+        </div> -->
+
+      <div class="col-md-6" class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
+        <div class="card card-stats diseaseHistory">
+          <div class="row container">
+            <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">
+              <div class="card-icon-disease">
+
+                <img [src]="'../../../../assets/img/haniot/'+disease.type+'.png'" alt="">
+
+              </div>
+            </div>
+            <div class="col-md row">
+              <div class="col-sm">
+                <label for="">
+                  Doença:
+                </label>
+                <h4 class="card-category">{{disease.type | chronicDisease}}</h4>
+              </div>
+              <div class="col-sm">
+                <label for="">
+                  Histórico:
+                </label>
+                <h4 class="card-category">{{disease.disease_history | diseaseHistory}}</h4>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- <div class="diseaseHistory">            
+            <span>{{disease.disease_history | diseaseHistory}}</span>
+          </div> -->
+
+
         </div>
-        
       </div>
+
+
     </div>
 
     <div class="d-flex flex-row-reverse">

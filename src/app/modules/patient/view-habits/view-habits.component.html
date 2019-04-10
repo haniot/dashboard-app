@@ -71,6 +71,7 @@
                   <div class="col-md-10">
                     <input matInput class="form-control" [matDatepicker]="pickerBirthDate" formControlName="birth_date"
                       name="birth_date" data-date-format="yyyy-MM-dd" placeholder="Selecione a data de nascimento">
+                      <mat-datepicker #pickerBirthDate></mat-datepicker>
                   </div>
                 </div>
                 <span *ngIf="patientForm.controls.birth_date.valid" class="glyphicon glyphicon-ok form-control-feedback"
@@ -119,11 +120,11 @@
         <sleep-habits [patientId]="patientForm.get('id').value"></sleep-habits>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-8">
         <physical-activity-habits [patientId]="patientForm.get('id').value"></physical-activity-habits>        
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-4">
           <medical-record [patientId]="patientForm.get('id').value"></medical-record>          
       </div>
     </div>
