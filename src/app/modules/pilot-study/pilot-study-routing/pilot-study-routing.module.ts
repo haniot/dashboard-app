@@ -5,6 +5,7 @@ import { TemplateComponent } from 'app/core/template/template-component/template
 import { AuthGuard } from 'app/security/guards/auth.guard';
 import { ScopeGuard } from 'app/security/guards/scope.guard';
 import { PilotStudyFormComponent } from '../pilot-study-form/pilot-study-form.component';
+import { ListPilotstudiesComponent } from 'app/modules/patient/list-pilotstudies/list-pilotstudies.component';
 
 // const routes: Routes = [
 //   {
@@ -42,7 +43,8 @@ const routes = [{
       path: 'pilotstudies/:pilotStudyId',
       component: PilotStudyFormComponent,
       data: { scope: "pilotstudy:update pilotstudy:updateAll"}
-    }
+    },
+    { path: '**', redirectTo: 'page-not-found' },
   ]
 }];
 

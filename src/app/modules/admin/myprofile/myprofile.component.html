@@ -41,7 +41,7 @@
             'has-error': healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)}"
               *ngIf="typeUser == 'HealthProfessional'">
               <label for="healthArea">Área: </label>
-              <select name="healthArea" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel"
+              <select name="health_area" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel"
                 [(ngModel)]="user==undefined?health_area:user.health_area" [disabled]="visibilityButtonSave?null:'disabled'">
                 <option *ngFor="let area of healthAreaOptions; index as i" [value]="area">{{area | healthArea}}</option>
               </select>
@@ -55,11 +55,11 @@
 
             <div class="row container-fluid">
               <div class="col-md">
-                <button type="button" class="btn btn-default" (click)="enabledEdit()"
+                <button type="button" class="btn btn-haniot-primary" (click)="enabledEdit()"
                   [disabled]="disabledButtonEdit">Habilitar edição</button>
               </div>
               <div class="col-md" *ngIf="visibilityButtonSave">
-                <button type="submit" class="btn btn-default" [disabled]="!formMyProfile.valid">Salvar</button>
+                <button type="submit" class="btn btn-haniot-primary" [disabled]="!formMyProfile.valid">Salvar</button>
               </div>
             </div>
           </form>
@@ -102,7 +102,7 @@
 
             <div class="row container-fluid">
               <div class="col-md">
-                <button type="submit" class="btn btn-default" [disabled]="!formPassword.valid">Alterar senha</button>
+                <button type="submit" class="btn btn-haniot-primary" [disabled]="!formPassword.valid">Alterar senha</button>
               </div>
             </div>
           </form>

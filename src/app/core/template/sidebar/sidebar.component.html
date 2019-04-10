@@ -1,8 +1,7 @@
 <div class="logo">
-    <a [routerLink]="['/dashboard']" class="simple-text">
-        <div class="logo-img">
-            <img src="/assets/img/haniot/silhueta.png" />
-        </div>
+    <a [routerLink]="['/dashboard']" id="linkLogo">
+        <img src="/assets/img/haniot/silhueta-50x40.png" />
+        <span id="haniotTitle">HANIoT</span>
     </a>
 </div>
 <div class="sidebar-wrapper">
@@ -74,16 +73,16 @@
                 <p>Estudos Pilotos</p>
             </a>
         </li>
+        <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()">
+            <a class="nav-link" [routerLink]="['/mystudies',userId]" *ngIf="verifyScopes('Meus estudos')">
+                <i class="material-icons">library_books</i>
+                <p>Meus estudos</p>
+            </a>
+        </li>
         <li routerLinkActive="active" class="nav-item">
             <a class="nav-link" [routerLink]="['/patients']" *ngIf="verifyScopes('Pacientes')">
                 <i class="material-icons">face</i>
                 <p>Pacientes</p>
-            </a>
-        </li>
-        <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" [routerLink]="['/mystudies', userId]" *ngIf="verifyScopes('Meus estudos')">
-                <i class="material-icons">face</i>
-                <p>Meus estudos</p>
             </a>
         </li>
     </ul>

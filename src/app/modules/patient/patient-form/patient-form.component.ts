@@ -6,6 +6,7 @@ import { Gender } from '../models/patient';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'patient-form',
@@ -26,7 +27,8 @@ export class PatientFormComponent implements OnInit {
     private pilotStudiesService: PilotStudyService,
     private toastService: ToastrService,
     private router: Router,
-    private activeRouter: ActivatedRoute
+    private activeRouter: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -58,8 +60,8 @@ export class PatientFormComponent implements OnInit {
       this.patientService.getById(this.pilotStudyId, this.patientId)
         .then(patient => {
           this.patientForm.setValue(patient);
-        }).catch(error => {
-          console.error('Não foi possível buscar paciente!', error);
+        }).catch(errorResponse => {
+          console.error('Não foi possível buscar paciente!', errorResponse);
         })
     }
   }
@@ -73,7 +75,7 @@ export class PatientFormComponent implements OnInit {
           this.patientForm.reset();
           this.toastService.info('Paciente criado!');
         })
-        .catch(error => {
+        .catch(errorResponse => {
           this.toastService.error('Não foi possível criar paciente!');
         });
     } else {
@@ -81,23 +83,24 @@ export class PatientFormComponent implements OnInit {
         .then(patient => {
           this.toastService.info('Paciente atualizado!');
         })
-        .catch(error => {
+        .catch(errorResponse => {
           this.toastService.error('Não foi possível atualizar paciente!');
         });
     }
   }
 
   onBack() {
-    this.router.navigate(['patients', this.pilotStudyId]);
+    this.location.back();
   }
 
   getAllPilotStudies() {
-    this.pilotStudiesService.getAll()
+    const userId = atob(localStorage.getItem('user'));
+    this.pilotStudiesService.getAllByUserId(userId)
       .then(pilots => {
         this.listPilots = pilots;
       })
-      .catch(error => {
-        console.log('Não foi possivel buscar estudos pilotos!', error);
+      .catch(errorResponse => {
+        console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
       });
   }
 }

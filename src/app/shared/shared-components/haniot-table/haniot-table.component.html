@@ -23,7 +23,7 @@
         <td>{{user.email}}</td>
         <td *ngIf="userType == 'HealthProfessional'">{{user.health_area | healthArea}}</td>
         <td><a class="nav-link" (click)="editUser(user.id)" title="Editar usuário..."><i class="material-icons">more_horiz</i></a></td>
-        <td *ngIf="!verifySameUser(user)"><a class="nav-link" (click)="removeUser(user.id)"
+        <td *ngIf="!verifySameUser(user)"><a class="nav-link" (click)="openModalConfirmRemove(user.id)"
             title="Excluir usuário..."><i class="material-icons">close</i></a></td>
       </tr>
     </tbody>
@@ -36,3 +36,5 @@
               [pageSizeOptions]="pageSizeOptions"
               (page)="clickPagination($event)">
 </mat-paginator>
+
+<modal-confirmation [message]="'Tem certeza que deseja remover usuário?'" (confirmation)="removeUser()" (noconfirmation)="closeModalConfirmRemove()"></modal-confirmation>

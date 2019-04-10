@@ -6,6 +6,7 @@ import { ScopeGuard } from 'app/security/guards/scope.guard';
 import { PatientComponentComponent } from '../patient-component/patient-component.component';
 import { PatientFormComponent } from '../patient-form/patient-form.component';
 import { ListPilotstudiesComponent } from '../list-pilotstudies/list-pilotstudies.component';
+import { ViewHabitsComponent } from '../view-habits/view-habits.component';
 
 const routes = [
   {
@@ -16,28 +17,29 @@ const routes = [
       { 
         path: 'patients',
         component: ListPilotstudiesComponent,
-        data: { scope: ""}//patient:readAll patient:delete patient:deleteAll
+        data: { scope: "patient:read patient:readAll"}
       },
       { 
         path: 'patients/:pilotstudy_id',
         component: PatientComponentComponent,
-        data: { scope: ""} //patient:create
+        data: { scope: "patient:read patient:readAll patient:delete patient:deleteAll"}
       },
       { 
         path: 'patients/:pilotstudy_id/new',
         component: PatientFormComponent,
-        data: { scope: ""} //patient:create
+        data: { scope: "patient:create"}
       },
       { 
         path: 'patients/:patientId/:pilotstudy_id',
         component: PatientFormComponent,
-        data: { scope: ""}//patient:update patient:updateAll
+        data: { scope: "patient:update patient:updateAll"}
       },
       { 
-        path: 'mystudies/:userId',
-        component: ListPilotstudiesComponent,
-        data: { scope: ""}//patient:readAll patient:delete patient:deleteAll
-      }
+        path: 'patients/:patientId/:pilotstudy_id/habits',
+        component: ViewHabitsComponent,
+        data: { scope: "patient:read patient:readAll"}
+      },
+      { path: '**', redirectTo: 'page-not-found' },     
     ]
   }
 ];

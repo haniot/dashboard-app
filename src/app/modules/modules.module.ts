@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PilotStudyModule } from './pilot-study/pilot-study.module';
 import { PatientModule } from './patient/patient.module';
+import { HabitsModule } from './habits/habits.module';
 
 @NgModule({
   declarations: [],
@@ -15,7 +16,8 @@ import { PatientModule } from './patient/patient.module';
     DashboardModule,
     UserModule,
     PilotStudyModule,
-    PatientModule
+    PatientModule,
+    HabitsModule
   ]
 })
 export class ModulesModule { }

@@ -16,6 +16,8 @@ import { HealthProfessionalService } from './services/health-professional.servic
 import { UserService } from './services/users.service';
 import { SharedModule } from 'app/shared/shared.module';
 import { PilotStudyModule } from '../pilot-study/pilot-study.module';
+import { MypilotstudiesComponent } from './mypilotstudies/mypilotstudies.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   imports: [
@@ -31,12 +33,14 @@ import { PilotStudyModule } from '../pilot-study/pilot-study.module';
     PilotStudyModule,
 
     MatSlideToggleModule,
+    MatPaginatorModule
   ],
   declarations: [
     AdministratorsComponent,   
     HealthProfessionalComponent,
     ModalUserComponent,
-    MyprofileComponent    
+    MyprofileComponent,
+    MypilotstudiesComponent    
 
   ], 
   providers:[

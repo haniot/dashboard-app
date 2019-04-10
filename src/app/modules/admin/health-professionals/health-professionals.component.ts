@@ -35,8 +35,9 @@ export class HealthProfessionalComponent {
         this.healthProfessionals = healthProfessionals;
         this.getLengthHealthProfessionals();
       })
-      .catch( error => {
-        console.log('Erro ao buscar profissionais de saúde: ',error);
+      .catch(errorResponse => {
+        this.toastr.error('Não foi possível listar profissional de saúde!');
+        //console.log('Erro ao buscar profissionais de saúde: ',errorResponse);
       });
   }
 
@@ -48,33 +49,45 @@ export class HealthProfessionalComponent {
           this.toastr.info('Profissional de saúde criado!');
           this.modalService.close('modalUser');
         } else {
-          this.toastr.error('Não foi possível criar profissional de saúde!');
-          this.modalService.actionNotExecuted('modalUser',event);
+          this.toastr.error('Email já cadastrado', 'Não foi possível criar profissional de saúde!');
+          this.modalService.actionNotExecuted('modalUser', event);
         }
       })
-      .catch(error => {
-        this.toastr.error('Não foi possível criar profissional de saúde!');
-        this.modalService.actionNotExecuted('modalUser',event,error.error);
-        console.log('Erro ao criar profissional de saúde: ', error);
+      .catch(errorResponse => {        
+        if (errorResponse.status == 409 &&
+          errorResponse.error.code == 409 &&
+          errorResponse.error.message == 'A registration with the same unique data already exists!') {
+          this.toastr.error('Email já cadastrado');
+        }else{
+          this.toastr.error('Não foi possível criar profissional de saúde!');
+        }
+        this.modalService.actionNotExecuted('modalUser', event, errorResponse.error);
+        //console.log('Não foi possível criar profissional de saúde!',errorResponse);
       });
   }
 
-  editHealthProfessinal(event) {
-    this.healthService.update(event)
+  editHealthProfessinal(healthProfessional) {
+    this.healthService.update(healthProfessional)
       .then(date => {
         if (date) {
           this.getAllHealthProfessionals();
           this.toastr.info('Profissional de saúde atualizado!');
-          this.modalService.close('modalUserEdit');          
+          this.modalService.close('modalUserEdit');
         } else {
           this.toastr.error('Não foi possível atualizar profissional de saúde!');
-          this.modalService.actionNotExecuted('modalUserEdit',event);
+          this.modalService.actionNotExecuted('modalUserEdit', healthProfessional);
         }
       })
-      .catch(error => {
-        this.modalService.actionNotExecuted('modalUserEdit',event,error.error);
-        this.toastr.error('Não foi possível atualizar profissional de saúde!');
-        console.log('Erro ao atualizar profissional de saúde: ', error);
+      .catch(errorResponse => {
+        if (errorResponse.status == 409 &&
+          errorResponse.error.code == 409 &&
+          errorResponse.error.message == 'A registration with the same unique data already exists!') {
+          this.toastr.error('Email já cadastrado');
+        }else{
+          this.toastr.error('Não foi possível atualizar profissional de saúde!');
+        }
+        this.modalService.actionNotExecuted('modalUserEdit', healthProfessional);
+        //console.log('Não foi possível atualizar profissional de saúde!', errorResponse);
       });
   }
 
@@ -88,18 +101,20 @@ export class HealthProfessionalComponent {
     this.userEdit = event;
   }
 
-  paginationEvent(event){
+  paginationEvent(event) {
     this.page = event.page;
     this.limit = event.limit;
     this.getAllHealthProfessionals();
   }
 
-  getLengthHealthProfessionals(){
-    /** Verificando quantidade de cuidadores cadastrados */
+  getLengthHealthProfessionals() {
+    /** Verificando quantidade de profissionais cadastrados */
     this.healthService.getAll()
       .then(caregivers => {
         this.length = caregivers.length;
       })
-      .catch();
+      .catch(errorResponse => {
+        //console.log('Não foi possível buscar todos os profissionais!', errorResponse);
+      });
   }
 }

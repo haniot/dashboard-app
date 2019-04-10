@@ -8,6 +8,7 @@ import { AdminService } from 'app/modules/admin/services/admin.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
 import { UserService } from 'app/modules/admin/services/users.service';
 import { IUser } from 'app/modules/admin/models/users.models';
+import { ModalService } from '../haniot-modal/service/modal.service';
 
 
 @Component({
@@ -34,22 +35,36 @@ export class HaniotTableComponent {
   search: string;
   searchTime;
 
+  cacheIdRemove: string;
+
   constructor(
     private authService: AuthService,
     private adminService: AdminService,
     private healthService: HealthProfessionalService,
     private userService: UserService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private modalService: ModalService) { }
 
   verifySameUser(user: any): boolean {
     return user.id == this.authService.decodeToken().sub;
   }
 
-  removeUser(id: string) {
-    this.userService.removeUser(id)
+  openModalConfirmRemove(id: string){
+    this.cacheIdRemove = id;
+    this.modalService.open('modalConfirmation');
+  }
+  
+  closeModalConfirmRemove(){
+    this.cacheIdRemove = '';
+    this.modalService.close('modalConfirmation');
+  }
+  
+  removeUser() {
+    this.userService.removeUser(this.cacheIdRemove)
       .then(() => {
         this.onremove.emit();
         this.toastr.info('Usuário excluido com sucesso!');
+        this.closeModalConfirmRemove();
       })
       .catch(error => {
         this.toastr.error('Não foi possível excluir usuário!');

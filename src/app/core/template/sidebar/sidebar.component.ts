@@ -5,42 +5,7 @@ import { VerifyScopeService } from 'app/security/services/verify-scope.service';
 
 declare const $: any;
 
-declare interface RouteInfo {
-  path: string;
-  title: string;
-  icon: string;
-  class: string;
-  scopes: Array<String>;
-  children?: Array<any>;
-}
-
-export const ROUTES: RouteInfo[] = [
-  { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '', scopes: [] },
-  {
-    path: '/usuarios',
-    title: 'Usuários',
-    icon: 'arrow_drop_down',
-    class: '',
-    scopes: ['adminAccount:create', 'adminAccount:deleteAll', 'adminAccount:readAll', 'adminAccount:updateAll',
-      'caregiverAccount:create', 'caregiverAccount:deleteAll', 'caregiverAccount:readAll', 'caregiverAccount:updateAll']
-  },
-  {
-    path: '/administrators',
-    title: 'Administradores',
-    icon: 'supervisor_account',
-    class: '',
-    scopes: ['adminAccount:create', 'adminAccount:deleteAll', 'adminAccount:readAll', 'adminAccount:updateAll']
-  },
-  {
-    path: '/healthprofessionals',
-    title: 'P. de Saúde',
-    icon: 'accessibility',
-    class: '',
-    scopes: ['caregiverAccount:create', 'caregiverAccount:deleteAll', 'caregiverAccount:readAll', 'caregiverAccount:updateAll']
-  }
-];
-
-const configSideBar = [
+export const configSideBar = [
   { title: 'Dashboard', scopes: [] },
   {
     title: 'Usuários',
@@ -53,14 +18,15 @@ const configSideBar = [
   },
   {
     title: 'P. de Saúde',
-    scopes: ['healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll' , 'healthprofessional:updateAll'] },
+    scopes: ['healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll', 'healthprofessional:updateAll']
+  },
   {
     title: 'Estudos Pilotos',
-    scopes: ['pilotstudy:create', 'pilotstudy:readAll', 'pilotstudy:updateAll' , 'pilotstudy:deleteAll']
+    scopes: ['pilotstudy:create', 'pilotstudy:readAll', 'pilotstudy:updateAll', 'pilotstudy:deleteAll']
   },
   {
     title: 'Pacientes',
-    scopes: []//'patient:create', 'patient:readAll', 'patient:updateAll' , 'patient:deleteAll'
+    scopes: ['patient:create', 'patient:readAll', 'patient:updateAll' , 'patient:deleteAll']
   },
   {
     title: 'Meus estudos',
@@ -104,7 +70,7 @@ export class SidebarComponent implements OnInit {
   };
 
   verifyScopes(title: string): boolean {
-    const configRouter = this.configSideBar.filter((element)=>{
+    const configRouter = this.configSideBar.filter((element) => {
       return element.title === title;
     });
     const routerScopes = configRouter[0].scopes;
@@ -114,22 +80,31 @@ export class SidebarComponent implements OnInit {
 
   getUserName() {
     this.userId = atob(localStorage.getItem('user'));
-    this.userService.getUserById(this.userId)
-      .then(user => {
-        if (user && user.name) {
-          this.userName = user.name;
-        }
-      })
-      .catch(error => {
-        console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
-      });
+    const username = atob(localStorage.getItem('username'));
+    if (localStorage.getItem('username')) {
+      this.userName = username;
+    } else {
+      this.userService.getUserById(this.userId)
+        .then(user => {
+          if (user && user.name) {
+            this.userName = user.name;
+          }
+        })
+        .catch(error => {
+          console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
+        });
+    }
   }
 
   logout() {
     this.authService.logout();
   }
 
-  onclickMenuUser(){
-    this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down'?'keyboard_arrow_right':'keyboard_arrow_down';
+  onclickMenuUser() {
+    this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
+  }
+
+  showMyStudies():boolean{    
+    return localStorage.getItem('typeUser') == 'HealthProfessional';
   }
 }

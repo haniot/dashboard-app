@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from '../services/admin.service';
-
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import { IUser, Admin } from '../models/users.models';
-
 
 @Component({
   selector: 'app-administrators',
@@ -44,6 +42,8 @@ export class AdministratorsComponent {
         if (errorResponse.status === 401) {
           this.errorCredentials = true;
         }
+        this.toastr.error('Não foi possível listar administrador!');
+        //console.log('Não foi possível listar administrador!',errorResponse);
       });
 
   }
@@ -57,12 +57,18 @@ export class AdministratorsComponent {
         this.modalService.close('modalLoading');
       })
       .catch((errorResponse: HttpErrorResponse) => {        
+        if (errorResponse.status == 409 &&
+          errorResponse.error.code == 409 &&
+          errorResponse.error.message == 'A registration with the same unique data already exists!') {
+          this.toastr.error('Email já cadastrado');
+        }else{
+          this.toastr.error('Não foi possível criar administrador!');
+        }
         this.modalService.actionNotExecuted('modalUser',event,errorResponse.error);
-        this.toastr.error('Não foi possível criar administrador!');
         if (errorResponse.status === 401) {
           this.errorCredentials = true;
         }
-
+        //console.log('Não foi possível criar administrador!',errorResponse);
       });
   }
 
@@ -74,12 +80,18 @@ export class AdministratorsComponent {
         this.modalService.close('modalUserEdit');
       })
       .catch((errorResponse: HttpErrorResponse) => {
-        this.modalService.actionNotExecuted('modalUserEdit', event,errorResponse.error);
-        this.toastr.error('Não foi possível atualizar administrador!');
+        if (errorResponse.status == 409 &&
+          errorResponse.error.code == 409 &&
+          errorResponse.error.message == 'A registration with the same unique data already exists!') {
+          this.toastr.error('Email já cadastrado');
+        }else{
+          this.toastr.error('Não foi possível atualizar administrador!');
+        }
+        this.modalService.actionNotExecuted('modalUserEdit', event,errorResponse.error);        
         if (errorResponse.status === 401) {
           this.errorCredentials = true;
         }
-
+        //console.log('Não foi possível atualizar administrador!', errorResponse);
       });
   }
 
@@ -100,13 +112,13 @@ export class AdministratorsComponent {
   }
 
   calcLengthAdministrators() {
-    /** Verificando quantidade de cuidadores cadastrados */
+    /** Verificando quantidade de administradores cadastrados */
     this.adminService.getAll()
-      .then(healthprofessionals => {
-        this.length = healthprofessionals.length;
+      .then(admins => {
+        this.length = admins.length;
       })
-      .catch(error => {
-        console.log('Error ao buscar profissionais de saúde!', error);
+      .catch(errorResponse => {
+        //console.log('Error ao buscar administradores!', errorResponse);
       });
   }
 }

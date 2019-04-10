@@ -9,27 +9,25 @@ import { HealthProfessional } from 'app/modules/admin/models/users.models';
   templateUrl: './view-health-professional.component.html',
   styleUrls: ['./view-health-professional.component.scss']
 })
-export class ViewHealthProfessionalComponent implements OnChanges{
+export class ViewHealthProfessionalComponent implements OnChanges {
 
   @Input() pilotstudyid: string;
   healthProfessionals: Array<HealthProfessional>;
 
   constructor(
     private modalService: ModalService,
-    private pilotStudyService: PilotStudyService) {}
+    private pilotStudyService: PilotStudyService) { }
 
-  open(){
-    this.modalService.open('healthProfessionals');
-  }
-
-  ngOnChanges(){
-    this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotstudyid)
-      .then( healthprofessionals => {
-        this.healthProfessionals = healthprofessionals;
-      })
-      .catch( error => {
-        console.log('Não foi possivel buscar profissionais de saúde');
-      });
+  ngOnChanges() {
+    if (this.pilotstudyid) {
+      this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotstudyid)
+        .then(healthprofessionals => {
+          this.healthProfessionals = healthprofessionals;
+        })
+        .catch(error => {
+          console.log('Não foi possivel buscar profissionais de saúde');
+        });
+    }
   }
 
 }

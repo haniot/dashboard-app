@@ -21,12 +21,12 @@ export class MyprofileComponent implements OnInit {
   typeUser: string;// Admin or HealthProfessional
   healthAreaOptions = Object.keys(HealtArea);
 
-  email:string;
-  password:string;
+  email: string;
+  password: string;
 
   old_password: string;
   new_password: string;
-  
+
   constructor(
     private adminService: AdminService,
     private healthService: HealthProfessionalService,
@@ -35,17 +35,28 @@ export class MyprofileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getUser();
+  }
+
+  getUser() {
     this.userId = atob(localStorage.getItem('user'));
-    this.userService.getUserById(this.userId)
-      .then( user => {
-        this.user = user;
-        if(this.user.health_area){
-          this.typeUser = 'HealthProfessional';
-        }
-      })
-      .catch(HttpError => {
-        console.log('Não foi possível carregar usuário logado!', HttpError);
-      });
+    this.typeUser = localStorage.getItem('typeUser');
+    if (this.typeUser == 'Admin') {
+      this.adminService.getById(this.userId)
+        .then(admin => this.user = admin)
+        .catch(HttpError => {
+          console.log('Não foi possível carregar usuário logado!', HttpError);
+        });
+    } else if (this.typeUser == 'HealthProfessional') {
+      this.healthService.getById(this.userId)
+        .then(healthprofessional => this.user = healthprofessional)
+        .catch(HttpError => {
+          console.log('Não foi possível carregar usuário logado!', HttpError);
+        });
+    } else {
+      this.userService.getTypeUserAndSetLocalStorage(this.userId);
+      this.getUser();
+    }
   }
 
   enabledEdit() {
@@ -59,8 +70,8 @@ export class MyprofileComponent implements OnInit {
       admin.id = atob(localStorage.getItem('user'));
       this.adminService.update(admin)
         .then(() => {
-          this.ngOnInit();
-          this.toastr.success('Informações atualizadas!');
+          this.getUser();
+          this.toastr.info('Informações atualizadas!');
           this.visibilityButtonSave = false;
           this.disabledButtonEdit = false;
         })
@@ -72,8 +83,8 @@ export class MyprofileComponent implements OnInit {
       healthProfessional.id = atob(localStorage.getItem('user'));
       this.healthService.update(healthProfessional)
         .then(() => {
-          this.ngOnInit();
-          this.toastr.success('Informações atualizadas!');
+          this.getUser();
+          this.toastr.info('Informações atualizadas!');
           this.visibilityButtonSave = false;
           this.disabledButtonEdit = false;
         })
@@ -82,8 +93,7 @@ export class MyprofileComponent implements OnInit {
         });
     }
   }
-  onChangePassword(form){
-    
+  onChangePassword(form) {
     this.userService.changePassword(this.userId, form.value)
       .then(() => {
         this.toastr.info('Senha modificada com sucesso!');
@@ -92,8 +102,8 @@ export class MyprofileComponent implements OnInit {
       .catch(HttpError => {
         console.log('Não foi possível mudar a senha!', HttpError);
         this.toastr.error('Não foi posível mudar sua senha!');
-        if(HttpError.error.code == 400 && HttpError.error.message == "Password does not match"){
-          form.controls['old_password'].setErrors({'incorrect': true});
+        if (HttpError.error.code == 400 && HttpError.error.message == "Password does not match") {
+          form.controls['old_password'].setErrors({ 'incorrect': true });
         }
       });
   }

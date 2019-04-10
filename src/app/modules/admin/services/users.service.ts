@@ -41,4 +41,18 @@ export class UserService {
       .toPromise();
   }
 
+  getTypeUserAndSetLocalStorage(userId: string){
+    this.healthService.getById(userId)    
+      .then(healthprofessional => {
+        if(healthprofessional){
+          localStorage.setItem('typeUser','HealthProfessional');
+        }else{
+          localStorage.setItem('typeUser','Admin');
+        }
+      })
+      .catch(httpError => {
+        localStorage.setItem('typeUser','Admin');
+      });
+  }
+
 }

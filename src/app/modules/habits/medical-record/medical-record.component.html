@@ -1,0 +1,46 @@
+<haniot-card [title]="'Hábitos de sono do paciente'" subtitle=''>
+
+  <form [formGroup]="medicalForm">
+
+    <div class="row container">
+      <label for="">
+        Lista de doenças crônicas:
+      </label>
+      <div class="row container">
+        <div class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
+          <span class="disease-type">
+            {{disease.type | chronicDisease}}
+          </span>
+          <span class="disease-history">{{disease.disease_history}}</span>
+          
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="d-flex flex-row-reverse">
+      <div class="p-2"><small class="pull-right">Data do registro:
+          {{medicalForm.get('created_at').value | myDate}}</small></div>
+    </div>
+
+  </form>
+
+  <!-- Botões Anterior e Próximo -->
+  <div class="container" *ngIf="listMedical.length>1">
+    <div class="row">
+      <div class="col align-self-start">
+        <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" title="Anterior"
+          (click)="prev()" [disabled]="!index">
+          <i class="material-icons">arrow_back</i>
+        </button>
+      </div>
+
+      <div class="col align-self-end">
+        <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
+          (click)="next()" title="Próximo" [disabled]="index == listMedical.length-1">
+          <i class="material-icons">arrow_forward</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</haniot-card>
