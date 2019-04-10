@@ -51,18 +51,7 @@ export class MedicalRecordComponent implements OnInit {
       this.medcalService.getAll(this.patientId)
         .then(medicalRecords => {
           this.listMedical = medicalRecords;
-          const mock: MedicalRecord = {
-            "id": "5c9137f29293b51a067711c8",
-            "created_at": "2018-11-19T14:40:00",
-            "chronic_diseases": [
-              {
-                "type": "hipertension",
-                "disease_history": "yes"
-              }
-            ]
-          }
-          this.createMedicalForm(mock);// FIXME: Remover
-          //this.createMedicalForm(medicalRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
+          this.createMedicalForm(medicalRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
         })
         .catch(errorResponse => {
           this.toastService.error('Não foi possível buscar histórico de doenças!');

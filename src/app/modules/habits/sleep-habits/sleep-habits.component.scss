@@ -1,11 +1,21 @@
-label{
-    color: black;
-    font-size: 14px;
-    font-weight: bold;
+label {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
 }
-.card-icon i{
-    padding: 0px 0px;
+
+.card-header-timer div {
+  background-color: #00a594;
 }
-.card-header-timer div{
-    background-color: #00a594;
+#alarm_on {
+    
+    width: 40px;
+    height: 50px;
+    
+}
+#alarm {
+    
+    width: 40px;
+    height: 50px;
+    
 }

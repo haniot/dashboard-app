@@ -7,7 +7,7 @@ export class ChronicDiseasePipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     switch (value) {
-      case 'hipertension':
+      case 'hypertension':
         return 'Hipertensão';
 
       case 'blood_fat':

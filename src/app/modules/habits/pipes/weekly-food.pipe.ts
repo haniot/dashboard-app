@@ -3,23 +3,41 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'breakFast'
+  name: 'weeklyFood'
 })
-export class BreakFastPipe implements PipeTransform {
+export class WeeklyFoodPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     switch (value) {
-      case 'never':
-        return 'Nunca';
+      case 'fish, chicken or red meat':
+        return 'Peixe, frango ou carne vermelha';
 
-      case 'sometimes':
-        return 'As vezes';
+      case 'soda':
+        return 'Refrigerante';
 
-      case 'almost_everyday':
-        return 'Quase todos os dias';
+      case 'raw salad, greens or vegetables':
+        return 'Salada, legumes ou vegetais';
 
-      case 'everyday':
-        return 'Todos os dias';
+      case 'fried':
+        return 'Salgados fritos';
+
+      case 'milk':
+        return 'Leite';
+
+      case 'bean':
+        return 'Feijão';
+
+      case 'fruits':
+        return 'Frutas';
+
+      case 'goodies':
+        return 'Guloseimas';
+      
+      case 'hamburger or sausages':
+        return 'Hamburgues, salsicha ou outros embutidos';
+
+      case undefined:
+        return 'Não respondido';
 
       case 'undefined':
         return 'Não respondido';

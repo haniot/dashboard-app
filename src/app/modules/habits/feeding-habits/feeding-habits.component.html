@@ -61,14 +61,14 @@
 
     <div class="row container">
       <label for="weekly_feeding_habits">
-        Lista de alimentos semanais e relação de consumo:
+        Lista de alimentos semanais e relação de consumo: <small>(Ultimos 7 dias)</small>
       </label>
       <div class="row container">
         <ul class="list-inline">
           <li class="list-inline-item weeklyFeeding"
             *ngFor="let weeklyFood of feedingForm.get('weekly_feeding_habits').value;" id="weekly_feeding_habits">
             <span class="food">
-              {{weeklyFood.food}}
+              {{weeklyFood.food | weeklyFood}}
               <span class="frequency">{{weeklyFood.seven_days_freq | weeklyFrequency}}</span>
             </span>
           </li>
