@@ -1,0 +1,13 @@
+.background-card{
+    background: linear-gradient(60deg, #00a594, #00a594);
+}
+
+.card .card-header-success .card-icon, .card .card-header-success .card-text, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card.bg-success, .card.card-rotate.bg-success .front, .card.card-rotate.bg-success .back{
+    background: linear-gradient(60deg, #00a594, #199e91);
+}
+
+.card-stats .card-header .card-category:not([class*="text-"]) {
+    color: #999999;
+    font-size: 14px;
+    margin-top: 60px;
+}

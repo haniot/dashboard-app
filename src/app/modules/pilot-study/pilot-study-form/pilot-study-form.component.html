@@ -1,0 +1,181 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <haniot-card [title]="pilotStudyId?'Editar um estudo piloto':'Criar um estudo piloto'" subtitle=''>
+          <form [formGroup]="pilotStudyForm">
+            <div class="form-group has-feedback"
+              [ngClass]="{'has-success': pilotStudyForm.controls.name.valid,
+          'has-error': pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)}">
+              <label for="name">
+                Nome:
+              </label>
+              <input class="form-control" type="text" formControlName="name" id="name">
+              <span *ngIf="pilotStudyForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                aria-hidden="true"></span>
+              <span
+                *ngIf="pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">Nome de estudo inválido.</span>
+              </span>
+            </div>
+
+            <div class="row">
+              <div class="form-group has-feedback col-md"
+                [ngClass]="{'has-success': pilotStudyForm.controls.start.valid,
+          'has-error': pilotStudyForm.controls.start.invalid && (pilotStudyForm.controls.start.touched || pilotStudyForm.controls.start.dirty)}">
+                <label for="start">
+                  Inicio:
+                </label>
+                <div class="row">
+                  <div class="col-md-10">
+                    <input matInput [matDatepicker]="pickerStart" class="form-control" formControlName="start"
+                      id="start" placeholder="Selecione a data de inicio">
+                  </div>
+                  <div class="col-md-2">
+                    <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerStart></mat-datepicker>
+                  </div>
+                </div>
+                <span *ngIf="pilotStudyForm.controls.start.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                  aria-hidden="true"></span>
+                <span
+                  *ngIf="pilotStudyForm.controls.start.invalid && (pilotStudyForm.controls.start.touched || pilotStudyForm.controls.start.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">Data de início inválida.</span>
+                </span>
+              </div>
+
+
+
+              <div class="form-group has-feedback col-md"
+                [ngClass]="{'has-success': pilotStudyForm.controls.end.valid,
+          'has-error': pilotStudyForm.controls.end.invalid && (pilotStudyForm.controls.end.touched || pilotStudyForm.controls.end.dirty)}">
+                <label for="end">
+                  Término:
+                </label>
+                <div class="row">
+                  <div class="col-md-10">
+                    <input matInput class="form-control" [matDatepicker]="pickerEnd" formControlName="end" id="end"
+                      placeholder="Selecione a data de término">
+                  </div>
+                  <div class="col-md-2">
+                    <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerEnd></mat-datepicker>
+                  </div>
+                </div>
+                <span *ngIf="pilotStudyForm.controls.end.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                  aria-hidden="true"></span>
+                <span
+                  *ngIf="pilotStudyForm.controls.end.invalid && (pilotStudyForm.controls.end.touched || pilotStudyForm.controls.end.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">Data de término inválida.</span>
+                </span>
+              </div>
+              <div class="col-md-2">
+                <label for="end">
+                  Situação:
+                </label>
+                <div class="row">
+                  <mat-slide-toggle class="example-margin" [color]="color" formControlName="is_active" id="is_active">
+                    {{pilotStudyForm.controls.is_active.value?'Ativado':'Desativado'}}
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback"
+              [ngClass]="{'has-success': pilotStudyForm.controls.health_professionals_id.valid,
+          'has-error': pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)}"
+              *ngIf="!pilotStudyId">
+              <mat-form-field>
+                <mat-label>Profissionais:</mat-label>
+                <mat-select formControlName="health_professionals_id" name="health_professionals_id"
+                  id="health_professionals_id" multiple>
+                  <mat-option *ngFor="let prof of listProf" [value]="prof.id">{{prof.name}},
+                    {{prof.health_area | healthArea}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <span *ngIf="pilotStudyForm.controls.health_professionals_id.valid"
+                class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+              <span
+                *ngIf="pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">Selecione profissionais.</span>
+              </span>
+            </div>
+
+            <div class="row container">
+              <div class="col-md">
+                <button type="button" class="btn btn-haniot-primary" (click)="onSubimt()"
+                  [disabled]="!pilotStudyForm.valid">Salvar</button>
+              </div>
+
+              <div class="col-md">
+                <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
+                  <i class="material-icons" id="iconBack">arrow_back</i>
+                  Voltar
+                </button>
+              </div>
+            </div>
+          </form>
+        </haniot-card>
+      </div>
+      <div class="col-md-12" *ngIf="pilotStudyId && showManagerProfessionals()" >
+        <haniot-card [title]="'Gerenciar professionais'" subtitle=''>
+          <form [formGroup]="professionalsForm">
+            <div class="row container">
+              <div class="form-group has-feedback col-md-10">
+                <mat-form-field>
+                  <mat-label>Adiconar novo profissional:</mat-label>
+                  <mat-select formControlName="health_professionals_id_add" name="health_professionals_id_add"
+                    id="health_professionals_id_add">
+                    <mat-option *ngFor="let prof of professinalsNotAssociated" [value]="prof.id">{{prof.name}},
+                      {{prof.health_area | healthArea}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <span *ngIf="professionalsForm.controls.health_professionals_id_add.valid"
+                  class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span
+                  *ngIf="professionalsForm.controls.health_professionals_id_add.invalid && (professionalsForm.controls.health_professionals_id_add.touched || professionalsForm.controls.health_professionals_id_add.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">Selecione profissionais.</span>
+                </span> -->
+              </div>
+
+              <div class="col-md-2">
+                <button type="button" class="btn btn-haniot-primary" (click)="addProfessionalInStudy()" [disabled]="!professionalsForm.valid">Adicionar</button>
+              </div>
+
+            </div>
+          </form>
+
+          <!-- Form para gerenciar profissionais de saude no estudo piloto -->
+          <div class="form-group table-responsive" id="listProfessionals">
+            <label for="">Profissionais associados:</label>
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Área</th>
+                  <th>Remover</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let professional of professinalsAssociated; index as i">
+                  <td>{{professional.name}}</td>
+                  <td>{{professional.health_area | healthArea}}</td>
+                  <td><a class="nav-link" (click)="dissociateHealthProfessional(professional.id)"
+                      title="Desassociar profissional..."><i class="material-icons">close</i></a></td>
+                </tr>
+              </tbody>
+            </table>
+
+
+          </div>
+        </haniot-card>
+      </div>
+    </div>
+  </div>
+</div>

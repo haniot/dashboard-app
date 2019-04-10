@@ -1,0 +1,26 @@
+<div *ngIf="!option" class="card-body padding-top-edit">
+        
+         <h4 class="card-title">Sem medições no período selecionado</h4>
+         
+     </div>
+
+ <div *ngIf="option">    
+    <div [ts-chart]="option">
+
+    </div>
+   
+    <div class="btn-group float-right" role="group">
+            <button class="button-color buttons" [disabled]="currentBegin<=0 && this.skipValue===0" type="button"  class="btn btn-round button-color">
+                <i class="material-icons">
+                    arrow_back
+                </i>
+                </button>
+            <button class="button-color buttons" [disabled]="currentEnd>=measurements.length && measurements.length<100 " type="button" class="btn btn-round button-color">
+                <i class="material-icons">
+                    arrow_forward
+                </i>
+            </button>
+        </div>
+</div>
+
+
