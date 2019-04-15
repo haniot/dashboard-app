@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { SleepHabitsRecord } from '../models/sleep';
@@ -10,7 +10,7 @@ import { SleepRecordService } from '../services/sleep-record.service';
   templateUrl: './sleep-habits.component.html',
   styleUrls: ['./sleep-habits.component.scss']
 })
-export class SleepHabitsComponent implements OnInit {
+export class SleepHabitsComponent implements OnInit, OnChanges {
 
   listSleep: Array<SleepHabitsRecord>;
   sleepForm: FormGroup;

@@ -53,6 +53,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         this.getListProfissonals();
       }
     });
+
     this.createForm();
     this.getPilotStudy();
     this.getListProfissonals();
@@ -85,13 +86,17 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         id: [''],
         name: ['', Validators.required],
         start: ['', Validators.required],
-        end: ['', Validators.required],
+        end: [{ value: '', disabled: true }, Validators.required],
         health_professionals_id: ['', Validators.required],
         is_active: [true, Validators.required]
       });
     }
     this.professionalsForm = this.fb.group({
       health_professionals_id_add: ['', Validators.required],
+    });
+    
+    this.pilotStudyForm.get('start').valueChanges.subscribe(val => {
+      this.pilotStudyForm.get('end').enable();
     });
   }
 
@@ -128,14 +133,14 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
   }
 
   getListProfissonals(): Promise<any> {
-    if(localStorage.getItem('typeUser') == 'Admin'){
+    if (localStorage.getItem('typeUser') == 'Admin') {
       return this.healthService.getAll()
-      .then(healthProfessionals => {
-        this.listProf = healthProfessionals;
-      })
-      .catch(error => {
-        console.log('Erro ao carregar lista de profisionais!', error);
-      });
+        .then(healthProfessionals => {
+          this.listProf = healthProfessionals;
+        })
+        .catch(error => {
+          console.log('Erro ao carregar lista de profisionais!', error);
+        });
     }
     return Promise.resolve([]);
   }
@@ -191,7 +196,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     }) ? true : false;
   }
 
-  showManagerProfessionals(): boolean{
-    return localStorage.getItem('typeUser')=='Admin';
+  showManagerProfessionals(): boolean {
+    return localStorage.getItem('typeUser') == 'Admin';
   }
 }

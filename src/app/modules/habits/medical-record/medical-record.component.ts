@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { MedicalRecord, ChronicDisease } from '../models/medical-record';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MedicalRecordService } from '../services/medical-record.service';
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './medical-record.component.html',
   styleUrls: ['./medical-record.component.scss']
 })
-export class MedicalRecordComponent implements OnInit {
+export class MedicalRecordComponent implements OnInit, OnChanges{
 
   listMedical: Array<MedicalRecord>;
   medicalForm: FormGroup;

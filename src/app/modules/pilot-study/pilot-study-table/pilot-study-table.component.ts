@@ -37,7 +37,7 @@ export class PilotStudyTableComponent implements OnInit {
 
   ngOnInit() {
     this.getAllPilotStudies();
-    this.calcLengthAdministrators();
+    this.calcLengthEstudies();
   }
 
   getAllPilotStudies(){
@@ -91,6 +91,7 @@ export class PilotStudyTableComponent implements OnInit {
         .then(() => {
           this.toastService.info('Estudo removido com sucesso!');
           this.getAllPilotStudies();
+          this.calcLengthEstudies();
           this.closeModalConfirmation();
         })
         .catch(error => {
@@ -101,7 +102,7 @@ export class PilotStudyTableComponent implements OnInit {
     }
   }
 
-  calcLengthAdministrators(){
+  calcLengthEstudies(){
     this.pilotStudyService.getAll()
       .then( pilots => {
         this.length = pilots.length;

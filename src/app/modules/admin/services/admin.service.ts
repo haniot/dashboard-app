@@ -37,15 +37,19 @@ export class AdminService {
   }
 
   update(administrator: Admin): Promise<boolean> {
-    return this.getById(administrator.id)
-      .then(adminOld => {
-        Object.keys(adminOld).forEach(key => {
-          if (adminOld[key] == administrator[key] && key != 'id') {
-            delete administrator[key];
-          }
-        });
-        return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
-          .toPromise();
-      });
+
+    return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
+      .toPromise();
+
+    // return this.getById(administrator.id)
+    //   .then(adminOld => {
+    //     Object.keys(adminOld).forEach(key => {
+    //       if (adminOld[key] == administrator[key] && key != 'id') {
+    //         delete administrator[key];
+    //       }
+    //     });
+    //     return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
+    //       .toPromise();
+    //   });
   }
 }

@@ -56,7 +56,7 @@
                 </label>
                 <div class="row">
                   <div class="col-md-10">
-                    <input matInput class="form-control" [matDatepicker]="pickerEnd" formControlName="end" id="end"
+                    <input matInput class="form-control" [matDatepicker]="pickerEnd" [min]="pilotStudyForm.get('start').value" formControlName="end" id="end"
                       placeholder="Selecione a data de término">
                   </div>
                   <div class="col-md-2">

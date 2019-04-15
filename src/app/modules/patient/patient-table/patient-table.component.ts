@@ -91,6 +91,7 @@ export class PatientTableComponent implements OnInit {
     this.patientService.remove(this.pilotStudyId,this.cacheIdPatientRemove)
       .then(() => {
         this.getAllPacients();
+        this.calcLengthPatients();
         this.toastService.info('Paciente removido com suecesso!');
         this.closeModalComfimation();
       })

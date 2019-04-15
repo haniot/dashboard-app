@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { PhysicalActivityHabitsRecord } from '../models/physicalActivity';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PhysicalActivityRecordService } from '../services/physical-activity-record.service';
@@ -10,7 +10,7 @@ import { PhysicalActivityPipe } from '../pipes/physical-activity-frequency.pipe'
   templateUrl: './physical-activity-habits.component.html',
   styleUrls: ['./physical-activity-habits.component.scss']
 })
-export class PhysicalActivityHabitsComponent implements OnInit {
+export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
 
   listPhysicalActivits: Array<PhysicalActivityHabitsRecord>;
   physicalActivityForm: FormGroup;

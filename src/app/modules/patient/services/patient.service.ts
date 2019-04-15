@@ -37,16 +37,18 @@ export class PatientService {
   }
 
   update(pilotstudyId: string, patient: Patient): Promise<boolean> {
-    return this.getById(pilotstudyId, patient.id)
-      .then(patientOld => {
-        Object.keys(patientOld).forEach(key => {
-          if (patientOld[key] == patient[key] && key != 'id') {
-            delete patient[key];
-          }
-        });
-        return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients/${patient.id}`, patient)
+    return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients/${patient.id}`, patient)
           .toPromise();
-      });
+    // return this.getById(pilotstudyId, patient.id)
+    //   .then(patientOld => {
+    //     Object.keys(patientOld).forEach(key => {
+    //       if (patientOld[key] == patient[key] && key != 'id') {
+    //         delete patient[key];
+    //       }
+    //     });
+    //     return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients/${patient.id}`, patient)
+    //       .toPromise();
+    //   });
   }
 
   remove(pilotstudyId: string, patientId: string): Promise<boolean> {
