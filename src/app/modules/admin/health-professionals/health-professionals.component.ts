@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { HealthProfessionalService } from '../services/health-professional.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { IUser, HealthProfessional } from '../models/users.models';
+import { IUser, HealthProfessional } from '../models/users';
 
 @Component({
   selector: 'health-professionals',

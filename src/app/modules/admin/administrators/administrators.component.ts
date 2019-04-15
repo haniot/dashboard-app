@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from '../services/admin.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { IUser, Admin } from '../models/users.models';
+import { IUser, Admin } from '../models/users';
 
 @Component({
   selector: 'app-administrators',

@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PilotStudyService } from '../services/pilot-study.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
-import { HealthProfessional } from 'app/modules/admin/models/users.models';
+import { HealthProfessional } from 'app/modules/admin/models/users';
 import { Location } from '@angular/common';
 
 @Component({

@@ -2,8 +2,7 @@ export interface IUser {
     id: string;
     email: string;
     name?: string;
-    //health_area?: HealtArea;
-    health_area?: string;
+    health_area?: HealtArea;
 }
 
 export class Admin implements IUser {
@@ -18,11 +17,12 @@ export enum HealtArea {
 }
 
 export class HealthProfessional implements IUser {
+
     id: string;
     name: string;
     email: string;
-    //health_area: HealtArea;
-    health_area: string;
+    health_area: HealtArea;
 
+    constructor() { }
 }
 

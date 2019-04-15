@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health-professional.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { HealtArea } from '../models/users.models';
+import { HealtArea } from '../models/users';
 
 @Component({
   selector: 'app-modal-user',

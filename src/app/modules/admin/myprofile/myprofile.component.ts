@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health-professional.service';
-import { IUser, HealtArea } from '../models/users.models';
+import { IUser, HealtArea } from '../models/users';
 import { UserService } from '../services/users.service';
 
 @Component({
