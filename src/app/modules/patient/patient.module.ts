@@ -8,6 +8,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material';
 
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PatientTableComponent } from './patient-table/patient-table.component';
@@ -18,6 +19,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { ListPilotstudiesComponent } from './list-pilotstudies/list-pilotstudies.component';
 import { ViewHabitsComponent } from './view-habits/view-habits.component';
 import { HabitsModule } from '../habits/habits.module';
+import { MeasurementModule } from '../measurement/measurement.module';
 
 @NgModule({
   declarations: [
@@ -38,8 +40,10 @@ import { HabitsModule } from '../habits/habits.module';
     MatNativeDateModule,
     MatFormFieldModule,
     MultiSelectModule,
+    MatTabsModule,
     PatientRoutingModule,
-    HabitsModule
+    HabitsModule,
+    MeasurementModule
   ],
   providers: [
     PatientService,

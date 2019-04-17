@@ -71,7 +71,7 @@
                   <div class="col-md-10">
                     <input matInput class="form-control" [matDatepicker]="pickerBirthDate" formControlName="birth_date"
                       name="birth_date" data-date-format="yyyy-MM-dd" placeholder="Selecione a data de nascimento">
-                      <mat-datepicker #pickerBirthDate></mat-datepicker>
+                    <mat-datepicker #pickerBirthDate></mat-datepicker>
                   </div>
                 </div>
                 <span *ngIf="patientForm.controls.birth_date.valid" class="glyphicon glyphicon-ok form-control-feedback"
@@ -111,21 +111,40 @@
           </form>
         </haniot-card>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-tab-group mat-align-tabs="center">
+          <!-- <mat-tab label="HÁBITOS">
 
-      <div class="col-md-8">
-        <feeding-habits [patientId]="patientForm.get('id').value"></feeding-habits>
-      </div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
+                  <feeding-habits [patientId]="patientForm.get('id').value"></feeding-habits>
+                </div>
 
-      <div class="col-md-4">
-        <sleep-habits [patientId]="patientForm.get('id').value"></sleep-habits>
-      </div>
+                <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
+                  <sleep-habits [patientId]="patientForm.get('id').value"></sleep-habits>
+                </div>
+                
+                <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
+                  <medical-record [patientId]="patientForm.get('id').value"></medical-record>
+                </div>
 
-      <div class="col-md-8">
-        <physical-activity-habits [patientId]="patientForm.get('id').value"></physical-activity-habits>        
-      </div>
+                <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
+                  <physical-activity-habits [patientId]="patientForm.get('id').value"></physical-activity-habits>
+                </div>
 
-      <div class="col-md-4">
-          <medical-record [patientId]="patientForm.get('id').value"></medical-record>          
+              </div>
+            </div>
+
+          </mat-tab> -->
+
+          <mat-tab label="MEDIÇÕES">
+            <measurement-component [patientId]="patientForm.get('id').value"></measurement-component>
+          </mat-tab>
+
+        </mat-tab-group>
       </div>
     </div>
   </div>

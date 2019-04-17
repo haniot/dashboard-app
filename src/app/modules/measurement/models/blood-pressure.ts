@@ -1,13 +1,12 @@
 import { MeasurementType } from './measurement';
-class DataSet {
-    value: number;
-    timestamp: string;
-}
-export class HeartRate {
+
+export class BloodPressure {
     id: string;
-    dataset: Array<DataSet>;
+    systolic: number;
+    diastolic: number;
     unit: string;
     type: MeasurementType;
+    timestamp: string;
     user_id: string;
     device_id?: string;
 }

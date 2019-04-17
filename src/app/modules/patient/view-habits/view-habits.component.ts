@@ -6,7 +6,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Patient, Gender } from '../models/patient';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
-import { FeedingHabitsRecord } from '../../habits/models/feeding';
 import { FeedingRecordService } from '../../habits/services/feeding-record.service';
 
 @Component({

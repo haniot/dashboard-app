@@ -1,0 +1,54 @@
+<haniot-card [title]="'Temperatura corporal'" subtitle=''>
+
+  <div class="row">
+
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center">
+      <div class="card card-stats">
+        <div class="card-header card-header-timer card-header-icon">
+          <div class="card-icon">
+            <img src="../../../../assets/img/haniot/body-temperature.png" alt="">
+          </div>
+          <p class="card-category">Último registro: </p>
+          <h3 class="card-title" *ngIf="lastData">
+            {{lastData.value }}
+            <small>{{lastData.unit }}</small>
+          </h3>
+        </div>
+
+      </div>
+      <div class="d-flex flex-row-reverse">
+        <div class="p-2"><small class="pull-right" *ngIf="lastData">Data do último
+            registro:{{lastData.timestamp | myDate}}</small></div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center" [ts-chart]="option"></div>
+
+
+  </div>
+
+
+
+  <div class="row">
+    <!-- Botões Anterior e Próximo -->
+    <div class="container" *ngIf="arrayDates.length>1">
+      <div class="row">
+        <div class="col align-self-start">
+          <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" title="Anterior"
+            (click)="prev()" [disabled]="!lastIndex">
+            <i class="material-icons">arrow_back</i>
+          </button>
+        </div>
+
+        <div class="col align-self-end">
+          <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
+            (click)="next()" title="Próximo" [disabled]="lastIndex == arrayDates.length-1">
+            <i class="material-icons">arrow_forward</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</haniot-card>
