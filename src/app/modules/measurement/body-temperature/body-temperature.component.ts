@@ -23,7 +23,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
   option = {
     tooltip: {
-      formatter: "{a} <br> {b} : {c} °C",
+      formatter: "Temperatura: {c} °C <br> Data: {b}",
       trigger: 'axis'
     },  
     xAxis: {

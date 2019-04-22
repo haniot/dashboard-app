@@ -25,8 +25,8 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
   option = {
 
     tooltip: {
-      trigger: 'axis',
-      formatter: "Glicose : <br/>{b} : {c} mg/dl"
+      trigger: 'item',
+      formatter: "Glicose : {c} mg/dl<br> Data: {b}"
     },
     legend: {
       data: ['Pré-prandial', 'Pós-prandial', 'Jejum', 'Casual', 'Antes de dormir']
@@ -40,7 +40,10 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     ],
     yAxis: [
       {
-        type: 'value'
+        type: 'value',
+        axisLabel: {
+          formatter: '{value} mg/dl'
+        }
       }
     ],
     series: [

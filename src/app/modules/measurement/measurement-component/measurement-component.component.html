@@ -1,24 +1,106 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Configurar gráficos visíveis
+          </mat-panel-title>
+          <mat-panel-description>
+            Clique para expandir/retrair...
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="row" id="config-graph">
+
+          <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+            <div class="p-2">
+              <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityWeight"> </mat-slide-toggle>
+            </div>
+            <div class="p-2"><label> Peso: </label></div>
+          </div>
+
+          <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+            <div class="p-2">
+              <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityHeight"> </mat-slide-toggle>
+            </div>
+            <div class="p-2"><label> Altura: </label></div>
+          </div>
+
+          <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+            <div class="p-2">
+              <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityWaist"> </mat-slide-toggle>
+            </div>
+            <div class="p-2"><label> Circunferência da cintura: </label></div>
+          </div>
+
+          <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+            <div class="p-2">
+              <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityBody"> </mat-slide-toggle>
+            </div>
+            <div class="p-2"><label> Temperatura corporal: </label></div>
+          </div>
+
+          <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+            <div class="p-2">
+              <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityGlucose"> </mat-slide-toggle>
+            </div>
+            <div class="p-2"><label> Pressão sanguínea: </label></div>
+          </div>
+
+          <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+            <div class="p-2">
+              <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityPressure">
+              </mat-slide-toggle>
+            </div>
+            <div class="p-2"><label> Glicose no sangue: </label></div>
+          </div>
+
+          <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+            <div class="p-2">
+              <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityHeart"> </mat-slide-toggle>
+            </div>
+            <div class="p-2"><label> Frequência cardíaca: </label></div>
+          </div>
+
+
+        </div>
+
+      </mat-expansion-panel>
+      
+    </div>
+  </div>
+
+  <div class="row">
+
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityWeight">
       <weight [data]="listWeight"></weight>
     </div>
-    
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityHeight">
       <height [data]="listHeight"></height>
     </div>
-    
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityWaist">
       <waist-circunference [data]="listWaistCircunference"></waist-circunference>
     </div>
-    
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityBody">
       <body-temperature [data]="listBodyTemperature"></body-temperature>
     </div>
-    
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityGlucose">
       <blood-glucose [data]="listBloodGlucose"></blood-glucose>
     </div>
-    
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityPressure">
+      <blood-pressure [data]="listBloodPressure"></blood-pressure>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityHeart">
+      <heart-rate [data]="listHeartRate"></heart-rate>
+    </div>
+
   </div>
 </div>

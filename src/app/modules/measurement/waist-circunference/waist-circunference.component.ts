@@ -23,10 +23,10 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges{
   option = {
     color: ['#3398DB'],
     tooltip : {
-        formatter: "{a} <br> {b} : {c} cm",
+        formatter: "Circunferência : {c} cm <br> Data: {b}",
         trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        axisPointer : {            
+            type : 'shadow'
         }
     },
     grid: {
@@ -46,7 +46,10 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges{
     ],
     yAxis : [
         {
-            type : 'value'
+            type : 'value',
+            axisLabel: {
+              formatter: '{value} cm'
+            }
         }
     ],
     series : [

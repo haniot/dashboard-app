@@ -24,14 +24,17 @@ export class HeightComponent implements OnInit, OnChanges{
   option = {
     tooltip: {
       trigger: 'axis',
-      formatter: "{a} <br> {b} : {c} cm"
+      formatter: "Altura: {c} cm <br> Data: {b}"
     },
     xAxis: {
         type: 'category',
         data: []
     },
     yAxis: {
-        type: 'value'
+        type: 'value',
+        axisLabel: {
+          formatter: '{value} cm'
+        }
     },
     series: [
         {

@@ -14,3 +14,11 @@
   text-decoration-line: underline;
   text-decoration-style: solid;
 }
+
+#config-graph{
+  padding: 5px 5px;
+}
+#navbarDropdownMenuLink i:hover{
+  cursor: pointer;
+  color: #00a594;
+}

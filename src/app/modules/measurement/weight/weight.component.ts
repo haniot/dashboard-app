@@ -24,14 +24,17 @@ export class WeightComponent implements OnInit, OnChanges {
 
   option = {
     tooltip: {
-      formatter: "{a} <br> {b} : {c} Kg"
+      formatter: "Peso: {c} Kg <br> Data: {b}"
     },
     xAxis: {
       type: 'category',
       data: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
+      axisLabel: {
+        formatter: '{value} kg'
+      }
     },
     series: [{
       name: "Histórico de peso",
