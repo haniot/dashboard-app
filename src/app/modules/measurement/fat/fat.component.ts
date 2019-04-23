@@ -1,47 +1,61 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 import * as _ from 'lodash';
 
-import { IMeasurement } from '../models/measurement';
 import { GraphService } from 'app/shared/shared-services/graph.service';
+import { DatePipe } from '@angular/common';
+import { IMeasurement } from '../models/measurement';
+
 @Component({
-  selector: 'waist-circunference',
-  templateUrl: './waist-circunference.component.html',
-  styleUrls: ['./waist-circunference.component.scss']
+  selector: 'fat',
+  templateUrl: './fat.component.html',
+  styleUrls: ['./fat.component.scss']
 })
-export class WaistCircunferenceComponent implements OnInit, OnChanges {
+export class FatComponent implements OnInit {
 
   @Input() data: Array<IMeasurement>;
 
   lastData: IMeasurement;
 
   option = {
-    color: ['#3398DB'],
+
     tooltip: {
-      formatter: "Circunferência : {c} cm <br> Data: {b}",
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      }
+      trigger: 'item',
+      formatter: "Gordura : {c} %<br> Data: {b}"
     },
     xAxis: [
       {
         type: 'category',
-        data: [],
-        axisTick: {
-          alignWithLabel: true
-        }
+        data: []
       }
     ],
     yAxis: [
       {
         type: 'value',
         axisLabel: {
-          formatter: '{value} cm'
+          formatter: '{value} %'
         }
       }
     ],
+    visualMap: {
+      top: 5,
+      right: 10,
+      pieces: [{
+        gt: 0,
+        lte: 25,
+        color: '#00a594'
+      }, {
+        gt: 25,
+        lte: 55,
+        color: '#0071a5'
+      }, {
+        gt: 55,
+        color: '#fd0808'
+      }],
+      outOfRange: {
+        color: '#999'
+      }
+    },
     dataZoom: [
       {
         type: 'slider'
@@ -50,13 +64,26 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
     series: [
       {
         type: 'bar',
-        barWidth: '60%',
-        color: '#00a594',
         data: [],
+        color: 'black',
+        label: {
+          normal: {
+            show: true,
+            position: 'outside',
+            offset: [0, -20],
+            formatter: function (param) {
+              return param.value + '%';
+            },
+            textStyle: {
+              fontSize: 18,
+              fontFamily: 'Arial'
+            }
+          }
+        },
         markLine: {
           tooltip: {
             trigger: 'item',
-            formatter: "Valor médio : {c} cm"
+            formatter: "Valor médio : {c} %"
           },
           lineStyle: {
             color: 'black',
@@ -68,6 +95,8 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
       }
     ]
   };
+
+
 
   constructor(
     private datePipe: DatePipe,
@@ -85,7 +114,13 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
     this.option.series[0].data = [];
 
     this.data.forEach((element: IMeasurement) => {
-      this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+      const find = this.option.xAxis[0].data.find((ele) => {
+        return ele == this.datePipe.transform(element.timestamp, "shortDate");
+      });
+
+      if (!find) {
+        this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+      }
       this.option.series[0].data.push(element.value);
     });
 

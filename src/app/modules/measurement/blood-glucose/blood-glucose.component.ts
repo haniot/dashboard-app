@@ -16,11 +16,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
   @Input() data: Array<BloodGlucose>;
 
-  arrayDates: Array<any> = [];
-
   lastData: IMeasurement;
-
-  lastIndex: number;
 
   option = {
 
@@ -44,6 +40,11 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         axisLabel: {
           formatter: '{value} mg/dl'
         }
+      }
+    ],
+    dataZoom: [
+      {
+        type: 'slider'
       }
     ],
     series: [
@@ -118,48 +119,46 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
   loadGraph() {
 
-    //Limpando o grafico
-    this.option.xAxis[0].data = [];
-    this.option.series[0].data = [];
+    if (this.data.length > 0) {
+      //Limpando o grafico
+      this.option.xAxis[0].data = [];
+      this.option.series[0].data = [];
 
-    this.arrayDates = _.chunk(this.data, 500);
+      this.data.forEach((element: BloodGlucose) => {
+        const find = this.option.xAxis[0].data.find((ele) => {
+          return ele == this.datePipe.transform(element.timestamp, "shortDate");
+        });
 
-    this.lastIndex = 0;
-
-    this.arrayDates[this.lastIndex].forEach((element: BloodGlucose) => {
-      const find = this.option.xAxis[0].data.find((ele) => {
-        return ele == this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5);
+        if (!find) {
+          this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+        }
+        switch (element.meal) {
+          case MealType.preprandial:
+            this.option.series[0].data.push(element.value);
+            break;
+          case MealType.postprandial:
+            this.option.series[1].data.push(element.value);
+            break;
+          case MealType.fasting:
+            this.option.series[2].data.push(element.value);
+            break;
+          case MealType.casual:
+            this.option.series[3].data.push(element.value);
+            break;
+          case MealType.bedtime:
+            this.option.series[4].data.push(element.value);
+            break;
+        }
       });
-      
-      if(!find){
-        this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-      }
-      switch (element.meal) {
-        case MealType.preprandial:
-          this.option.series[0].data.push(element.value);
-          break;
-        case MealType.postprandial:
-          this.option.series[1].data.push(element.value);
-          break;
-        case MealType.fasting:
-          this.option.series[2].data.push(element.value);
-          break;
-        case MealType.casual:
-          this.option.series[3].data.push(element.value);
-          break;
-        case MealType.bedtime:
-          this.option.series[4].data.push(element.value);
-          break;
-      }
-    });
 
-    if (this.data.length > 1) {
-      this.lastData = this.data[this.data.length - 1];
-    } else {
-      this.lastData = this.data[0];
+      if (this.data.length > 1) {
+        this.lastData = this.data[this.data.length - 1];
+      } else {
+        this.lastData = this.data[0];
+      }
+
+      this.graphService.refreshGraph();
     }
-
-    this.graphService.refreshGraph();
 
 
   }
@@ -168,37 +167,6 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     if (this.data && changes.data.currentValue != undefined && changes.data.previousValue == undefined) {
       this.loadGraph();
     }
-  }
-
-  prev() {
-
-    //Limpando o grafico
-    this.option.xAxis[0].data = [];
-    this.option.series[0].data = [];
-
-    this.lastIndex--;
-    this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-      this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-      this.option.series[0].data.push(element.value);
-    });
-
-    this.graphService.refreshGraph();
-  }
-
-  next() {
-
-    //Limpando o grafico
-    this.option.xAxis[0].data = [];
-    this.option.series[0].data = [];
-
-    this.lastIndex++
-
-    this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-      this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-      this.option.series[0].data.push(element.value);
-    });
-
-    this.graphService.refreshGraph();
   }
 
 }

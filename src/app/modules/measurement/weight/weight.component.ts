@@ -16,8 +16,6 @@ export class WeightComponent implements OnInit, OnChanges {
 
   @Input() data: Array<IMeasurement>;
 
-  arrayDates: Array<any> = [];
-
   lastData: IMeasurement;
 
   lastIndex: number;
@@ -28,7 +26,7 @@ export class WeightComponent implements OnInit, OnChanges {
     },
     xAxis: {
       type: 'category',
-      data: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
+      data: []
     },
     yAxis: {
       type: 'value',
@@ -36,9 +34,14 @@ export class WeightComponent implements OnInit, OnChanges {
         formatter: '{value} kg'
       }
     },
+    dataZoom: [
+      {
+        type: 'slider'
+      }
+    ],
     series: [{
       name: "Histórico de peso",
-      data: [120, 200, 150, 80, 70, 110, 130],
+      data: [],
       type: 'line',
       symbol: 'circle',
       symbolSize: 20,
@@ -65,23 +68,21 @@ export class WeightComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   loadGraph() {
-    
+
     //Limpando o grafico
     this.option.xAxis.data = [];
     this.option.series[0].data = [];
 
-    this.arrayDates = _.chunk(this.data, 7);
-
     this.lastIndex = 0;
-    
-      this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-        this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-        this.option.series[0].data.push(element.value);
-      });
+
+    this.data.forEach((element: IMeasurement) => {
+      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+      this.option.series[0].data.push(element.value);
+    });
 
     if (this.data.length > 1) {
       this.lastData = this.data[this.data.length - 1];
@@ -100,34 +101,4 @@ export class WeightComponent implements OnInit, OnChanges {
     }
   }
 
-  prev() {
-
-    //Limpando o grafico
-    this.option.xAxis.data = [];
-    this.option.series[0].data = [];
-
-    this.lastIndex--;
-    this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-      this.option.series[0].data.push(element.value);
-    });
-
-    this.graphService.refreshGraph();
-  }
-
-  next() {
-
-    //Limpando o grafico
-    this.option.xAxis.data = [];
-    this.option.series[0].data = [];
-
-    this.lastIndex++
-    
-    this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-      this.option.series[0].data.push(element.value);
-    });
-
-   this.graphService.refreshGraph();
-  }
 }

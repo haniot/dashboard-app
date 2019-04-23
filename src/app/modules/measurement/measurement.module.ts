@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -14,8 +15,8 @@ import { BodyTemperatureComponent } from './body-temperature/body-temperature.co
 import { BloodGlucoseComponent } from './blood-glucose/blood-glucose.component';
 import { BloodPressureComponent } from './blood-pressure/blood-pressure.component';
 import { HeartRateComponent } from './heart-rate/heart-rate.component';
-import { FormsModule } from '@angular/forms';
-
+import { MealPipe } from './pipes/meal.pipe';
+import { FatComponent } from './fat/fat.component';
 @NgModule({
   declarations: [
     MeasurementComponentComponent,
@@ -25,7 +26,9 @@ import { FormsModule } from '@angular/forms';
     BodyTemperatureComponent,
     BloodGlucoseComponent,
     BloodPressureComponent,
-    HeartRateComponent
+    HeartRateComponent,
+    MealPipe,
+    FatComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +42,8 @@ import { FormsModule } from '@angular/forms';
   ],
   providers: [
     MeasurementService,
-    DatePipe
+    DatePipe,
+    MealPipe
   ]
 })
 export class MeasurementModule { }

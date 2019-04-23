@@ -1,4 +1,4 @@
-<haniot-card [title]="'Glicose no sangue'" subtitle=''>
+<haniot-card [title]="'Gordura corporal'" subtitle=''>
 
   <div class="row">
 
@@ -6,10 +6,8 @@
       <div class="card card-stats">
         <div class="card-header card-header-timer card-header-icon">
           <div class="card-icon">
-            <img src="../../../../assets/img/haniot/blood-glucose.png" alt="">
+            <img src="../../../../assets/img/haniot/fat.png" alt="">
           </div>
-          <span class="badge badge-haniot" *ngIf="lastData">{{lastData.meal | meal}}</span>
-          <span class="badge badge-haniot" *ngIf="!lastData">Periodo da medição</span>
           <p class="card-category">Último registro: </p>
           <h3 class="card-title" *ngIf="lastData">
             {{lastData.value }}

@@ -15,17 +15,13 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
   @Input() data: Array<IMeasurement>;
 
-  arrayDates: Array<any> = [];
-
   lastData: IMeasurement;
-
-  lastIndex: number;
 
   option = {
     tooltip: {
       formatter: "Temperatura: {c} °C <br> Data: {b}",
       trigger: 'axis'
-    },  
+    },
     xAxis: {
       type: 'category',
       boundaryGap: false,
@@ -37,6 +33,11 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         formatter: '{value} °C'
       }
     },
+    dataZoom: [
+      {
+        type: 'slider'
+      }
+    ],
     series: [
       {
         name: 'Histórico de temperatura',
@@ -48,7 +49,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
             { type: 'min', name: 'Minimo' }
           ]
         }
-      }     
+      }
     ]
   };
 
@@ -69,12 +70,8 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
     this.option.xAxis.data = [];
     this.option.series[0].data = [];
 
-    this.arrayDates = _.chunk(this.data, 7);
-
-    this.lastIndex = 0;
-
-    this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
+    this.data.forEach((element: IMeasurement) => {
+      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
       this.option.series[0].data.push(element.value);
     });
 
@@ -94,36 +91,4 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
       this.loadGraph();
     }
   }
-
-  prev() {
-
-    //Limpando o grafico
-    this.option.xAxis.data = [];
-    this.option.series[0].data = [];
-
-    this.lastIndex--;
-    this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-      this.option.series[0].data.push(element.value);
-    });
-
-    this.graphService.refreshGraph();
-  }
-
-  next() {
-
-    //Limpando o grafico
-    this.option.xAxis.data = [];
-    this.option.series[0].data = [];
-
-    this.lastIndex++
-
-    this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-      this.option.series[0].data.push(element.value);
-    });
-
-    this.graphService.refreshGraph();
-  }
-
 }

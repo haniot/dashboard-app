@@ -16,14 +16,19 @@ export class HeartRateComponent implements OnInit {
 
   @Input() data: Array<HeartRate>;
 
+  lastData: HeartRate;
 
   option = {
+    title: {
+      text: 'Histório de medições',
+      subtext: 'O gráfico abaixo representa todos os valores captados em todas as medições realizadas'
+    },
     tooltip: {
       formatter: "Frequência: {c} bpm <br> Data: {b}",
       trigger: 'axis'
     },
     xAxis: {
-      data: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
+      data: []
     },
     yAxis: {
       splitLine: {
@@ -33,15 +38,48 @@ export class HeartRateComponent implements OnInit {
         formatter: '{value} bpm'
       }
     },
-    dataZoom: [{
-      startValue: '2014-06-01'
-    }, {
-      type: 'inside'
-    }],
+    dataZoom: [
+      {
+        type: 'slider'
+      }
+    ],
     series: [
       {
         type: 'line',
-        data: [10, 20, 30, 40, 50, 60, 70]
+        data: []
+      }
+    ]
+  };
+
+  optionLastData = {
+    title: {
+      text: 'Última medição realizada',
+      subtext: 'O gráfico abaixo representa todos os valores captados na última medição realizada'
+    },
+    tooltip: {
+      formatter: "Frequência: {c} bpm <br> Data: {b}",
+      trigger: 'axis'
+    },
+    xAxis: {
+      data: []
+    },
+    yAxis: {
+      splitLine: {
+        show: false
+      },
+      axisLabel: {
+        formatter: '{value} bpm'
+      }
+    },
+    dataZoom: [
+      {
+        type: 'slider'
+      }
+    ],
+    series: [
+      {
+        type: 'line',
+        data: []
       }
     ]
   };
@@ -74,11 +112,31 @@ export class HeartRateComponent implements OnInit {
         //   this.option.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate").substr(0, 5));
         // }
 
-        this.option.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate").substr(0, 5));
+        this.option.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
 
         this.option.series[0].data.push(date.value);
 
       });
+
+
+    });
+
+    if (this.data.length > 1) {
+      this.lastData = this.data[this.data.length - 1];
+    } else {
+      this.lastData = this.data[0];
+    }
+
+    //Inserindo dados no gráfico da ultima medião
+    //Limpando o grafico
+    this.optionLastData.xAxis.data = [];
+    this.optionLastData.series[0].data = [];
+
+    this.lastData.dataset.forEach((date: { value: number, timestamp: string }) => {      
+
+      this.optionLastData.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+
+      this.optionLastData.series[0].data.push(date.value);
 
     });
 

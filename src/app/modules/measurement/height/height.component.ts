@@ -11,15 +11,11 @@ import { GraphService } from 'app/shared/shared-services/graph.service';
   templateUrl: './height.component.html',
   styleUrls: ['./height.component.scss']
 })
-export class HeightComponent implements OnInit, OnChanges{
+export class HeightComponent implements OnInit, OnChanges {
 
   @Input() data: Array<IMeasurement>;
 
-  arrayDates: Array<any> = [];
-
   lastData: IMeasurement;
-
-  lastIndex: number;
 
   option = {
     tooltip: {
@@ -27,24 +23,29 @@ export class HeightComponent implements OnInit, OnChanges{
       formatter: "Altura: {c} cm <br> Data: {b}"
     },
     xAxis: {
-        type: 'category',
-        data: []
+      type: 'category',
+      data: []
     },
     yAxis: {
-        type: 'value',
-        axisLabel: {
-          formatter: '{value} cm'
-        }
+      type: 'value',
+      axisLabel: {
+        formatter: '{value} cm'
+      }
     },
+    dataZoom: [
+      {
+        type: 'slider'
+      }
+    ],
     series: [
-        {
-            name:'Altura',
-            type:'line',
-            step: 'start',
-            data:[]
-        }
+      {
+        name: 'Altura',
+        type: 'line',
+        step: 'start',
+        data: []
+      }
     ]
-};
+  };
 
 
   constructor(
@@ -53,23 +54,19 @@ export class HeightComponent implements OnInit, OnChanges{
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   loadGraph() {
-    
+
     //Limpando o grafico
     this.option.xAxis.data = [];
     this.option.series[0].data = [];
 
-    this.arrayDates = _.chunk(this.data, 7);
-
-    this.lastIndex = 0;
-    
-      this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-        this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-        this.option.series[0].data.push(element.value);
-      });
+    this.data.forEach((element: IMeasurement) => {
+      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+      this.option.series[0].data.push(element.value);
+    });
 
     if (this.data.length > 1) {
       this.lastData = this.data[this.data.length - 1];
@@ -88,34 +85,5 @@ export class HeightComponent implements OnInit, OnChanges{
     }
   }
 
-  prev() {
 
-    //Limpando o grafico
-    this.option.xAxis.data = [];
-    this.option.series[0].data = [];
-
-    this.lastIndex--;
-    this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-      this.option.series[0].data.push(element.value);
-    });
-
-    this.graphService.refreshGraph();
-  }
-
-  next() {
-
-    //Limpando o grafico
-    this.option.xAxis.data = [];
-    this.option.series[0].data = [];
-
-    this.lastIndex++
-    
-    this.arrayDates[this.lastIndex].forEach((element: IMeasurement) => {
-      this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate").substr(0, 5));
-      this.option.series[0].data.push(element.value);
-    });
-
-   this.graphService.refreshGraph();
-  }
 }

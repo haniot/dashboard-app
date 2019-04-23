@@ -5,6 +5,7 @@ import { MeasurementService } from '../services/measurement.service';
 import { BloodPressure } from '../models/blood-pressure';
 import { HeartRate } from '../models/heart-rate';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'measurement-component',
@@ -18,6 +19,9 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
 
   listHeight: Array<IMeasurement>;
   visibilityHeight: boolean = true;
+
+  listFat: Array<IMeasurement>;
+  visibilityFat: boolean = true;
 
   listWaistCircunference: Array<IMeasurement>;
   visibilityWaist: boolean = true;
@@ -38,7 +42,8 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
 
   constructor(
     private measurementService: MeasurementService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private toastService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -54,6 +59,10 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
 
         this.listHeight = measurements.filter((element: Measurement) => {
           return element.type === MeasurementType.height
+        });
+
+        this.listFat = measurements.filter((element: Measurement) => {
+          return element.type === MeasurementType.fat
         });
 
         this.listWaistCircunference = measurements.filter((element: Measurement) => {
@@ -77,7 +86,10 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
         });
 
       })
-      .catch();
+      .catch(errorResponse => {
+        this.toastService.error('Não foi possível buscar medições!');
+        //console.log('Não foi possível buscar medições!',errorResponse);
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -86,11 +98,11 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
   }
 
-  showModalConfigGraph(){
+  showModalConfigGraph() {
     this.modalService.open('modalConfigGraph');
   }
-  
-  hiddenModalConfigGraph(){
+
+  hiddenModalConfigGraph() {
     this.modalService.close('modalConfigGraph');
   }
 
