@@ -1,4 +1,4 @@
-enum DeviceType {
+export enum DeviceType {
     thermometer = "thermometer",
     glucometer = "glucometer",
     body_composition = "body_composition",

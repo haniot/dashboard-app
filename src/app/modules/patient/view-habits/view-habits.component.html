@@ -143,6 +143,10 @@
           <mat-tab label="MEDIÇÕES">
             <measurement-component [patientId]="patientForm.get('id').value"></measurement-component>
           </mat-tab>
+          
+          <mat-tab label="DISPOSITIVOS">
+            <device [patientId]="patientForm.get('id').value"></device>
+          </mat-tab>
 
         </mat-tab-group>
       </div>

@@ -17,6 +17,9 @@ import { BloodPressureComponent } from './blood-pressure/blood-pressure.componen
 import { HeartRateComponent } from './heart-rate/heart-rate.component';
 import { MealPipe } from './pipes/meal.pipe';
 import { FatComponent } from './fat/fat.component';
+import { DeviceTypePipe } from './pipes/device-type.pipe';
+import { DeviceComponent } from './device/device.component';
+import { DeviceService } from './services/device.service';
 @NgModule({
   declarations: [
     MeasurementComponentComponent,
@@ -28,7 +31,9 @@ import { FatComponent } from './fat/fat.component';
     BloodPressureComponent,
     HeartRateComponent,
     MealPipe,
-    FatComponent
+    DeviceTypePipe,
+    FatComponent,
+    DeviceComponent
   ],
   imports: [
     CommonModule,
@@ -38,12 +43,15 @@ import { FatComponent } from './fat/fat.component';
     MatSlideToggleModule
   ],
   exports: [
-    MeasurementComponentComponent
+    MeasurementComponentComponent,
+    DeviceComponent
   ],
   providers: [
     MeasurementService,
+    DeviceService,
     DatePipe,
-    MealPipe
+    MealPipe,
+    DeviceTypePipe
   ]
 })
 export class MeasurementModule { }

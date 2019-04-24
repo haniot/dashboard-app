@@ -15,7 +15,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.weight,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4882751b5f21ba364ba6f",
@@ -24,7 +24,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.weight,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4882751b5f21ba364ba6f",
@@ -33,7 +33,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.weight,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4882751b5f21ba364ba6f",
@@ -42,7 +42,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.weight,
     "timestamp": "2018-11-22T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4882751b5f21ba364ba6f",
@@ -51,7 +51,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.weight,
     "timestamp": "2018-11-23T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4882751b5f21ba364ba6f",
@@ -60,7 +60,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.weight,
     "timestamp": "2018-11-24T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -69,7 +69,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.height,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -78,7 +78,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.height,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -87,7 +87,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.height,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -96,7 +96,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.height,
     "timestamp": "2018-11-23T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -105,7 +105,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.height,
     "timestamp": "2018-11-25T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -114,7 +114,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.height,
     "timestamp": "2018-11-26T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -123,7 +123,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.height,
     "timestamp": "2018-11-27T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -132,7 +132,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.height,
     "timestamp": "2018-11-28T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -141,7 +141,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.height,
     "timestamp": "2018-11-29T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -150,7 +150,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.waist_circunference,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -159,7 +159,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.waist_circunference,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -168,7 +168,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.waist_circunference,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -177,7 +177,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.waist_circunference,
     "timestamp": "2018-11-22T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -186,7 +186,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.waist_circunference,
     "timestamp": "2018-11-23T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -195,7 +195,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.waist_circunference,
     "timestamp": "2018-11-24T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4b2fd02eb7733b03db810",
@@ -204,7 +204,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.body_temperature,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4b2fd02eb7733b03db810",
@@ -213,7 +213,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.body_temperature,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4b2fd02eb7733b03db810",
@@ -222,7 +222,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.body_temperature,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4b2fd02eb7733b03db810",
@@ -231,7 +231,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.body_temperature,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4b2fd02eb7733b03db810",
@@ -240,7 +240,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.body_temperature,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb4b2fd02eb7733b03db810",
@@ -249,7 +249,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.body_temperature,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -259,7 +259,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -269,7 +269,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -279,7 +279,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -289,7 +289,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -299,7 +299,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -309,7 +309,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -319,7 +319,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -329,7 +329,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -339,7 +339,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -349,7 +349,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -359,7 +359,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -369,7 +369,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -379,7 +379,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -389,7 +389,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488278cf5f9e6760c14ed",
@@ -399,7 +399,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_glucose,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb48827217ee2910ea11e84",
@@ -409,7 +409,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_pressure,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb48827217ee2910ea11e84",
@@ -419,7 +419,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_pressure,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb48827217ee2910ea11e84",
@@ -429,7 +429,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_pressure,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb48827217ee2910ea11e84",
@@ -439,7 +439,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_pressure,
     "timestamp": "2018-11-22T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb48827217ee2910ea11e84",
@@ -449,7 +449,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_pressure,
     "timestamp": "2018-11-23T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb48827217ee2910ea11e84",
@@ -459,7 +459,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.blood_pressure,
     "timestamp": "2018-11-24T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb48827217ee2910ea11e84",
@@ -485,7 +485,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.heart_rate,
     "timestamp": "2018-11-22T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb48827217ee2910ea11p84",
@@ -511,7 +511,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.heart_rate,
     "timestamp": "2018-11-25T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb48827217ee2910ea11p84",
@@ -537,7 +537,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.heart_rate,
     "timestamp": "2018-11-30T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -546,7 +546,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-18T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -555,7 +555,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-19T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -564,7 +564,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-20T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -573,7 +573,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-21T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -582,7 +582,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-22T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -591,7 +591,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-23T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -600,7 +600,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-24T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },  
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -609,7 +609,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-26T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -618,7 +618,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-27T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -627,7 +627,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-28T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -636,7 +636,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-29T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
   {
     "id": "5cb488279ea138bd6abf936a",
@@ -645,7 +645,7 @@ const mock: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate> = [
     "type": MeasurementType.fat,
     "timestamp": "2018-11-30T14:40:00Z",
     "user_id": "5a62be07d6f33400146c9b61",
-    "device_id": "5ca790f77aefffa37a17b605"
+    "device_id": "5cc0be311f7cca39e6de1e7d"
   },
 ];
 @Injectable()
@@ -670,8 +670,9 @@ export class MeasurementService {
   }
 
   getAllByUser(userId: string): Promise<Array<IMeasurement | BloodPressure | HeartRate> | Array<any>> {
-    return this.http.get<any>(`${environment.api_url}/users/${userId}/measurements`)
-      .toPromise();
+    return Promise.resolve(mock);
+    // return this.http.get<any>(`${environment.api_url}/users/${userId}/measurements`)
+    //   .toPromise();
   }
 
   create(userId: string, measurement: Measurement): Promise<IMeasurement> {
