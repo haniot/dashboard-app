@@ -26,7 +26,7 @@ export const configSideBar = [
   },
   {
     title: 'Pacientes',
-    scopes: ['patient:create', 'patient:readAll', 'patient:updateAll' , 'patient:deleteAll']
+    scopes: ['patient:create', 'patient:readAll', 'patient:updateAll', 'patient:deleteAll']
   },
   {
     title: 'Meus estudos',
@@ -104,7 +104,7 @@ export class SidebarComponent implements OnInit {
     this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
   }
 
-  showMyStudies():boolean{    
-    return localStorage.getItem('typeUser') == 'HealthProfessional';
+  showMyStudies(): boolean {
+    return this.authService.decodeToken().sub_type == 'health_professional';
   }
 }

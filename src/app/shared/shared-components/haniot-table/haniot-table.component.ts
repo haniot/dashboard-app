@@ -49,16 +49,16 @@ export class HaniotTableComponent {
     return user.id == this.authService.decodeToken().sub;
   }
 
-  openModalConfirmRemove(id: string){
+  openModalConfirmRemove(id: string) {
     this.cacheIdRemove = id;
     this.modalService.open('modalConfirmation');
   }
-  
-  closeModalConfirmRemove(){
+
+  closeModalConfirmRemove() {
     this.cacheIdRemove = '';
     this.modalService.close('modalConfirmation');
   }
-  
+
   removeUser() {
     this.userService.removeUser(this.cacheIdRemove)
       .then(() => {
@@ -73,14 +73,28 @@ export class HaniotTableComponent {
   }
 
   editUser(id: string) {
-    this.userService.getUserById(id)
-      .then((user) => {
-        this.onedit.emit(user);
-      })
-      .catch(error => {
-        this.toastr.error('Não foi possível buscar usuário!');
-      });
 
+    switch (this.userType) {
+      case 'Admin':
+        this.adminService.getById(id)
+          .then((user) => {
+            this.onedit.emit(user);
+          })
+          .catch(error => {
+            this.toastr.error('Não foi possível buscar usuário!');
+          });
+        break;
+
+      case 'HealthProfessional':
+        this.healthService.getById(id)
+          .then((user) => {
+            this.onedit.emit(user);
+          })
+          .catch(error => {
+            this.toastr.error('Não foi possível buscar usuário!');
+          });
+        break;
+    }
   }
 
   searchOnSubmit() {
@@ -89,11 +103,11 @@ export class HaniotTableComponent {
       this.getAllUsers().
         then(users => {
           this.list = users;
-          try{
+          try {
             this.list = this.list.filter((user) => {
               return user.name.search(this.search) != -1;
             });
-          }catch(error){
+          } catch (error) {
             this.list = this.list.filter((user) => {
               return user.email.search(this.search) != -1;
             });
@@ -135,7 +149,7 @@ export class HaniotTableComponent {
   }
 
   getIndex(index: number): number {
-    if(this.search){
+    if (this.search) {
       return null;
     }
     const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.pageSize;

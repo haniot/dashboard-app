@@ -44,7 +44,6 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getTypeUser();
         this.getUserName();
         this.listTitles = ROUTES;
         const navbar: HTMLElement = this.element.nativeElement;
@@ -138,7 +137,7 @@ export class NavbarComponent implements OnInit {
 
     getTitle() {
         var titlee = this.location.prepareExternalUrl(this.location.path());
-        titlee = '/'+titlee.split('/')[1];
+        titlee = '/' + titlee.split('/')[1];
         this.listTitles.forEach(element => {
             if (element.path == titlee) {
                 this.title = element.title;
@@ -162,14 +161,7 @@ export class NavbarComponent implements OnInit {
                     console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
                 });
         }
-    }
-
-    getTypeUser(){
-        const typeUser = localStorage.getItem('typeUser');
-        if(!typeUser){
-            this.userService.getTypeUserAndSetLocalStorage(atob(localStorage.getItem('user')));
-        }
-    }
+    }    
 
     logout() {
         this.authService.logout();

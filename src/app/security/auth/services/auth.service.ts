@@ -14,13 +14,13 @@ import { User } from '../interfaces/users.interfaces';
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router) {  }
+  constructor(private http: HttpClient, private router: Router) { }
 
   check(): boolean {
     const token = this.decodeToken();
     if (!token) {
       return false;
-    }    
+    }
     const user = atob(localStorage.getItem('user'));
 
     return user === token.sub;
@@ -69,16 +69,15 @@ export class AuthService {
       );
 
   }
- 
+
   getScopeUser(): String {
     return this.decodeToken().scope;
   }
 
-  decodeToken(): { sub: string, iss: string, iat: number, exp: number, scope: string } {
+  decodeToken(): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string } {
     const token = localStorage.getItem('token');
-    let decodedToken: { sub: string, iss: string, iat: number, exp: number, scope: string };
+    let decodedToken: { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string };
     try {
-      // Validar assinatura do JWT
       decodedToken = JWT_decode(token);
     }
     catch (Error) {

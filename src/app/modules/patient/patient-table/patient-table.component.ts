@@ -92,7 +92,7 @@ export class PatientTableComponent implements OnInit {
       .then(() => {
         this.getAllPacients();
         this.calcLengthPatients();
-        this.toastService.info('Paciente removido com suecesso!');
+        this.toastService.info('Paciente removido com sucesso!');
         this.closeModalComfimation();
       })
       .catch(errorResponse => {

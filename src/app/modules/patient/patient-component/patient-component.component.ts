@@ -15,29 +15,29 @@ export class PatientComponentComponent implements OnInit {
     private activeRouter: ActivatedRoute,
     private pilotStudyService: PilotStudyService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.activeRouter.paramMap.subscribe((params) => {
       this.pilotStudyId = params.get('pilotstudy_id');
-      this.router.navigate(['patients',this.pilotStudyId]);
+      this.router.navigate(['patients', this.pilotStudyId]);
     });
     this.buildSubtitle();
   }
 
-  newPatient(){
-    this.router.navigate(['patients',this.pilotStudyId ,'new']);
+  newPatient() {
+    this.router.navigate(['patients', this.pilotStudyId, 'new']);
   }
 
-  buildSubtitle(){
+  buildSubtitle() {
     this.pilotStudyService.getById(this.pilotStudyId)
       .then(pilot => {
-        this.subtitle = 'Estudo selecionado: '+pilot.name;
+        this.subtitle = 'Estudo selecionado: ' + pilot.name;
       })
       .catch(errorResponse => {
         console.log('Não foi possível buscar estudo piloto!', errorResponse);
       });
   }
 
-  onBack(){
+  onBack() {
     this.router.navigate(['patients']);
   }
 
