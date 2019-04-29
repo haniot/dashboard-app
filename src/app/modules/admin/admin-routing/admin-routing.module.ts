@@ -9,6 +9,7 @@ import { AuthGuard } from 'app/security/guards/auth.guard';
 import { DashboardComponent } from 'app/modules/dashboard/dashboard-component/dashboard.component';
 import { TemplateComponent } from 'app/core/template/template-component/template.component';
 import { MypilotstudiesComponent } from '../mypilotstudies/mypilotstudies.component';
+import { EditMypilotComponent } from '../edit-mypilot/edit-mypilot.component';
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
       {
         path: 'mystudies/:userId',
         component: MypilotstudiesComponent,
+        data: { scope: "" }
+      },
+      {
+        path: 'mystudies/:userId/:pilotstudy_id',
+        component: EditMypilotComponent,
         data: { scope: "" }
       },
       { path: '**', redirectTo: 'page-not-found' },

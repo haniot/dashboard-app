@@ -9,6 +9,7 @@ import { HealthProfessionalService } from 'app/modules/admin/services/health-pro
 import { UserService } from 'app/modules/admin/services/users.service';
 import { IUser } from 'app/modules/admin/models/users';
 import { ModalService } from '../haniot-modal/service/modal.service';
+import { switchAll } from 'rxjs/operators';
 
 
 @Component({
@@ -100,36 +101,57 @@ export class HaniotTableComponent {
   searchOnSubmit() {
     clearInterval(this.searchTime);
     this.searchTime = setTimeout(() => {
-      this.getAllUsers().
-        then(users => {
-          this.list = users;
-          try {
-            this.list = this.list.filter((user) => {
-              return user.name.search(this.search) != -1;
-            });
-          } catch (error) {
-            this.list = this.list.filter((user) => {
-              return user.email.search(this.search) != -1;
-            });
-          }
-        })
-        .catch();
-    }, 200);
-
-  }
-
-  getAllUsers(): Promise<Array<IUser>> {
-    if (this.search === '') {
       const page = this.pageEvent && this.pageEvent.pageIndex ? this.pageEvent.pageIndex : 0;
       const limit = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : 5;
       switch (this.userType) {
         case 'Admin':
-          return this.adminService.getAll(page + 1, limit);
+          if (this.search && this.search != '') {
+            this.adminService.getAll(page + 1, limit, this.search)
+              .then(users => {
+                this.list = users;
+                this.updatePagination();
+              })
+              .catch(errorResponse => {
+                console.log('Não foi possível buscar administradores!', errorResponse.error);
+              });
+          } else {
+            this.adminService.getAll(page + 1, limit)
+              .then(users => {
+                this.list = users;
+                this.updatePagination();
+              })
+              .catch(errorResponse => {
+                console.log('Não foi possível buscar administradores!', errorResponse.error);
+              });
+          }
+          break;
         case 'HealthProfessional':
-          return this.healthService.getAll(page + 1, limit);
-      }
-    }
+          if (this.search && this.search != '') {
+            this.healthService.getAll(page + 1, limit, this.search)
+              .then(users => {
+                this.list = users;
+                this.updatePagination();
+              })
+              .catch(errorResponse => {
+                console.log('Não foi possível buscar administradores!', errorResponse.error);
+              });
+          } else {
+            this.healthService.getAll(page + 1, limit)
+              .then(users => {
+                this.list = users;
+                this.updatePagination();
+              })
+              .catch(errorResponse => {
+                console.log('Não foi possível buscar administradores!', errorResponse.error);
+              });
+          }
 
+          break;
+      }
+    }, 200);
+  }
+
+  getAllUsers(): Promise<Array<IUser>> {
     switch (this.userType) {
       case 'Admin':
         return this.adminService.getAll();
@@ -143,7 +165,7 @@ export class HaniotTableComponent {
 
     this.pageEvent = event;
 
-    const eventPagination = { page: this.pageEvent.pageIndex + 1, limit: this.pageEvent.pageSize };
+    const eventPagination = { page: this.pageEvent.pageIndex + 1, limit: this.pageEvent.pageSize, search: this.search };
 
     this.pagination.emit(eventPagination);
   }
@@ -159,6 +181,54 @@ export class HaniotTableComponent {
     }
     else {
       return index + Math.pow(size, 1 - 1);
+    }
+  }
+
+  updatePagination() {
+    switch (this.userType) {
+      case 'Admin':
+        if (this.search && this.search != '') {
+          /** Verificando quantidade de administradores cadastrados */
+          this.adminService.getAll(undefined, undefined, this.search)
+            .then(admins => {
+              this.length = admins.length;
+            })
+            .catch(errorResponse => {
+              //console.log('Error ao buscar administradores!', errorResponse);
+            });
+        } else {
+          /** Verificando quantidade de administradores cadastrados */
+          this.adminService.getAll()
+            .then(admins => {
+              this.length = admins.length;
+            })
+            .catch(errorResponse => {
+              //console.log('Error ao buscar administradores!', errorResponse);
+            });
+        }
+        break;
+      case 'HealthProfessional':
+        if (this.search && this.search != '') {
+          /** Verificando quantidade de administradores cadastrados */
+          this.healthService.getAll(undefined, undefined, this.search)
+            .then(healthProfessionals => {
+              this.length = healthProfessionals.length;
+            })
+            .catch(errorResponse => {
+              //console.log('Error ao buscar administradores!', errorResponse);
+            });
+        } else {
+          /** Verificando quantidade de administradores cadastrados */
+          this.healthService.getAll()
+            .then(healthProfessionals => {
+              this.length = healthProfessionals.length;
+            })
+            .catch(errorResponse => {
+              //console.log('Error ao buscar administradores!', errorResponse);
+            });
+        }
+
+        break;
     }
   }
 }

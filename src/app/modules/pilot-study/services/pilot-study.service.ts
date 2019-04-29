@@ -14,14 +14,19 @@ export class PilotStudyService {
       .toPromise();
   }
 
-  getAllByUserId(userId: string, page?: number, limit?: number): Promise<PilotStudy[]> {
+  getAllByUserId(userId: string, page?: number, limit?: number, search?: string): Promise<PilotStudy[]> {
     let myParams = new HttpParams();
 
-    if (page && limit) {
-      myParams = new HttpParams()
-        .set("page", String(page))
-        .set("limit", String(limit))
-        .set("sort", 'created_a');
+    if (page) {
+      myParams = myParams.append("page", String(page));
+    }
+
+    if (limit) {
+      myParams = myParams.append("limit", String(limit));
+    }
+
+    if (search) {
+      myParams = myParams.append("?name", '*' + search + '*');
     }
 
     const url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
@@ -30,14 +35,19 @@ export class PilotStudyService {
       .toPromise();
   }
 
-  getAll(page?: number, limit?: number): Promise<PilotStudy[]> {
+  getAll(page?: number, limit?: number, search?: string): Promise<PilotStudy[]> {
     let myParams = new HttpParams();
 
-    if (page && limit) {
-      myParams = new HttpParams()
-        .set("page", String(page))
-        .set("limit", String(limit))
-        .set("sort", 'created_a');
+    if (page) {
+      myParams = myParams.append("page", String(page));
+    }
+
+    if (limit) {
+      myParams = myParams.append("limit", String(limit));
+    }
+
+    if (search) {
+      myParams = myParams.append("?name", '*' + search + '*');
     }
 
     const url = `${environment.api_url}/pilotstudies`;
@@ -54,7 +64,7 @@ export class PilotStudyService {
   update(pilotstudy: PilotStudy): Promise<boolean> {
     delete pilotstudy.health_professionals_id;
     return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudy.id}`, pilotstudy)
-          .toPromise();
+      .toPromise();
     // const health_professionals_id = pilotstudy.health_professionals_id;
     // return this.getById(pilotstudy.id)
     //   .then(pilotstudyOld => {
@@ -83,7 +93,7 @@ export class PilotStudyService {
       .toPromise();
   }
 
-  addHealthProfessionalsToPilotStudy(pilotStudyId: string, healthprofessinalId: string): Promise<PilotStudy>{
+  addHealthProfessionalsToPilotStudy(pilotStudyId: string, healthprofessinalId: string): Promise<PilotStudy> {
     return this.http.post<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/healthprofessionals/${healthprofessinalId}`, {})
       .toPromise();
   }

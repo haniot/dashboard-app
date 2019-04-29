@@ -22,6 +22,8 @@ export class AdministratorsComponent {
   limit: number = 5;
   length: number;
 
+  search: string;
+
   constructor(
     private adminService: AdminService,
     private toastr: ToastrService,
@@ -33,7 +35,7 @@ export class AdministratorsComponent {
 
 
   getAllAdministrators() {
-    this.adminService.getAll(this.page, this.limit)
+    this.adminService.getAll(this.page, this.limit, this.search)
       .then(admins => {
         this.admins = admins;
         this.calcLengthAdministrators();
@@ -56,15 +58,15 @@ export class AdministratorsComponent {
         this.modalService.close('modalUser');
         this.modalService.close('modalLoading');
       })
-      .catch((errorResponse: HttpErrorResponse) => {        
+      .catch((errorResponse: HttpErrorResponse) => {
         if (errorResponse.status == 409 &&
           errorResponse.error.code == 409 &&
           errorResponse.error.message == 'A registration with the same unique data already exists!') {
           this.toastr.error('Email já cadastrado');
-        }else{
+        } else {
           this.toastr.error('Não foi possível criar administrador!');
         }
-        this.modalService.actionNotExecuted('modalUser',event,errorResponse.error);
+        this.modalService.actionNotExecuted('modalUser', event, errorResponse.error);
         if (errorResponse.status === 401) {
           this.errorCredentials = true;
         }
@@ -84,10 +86,10 @@ export class AdministratorsComponent {
           errorResponse.error.code == 409 &&
           errorResponse.error.message == 'A registration with the same unique data already exists!') {
           this.toastr.error('Email já cadastrado');
-        }else{
+        } else {
           this.toastr.error('Não foi possível atualizar administrador!');
         }
-        this.modalService.actionNotExecuted('modalUserEdit', event,errorResponse.error);        
+        this.modalService.actionNotExecuted('modalUserEdit', event, errorResponse.error);
         if (errorResponse.status === 401) {
           this.errorCredentials = true;
         }
@@ -108,6 +110,7 @@ export class AdministratorsComponent {
   paginationEvent(event) {
     this.page = event.page;
     this.limit = event.limit;
+    this.search = event.search;
     this.getAllAdministrators();
   }
 

@@ -22,9 +22,7 @@ export class UserService {
   }
 
   getUserById(id: string): Promise<any> {
-    const typeUser = this.getTypeUser();
-
-    switch (typeUser) {
+    switch (this.getTypeUser()) {
       case 'admin':
         return this.adminService.getById(id);
 

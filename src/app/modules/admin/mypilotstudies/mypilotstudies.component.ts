@@ -31,7 +31,7 @@ export class MypilotstudiesComponent implements OnInit {
 
   constructor(
     private pilotStudyService: PilotStudyService,
-    private  modalService: ModalService,
+    private modalService: ModalService,
     private activeRouter: ActivatedRoute
   ) { }
 
@@ -47,7 +47,7 @@ export class MypilotstudiesComponent implements OnInit {
 
   getAllPilotStudies() {
     this.userId = atob(localStorage.getItem('user'));
-    this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
+    this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
       .then(studies => {
         this.list = studies;
       })
@@ -59,11 +59,10 @@ export class MypilotstudiesComponent implements OnInit {
   searchOnSubmit() {
     clearInterval(this.searchTime);
     this.searchTime = setTimeout(() => {
-      this.pilotStudyService.getAll()
+      this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
         .then(studies => {
-          this.list = studies.filter((study) => {
-            return study.name.search(this.search) != -1;
-          });
+          this.list = studies;
+          this.getLengthPilotStudies();
         })
         .catch(error => {
           console.log('Erro ao buscar pilot-studies: ', error);
@@ -94,7 +93,7 @@ export class MypilotstudiesComponent implements OnInit {
 
   getLengthPilotStudies() {
     if (this.userId) {
-      this.pilotStudyService.getAllByUserId(this.userId)
+      this.pilotStudyService.getAllByUserId(this.userId, undefined, undefined, this.search)
         .then(studies => {
           this.length = studies.length;
         })

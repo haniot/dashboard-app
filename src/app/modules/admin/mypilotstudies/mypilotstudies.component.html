@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <haniot-card title="Lista de estudos piloto" subtitle="Selecione um estudo para visualizar seus pacientes">
+        <haniot-card title="Lista de estudos piloto" subtitle="Selecione um estudo para editar">
           <div class="table-responsive">
             <div class="input-group no-border">
               <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
@@ -35,7 +35,7 @@
                       {{study.is_active?'ATIVADO':'DESATIVADO'}}
                     </span>
                   </td>
-                  <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id]" title="Editar estudo..."><i
+                  <td><a class="nav-link" [routerLink]="['/mystudies',userId, study.id]" title="Editar estudo..."><i
                     class="material-icons">more_horiz</i></a>
                   </td>
                     

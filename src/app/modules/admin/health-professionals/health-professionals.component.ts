@@ -20,6 +20,8 @@ export class HealthProfessionalComponent {
   limit: number = 5;
   length: number;
 
+  search: string;
+
   constructor(
     private healthService: HealthProfessionalService,
     private toastr: ToastrService,
@@ -30,7 +32,7 @@ export class HealthProfessionalComponent {
   }
 
   getAllHealthProfessionals() {
-    this.healthService.getAll(this.page, this.limit)
+    this.healthService.getAll(this.page, this.limit, this.search)
       .then(healthProfessionals => {
         this.healthProfessionals = healthProfessionals;
         this.getLengthHealthProfessionals();
@@ -53,12 +55,12 @@ export class HealthProfessionalComponent {
           this.modalService.actionNotExecuted('modalUser', event);
         }
       })
-      .catch(errorResponse => {        
+      .catch(errorResponse => {
         if (errorResponse.status == 409 &&
           errorResponse.error.code == 409 &&
           errorResponse.error.message == 'A registration with the same unique data already exists!') {
           this.toastr.error('Email já cadastrado');
-        }else{
+        } else {
           this.toastr.error('Não foi possível criar profissional de saúde!');
         }
         this.modalService.actionNotExecuted('modalUser', event, errorResponse.error);
@@ -83,7 +85,7 @@ export class HealthProfessionalComponent {
           errorResponse.error.code == 409 &&
           errorResponse.error.message == 'A registration with the same unique data already exists!') {
           this.toastr.error('Email já cadastrado');
-        }else{
+        } else {
           this.toastr.error('Não foi possível atualizar profissional de saúde!');
         }
         this.modalService.actionNotExecuted('modalUserEdit', healthProfessional);
@@ -104,6 +106,7 @@ export class HealthProfessionalComponent {
   paginationEvent(event) {
     this.page = event.page;
     this.limit = event.limit;
+    this.search = event.search;
     this.getAllHealthProfessionals();
   }
 

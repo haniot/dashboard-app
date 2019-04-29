@@ -15,14 +15,19 @@ export class AdminService {
       .toPromise();
   }
 
-  getAll(page?: number, limit?: number): Promise<IUser[]> {
+  getAll(page?: number, limit?: number, search?: string): Promise<IUser[]> {
     let myParams = new HttpParams();
 
-    if (page && limit) {
-      myParams = new HttpParams()
-        .set("page", String(page))
-        .set("limit", String(limit))
-        .set("sort", 'created_a');
+    if (page) {
+      myParams = myParams.append("page", String(page));
+    }
+
+    if (limit) {
+      myParams = myParams.append("limit", String(limit));
+    }
+
+    if (search) {
+      myParams = myParams.append("?email", '*' + search + '*');
     }
 
     const url = `${environment.api_url}/users/admins`;

@@ -55,11 +55,10 @@ export class ListPilotstudiesComponent implements OnInit {
   searchOnSubmit() {
     clearInterval(this.searchTime);
     this.searchTime = setTimeout(() => {
-      this.pilotStudyService.getAll()
+      this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
         .then(studies => {
-          this.list = studies.filter((study) => {
-            return study.name.search(this.search) != -1;
-          });
+          this.list = studies;
+          this.getLengthPilotStudies();
         })
         .catch(errorResponse => {
           console.log('Erro ao buscar pilot-studies: ', errorResponse);
@@ -90,7 +89,7 @@ export class ListPilotstudiesComponent implements OnInit {
 
   getLengthPilotStudies() {
     if (this.userId) {
-      this.pilotStudyService.getAllByUserId(this.userId)
+      this.pilotStudyService.getAllByUserId(this.userId, undefined, undefined, this.search)
         .then(studies => {
           this.length = studies.length;
         })

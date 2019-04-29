@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PilotStudyService } from '../services/pilot-study.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
 import { HealthProfessional } from 'app/modules/admin/models/users';
-import { Location } from '@angular/common';
+import { AuthService } from 'app/security/auth/services/auth.service';
 
 @Component({
   selector: 'pilot-study-form',
@@ -38,7 +39,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     private toastService: ToastrService,
     private router: Router,
     private activeRouter: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private authService: AuthService
   ) {
 
   }
@@ -94,7 +96,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     this.professionalsForm = this.fb.group({
       health_professionals_id_add: ['', Validators.required],
     });
-    
+
     this.pilotStudyForm.get('start').valueChanges.subscribe(val => {
       this.pilotStudyForm.get('end').enable();
     });
@@ -133,16 +135,13 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
   }
 
   getListProfissonals(): Promise<any> {
-    if (localStorage.getItem('typeUser') == 'Admin') {
-      return this.healthService.getAll()
-        .then(healthProfessionals => {
-          this.listProf = healthProfessionals;
-        })
-        .catch(error => {
-          console.log('Erro ao carregar lista de profisionais!', error);
-        });
-    }
-    return Promise.resolve([]);
+    return this.healthService.getAll()
+      .then(healthProfessionals => {
+        this.listProf = healthProfessionals;
+      })
+      .catch(error => {
+        console.log('Erro ao carregar lista de profisionais!', error);
+      });
   }
 
   dissociateHealthProfessional(health_professionals_id: string) {
@@ -197,6 +196,6 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
   }
 
   showManagerProfessionals(): boolean {
-    return localStorage.getItem('typeUser') == 'Admin';
+    return this.authService.decodeToken().sub_type == 'admin';
   }
 }

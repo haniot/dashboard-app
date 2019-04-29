@@ -16,14 +16,19 @@ export class HealthProfessionalService {
       .toPromise();
   }
 
-  getAll(page?: number, limit?: number): Promise<HealthProfessional[]> {
+  getAll(page?: number, limit?: number, search?: string): Promise<HealthProfessional[]> {
     let myParams = new HttpParams();
-    
-    if (page && limit) {
-      myParams = new HttpParams()
-        .set("page", String(page))
-        .set("limit", String(limit))
-        .set("sort", 'created_a');
+
+    if (page) {
+      myParams = myParams.append("page", String(page));
+    }
+
+    if (limit) {
+      myParams = myParams.append("limit", String(limit));
+    }
+
+    if (search) {
+      myParams = myParams.append("?name", '*' + search + '*');
     }
 
     const url = `${environment.api_url}/users/healthprofessionals`;
@@ -40,7 +45,7 @@ export class HealthProfessionalService {
 
   update(healthprofessionals: HealthProfessional): Promise<boolean> {
     return this.http.patch<any>(`${environment.api_url}/users/healthprofessionals/${healthprofessionals.id}`, healthprofessionals)
-          .toPromise();
+      .toPromise();
     // let copy_healthprofessionals = {};
     // return this.getById(healthprofessionals.id)
     //   .then(healthprofessionalsOld => {

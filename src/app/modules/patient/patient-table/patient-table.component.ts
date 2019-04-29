@@ -28,7 +28,7 @@ export class PatientTableComponent implements OnInit {
   searchTime;
 
   @Input() pilotStudyId;
-  
+
   cacheIdPatientRemove: string;
 
   constructor(
@@ -46,12 +46,10 @@ export class PatientTableComponent implements OnInit {
   searchOnSubmit() {
     clearInterval(this.searchTime);
     this.searchTime = setTimeout(() => {
-      this.patientService.getAll(this.pilotStudyId, this.page, this.limit)
+      this.patientService.getAll(this.pilotStudyId, this.page, this.limit, this.search)
         .then(patients => {
-          const pacientsReturned = patients.filter((patient) => {
-            return patient.first_name.search(this.search) != -1 || patient.last_name.search(this.search) != -1;
-          });
-          this.listOfPatients = pacientsReturned;
+          this.listOfPatients = patients;
+          this.calcLengthPatients();
         })
         .catch(errorResponse => {
           console.log('Erro ao buscar pacientes: ', errorResponse);
@@ -60,9 +58,10 @@ export class PatientTableComponent implements OnInit {
   }
 
   getAllPacients() {
-    this.patientService.getAll(this.pilotStudyId, this.page, this.limit)
+    this.patientService.getAll(this.pilotStudyId, this.page, this.limit, this.search)
       .then(patients => {
         this.listOfPatients = patients;
+        this.calcLengthPatients();
       })
       .catch(errorResponse => {
         console.log('Erro ao buscar pacientes: ', errorResponse);
@@ -76,19 +75,19 @@ export class PatientTableComponent implements OnInit {
     this.getAllPacients();
   }
 
-  openModalConfirmation(pilotstudy_id: string, patientId: string){
+  openModalConfirmation(pilotstudy_id: string, patientId: string) {
     this.cacheIdPatientRemove = patientId;
     this.pilotStudyId = pilotstudy_id;
     this.modalService.open('modalConfirmation');
   }
 
-  closeModalComfimation(){
+  closeModalComfimation() {
     this.cacheIdPatientRemove = '';
     this.modalService.close('modalConfirmation');
   }
 
   removePatient() {
-    this.patientService.remove(this.pilotStudyId,this.cacheIdPatientRemove)
+    this.patientService.remove(this.pilotStudyId, this.cacheIdPatientRemove)
       .then(() => {
         this.getAllPacients();
         this.calcLengthPatients();
@@ -116,7 +115,7 @@ export class PatientTableComponent implements OnInit {
   }
 
   calcLengthPatients() {
-    this.patientService.getAll(this.pilotStudyId)
+    this.patientService.getAll(this.pilotStudyId, undefined, undefined, this.search)
       .then(patients => {
         this.length = patients.length;
       })

@@ -15,14 +15,20 @@ export class PatientService {
       .toPromise();
   }
 
-  getAll(pilotstudyId: string, page?: number, limit?: number): Promise<Patient[]> {
+  getAll(pilotstudyId: string, page?: number, limit?: number, search?: string): Promise<Patient[]> {
     let myParams = new HttpParams();
 
-    if (page && limit) {
-      myParams = new HttpParams()
-        .set("page", String(page))
-        .set("limit", String(limit))
-        .set("sort", 'created_a');
+    if (page) {
+      myParams = myParams.append("page", String(page));
+    }
+
+    if (limit) {
+      myParams = myParams.append("limit", String(limit));
+    }
+
+    if (search) {
+      myParams = myParams.append("?first_name", '*' + search + '*');
+      //myParams = myParams.append("?last_name", '*' + search + '*');
     }
 
     const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
@@ -38,7 +44,7 @@ export class PatientService {
 
   update(pilotstudyId: string, patient: Patient): Promise<boolean> {
     return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients/${patient.id}`, patient)
-          .toPromise();
+      .toPromise();
     // return this.getById(pilotstudyId, patient.id)
     //   .then(patientOld => {
     //     Object.keys(patientOld).forEach(key => {
