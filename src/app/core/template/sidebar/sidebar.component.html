@@ -45,26 +45,27 @@
             </a>
         </li>
         <li routerLinkActive="active" class="nav-item" *ngIf="verifyScopes('Usuários')">
-            <a class="nav-link" href="#pageSubmenu"  data-toggle="collapse" aria-expanded="false" (click)="onclickMenuUser()">
+            <a class="nav-link" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                (click)="onclickMenuUser()">
                 <p>
                     Usuários
                     <i class="material-icons">{{iconUserMenu}}</i>
                 </p>
-                
+
             </a>
-            <ul class="collapse list-unstyled submenu" id="pageSubmenu" >
+            <ul class="collapse list-unstyled submenu" id="pageSubmenu">
                 <li routerLinkActive="active" class="nav-subitem">
-                    <a class="nav-link" [routerLink]="['/administrators']" *ngIf="verifyScopes('Administradores')">
+                    <a class="nav-link" [routerLink]="['/ui/administrators']" *ngIf="verifyScopes('Administradores')">
                         <i class="material-icons">supervisor_account</i>
                         <p>Administradores</p>
                     </a>
                 </li>
                 <li routerLinkActive="active" class="nav-subitem">
-                        <a class="nav-link" [routerLink]="['/healthprofessionals']" *ngIf="verifyScopes('P. de Saúde')">
-                            <i class="material-icons">accessibility</i>
-                            <p>Profissionais de Saúde</p>
-                        </a>
-                    </li>
+                    <a class="nav-link" [routerLink]="['/ui/healthprofessionals']" *ngIf="verifyScopes('P. de Saúde')">
+                        <i class="material-icons">accessibility</i>
+                        <p>Profissionais de Saúde</p>
+                    </a>
+                </li>
             </ul>
         </li>
         <li routerLinkActive="active" class="nav-item">
@@ -74,7 +75,7 @@
             </a>
         </li>
         <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()">
-            <a class="nav-link" [routerLink]="['/mystudies',userId]" *ngIf="verifyScopes('Meus estudos')">
+            <a class="nav-link" [routerLink]="['/ui/mystudies',userId]" *ngIf="verifyScopes('Meus estudos')">
                 <i class="material-icons">library_books</i>
                 <p>Meus estudos</p>
             </a>

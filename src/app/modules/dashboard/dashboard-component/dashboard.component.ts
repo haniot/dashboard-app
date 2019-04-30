@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 
 import * as $ from 'jquery';
 @Component({
@@ -9,59 +8,29 @@ import * as $ from 'jquery';
 })
 export class DashboardComponent implements OnInit {
 
-  measurements;
+  patientsTotal: number;
+  studiesTotal: number;
+  measurementsTotal: number;
+  assessmentTotal: number;
 
-  dataArr = []
 
-  result = []
 
-  users: any;
-
-  dashboardData : DashboardData;
-
-  constructor(private modalService: ModalService) { }
-
-  renderData(data: Array<any>) {
-//    console.log(data)
+  constructor() {
+    this.patientsTotal = 20;
+    this.studiesTotal = 6;
+    this.measurementsTotal = 125;
+    this.assessmentTotal = 55;
   }
+
+
 
   ngOnInit() {
-    $('body').css('background-color', '#ececec')
-    this.init();    
+    $('body').css('background-color', '#ececec');
   }
 
-  init(){
-    
-  }
 
-  prepareDashboardData(){
-    let data : DashboardData = {
-      totalPatients : this.users.length,
-      totalMeasurement : this.measurements.length,
-      averageAge: this.getAverageAge()
-    }
-    this.dashboardData = data;
-  }
 
-  getAverageAge(){
 
-    if (this.users){
-      return (this.users.map(user=>{
-        return(new Date(Date.now()).getFullYear() - new Date(user.dateOfBirth).getFullYear());
-      })
-      .reduce((acumulator, current)=>{
-          return current + acumulator;
-      }) / this.users.length).toFixed(0);
-    }
-
-  }
 
 }
-
-export interface DashboardData{
-  totalPatients : number,
-  totalMeasurement: number,
-  averageAge: string
-}
-
 

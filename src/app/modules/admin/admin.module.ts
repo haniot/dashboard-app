@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 
@@ -22,24 +21,22 @@ import { AdminService } from './services/admin.service';
 import { HealthProfessionalService } from './services/health-professional.service';
 import { UserService } from './services/users.service';
 import { SharedModule } from 'app/shared/shared.module';
-import { PilotStudyModule } from '../pilot-study/pilot-study.module';
 import { MypilotstudiesComponent } from './mypilotstudies/mypilotstudies.component';
 import { EditMypilotComponent } from './edit-mypilot/edit-mypilot.component';
 import { MatNativeDateModule } from '@angular/material';
+import { HaniotTableComponent } from './haniot-table/haniot-table.component';
 
 @NgModule({
   imports: [
-    BrowserModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    CommonModule,    
-    
+
     AdminRoutingModule,
     TemplateModule,
     SharedModule,
-    PilotStudyModule,
-
+    
     MatPaginatorModule,
     MatSelectModule,
     MatDatepickerModule,
@@ -49,15 +46,16 @@ import { MatNativeDateModule } from '@angular/material';
     MultiSelectModule
   ],
   declarations: [
-    AdministratorsComponent,   
+    AdministratorsComponent,
     HealthProfessionalComponent,
     ModalUserComponent,
     MyprofileComponent,
     MypilotstudiesComponent,
-    EditMypilotComponent    
+    EditMypilotComponent,
+    HaniotTableComponent
 
-  ], 
-  providers:[
+  ],
+  providers: [
     UserService,
     AdminService,
     HealthProfessionalService

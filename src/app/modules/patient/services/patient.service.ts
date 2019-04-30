@@ -28,7 +28,7 @@ export class PatientService {
 
     if (search) {
       myParams = myParams.append("?first_name", '*' + search + '*');
-      //myParams = myParams.append("?last_name", '*' + search + '*');
+      //myParams = myParams.append("&last_name", '*' + search + '*');
     }
 
     const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;

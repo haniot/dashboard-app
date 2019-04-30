@@ -30,16 +30,18 @@ import { ViewHealthProfessionalComponent } from './view-health-professional/view
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
     RouterModule,
+
     MatPaginatorModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
     MatSlideToggleModule,
+    MultiSelectModule,
+    
+    SharedModule,
     PilotStudyRoutingModule,
-    MultiSelectModule
   ],
   providers:[
     PilotStudyService,

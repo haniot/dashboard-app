@@ -34,6 +34,7 @@ import { MeasurementModule } from '../measurement/measurement.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+
     MatPaginatorModule,
     MatSelectModule,
     MatDatepickerModule,
@@ -41,6 +42,7 @@ import { MeasurementModule } from '../measurement/measurement.module';
     MatFormFieldModule,
     MultiSelectModule,
     MatTabsModule,
+    
     PatientRoutingModule,
     HabitsModule,
     MeasurementModule

@@ -11,13 +11,13 @@ export declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard' },
-    { path: '/administrators', title: 'Usuários - Administradores' },
-    { path: '/healthprofessionals', title: 'Usuários - Profissionais de Saúde' },
+    { path: '/ui/dashboard', title: 'Dashboard' },
+    { path: '/ui/administrators', title: 'Usuários - Administradores' },
+    { path: '/ui/healthprofessionals', title: 'Usuários - Profissionais de Saúde' },
     { path: '/pilotstudies', title: 'Estudos Pilotos' },
     { path: '/patients', title: 'Pacientes' },
-    { path: '/mystudies', title: 'Meus estudos' },
-    { path: '/myprofile', title: 'Meus dados' }
+    { path: '/ui/mystudies', title: 'Meus estudos' },
+    { path: '/ui/myprofile', title: 'Meus dados' }
 ];
 @Component({
     selector: 'app-navbar',
