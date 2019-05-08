@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import * as $ from 'jquery';
+import { DashboardService } from '../services/dashboard.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
+
+  userId: string;
 
   patientsTotal: number;
   studiesTotal: number;
@@ -15,9 +20,12 @@ export class DashboardComponent implements OnInit {
 
 
 
-  constructor() {
+  constructor(
+    private dashboardService: DashboardService,
+    private authService: AuthService,
+    private loadinService: LoadingService
+  ) {
     this.patientsTotal = 20;
-    this.studiesTotal = 6;
     this.measurementsTotal = 125;
     this.assessmentTotal = 55;
   }
@@ -26,10 +34,30 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     $('body').css('background-color', '#ececec');
+    this.loadUserId();
+    this.load();
   }
 
+  load() {
+    if (this.userId && this.userId != '') {
+      this.dashboardService.getNumberOfStudies(this.userId)
+        .then(numberStudies => this.studiesTotal = numberStudies)
+        .catch(error => this.studiesTotal = 0);
+    } else {
+      this.loadUserId();
+      this.load();
+    }
+  }
 
+  loadUserId() {
+    this.userId = this.authService.decodeToken().sub;
+  }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.loadinService.close();
+    }, 500);
+  }
 
 
 }

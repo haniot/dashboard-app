@@ -1,0 +1,30 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <haniot-card title="Avaliações nutricionais" [subtitle]="subtitle">
+          <nutrition-evaluation-table [(patient)]="patient"></nutrition-evaluation-table>
+        </haniot-card>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <haniot-card title="Avaliações odontológicas" [subtitle]="subtitle">
+
+        </haniot-card>
+      </div>
+      <div class="row container">
+        <div class="col-md-6">
+          <button type="submit" class="btn btn-haniot-primary" (click)="newEvaluation()">
+            Adicionar
+            <i class="material-icons">add</i>
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
+            <i class="material-icons">arrow_back</i>
+            Voltar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,7 +23,9 @@ export class PatientTableComponent implements OnInit {
   limit: number = 5;
   length: number;
 
-  listOfPatients: Array<Patient>;
+  listOfPatientsIsEmpty: boolean = false;
+
+  listOfPatients = new Array<Patient>();
   search: string;
   searchTime;
 
@@ -62,6 +64,11 @@ export class PatientTableComponent implements OnInit {
       .then(patients => {
         this.listOfPatients = patients;
         this.calcLengthPatients();
+        if (patients.length == 0) {
+          this.listOfPatientsIsEmpty = true;
+        } else {
+          this.listOfPatientsIsEmpty = false;
+        }
       })
       .catch(errorResponse => {
         console.log('Erro ao buscar pacientes: ', errorResponse);

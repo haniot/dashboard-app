@@ -97,50 +97,52 @@ export class HeartRateComponent implements OnInit {
 
   loadGraph() {
 
-    //Limpando o grafico
-    this.option.xAxis.data = [];
-    this.option.series[0].data = [];
+    if (this.data.length > 0) {
+      //Limpando o grafico
+      this.option.xAxis.data = [];
+      this.option.series[0].data = [];
 
-    this.data.forEach((heartRate) => {
+      this.data.forEach((heartRate) => {
 
-      heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
-        // const find = this.option.xAxis.data.find((ele) => {
-        //   return ele == this.datePipe.transform(date.timestamp, "shortDate").substr(0, 5);
-        // });
+        heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
+          // const find = this.option.xAxis.data.find((ele) => {
+          //   return ele == this.datePipe.transform(date.timestamp, "shortDate").substr(0, 5);
+          // });
 
-        // if (!find) {
-        //   this.option.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate").substr(0, 5));
-        // }
+          // if (!find) {
+          //   this.option.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate").substr(0, 5));
+          // }
 
-        this.option.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+          this.option.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
 
-        this.option.series[0].data.push(date.value);
+          this.option.series[0].data.push(date.value);
+
+        });
+
 
       });
 
+      if (this.data.length > 1) {
+        this.lastData = this.data[this.data.length - 1];
+      } else {
+        this.lastData = this.data[0];
+      }
 
-    });
+      //Inserindo dados no gráfico da ultima medião
+      //Limpando o grafico
+      this.optionLastData.xAxis.data = [];
+      this.optionLastData.series[0].data = [];
 
-    if (this.data.length > 1) {
-      this.lastData = this.data[this.data.length - 1];
-    } else {
-      this.lastData = this.data[0];
+      this.lastData.dataset.forEach((date: { value: number, timestamp: string }) => {
+
+        this.optionLastData.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+
+        this.optionLastData.series[0].data.push(date.value);
+
+      });
+
+      this.graphService.refreshGraph();
     }
-
-    //Inserindo dados no gráfico da ultima medião
-    //Limpando o grafico
-    this.optionLastData.xAxis.data = [];
-    this.optionLastData.series[0].data = [];
-
-    this.lastData.dataset.forEach((date: { value: number, timestamp: string }) => {      
-
-      this.optionLastData.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
-
-      this.optionLastData.series[0].data.push(date.value);
-
-    });
-
-    this.graphService.refreshGraph();
 
   }
 

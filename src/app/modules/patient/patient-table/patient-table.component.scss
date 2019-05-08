@@ -1,12 +1,14 @@
-.material-icons{
-    color : #00a594;
-    transform: rotate(180deg) scaleX(-1);
-    cursor: pointer;
-  }
-  .nav-link i:hover{
-    border-radius: 20px;
-    background: rgb(212, 207, 207);
-  }
-  table tr {
-    cursor: pointer;
-  }
+.material-icons {
+  color: #00a594;
+  cursor: pointer;
+}
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+table tr {
+  cursor: pointer;
+}
+td img {
+  width: 2%;
+}

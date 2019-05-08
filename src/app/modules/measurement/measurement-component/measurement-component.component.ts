@@ -66,7 +66,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
         });
 
         this.listWaistCircunference = measurements.filter((element: Measurement) => {
-          return element.type === MeasurementType.waist_circunference
+          return element.type === MeasurementType.waist_circumference
         });
 
         this.listBodyTemperature = measurements.filter((element: Measurement) => {
@@ -87,8 +87,8 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
 
       })
       .catch(errorResponse => {
-        this.toastService.error('Não foi possível buscar medições!');
-        //console.log('Não foi possível buscar medições!',errorResponse);
+        //this.toastService.error('Não foi possível buscar medições!');
+        //console.log('Não foi possível buscar medições!', errorResponse);
       });
   }
 

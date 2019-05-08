@@ -17,7 +17,8 @@ const routes = [
       { path: 'dashboard', loadChildren: 'app/modules/dashboard/dashboard.module#DashboardModule' },
       { path: 'ui', loadChildren: 'app/modules/admin/admin.module#AdminModule' },
       { path: 'patients', loadChildren: 'app/modules/patient/patient.module#PatientModule' },
-      { path: 'pilotstudies', loadChildren: 'app/modules/pilot-study/pilot-study.module#PilotStudyModule' }
+      { path: 'pilotstudies', loadChildren: 'app/modules/pilot-study/pilot-study.module#PilotStudyModule' },
+      { path: 'evaluations', loadChildren: 'app/modules/evaluation/evaluation.module#EvaluationModule' }
     ]
   },
   { path: 'acess-denied', component: AcessDeniedComponent },

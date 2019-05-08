@@ -35,10 +35,10 @@
                       {{study.is_active?'ATIVADO':'DESATIVADO'}}
                     </span>
                   </td>
-                  <td><a class="nav-link" [routerLink]="['/mystudies',userId, study.id]" title="Editar estudo..."><i
-                    class="material-icons">more_horiz</i></a>
+                  <td><a class="nav-link" [routerLink]="['/ui/mystudies',userId, study.id]" title="Editar estudo..."><i
+                        class="material-icons">edit</i></a>
                   </td>
-                    
+
                 </tr>
               </tbody>
             </table>
@@ -51,7 +51,7 @@
           <!-- <patient-table [pilotStudyId]="'5c9538e671f8395ce5ba5585'"></patient-table> -->
         </haniot-card>
       </div>
-      
+
     </div>
   </div>
 </div>

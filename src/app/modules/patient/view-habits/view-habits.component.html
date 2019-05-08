@@ -1,7 +1,12 @@
 <div class="main-content">
   <div class="container-fluid">
+    <div class="d-flex flex-row-reverse">
+      <div class="p-2">
+        Avaliações disponiveis: <a class="nav-link" [routerLink]="['/evaluations',pilotStudyId,patientId]">aqui</a>
+      </div>
+    </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <haniot-card [title]="'Informações pessoais do paciente'" subtitle=''>
           <form [formGroup]="patientForm">
 
@@ -111,6 +116,12 @@
           </form>
         </haniot-card>
       </div>
+      <div class="col-md-12">
+        <familycohesion-record [(patientId)]="patientId"></familycohesion-record>
+      </div>
+      <div class="col-md-12">
+        <sociodemographic-record [(patientId)]="patientId"></sociodemographic-record>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-12">
@@ -120,19 +131,19 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
-                  <feeding-habits [patientId]="patientForm.get('id').value"></feeding-habits>
+                  <feeding-habits [(patientId)]="patientId"></feeding-habits>
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
-                  <sleep-habits [patientId]="patientForm.get('id').value"></sleep-habits>
+                  <sleep-habits [(patientId)]="patientId"></sleep-habits>
                 </div>
-                
+
                 <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
-                  <medical-record [patientId]="patientForm.get('id').value"></medical-record>
+                  <medical-record [(patientId)]="patientId"></medical-record>
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
-                  <physical-activity-habits [patientId]="patientForm.get('id').value"></physical-activity-habits>
+                  <physical-activity-habits [(patientId)]="patientId"></physical-activity-habits>
                 </div>
 
               </div>
@@ -141,11 +152,11 @@
           </mat-tab>
 
           <mat-tab label="MEDIÇÕES">
-            <measurement-component [patientId]="patientForm.get('id').value"></measurement-component>
+            <measurement-component [(patientId)]="patientId"></measurement-component>
           </mat-tab>
-          
-          <mat-tab label="DISPOSITIVOS">
-            <device [patientId]="patientForm.get('id').value"></device>
+
+          <mat-tab label="SAÚDE BUCAL">
+            <oralhealth-record [(patientId)]="patientId"></oralhealth-record>
           </mat-tab>
 
         </mat-tab-group>

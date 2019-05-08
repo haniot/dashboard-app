@@ -16,6 +16,7 @@ import { CoreModule } from './core/core.module';
 import { ModulesModule } from './modules/modules.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './core/app-routing/app-routing.module';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 registerLocaleData(localePt, 'pt-BR', localePtExtra);
 
@@ -39,7 +40,10 @@ registerLocaleData(localePt, 'pt-BR', localePtExtra);
   declarations: [
     AppComponent,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: "pt-BR" }],
+  providers: [
+    { provide: LOCALE_ID, useValue: "pt-BR" },
+    { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

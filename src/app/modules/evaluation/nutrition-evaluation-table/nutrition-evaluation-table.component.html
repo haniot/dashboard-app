@@ -1,0 +1,50 @@
+<div class="input-group no-border">
+  <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
+    placeholder="Pesquisar avaliação..." (keyup)="searchOnSubmit()">
+  <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
+    <i class="material-icons">search</i>
+    <div class="ripple-container"></div>
+  </button>
+</div>
+<div class="table-responsive">
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nome do paciente</th>
+        <th>Data</th>
+        <th>Estado</th>
+        <th colspan="2">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let evaluation of listOfEvaluations; index as i">
+        <td>{{getIndex(i)}}</td>
+        <td>{{patient.first_name}} {{patient.last_name}}</td>
+        <td>{{evaluation.created_at | date}}</td>
+        <td>
+          <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus}}</span>
+        </td>
+        <td>
+          <a class="nav-link" [routerLink]="['/evaluations',evaluation.patient_id, 'nutritional', evaluation.id]"
+            title="Acessar avaliação...">
+            <i class="material-icons">input</i>
+          </a>
+        </td>
+        <td>
+          <a class="nav-link" (click)="openModalConfirmation(evaluation.id)" title="Excluir avaliação...">
+            <i class="material-icons">close</i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+  (page)="clickPagination($event)">
+</mat-paginator>
+
+<modal-confirmation [message]="'Tem certeza que deseja remover avaliação?'" (confirmation)="removeEvaluation()"
+  (noconfirmation)="closeModalComfimation()"></modal-confirmation>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'app/modules/admin/services/users.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { VerifyScopeService } from 'app/security/services/verify-scope.service';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 
 declare const $: any;
 
@@ -31,6 +33,10 @@ export const configSideBar = [
   {
     title: 'Meus estudos',
     scopes: []
+  },
+  {
+    title: 'Avaliações',
+    scopes: []
   }
 ];
 
@@ -54,7 +60,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private verifyScopesService: VerifyScopeService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     //this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -74,8 +81,12 @@ export class SidebarComponent implements OnInit {
       return element.title === title;
     });
     const routerScopes = configRouter[0].scopes;
-    const userScopes: Array<String> = this.authService.getScopeUser().split(' ');
-    return this.verifyScopesService.verifyScopes(routerScopes, userScopes);
+    const scopes = this.authService.getScopeUser();
+    if (scopes) {
+      const userScopes: Array<String> = scopes.split(' ');
+      return this.verifyScopesService.verifyScopes(routerScopes, userScopes);
+    }
+    return false;
   }
 
   getUserName() {
@@ -106,5 +117,9 @@ export class SidebarComponent implements OnInit {
 
   showMyStudies(): boolean {
     return this.authService.decodeToken().sub_type == 'health_professional';
+  }
+
+  openLoading() {
+    this.loadingService.open();
   }
 }

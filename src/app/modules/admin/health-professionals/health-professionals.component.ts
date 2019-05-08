@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 
 import { ToastrService } from 'ngx-toastr';
 
 import { HealthProfessionalService } from '../services/health-professional.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import { IUser, HealthProfessional } from '../models/users';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 
 @Component({
   selector: 'health-professionals',
   templateUrl: './health-professionals.component.html',
   styleUrls: ['./health-professionals.component.scss']
 })
-export class HealthProfessionalComponent {
+export class HealthProfessionalComponent implements AfterViewInit{
   userEdit: IUser = new HealthProfessional();
   healthProfessionals: Array<IUser> = [];
 
@@ -25,7 +26,8 @@ export class HealthProfessionalComponent {
   constructor(
     private healthService: HealthProfessionalService,
     private toastr: ToastrService,
-    private modalService: ModalService) {
+    private modalService: ModalService,
+    private loadinService: LoadingService) {
     this.getAllHealthProfessionals();
     /* Buscando todos profissionais de saúde cadastrados para saber a quantidade total, o length é utilizado na paginação */
     this.getLengthHealthProfessionals();
@@ -119,5 +121,11 @@ export class HealthProfessionalComponent {
       .catch(errorResponse => {
         //console.log('Não foi possível buscar todos os profissionais!', errorResponse);
       });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.loadinService.close();
+    }, 1000);
   }
 }

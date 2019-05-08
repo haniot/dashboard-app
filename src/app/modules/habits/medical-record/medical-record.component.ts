@@ -54,8 +54,8 @@ export class MedicalRecordComponent implements OnInit, OnChanges{
           this.createMedicalForm(medicalRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
         })
         .catch(errorResponse => {
-          this.toastService.error('Não foi possível buscar histórico de doenças!');
-          console.log('Não foi possível buscar histórico de doenças!', errorResponse);
+          //this.toastService.error('Não foi possível buscar histórico de doenças!');
+          //console.log('Não foi possível buscar histórico de doenças!', errorResponse);
         });
     }
   }

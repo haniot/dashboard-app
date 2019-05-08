@@ -17,7 +17,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/pilotstudies', title: 'Estudos Pilotos' },
     { path: '/patients', title: 'Pacientes' },
     { path: '/ui/mystudies', title: 'Meus estudos' },
-    { path: '/ui/myprofile', title: 'Meus dados' }
+    { path: '/ui/myprofile', title: 'Meus dados' },
+    { path: '/evaluations', title: 'Avaliações' }
 ];
 @Component({
     selector: 'app-navbar',
@@ -161,7 +162,7 @@ export class NavbarComponent implements OnInit {
                     console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
                 });
         }
-    }    
+    }
 
     logout() {
         this.authService.logout();

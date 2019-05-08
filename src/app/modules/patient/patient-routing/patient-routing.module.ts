@@ -29,7 +29,7 @@ const routes = [
     data: { scope: "patient:update patient:updateAll" }
   },
   {
-    path: ':patientId/:pilotstudy_id/habits',
+    path: ':patientId/:pilotstudy_id/details',
     component: ViewHabitsComponent,
     data: { scope: "patient:read patient:readAll" }
   },

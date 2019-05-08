@@ -13,7 +13,7 @@ import { MatTabsModule } from '@angular/material';
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PatientTableComponent } from './patient-table/patient-table.component';
 import { PatientComponentComponent } from './patient-component/patient-component.component';
-import { PatientService } from './services/patient.service';
+
 import { PatientRoutingModule } from './patient-routing/patient-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { ListPilotstudiesComponent } from './list-pilotstudies/list-pilotstudies.component';
@@ -42,14 +42,16 @@ import { MeasurementModule } from '../measurement/measurement.module';
     MatFormFieldModule,
     MultiSelectModule,
     MatTabsModule,
-    
+
     PatientRoutingModule,
     HabitsModule,
     MeasurementModule
   ],
   providers: [
-    PatientService,
-    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+  ],
+  exports: [
+    PatientTableComponent
   ]
 })
 export class PatientModule { }

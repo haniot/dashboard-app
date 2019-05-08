@@ -25,7 +25,7 @@ const routes = [
     data: { scope: "healthprofessional:create healthprofessional:deleteAll healthprofessional:readAll healthprofessional:updateAll" }
   },
   {
-    path: 'mystudies/:userId',
+    path: 'mystudies',
     component: MypilotstudiesComponent,
     data: { scope: "" }
   },

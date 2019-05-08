@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
+
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
-import { ActivatedRoute } from '@angular/router';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 
 @Component({
   selector: 'app-list-pilotstudies',
   templateUrl: './list-pilotstudies.component.html',
   styleUrls: ['./list-pilotstudies.component.scss']
 })
-export class ListPilotstudiesComponent implements OnInit {
+export class ListPilotstudiesComponent implements OnInit, AfterViewInit {
   userId: string;
   // MatPaginator Inputs
   pageSizeOptions: number[] = [5, 10, 25, 100];
@@ -28,7 +30,8 @@ export class ListPilotstudiesComponent implements OnInit {
 
   constructor(
     private pilotStudyService: PilotStudyService,
-    private activeRouter: ActivatedRoute
+    private activeRouter: ActivatedRoute,
+    private loadinService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -105,6 +108,12 @@ export class ListPilotstudiesComponent implements OnInit {
           console.log('Erro ao buscar pilot-studies: ', errorResponse);
         });
     }
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.loadinService.close();
+    }, 500);
   }
 
 }

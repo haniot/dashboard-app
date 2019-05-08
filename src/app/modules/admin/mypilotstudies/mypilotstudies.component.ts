@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
 import { ActivatedRoute } from '@angular/router';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
 
 @Component({
   selector: 'mypilotstudies',
   templateUrl: './mypilotstudies.component.html',
   styleUrls: ['./mypilotstudies.component.scss']
 })
-export class MypilotstudiesComponent implements OnInit {
+export class MypilotstudiesComponent implements OnInit, AfterViewInit {
+
   userId: string;
   // MatPaginator Inputs
   pageSizeOptions: number[] = [5, 10, 25, 100];
@@ -31,18 +34,20 @@ export class MypilotstudiesComponent implements OnInit {
 
   constructor(
     private pilotStudyService: PilotStudyService,
-    private modalService: ModalService,
-    private activeRouter: ActivatedRoute
-  ) { }
+    private authService: AuthService,
+    private loadinService: LoadingService
+  ) {
+
+  }
 
   ngOnInit() {
-    this.activeRouter.paramMap.subscribe((params) => {
-      this.userId = params.get('userId');
-      this.getAllPilotStudies();
-      this.getLengthPilotStudies();
-    });
+    this.loadUserId();
     this.getAllPilotStudies();
     this.getLengthPilotStudies();
+  }
+
+  loadUserId() {
+    this.userId = atob(localStorage.getItem('user'));
   }
 
   getAllPilotStudies() {
@@ -109,6 +114,12 @@ export class MypilotstudiesComponent implements OnInit {
           console.log('Erro ao buscar pilot-studies: ', error);
         });
     }
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.loadinService.close();
+    }, 500);
   }
 
 }

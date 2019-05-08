@@ -1,12 +1,12 @@
+<div class="input-group no-border">
+  <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
+    placeholder="Pesquisar paciente..." (keyup)="searchOnSubmit()">
+  <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
+    <i class="material-icons">search</i>
+    <div class="ripple-container"></div>
+  </button>
+</div>
 <div class="table-responsive">
-  <div class="input-group no-border">
-    <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
-      placeholder="Pesquisar paciente..." (keyup)="searchOnSubmit()">
-    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
-      <i class="material-icons">search</i>
-      <div class="ripple-container"></div>
-    </button>
-  </div>
   <table class="table table-sm table-hover">
     <thead>
       <tr>
@@ -18,23 +18,31 @@
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="listOfPatients.length==0">
+        <td colspan="5" *ngIf="!listOfPatientsIsEmpty"><img src="../../../../assets/img/loading.gif" alt=""> carregando
+          pacientes...</td>
+        <td colspan="5" *ngIf="listOfPatientsIsEmpty">Nenhum registro encontrado.</td>
+      </tr>
       <tr *ngFor="let patient of listOfPatients; index as i">
         <td>{{getIndex(i)}}</td>
         <td>{{patient.first_name}} {{patient.last_name}}</td>
         <td>{{patient.gender | gender}}</td>
         <td>{{patient.birth_date | date}}</td>
         <td>
-          <a class="nav-link" [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'habits']" title="Visualizar habitos...">
+          <a class="nav-link" [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']"
+            title="Visualizar detalhes...">
             <i class="material-icons">visibility</i>
           </a>
         </td>
         <td>
-          <a class="nav-link" [routerLink]="['/patients',patient.id, patient.pilotstudy_id ]" title="Editar paciente...">
-            <i class="material-icons">more_horiz</i>
+          <a class="nav-link" [routerLink]="['/patients',patient.id, patient.pilotstudy_id ]"
+            title="Editar paciente...">
+            <i class="material-icons">edit</i>
           </a>
         </td>
         <td>
-          <a class="nav-link" (click)="openModalConfirmation(patient.pilotstudy_id,patient.id)" title="Excluir paciente...">
+          <a class="nav-link" (click)="openModalConfirmation(patient.pilotstudy_id,patient.id)"
+            title="Excluir paciente...">
             <i class="material-icons">close</i>
           </a>
         </td>
@@ -48,4 +56,5 @@
   (page)="clickPagination($event)">
 </mat-paginator>
 
-<modal-confirmation [message]="'Tem certeza que deseja remover paciente?'" (confirmation)="removePatient()" (noconfirmation)="closeModalComfimation()"></modal-confirmation>
+<modal-confirmation [message]="'Tem certeza que deseja remover paciente?'" (confirmation)="removePatient()"
+  (noconfirmation)="closeModalComfimation()"></modal-confirmation>

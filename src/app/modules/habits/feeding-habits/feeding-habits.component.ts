@@ -82,8 +82,8 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
           this.createFeedingForm(feedingRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
         })
         .catch(errorResponse => {
-          this.toastService.error('Não foi possível buscar hábitos alimentares!');
-          console.log('Não foi possível buscar hábitos alimentares!', errorResponse);
+          //this.toastService.error('Não foi possível buscar hábitos alimentares!');
+          //console.log('Não foi possível buscar hábitos alimentares!', errorResponse);
         });
     }
   }

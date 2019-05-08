@@ -36,7 +36,7 @@ import { HaniotTableComponent } from './haniot-table/haniot-table.component';
     AdminRoutingModule,
     TemplateModule,
     SharedModule,
-    
+
     MatPaginatorModule,
     MatSelectModule,
     MatDatepickerModule,
@@ -59,6 +59,9 @@ import { HaniotTableComponent } from './haniot-table/haniot-table.component';
     UserService,
     AdminService,
     HealthProfessionalService
+  ],
+  exports: [
+    MypilotstudiesComponent
   ]
 })
 export class AdminModule { }

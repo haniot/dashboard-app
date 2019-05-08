@@ -19,11 +19,12 @@ export class MedicalRecordService {
   getAll(patientId: string, page?: number, limit?: number): Promise<MedicalRecord[]> {
     let myParams = new HttpParams();
 
-    if (page && limit) {
-      myParams = new HttpParams()
-        .set("page", String(page))
-        .set("limit", String(limit))
-        .set("sort", 'created_a');
+    if (page) {
+      myParams = myParams.append("page", String(page));
+    }
+
+    if (limit) {
+      myParams = myParams.append("limit", String(limit));
     }
 
     const url = `${environment.api_url}/patients/${patientId}/medicalrecords`;

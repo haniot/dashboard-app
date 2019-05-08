@@ -119,7 +119,13 @@ table tr td {
 }
 
 /* Styles for link-bar mat-tab-group*/
+
 /* ink bar style */
+
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
     background: #00a594;
 }
+
+/* .p-2 small {
+    color: black;
+} */

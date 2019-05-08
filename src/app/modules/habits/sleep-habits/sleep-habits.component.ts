@@ -57,8 +57,8 @@ export class SleepHabitsComponent implements OnInit, OnChanges {
           this.createSleepForm(sleepRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
         })
         .catch(errorResponse => {
-          this.toastService.error('Não foi possível buscar hábitos de sono!');
-          console.log('Não foi possível buscar hábitos de sono!', errorResponse);
+          //this.toastService.error('Não foi possível buscar hábitos de sono!');
+          //console.log('Não foi possível buscar hábitos de sono!', errorResponse);
         });
     }
   }

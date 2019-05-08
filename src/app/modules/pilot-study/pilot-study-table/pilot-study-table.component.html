@@ -1,12 +1,12 @@
+<div class="input-group no-border">
+  <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
+    placeholder="Pesquisar estudo..." (keyup)="searchOnSubmit()">
+  <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
+    <i class="material-icons">search</i>
+    <div class="ripple-container"></div>
+  </button>
+</div>
 <div class="table-responsive">
-  <div class="input-group no-border">
-    <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
-      placeholder="Pesquisar estudo..." (keyup)="searchOnSubmit()">
-    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
-      <i class="material-icons">search</i>
-      <div class="ripple-container"></div>
-    </button>
-  </div>
   <table class="table table-sm table-hover">
     <thead>
       <tr>
@@ -31,24 +31,26 @@
           </span>
         </td>
         <td>
-          <button type="button" class="btn btn-haniot-primary btn-sm button_view" (click)="openModalhealthProfessionals(study.id)" >
+          <button type="button" class="btn btn-haniot-primary btn-sm button_view"
+            (click)="openModalhealthProfessionals(study.id)">
             Visualizar
             <i class="material-icons">drag_indicator</i>
           </button>
         </td>
         <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id]" title="Editar estudo..."><i
-          class="material-icons">more_horiz</i></a></td>
-          <td><a class="nav-link" (click)="openModalConfirmation(study.id)" title="Excluir estudo..."><i
-            class="material-icons">close</i></a></td>
-          </tr>
-        </tbody>
-      </table>
-      
-    </div>
-    
-    <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
-    (page)="clickPagination($event)">
-  </mat-paginator>
-  <view-health-professional [pilotstudyid]="pilotStudy_id"></view-health-professional>
+              class="material-icons">more_horiz</i></a></td>
+        <td><a class="nav-link" (click)="openModalConfirmation(study.id)" title="Excluir estudo..."><i
+              class="material-icons">close</i></a></td>
+      </tr>
+    </tbody>
+  </table>
 
-  <modal-confirmation [message]="'Tem certeza que deseja remover estudo piloto?'" (confirmation)="removeStudy()" (noconfirmation)="closeModalConfirmation()"></modal-confirmation>
+</div>
+
+<mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+  (page)="clickPagination($event)">
+</mat-paginator>
+<view-health-professional [pilotstudyid]="pilotStudy_id"></view-health-professional>
+
+<modal-confirmation [message]="'Tem certeza que deseja remover estudo piloto?'" (confirmation)="removeStudy()"
+  (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

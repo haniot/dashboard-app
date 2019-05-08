@@ -1,0 +1,208 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="d-flex flex-row-reverse" style="height: 50px;">
+      <div class="p-2">
+        <i class="material-icons" title="Compartilhar" (click)="shareEvaluationOpen()">share</i>
+      </div>
+      <div class="p-2">
+        <i class="material-icons" title="Baixar em CSV">get_app</i>
+      </div>
+      <div class="p-2">
+        <i class="material-icons" title="Baixar em PDF">picture_as_pdf</i>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <haniot-card title="Avaliação nutricional" subtitle=''>
+          <form [formGroup]="nutritionForm">
+            <div class="d-flex justify-content-center">
+              <div class="form-group has-feedback col-sm-8 col-md-6 col-lg-4 col-xl-3">
+                <label for="status">
+                  Estado da avaliação:
+                </label>
+                <select class="form-control" formControlName="status">
+                  <option *ngFor="let statusOption of listStatus" [value]="statusOption">
+                    {{statusOption | evaluationStatus}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group has-feedback col-sm-8 col-md-6 col-lg-4 col-xl-3">
+                <label for="created_at">
+                  Data da avaliação:
+                </label>
+                <input class="form-control" type="text" formControlName="created_at" id="created_at">
+              </div>
+            </div>
+            <hr class="hr-text" data-content="Estado nutricional">
+            <div class="row" formGroupName="nutritional_status">
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="bmi">
+                  BMI:
+                </label>
+                <input class="form-control" type="number" formControlName="bmi" id="bmi">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="percentile">
+                  Percentil:
+                </label>
+                <input class="form-control" type="text" formControlName="percentile" id="percentile">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="classification">
+                  Cassificação:
+                </label>
+                <input class="form-control" type="text" formControlName="classification" id="classification">
+              </div>
+
+            </div>
+            <hr class="hr-text" data-content="Indicadores de sobrepeso">
+            <div class="row" formGroupName="overweight_indicator">
+
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="waist_height_relation">
+                  Relação da altura da cintura:
+                </label>
+                <input class="form-control" type="number" formControlName="waist_height_relation"
+                  id="waist_height_relation">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="overweight_indicator_classification">
+                  Cassificação:
+                </label>
+                <input class="form-control" type="text" formControlName="classification"
+                  id="overweight_indicator_classification">
+              </div>
+            </div>
+            <hr class="hr-text" data-content="Frequência Cardiaca">
+            <div class="row" formGroupName="heart_rate">
+
+              <div class="form-group has-feedback col-sm col-md col-lg xld">
+                <label for="min">
+                  Frequência Mínima:
+                </label>
+                <input class="form-control" type="number" formControlName="min" id="min">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="max">
+                  Frequência Máxima:
+                </label>
+                <input class="form-control" type="number" formControlName="max" id="max">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="average">
+                  Frequência Média:
+                </label>
+                <input class="form-control" type="number" formControlName="average" id="average">
+              </div>
+            </div>
+            <hr class="hr-text" data-content="Glicose no sangue">
+            <div class="row" formGroupName="blood_glucose">
+
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="value">
+                  Valor:
+                </label>
+                <input class="form-control" type="number" formControlName="value" id="value">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="meal">
+                  Refeição:
+                </label>
+                <input class="form-control" type="text" formControlName="meal" id="meal">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="blood_glucose_classification">
+                  Classificação:
+                </label>
+                <input class="form-control" type="text" formControlName="classification"
+                  id="blood_glucose_classification">
+              </div>
+            </div>
+            <hr class="hr-text" data-content="Pressão sanguinia">
+            <div class="row" formGroupName="blood_pressure">
+
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="systolic">
+                  systolic:
+                </label>
+                <input class="form-control" type="text" formControlName="systolic" id="systolic">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="systolic_percentile">
+                  systolic_percentile:
+                </label>
+                <input class="form-control" type="text" formControlName="systolic_percentile" id="systolic_percentile">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="diastolic">
+                  diastolic:
+                </label>
+                <input class="form-control" type="text" formControlName="diastolic" id="diastolic">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="diastolic_percentile">
+                  diastolic_percentile:
+                </label>
+                <input class="form-control" type="text" formControlName="diastolic_percentile"
+                  id="diastolic_percentile">
+              </div>
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="blood_glucose_classification">
+                  Classificação:
+                </label>
+                <input class="form-control" type="text" formControlName="classification"
+                  id="blood_glucose_classification">
+              </div>
+            </div>
+            <hr class="hr-text" data-content="Observações">
+            <div class="row">
+              <div class="form-group has-feedback col-sm col-md col-lg xl">
+                <label for="counseling">
+                  counseling:
+                </label>
+                <input class="form-control" type="text" formControlName="counseling" id="counseling">
+              </div>
+            </div>
+          </form>
+        </haniot-card>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<haniot-modal [modalId]="'modalShareEvaluation'">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Compartilhar avaliação</h5>
+      <button type="button" class="close" (click)="closeModalShareEvaluation()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="form-group has-feedback col-md">
+          <form [formGroup]="form">
+            <div class="form-group has-feedback"
+              [ngClass]="{'has-success': form.controls['email'].valid,
+                    'has-error': form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty)}">
+              <label for="InputEmail">Email:</label>
+              <input type="email" formControlName="email" class="form-control" id="InputEmail"
+                placeholder="Digite o email de destino...">
+              <span *ngIf="form.controls['email'].valid" class="glyphicon glyphicon-ok form-control-feedback"
+                aria-hidden="true"></span>
+              <span
+                *ngIf="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty)">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">E-mail inválido.</span>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-haniot-primary" [disabled]="!form.valid">Enviar</button>
+    </div>
+  </div>
+</haniot-modal>

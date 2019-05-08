@@ -7,6 +7,7 @@ import { UserService } from 'app/modules/admin/services/users.service';
 import { AdminService } from 'app/modules/admin/services/admin.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { PatientService } from 'app/modules/patient/services/patient.service';
 
 @NgModule({
   declarations: [],
@@ -19,6 +20,7 @@ import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.
     AuthService,
     UserService,
     AdminService,
-    HealthProfessionalService]
+    HealthProfessionalService,
+    PatientService]
 })
 export class SharedServicesModule { }

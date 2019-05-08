@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastrService } from 'ngx-toastr';
@@ -6,13 +6,14 @@ import { ToastrService } from 'ngx-toastr';
 import { AdminService } from '../services/admin.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import { IUser, Admin } from '../models/users';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 
 @Component({
   selector: 'app-administrators',
   templateUrl: './administrators.component.html',
   styleUrls: ['./administrators.component.scss']
 })
-export class AdministratorsComponent {
+export class AdministratorsComponent implements AfterViewInit{
   userEdit: IUser = new Admin();
   admins: Array<IUser> = [];
   errorCredentials = false;
@@ -27,7 +28,8 @@ export class AdministratorsComponent {
   constructor(
     private adminService: AdminService,
     private toastr: ToastrService,
-    private modalService: ModalService) {
+    private modalService: ModalService,
+    private loadinService: LoadingService) {
     this.getAllAdministrators();
     /* Verificando a quantidade total de cuidadores cadastrados */
     this.calcLengthAdministrators();
@@ -123,5 +125,11 @@ export class AdministratorsComponent {
       .catch(errorResponse => {
         //console.log('Error ao buscar administradores!', errorResponse);
       });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.loadinService.close();
+    }, 1000);
   }
 }

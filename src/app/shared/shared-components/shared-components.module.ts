@@ -10,6 +10,7 @@ import { HaniotModalComponent } from './haniot-modal/haniot-modal.component';
 import { ModalService } from './haniot-modal/service/modal.service';
 import { LoadingComponentComponent } from './loading-component/loading-component.component';
 import { ModalConfirmationComponent } from './modal-confirmation/modal-confirmation.component';
+import { LoadingService } from './loading-component/service/loading.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ModalConfirmationComponent } from './modal-confirmation/modal-confirmat
     ModalConfirmationComponent
   ],
   providers: [
-    ModalService
+    ModalService,
+    LoadingService
   ]
 })
 export class SharedComponentsModule { }

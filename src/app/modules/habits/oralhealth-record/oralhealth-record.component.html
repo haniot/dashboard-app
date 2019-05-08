@@ -1,0 +1,67 @@
+<haniot-card [title]="'Informações sobre a sáude bucal'" subtitle=''>
+  <form [formGroup]="oralhealthForm">
+
+    <div class="row justify-content-md-center" *ngIf="listOralhealthRecords.length!=0">
+
+      <div class="form-group col-md-3">
+        <label for="teeth_brushing_freq">
+          Frequência que realiza a saúde bucal:
+        </label>
+        <input class="form-control" type="text" formControlName="teeth_brushing_freq" id="teeth_brushing_freq">
+      </div>
+
+    </div>
+    <div class="form-group col-md-3">
+      <label for="teeth_lesions">
+        Lista lesões:
+      </label>
+      <div class="row container">
+        <div class="table-responsive">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr>
+                <th>Tipo de Dente</th>
+                <th>Tipo de Lesão</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let lesion of oralhealthForm.get('teeth_lesions').value;" id="teeth_lesions">
+                <td>{{lesion.tooth_type | toothType}}</td>
+                <td>{{lesion.lesion_type | lesionType}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <div class="d-flex flex-row-reverse">
+    <div class="p-2"><small class="pull-right">Data do registro:
+        {{oralhealthForm.get('created_at').value | myDate }}</small></div>
+  </div>
+  <div class="row">
+    <!-- Botões Anterior e Próximo -->
+    <div class="container" *ngIf="listOralhealthRecords.length>1">
+      <div class="row">
+        <div class="col align-self-start">
+          <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" title="Anterior"
+            (click)="prev()" [disabled]="!index">
+            <i class="material-icons">arrow_back</i>
+          </button>
+        </div>
+
+        <div class="col align-self-end">
+          <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
+            (click)="next()" title="Próximo" [disabled]="index == listOralhealthRecords.length-1">
+            <i class="material-icons">arrow_forward</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="listOralhealthRecords.length==0">
+    <span class="badge badge-danger badge-12">Dados sobre saúde bucal indisponível!</span>
+  </div>
+</haniot-card>

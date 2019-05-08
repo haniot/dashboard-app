@@ -10,6 +10,7 @@ import { LineGraphComponent } from './line-graph/line-graph.component';
 import { ScatterGraphComponent } from './scatter-graph/scatter-graph.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { DashboardRoutingModule } from './dashboard-routing/dashboard-routing.module';
+import { DashboardService } from './services/dashboard.service';
 
 
 
@@ -28,6 +29,7 @@ import { DashboardRoutingModule } from './dashboard-routing/dashboard-routing.mo
     LineGraphComponent,
     ScatterGraphComponent
   ],
-  exports: []
+  exports: [],
+  providers: [DashboardService]
 })
 export class DashboardModule { }

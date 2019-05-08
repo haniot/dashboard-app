@@ -20,14 +20,14 @@
               <div class="card-icon">
                 <i class="material-icons" id="alarm_on">alarm_on</i>
               </div>
-              <p class="card-category">Horario que acorda:</p>
+              <p class="label">Horario que acorda:</p>
               <h3 class="card-title">{{sleepForm.get('week_day_wake_up').value}} hs</h3>
             </div>
           </div>
         </div>
-      
+
       </div>
-      
+
       <div class="row">
 
         <div class="col-md col-sm">
@@ -36,7 +36,7 @@
               <div class="card-icon">
                 <i class="material-icons" id="alarm">alarm</i>
               </div>
-              <p class="card-category">Horario que vai dormir:</p>
+              <p class="label">Horario que vai dormir:</p>
               <h3 class="card-title">{{sleepForm.get('week_day_sleep').value}} hs</h3>
             </div>
           </div>
@@ -71,5 +71,8 @@
         </button>
       </div>
     </div>
+  </div>
+  <div *ngIf="listSleep.length==0">
+    <span class="badge badge-danger badge-12">Nenhum hábito de sono cadastrado!</span>
   </div>
 </haniot-card>

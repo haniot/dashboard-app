@@ -1,0 +1,58 @@
+<haniot-card [title]="'Informações sócio-demográficas'" subtitle='' *ngIf="listSociodemographic.length!=0">
+  <form [formGroup]="socioDemographicForm">
+
+    <div class="row justify-content-md-center">
+
+      <div class="form-group col-md-3">
+        <label for="color_race">
+          Cor ou raça:
+        </label>
+        <input class="form-control" type="text" formControlName="color_race" id="color_race">
+      </div>
+
+      <div class="form-group col-md-3">
+        <label for="mother_schoolarity">
+          Escolaridade da mãe:
+        </label>
+        <input class="form-control" type="text" formControlName="mother_schoolarity" id="mother_schoolarity">
+      </div>
+
+      <div class="form-group col-md-3">
+        <label for="people_in_home">
+          Quantidade de pessoas em casa:
+        </label>
+        <input class="form-control" type="text" formControlName="people_in_home" id="people_in_home">
+      </div>
+
+    </div>
+
+  </form>
+  <div class="d-flex flex-row-reverse">
+    <div class="p-2"><small class="pull-right">Data do registro:
+        {{socioDemographicForm.get('created_at').value | myDate }}</small></div>
+  </div>
+  <div class="row">
+    <!-- Botões Anterior e Próximo -->
+    <div class="container" *ngIf="listSociodemographic.length>1">
+      <div class="row">
+        <div class="col align-self-start">
+          <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" title="Anterior"
+            (click)="prev()" [disabled]="!index">
+            <i class="material-icons">arrow_back</i>
+          </button>
+        </div>
+
+        <div class="col align-self-end">
+          <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
+            (click)="next()" title="Próximo" [disabled]="index == listSociodemographic.length-1">
+            <i class="material-icons">arrow_forward</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="listSociodemographic.length==0">
+    <span class="badge badge-danger badge-12">Dados de sócio-demográficos indisponível!</span>
+  </div>
+</haniot-card>

@@ -91,9 +91,10 @@
   </form>
 
   <div class="d-flex flex-row-reverse">
-    <div class="p-2"><small class="pull-right">Data do registro: {{feedingForm.get('created_at').value | myDate }}</small></div>
+    <div class="p-2"><small class="pull-right">Data do registro:
+        {{feedingForm.get('created_at').value | myDate }}</small></div>
   </div>
- 
+
   <div class="row">
     <!-- Botões Anterior e Próximo -->
     <div class="container" *ngIf="listFeeding.length>1">
@@ -113,6 +114,10 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="listFeeding.length==0">
+    <span class="badge badge-danger badge-12">Nenhum hábito alimentar cadastrado!</span>
   </div>
 
 </haniot-card>
