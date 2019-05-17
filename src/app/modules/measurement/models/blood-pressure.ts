@@ -4,6 +4,7 @@ export class BloodPressure {
     id: string;
     systolic: number;
     diastolic: number;
+    pulse: number
     unit: string;
     type: MeasurementType;
     timestamp: string;

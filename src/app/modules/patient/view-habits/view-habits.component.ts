@@ -16,13 +16,14 @@ import { FeedingRecordService } from '../../habits/services/feeding-record.servi
 export class ViewHabitsComponent implements OnInit {
 
   patientForm: FormGroup;
-  
+
   optionsGender: Array<string> = Object.keys(Gender);
+
   listPilots: Array<PilotStudy>;
 
   patientId: string;
   pilotStudyId: string;
-  
+
   constructor(
     private fb: FormBuilder,
     private patientService: PatientService,
@@ -40,8 +41,8 @@ export class ViewHabitsComponent implements OnInit {
     this.activeRouter.paramMap.subscribe((params) => {
       this.patientId = params.get('patientId');
       this.pilotStudyId = params.get('pilotstudy_id');
-      this.patientService.getById(this.pilotStudyId,this.patientId)
-        .then( patient => {
+      this.patientService.getById(this.patientId)
+        .then(patient => {
           this.createPatientForm(patient);
         })
         .catch(errorResponse => {
@@ -55,11 +56,10 @@ export class ViewHabitsComponent implements OnInit {
   createPatientFormInit() {
     this.patientForm = this.fb.group({
       id: [''],
-      pilotstudy_id: [{value:'', disabled:true}],
-      first_name: [{value:'', disabled:true}],
-      last_name: [{value:'', disabled:true}],
-      gender: [{value:'', disabled:true}],
-      birth_date: [{value:'', disabled:true}]
+      pilotstudy_id: [{ value: '', disabled: true }],
+      name: [{ value: '', disabled: true }],
+      gender: [{ value: '', disabled: true }],
+      birth_date: [{ value: '', disabled: true }]
     });
   }
 
@@ -67,14 +67,13 @@ export class ViewHabitsComponent implements OnInit {
     this.patientForm = this.fb.group({
       id: [patient.id],
       pilotstudy_id: [this.pilotStudyId],
-      first_name: [{value:patient.first_name, disabled:true}],
-      last_name: [{value:patient.last_name, disabled:true}],
-      gender: [{value:patient.gender, disabled:true}],
-      birth_date: [{value:patient.birth_date, disabled:true}]
+      name: [{ value: patient.name, disabled: true }],
+      gender: [{ value: patient.gender, disabled: true }],
+      birth_date: [{ value: patient.birth_date, disabled: true }]
     });
   }
 
-  
+
 
   getAllPilotStudies() {
     const userId = atob(localStorage.getItem('user'));

@@ -71,17 +71,17 @@ export class AuthService {
   }
 
   getScopeUser(): String {
-    return this.decodeToken().scope;
+    return this.decodeToken().scopes;
   }
 
-  decodeToken(): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string } {
+  decodeToken(): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scopes: string } {
     const token = localStorage.getItem('token');
-    let decodedToken: { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string };
+    let decodedToken: { sub: string, sub_type: string, iss: string, iat: number, exp: number, scopes: string };
     try {
       decodedToken = JWT_decode(token);
     }
     catch (Error) {
-      decodedToken = null;
+      decodedToken = { sub: "", sub_type: "", iss: "", iat: 0, exp: 0, scopes: "" };
     }
     return decodedToken;
   }

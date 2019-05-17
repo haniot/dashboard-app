@@ -73,6 +73,8 @@ export class OralHealthRecordService {
 
         if (limit) {
             myParams = myParams.append("limit", String(limit));
+        } else {
+            myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
         }
 
         const url = `${environment.api_url}/patients/${patientId}/oralhealthrecords`;

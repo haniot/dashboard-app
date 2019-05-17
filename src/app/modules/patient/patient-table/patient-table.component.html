@@ -25,7 +25,7 @@
       </tr>
       <tr *ngFor="let patient of listOfPatients; index as i">
         <td>{{getIndex(i)}}</td>
-        <td>{{patient.first_name}} {{patient.last_name}}</td>
+        <td>{{patient.name}}</td>
         <td>{{patient.gender | gender}}</td>
         <td>{{patient.birth_date | date}}</td>
         <td>

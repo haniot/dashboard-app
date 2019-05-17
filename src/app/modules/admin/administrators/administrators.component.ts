@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, AfterViewChecked } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,7 @@ import { LoadingService } from 'app/shared/shared-components/loading-component/s
   templateUrl: './administrators.component.html',
   styleUrls: ['./administrators.component.scss']
 })
-export class AdministratorsComponent implements AfterViewInit{
+export class AdministratorsComponent implements AfterViewChecked {
   userEdit: IUser = new Admin();
   admins: Array<IUser> = [];
   errorCredentials = false;
@@ -35,12 +35,12 @@ export class AdministratorsComponent implements AfterViewInit{
     this.calcLengthAdministrators();
   }
 
-
   getAllAdministrators() {
     this.adminService.getAll(this.page, this.limit, this.search)
       .then(admins => {
         this.admins = admins;
         this.calcLengthAdministrators();
+        this.loadinService.close();
       })
       .catch((errorResponse: HttpErrorResponse) => {
         if (errorResponse.status === 401) {
@@ -127,9 +127,8 @@ export class AdministratorsComponent implements AfterViewInit{
       });
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.loadinService.close();
-    }, 1000);
+  ngAfterViewChecked() {
+    this.loadinService.close();
   }
+
 }

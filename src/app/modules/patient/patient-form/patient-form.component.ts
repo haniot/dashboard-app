@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
 import { Location } from '@angular/common';
+import { PatientsComponent } from 'app/modules/evaluation/patients/patients.component';
+import { AuthService } from 'app/security/auth/services/auth.service';
 
 @Component({
   selector: 'patient-form',
@@ -21,6 +23,10 @@ export class PatientFormComponent implements OnInit {
   patientId: string;
   pilotStudyId: string;
 
+  matchPasswordStatus;
+
+  matchPasswordTime;
+
   constructor(
     private fb: FormBuilder,
     private patientService: PatientService,
@@ -28,7 +34,8 @@ export class PatientFormComponent implements OnInit {
     private toastService: ToastrService,
     private router: Router,
     private activeRouter: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -40,7 +47,6 @@ export class PatientFormComponent implements OnInit {
       this.getAllPilotStudies();
     });
     this.createForm();
-    this.loadPatientInForm();
     this.getAllPilotStudies();
   }
 
@@ -48,8 +54,10 @@ export class PatientFormComponent implements OnInit {
     this.patientForm = this.fb.group({
       id: [''],
       pilotstudy_id: [this.pilotStudyId, Validators.required],
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
+      name: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: [''],
+      password_confirm: [''],
       gender: ['', Validators.required],
       birth_date: ['', Validators.required]
     });
@@ -57,8 +65,11 @@ export class PatientFormComponent implements OnInit {
 
   loadPatientInForm() {
     if (this.patientId) {
-      this.patientService.getById(this.pilotStudyId, this.patientId)
+      this.patientService.getById(this.patientId)
         .then(patient => {
+          patient.password = '';
+          patient.password_confirm = '';
+          this.verifyMatchPassword();
           this.patientForm.setValue(patient);
         }).catch(errorResponse => {
           console.error('Não foi possível buscar paciente!', errorResponse);
@@ -66,11 +77,11 @@ export class PatientFormComponent implements OnInit {
     }
   }
 
-   onSubimt() {
+  onSubimt() {
     const form = this.patientForm.getRawValue();
     form.birth_date = new Date(form.birth_date).toISOString().split('T')[0];
     if (!this.patientId) {
-      this.patientService.create(form.pilotstudy_id, form)
+      this.patientService.create(form)
         .then(patient => {
           this.patientForm.reset();
           this.toastService.info('Paciente criado!');
@@ -79,7 +90,10 @@ export class PatientFormComponent implements OnInit {
           this.toastService.error('Não foi possível criar paciente!');
         });
     } else {
-      this.patientService.update(this.pilotStudyId, form)
+      delete form.password;
+      delete form.password_confirm;
+      delete form.pilotstudy_id;
+      this.patientService.update(form)
         .then(patient => {
           this.toastService.info('Paciente atualizado!');
         })
@@ -94,13 +108,36 @@ export class PatientFormComponent implements OnInit {
   }
 
   getAllPilotStudies() {
-    const userId = atob(localStorage.getItem('user'));
-    this.pilotStudiesService.getAllByUserId(userId)
-      .then(pilots => {
-        this.listPilots = pilots;
-      })
-      .catch(errorResponse => {
-        console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
-      });
+    if (this.authService.decodeToken().sub_type == 'admin') {
+
+      this.pilotStudiesService.getAll()
+        .then(pilots => {
+          this.listPilots = pilots;
+        })
+        .catch(errorResponse => {
+          console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
+        });
+    } else {
+      const userId = atob(localStorage.getItem('user'));
+      this.pilotStudiesService.getAllByUserId(userId)
+        .then(pilots => {
+          this.listPilots = pilots;
+        })
+        .catch(errorResponse => {
+          console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
+        });
+    }
+  }
+
+  passwordMatch(): boolean {
+    return this.patientForm.get('password').value == this.patientForm.get('password_confirm').value;
+  }
+
+  verifyMatchPassword() {
+    clearTimeout(this.matchPasswordTime);
+
+    this.matchPasswordTime = setTimeout(() => {
+      this.matchPasswordStatus = this.passwordMatch();
+    }, 200);
   }
 }

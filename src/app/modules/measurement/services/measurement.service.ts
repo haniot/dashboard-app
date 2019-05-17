@@ -10,7 +10,7 @@ export class MeasurementService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(page?: number, limit?: number): Promise<IMeasurement[]> {
+  getAll(page?: number, limit?: number, search?: string): Promise<IMeasurement[]> {
     let myParams = new HttpParams();
 
     if (page) {
@@ -20,8 +20,14 @@ export class MeasurementService {
     if (limit) {
       myParams = myParams.append("limit", String(limit));
     } else {
-      myParams = myParams.append("limit", "100");
+      myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
     }
+
+    if (search) {
+      myParams = myParams.append("?type", "*" + search + "*");
+    }
+
+    myParams = myParams.append("sort", "+timestamp");
 
     const url = `${environment.api_url}/measurements`;
 
@@ -29,12 +35,30 @@ export class MeasurementService {
       .toPromise();
   }
 
-  getAllByUser(userId: string): Promise<Array<IMeasurement | BloodPressure | HeartRate> | Array<any>> {
+  getAllByUser(userId: string, page?: number, limit?: number, search?: string)
+    : Promise<Array<IMeasurement | BloodPressure | HeartRate> | Array<any>> {
+
     let myParams = new HttpParams();
 
-    myParams = myParams.append("limit", "100");
+    if (page) {
+      myParams = myParams.append("page", String(page));
+    }
 
-    return this.http.get<any>(`${environment.api_url}/users/${userId}/measurements`, { params: myParams })
+    if (limit) {
+      myParams = myParams.append("limit", String(limit));
+    } else {
+      myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
+    }
+
+    if (search) {
+      myParams = myParams.append("?type", "*" + search + "*");
+    }
+
+    myParams = myParams.append("sort", "+timestamp");
+
+    const url = `${environment.api_url}/users/${userId}/measurements`;
+
+    return this.http.get<any>(url, { params: myParams })
       .toPromise();
   }
 

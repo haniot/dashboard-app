@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -11,10 +11,13 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
   }]
 })
-export class EvaluationListComponent implements OnInit, AfterViewInit {
+export class EvaluationListComponent implements OnInit, AfterViewChecked {
 
   pilotForm: FormGroup;
   patientForm: FormGroup;
+
+  pilotstudy_id: string;
+  patient_id: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,16 +40,15 @@ export class EvaluationListComponent implements OnInit, AfterViewInit {
   selectStudy(pilotstudy_id) {
     this.patientForm.reset();
     this.pilotForm.get('pilotstudyId').setValue(pilotstudy_id);
+    this.pilotstudy_id = pilotstudy_id;
   }
 
-  selectPatient(patietn_id) {
-    this.patientForm.get('patientId').setValue(patietn_id);
+  selectPatient(patient_id) {
+    this.patientForm.get('patientId').setValue(patient_id);
+    this.patient_id = patient_id;
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.loadingService.close();
-    }, 500);
+  ngAfterViewChecked() {
+    this.loadingService.close();
   }
-
 }

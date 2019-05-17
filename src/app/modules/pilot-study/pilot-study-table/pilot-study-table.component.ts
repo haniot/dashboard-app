@@ -29,11 +29,15 @@ export class PilotStudyTableComponent implements OnInit {
 
   cacheStudyIdRemove; string;
 
+  listOfpilotsIsEmpty: boolean = false;
+
   constructor(
     private pilotStudyService: PilotStudyService,
     private toastService: ToastrService,
     private modalService: ModalService
-  ) { }
+  ) {
+    this.list = new Array<PilotStudy>();
+  }
 
   ngOnInit() {
     this.getAllPilotStudies();
@@ -44,6 +48,11 @@ export class PilotStudyTableComponent implements OnInit {
     this.pilotStudyService.getAll(this.page, this.limit)
       .then(studies => {
         this.list = studies;
+        if (this.list.length == 0) {
+          this.listOfpilotsIsEmpty = true;
+        } else {
+          this.listOfpilotsIsEmpty = false;
+        }
       })
       .catch(error => {
         console.log('Erro ao buscar pilot-studies: ', error);

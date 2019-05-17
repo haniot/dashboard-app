@@ -23,7 +23,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
       formatter: "Pressão : {c} mmHg<br>  Data: {b}"
     },
     legend: {
-      data: ['Sistólica', 'Diastólica']
+      data: ['Sistólica', 'Diastólica', "Pulso"]
     },
     xAxis: {
       type: 'category',
@@ -82,6 +82,27 @@ export class BloodPressureComponent implements OnInit, OnChanges {
             color: 'red'
           }
         }
+      },
+      {
+        name: "Pulso",
+        data: [],
+        type: 'line',
+        symbol: 'line',
+        symbolSize: 20,
+        lineStyle: {
+          normal: {
+            color: 'black',
+            width: 4,
+            type: 'solid'
+          }
+        },
+        itemStyle: {
+          normal: {
+            borderWidth: 3,
+            borderColor: 'white',
+            color: 'black'
+          }
+        }
       }
     ]
   };
@@ -115,6 +136,9 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
       // Adicionando Diastólica
       this.option.series[1].data.push(element.diastolic);
+
+      // Adicionando Pulso
+      this.option.series[2].data.push(element.pulse);
     });
 
     if (this.data.length > 1) {

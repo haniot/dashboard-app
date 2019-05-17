@@ -23,14 +23,21 @@ export class PilotStudyService {
 
     if (limit) {
       myParams = myParams.append("limit", String(limit));
+    } else {
+      myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
     }
 
     if (search) {
       myParams = myParams.append("?name", '*' + search + '*');
     }
 
-    const url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
 
+    const url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
+    /*
+    * TODO: Verficar o tipo de usuário e modificar a url. Por exemplo, se for um 
+    * healthprofessional: `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`
+    * patient: `${environment.api_url}/users/patients/${userId}/pilotstudies`
+    */
     return this.http.get<any>(url, { params: myParams })
       .toPromise();
   }
@@ -44,11 +51,15 @@ export class PilotStudyService {
 
     if (limit) {
       myParams = myParams.append("limit", String(limit));
+    } else {
+      myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
     }
 
     if (search) {
       myParams = myParams.append("?name", '*' + search + '*');
     }
+
+    myParams = myParams.append("sort", "+created_at");
 
     const url = `${environment.api_url}/pilotstudies`;
 
@@ -65,20 +76,6 @@ export class PilotStudyService {
     delete pilotstudy.health_professionals_id;
     return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudy.id}`, pilotstudy)
       .toPromise();
-    // const health_professionals_id = pilotstudy.health_professionals_id;
-    // return this.getById(pilotstudy.id)
-    //   .then(pilotstudyOld => {
-    //     Object.keys(pilotstudyOld).forEach(key => {
-    //       if (pilotstudyOld[key].toString() == pilotstudy[key].toString() && key != 'id' || key == 'health_professionals_id') {
-    //         delete pilotstudy[key];
-    //       }
-    //     });
-    //     if (Object.keys(pilotstudy).length == 1 && pilotstudy.id) {
-    //       return Promise.resolve(true);
-    //     }
-    //     return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudy.id}`, pilotstudy)
-    //       .toPromise();
-    //   });
   }
 
   remove(pilotstudyId: string): Promise<boolean> {

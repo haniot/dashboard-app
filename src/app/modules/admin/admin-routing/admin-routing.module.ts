@@ -12,17 +12,19 @@ const routes = [
   {
     path: 'myprofile',
     component: MyprofileComponent,
-    data: { scope: "admin:readAll admin:updateAll healthprofessional:read healthprofessional:update" }
+    data: { scope: "" }
   },
   {
     path: 'administrators',
     component: AdministratorsComponent,
-    data: { scope: "admin:create admin:deleteAll admin:readAll admin:updateAll" }
+    data: { scope: "admins:create admins:delete admins:readAll admins:update" }
   },
   {
     path: 'healthprofessionals',
     component: HealthProfessionalComponent,
-    data: { scope: "healthprofessional:create healthprofessional:deleteAll healthprofessional:readAll healthprofessional:updateAll" }
+    data: {
+      scope: "healthprofessionals:create healthprofessionals:readAll"
+    }
   },
   {
     path: 'mystudies',

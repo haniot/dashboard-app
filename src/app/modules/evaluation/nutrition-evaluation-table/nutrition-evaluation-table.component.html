@@ -20,7 +20,7 @@
     <tbody>
       <tr *ngFor="let evaluation of listOfEvaluations; index as i">
         <td>{{getIndex(i)}}</td>
-        <td>{{patient.first_name}} {{patient.last_name}}</td>
+        <td>{{patient.name}}</td>
         <td>{{evaluation.created_at | date}}</td>
         <td>
           <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus}}</span>

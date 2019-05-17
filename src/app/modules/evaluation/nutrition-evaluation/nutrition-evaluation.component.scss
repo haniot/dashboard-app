@@ -1,45 +1,9 @@
-.hr-text {
-  line-height: 1em;
-  position: relative;
-  outline: 0;
-  border: 0;
-  color: black;
-  text-align: center;
-  height: 1.5em;
-
-  &:before {
-    content: "";
-    // use the linear-gradient for the fading effect
-    // use a solid background color for a solid bar
-    background: linear-gradient(to right, transparent, #818078, transparent);
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 1px;
-  }
-  &:after {
-    content: attr(data-content);
-    position: relative;
-    display: inline-block;
-    color: black;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 0 0.5em;
-    line-height: 1.5em;
-    // this is really the only tricky part, you need to specify the background color of the container element...
-    color: black;
-    background-color: #fcfcfa;
-    opacity: 1;
-  }
-}
-
 label {
   color: black;
   font-size: 14px;
   font-weight: bold;
 }
-.material-icons {
+.shared .material-icons {
   cursor: pointer;
   color: #00a594;
   border-radius: 10px;
@@ -47,7 +11,108 @@ label {
   -webkit-transition: font-size 500ms; /* Safari */
   transition: font-size 500ms;
 }
-.material-icons:hover {
+.shared .material-icons:hover {
   font-size: 35px;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+}
+
+label,
+textarea {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+textarea {
+  padding: 10px;
+  line-height: 1.5;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px #999;
+}
+label {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.card-header-timer div {
+  background-color: #00a594;
+}
+#alarm_on {
+  width: 40px;
+  height: 50px;
+}
+#alarm {
+  width: 40px;
+  height: 50px;
+}
+.badge-haniot {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #00a594;
+}
+.category {
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+  background-color: #fdfdfd;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.classification {
+  color: #00a594;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: white;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+// overwrite the checkbox background
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #00a594 !important;
+}
+
+// overwrite the ripple overlay on hover and click
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #00a594 !important;
+}
+
+.counselings {
+  margin-left: 5px;
+}
+.counselings textarea {
+  max-height: 500px;
+}
+.haniot-card-icon {
+  border: 1px solid white;
+}
+.haniot-card-icon img {
+  border: 1px solid black;
+}
+.card-category {
+  color: black;
+  font-weight: bold;
+}
+#heartRateGraph {
+  border-top: 1px solid #eeeeee;
+}
+#finalingEvaluantion img {
+  width: 10%;
+}
+
+#externa {
+  z-index: 2000;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }

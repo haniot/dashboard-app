@@ -3,35 +3,40 @@ import { RouterModule } from '@angular/router';
 
 import { PatientComponentComponent } from '../patient-component/patient-component.component';
 import { PatientFormComponent } from '../patient-form/patient-form.component';
-import { ListPilotstudiesComponent } from '../list-pilotstudies/list-pilotstudies.component';
 import { ViewHabitsComponent } from '../view-habits/view-habits.component';
+import { PatientManagerComponent } from '../patient-manager/patient-manager.component';
 
 const routes = [
 
   {
     path: '',
-    component: ListPilotstudiesComponent,
-    data: { scope: "patient:read patient:readAll" }
+    component: PatientManagerComponent,
+    //data: { scope: "pilots:read" }
+  },
+  {
+    path: 'new',
+    component: PatientFormComponent,
+    data: { scope: "patients:create" }
   },
   {
     path: ':pilotstudy_id',
     component: PatientComponentComponent,
-    data: { scope: "patient:read patient:readAll patient:delete patient:deleteAll" }
+    data: { scope: "patients:read patients:delete" }
   },
   {
     path: ':pilotstudy_id/new',
     component: PatientFormComponent,
-    data: { scope: "patient:create" }
+    data: { scope: "patients:create" }
   },
   {
     path: ':patientId/:pilotstudy_id',
     component: PatientFormComponent,
-    data: { scope: "patient:update patient:updateAll" }
+    data: { scope: "patients:update" }
   },
   {
     path: ':patientId/:pilotstudy_id/details',
     component: ViewHabitsComponent,
-    data: { scope: "patient:read patient:readAll" }
+    data: { scope: "patients:read" }//FIXME: Aqui acredito adicionar os escopos forms:read
   },
   { path: '**', redirectTo: 'page-not-found' }
 ];

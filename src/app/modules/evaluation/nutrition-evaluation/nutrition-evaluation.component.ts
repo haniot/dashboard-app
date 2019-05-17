@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DatePipe, Location } from '@angular/common';
+
+import { ToastrService } from 'ngx-toastr';
+
 import { NutritionEvaluationService } from '../services/nutrition-evaluation.service';
-import { NutritionEvaluation } from '../models/nutrition-evaluation';
+import { NutritionEvaluation, NutritionalCouncil } from '../models/nutrition-evaluation';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { EvaluationStatustPipe } from '../pipes/evaluation-status.pipe';
-import { DatePipe } from '@angular/common';
+import { EvaluationStatus } from '../models/evaluation';
+import { GraphService } from 'app/shared/shared-services/graph.service';
+import { PatientService } from 'app/modules/patient/services/patient.service';
+import { Patient } from 'app/modules/patient/models/patient';
 
 @Component({
   selector: 'app-nutrition-evaluation',
@@ -14,134 +19,269 @@ import { DatePipe } from '@angular/common';
 })
 export class NutritionEvaluationComponent implements OnInit {
 
-  listStatus = Object.keys(EvaluationStatustPipe);
+  listStatus = Object.keys(EvaluationStatus);
 
-  form: FormGroup;
-
-  nutritionForm: FormGroup;
+  nutritionalEvaluation: NutritionEvaluation;
 
   nutritionEvaluationId: string;
 
+  option = {
+    title: {
+      text: 'Medições coletas',
+    },
+    tooltip: {
+      formatter: "Frequência: {c} bpm <br> Data: {b}",
+      trigger: 'axis'
+    },
+    xAxis: {
+      data: []
+    },
+    yAxis: {
+      splitLine: {
+        show: false
+      },
+      axisLabel: {
+        formatter: '{value} bpm'
+      }
+    },
+    dataZoom: [
+      {
+        type: 'slider'
+      }
+    ],
+    series: [
+      {
+        type: 'line',
+        data: []
+      }
+    ]
+  };
+
+  patientId: string;
+  patient: Patient;
+
+  sharedEmail: boolean;
+  sharedSms: boolean;
+  sharedWhatsapp: boolean;
+
+  ncSuggested: NutritionalCouncil;
+  ncDefinitive: NutritionalCouncil;
+
+  finalCounseling: string = "";
+
+  allCounselings: boolean = false;
+
+  listChecksBmiWhr: Array<boolean>;
+  listChecksGlycemia: Array<boolean>;
+  listChecksBloodPressure: Array<boolean>;
+
+  finalingEvaluantion: boolean;
+
   constructor(
-    private fb: FormBuilder,
     private nutritionService: NutritionEvaluationService,
     private activeRouter: ActivatedRoute,
-    private evaluationStatusPipe: EvaluationStatustPipe,
     private datePipe: DatePipe,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private location: Location,
+    private graphService: GraphService,
+    private patientService: PatientService,
+    private toastService: ToastrService,
+    private nutritionEvaluationService: NutritionEvaluationService
   ) {
-
+    this.nutritionalEvaluation = new NutritionEvaluation();
+    this.listChecksBmiWhr = new Array<boolean>();
+    this.listChecksGlycemia = new Array<boolean>();
+    this.listChecksBloodPressure = new Array<boolean>();
   }
 
   ngOnInit() {
     this.activeRouter.paramMap.subscribe((params) => {
+      this.patientId = params.get('patient_id');
       this.nutritionEvaluationId = params.get('nutritionevaluation_id');
       this.getNutritionEvaluation();
     });
-    this.createForm()
     this.getNutritionEvaluation();
   }
 
-  createForm() {
-    this.nutritionForm = this.fb.group({
-      id: [''],
-      created_at: [{ value: '', disabled: true }],
-      status: [{ value: '' }],
-      patient_id: [''],
-      nutritional_status: this.fb.group({
-        bmi: [{ value: 0, disabled: true }],
-        percentile: [{ value: '', disabled: true }],
-        classification: [{ value: '', disabled: true }],
-      }),
-      overweight_indicator: this.fb.group({
-        waist_height_relation: [{ value: 0, disabled: true }],
-        classification: [{ value: '', disabled: true }],
-      }),
-      heart_rate: this.fb.group({
-        min: [{ value: 0, disabled: true }],
-        max: [{ value: 0, disabled: true }],
-        average: [{ value: 0, disabled: true }],
-        dataset: this.fb.array([])
-      }),
-      blood_glucose: this.fb.group({
-        value: [{ value: 0, disabled: true }],
-        meal: [{ value: '', disabled: true }],
-        classification: [{ value: '', disabled: true }],
-        zones: this.fb.array([])
-      }),
-      blood_pressure: this.fb.group({
-        systolic: [{ value: 0, disabled: true }],
-        diastolic: [{ value: 0, disabled: true }],
-        systolic_percentile: [{ value: '', disabled: true }],
-        diastolic_percentile: [{ value: '', disabled: true }],
-        classification: [{ value: '', disabled: true }],
-      }),
-      counseling: [{ value: '' }],
-    });
-
-    this.form = this.fb.group({
-      email: [null, [Validators.required, Validators.email]]
-    });
-  }
-
-  loadNutritionEvaluationInForm(nutritionEvaluation: NutritionEvaluation) {
-    this.nutritionForm = this.fb.group({
-      id: [{ value: nutritionEvaluation.id, disabled: true }],
-      created_at: [{ value: nutritionEvaluation.created_at, disabled: true }],
-      status: [{ value: nutritionEvaluation.status, disabled: true }],
-      patient_id: [{ value: nutritionEvaluation.patient_id, disabled: true }],
-      nutritional_status: this.fb.group({
-        bmi: [{ value: nutritionEvaluation.nutritional_status.bmi, disabled: true }],
-        percentile: [{ value: nutritionEvaluation.nutritional_status.percentile, disabled: true }],
-        classification: [{ value: nutritionEvaluation.nutritional_status.classification, disabled: true }],
-      }),
-      overweight_indicator: this.fb.group({
-        waist_height_relation: [{ value: nutritionEvaluation.overweight_indicator.waist_height_relation, disabled: true }],
-        classification: [{ value: nutritionEvaluation.overweight_indicator.classification, disabled: true }]
-      }),
-      heart_rate: this.fb.group({
-        min: [{ value: nutritionEvaluation.heart_rate.min, disabled: true }],
-        max: [{ value: nutritionEvaluation.heart_rate.max, disabled: true }],
-        average: [{ value: nutritionEvaluation.heart_rate.average, disabled: true }],
-        dataset: this.fb.array([])
-      }),
-      blood_glucose: this.fb.group({
-        value: [{ value: nutritionEvaluation.blood_glucose.value, disabled: true }],
-        meal: [{ value: nutritionEvaluation.blood_glucose.meal, disabled: true }],
-        classification: [{ value: nutritionEvaluation.blood_glucose.classification, disabled: true }],
-        zones: this.fb.array([])
-      }),
-      blood_pressure: this.fb.group({
-        systolic: [{ value: nutritionEvaluation.blood_pressure.systolic, disabled: true }],
-        diastolic: [{ value: nutritionEvaluation.blood_pressure.diastolic, disabled: true }],
-        systolic_percentile: [{ value: nutritionEvaluation.blood_pressure.systolic_percentile, disabled: true }],
-        diastolic_percentile: [{ value: nutritionEvaluation.blood_pressure.diastolic_percentile, disabled: true }],
-        classification: [{ value: nutritionEvaluation.blood_pressure.classification, disabled: true }],
-      }),
-      counseling: [{ value: nutritionEvaluation.counseling, disabled: true }]
-    });
-    this.nutritionForm.get('created_at').patchValue(this.datePipe.transform(nutritionEvaluation.created_at));
-    this.nutritionForm.get('status').patchValue(this.evaluationStatusPipe.transform(nutritionEvaluation.status));
-  }
-
   getNutritionEvaluation() {
-    this.nutritionService.getById(this.nutritionEvaluationId, this.nutritionEvaluationId)
+    this.nutritionService.getById(this.patientId, this.nutritionEvaluationId)
       .then(nutritionEvaluation => {
-        this.loadNutritionEvaluationInForm(nutritionEvaluation);
+        this.nutritionalEvaluation = nutritionEvaluation;
+        this.formatCounseling()
+        this.loadGraph(nutritionEvaluation.heart_rate.dataset);
       })
       .catch(erroResponse => {
+        this.toastService.error("Não foi possível carregar avaliação nutricional!");
         //console.log('Não foi possível carregar avaliação!', errorResponse);
       });
 
   }
 
+  formatCounseling() {
+    this.finalCounseling = "";
+
+    this.ncSuggested = this.nutritionalEvaluation.counselings.suggested;
+    this.ncDefinitive = this.nutritionalEvaluation.counselings.definitive;
+
+
+    this.ncSuggested.bmi_whr.forEach((counseling, index) => {
+      if (index == this.ncSuggested.bmi_whr.length - 1) {
+        this.finalCounseling += '\t' + (index + 1) + ". " + counseling;
+      } else {
+        this.finalCounseling += '\t' + (index + 1) + ". " + counseling + '\n\n';
+      }
+      this.listChecksBmiWhr.push(false);
+    });
+
+    this.ncSuggested.glycemia.forEach((counseling, index) => {
+      if (index == this.ncSuggested.glycemia.length - 1) {
+        this.finalCounseling += '\t' + (index + 1) + ". " + counseling;
+      } else {
+        this.finalCounseling += '\t' + (index + 1) + ". " + counseling + '\n\n';
+      }
+      this.listChecksGlycemia.push(false);
+    });
+
+    this.ncSuggested.blood_pressure.forEach((counseling, index) => {
+      if (index == this.ncSuggested.blood_pressure.length - 1) {
+        this.finalCounseling += '\t' + (index + 1) + ". " + counseling;
+      } else {
+        this.finalCounseling += '\t' + (index + 1) + ". " + counseling + '\n\n';
+      }
+      this.listChecksBloodPressure.push(false);
+    });
+
+  }
+
+  loadGraph(dataset: Array<any>) {
+
+    //console.log(dataset);
+    if (dataset && dataset.length > 0) {
+      //Limpando o grafico
+      this.option.xAxis.data = [];
+      this.option.series[0].data = [];
+
+      dataset.forEach((date: { value: number, timestamp: string }) => {
+
+        this.option.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+
+        this.option.series[0].data.push(date.value);
+
+      });
+
+      this.graphService.refreshGraph();
+    }
+
+  }
+
+
+
+
   shareEvaluationOpen() {
-    this.modalService.open('modalShareEvaluation');
+    this.patientService.getById(this.patientId)
+      .then(patient => {
+        this.patient = patient;
+        this.modalService.open('modalShareEvaluation');
+      })
+      .catch(errorResponse => {
+        this.toastService.error('Não foi possível identificar o paciente!')
+        console.log('Não foi possível buscar paciente!', errorResponse);
+      });
+
   }
 
   closeModalShareEvaluation() {
-    this.form.reset();
     this.modalService.close('modalShareEvaluation');
+  }
+
+  finalizeEvaluation() {
+    this.finalingEvaluantion = true;
+    let counselingBwr: Array<number> = new Array<number>();
+    this.listChecksBmiWhr.forEach((element, index) => {
+      if (element) {
+        counselingBwr.push(index);
+      }
+    });
+
+    let counselingGlycemia: Array<number> = new Array<number>();
+    this.listChecksGlycemia.forEach((element, index) => {
+      if (element) {
+        counselingGlycemia.push(index);
+      }
+    });
+
+    let counselingBlood: Array<number> = new Array<number>();
+    this.listChecksBloodPressure.forEach((element, index) => {
+      if (element) {
+        counselingBlood.push(index);
+      }
+    });
+
+    const nutritionalCouncil: NutritionalCouncil = new NutritionalCouncil();
+
+    counselingBwr.forEach(element => {
+      nutritionalCouncil.bmi_whr.push(this.ncSuggested.bmi_whr[element])
+    });
+    counselingGlycemia.forEach(element => {
+      nutritionalCouncil.glycemia.push(this.ncSuggested.glycemia[element])
+    });
+    counselingBlood.forEach(element => {
+      nutritionalCouncil.blood_pressure.push(this.ncSuggested.blood_pressure[element])
+    });
+
+    const copyNutritionalEvaluation = Object.assign({}, this.nutritionalEvaluation);
+
+    copyNutritionalEvaluation.counselings.definitive = nutritionalCouncil;
+    copyNutritionalEvaluation.status = EvaluationStatus.complete;
+
+
+    this.nutritionEvaluationService.update(this.nutritionalEvaluation.patient_id, copyNutritionalEvaluation)
+      .then(nutritionEvaluation => {
+        this.nutritionalEvaluation = Object.assign({}, copyNutritionalEvaluation);
+        this.toastService.info("Avaliação atualizada com sucesso!");
+        this.finalingEvaluantion = false;
+      })
+      .catch(errorResponse => {
+        this.finalingEvaluantion = false
+        this.getNutritionEvaluation();
+        this.toastService.error("Não foi possível atualizar avaliação!");
+        console.log("Não foi possível atualizar avaliação!", errorResponse);
+      });
+  }
+
+  onBack() {
+    this.location.back();
+  }
+
+  clickCheckAll() {
+    this.listChecksBmiWhr.forEach((element, index) => {
+      this.listChecksBmiWhr[index] = !this.allCounselings;
+    });
+
+    this.listChecksGlycemia.forEach((element, index) => {
+      this.listChecksGlycemia[index] = !this.allCounselings;
+    });
+
+    this.listChecksBloodPressure.forEach((element, index) => {
+      this.listChecksBloodPressure[index] = !this.allCounselings;
+    });
+  }
+
+  allChecksDisabled(): boolean {
+    const findBmi = this.listChecksBmiWhr.find(element => {
+      return element === true;
+    });
+
+    const findGlycemia = this.listChecksGlycemia.find(element => {
+      return element === true;
+    });
+
+    const findBlood = this.listChecksBloodPressure.find(element => {
+      return element === true;
+    });
+
+
+    return !(findBmi || findGlycemia || findBlood);
   }
 
 }

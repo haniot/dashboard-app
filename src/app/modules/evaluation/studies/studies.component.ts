@@ -32,6 +32,8 @@ export class StudiesComponent implements OnInit {
   search: string;
   searchTime;
 
+  listOfpilotsIsEmpty: boolean = false;
+
   cacheStudyIdRemove: string;
 
   constructor(
@@ -39,6 +41,7 @@ export class StudiesComponent implements OnInit {
     private authService: AuthService,
     private loadinService: LoadingService
   ) {
+    this.list = new Array<PilotStudy>();
     this.listClass = new Array<string>();
   }
 
@@ -53,27 +56,60 @@ export class StudiesComponent implements OnInit {
   }
 
   getAllPilotStudies() {
-    this.userId = atob(localStorage.getItem('user'));
-    this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-      .then(studies => {
-        this.list = studies;
-      })
-      .catch(error => {
-        console.log('Erro ao buscar pilot-studies: ', error);
-      });
+    if (this.authService.decodeToken().sub_type == 'admin') {
+      this.pilotStudyService.getAll(this.page, this.limit, this.search)
+        .then(studies => {
+          this.list = studies;
+          if (studies && studies.length) {
+            this.listOfpilotsIsEmpty = false;
+          } else {
+            this.listOfpilotsIsEmpty = true;
+          }
+        })
+        .catch(error => {
+          this.listOfpilotsIsEmpty = true;
+          console.log('Erro ao buscar pilot-studies: ', error);
+        });
+    } else {
+      this.userId = atob(localStorage.getItem('user'));
+      this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
+        .then(studies => {
+          this.list = studies;
+          if (studies && studies.length) {
+            this.listOfpilotsIsEmpty = false;
+          } else {
+            this.listOfpilotsIsEmpty = true;
+          }
+        })
+        .catch(error => {
+          this.listOfpilotsIsEmpty = true;
+          console.log('Erro ao buscar pilot-studies: ', error);
+        });
+    }
   }
 
   searchOnSubmit() {
     clearInterval(this.searchTime);
     this.searchTime = setTimeout(() => {
-      this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-        .then(studies => {
-          this.list = studies;
-          this.getLengthPilotStudies();
-        })
-        .catch(error => {
-          console.log('Erro ao buscar pilot-studies: ', error);
-        });
+      if (this.authService.decodeToken().sub_type) {
+        this.pilotStudyService.getAll(this.page, this.limit, this.search)
+          .then(studies => {
+            this.list = studies;
+            this.getLengthPilotStudies();
+          })
+          .catch(error => {
+            console.log('Erro ao buscar pilot-studies: ', error);
+          });
+      } else {
+        this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
+          .then(studies => {
+            this.list = studies;
+            this.getLengthPilotStudies();
+          })
+          .catch(error => {
+            console.log('Erro ao buscar pilot-studies: ', error);
+          });
+      }
     }, 200);
   }
 

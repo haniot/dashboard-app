@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 
 import * as $ from 'jquery';
 import { DashboardService } from '../services/dashboard.service';
@@ -9,7 +9,7 @@ import { LoadingService } from 'app/shared/shared-components/loading-component/s
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewChecked {
 
   userId: string;
 
@@ -29,7 +29,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.measurementsTotal = 125;
     this.assessmentTotal = 55;
   }
-
 
 
   ngOnInit() {
@@ -53,10 +52,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.userId = this.authService.decodeToken().sub;
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.loadinService.close();
-    }, 500);
+  ngAfterViewChecked() {
+    this.loadinService.close();
   }
 
 

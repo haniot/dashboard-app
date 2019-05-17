@@ -16,6 +16,7 @@ export class ScopeGuard implements CanActivate, CanActivateChild {
         private verifyScopesService: VerifyScopeService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        
         const userScopes: Array<String> = this.auth.getScopeUser().split(' ');
         if (route.data && route.data.scope) {
             const expectedScopes = route.data.scope.split(' ');            

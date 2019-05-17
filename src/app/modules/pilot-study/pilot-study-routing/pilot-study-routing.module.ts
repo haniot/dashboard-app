@@ -3,45 +3,36 @@ import { RouterModule } from '@angular/router';
 
 import { PilotStudyComponentComponent } from 'app/modules/pilot-study/pilot-study-component/pilot-study-component.component';
 import { PilotStudyFormComponent } from '../pilot-study-form/pilot-study-form.component';
-
-// const routes: Routes = [
-//   {
-//     path: '',
-//     component: PilotStudyComponentComponent
-//   },
-//   { 
-//     path: 'new',
-//     component: PilotStudyComponentComponent,
-//     data: { scope: ""}
-//   },
-//   { 
-//     path: ':pilotStudyId',
-//     component: PilotStudyComponentComponent,
-//     data: { scope: ""}
-//   }
-
-// ];
+import { PilotStudyViewComponent } from '../pilot-study-view/pilot-study-view.component';
 
 const routes = [
   {
     path: '',
     component: PilotStudyComponentComponent,
-    data: { scope: "pilotstudy:readAll pilotstudy:delete pilotstudy:deleteAll" }
+    data: {
+      scope: "pilots:readAll pilots:delete"
+    }
   },
+
   {
     path: 'new',
     component: PilotStudyFormComponent,
-    data: { scope: "pilotstudy:create" }
+    data: { scope: "pilots:create" }
   },
   {
     path: ':pilotStudyId',
     component: PilotStudyFormComponent,
-    data: { scope: "pilotstudy:update pilotstudy:updateAll" }
+    data: { scope: "pilots:update" }
+  },
+  {
+    path: ':pilotStudyId/details',
+    component: PilotStudyViewComponent,
+    data: { scope: "pilots:update" }
   },
   {
     path: ':pilotStudyId/:userRequest',
     component: PilotStudyFormComponent,
-    data: { scope: "pilotstudy:update pilotstudy:updateAll" }
+    data: { scope: "pilots:update" }
   },
   { path: '**', redirectTo: 'page-not-found' }
 ];

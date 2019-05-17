@@ -20,6 +20,11 @@
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="list.length==0">
+        <td colspan="8" *ngIf="!listOfpilotsIsEmpty"><img src="../../../../assets/img/loading.gif" alt=""> carregando
+          estudoos...</td>
+        <td colspan="8" *ngIf="listOfpilotsIsEmpty">Nenhum registro encontrado.</td>
+      </tr>
       <tr *ngFor="let study of list; index as i">
         <td>{{getIndex(i)}}</td>
         <td>{{study.name}}</td>
@@ -38,7 +43,7 @@
           </button>
         </td>
         <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id]" title="Editar estudo..."><i
-              class="material-icons">more_horiz</i></a></td>
+              class="material-icons">edit</i></a></td>
         <td><a class="nav-link" (click)="openModalConfirmation(study.id)" title="Excluir estudo..."><i
               class="material-icons">close</i></a></td>
       </tr>

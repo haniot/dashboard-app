@@ -44,7 +44,8 @@ import { DeviceService } from './services/device.service';
   ],
   exports: [
     MeasurementComponentComponent,
-    DeviceComponent
+    DeviceComponent,
+    MealPipe
   ],
   providers: [
     MeasurementService,

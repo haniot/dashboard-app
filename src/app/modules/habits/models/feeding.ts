@@ -1,35 +1,59 @@
-enum WeeklyFrequency{
-    never, no_day, one_two_days, three_four_days, five_six_days, all_days, undefined
+export enum WeeklyFrequency {
+    never = "never",
+    no_day = "no_day",
+    one_two_days = "one_two_days",
+    three_four_days = "three_four_days",
+    five_six_days = "five_six_days",
+    all_days = "all_days",
+    undefined = "undefined"
 }
 
-enum WaterGlass{
-    none, one_two, three_four, five_more, undefined
+export enum QuantityWaterGlass {
+    none = "none",
+    one_two = "one_two",
+    three_four = "three_four",
+    five_more = "five_more",
+    undefined = "undefined"
 }
 
-enum Breastfeeding{
-    exclusive, complementary, infant_formulas, other, undefined
+export enum Breastfeeding {
+    exclusive = "exclusive",
+    complementary = "complementary",
+    infant_formulas = "infant_formulas",
+    other = "other",
+    undefined = "undefined"
 }
 
-enum FoodAllergy{
-    gluten, aplv, lactose, dye, egg, peanut, other, undefined
+export enum FoodAllergy {
+    gluten = "gluten",
+    aplv = "aplv",
+    lactose = "lactose",
+    dye = "dye",
+    egg = "egg",
+    peanut = "peanut",
+    other = "other",
+    undefined = "undefined"
 }
 
-enum Breakfast{
-    never, sometimes, almost_everyday, everyday, undefined
+export enum Breakfast {
+    never = "never",
+    sometimes = "sometimes",
+    almost_everyday = "almost_everyday",
+    everyday = "everyday",
+    undefined = "undefined"
 }
 
-
-export class WeeklyFoodRecord{
+export class WeeklyFoodRecord {
     food: string;
-    seven_days_freq: string;
+    seven_days_freq: WeeklyFrequency;
 }
 
-export class FeedingHabitsRecord{
+export class FeedingHabitsRecord {
     id: string;
     created_at: string;
     weekly_feeding_habits: Array<WeeklyFoodRecord>;
-    daily_water_glasses: string;
-    six_month_breast_feeding: string;
-    food_allergy_intolerance: Array<string>;
-    breakfast_daily_frequency: string;
+    daily_water_glasses: QuantityWaterGlass;
+    six_month_breast_feeding: Breastfeeding;
+    food_allergy_intolerance: Array<FoodAllergy>;
+    breakfast_daily_frequency: Breakfast;
 }

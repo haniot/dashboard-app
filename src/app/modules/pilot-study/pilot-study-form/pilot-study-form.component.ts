@@ -26,11 +26,15 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
 
   multiSelectProfissionais: Array<any> = new Array<any>();
   multiSelectProfissionaisSelected: Array<any> = new Array<any>();
+
   color = 'accent';
   checked = false;
   disabled = false;
 
   @Input() pilotStudyId: string;
+  healthprofessionalId: string;
+
+  typeUserLogado: string;
 
   constructor(
     private fb: FormBuilder,
@@ -39,18 +43,24 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     private toastService: ToastrService,
     private router: Router,
     private activeRouter: ActivatedRoute,
-    private location: Location,
+    private _location: Location,
     private authService: AuthService
   ) {
 
   }
 
   ngOnInit() {
+    this.typeUserLogado = this.authService.decodeToken().sub_type;
     this.activeRouter.paramMap.subscribe((params) => {
+
       this.pilotStudyId = params.get('pilotStudyId');
+
       if (this.pilotStudyId) {
         this.createForm();
         this.getPilotStudy();
+      }
+
+      if (this.typeUserLogado && this.typeUserLogado == 'admin') {
         this.loadProfessinalsAssociated();
         this.getListProfissonals();
       }
@@ -58,7 +68,11 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
 
     this.createForm();
     this.getPilotStudy();
-    this.getListProfissonals();
+
+
+    if (this.typeUserLogado && this.typeUserLogado == 'admin') {
+      this.getListProfissonals();
+    }
   }
 
   getPilotStudy() {
@@ -67,7 +81,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         .then(res => {
           this.pilotStudyForm.setValue(res);
         }).catch(error => {
-          console.error('Não foi possível buscar estudo piloto!', error);
+          this.toastService.error('Não foi possível buscar estudo piloto!');
+          //console.error('Não foi possível buscar estudo piloto!', error);
         })
     }
   }
@@ -77,20 +92,22 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
       this.pilotStudyForm = this.fb.group({
         id: [''],
         name: ['', Validators.required],
+        location: ['', Validators.required],
         start: ['', Validators.required],
         end: ['', Validators.required],
-        health_professionals_id: [{ value: '', disabled: true }, Validators.required],
-        is_active: [true, Validators.required]
+        health_professionals_id: ['', Validators.required],
+        is_active: [true, Validators.required],
       });
     }
     else {//Caso seja a tela de inserção
       this.pilotStudyForm = this.fb.group({
         id: [''],
         name: ['', Validators.required],
+        location: [''],
         start: ['', Validators.required],
         end: [{ value: '', disabled: true }, Validators.required],
         health_professionals_id: ['', Validators.required],
-        is_active: [true, Validators.required]
+        is_active: [true, Validators.required],
       });
     }
     this.professionalsForm = this.fb.group({
@@ -131,7 +148,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
   }
 
   onBack() {
-    this.location.back();
+    this._location.back();
   }
 
   getListProfissonals(): Promise<any> {
@@ -193,9 +210,5 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     return listProf.find(prof => {
       return prof.id == professional.id;
     }) ? true : false;
-  }
-
-  showManagerProfessionals(): boolean {
-    return this.authService.decodeToken().sub_type == 'admin';
   }
 }

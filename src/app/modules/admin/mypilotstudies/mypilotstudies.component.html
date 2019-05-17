@@ -21,7 +21,7 @@
                   <th>Início</th>
                   <th>Término</th>
                   <th>Situação</th>
-                  <th>Ações</th>
+                  <th colspan="3">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,9 +35,13 @@
                       {{study.is_active?'ATIVADO':'DESATIVADO'}}
                     </span>
                   </td>
-                  <td><a class="nav-link" [routerLink]="['/ui/mystudies',userId, study.id]" title="Editar estudo..."><i
+                  <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id,'details']"
+                      title="Editar estudo..."><i class="material-icons">input</i></a>
+                  <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id]" title="Editar estudo..."><i
                         class="material-icons">edit</i></a>
                   </td>
+                  <td><a class="nav-link" (click)="openModalConfirmation(study.id)" title="Excluir estudo..."><i
+                        class="material-icons">close</i></a></td>
 
                 </tr>
               </tbody>
@@ -50,8 +54,18 @@
           </mat-paginator>
           <!-- <patient-table [pilotStudyId]="'5c9538e671f8395ce5ba5585'"></patient-table> -->
         </haniot-card>
+
+        <!-- <div class="col-md">
+          <button type="submit" class="btn btn-haniot-primary" (click)="newPilotStudy()">
+            Adicionar
+            <i class="material-icons">add</i>
+          </button>
+        </div> -->
+
       </div>
 
     </div>
   </div>
 </div>
+<modal-confirmation [message]="'Tem certeza que deseja remover estudo piloto?'" (confirmation)="removeStudy()"
+  (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

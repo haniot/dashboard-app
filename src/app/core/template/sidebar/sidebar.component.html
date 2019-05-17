@@ -77,8 +77,9 @@
                 <p>Estudos Pilotos</p>
             </a>
         </li>
-        <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()" (click)="openLoading()">
-            <a class="nav-link" [routerLink]="['/ui/mystudies']" *ngIf="verifyScopes('Meus estudos')">
+        <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()">
+            <a class="nav-link" [routerLink]="['/ui/mystudies']" *ngIf="verifyScopes('Meus estudos')"
+                (click)="openLoading()">
                 <i class="material-icons">library_books</i>
                 <p>Meus estudos</p>
             </a>

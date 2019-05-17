@@ -11,7 +11,7 @@ export class MedicalRecordService {
   constructor(private http: HttpClient) { }
 
 
-  getById(patientId: string, medicalRecordId: string,): Promise<MedicalRecord> {
+  getById(patientId: string, medicalRecordId: string, ): Promise<MedicalRecord> {
     return this.http.get<any>(`${environment.api_url}/patients/${patientId}/medicalrecords/${medicalRecordId}`)
       .toPromise();
   }
@@ -25,6 +25,8 @@ export class MedicalRecordService {
 
     if (limit) {
       myParams = myParams.append("limit", String(limit));
+    } else {
+      myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
     }
 
     const url = `${environment.api_url}/patients/${patientId}/medicalrecords`;

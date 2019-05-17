@@ -1,7 +1,7 @@
 <haniot-card [title]="'Coesão familiar'" subtitle='' *ngIf="listFamilyCohesion.length!=0">
   <form [formGroup]="familyForm">
 
-    <div class="row">
+    <!-- <div class="row">
 
       <div class="form-group col-md-3">
         <label for="family_mutual_aid_freq">
@@ -86,7 +86,23 @@
         <input class="form-control" type="text" formControlName="family_cohesion_result" id="family_cohesion_result">
       </div>
 
+    </div> -->
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card card-stats ">
+          <div class="card-header card-header-icon">
+            <div class="card-icon">
+              <img src="../../../../assets/img/haniot/cohesion.png" alt="">
+            </div>
+            <br>
+            <p class="card-category">Coesão familiar </p>
+            <h3 class="card-title">{{familyForm.get('family_cohesion_result').value}}</h3>
+          </div>
+        </div>
+      </div>
     </div>
+
   </form>
   <div class="d-flex flex-row-reverse">
     <div class="p-2"><small class="pull-right">Data do registro:

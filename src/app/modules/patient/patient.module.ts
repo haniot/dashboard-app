@@ -20,6 +20,7 @@ import { ListPilotstudiesComponent } from './list-pilotstudies/list-pilotstudies
 import { ViewHabitsComponent } from './view-habits/view-habits.component';
 import { HabitsModule } from '../habits/habits.module';
 import { MeasurementModule } from '../measurement/measurement.module';
+import { PatientManagerComponent } from './patient-manager/patient-manager.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MeasurementModule } from '../measurement/measurement.module';
     PatientTableComponent,
     PatientComponentComponent,
     ListPilotstudiesComponent,
-    ViewHabitsComponent
+    ViewHabitsComponent,
+    PatientManagerComponent
   ],
   imports: [
     CommonModule,

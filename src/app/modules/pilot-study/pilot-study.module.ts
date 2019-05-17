@@ -18,13 +18,16 @@ import { RouterModule } from '@angular/router';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PilotStudyRoutingModule } from './pilot-study-routing/pilot-study-routing.module';
 import { ViewHealthProfessionalComponent } from './view-health-professional/view-health-professional.component';
+import { PilotStudyViewComponent } from './pilot-study-view/pilot-study-view.component';
+import { DashboardModule } from '../dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
     PilotStudyFormComponent,
     PilotStudyTableComponent,
     PilotStudyComponentComponent,
-    ViewHealthProfessionalComponent
+    ViewHealthProfessionalComponent,
+    PilotStudyViewComponent
   ],
   imports: [
     CommonModule,
@@ -39,11 +42,11 @@ import { ViewHealthProfessionalComponent } from './view-health-professional/view
     MatFormFieldModule,
     MatSlideToggleModule,
     MultiSelectModule,
-    
+
     SharedModule,
     PilotStudyRoutingModule,
   ],
-  providers:[
+  providers: [
     PilotStudyService,
     MatDatepickerModule
   ]

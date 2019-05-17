@@ -3,3 +3,16 @@ label {
   font-size: 14px;
   font-weight: bold;
 }
+
+.shared .material-icons {
+  cursor: pointer;
+  color: #00a594;
+  border-radius: 10px;
+  font-size: 30px;
+  -webkit-transition: font-size 500ms; /* Safari */
+  transition: font-size 500ms;
+}
+.shared .material-icons:hover {
+  font-size: 35px;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+}

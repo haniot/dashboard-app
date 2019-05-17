@@ -8,7 +8,7 @@ export class TeethbushingPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'none':
-                return 'Nenuma';
+                return 'Nenhuma';
 
             case 'once':
                 return 'Uma vez';

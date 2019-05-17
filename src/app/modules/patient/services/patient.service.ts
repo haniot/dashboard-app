@@ -9,13 +9,13 @@ export class PatientService {
 
   constructor(private http: HttpClient) { }
 
-
-  getById(pilotstudyId: string, patientId: string): Promise<Patient> {
-    return this.http.get<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients/${patientId}`)
+  getById(patientId: string): Promise<Patient> {
+    return this.http.get<any>(`${environment.api_url}/users/patients/${patientId}`)
       .toPromise();
   }
 
-  getAll(pilotstudyId: string, page?: number, limit?: number, search?: string): Promise<Patient[]> {
+
+  getAllByPilotStudy(pilotstudyId: string, page?: number, limit?: number, search?: string): Promise<Patient[]> {
     let myParams = new HttpParams();
 
     if (page) {
@@ -24,11 +24,12 @@ export class PatientService {
 
     if (limit) {
       myParams = myParams.append("limit", String(limit));
+    } else {
+      myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
     }
 
     if (search) {
-      myParams = myParams.append("?first_name", '*' + search + '*');
-      //myParams = myParams.append("&last_name", '*' + search + '*');
+      myParams = myParams.append("?name", '*' + search + '*');
     }
 
     const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
@@ -37,28 +38,41 @@ export class PatientService {
       .toPromise();
   }
 
-  create(pilotstudyId: string, patient: Patient): Promise<boolean> {
-    return this.http.post<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients`, patient)
+  getAll(page?: number, limit?: number, search?: string): Promise<Patient[]> {
+    let myParams = new HttpParams();
+
+    if (page) {
+      myParams = myParams.append("page", String(page));
+    }
+
+    if (limit) {
+      myParams = myParams.append("limit", String(limit));
+    } else {
+      myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
+    }
+
+    if (search) {
+      myParams = myParams.append("?name", '*' + search + '*');
+    }
+
+    const url = `${environment.api_url}/users/patients`;
+
+    return this.http.get<any>(url, { params: myParams })
       .toPromise();
   }
 
-  update(pilotstudyId: string, patient: Patient): Promise<boolean> {
-    return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients/${patient.id}`, patient)
+  create(patient: Patient): Promise<boolean> {
+    return this.http.post<any>(`${environment.api_url}/users/patients`, patient)
       .toPromise();
-    // return this.getById(pilotstudyId, patient.id)
-    //   .then(patientOld => {
-    //     Object.keys(patientOld).forEach(key => {
-    //       if (patientOld[key] == patient[key] && key != 'id') {
-    //         delete patient[key];
-    //       }
-    //     });
-    //     return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients/${patient.id}`, patient)
-    //       .toPromise();
-    //   });
   }
 
-  remove(pilotstudyId: string, patientId: string): Promise<boolean> {
-    return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients/${patientId}`)
+  update(patient: Patient): Promise<boolean> {
+    return this.http.patch<any>(`${environment.api_url}/users/patients/${patient.id}`, patient)
+      .toPromise();
+  }
+
+  remove(patientId: string): Promise<boolean> {
+    return this.http.delete<any>(`${environment.api_url}/users/${patientId}`)
       .toPromise();
   }
 }

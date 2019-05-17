@@ -1,7 +1,7 @@
 <haniot-card [title]="'Informações sócio-demográficas'" subtitle='' *ngIf="listSociodemographic.length!=0">
   <form [formGroup]="socioDemographicForm">
 
-    <div class="row justify-content-md-center">
+    <!-- <div class="row justify-content-md-center">
 
       <div class="form-group col-md-3">
         <label for="color_race">
@@ -24,6 +24,45 @@
         <input class="form-control" type="text" formControlName="people_in_home" id="people_in_home">
       </div>
 
+    </div> -->
+
+    <div class="row justify-content-md-center">
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card card-stats ">
+          <div class="card-header card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">insert_emoticon</i>
+            </div>
+            <br>
+            <p class="card-category">Cor ou raça:</p>
+            <h3 class="card-title">{{socioDemographicForm.get('color_race').value}}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card card-stats ">
+          <div class="card-header card-header-icon">
+            <div class="card-icon">
+              <img src="../../../../assets/img/haniot/schoolarity.png" alt="">
+            </div>
+            <br>
+            <p class="card-category">Escolaridade da mãe:</p>
+            <h3 class="card-title">{{socioDemographicForm.get('mother_schoolarity').value}}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card card-stats ">
+          <div class="card-header card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">people</i>
+            </div>
+            <br>
+            <p class="card-category">Quantidade de pessoas em casa:</p>
+            <h3 class="card-title">{{socioDemographicForm.get('people_in_home').value}}</h3>
+          </div>
+        </div>
+      </div>
     </div>
 
   </form>

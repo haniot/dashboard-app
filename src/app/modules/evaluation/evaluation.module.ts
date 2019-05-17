@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 import { MatStepperModule } from '@angular/material/stepper';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { EvaluationComponentComponent } from './evaluation-component/evaluation-component.component';
 import { EvaluationRoutingModule } from './evaluation-routing/evaluation-routing.module';
@@ -16,16 +17,27 @@ import { EvaluationStatustPipe } from './pipes/evaluation-status.pipe';
 import { EvaluationListComponent } from './evaluation-list/evaluation-list.component';
 import { StudiesComponent } from './studies/studies.component';
 import { PatientsComponent } from './patients/patients.component';
+import { NutritionClassificationtPipe } from './pipes/nutrition-classification.pipe';
+import { OverweigthClassificationPipe } from './pipes/overweigth-classification.pipe';
+import { BloodglucoseClassificationPipe } from './pipes/bloodglucose-classification.pipe';
+import { BloodpressureClassificationPipe } from './pipes/bloodpressure-classification.pipe';
+import { MeasurementModule } from '../measurement/measurement.module';
 
 @NgModule({
   declarations: [
+    /** components */
     EvaluationComponentComponent,
     NutritionEvaluationComponent,
     NutritionEvaluationTableComponent,
-    EvaluationStatustPipe,
     EvaluationListComponent,
     StudiesComponent,
-    PatientsComponent
+    PatientsComponent,
+    /** pipes */
+    EvaluationStatustPipe,
+    NutritionClassificationtPipe,
+    OverweigthClassificationPipe,
+    BloodglucoseClassificationPipe,
+    BloodpressureClassificationPipe
   ],
   imports: [
     CommonModule,
@@ -36,10 +48,11 @@ import { PatientsComponent } from './patients/patients.component';
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
-
+    MatCheckboxModule,
 
     SharedModule,
-    EvaluationRoutingModule
+    EvaluationRoutingModule,
+    MeasurementModule
   ],
   providers: [
     /** services */
@@ -47,7 +60,11 @@ import { PatientsComponent } from './patients/patients.component';
     NutritionEvaluationService,
     /** pipes */
     EvaluationStatustPipe,
-    DatePipe
+    DatePipe,
+    NutritionClassificationtPipe,
+    OverweigthClassificationPipe,
+    BloodglucoseClassificationPipe,
+    BloodpressureClassificationPipe
   ]
 })
 export class EvaluationModule { }

@@ -4,13 +4,15 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Patient } from 'app/modules/patient/models/patient';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
+import { AuthService } from 'app/security/auth/services/auth.service';
 
 
 @Injectable()
 export class DashboardService {
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private authService: AuthService
     ) { }
 
 
@@ -30,7 +32,11 @@ export class DashboardService {
      */
     private getAllStudiesByUserId(userId: string): Promise<PilotStudy[]> {
 
-        const url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
+        let url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
+
+        if (this.authService.decodeToken().sub_type == 'admin') {
+            url = `${environment.api_url}/pilotstudies`;
+        }
 
         return this.http.get<any>(url)
             .toPromise();

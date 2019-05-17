@@ -11,24 +11,24 @@ export const configSideBar = [
   { title: 'Dashboard', scopes: [] },
   {
     title: 'Usuários',
-    scopes: ['admin:create', 'admin:deleteAll', 'admin:readAll', 'admin:updateAll',
-      'healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll', 'healthprofessional:updateAll']
+    scopes: ['admins:create', 'admins:delete', 'admins:readAll', 'admins:update',
+      'healthprofessionals:create', 'healthprofessionals:readAll', 'healthprofessionals:update', 'healthprofessionals:delete']
   },
   {
     title: 'Administradores',
-    scopes: ['admin:create', 'admin:deleteAll', 'admin:readAll', 'admin:updateAll']
+    scopes: ['admins:create', 'admins:delete', 'admins:readAll', 'admins:update']
   },
   {
     title: 'P. de Saúde',
-    scopes: ['healthprofessional:create', 'healthprofessional:deleteAll', 'healthprofessional:readAll', 'healthprofessional:updateAll']
+    scopes: ['healthprofessionals:create', 'healthprofessionals:delete', 'healthprofessionals:readAll', 'healthprofessionals:update']
   },
   {
     title: 'Estudos Pilotos',
-    scopes: ['pilotstudy:create', 'pilotstudy:readAll', 'pilotstudy:updateAll', 'pilotstudy:deleteAll']
+    scopes: ['pilots:readAll', 'pilots:create', 'pilots:delete', 'pilots:update']
   },
   {
     title: 'Pacientes',
-    scopes: ['patient:create', 'patient:readAll', 'patient:updateAll', 'patient:deleteAll']
+    scopes: ['patients:create', 'patients:read', 'patients:update', 'patients:delete']
   },
   {
     title: 'Meus estudos',
@@ -61,7 +61,8 @@ export class SidebarComponent implements OnInit {
     private authService: AuthService,
     private verifyScopesService: VerifyScopeService,
     private userService: UserService,
-    private loadingService: LoadingService) { }
+    private loadingService: LoadingService
+  ) { }
 
   ngOnInit() {
     //this.menuItems = ROUTES.filter(menuItem => menuItem);

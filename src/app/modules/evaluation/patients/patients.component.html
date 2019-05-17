@@ -12,6 +12,7 @@
       <tr>
         <th>#</th>
         <th>Nome do paciente</th>
+        <th>Email</th>
         <th>Gênero</th>
         <th>Data de Nascimento</th>
       </tr>
@@ -25,7 +26,8 @@
       <tr *ngFor="let patient of listOfPatients; index as i" (click)="selectPatient(patient.id)"
         [(ngClass)]="listClass[i]">
         <td>{{getIndex(i)}}</td>
-        <td>{{patient.first_name}} {{patient.last_name}}</td>
+        <td>{{patient.name}}</td>
+        <td>{{patient.email}}</td>
         <td>{{patient.gender | gender}}</td>
         <td>{{patient.birth_date | date}}</td>
       </tr>

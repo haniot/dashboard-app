@@ -1,10 +1,22 @@
 <div class="main-content">
   <div class="container-fluid">
-    <div class="d-flex flex-row-reverse">
+    <div class="d-flex flex-row-reverse shared" style="height: 50px;">
+
       <div class="p-2">
-        Avaliações disponiveis: <a class="nav-link" [routerLink]="['/evaluations',pilotStudyId,patientId]">aqui</a>
+        <i class="material-icons" title="Visualizar avaliações..."
+          [routerLink]="['/evaluations',pilotStudyId,patientId]">assignment</i>
+      </div>
+      <div class="p-2">
+        Avaliações disponiveis:
       </div>
     </div>
+    <!-- <div class="d-flex flex-row-reverse">
+      <div class="p-2">
+        Avaliações disponiveis: <a class="nav-link shared" >
+          <i class="material-icons">assingment</i>
+        </a>
+      </div>
+    </div> -->
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <haniot-card [title]="'Informações pessoais do paciente'" subtitle=''>
@@ -12,34 +24,18 @@
 
             <div class="row">
               <div class="form-group has-feedback col-md"
-                [ngClass]="{'has-success': patientForm.controls.first_name.valid,
-              'has-error': patientForm.controls.first_name.invalid && (patientForm.controls.first_name.touched || patientForm.controls.first_name.dirty)}">
-                <label for="first_name">
+                [ngClass]="{'has-success': patientForm.controls.name.valid,
+              'has-error': patientForm.controls.name.invalid && (patientForm.controls.name.touched || patientForm.controls.name.dirty)}">
+                <label for="name">
                   Nome:
                 </label>
-                <input class="form-control" type="text" formControlName="first_name" id="first_name">
-                <span *ngIf="patientForm.controls.first_name.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                <input class="form-control" type="text" formControlName="name" id="name">
+                <span *ngIf="patientForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback"
                   aria-hidden="true"></span>
                 <span
-                  *ngIf="patientForm.controls.first_name.invalid && (patientForm.controls.first_name.touched || patientForm.controls.first_name.dirty)">
+                  *ngIf="patientForm.controls.name.invalid && (patientForm.controls.name.touched || patientForm.controls.name.dirty)">
                   <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                   <span class="text-danger">Nome inválido.</span>
-                </span>
-              </div>
-
-              <div class="form-group has-feedback col-md"
-                [ngClass]="{'has-success': patientForm.controls.last_name.valid,
-              'has-error': patientForm.controls.last_name.invalid && (patientForm.controls.last_name.touched || patientForm.controls.last_name.dirty)}">
-                <label for="last_name">
-                  Sobrenome:
-                </label>
-                <input class="form-control" type="text" formControlName="last_name" id="last_name">
-                <span *ngIf="patientForm.controls.last_name.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                  aria-hidden="true"></span>
-                <span
-                  *ngIf="patientForm.controls.last_name.invalid && (patientForm.controls.last_name.touched || patientForm.controls.last_name.dirty)">
-                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Sobrenome inválido.</span>
                 </span>
               </div>
 
@@ -116,10 +112,10 @@
           </form>
         </haniot-card>
       </div>
-      <div class="col-md-12">
+      <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
         <familycohesion-record [(patientId)]="patientId"></familycohesion-record>
       </div>
-      <div class="col-md-12">
+      <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9">
         <sociodemographic-record [(patientId)]="patientId"></sociodemographic-record>
       </div>
     </div>
@@ -146,6 +142,10 @@
                   <physical-activity-habits [(patientId)]="patientId"></physical-activity-habits>
                 </div>
 
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <oralhealth-record [(patientId)]="patientId"></oralhealth-record>
+                </div>
+
               </div>
             </div>
 
@@ -155,9 +155,9 @@
             <measurement-component [(patientId)]="patientId"></measurement-component>
           </mat-tab>
 
-          <mat-tab label="SAÚDE BUCAL">
+          <!-- <mat-tab label="SAÚDE BUCAL">
             <oralhealth-record [(patientId)]="patientId"></oralhealth-record>
-          </mat-tab>
+          </mat-tab> -->
 
         </mat-tab-group>
       </div>

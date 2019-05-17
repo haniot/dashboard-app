@@ -29,7 +29,13 @@ import { DashboardService } from './services/dashboard.service';
     LineGraphComponent,
     ScatterGraphComponent
   ],
-  exports: [],
-  providers: [DashboardService]
+  providers: [DashboardService],
+  exports: [
+    AreaGraphComponent,
+    BarGraphComponent,
+    GlucoseGraphComponent,
+    LineGraphComponent,
+    ScatterGraphComponent
+  ],
 })
 export class DashboardModule { }

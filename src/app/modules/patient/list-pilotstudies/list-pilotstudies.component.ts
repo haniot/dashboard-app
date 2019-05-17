@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,11 +7,11 @@ import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 
 @Component({
-  selector: 'app-list-pilotstudies',
+  selector: 'list-pilotstudies',
   templateUrl: './list-pilotstudies.component.html',
   styleUrls: ['./list-pilotstudies.component.scss']
 })
-export class ListPilotstudiesComponent implements OnInit, AfterViewInit {
+export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
   userId: string;
   // MatPaginator Inputs
   pageSizeOptions: number[] = [5, 10, 25, 100];
@@ -49,6 +49,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewInit {
     this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
       .then(studies => {
         this.list = studies;
+        this.loadinService.close();
       })
       .catch(errorResponse => {
         console.log('Erro ao buscar pilot-studies: ', errorResponse);
@@ -110,10 +111,8 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.loadinService.close();
-    }, 500);
+  ngAfterViewChecked() {
+    this.loadinService.close();
   }
 
 }

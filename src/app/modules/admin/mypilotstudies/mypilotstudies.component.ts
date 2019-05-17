@@ -2,10 +2,11 @@ import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular
 import { PageEvent } from '@angular/material/paginator';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'mypilotstudies',
@@ -35,7 +36,10 @@ export class MypilotstudiesComponent implements OnInit, AfterViewInit {
   constructor(
     private pilotStudyService: PilotStudyService,
     private authService: AuthService,
-    private loadinService: LoadingService
+    private loadinService: LoadingService,
+    private router: Router,
+    private modalService: ModalService,
+    private toastService: ToastrService
   ) {
 
   }
@@ -114,6 +118,37 @@ export class MypilotstudiesComponent implements OnInit, AfterViewInit {
           console.log('Erro ao buscar pilot-studies: ', error);
         });
     }
+  }
+
+  newPilotStudy() {
+    this.router.navigate(['/pilotstudies/new']);
+  }
+
+  removeStudy() {
+    if (this.cacheStudyIdRemove) {
+      this.pilotStudyService.remove(this.cacheStudyIdRemove)
+        .then(() => {
+          this.toastService.info('Estudo removido com sucesso!');
+          this.getAllPilotStudies();
+          this.getLengthPilotStudies();
+          this.closeModalConfirmation();
+        })
+        .catch(error => {
+          this.toastService.error('Não foi possível remover estudo!');
+        });
+    } else {
+      this.toastService.error('Não foi possível remover estudo!');
+    }
+  }
+
+  openModalConfirmation(id: string) {
+    this.cacheStudyIdRemove = id;
+    this.modalService.open('modalConfirmation');
+  }
+
+  closeModalConfirmation() {
+    this.cacheStudyIdRemove = '';
+    this.modalService.close('modalConfirmation');
   }
 
   ngAfterViewInit() {

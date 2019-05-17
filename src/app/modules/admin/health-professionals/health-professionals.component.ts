@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, AfterViewChecked } from '@angular/core';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -12,7 +12,7 @@ import { LoadingService } from 'app/shared/shared-components/loading-component/s
   templateUrl: './health-professionals.component.html',
   styleUrls: ['./health-professionals.component.scss']
 })
-export class HealthProfessionalComponent implements AfterViewInit{
+export class HealthProfessionalComponent implements AfterViewChecked {
   userEdit: IUser = new HealthProfessional();
   healthProfessionals: Array<IUser> = [];
 
@@ -38,6 +38,7 @@ export class HealthProfessionalComponent implements AfterViewInit{
       .then(healthProfessionals => {
         this.healthProfessionals = healthProfessionals;
         this.getLengthHealthProfessionals();
+        this.loadinService.close();
       })
       .catch(errorResponse => {
         this.toastr.error('Não foi possível listar profissional de saúde!');
@@ -123,9 +124,8 @@ export class HealthProfessionalComponent implements AfterViewInit{
       });
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.loadinService.close();
-    }, 1000);
+  ngAfterViewChecked() {
+    this.loadinService.close();
   }
+
 }

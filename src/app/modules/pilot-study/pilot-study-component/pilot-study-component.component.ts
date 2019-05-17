@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 
@@ -7,7 +7,7 @@ import { LoadingService } from 'app/shared/shared-components/loading-component/s
   templateUrl: './pilot-study-component.component.html',
   styleUrls: ['./pilot-study-component.component.scss']
 })
-export class PilotStudyComponentComponent implements OnInit, AfterViewInit {
+export class PilotStudyComponentComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private router: Router,
@@ -17,13 +17,12 @@ export class PilotStudyComponentComponent implements OnInit, AfterViewInit {
   ngOnInit() { }
 
 
-  cleanStudyId() {
+  newPilotStudy() {
     this.router.navigate(['pilotstudies', 'new']);
   }
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.loadingService.close();
-    }, 1000);
+
+  ngAfterViewChecked() {
+    this.loadingService.close();
   }
 }
 

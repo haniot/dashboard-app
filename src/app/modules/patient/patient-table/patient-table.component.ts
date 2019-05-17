@@ -48,7 +48,7 @@ export class PatientTableComponent implements OnInit {
   searchOnSubmit() {
     clearInterval(this.searchTime);
     this.searchTime = setTimeout(() => {
-      this.patientService.getAll(this.pilotStudyId, this.page, this.limit, this.search)
+      this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
         .then(patients => {
           this.listOfPatients = patients;
           this.calcLengthPatients();
@@ -60,11 +60,11 @@ export class PatientTableComponent implements OnInit {
   }
 
   getAllPacients() {
-    this.patientService.getAll(this.pilotStudyId, this.page, this.limit, this.search)
+    this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
       .then(patients => {
         this.listOfPatients = patients;
         this.calcLengthPatients();
-        if (patients.length == 0) {
+        if (this.listOfPatients.length == 0) {
           this.listOfPatientsIsEmpty = true;
         } else {
           this.listOfPatientsIsEmpty = false;
@@ -94,7 +94,7 @@ export class PatientTableComponent implements OnInit {
   }
 
   removePatient() {
-    this.patientService.remove(this.pilotStudyId, this.cacheIdPatientRemove)
+    this.patientService.remove(this.cacheIdPatientRemove)
       .then(() => {
         this.getAllPacients();
         this.calcLengthPatients();
@@ -122,7 +122,7 @@ export class PatientTableComponent implements OnInit {
   }
 
   calcLengthPatients() {
-    this.patientService.getAll(this.pilotStudyId, undefined, undefined, this.search)
+    this.patientService.getAllByPilotStudy(this.pilotStudyId, undefined, undefined, this.search)
       .then(patients => {
         this.length = patients.length;
       })

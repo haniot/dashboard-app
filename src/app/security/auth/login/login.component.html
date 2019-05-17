@@ -1,15 +1,15 @@
-<div class="container-fluid" >
+<div class="container-fluid">
   <div class="row">
     <div class="col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto">
       <div class="card card-signin">
         <div class="card-body">
           <div id="divLogo">
             <a [routerLink]="['/']" id="linkLogo">
-              <img src="assets/img/logo-login-new.png"/>
+              <img src="assets/img/logo-login-new.png" />
               <span id="labelHaniot">HANIoT</span>
             </a>
           </div>
-          
+
           <form [formGroup]="f" novalidate class="form-signin">
 
             <div class="form-group has-feedback"
@@ -41,11 +41,27 @@
               </span>
             </div>
 
-            <button type="submit" class="btn btn-haniot-primary btn-block " [disabled]="f.invalid" (click)="onSubmit()" id="buttonEntrar">Entrar</button>
+            <button type="submit" class="btn btn-haniot-primary btn-block " [disabled]="f.invalid" (click)="onSubmit()"
+              id="buttonEntrar">Entrar</button>
           </form>
           <div>Esqueceu sua senha?<a href="javascript:void(0);"> redefina aqui.</a></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading">
+  <div id="externa">
+    <div tabindex="-1" role="dialog" id="loading">
+      <div class="modal-dialog" role="document">
+        <div class="d-flex justify-content-around">
+          <img src="../../../../assets/img/loading.gif" alt="">
         </div>
       </div>
     </div>
   </div>
+  <div class="modal-backdrop show">
+    <div>
 </div>

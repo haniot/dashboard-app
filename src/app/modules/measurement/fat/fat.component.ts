@@ -114,6 +114,8 @@ export class FatComponent implements OnInit {
     this.option.series[0].data = [];
 
     this.data.forEach((element: IMeasurement) => {
+      this.option.series[0].data.push(element.value);
+
       const find = this.option.xAxis[0].data.find((ele) => {
         return ele == this.datePipe.transform(element.timestamp, "shortDate");
       });
@@ -121,7 +123,8 @@ export class FatComponent implements OnInit {
       if (!find) {
         this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate"));
       }
-      this.option.series[0].data.push(element.value);
+
+
     });
 
     if (this.data.length > 1) {

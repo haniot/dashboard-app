@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 import { Patient } from 'app/modules/patient/models/patient';
 import { PatientService } from 'app/modules/patient/services/patient.service';
 
@@ -12,12 +14,12 @@ export class EvaluationComponentComponent implements OnInit, OnChanges {
 
   @Input() patientId: string;
   @Input() pilotStudyId: string;
-
+  subtitle: string;
   patient: Patient;
 
   constructor(
     private activeRouter: ActivatedRoute,
-    private router: Router,
+    private location: Location,
     private patientService: PatientService
   ) { }
 
@@ -32,7 +34,7 @@ export class EvaluationComponentComponent implements OnInit, OnChanges {
 
   loadPatient(): void {
     if (this.pilotStudyId && this.patientId) {
-      this.patientService.getById(this.pilotStudyId, this.patientId)
+      this.patientService.getById(this.patientId)
         .then(patient => this.patient = patient)
         .catch(errorResponse => {
           //console.log('Não foi possível buscar paciente!', errorResponse);
@@ -41,7 +43,7 @@ export class EvaluationComponentComponent implements OnInit, OnChanges {
   }
 
   onBack() {
-    this.router.navigate(['']);
+    this.location.back();
   }
 
   ngOnChanges(changes: SimpleChanges) {

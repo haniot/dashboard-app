@@ -42,6 +42,7 @@ export class PatientsComponent implements OnInit, OnChanges {
     private toastService: ToastrService,
     private modalService: ModalService
   ) {
+    this.listOfPatients = new Array<Patient>();
     this.listClass = new Array<string>();
   }
 
@@ -52,19 +53,25 @@ export class PatientsComponent implements OnInit, OnChanges {
   searchOnSubmit() {
     clearInterval(this.searchTime);
     this.searchTime = setTimeout(() => {
-      this.patientService.getAll(this.pilotStudyId, this.page, this.limit, this.search)
+      this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
         .then(patients => {
           this.listOfPatients = patients;
+          if (patients && patients.length) {
+            this.listOfPatientsIsEmpty = false;
+          } else {
+            this.listOfPatientsIsEmpty = true;
+          }
           this.calcLengthPatients();
         })
         .catch(errorResponse => {
+          this.listOfPatientsIsEmpty = true;
           console.log('Erro ao buscar pacientes: ', errorResponse);
         });
     }, 200);
   }
 
   getAllPacients() {
-    this.patientService.getAll(this.pilotStudyId, this.page, this.limit, this.search)
+    this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
       .then(patients => {
         this.listOfPatients = patients;
         this.calcLengthPatients();
@@ -98,7 +105,7 @@ export class PatientsComponent implements OnInit, OnChanges {
   }
 
   removePatient() {
-    this.patientService.remove(this.pilotStudyId, this.cacheIdPatientRemove)
+    this.patientService.remove(this.cacheIdPatientRemove)
       .then(() => {
         this.getAllPacients();
         this.calcLengthPatients();
@@ -126,7 +133,7 @@ export class PatientsComponent implements OnInit, OnChanges {
   }
 
   calcLengthPatients() {
-    this.patientService.getAll(this.pilotStudyId, undefined, undefined, this.search)
+    this.patientService.getAllByPilotStudy(this.pilotStudyId, undefined, undefined, this.search)
       .then(patients => {
         this.length = patients.length;
       })

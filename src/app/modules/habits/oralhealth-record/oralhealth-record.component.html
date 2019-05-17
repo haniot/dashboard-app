@@ -2,20 +2,32 @@
   <form [formGroup]="oralhealthForm">
 
     <div class="row justify-content-md-center" *ngIf="listOralhealthRecords.length!=0">
+      <div class="col-md col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-timer card-header-icon">
+            <div class="card-icon">
+              <img src="../../../../assets/img/haniot/oral-health.png" alt="">
+            </div>
+            <p class="label">Frequência que realiza a saúde bucal:</p>
+            <h3 class="card-title">{{oralhealthForm.get('teeth_brushing_freq').value}}</h3>
+          </div>
+        </div>
+      </div>
 
-      <div class="form-group col-md-3">
+
+      <!-- <div class="form-group col-md-3">
         <label for="teeth_brushing_freq">
           Frequência que realiza a saúde bucal:
         </label>
         <input class="form-control" type="text" formControlName="teeth_brushing_freq" id="teeth_brushing_freq">
-      </div>
+      </div> -->
 
     </div>
-    <div class="form-group col-md-3">
+    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <label for="teeth_lesions">
         Lista lesões:
       </label>
-      <div class="row container">
+      <!-- <div class="row container">
         <div class="table-responsive">
           <table class="table table-sm table-hover">
             <thead>
@@ -32,6 +44,36 @@
             </tbody>
           </table>
         </div>
+      </div> -->
+      <div class="row  justify-content-md-center">
+
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" class="diseases"
+          *ngFor="let disease of oralhealthForm.get('teeth_lesions').value">
+          <div class="card card-stats diseaseHistory">
+            <div class="row container">
+              <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">
+                <div class="card-icon-disease">
+                  <img src="../../../../assets/img/haniot/oral-lesion.png" alt="">
+                </div>
+              </div>
+              <div class="col-md row">
+                <div class="col-sm">
+                  <label for="">
+                    Tipo de dente:
+                  </label>
+                  <h4 class="card-category">{{disease.tooth_type | toothType}}</h4>
+                </div>
+                <div class="col-sm">
+                  <label for="">
+                    Tipo de lesão:
+                  </label>
+                  <h4 class="card-category">{{disease.lesion_type | lesionType}}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 

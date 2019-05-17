@@ -18,13 +18,15 @@ export class ChangePasswordComponent implements OnInit {
   errorCredentials = false;
   redirect_link;
 
+  loading: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
-    ) { }
+  ) { }
 
   ngOnInit() {
     $('body').css('background-color', '#00a594')
@@ -43,18 +45,21 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.errorCredentials = false;
     this.authService.changePassowrd(this.f.value, this.redirect_link).subscribe(
       (resp) => {
+        this.loading = false;
         this.toastr.info("Senha alterada com sucesso!");
       },
       (errorResponse: HttpErrorResponse) => {
         // console.log(errorResponse)        
         if (errorResponse.status == 400 && errorResponse.error.code == 400 && errorResponse.error.message == 'Password does not match!') {
           this.toastr.error("Senha antiga informada incorreta!");
-        }else{
+        } else {
           this.toastr.error("Não foi possível mudar a senha!");
         }
+        this.loading = false;
       }
     );
   }

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 import { ToastrService } from 'ngx-toastr';
 import { PageEvent } from '@angular/material/paginator';
@@ -16,7 +16,7 @@ import { ModalService } from 'app/shared/shared-components/haniot-modal/service/
   templateUrl: './haniot-table.component.html',
   styleUrls: ['./haniot-table.component.scss']
 })
-export class HaniotTableComponent {
+export class HaniotTableComponent implements OnInit {
 
   // MatPaginator Inputs
   @Input() length: number;
@@ -36,6 +36,7 @@ export class HaniotTableComponent {
   searchTime;
 
   cacheIdRemove: string;
+  listOfUserIsEmpty: boolean;
 
   constructor(
     private authService: AuthService,
@@ -43,7 +44,14 @@ export class HaniotTableComponent {
     private healthService: HealthProfessionalService,
     private userService: UserService,
     private toastr: ToastrService,
-    private modalService: ModalService) { }
+    private modalService: ModalService) {
+    this.list = new Array<IUser>();
+    this.listOfUserIsEmpty = false;
+  }
+
+  ngOnInit() {
+    this.updateStateOfList();
+  }
 
   verifySameUser(user: any): boolean {
     return user.id == this.authService.decodeToken().sub;
@@ -138,6 +146,7 @@ export class HaniotTableComponent {
             this.healthService.getAll(page + 1, limit)
               .then(users => {
                 this.list = users;
+                this.updateStateOfList
                 this.updatePagination();
               })
               .catch(errorResponse => {
@@ -147,6 +156,7 @@ export class HaniotTableComponent {
 
           break;
       }
+      this.updateStateOfList();
     }, 200);
   }
 
@@ -157,7 +167,6 @@ export class HaniotTableComponent {
       case 'HealthProfessional':
         return this.healthService.getAll();
     }
-
   }
 
   clickPagination(event) {
@@ -228,6 +237,14 @@ export class HaniotTableComponent {
         }
 
         break;
+    }
+  }
+
+  updateStateOfList(): void {
+    if (this.list.length === 0) {
+      this.listOfUserIsEmpty = true
+    } else {
+      this.listOfUserIsEmpty = false;
     }
   }
 }

@@ -1,11 +1,12 @@
 import { MeasurementType } from './measurement';
-class DataSet {
+export class DataSetUnit {
     value: number;
     timestamp: string;
 }
+
 export class HeartRate {
     id: string;
-    dataset: Array<DataSet>;
+    dataset: Array<DataSetUnit>;
     unit: string;
     type: MeasurementType;
     user_id: string;
