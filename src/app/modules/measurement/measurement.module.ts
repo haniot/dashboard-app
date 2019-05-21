@@ -45,7 +45,15 @@ import { DeviceService } from './services/device.service';
   exports: [
     MeasurementComponentComponent,
     DeviceComponent,
-    MealPipe
+    MealPipe,
+    WeightComponent,
+    HeightComponent,
+    WaistCircunferenceComponent,
+    BodyTemperatureComponent,
+    BloodGlucoseComponent,
+    BloodPressureComponent,
+    HeartRateComponent,
+    FatComponent
   ],
   providers: [
     MeasurementService,

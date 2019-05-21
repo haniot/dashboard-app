@@ -15,7 +15,7 @@ import { Weight } from '../models/wieght';
 })
 export class WeightComponent implements OnInit, OnChanges {
 
-  @Input() data: Array<IMeasurement>;
+  @Input() data: Array<Weight>;
 
   lastData: IMeasurement;
 

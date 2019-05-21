@@ -2,7 +2,7 @@
   "name": "haniot-dashboard",
   "version": "2.0.0",
   "license": "Apache 2.0",
-  "autor":"NUTES/UEPB",
+  "autor": "NUTES/UEPB",
   "scripts": {
     "ng": "ng",
     "prestart": "npm run env",
@@ -47,6 +47,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.10",
     "moment": "^2.19.1",
+    "ngx-export-as": "^1.2.2",
     "ngx-toastr": "^9.1.2",
     "node-sass": "^4.11.0",
     "perfect-scrollbar": "1.1.0",

@@ -11,6 +11,11 @@ import { EvaluationStatus } from '../models/evaluation';
 import { GraphService } from 'app/shared/shared-services/graph.service';
 import { PatientService } from 'app/modules/patient/services/patient.service';
 import { Patient } from 'app/modules/patient/models/patient';
+import { PhysicalActivityHabitsRecord, ActivityFrequency } from 'app/modules/habits/models/physicalActivity';
+import { Weight } from 'app/modules/measurement/models/wieght';
+import { Measurement, IMeasurement, MeasurementType } from 'app/modules/measurement/models/measurement';
+import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
+import { HeartRate } from 'app/modules/measurement/models/heart-rate';
 
 @Component({
   selector: 'app-nutrition-evaluation',
@@ -75,7 +80,20 @@ export class NutritionEvaluationComponent implements OnInit {
   listChecksGlycemia: Array<boolean>;
   listChecksBloodPressure: Array<boolean>;
 
-  finalingEvaluantion: boolean;
+  finalingEvaluantion: boolean = false;
+
+  listWeight: Array<IMeasurement>;
+  listHeight: Array<IMeasurement>;
+  listFat: Array<IMeasurement>;
+  listWaistCircunference: Array<IMeasurement>;
+  listBodyTemperature: Array<IMeasurement>;
+  listBloodGlucose: Array<IMeasurement>;
+  listBloodPressure: Array<BloodPressure>;
+  listHeartRate: Array<HeartRate>;
+
+  newCounseling: string = "";
+  newCounselingType: string = "undefined";
+
 
   constructor(
     private nutritionService: NutritionEvaluationService,
@@ -88,10 +106,22 @@ export class NutritionEvaluationComponent implements OnInit {
     private toastService: ToastrService,
     private nutritionEvaluationService: NutritionEvaluationService
   ) {
+
+    this.patient = new Patient();
+
     this.nutritionalEvaluation = new NutritionEvaluation();
     this.listChecksBmiWhr = new Array<boolean>();
     this.listChecksGlycemia = new Array<boolean>();
     this.listChecksBloodPressure = new Array<boolean>();
+
+    this.listWeight = new Array<Weight>();
+    this.listHeight = new Array<IMeasurement>();
+    this.listFat = new Array<IMeasurement>();
+    this.listWaistCircunference = new Array<IMeasurement>();
+    this.listBodyTemperature = new Array<IMeasurement>();
+    this.listBloodGlucose = new Array<IMeasurement>();
+    this.listBloodPressure = new Array<BloodPressure>();
+    this.listHeartRate = new Array<HeartRate>();
   }
 
   ngOnInit() {
@@ -109,12 +139,21 @@ export class NutritionEvaluationComponent implements OnInit {
         this.nutritionalEvaluation = nutritionEvaluation;
         this.formatCounseling()
         this.loadGraph(nutritionEvaluation.heart_rate.dataset);
+        this.separateMeasurements();
       })
       .catch(erroResponse => {
         this.toastService.error("Não foi possível carregar avaliação nutricional!");
         //console.log('Não foi possível carregar avaliação!', errorResponse);
       });
 
+    this.patientService.getById(this.patientId)
+      .then(patient => {
+        this.patient = patient;
+      })
+      .catch(errorResponse => {
+        this.toastService.error('Não foi possível identificar o paciente!')
+        console.log('Não foi possível buscar paciente!', errorResponse);
+      });
   }
 
   formatCounseling() {
@@ -174,9 +213,6 @@ export class NutritionEvaluationComponent implements OnInit {
 
   }
 
-
-
-
   shareEvaluationOpen() {
     this.patientService.getById(this.patientId)
       .then(patient => {
@@ -229,16 +265,10 @@ export class NutritionEvaluationComponent implements OnInit {
       nutritionalCouncil.blood_pressure.push(this.ncSuggested.blood_pressure[element])
     });
 
-    const copyNutritionalEvaluation = Object.assign({}, this.nutritionalEvaluation);
-
-    copyNutritionalEvaluation.counselings.definitive = nutritionalCouncil;
-    copyNutritionalEvaluation.status = EvaluationStatus.complete;
-
-
-    this.nutritionEvaluationService.update(this.nutritionalEvaluation.patient_id, copyNutritionalEvaluation)
+    this.nutritionEvaluationService.finalize(this.nutritionalEvaluation.id, this.nutritionalEvaluation.patient_id, nutritionalCouncil)
       .then(nutritionEvaluation => {
-        this.nutritionalEvaluation = Object.assign({}, copyNutritionalEvaluation);
-        this.toastService.info("Avaliação atualizada com sucesso!");
+        this.getNutritionEvaluation();
+        this.toastService.info("Avaliação finalizada com sucesso!");
         this.finalingEvaluantion = false;
       })
       .catch(errorResponse => {
@@ -282,6 +312,78 @@ export class NutritionEvaluationComponent implements OnInit {
 
 
     return !(findBmi || findGlycemia || findBlood);
+  }
+
+  separateMeasurements() {
+    let measurements: Array<any> = this.nutritionalEvaluation.measurements;
+
+    this.listWeight = measurements.filter((element: Weight) => {
+      return element.type === MeasurementType.weight
+    });
+
+    this.listHeight = measurements.filter((element: Measurement) => {
+      return element.type === MeasurementType.height
+    });
+
+    this.listFat = measurements.filter((element: Measurement) => {
+      return element.type === MeasurementType.fat
+    });
+
+    this.listWaistCircunference = measurements.filter((element: Measurement) => {
+      return element.type === MeasurementType.waist_circumference
+    });
+
+    this.listBodyTemperature = measurements.filter((element: Measurement) => {
+      return element.type === MeasurementType.body_temperature
+    });
+
+    this.listBloodGlucose = measurements.filter((element: Measurement) => {
+      return element.type === MeasurementType.blood_glucose
+    });
+
+    this.listBloodPressure = measurements.filter((element: Measurement) => {
+      return element.type === MeasurementType.blood_pressure
+    });
+
+    this.listHeartRate = measurements.filter((element: Measurement) => {
+      return element.type === MeasurementType.heart_rate
+    });
+  }
+
+  showNewCounseling() {
+    this.modalService.open('newCounseling');
+  }
+
+  hiddenNewCounseling() {
+    this.modalService.close('newCounseling');
+    this.newCounseling = "";
+    this.newCounselingType = "";
+  }
+
+  addNewCounseling() {
+    let flag = false;
+    switch (this.newCounselingType) {
+      case "bmi_whr":
+        this.ncSuggested.bmi_whr.push(this.newCounseling);
+        flag = true;
+        break;
+      case "glycemia":
+        this.ncSuggested.glycemia.push(this.newCounseling);
+        flag = true;
+        break;
+      case "blood_pressure":
+        this.ncSuggested.blood_pressure.push(this.newCounseling);
+        flag = true;
+        break;
+      default:
+        this.toastService.error("Não foi possível adicionar conselho!");
+        flag = false;
+        break;
+
+    }
+    if (flag) {
+      this.hiddenNewCounseling();
+    }
   }
 
 }

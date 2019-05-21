@@ -14,11 +14,12 @@ import {
     BloodPressureClassification,
     BloodPressurePercentile,
     NutritionClassification,
-    OverWeightClassification
+    OverWeightClassification,
+    NutritionalCouncil
 } from '../models/nutrition-evaluation';
 import { EvaluationStatus } from '../models/evaluation';
 import { MealType, BloodGlucose } from 'app/modules/measurement/models/blood-glucose';
-import { IMeasurement, MeasurementType } from 'app/modules/measurement/models/measurement';
+import { IMeasurement, MeasurementType, Measurement } from 'app/modules/measurement/models/measurement';
 import { PhysicalActivityHabitsRecord, ActivityFrequency } from 'app/modules/habits/models/physicalActivity';
 import {
     FeedingHabitsRecord,
@@ -31,7 +32,7 @@ import {
 import { MedicalRecord } from 'app/modules/habits/models/medical-record';
 import { HeartRate } from 'app/modules/measurement/models/heart-rate';
 import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
-import { Weight } from 'app/modules/measurement/models/wieght';
+import { Weight, Fat } from 'app/modules/measurement/models/wieght';
 
 const nutritionalStatus = new NutritionalStatus();
 nutritionalStatus.height = 160;
@@ -133,106 +134,33 @@ bloodPressureEvaluation.systolic_percentile = BloodPressurePercentile.pas10;
 bloodPressureEvaluation.diastolic_percentile = BloodPressurePercentile.pas25;
 bloodPressureEvaluation.classification = BloodPressureClassification.arterial_hypertension_stage_1;
 
+const m1 = new BloodGlucose();
+m1.id = "5cb488278cf5f9e6760c14ed";
+m1.value = 99;
+m1.unit = "mg/dl";
+m1.meal = MealType.preprandial;
+m1.type = MeasurementType.blood_glucose;
+m1.timestamp = "2018-11-19T14:40:00Z";
+m1.user_id = "5a62be07d6f33400146c9b61";
+m1.device_id = "5ca790f77aefffa37a17b605";
+
+const fat = new Fat();
+fat.value = 62;
+fat.unit = "%";
+
+const m2 = new Weight();
+m2.id = "5cb488278cf5f9e6760c14ed";
+m2.value = 65;
+m2.unit = "Kg";
+m2.fat = fat
+m2.type = MeasurementType.weight;
+m2.timestamp = "2018-11-19T14:40:00Z";
+m2.user_id = "5a62be07d6f33400146c9b61";
+m2.device_id = "5ca790f77aefffa37a17b605";
+
 const Measurements: Array<IMeasurement | BloodGlucose | BloodPressure | HeartRate | Weight> = [
-    {
-        "id": "5cb488278cf5f9e6760c14ed",
-        "value": 99,
-        "unit": "mg/dl",
-        "meal": MealType.preprandial,
-        "type": MeasurementType.blood_glucose,
-        "timestamp": "2018-11-19T14:40:00Z",
-        "user_id": "5a62be07d6f33400146c9b61",
-        "device_id": "5ca790f77aefffa37a17b605"
-    },
-    {
-        "id": "5cb48827217ee2910ea11e84",
-        "systolic": 120,
-        "diastolic": 80,
-        "pulse": 80,
-        "unit": "mmHg",
-        "type": MeasurementType.blood_pressure,
-        "timestamp": "2018-11-19T14:40:00Z",
-        "user_id": "5a62be07d6f33400146c9b61",
-        "device_id": "5ca790f77aefffa37a17b605"
-    },
-    {
-        "id": "5cb4b2fd02eb7733b03db810",
-        "value": 36,
-        "unit": "°C",
-        "type": MeasurementType.body_temperature,
-        "timestamp": "2018-11-19T14:40:00Z",
-        "user_id": "5a62be07d6f33400146c9b61",
-        "device_id": "5ca790f77aefffa37a17b605"
-    },
-    {
-        "id": "5cb4882751b5f21ba364ba6f",
-        "value": 20,
-        "unit": "%",
-        "type": MeasurementType.fat,
-        "timestamp": "2018-11-17T14:40:00Z",
-        "user_id": "5a62be07d6f33400146c9b61",
-        "device_id": "5ca790f77aefffa37a17b605"
-    },
-    {
-        "id": "5cb488277b26234cfe2635da",
-        "dataset": [
-            {
-                "value": 90,
-                "timestamp": "2018-11-19T14:40:00Z"
-            },
-            {
-                "value": 87,
-                "timestamp": "2018-11-19T14:41:00Z"
-            },
-            {
-                "value": 89,
-                "timestamp": "2018-11-19T14:42:00Z"
-            },
-            {
-                "value": 90,
-                "timestamp": "2018-11-19T14:43:00Z"
-            },
-            {
-                "value": 91,
-                "timestamp": "2018-11-19T14:44:00Z"
-            }
-        ],
-        "unit": "bpm",
-        "type": MeasurementType.heart_rate,
-        "user_id": "5a62be07d6f33400146c9b61",
-        "device_id": "5ca790f77aefffa37a17b605"
-    },
-    {
-        "id": "5cb488279ea138bd6abf936a",
-        "value": 150,
-        "unit": "cm",
-        "type": MeasurementType.height,
-        "timestamp": "2018-11-19T14:40:00Z",
-        "user_id": "5a62be07d6f33400146c9b61",
-        "device_id": "5ca790f77aefffa37a17b605"
-    },
-    {
-        "id": "5cb488279ea138bd6abf936a",
-        "value": 70,
-        "unit": "cm",
-        "type": MeasurementType.waist_circumference,
-        "timestamp": "2018-11-19T14:40:00Z",
-        "user_id": "5a62be07d6f33400146c9b61",
-        "device_id": "5ca790f77aefffa37a17b605"
-    },
-    {
-        "id": "5cb4882751b5f21ba364ba6f",
-        "value": 50,
-        "unit": "kg",
-        "type": MeasurementType.weight,
-        "timestamp": "2018-11-19T14:40:00Z",
-        "user_id": "5a62be07d6f33400146c9b61",
-        "fat": {
-            "value": 30,
-            "unit": "%"
-        },
-        "device_id": "5ca790f77aefffa37a17b605"
-    }
+    m1,
+    m2
 ]
 
 const PhysicalActivityHabitsLocal: PhysicalActivityHabitsRecord = {
@@ -241,7 +169,10 @@ const PhysicalActivityHabitsLocal: PhysicalActivityHabitsRecord = {
     "school_activity_freq": ActivityFrequency.four_more_per_week,
     "weekly_activities": [
         "run",
-        "swim"
+        "swim",
+        "soccer",
+        "basketball",
+        "athletics"
     ]
 }
 const FeedingHabitsRecordLocal: FeedingHabitsRecord = {
@@ -249,7 +180,15 @@ const FeedingHabitsRecordLocal: FeedingHabitsRecord = {
     "created_at": "2018-11-19T14:40:00Z",
     "weekly_feeding_habits": [
         {
-            "food": "bread",
+            "food": "soda",
+            "seven_days_freq": WeeklyFrequency.all_days
+        },
+        {
+            "food": "fried",
+            "seven_days_freq": WeeklyFrequency.all_days
+        },
+        {
+            "food": "fruits",
             "seven_days_freq": WeeklyFrequency.all_days
         }
     ],
@@ -281,7 +220,7 @@ const mock: Array<NutritionEvaluation> = [
     {
         id: "5cb4882751b5f21ba364ba6f",
         created_at: "2018-11-19T14:40:00Z",
-        status: EvaluationStatus.incomplete,
+        status: EvaluationStatus.complete,
         patient_id: "5cb4882751b5f21ba364ba6f",
         nutritional_status: nutritionalStatus,
         overweight_indicator: overWeightIndicator,
@@ -467,9 +406,9 @@ export class NutritionEvaluationService {
         //     .toPromise();
     }
 
-    update(patient_id: string, nutritionevaluation: NutritionEvaluation): Promise<NutritionEvaluation> {
-        return this.http.patch<any>
-            (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation.id}`, nutritionevaluation)
+    finalize(evaluation_id: string, patient_id: string, counselings: NutritionalCouncil): Promise<NutritionEvaluation> {
+        return this.http.post<any>
+            (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`, counselings)
             .toPromise();
     }
 

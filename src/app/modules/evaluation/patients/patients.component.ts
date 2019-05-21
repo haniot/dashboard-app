@@ -16,14 +16,14 @@ export class PatientsComponent implements OnInit, OnChanges {
   listClass: Array<string>;
   @Output() selected = new EventEmitter();
   // MatPaginator Inputs
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions: number[] = [10, 25, 100];
 
   // MatPaginator Output
   pageEvent: PageEvent;
 
   /* Controles de paginação */
   page: number = 1;
-  limit: number = 5;
+  limit: number = 10;
   length: number;
 
   listOfPatientsIsEmpty: boolean = false;

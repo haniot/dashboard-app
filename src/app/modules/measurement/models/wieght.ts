@@ -1,7 +1,7 @@
 import { Measurement, } from './measurement';
 
 
-class Fat {
+export class Fat {
     value: number;
     unit: string;
 }

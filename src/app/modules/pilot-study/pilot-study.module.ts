@@ -20,6 +20,7 @@ import { PilotStudyRoutingModule } from './pilot-study-routing/pilot-study-routi
 import { ViewHealthProfessionalComponent } from './view-health-professional/view-health-professional.component';
 import { PilotStudyViewComponent } from './pilot-study-view/pilot-study-view.component';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { EvaluationModule } from '../evaluation/evaluation.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { DashboardModule } from '../dashboard/dashboard.module';
 
     SharedModule,
     PilotStudyRoutingModule,
+    EvaluationModule
   ],
   providers: [
     PilotStudyService,

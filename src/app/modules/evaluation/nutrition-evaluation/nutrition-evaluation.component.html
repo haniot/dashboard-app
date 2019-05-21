@@ -1,5 +1,35 @@
 <div class="main-content">
   <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <haniot-card title="Paciente selecionado" subtitle="">
+          <div class="row">
+            <div class="form-group col-md">
+              <label for="name">
+                Nome:
+              </label>
+              <p>{{patient.name}}</p>
+            </div>
+
+            <div class="form-group has-feedback col-md">
+              <label for="gender">
+                Gênero:
+              </label>
+              <p>{{patient.gender | gender}}</p>
+            </div>
+
+            <div class="form-group col-md">
+              <label for="birth_date">
+                Data de nascimento:
+              </label>
+              <p>{{patient.birth_date | date}}</p>
+            </div>
+
+          </div>
+        </haniot-card>
+      </div>
+    </div>
+
     <div class="d-flex flex-row-reverse shared" style="height: 50px;">
       <div class="p-2">
         <i class="material-icons" title="Compartilhar" (click)="shareEvaluationOpen()">share</i>
@@ -11,388 +41,501 @@
         <i class="material-icons" title="Baixar em PDF">picture_as_pdf</i>
       </div>
     </div>
+
     <div class="row">
+
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <haniot-card title="Avaliação nutricional" subtitle=''>
 
-          <div class="container"
-            *ngIf="nutritionalEvaluation && nutritionalEvaluation.nutritional_status && nutritionalEvaluation.overweight_indicator && nutritionalEvaluation.blood_glucose && nutritionalEvaluation.blood_pressure && nutritionalEvaluation.heart_rate">
-            <div class="row">
-              <!-- Estado Nutricional -->
-              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
-                <div class="card card-stats">
-                  <div class="card-header card-header-timer card-header-icon">
-                    <div class="card-icon">
-                      <img src="../../../../assets/img/haniot/nutrition.png" alt="">
-                    </div>
-                    <span class="badge badge-haniot category">Estado Nutricional:</span>
-                    <span
-                      class="badge badge-haniot classification">{{nutritionalEvaluation.nutritional_status.classification | nutritionClassification}}</span>
-                  </div>
-                  <div class="card-footer">
-                    <div class="stats"></div>
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
-                          <p class="card-category">Altura: </p>
-                          <h3 class="card-title">
-                            {{nutritionalEvaluation.nutritional_status.height}}
-                            <small>cm</small>
-                          </h3>
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
-                          <p class="card-category">Peso: </p>
-                          <h3 class="card-title">
-                            {{nutritionalEvaluation.nutritional_status.weight}}
-                            <small>Kg</small>
-                          </h3>
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
-                          <p class="card-category">BMI: </p>
-                          <h3 class="card-title">
-                            {{nutritionalEvaluation.nutritional_status.bmi}}
-                          </h3>
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
-                          <p class="card-category">Percentil: </p>
-                          <h3 class="card-title">
-                            {{nutritionalEvaluation.nutritional_status.percentile}}
-                            <small>%</small>
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="row">
 
-              <!-- Indicadores de Sobrepeso -->
-              <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 align-self-center">
-                <div class="card card-stats">
-                  <div class="card-header card-header-timer card-header-icon">
-                    <div class="card-icon">
-                      <img src="../../../../assets/img/haniot/waist-circunference.png" alt="">
-                    </div>
-                    <span class="badge badge-haniot category">Indicadores de sobrepeso:</span>
-                    <span
-                      class="badge badge-haniot classification">{{nutritionalEvaluation.overweight_indicator.classification | overweigthClassification}}</span>
-                  </div>
-                  <div class="card-footer">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                          <p class="card-category">Circunferência abdominal:</p>
-                          <h3 class="card-title">
-                            {{nutritionalEvaluation.overweight_indicator.waist_circumference}}
-                            <small>cm</small>
-                          </h3>
-                        </div>
-                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                          <p class="card-category">Altura: </p>
-                          <h3 class="card-title">
-                            {{nutritionalEvaluation.overweight_indicator.height}}
-                            <small>cm</small>
-                          </h3>
-                        </div>
-                        <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                          <p class="card-category">Relação da altura da cintura:</p>
-                          <h3 class="card-title">
-                            {{nutritionalEvaluation.overweight_indicator.waist_height_relation}}
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <mat-tab-group mat-align-tabs="center">
 
-              <!-- Glicose no sangue -->
-              <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 align-self-center">
-                <div class="card card-stats">
-                  <div class="card-header card-header-timer card-header-icon">
-                    <div class="card-icon">
-                      <img src="../../../../assets/img/haniot/blood-glucose.png" alt="">
-                    </div>
-                    <span class="badge badge-haniot category">Glicose no sangue:</span>
-                    <span
-                      class="badge badge-haniot classification">{{nutritionalEvaluation.blood_glucose.classification | bloodglucoseClassification}}</span>
-                  </div>
-                  <div class="card-footer">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
-                          <p class="card-category">Tipo de refeição:</p>
-                          <span class="badge badge-haniot">{{nutritionalEvaluation.blood_glucose.meal | meal}}</span>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
-                          <p class="card-category">Valor:</p>
-                          <h3 class="card-title">
-                            {{nutritionalEvaluation.blood_glucose.value}}
-                            <small>mg/dl</small>
-                          </h3>
+                <mat-tab label="AVALIAÇÃO">
+                  <div class="container"
+                    *ngIf="nutritionalEvaluation && nutritionalEvaluation.nutritional_status && nutritionalEvaluation.overweight_indicator && nutritionalEvaluation.blood_glucose && nutritionalEvaluation.blood_pressure && nutritionalEvaluation.heart_rate">
+                    <div class="row">
+                      <!-- Estado Nutricional -->
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
+                        <div class="card card-stats">
+                          <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                              <img src="../../../../assets/img/haniot/nutrition.png" alt="">
+                            </div>
+                            <span class="badge badge-haniot category">Estado Nutricional:</span>
+                            <span
+                              class="badge badge-haniot classification">{{nutritionalEvaluation.nutritional_status.classification | nutritionClassification}}</span>
+                          </div>
+                          <div class="card-footer">
+                            <div class="stats"></div>
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                                  <p class="card-category">Altura: </p>
+                                  <h3 class="card-title">
+                                    {{nutritionalEvaluation.nutritional_status.height}}
+                                    <small>cm</small>
+                                  </h3>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                                  <p class="card-category">Peso: </p>
+                                  <h3 class="card-title">
+                                    {{nutritionalEvaluation.nutritional_status.weight}}
+                                    <small>Kg</small>
+                                  </h3>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                                  <p class="card-category">BMI: </p>
+                                  <h3 class="card-title">
+                                    {{nutritionalEvaluation.nutritional_status.bmi}}
+                                  </h3>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                                  <p class="card-category">Percentil: </p>
+                                  <h3 class="card-title">
+                                    {{nutritionalEvaluation.nutritional_status.percentile}}
+                                    <small>%</small>
+                                  </h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <!-- Pressão sanguinia -->
-              <div class="container row">
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
-                  <div class="card card-stats">
-                    <div class="card-header card-header-timer card-header-icon">
-                      <div class="card-icon">
-                        <img src="../../../../assets/img/haniot/blood-pressure.png" alt="">
+                      <!-- Indicadores de Sobrepeso -->
+                      <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 align-self-center">
+                        <div class="card card-stats">
+                          <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                              <img src="../../../../assets/img/haniot/waist-circunference.png" alt="">
+                            </div>
+                            <span class="badge badge-haniot category">Indicadores de sobrepeso:</span>
+                            <span
+                              class="badge badge-haniot classification">{{nutritionalEvaluation.overweight_indicator.classification | overweigthClassification}}</span>
+                          </div>
+                          <div class="card-footer">
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                  <p class="card-category">Circunferência abdominal:</p>
+                                  <h3 class="card-title">
+                                    {{nutritionalEvaluation.overweight_indicator.waist_circumference}}
+                                    <small>cm</small>
+                                  </h3>
+                                </div>
+                                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                  <p class="card-category">Altura: </p>
+                                  <h3 class="card-title">
+                                    {{nutritionalEvaluation.overweight_indicator.height}}
+                                    <small>cm</small>
+                                  </h3>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                  <p class="card-category">Relação da altura da cintura:</p>
+                                  <h3 class="card-title">
+                                    {{nutritionalEvaluation.overweight_indicator.waist_height_relation}}
+                                  </h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <span class="badge badge-haniot category">Pressão sanguínea:</span>
-                      <span
-                        class="badge badge-haniot classification">{{nutritionalEvaluation.blood_pressure.classification | bloodpressureClassification}}</span>
-                    </div>
-                    <div class="card-footer">
+
+                      <!-- Glicose no sangue -->
+                      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 align-self-center">
+                        <div class="card card-stats">
+                          <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                              <img src="../../../../assets/img/haniot/blood-glucose.png" alt="">
+                            </div>
+                            <span class="badge badge-haniot category">Glicose no sangue:</span>
+                            <span
+                              class="badge badge-haniot classification">{{nutritionalEvaluation.blood_glucose.classification | bloodglucoseClassification}}</span>
+                          </div>
+                          <div class="card-footer">
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                  <p class="card-category">Tipo de refeição:</p>
+                                  <span
+                                    class="badge badge-haniot">{{nutritionalEvaluation.blood_glucose.meal | meal}}</span>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                  <p class="card-category">Valor:</p>
+                                  <h3 class="card-title">
+                                    {{nutritionalEvaluation.blood_glucose.value}}
+                                    <small>mg/dl</small>
+                                  </h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Pressão sanguinia -->
                       <div class="container row">
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center row">
-                          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center"><span
-                              class="badge badge-haniot">SISTÓLICA</span></div>
-                          <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
-                            <p class="card-category">Valor: </p>
-                            <h3 class="card-title">
-                              {{nutritionalEvaluation.blood_pressure.systolic}}
-                              <small>mmHg</small>
-                            </h3>
-                          </div>
-                          <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
-                            <p class="card-category">Percentil: </p>
-                            <h3 class="card-title">
-                              {{nutritionalEvaluation.blood_pressure.systolic_percentile}}
-                            </h3>
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
+                          <div class="card card-stats">
+                            <div class="card-header card-header-timer card-header-icon">
+                              <div class="card-icon">
+                                <img src="../../../../assets/img/haniot/blood-pressure.png" alt="">
+                              </div>
+                              <span class="badge badge-haniot category">Pressão sanguínea:</span>
+                              <span
+                                class="badge badge-haniot classification">{{nutritionalEvaluation.blood_pressure.classification | bloodpressureClassification}}</span>
+                            </div>
+                            <div class="card-footer">
+                              <div class="container row">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center"><span
+                                      class="badge badge-haniot">SISTÓLICA</span></div>
+                                  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                    <p class="card-category">Valor: </p>
+                                    <h3 class="card-title">
+                                      {{nutritionalEvaluation.blood_pressure.systolic}}
+                                      <small>mmHg</small>
+                                    </h3>
+                                  </div>
+                                  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                    <p class="card-category">Percentil: </p>
+                                    <h3 class="card-title">
+                                      {{nutritionalEvaluation.blood_pressure.systolic_percentile}}
+                                    </h3>
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
+                                    <span class="badge badge-haniot">DIASTÓLICA</span>
+                                  </div>
+                                  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                    <p class="card-category">Valor: </p>
+                                    <h3 class="card-title">
+                                      {{nutritionalEvaluation.blood_pressure.diastolic}}
+                                      <small>mmHg</small>
+                                    </h3>
+                                  </div>
+                                  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                    <p class="card-category">Percentil: </p>
+                                    <h3 class="card-title">
+                                      {{nutritionalEvaluation.blood_pressure.diastolic_percentile}}
+                                    </h3>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                           </div>
                         </div>
 
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center row">
-                          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
-                            <span class="badge badge-haniot">DIASTÓLICA</span>
-                          </div>
-                          <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
-                            <p class="card-category">Valor: </p>
-                            <h3 class="card-title">
-                              {{nutritionalEvaluation.blood_pressure.diastolic}}
-                              <small>mmHg</small>
-                            </h3>
-                          </div>
-                          <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
-                            <p class="card-category">Percentil: </p>
-                            <h3 class="card-title">
-                              {{nutritionalEvaluation.blood_pressure.diastolic_percentile}}
-                            </h3>
-                          </div>
-                        </div>
                       </div>
-                    </div>
 
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- Pressão sanguinia -->
-              <div class="container">
-
-                <div class="row">
-
-                  <div class="card card-stats">
-                    <div class="card-header card-header-timer card-header-icon">
-                      <div class="card-icon">
-                        <img src="../../../../assets/img/haniot/heart-rate.png" alt="">
-                      </div>
-                      <span class="badge badge-haniot category">Frequência cardíaca </span>
-                      <span class="badge badge-haniot classification">classificação</span>
-                    </div>
-                    <div class="card-footer">
+                      <!-- Pressão sanguinia -->
                       <div class="container">
 
                         <div class="row">
 
-                          <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 align-self-center">
-                            <span class="badge badge-haniot">MÍNIMA</span>
-                            <p class="card-category">Valor: </p>
-                            <h3 class="card-title">
-                              {{nutritionalEvaluation.heart_rate.min}}
-                              <small>bpm</small>
-                            </h3>
+                          <div class="card card-stats">
+                            <div class="card-header card-header-timer card-header-icon">
+                              <div class="card-icon">
+                                <img src="../../../../assets/img/haniot/heart-rate.png" alt="">
+                              </div>
+                              <span class="badge badge-haniot category">Frequência cardíaca </span>
+                              <span class="badge badge-haniot classification">classificação</span>
+                            </div>
+                            <div class="card-footer">
+                              <div class="container">
+
+                                <div class="row">
+
+                                  <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 align-self-center">
+                                    <span class="badge badge-haniot">MÍNIMA</span>
+                                    <p class="card-category">Valor: </p>
+                                    <h3 class="card-title">
+                                      {{nutritionalEvaluation.heart_rate.min}}
+                                      <small>bpm</small>
+                                    </h3>
+                                  </div>
+
+                                  <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 align-self-center">
+                                    <span class="badge badge-haniot">MÉDIA</span>
+                                    <p class="card-category">Valor: </p>
+                                    <h3 class="card-title">
+                                      {{nutritionalEvaluation.heart_rate.average}}
+                                      <small>bpm</small>
+                                    </h3>
+                                  </div>
+
+                                  <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 align-self-center">
+                                    <span class="badge badge-haniot">MÁXIMA</span>
+                                    <p class="card-category">Valor: </p>
+                                    <h3 class="card-title">
+                                      {{nutritionalEvaluation.heart_rate.max}}
+                                      <small>bpm</small>
+                                    </h3>
+                                  </div>
+
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
+                                    <hr>
+                                  </div>
+                                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center"
+                                    [ts-chart]="option">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                           </div>
 
-                          <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 align-self-center">
-                            <span class="badge badge-haniot">MÉDIA</span>
-                            <p class="card-category">Valor: </p>
-                            <h3 class="card-title">
-                              {{nutritionalEvaluation.heart_rate.average}}
-                              <small>bpm</small>
-                            </h3>
-                          </div>
-
-                          <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 align-self-center">
-                            <span class="badge badge-haniot">MÁXIMA</span>
-                            <p class="card-category">Valor: </p>
-                            <h3 class="card-title">
-                              {{nutritionalEvaluation.heart_rate.max}}
-                              <small>bpm</small>
-                            </h3>
-                          </div>
-
-                        </div>
-
-                        <div class="row">
-                          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
-                            <hr>
-                          </div>
-                          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center" [ts-chart]="option">
-                          </div>
                         </div>
                       </div>
+
                     </div>
 
+
+                  </div>
+                </mat-tab>
+
+                <mat-tab label="HÁBITOS">
+
+                  <div class="container">
+                    <div class="row">
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <physical-activity-habits [(physicalRecord)]="nutritionalEvaluation.physical_activity_habits">
+                        </physical-activity-habits>
+                      </div>
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <feeding-habits [(feedingHabitsRecord)]="nutritionalEvaluation.feeding_habits_record">
+                        </feeding-habits>
+                      </div>
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <medical-record [(medicalRecord)]="nutritionalEvaluation.medical_record"></medical-record>
+                      </div>
+
+                    </div>
                   </div>
 
-                </div>
-              </div>
+                </mat-tab>
 
+                <mat-tab label="MEDIÇÕES">
+                  <div class="container">
+                    <div class="row">
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listWeight.length">
+                        <weight [(data)]="listWeight"></weight>
+                      </div>
+
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listHeight.length">
+                        <height [data]="listHeight"></height>
+                      </div>
+
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listFat.length">
+                        <fat [data]="listFat"></fat>
+                      </div>
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listWaistCircunference.length">
+                        <waist-circunference [data]="listWaistCircunference"></waist-circunference>
+                      </div>
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listBodyTemperature.length">
+                        <body-temperature [data]="listBodyTemperature"></body-temperature>
+                      </div>
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listBloodGlucose.length">
+                        <blood-glucose [data]="listBloodGlucose"></blood-glucose>
+                      </div>
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listBloodPressure.length">
+                        <blood-pressure [data]="listBloodPressure"></blood-pressure>
+                      </div>
+
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listHeartRate.length">
+                        <heart-rate [data]="listHeartRate"></heart-rate>
+                      </div>
+
+                    </div>
+                  </div>
+                </mat-tab>
+
+              </mat-tab-group>
             </div>
 
             <!-- Sugestões de aconselhamentos -->
-            <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
-              *ngIf="nutritionalEvaluation.status==='incomplete'">
-              <label>
-                Sugestões de aconselhamentos:
-              </label>
-
-              <div class="counselings">
-
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="container">
                 <div class="row">
-                  <div class="form-group col-sm-12 col-md-4">
-                    <mat-checkbox class="example-margin" [(ngModel)]="allCounselings" (click)="clickCheckAll()">
-                      Selecionar todos
-                    </mat-checkbox>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+                  <!-- Sugestões de aconselhamentos -->
+                  <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                    *ngIf="nutritionalEvaluation.status==='incomplete'">
                     <label>
-                      BWR
+                      Sugestões de aconselhamentos:
                     </label>
-                  </div>
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
-                    *ngFor="let counseling of ncSuggested.bmi_whr; let i = index">
-                    <mat-checkbox [(ngModel)]="listChecksBmiWhr[i]"></mat-checkbox>
-                    <textarea style="margin-left: 10px" class="form-control" [value]="counseling" readonly></textarea>
+
+                    <div class="counselings">
+
+                      <div class="row">
+                        <div class="form-group col-sm-12 col-md-4">
+                          <mat-checkbox class="example-margin" [(ngModel)]="allCounselings" (click)="clickCheckAll()">
+                            Selecionar todos
+                          </mat-checkbox>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-4">
+                          <button type="button" class="btn btn-haniot-primary btn-sm" (click)="showNewCounseling()">
+                            Adiconar
+                            <i class="material-icons">add</i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+                          <label>
+                            BWR
+                          </label>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
+                          *ngFor="let counseling of ncSuggested.bmi_whr; let i = index">
+                          <mat-checkbox [(ngModel)]="listChecksBmiWhr[i]"></mat-checkbox>
+                          <textarea style="margin-left: 10px" class="form-control" [value]="counseling"
+                            readonly></textarea>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+                          <label>
+                            Glicemia
+                          </label>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
+                          *ngFor="let counseling of ncSuggested.glycemia; let i = index">
+                          <mat-checkbox [(ngModel)]="listChecksGlycemia[i]"></mat-checkbox>
+                          <textarea style="margin-left: 10px" class="form-control" [value]="counseling"
+                            readonly></textarea>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+                          <label>
+                            Pressão sanguínea
+                          </label>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
+                          *ngFor="let counseling of ncSuggested.blood_pressure;let i = index">
+                          <mat-checkbox [(ngModel)]="listChecksBloodPressure[i]"></mat-checkbox>
+                          <textarea style="margin-left: 10px" class="form-control" [value]="counseling"
+                            readonly></textarea>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- Quando a avaliação estiver completa -->
+                    <!-- <div class="counselings">                  
+                                  <textarea class=" form-control" [rows]="listOfCounseling.length * 2" [value]="finalCounseling"
+                                    *ngIf="listOfCounseling"></textarea>
+                                </div> -->
                   </div>
                 </div>
-
-                <div class="row">
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
-                    <label>
-                      Glicemia
-                    </label>
-                  </div>
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
-                    *ngFor="let counseling of ncSuggested.glycemia; let i = index">
-                    <mat-checkbox [(ngModel)]="listChecksGlycemia[i]"></mat-checkbox>
-                    <textarea style="margin-left: 10px" class="form-control" [value]="counseling" readonly></textarea>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
-                    <label>
-                      Pressão sanguínea
-                    </label>
-                  </div>
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
-                    *ngFor="let counseling of ncSuggested.blood_pressure;let i = index">
-                    <mat-checkbox [(ngModel)]="listChecksBloodPressure[i]"></mat-checkbox>
-                    <textarea style="margin-left: 10px" class="form-control" [value]="counseling" readonly></textarea>
-                  </div>
-                </div>
-
               </div>
-              <!-- Quando a avaliação estiver completa -->
-              <!-- <div class="counselings">                  
-                  <textarea class=" form-control" [rows]="listOfCounseling.length * 2" [value]="finalCounseling"
-                    *ngIf="listOfCounseling"></textarea>
-                </div> -->
             </div>
 
-            <!-- Aconselhamentos definitivos -->
-            <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
-              *ngIf="nutritionalEvaluation.status==='complete'">
-              <label>
-                Aconselhamentos:
-              </label>
-
-              <div class="counselings">
-
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="container">
                 <div class="row">
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+                  <!-- Aconselhamentos definitivos -->
+                  <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                    *ngIf="nutritionalEvaluation.status==='complete'">
                     <label>
-                      BWR
+                      Aconselhamentos:
                     </label>
-                  </div>
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
-                    *ngFor="let counseling of ncDefinitive.bmi_whr">
-                    <textarea style="margin-left: 10px" class="form-control" [value]="counseling" readonly></textarea>
+
+                    <div class="counselings">
+
+                      <div class="row">
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+                          <label>
+                            BWR
+                          </label>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
+                          *ngFor="let counseling of ncDefinitive.bmi_whr">
+                          <textarea style="margin-left: 10px" class="form-control" [value]="counseling"
+                            readonly></textarea>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+                          <label>
+                            Glicemia
+                          </label>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
+                          *ngFor="let counseling of ncDefinitive.glycemia">
+                          <textarea style="margin-left: 10px" class="form-control" [value]="counseling"
+                            readonly></textarea>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+                          <label>
+                            Pressão sanguínea
+                          </label>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
+                          *ngFor="let counseling of ncDefinitive.blood_pressure">
+                          <textarea style="margin-left: 10px" class="form-control" [value]="counseling"
+                            readonly></textarea>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- Quando a avaliação estiver completa -->
+                    <!-- <div class="counselings">                  
+                                  <textarea class=" form-control" [rows]="listOfCounseling.length * 2" [value]="finalCounseling"
+                                    *ngIf="listOfCounseling"></textarea>
+                                </div> -->
                   </div>
                 </div>
-
-                <div class="row">
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
-                    <label>
-                      Glicemia
-                    </label>
-                  </div>
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
-                    *ngFor="let counseling of ncDefinitive.glycemia">
-                    <textarea style="margin-left: 10px" class="form-control" [value]="counseling" readonly></textarea>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
-                    <label>
-                      Pressão sanguínea
-                    </label>
-                  </div>
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
-                    *ngFor="let counseling of ncDefinitive.blood_pressure">
-                    <textarea style="margin-left: 10px" class="form-control" [value]="counseling" readonly></textarea>
-                  </div>
-                </div>
-
               </div>
-              <!-- Quando a avaliação estiver completa -->
-              <!-- <div class="counselings">                  
-                  <textarea class=" form-control" [rows]="listOfCounseling.length * 2" [value]="finalCounseling"
-                    *ngIf="listOfCounseling"></textarea>
-                </div> -->
             </div>
 
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
-              <div class="form-group has-feedback col">
-                <label for="status">
-                  Estado da avaliação:
-                </label>
-                <p> {{nutritionalEvaluation.status | evaluationStatus}}</p>
-              </div>
-              <div class="form-group has-feedback col">
-                <label for="created_at">
-                  Data da avaliação:
-                </label>
-                <p>{{nutritionalEvaluation.created_at | date:"short"}}<p>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                    <div class="form-group has-feedback col">
+                      <label for="status">
+                        Estado da avaliação:
+                      </label>
+                      <p> {{nutritionalEvaluation.status | evaluationStatus}}</p>
+                    </div>
+                    <div class="form-group has-feedback col">
+                      <label for="created_at">
+                        Data da avaliação:
+                      </label>
+                      <p>{{nutritionalEvaluation.created_at | date:"short"}}<p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
           </div>
-
 
           <div class="d-flex justify-content-around">
             <div class="p-2">
@@ -446,13 +589,13 @@
             </div>
           </form> -->
           <div class="container">
-            <div class="row">
+            <div class="row justify-content-md-center">
               <div class="form-group col-sm-12 col-md-4">
                 <mat-checkbox class="example-margin" [ngModel]="sharedEmail">
                   Email
                 </mat-checkbox>
               </div>
-              <div class="form-group col-sm-12 col-md-4">
+              <!-- <div class="form-group col-sm-12 col-md-4">
                 <mat-checkbox class="example-margin" [ngModel]="sharedSms">
                   SMS
                 </mat-checkbox>
@@ -461,18 +604,18 @@
                 <mat-checkbox class="example-margin" [ngModel]="sharedWhatsapp">
                   Whatsapp
                 </mat-checkbox>
-              </div>
+              </div> -->
             </div>
-            <div class="row">
+            <div class="row justify-content-md-center">
               <div class="form-group col-sm-12 col-md-4">
                 <img src="../../../../assets/img/haniot/email.png" alt="">
               </div>
-              <div class="form-group col-sm-12 col-md-4">
+              <!-- <div class="form-group col-sm-12 col-md-4">
                 <img src="../../../../assets/img/haniot/sms.png" alt="">
               </div>
               <div class="form-group col-sm-12 col-md-4">
                 <img src="../../../../assets/img/haniot/whatsapp.png" alt="">
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -487,7 +630,7 @@
 
 <div id="finalingEvaluantion" *ngIf="finalingEvaluantion">
   <div id="externa">
-    <div tabindex="-1" role="dialog" id="errou">
+    <div tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
@@ -503,3 +646,42 @@
   <div class="modal-backdrop show">
   </div>
 </div>
+
+<haniot-modal [modalId]="'newCounseling'">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Adicionar conselho</h5>
+      <button type="button" class="close" aria-label="Close" (click)="hiddenNewCounseling()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+
+          <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <label for="counseling">Aconselhamento:</label>
+            <textarea class="form-control" required name="counseling" id="counseling" rows="5"
+              #counselingModel="ngModel" [(ngModel)]="newCounseling"></textarea>
+          </div>
+          <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <label for="counseling">Tipo:</label>
+            <select class="form-control" name="" id="" required [(ngModel)]="newCounselingType"
+              #counselingTypeModel="ngModel">
+              <option value="undefined"> - - - selecione o tipo de aconselhamento - - - </option>
+              <option value="bmi_whr">Sobrepeso</option>
+              <option value="glycemia">Glicemia</option>
+              <option value="blood_pressure">Pressão sanguinia</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-haniot-primary" (click)="addNewCounseling()"
+        [disabled]="(!counselingModel.valid && !counselingTypeModel.valid) || newCounselingType == 'undefined' || newCounseling == ''">Adicionar</button>
+      <button type="button" class="btn btn-haniot-secondary" (click)="hiddenNewCounseling()">Cancelar</button>
+    </div>
+  </div>
+</haniot-modal>

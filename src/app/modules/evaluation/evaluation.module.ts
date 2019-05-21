@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 import { MatStepperModule } from '@angular/material/stepper';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material';
 
 import { EvaluationComponentComponent } from './evaluation-component/evaluation-component.component';
 import { EvaluationRoutingModule } from './evaluation-routing/evaluation-routing.module';
@@ -22,6 +23,9 @@ import { OverweigthClassificationPipe } from './pipes/overweigth-classification.
 import { BloodglucoseClassificationPipe } from './pipes/bloodglucose-classification.pipe';
 import { BloodpressureClassificationPipe } from './pipes/bloodpressure-classification.pipe';
 import { MeasurementModule } from '../measurement/measurement.module';
+import { HabitsModule } from '../habits/habits.module';
+import { DentalEvaluationTableComponent } from './dental-evaluation-table/dental-evaluation-table.component';
+import { DentalEvaluationService } from './services/dental-evaluation.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,8 @@ import { MeasurementModule } from '../measurement/measurement.module';
     NutritionClassificationtPipe,
     OverweigthClassificationPipe,
     BloodglucoseClassificationPipe,
-    BloodpressureClassificationPipe
+    BloodpressureClassificationPipe,
+    DentalEvaluationTableComponent
   ],
   imports: [
     CommonModule,
@@ -49,8 +54,11 @@ import { MeasurementModule } from '../measurement/measurement.module';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
+    MatTabsModule,
 
     SharedModule,
+    HabitsModule,
+    MeasurementModule,
     EvaluationRoutingModule,
     MeasurementModule
   ],
@@ -58,6 +66,7 @@ import { MeasurementModule } from '../measurement/measurement.module';
     /** services */
     EvaluationService,
     NutritionEvaluationService,
+    DentalEvaluationService,
     /** pipes */
     EvaluationStatustPipe,
     DatePipe,
@@ -65,6 +74,9 @@ import { MeasurementModule } from '../measurement/measurement.module';
     OverweigthClassificationPipe,
     BloodglucoseClassificationPipe,
     BloodpressureClassificationPipe
+  ],
+  exports: [
+    DentalEvaluationTableComponent
   ]
 })
 export class EvaluationModule { }

@@ -11,7 +11,6 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Nome do paciente</th>
         <th>Data</th>
         <th>Estado</th>
         <th colspan="2">Ações</th>
@@ -20,13 +19,12 @@
     <tbody>
       <tr *ngFor="let evaluation of listOfEvaluations; index as i">
         <td>{{getIndex(i)}}</td>
-        <td>{{patient.name}}</td>
         <td>{{evaluation.created_at | date}}</td>
         <td>
           <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus}}</span>
         </td>
         <td>
-          <a class="nav-link" [routerLink]="['/evaluations',evaluation.patient_id, 'nutritional', evaluation.id]"
+          <a class="nav-link" [routerLink]="['/evaluations',patientId, 'nutritional', evaluation.id]"
             title="Acessar avaliação...">
             <i class="material-icons">input</i>
           </a>

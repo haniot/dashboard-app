@@ -9,11 +9,13 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './medical-record.component.html',
   styleUrls: ['./medical-record.component.scss']
 })
-export class MedicalRecordComponent implements OnInit, OnChanges{
+export class MedicalRecordComponent implements OnInit, OnChanges {
 
   listMedical: Array<MedicalRecord>;
   medicalForm: FormGroup;
   @Input() patientId: string;
+  @Input() medicalRecord: MedicalRecord;
+
   index: number;
 
   constructor(
@@ -34,13 +36,13 @@ export class MedicalRecordComponent implements OnInit, OnChanges{
     this.medicalForm = this.fb.group({
       id: [''],
       created_at: [{ value: '', disabled: true }],
-      chronic_diseases: this.fb.array([])   
+      chronic_diseases: this.fb.array([])
     });
   }
 
   createMedicalForm(medicalRecord: MedicalRecord) {
     this.medicalForm = this.fb.group({
-      id: [{value: medicalRecord.id}],
+      id: [{ value: medicalRecord.id }],
       created_at: [{ value: medicalRecord.created_at, disabled: true }],
       chronic_diseases: [{ value: medicalRecord.chronic_diseases, disabled: true }]
     });
@@ -57,6 +59,10 @@ export class MedicalRecordComponent implements OnInit, OnChanges{
           //this.toastService.error('Não foi possível buscar histórico de doenças!');
           //console.log('Não foi possível buscar histórico de doenças!', errorResponse);
         });
+    } else if (this.medicalRecord && changes.medicalRecord.currentValue != changes.medicalRecord.previousValue) {
+      this.listMedical = new Array<MedicalRecord>();
+      this.listMedical.push(this.medicalRecord);
+      this.createMedicalForm(this.medicalRecord);
     }
   }
 

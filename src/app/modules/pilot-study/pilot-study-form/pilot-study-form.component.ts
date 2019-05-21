@@ -188,12 +188,14 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
   }
 
   loadProfessinalsAssociated() {
-    this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudyId)
-      .then(professionals => {
-        this.professinalsAssociated = professionals
-        this.loadProfessinalsNotAssociated();
-      })
-      .catch(HttpError => console.log('Não foi possível carregar profissionais associados ao estudo!', HttpError));
+    if (this.pilotStudyId) {
+      this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudyId)
+        .then(professionals => {
+          this.professinalsAssociated = professionals
+          this.loadProfessinalsNotAssociated();
+        })
+        .catch(HttpError => console.log('Não foi possível carregar profissionais associados ao estudo!', HttpError));
+    }
   }
 
   loadProfessinalsNotAssociated() {

@@ -5,6 +5,7 @@ import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
 import { PhysicalActivityHabitsRecord } from 'app/modules/habits/models/physicalActivity';
 import { FeedingHabitsRecord } from 'app/modules/habits/models/feeding';
 import { MedicalRecord } from 'app/modules/habits/models/medical-record';
+import { Weight } from 'app/modules/measurement/models/wieght';
 
 export enum Percentile {
     p01 = "p01",
@@ -126,13 +127,14 @@ export class NutritionalCounseling implements ICounseling {
 }
 
 export class NutritionEvaluation extends Evaluation {
-
+    patient_id: string;
+    counselings: ICounseling;
     nutritional_status: NutritionalStatus;
     overweight_indicator: OverWeightIndicator;
     heart_rate: HeartRateEvaluation;
     blood_glucose: BloodGlucoseEvaluation;
     blood_pressure: BloodPressureEvaluation;
-    measurements: Array<IMeasurement | BloodPressure | HeartRate>;
+    measurements: Array<IMeasurement | BloodPressure | HeartRate | Weight>;
     physical_activity_habits: PhysicalActivityHabitsRecord;
     feeding_habits_record: FeedingHabitsRecord;
     medical_record: MedicalRecord

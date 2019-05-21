@@ -21,7 +21,7 @@ export class HaniotTableComponent implements OnInit {
   // MatPaginator Inputs
   @Input() length: number;
   @Input() pageSize: number;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions: number[] = [10, 25, 100];
 
   // MatPaginator Output
   pageEvent: PageEvent;

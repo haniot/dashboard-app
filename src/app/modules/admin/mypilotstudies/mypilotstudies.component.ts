@@ -1,12 +1,13 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
+import { Router } from '@angular/router';
+
+import { ToastrService } from 'ngx-toastr';
+
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { ToastrService } from 'ngx-toastr';
+import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 
 @Component({
   selector: 'mypilotstudies',
@@ -17,14 +18,14 @@ export class MypilotstudiesComponent implements OnInit, AfterViewInit {
 
   userId: string;
   // MatPaginator Inputs
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions: number[] = [10, 25, 100];
 
   // MatPaginator Output
   pageEvent: PageEvent;
 
   /* Controles de paginação */
   page: number = 1;
-  limit: number = 5;
+  limit: number = 10;
   length: number;
 
   list: Array<PilotStudy>;
@@ -35,7 +36,6 @@ export class MypilotstudiesComponent implements OnInit, AfterViewInit {
 
   constructor(
     private pilotStudyService: PilotStudyService,
-    private authService: AuthService,
     private loadinService: LoadingService,
     private router: Router,
     private modalService: ModalService,

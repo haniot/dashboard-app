@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Patient } from 'app/modules/patient/models/patient';
+import { Patient, Gender } from 'app/modules/patient/models/patient';
 import { PatientService } from 'app/modules/patient/services/patient.service';
 
 @Component({
@@ -16,6 +16,8 @@ export class EvaluationComponentComponent implements OnInit, OnChanges {
   @Input() pilotStudyId: string;
   subtitle: string;
   patient: Patient;
+
+  optionsGender: Array<string> = Object.keys(Gender);
 
   constructor(
     private activeRouter: ActivatedRoute,

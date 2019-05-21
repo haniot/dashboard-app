@@ -1,44 +1,48 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material';
-
-import { NutritionEvaluation } from '../models/nutrition-evaluation';
-import { NutritionEvaluationService } from '../services/nutrition-evaluation.service';
+import { EvaluationService } from '../services/evaluation.service';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { EvaluationService } from '../services/evaluation.service';
-import { Patient } from 'app/modules/patient/models/patient';
+import { DentalEvaluation } from '../models/dental-evaluation';
+import { DentalEvaluationService } from '../services/dental-evaluation.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'nutrition-evaluation-table',
-  templateUrl: './nutrition-evaluation-table.component.html',
-  styleUrls: ['./nutrition-evaluation-table.component.scss']
+  selector: 'dental-evaluation-table',
+  templateUrl: './dental-evaluation-table.component.html',
+  styleUrls: ['./dental-evaluation-table.component.scss']
 })
-export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
+export class DentalEvaluationTableComponent implements OnInit {
 
   // MatPaginator Inputs
-  pageSizeOptions: number[] = [10, 25, 100];
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
   // MatPaginator Output
   pageEvent: PageEvent;
 
   /* Controles de paginação */
   page: number = 1;
-  limit: number = 10;
+  limit: number = 5;
   length: number;
 
-  listOfEvaluations: Array<NutritionEvaluation>;
+  listOfEvaluations: Array<DentalEvaluation>;
   search: string;
   searchTime;
 
-  @Input() patientId: string;
+  @Input() pilotStudyId: string;
 
   cacheIdEvaluationRemove: string;
 
+  lastEvaluation: DentalEvaluation;
+
+  generatingEvaluantion: boolean = false;
+
   constructor(
     private evaluationService: EvaluationService,
-    private nutritionService: NutritionEvaluationService,
+    private dentalService: DentalEvaluationService,
     private toastService: ToastrService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private _http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -47,12 +51,12 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
   }
 
   searchOnSubmit() {
-    if (this.patientId) {
+    if (this.pilotStudyId) {
       clearInterval(this.searchTime);
       this.searchTime = setTimeout(() => {
-        this.nutritionService.getAllByPatient(this.patientId, this.page, this.limit, this.search)
-          .then(nutritionsEvaluations => {
-            this.listOfEvaluations = nutritionsEvaluations;
+        this.dentalService.getAllByPilotstudy(this.pilotStudyId, this.page, this.limit, this.search)
+          .then(dentalsEvaluations => {
+            this.listOfEvaluations = dentalsEvaluations;
             this.calcLenghtNutritionEvaluations();
           })
           .catch(errorResponse => {
@@ -63,11 +67,12 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
   }
 
   getAllNutritionEvaluations() {
-    if (this.patientId) {
-      this.nutritionService.getAllByPatient(this.patientId, this.page, this.limit, this.search)
-        .then(nutritionsEvaluations => {
-          this.listOfEvaluations = nutritionsEvaluations;
+    if (this.pilotStudyId) {
+      this.dentalService.getAllByPilotstudy(this.pilotStudyId, this.page, this.limit, this.search)
+        .then(dentalsEvaluations => {
+          this.listOfEvaluations = dentalsEvaluations;
           this.calcLenghtNutritionEvaluations();
+          this.lastEvaluation = dentalsEvaluations[0];
         })
         .catch(errorResponse => {
           console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
@@ -93,8 +98,8 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
   }
 
   removeEvaluation() {
-    if (this.patientId) {
-      this.evaluationService.remove(this.patientId, this.cacheIdEvaluationRemove)
+    if (this.pilotStudyId) {
+      this.evaluationService.remove(this.pilotStudyId, this.cacheIdEvaluationRemove)
         .then(() => {
           this.getAllNutritionEvaluations();
           this.calcLenghtNutritionEvaluations();
@@ -123,8 +128,8 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
   }
 
   calcLenghtNutritionEvaluations() {
-    if (this.patientId) {
-      this.nutritionService.getAllByPatient(this.patientId, undefined, undefined, this.search)
+    if (this.pilotStudyId) {
+      this.dentalService.getAllByPilotstudy(this.pilotStudyId, undefined, undefined, this.search)
         .then(nutritionEvaluations => {
           this.length = nutritionEvaluations.length;
         })
@@ -134,9 +139,29 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.patientId.currentValue != undefined && changes.patientId.previousValue == undefined) {
+    if (changes.pilotStudyId.currentValue != undefined && changes.pilotStudyId.previousValue == undefined) {
       this.getAllNutritionEvaluations();
       this.calcLenghtNutritionEvaluations();
     }
+  }
+
+  generateEvaluation() {
+    this.generatingEvaluantion = true;
+    setTimeout(() => {
+      this.generatingEvaluantion = false;
+      this.dentalEvaluationGenerated();
+    }, 3000);
+  }
+
+  dentalEvaluationGenerated() {
+    this.modalService.open('dentalEvaluation');
+  }
+
+  closeModalDentalEvaluation() {
+    this.modalService.close('dentalEvaluation');
+  }
+
+  download(link: string) {
+    console.log('Baixar ', link);
   }
 }

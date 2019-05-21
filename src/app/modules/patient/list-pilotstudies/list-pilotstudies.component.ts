@@ -14,14 +14,14 @@ import { LoadingService } from 'app/shared/shared-components/loading-component/s
 export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
   userId: string;
   // MatPaginator Inputs
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions: number[] = [10, 25, 100];
 
   // MatPaginator Output
   pageEvent: PageEvent;
 
   /* Controles de paginação */
   page: number = 1;
-  limit: number = 5;
+  limit: number = 10;
   length: number;
 
   list: Array<PilotStudy>;

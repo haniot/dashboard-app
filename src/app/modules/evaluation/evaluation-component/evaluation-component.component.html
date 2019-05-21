@@ -2,16 +2,41 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <haniot-card title="Avaliações nutricionais" [subtitle]="subtitle">
-          <nutrition-evaluation-table [(patient)]="patient"></nutrition-evaluation-table>
+        <haniot-card title="Paciente selecionado" [subtitle]="subtitle" *ngIf="patient">
+
+          <div class="row">
+            <div class="form-group col-md">
+              <label for="name">
+                Nome:
+              </label>
+              <p>{{patient.name}}</p>
+            </div>
+
+            <div class="form-group has-feedback col-md">
+              <label for="gender">
+                Gênero:
+              </label>
+              <p>{{patient.gender | gender}}</p>
+            </div>
+
+
+            <div class="form-group col-md">
+              <label for="birth_date">
+                Data de nascimento:
+              </label>
+              <p>{{patient.birth_date | date}}</p>
+            </div>
+
+
+          </div>
+
         </haniot-card>
       </div>
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <haniot-card title="Avaliações odontológicas" [subtitle]="subtitle">
-
+        <haniot-card title="Avaliações nutricionais" [subtitle]="subtitle">
+          <nutrition-evaluation-table [(patientId)]="patientId"></nutrition-evaluation-table>
         </haniot-card>
       </div>
-
     </div>
     <div class="d-flex justify-content-around">
       <div class="p-2">
