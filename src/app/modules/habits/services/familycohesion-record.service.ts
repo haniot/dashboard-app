@@ -64,7 +64,6 @@ export class FamilyCohesionRecordService {
 
     const url = `${environment.api_url}/patients/${patientId}/familycohesionrecords`;
 
-    return Promise.resolve(mock);
     return this.http.get<any>(url, { params: myParams })
       .toPromise();
   }

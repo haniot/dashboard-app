@@ -1,7 +1,7 @@
-<haniot-card [title]="'Informações sobre a sáude bucal'" subtitle=''>
-  <form [formGroup]="oralhealthForm">
+<haniot-card [title]="'Informações sobre a saúde bucal'" subtitle='' *ngIf="listOralhealthRecords.length!=0">
+  <form [formGroup]="oralhealthForm" >
 
-    <div class="row justify-content-md-center" *ngIf="listOralhealthRecords.length!=0">
+    <div class="row justify-content-md-center">
       <div class="col-md col-sm-12 col-md-6 col-lg-6 col-xl-6">
         <div class="card card-stats">
           <div class="card-header card-header-timer card-header-icon">
@@ -23,7 +23,8 @@
       </div> -->
 
     </div>
-    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12" >
       <label for="teeth_lesions">
         Lista lesões:
       </label>

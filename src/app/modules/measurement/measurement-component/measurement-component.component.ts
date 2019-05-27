@@ -85,6 +85,8 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
           return element.type === MeasurementType.heart_rate
         });
 
+        console.log(this.listWeight);
+
       })
       .catch(errorResponse => {
         //this.toastService.error('Não foi possível buscar medições!');

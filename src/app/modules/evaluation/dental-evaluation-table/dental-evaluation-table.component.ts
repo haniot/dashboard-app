@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { PageEvent } from '@angular/material';
-import { EvaluationService } from '../services/evaluation.service';
 import { ToastrService } from 'ngx-toastr';
+import { saveAs } from 'file-saver';
+
+import { EvaluationService } from '../services/evaluation.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import { DentalEvaluation } from '../models/dental-evaluation';
 import { DentalEvaluationService } from '../services/dental-evaluation.service';
-import { HttpClient } from '@angular/common/http';
-
 @Component({
   selector: 'dental-evaluation-table',
   templateUrl: './dental-evaluation-table.component.html',
@@ -162,6 +164,18 @@ export class DentalEvaluationTableComponent implements OnInit {
   }
 
   download(link: string) {
-    console.log('Baixar ', link);
+    this.dentalService
+      .getAndDownloadFile(link)
+      .toPromise()
+      .then(data => {
+        const blob = new Blob([data], { type: 'application/octet-stream' });
+        const fileName = 'YourFileName.csv';
+        saveAs(blob, fileName);
+        this.toastService.info('Arquivo baixado com sucesso!');
+      })
+      .catch(err => {
+        console.log('Erro durante o download do arquivo!', err);
+        this.toastService.error('Arquivo baixado com sucesso!');
+      });
   }
 }

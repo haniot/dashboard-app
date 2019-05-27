@@ -37,7 +37,7 @@ export class SociodemographicRecordComponent implements OnInit, OnChanges{
       id: [''],
       created_at: [{ value: '', disabled: true }],
       color_race: [{ value: '', disabled: true }],
-      mother_schoolarity: [{ value: '', disabled: true }],
+      mother_scholarity: [{ value: '', disabled: true }],
       people_in_home: [{ value: 0, disabled: true }]
     });
 
@@ -48,13 +48,13 @@ export class SociodemographicRecordComponent implements OnInit, OnChanges{
       id: [{ value: sociodemographicRecord.id, disabled: true }],
       created_at: [{ value: sociodemographicRecord.created_at, disabled: true }],
       color_race: [{ value: sociodemographicRecord.color_race, disabled: true }],
-      mother_schoolarity: [{ value: sociodemographicRecord.mother_schoolarity, disabled: true }],
+      mother_scholarity: [{ value: sociodemographicRecord.mother_scholarity, disabled: true }],
       people_in_home: [{ value: sociodemographicRecord.people_in_home, disabled: true }]
     });
     this.socioDemographicForm.get('color_race')
       .patchValue(this.corAndRacePipe.transform(sociodemographicRecord.color_race));
     this.socioDemographicForm.get('mother_schoolarity')
-      .patchValue(this.motherSchoolarityPipe.transform(sociodemographicRecord.mother_schoolarity));
+      .patchValue(this.motherSchoolarityPipe.transform(sociodemographicRecord.mother_scholarity));
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -220,7 +220,7 @@ const mock: Array<NutritionEvaluation> = [
     {
         id: "5cb4882751b5f21ba364ba6f",
         created_at: "2018-11-19T14:40:00Z",
-        status: EvaluationStatus.complete,
+        status: EvaluationStatus.incomplete,
         patient_id: "5cb4882751b5f21ba364ba6f",
         nutritional_status: nutritionalStatus,
         overweight_indicator: overWeightIndicator,
@@ -349,8 +349,8 @@ export class NutritionEvaluationService {
 
         const url = `${environment.api_url}/patients/${patient_id}/nutritional/evaluations`;
         return Promise.resolve(mock);
-        // return this.http.get<any>(url, { params: myParams })
-        //     .toPromise();
+        return this.http.get<any>(url, { params: myParams })
+            .toPromise();
     }
 
     getAllByPilotstudy(pilostudy_id: string, page?: number, limit?: number, search?: string): Promise<NutritionEvaluation[]> {
@@ -402,20 +402,35 @@ export class NutritionEvaluationService {
 
     getById(patient_id: string, nutritionevaluation_id: string): Promise<NutritionEvaluation> {
         return Promise.resolve(mock[0]);
-        // return this.http.get<any>(`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
-        //     .toPromise();
-    }
-
-    finalize(evaluation_id: string, patient_id: string, counselings: NutritionalCouncil): Promise<NutritionEvaluation> {
-        return this.http.post<any>
-            (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`, counselings)
+        return this.http.get<any>(`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
             .toPromise();
     }
+
+    finalize(evaluation: NutritionEvaluation, nutritionalCouncil: NutritionalCouncil): Promise<any> {
+        return Promise.resolve(evaluation);
+
+    }
+    // finalize(evaluation_id: string, patient_id: string, counselings: NutritionalCouncil): Promise<NutritionEvaluation> {
+    //     return this.http.post<any>
+    //         (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`, counselings)
+    //         .toPromise();
+    // }
 
     remove(patient_id: string, nutritionevaluation_id: string): Promise<NutritionEvaluation> {
         return this.http.delete<any>
             (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
             .toPromise();
+    }
+
+    sendNutritionalEvaluationViaEmail(email: string, nutritonalEvaluation: NutritionEvaluation): Promise<boolean> {
+        const body = {
+            email: email,
+            evaluation: nutritonalEvaluation
+        };
+        return Promise.reject(false);
+        // return this.http.post<any>
+        //     (`${environment.api_url}/notification`, body)
+        //     .toPromise();
     }
 
 }

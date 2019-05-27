@@ -34,12 +34,16 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
 
   cacheIdEvaluationRemove: string;
 
+  listOfEvaluationsIsEmpty: boolean = false;
+
   constructor(
     private evaluationService: EvaluationService,
     private nutritionService: NutritionEvaluationService,
     private toastService: ToastrService,
     private modalService: ModalService
-  ) { }
+  ) {
+    this.listOfEvaluations = new Array<NutritionEvaluation>();
+  }
 
   ngOnInit() {
     this.getAllNutritionEvaluations();
@@ -68,8 +72,14 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
         .then(nutritionsEvaluations => {
           this.listOfEvaluations = nutritionsEvaluations;
           this.calcLenghtNutritionEvaluations();
+          if (nutritionsEvaluations && nutritionsEvaluations.length) {
+            this.listOfEvaluationsIsEmpty = false;
+          } else {
+            this.listOfEvaluationsIsEmpty = true;
+          }
         })
         .catch(errorResponse => {
+          this.listOfEvaluationsIsEmpty = true;
           console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
         });
     }

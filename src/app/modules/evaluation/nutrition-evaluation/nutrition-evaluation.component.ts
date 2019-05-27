@@ -66,8 +66,6 @@ export class NutritionEvaluationComponent implements OnInit {
   patient: Patient;
 
   sharedEmail: boolean;
-  sharedSms: boolean;
-  sharedWhatsapp: boolean;
 
   ncSuggested: NutritionalCouncil;
   ncDefinitive: NutritionalCouncil;
@@ -129,6 +127,7 @@ export class NutritionEvaluationComponent implements OnInit {
       this.patientId = params.get('patient_id');
       this.nutritionEvaluationId = params.get('nutritionevaluation_id');
       this.getNutritionEvaluation();
+      this.getPatient();
     });
     this.getNutritionEvaluation();
   }
@@ -213,11 +212,10 @@ export class NutritionEvaluationComponent implements OnInit {
 
   }
 
-  shareEvaluationOpen() {
+  getPatient(): void {
     this.patientService.getById(this.patientId)
       .then(patient => {
         this.patient = patient;
-        this.modalService.open('modalShareEvaluation');
       })
       .catch(errorResponse => {
         this.toastService.error('Não foi possível identificar o paciente!')
@@ -232,6 +230,7 @@ export class NutritionEvaluationComponent implements OnInit {
 
   finalizeEvaluation() {
     this.finalingEvaluantion = true;
+    this.modalService.open('finalingEvaluantion');
     let counselingBwr: Array<number> = new Array<number>();
     this.listChecksBmiWhr.forEach((element, index) => {
       if (element) {
@@ -265,11 +264,18 @@ export class NutritionEvaluationComponent implements OnInit {
       nutritionalCouncil.blood_pressure.push(this.ncSuggested.blood_pressure[element])
     });
 
-    this.nutritionEvaluationService.finalize(this.nutritionalEvaluation.id, this.nutritionalEvaluation.patient_id, nutritionalCouncil)
+
+    //this.nutritionEvaluationService.finalize(this.nutritionalEvaluation.id, this.nutritionalEvaluation.patient_id, nutritionalCouncil)
+    this.nutritionEvaluationService.finalize(this.nutritionalEvaluation, nutritionalCouncil)
       .then(nutritionEvaluation => {
-        this.getNutritionEvaluation();
-        this.toastService.info("Avaliação finalizada com sucesso!");
-        this.finalingEvaluantion = false;
+        setTimeout(() => {
+          this.nutritionalEvaluation.status = EvaluationStatus.complete;
+          this.nutritionalEvaluation.counselings.definitive = nutritionalCouncil;
+          //this.getNutritionEvaluation();
+          this.toastService.info("Avaliação finalizada com sucesso!");
+          this.finalingEvaluantion = false;
+          this.modalService.close('finalingEvaluantion');
+        }, 2000);
       })
       .catch(errorResponse => {
         this.finalingEvaluantion = false
@@ -314,7 +320,7 @@ export class NutritionEvaluationComponent implements OnInit {
     return !(findBmi || findGlycemia || findBlood);
   }
 
-  separateMeasurements() {
+  separateMeasurements(): void {
     let measurements: Array<any> = this.nutritionalEvaluation.measurements;
 
     this.listWeight = measurements.filter((element: Weight) => {
@@ -350,17 +356,17 @@ export class NutritionEvaluationComponent implements OnInit {
     });
   }
 
-  showNewCounseling() {
+  showNewCounseling(): void {
     this.modalService.open('newCounseling');
   }
 
-  hiddenNewCounseling() {
+  hiddenNewCounseling(): void {
     this.modalService.close('newCounseling');
     this.newCounseling = "";
     this.newCounselingType = "";
   }
 
-  addNewCounseling() {
+  addNewCounseling(): void {
     let flag = false;
     switch (this.newCounselingType) {
       case "bmi_whr":
@@ -384,6 +390,16 @@ export class NutritionEvaluationComponent implements OnInit {
     if (flag) {
       this.hiddenNewCounseling();
     }
+  }
+
+  sendEvaluationViaEmail(): void {
+    this.nutritionService.sendNutritionalEvaluationViaEmail(this.patient.email, this.nutritionalEvaluation)
+      .then(() => {
+        this.toastService.info('Avaliação enviada com sucesso!');
+      })
+      .catch(err => {
+        this.toastService.error('Não foi possível enviar avaliação com sucesso!');
+      });
   }
 
 }

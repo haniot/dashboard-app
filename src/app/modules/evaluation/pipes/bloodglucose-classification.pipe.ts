@@ -8,7 +8,7 @@ export class BloodglucoseClassificationPipe implements PipeTransform {
   transform(value: any, args?: any): any {
     switch (value) {
       case 'good':
-        return 'Bom';
+        return 'Ideal';
 
       case 'great':
         return 'Ótimo';

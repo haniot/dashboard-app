@@ -19,6 +19,6 @@ export class SocioDemographicRecord {
     id: string;
     created_at: string;
     color_race: CorAndRace;
-    mother_schoolarity: MotherSchoolarity;
+    mother_scholarity: MotherSchoolarity;
     people_in_home: number;
 }

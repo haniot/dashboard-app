@@ -11,7 +11,7 @@ export class BloodpressureClassificationPipe implements PipeTransform {
         return 'Normal';
 
       case 'pre_hypertension':
-        return 'Pré-Hipertensão';
+        return 'Limítrofe';
 
       case 'arterial_hypertension_stage_1':
         return 'Hipertensão estágio 1';

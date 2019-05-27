@@ -17,7 +17,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
   @Input() data: Array<Weight>;
 
-  lastData: IMeasurement;
+  lastData: Weight;
 
   lastIndex: number;
 

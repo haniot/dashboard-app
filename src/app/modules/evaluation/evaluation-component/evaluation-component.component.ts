@@ -44,11 +44,11 @@ export class EvaluationComponentComponent implements OnInit, OnChanges {
     }
   }
 
-  onBack() {
+  onBack(): void{
     this.location.back();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void{
     this.loadPatient();
   }
 

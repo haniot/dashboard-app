@@ -78,7 +78,6 @@ export class OralHealthRecordService {
         }
 
         const url = `${environment.api_url}/patients/${patientId}/oralhealthrecords`;
-        return Promise.resolve(mock);
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }

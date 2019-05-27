@@ -7,23 +7,20 @@ export class MotherSchoolarityPipe implements PipeTransform {
 
     transform(value: any, args?: any): any {
         switch (value) {
-            case 'unlettered':
-                return 'Analfabeta';
+            case 'unlettered_elementary_one_incomplete':
+                return 'Não alfabetizada';
 
-            case 'elementary_1_to_3':
-                return 'Fundamental do 1° ao 3°';
+            case 'elementary_one_elementary_two_incomplete':
+                return 'Fundamental 1 incompleto';
 
-            case 'elementary_4_to_7':
-                return 'Fundamental do 4° ao 7°';
+            case 'elementary_two_high_school_incomplete':
+                return 'Fundamental 2 incompleto';
 
-            case 'elementary_complete':
-                return 'Fundamental Completo';
+            case 'medium_graduation_incomplete':
+                return 'Médio incompleto';
 
-            case 'high_school_incomplete':
-                return 'Ensino Médio Incompleto';
-
-            case 'high_school_complete':
-                return 'Ensino Médio Completo';
+            case 'graduation_complete':
+                return 'Superior completo';
 
             case 'undefined':
                 return 'Não respondido';

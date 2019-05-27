@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
 import { DentalEvaluation } from '../models/dental-evaluation';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const dental = new DentalEvaluation();
 dental.total_patients = 20;
 dental.created_at = "2018-11-19T14:40:00Z";
-dental.file_csv = "https://drive.google.com/uc?export=download&id=1TB2sbzvOjSWu0MH5gzMIAK66gE9rVyF";
-dental.file_xls = "https://drive.google.com/uc?export=download&id=1TB2sbzvOjSWu0MH5gzMIAK66gE9rVyF";
+dental.file_csv = "https://s3.amazonaws.com/assets.datacamp.com/blog_assets/test.csv";
+dental.file_xls = "https://s3.amazonaws.com/assets.datacamp.com/blog_assets/test.csv";
 
 @Injectable()
 export class DentalEvaluationService {
@@ -66,6 +68,29 @@ export class DentalEvaluationService {
         return Promise.resolve(new DentalEvaluation())
         // return this.http.get<any>(`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
         //     .toPromise();
+    }
+
+    getAndDownloadFile(url): Observable<ArrayBuffer> {
+        let headers = new HttpHeaders();
+
+        const options: {
+            headers?: HttpHeaders;
+            observe?: 'body';
+            params?: HttpParams;
+            reportProgress?: boolean;
+            responseType: 'arraybuffer';
+            withCredentials?: boolean;
+        } = {
+            responseType: 'arraybuffer'
+        };
+
+        return this.http
+            .get(url, options)
+            .pipe(
+                map((file: ArrayBuffer) => {
+                    return file;
+                })
+            );
     }
 
 }
