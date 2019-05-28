@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MultiSelectModule } from 'primeng/multiselect';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
@@ -42,7 +41,6 @@ import { PatientManagerComponent } from './patient-manager/patient-manager.compo
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MultiSelectModule,
     MatTabsModule,
 
     PatientRoutingModule,

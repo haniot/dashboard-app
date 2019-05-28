@@ -406,15 +406,11 @@ export class NutritionEvaluationService {
             .toPromise();
     }
 
-    finalize(evaluation: NutritionEvaluation, nutritionalCouncil: NutritionalCouncil): Promise<any> {
-        return Promise.resolve(evaluation);
-
+    finalize(evaluation_id: string, patient_id: string, counselings: NutritionalCouncil): Promise<NutritionEvaluation> {
+        return this.http.post<any>
+            (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`, counselings)
+            .toPromise();
     }
-    // finalize(evaluation_id: string, patient_id: string, counselings: NutritionalCouncil): Promise<NutritionEvaluation> {
-    //     return this.http.post<any>
-    //         (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`, counselings)
-    //         .toPromise();
-    // }
 
     remove(patient_id: string, nutritionevaluation_id: string): Promise<NutritionEvaluation> {
         return this.http.delete<any>

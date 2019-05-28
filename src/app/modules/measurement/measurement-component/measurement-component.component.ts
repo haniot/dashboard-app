@@ -44,7 +44,16 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     private measurementService: MeasurementService,
     private modalService: ModalService,
     private toastService: ToastrService
-  ) { }
+  ) {
+      this.listWeight = new Array<IMeasurement>();
+      this.listHeight = new Array<IMeasurement>();
+      this.listFat = new Array<IMeasurement>();
+      this.listWaistCircunference = new Array<IMeasurement>();
+      this.listBodyTemperature = new Array<IMeasurement>();
+      this.listBloodGlucose = new Array<IMeasurement>();
+      this.listBloodPressure = new Array<BloodPressure>();
+      this.listHeartRate = new Array<HeartRate>();
+  }
 
   ngOnInit() {
     this.loadMeasurements();
@@ -84,8 +93,6 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
         this.listHeartRate = measurements.filter((element: Measurement) => {
           return element.type === MeasurementType.heart_rate
         });
-
-        console.log(this.listWeight);
 
       })
       .catch(errorResponse => {

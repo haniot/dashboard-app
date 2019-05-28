@@ -7,7 +7,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MultiSelectModule } from 'primeng/multiselect';
 
 import { PilotStudyFormComponent } from './pilot-study-form/pilot-study-form.component';
 import { SharedModule } from 'app/shared/shared.module';
@@ -42,7 +41,6 @@ import { EvaluationModule } from '../evaluation/evaluation.module';
     MatNativeDateModule,
     MatFormFieldModule,
     MatSlideToggleModule,
-    MultiSelectModule,
 
     SharedModule,
     PilotStudyRoutingModule,

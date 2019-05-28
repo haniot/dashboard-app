@@ -84,35 +84,35 @@
 
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityWeight">
-      <weight [data]="listWeight"></weight>
+      <weight [data]="listWeight" *ngIf="listWeight.length"></weight>
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityHeight">
-      <height [data]="listHeight"></height>
+      <height [data]="listHeight" *ngIf="listHeight.length"></height>
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityFat">
-      <fat [data]="listFat"></fat>
+      <fat [data]="listFat" *ngIf="listFat.length"></fat>
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityWaist">
-      <waist-circunference [data]="listWaistCircunference"></waist-circunference>
+      <waist-circunference [data]="listWaistCircunference" *ngIf="listWaistCircunference.length"></waist-circunference>
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityBody">
-      <body-temperature [data]="listBodyTemperature"></body-temperature>
+      <body-temperature [data]="listBodyTemperature" *ngIf="listBodyTemperature.length"></body-temperature>
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityGlucose">
-      <blood-glucose [data]="listBloodGlucose"></blood-glucose>
+      <blood-glucose [data]="listBloodGlucose" *ngIf="listBloodGlucose.length"></blood-glucose>
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityPressure">
-      <blood-pressure [data]="listBloodPressure"></blood-pressure>
+      <blood-pressure [data]="listBloodPressure" *ngIf="listBloodPressure.length"></blood-pressure>
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityHeart">
-      <heart-rate [data]="listHeartRate"></heart-rate>
+      <heart-rate [data]="listHeartRate" *ngIf="listHeartRate.length"></heart-rate>
     </div>
 
   </div>

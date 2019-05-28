@@ -9,7 +9,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MultiSelectModule } from 'primeng/multiselect';
 
 import { TemplateModule } from 'app/core/template/template.module';
 import { AdminRoutingModule } from './admin-routing/admin-routing.module';
@@ -42,8 +41,7 @@ import { HaniotTableComponent } from './haniot-table/haniot-table.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatSlideToggleModule,
-    MultiSelectModule
+    MatSlideToggleModule
   ],
   declarations: [
     AdministratorsComponent,
