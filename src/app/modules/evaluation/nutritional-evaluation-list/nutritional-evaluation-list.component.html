@@ -2,29 +2,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <!-- <mat-horizontal-stepper linear="false" labelPosition="bottom" #stepper>
-          
-          <mat-step [stepControl]="pilotForm" errorMessage="Name is required.">
-            <ng-template matStepLabel>SELECIONE UM ESTUDO PILOTO</ng-template>
-            
-          </mat-step>
-          <mat-step [stepControl]="patientForm" errorMessage="Selecione um paciente!">
-            <ng-template matStepLabel>SELECIONE UM PACIENTE</ng-template>
-            <patients (selected)="selectPatient($event)" [(pilotStudyId)]="pilotstudyId"></patients>
-            <div class="d-flex justify-content-center">
-              <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2"><button type="button" class="btn btn-haniot-primary"
-                  matStepperPrevious>Anterior</button></div>
-
-              <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                <button class="btn btn-haniot-primary" matStepperNext [disabled]="!patientId">Próximo</button>
-              </div>
-            </div>
-          </mat-step>
-          <mat-step>
-            <ng-template matStepLabel>AVALIAÇÕES</ng-template>
-            
-          </mat-step>
-        </mat-horizontal-stepper> -->
         <mat-horizontal-stepper linear #stepper>
           <mat-step [stepControl]="pilotForm">
             <form [formGroup]="pilotForm">

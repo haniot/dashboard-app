@@ -5,13 +5,13 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-evaluation-list',
-  templateUrl: './evaluation-list.component.html',
-  styleUrls: ['./evaluation-list.component.scss'],
+  templateUrl: './nutritional-evaluation-list.component.html',
+  styleUrls: ['./nutritinal-evaluation-list.component.scss'],
   providers: [{
     provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
   }]
 })
-export class EvaluationListComponent implements OnInit, AfterViewChecked {
+export class NutritionalEvaluationListComponent implements OnInit, AfterViewChecked {
 
   pilotForm: FormGroup;
   patientForm: FormGroup;
