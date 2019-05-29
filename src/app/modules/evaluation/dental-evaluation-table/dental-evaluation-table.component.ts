@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { PageEvent } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import { saveAs } from 'file-saver';
 
 import { EvaluationService } from '../services/evaluation.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
@@ -43,8 +41,7 @@ export class DentalEvaluationTableComponent implements OnInit {
     private evaluationService: EvaluationService,
     private dentalService: DentalEvaluationService,
     private toastService: ToastrService,
-    private modalService: ModalService,
-    private _http: HttpClient
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -163,19 +160,19 @@ export class DentalEvaluationTableComponent implements OnInit {
     this.modalService.close('dentalEvaluation');
   }
 
-  download(link: string) {
-    this.dentalService
-      .getAndDownloadFile(link)
-      .toPromise()
-      .then(data => {
-        const blob = new Blob([data], { type: 'application/octet-stream' });
-        const fileName = 'YourFileName.csv';
-        saveAs(blob, fileName);
-        this.toastService.info('Arquivo baixado com sucesso!');
-      })
-      .catch(err => {
-        console.log('Erro durante o download do arquivo!', err);
-        this.toastService.error('Arquivo baixado com sucesso!');
-      });
-  }
+  // download(link: string) {
+  //   this.dentalService
+  //     .getAndDownloadFile(link)
+  //     .toPromise()
+  //     .then(data => {
+  //       const blob = new Blob([data], { type: 'application/octet-stream' });
+  //       const fileName = 'YourFileName.csv';
+  //       saveAs(blob, fileName);
+  //       this.toastService.info('Arquivo baixado com sucesso!');
+  //     })
+  //     .catch(err => {
+  //       console.log('Erro durante o download do arquivo!', err);
+  //       this.toastService.error('Arquivo baixado com sucesso!');
+  //     });
+  // }
 }
