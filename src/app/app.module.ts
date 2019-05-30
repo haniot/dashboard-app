@@ -38,7 +38,7 @@ registerLocaleData(localePt, 'pt-BR', localePtExtra);
     AppRoutingModule
   ],
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "pt-BR" },

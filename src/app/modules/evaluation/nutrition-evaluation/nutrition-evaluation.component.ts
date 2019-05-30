@@ -7,11 +7,9 @@ import {ToastrService} from 'ngx-toastr';
 import {NutritionEvaluationService} from '../services/nutrition-evaluation.service';
 import {NutritionEvaluation, NutritionalCouncil} from '../models/nutrition-evaluation';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {EvaluationStatus} from '../models/evaluation';
 import {GraphService} from 'app/shared/shared-services/graph.service';
 import {PatientService} from 'app/modules/patient/services/patient.service';
 import {Patient} from 'app/modules/patient/models/patient';
-import {PhysicalActivityHabitsRecord, ActivityFrequency} from 'app/modules/habits/models/physicalActivity';
 import {Weight} from 'app/modules/measurement/models/wieght';
 import {Measurement, IMeasurement, MeasurementType} from 'app/modules/measurement/models/measurement';
 import {BloodPressure} from 'app/modules/measurement/models/blood-pressure';
@@ -262,7 +260,7 @@ export class NutritionEvaluationComponent implements OnInit {
         });
 
 
-        this.nutritionEvaluationService.finalize(this.nutritionalEvaluation.id, this.nutritionalEvaluation.patient_id, nutritionalCouncil)
+        this.nutritionEvaluationService.finalize(this.nutritionalEvaluation.id, this.nutritionalEvaluation.patient.id, nutritionalCouncil)
             .then(nutritionEvaluation => {
                 this.getNutritionEvaluation();
                 this.toastService.info("Avaliação finalizada com sucesso!");

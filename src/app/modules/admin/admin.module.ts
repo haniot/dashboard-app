@@ -24,6 +24,8 @@ import { MypilotstudiesComponent } from './mypilotstudies/mypilotstudies.compone
 import { EditMypilotComponent } from './edit-mypilot/edit-mypilot.component';
 import { MatNativeDateModule } from '@angular/material';
 import { HaniotTableComponent } from './haniot-table/haniot-table.component';
+import { MyevaluationsComponent } from './myevaluations/myevaluations.component';
+import {EvaluationModule} from "../evaluation/evaluation.module";
 
 @NgModule({
   imports: [
@@ -35,6 +37,7 @@ import { HaniotTableComponent } from './haniot-table/haniot-table.component';
     AdminRoutingModule,
     TemplateModule,
     SharedModule,
+    EvaluationModule,
 
     MatPaginatorModule,
     MatSelectModule,
@@ -50,7 +53,8 @@ import { HaniotTableComponent } from './haniot-table/haniot-table.component';
     MyprofileComponent,
     MypilotstudiesComponent,
     EditMypilotComponent,
-    HaniotTableComponent
+    HaniotTableComponent,
+    MyevaluationsComponent
 
   ],
   providers: [

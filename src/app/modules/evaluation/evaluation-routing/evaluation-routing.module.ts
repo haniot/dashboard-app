@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NutritionEvaluationComponent } from '../nutrition-evaluation/nutrition-evaluation.component';
 import { EvaluationComponentComponent } from '../evaluation-component/evaluation-component.component';
-import { EvaluationListComponent } from '../evaluation-list/evaluation-list.component';
+import { NutritionalEvaluationListComponent } from '../nutritional-evaluation-list/nutritional-evaluation-list.component';
+import {DentalEvaluationListComponent} from "../dental-evaluation-list/dental-evaluation-list.component";
 
 const routes = [
 
   {
-    path: '',
-    component: EvaluationListComponent
+    path: 'nutritional',
+    component: NutritionalEvaluationListComponent
+  },
+  {
+    path: 'odontological',
+    component: DentalEvaluationListComponent
   },
   {
     path: ':pilostudy_id/:patient_id',

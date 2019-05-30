@@ -15,7 +15,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { EvaluationService } from './services/evaluation.service';
 import { NutritionEvaluationService } from './services/nutrition-evaluation.service';
 import { EvaluationStatustPipe } from './pipes/evaluation-status.pipe';
-import { EvaluationListComponent } from './evaluation-list/evaluation-list.component';
+import { NutritionalEvaluationListComponent } from './nutritional-evaluation-list/nutritional-evaluation-list.component';
 import { StudiesComponent } from './studies/studies.component';
 import { PatientsComponent } from './patients/patients.component';
 import { NutritionClassificationtPipe } from './pipes/nutrition-classification.pipe';
@@ -26,6 +26,7 @@ import { MeasurementModule } from '../measurement/measurement.module';
 import { HabitsModule } from '../habits/habits.module';
 import { DentalEvaluationTableComponent } from './dental-evaluation-table/dental-evaluation-table.component';
 import { DentalEvaluationService } from './services/dental-evaluation.service';
+import { DentalEvaluationListComponent } from './dental-evaluation-list/dental-evaluation-list.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { DentalEvaluationService } from './services/dental-evaluation.service';
     EvaluationComponentComponent,
     NutritionEvaluationComponent,
     NutritionEvaluationTableComponent,
-    EvaluationListComponent,
+    NutritionalEvaluationListComponent,
     StudiesComponent,
     PatientsComponent,
     /** pipes */
@@ -42,7 +43,8 @@ import { DentalEvaluationService } from './services/dental-evaluation.service';
     OverweigthClassificationPipe,
     BloodglucoseClassificationPipe,
     BloodpressureClassificationPipe,
-    DentalEvaluationTableComponent
+    DentalEvaluationTableComponent,
+    DentalEvaluationListComponent
   ],
   imports: [
     CommonModule,
@@ -75,8 +77,9 @@ import { DentalEvaluationService } from './services/dental-evaluation.service';
     BloodglucoseClassificationPipe,
     BloodpressureClassificationPipe
   ],
-  exports: [
-    DentalEvaluationTableComponent
-  ]
+    exports: [
+        DentalEvaluationTableComponent,
+        EvaluationStatustPipe
+    ]
 })
 export class EvaluationModule { }

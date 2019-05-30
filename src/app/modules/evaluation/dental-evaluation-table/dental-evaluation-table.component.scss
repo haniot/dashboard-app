@@ -2,6 +2,10 @@ table .material-icons {
   color: #00a594;
   cursor: pointer;
 }
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
 label {
   color: black;
   font-size: 14px;
@@ -25,4 +29,12 @@ label {
 }
 #loading img {
   width: 10%;
+}
+.background-green:hover{
+  background-color: #00a594;
+}
+
+#navbarDropdownMenuLink i:hover{
+  cursor: pointer;
+  color: #00a594;
 }

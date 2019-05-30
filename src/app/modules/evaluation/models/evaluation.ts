@@ -11,7 +11,6 @@ export interface ICounseling {
 export interface IEvaluation {
     id: string;
     created_at: string;
-    status: EvaluationStatus;
 
 }
 
@@ -19,7 +18,6 @@ export class Evaluation implements IEvaluation {
 
     id: string;
     created_at: string;
-    status: EvaluationStatus;
 
     constructor() { }
 }

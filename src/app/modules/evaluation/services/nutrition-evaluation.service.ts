@@ -221,7 +221,14 @@ const mock: Array<NutritionEvaluation> = [
         id: "5cb4882751b5f21ba364ba6f",
         created_at: "2018-11-19T14:40:00Z",
         status: EvaluationStatus.incomplete,
-        patient_id: "5cb4882751b5f21ba364ba6f",
+        patient: {
+            "id": "5c9137f2b8d3921ff3028378",
+            "name": "Elvis Aaron",
+            "email": "elvis@mail.com",
+            "gender": "male",
+            "birth_date": "2008-01-08",
+            "pilotstudy_id": "5c86d00c2239a48ea20a0134"
+        },
         nutritional_status: nutritionalStatus,
         overweight_indicator: overWeightIndicator,
         heart_rate: heartRateEvaluation,
@@ -265,7 +272,14 @@ const mock: Array<NutritionEvaluation> = [
         id: "5cb4881851b5f21bb364ba6f",
         created_at: "2018-11-20T14:40:00Z",
         status: EvaluationStatus.incomplete,
-        patient_id: "5cb4882751b5f21ba364ba6f",
+        patient: {
+            "id": "5c9137f2b8d3921ff3028378",
+            "name": "Elvis Aaron",
+            "email": "elvis@mail.com",
+            "gender": "male",
+            "birth_date": "2008-01-08",
+            "pilotstudy_id": "5c86d00c2239a48ea20a0134"
+        },
         nutritional_status: nutritionalStatus,
         overweight_indicator: overWeightIndicator,
         heart_rate: heartRateEvaluation,
@@ -395,9 +409,10 @@ export class NutritionEvaluationService {
         }
 
         const url = `${environment.api_url}/healthprofessionals/${healthprofessional_id}/nutritional/evaluations`;
-
+        return Promise.resolve(mock);
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
+
     }
 
     getById(patient_id: string, nutritionevaluation_id: string): Promise<NutritionEvaluation> {

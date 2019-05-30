@@ -22,7 +22,7 @@
           carregando avaliações...</td>
         <td colspan="5" *ngIf="listOfEvaluationsIsEmpty">Nenhum registro encontrado.</td>
       </tr>
-      <tr *ngFor="let evaluation of listOfEvaluations; index as i">
+      <tr *ngFor="let evaluation of listOfEvaluations; index as i" >
         <td>{{getIndex(i)}}</td>
         <td>{{evaluation.created_at | date}}</td>
         <td>
@@ -36,7 +36,7 @@
         </td>
         <td>
           <a class="nav-link" (click)="openModalConfirmation(evaluation.id)" title="Excluir avaliação...">
-            <i class="material-icons">close</i>
+            <i class="material-icons">delete</i>
           </a>
         </td>
       </tr>

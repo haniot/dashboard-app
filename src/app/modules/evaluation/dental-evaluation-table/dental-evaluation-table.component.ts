@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { EvaluationService } from '../services/evaluation.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { DentalEvaluation } from '../models/dental-evaluation';
+import { OdontologicEvaluation } from '../models/odontologic-evaluation';
 import { DentalEvaluationService } from '../services/dental-evaluation.service';
 @Component({
   selector: 'dental-evaluation-table',
@@ -25,7 +25,7 @@ export class DentalEvaluationTableComponent implements OnInit {
   limit: number = 5;
   length: number;
 
-  listOfEvaluations: Array<DentalEvaluation>;
+  listOfEvaluations: Array<OdontologicEvaluation>;
   search: string;
   searchTime;
 
@@ -33,7 +33,7 @@ export class DentalEvaluationTableComponent implements OnInit {
 
   cacheIdEvaluationRemove: string;
 
-  lastEvaluation: DentalEvaluation;
+  lastEvaluation: OdontologicEvaluation;
 
   generatingEvaluantion: boolean = false;
 

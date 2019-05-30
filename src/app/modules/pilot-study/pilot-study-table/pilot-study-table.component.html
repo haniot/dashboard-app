@@ -42,12 +42,12 @@
             <i class="material-icons">drag_indicator</i>
           </button>
         </td>
-        <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id,'details']" title="Editar estudo..."><i
+        <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id,'details']" title="Visualizar estudo..."><i
               class="material-icons">input</i></a>
         <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id]" title="Editar estudo..."><i
               class="material-icons">edit</i></a></td>
         <td><a class="nav-link" (click)="openModalConfirmation(study.id)" title="Excluir estudo..."><i
-              class="material-icons">close</i></a></td>
+              class="material-icons">delete</i></a></td>
       </tr>
     </tbody>
   </table>

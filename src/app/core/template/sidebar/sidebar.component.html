@@ -1,6 +1,6 @@
 <div class="logo">
     <a [routerLink]="['/dashboard']" id="linkLogo">
-        <img src="/assets/img/haniot/silhueta-50x40.png" />
+        <img src="/assets/img/haniot/silhueta-50x40.png"/>
         <span id="haniotTitle">HANIoT</span>
     </a>
 </div>
@@ -20,14 +20,14 @@
         <ul class="nav navbar-nav nav-mobile-menu">
             <li class="nav-item dropdown">
                 <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                   aria-haspopup="true" aria-expanded="false">
                     <span id="userName">{{userName}}.</span><i class="material-icons">settings</i>
 
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
                     <a class="dropdown-item background-green" href="javascript:void(0);"
-                        [routerLink]="['/myprofile']">Meus
+                       [routerLink]="['/myprofile']">Meus
                         dados</a>
 
                     <a class="dropdown-item background-green" href="javascript:void(0);" (click)="logout()">Sair</a>
@@ -38,15 +38,17 @@
 
     </div>
     <ul class="nav">
+
         <li routerLinkActive="active" class="nav-item">
             <a class="nav-link" [routerLink]="['/dashboard']" *ngIf="verifyScopes('Dashboard')" (click)="openLoading()">
                 <i class="material-icons">dashboard</i>
                 <p>Dashboard</p>
             </a>
         </li>
+
         <li routerLinkActive="active" class="nav-item" *ngIf="verifyScopes('Usuários')">
             <a class="nav-link" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                (click)="onclickMenuUser()">
+               (click)="onclickMenuUser()">
                 <p>
                     Usuários
                     <i class="material-icons">{{iconUserMenu}}</i>
@@ -56,47 +58,79 @@
             <ul class="collapse list-unstyled submenu" id="pageSubmenu">
                 <li routerLinkActive="active" class="nav-subitem">
                     <a class="nav-link" [routerLink]="['/ui/administrators']" *ngIf="verifyScopes('Administradores')"
-                        (click)="openLoading()">
+                       (click)="openLoading()">
                         <i class="material-icons">supervisor_account</i>
                         <p>Administradores</p>
                     </a>
                 </li>
                 <li routerLinkActive="active" class="nav-subitem">
                     <a class="nav-link" [routerLink]="['/ui/healthprofessionals']" *ngIf="verifyScopes('P. de Saúde')"
-                        (click)="openLoading()">
+                       (click)="openLoading()">
                         <i class="material-icons">accessibility</i>
                         <p>Profissionais de Saúde</p>
                     </a>
                 </li>
             </ul>
         </li>
+
         <li routerLinkActive="active" class="nav-item">
             <a class="nav-link" [routerLink]="['/pilotstudies']" *ngIf="verifyScopes('Estudos Pilotos')"
-                (click)="openLoading()">
+               (click)="openLoading()">
                 <i class="material-icons">find_replace</i>
                 <p>Estudos Pilotos</p>
             </a>
         </li>
+
         <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()">
             <a class="nav-link" [routerLink]="['/ui/mystudies']" *ngIf="verifyScopes('Meus estudos')"
-                (click)="openLoading()">
+               (click)="openLoading()">
                 <i class="material-icons">library_books</i>
                 <p>Meus estudos</p>
             </a>
         </li>
+
+        <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()">
+            <a class="nav-link" [routerLink]="['/ui/myevaluations']" *ngIf="verifyScopes('Minhas avaliações')"
+               (click)="openLoading()">
+                <i class="material-icons">assignment</i>
+                <p>Minhas avaliações</p>
+            </a>
+        </li>
+
         <li routerLinkActive="active" class="nav-item">
             <a class="nav-link" [routerLink]="['/patients']" *ngIf="verifyScopes('Pacientes')" (click)="openLoading()">
                 <i class="material-icons">face</i>
                 <p>Pacientes</p>
             </a>
         </li>
-        <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" [routerLink]="['/evaluations']" *ngIf="verifyScopes('Avaliações')"
-                (click)="openLoading()">
-                <i class="material-icons">assignment</i>
-                <p>Avaliações</p>
-            </a>
-        </li>
+
+<!--        <li routerLinkActive="active" class="nav-item">-->
+<!--            <a class="nav-link" href="#pageSubmenuEvaluation" data-toggle="collapse" aria-expanded="false"-->
+<!--               (click)="onClickMenuEvaluation()">-->
+<!--                <p>-->
+<!--                    Avaliações-->
+<!--                    <i class="material-icons">{{iconEvaluatioinMenu}}</i>-->
+<!--                </p>-->
+
+<!--            </a>-->
+<!--            <ul class="collapse list-unstyled submenu" id="pageSubmenuEvaluation">-->
+<!--                <li routerLinkActive="active" class="nav-subitem">-->
+<!--                    <a class="nav-link" [routerLink]="['/evaluations/nutritional']" *ngIf="verifyScopes('Avaliações')"-->
+<!--                       (click)="openLoading()">-->
+<!--                        <i class="material-icons">accessibility</i>-->
+<!--                        <p>Nutricionais</p>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li routerLinkActive="active" class="nav-subitem">-->
+<!--                    <a class="nav-link" [routerLink]="['/evaluations/odontological']" *ngIf="verifyScopes('Avaliações')"-->
+<!--                       (click)="openLoading()">-->
+<!--                        <i class="material-icons">mood</i>-->
+<!--                        <p>Odontológicas</p>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </li>-->
+
     </ul>
 
 </div>

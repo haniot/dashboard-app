@@ -6,6 +6,7 @@ import { HealthProfessionalComponent } from '../health-professionals/health-prof
 import { MyprofileComponent } from '../myprofile/myprofile.component';
 import { MypilotstudiesComponent } from '../mypilotstudies/mypilotstudies.component';
 import { EditMypilotComponent } from '../edit-mypilot/edit-mypilot.component';
+import {MyevaluationsComponent} from "../myevaluations/myevaluations.component";
 
 const routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -34,6 +35,11 @@ const routes = [
   {
     path: 'mystudies/:userId/:pilotstudy_id',
     component: EditMypilotComponent,
+    data: { scope: "" }
+  },
+  {
+    path: 'myevaluations',
+    component: MyevaluationsComponent,
     data: { scope: "" }
   },
   { path: '**', redirectTo: 'page-not-found' },

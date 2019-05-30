@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {Component, OnInit, AfterViewInit, AfterViewChecked} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
   templateUrl: './mypilotstudies.component.html',
   styleUrls: ['./mypilotstudies.component.scss']
 })
-export class MypilotstudiesComponent implements OnInit, AfterViewInit {
+export class MypilotstudiesComponent implements OnInit, AfterViewChecked{
 
   userId: string;
   // MatPaginator Inputs
@@ -151,10 +151,8 @@ export class MypilotstudiesComponent implements OnInit, AfterViewInit {
     this.modalService.close('modalConfirmation');
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.loadinService.close();
-    }, 500);
+  ngAfterViewChecked() {
+    this.loadinService.close();
   }
 
 }

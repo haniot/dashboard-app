@@ -1,4 +1,4 @@
-import { Evaluation, ICounseling } from './evaluation';
+import {Evaluation, EvaluationStatus, ICounseling} from './evaluation';
 import { IMeasurement } from 'app/modules/measurement/models/measurement';
 import { HeartRate } from 'app/modules/measurement/models/heart-rate';
 import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
@@ -6,6 +6,7 @@ import { PhysicalActivityHabitsRecord } from 'app/modules/habits/models/physical
 import { FeedingHabitsRecord } from 'app/modules/habits/models/feeding';
 import { MedicalRecord } from 'app/modules/habits/models/medical-record';
 import { Weight } from 'app/modules/measurement/models/wieght';
+import {Patient} from "../../patient/models/patient";
 
 export enum Percentile {
     p01 = "p01",
@@ -127,7 +128,8 @@ export class NutritionalCounseling implements ICounseling {
 }
 
 export class NutritionEvaluation extends Evaluation {
-    patient_id: string;
+    status: EvaluationStatus;
+    patient: Patient;
     counselings: ICounseling;
     nutritional_status: NutritionalStatus;
     overweight_indicator: OverWeightIndicator;
