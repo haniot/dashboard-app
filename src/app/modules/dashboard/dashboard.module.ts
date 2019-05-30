@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
+import { MatSelectModule } from '@angular/material/select';
 
 import { DashboardComponent } from './dashboard-component/dashboard.component';
 import { AreaGraphComponent } from './area-graph/area-graph.component';
@@ -17,9 +20,12 @@ import { DashboardService } from './services/dashboard.service';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     SharedModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+
+    MatSelectModule
   ],
   declarations: [
     DashboardComponent,

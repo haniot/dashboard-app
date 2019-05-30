@@ -1,17 +1,18 @@
-import {Component, OnInit, AfterViewInit, AfterViewChecked} from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
-import {ActivatedRoute, Router} from '@angular/router';
-
-import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
+import {PilotStudyService} from "../../../modules/pilot-study/services/pilot-study.service";
+import {PilotStudy} from "../../../modules/pilot-study/models/pilot.study";
+import {PageEvent} from "@angular/material";
+import {ActivatedRoute, Router} from "@angular/router";
+import {LoadingService} from "../loading-component/service/loading.service";
+import {SelectPilotStudyService} from "./service/select-pilot-study.service";
 
 @Component({
-    selector: 'list-pilotstudies',
-    templateUrl: './list-pilotstudies.component.html',
-    styleUrls: ['./list-pilotstudies.component.scss']
+    selector: 'select-pilotstudy',
+    templateUrl: './select-pilotstudy.component.html',
+    styleUrls: ['./select-pilotstudy.component.scss']
 })
-export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
+export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
+
     userId: string;
     // MatPaginator Inputs
     pageSizeOptions: number[] = [10, 25, 100];
@@ -20,8 +21,8 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
     pageEvent: PageEvent;
 
     /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page = 1;
+    limit = 10;
     length: number;
 
     list: Array<PilotStudy>;
@@ -32,6 +33,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
         private pilotStudyService: PilotStudyService,
         private activeRouter: ActivatedRoute,
         private loadinService: LoadingService,
+        private selectPilot: SelectPilotStudyService,
         private router: Router
     ) {
     }
@@ -114,6 +116,12 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
                     console.log('Erro ao buscar pilot-studies: ', errorResponse);
                 });
         }
+    }
+
+    selectPilotStudy(pilotstudy_id: string): void {
+        localStorage.setItem('pilotstudi_id', pilotstudy_id);
+        this.selectPilot.close();
+
     }
 
     gotoPatients(pilotstudy_id: string) {

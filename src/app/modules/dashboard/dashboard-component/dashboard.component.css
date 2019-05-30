@@ -11,3 +11,8 @@
     font-size: 14px;
     margin-top: 60px;
 }
+label {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}

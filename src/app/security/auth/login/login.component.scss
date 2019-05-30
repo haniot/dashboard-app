@@ -45,6 +45,7 @@ label {
 .logo {
   display: flex;
 }
+
 #linkLogo {
   margin: auto auto;
 }
@@ -69,6 +70,7 @@ label {
   position: absolute;
   top: 0;
 }
+
 #externa {
   z-index: 5;
   align-items: center;
@@ -82,7 +84,29 @@ label {
   bottom: 0;
   left: 0;
 }
+
 .d-flex img {
   width: 50%;
   height: 50%;
+}
+
+.material-icons {
+  color: #00a594;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.icon_password {
+  position: absolute;
+  top: 30px;
+  right: 0;
+}
+
+.icon_password:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
 }

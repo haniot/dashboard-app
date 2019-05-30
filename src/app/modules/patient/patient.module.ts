@@ -51,7 +51,8 @@ import { PatientManagerComponent } from './patient-manager/patient-manager.compo
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
   ],
   exports: [
-    PatientTableComponent
+    PatientTableComponent,
+      ListPilotstudiesComponent
   ]
 })
 export class PatientModule { }

@@ -1,0 +1,28 @@
+.material-icons {
+  color: #00a594;
+  transform: rotate(180deg) scaleX(-1);
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+table tr {
+  cursor: pointer;
+}
+
+#modalSelectPilotStudy {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: none;
+  border: none;
+  border-radius: 0.3rem;
+  outline: 0;
+}

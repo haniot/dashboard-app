@@ -1,67 +1,77 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto">
-      <div class="card card-signin">
-        <div class="card-body">
-          <div id="divLogo">
-            <a [routerLink]="['/']" id="linkLogo">
-              <img src="assets/img/logo-login-new.png" />
-              <span id="labelHaniot">HANIoT</span>
-            </a>
-          </div>
+    <div class="row">
+        <div class="col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto">
+            <div class="card card-signin">
+                <div class="card-body">
+                    <div id="divLogo">
+                        <a [routerLink]="['/']" id="linkLogo">
+                            <img src="assets/img/logo-login-new.png"/>
+                            <span id="labelHaniot">HANIoT</span>
+                        </a>
+                    </div>
 
-          <form [formGroup]="f" novalidate class="form-signin">
+                    <form [formGroup]="f" novalidate class="form-signin">
 
-            <div class="form-group has-feedback"
-              [ngClass]="{'has-success': f.controls['email'].valid,
+                        <div class="form-group has-feedback"
+                             [ngClass]="{'has-success': f.controls['email'].valid,
                 'has-error': f.controls['email'].invalid && (f.controls['email'].touched || f.controls['email'].dirty)}">
-              <label for="InputEmail">Email:</label>
-              <input type="email" formControlName="email" class="form-control" id="InputEmail"
-                placeholder="Digite aqui seu email...">
-              <span *ngIf="f.controls['email'].valid" class="glyphicon glyphicon-ok form-control-feedback"
-                aria-hidden="true"></span>
-              <span *ngIf="f.controls['email'].invalid && (f.controls['email'].touched || f.controls['email'].dirty)">
+                            <label for="InputEmail">Email:</label>
+                            <input type="email" formControlName="email" class="form-control" id="InputEmail"
+                                   placeholder="Digite aqui seu email...">
+                            <span *ngIf="f.controls['email'].valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                  aria-hidden="true"></span>
+                            <span *ngIf="f.controls['email'].invalid && (f.controls['email'].touched || f.controls['email'].dirty)">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 <span class="text-danger">E-mail inválido.</span>
               </span>
-            </div>
+                        </div>
 
-            <div class="form-group has-feedback"
-              [ngClass]="{'has-success': f.controls['password'].valid,
+                        <div class="form-group has-feedback"
+                             [ngClass]="{'has-success': f.controls['password'].valid,
                 'has-error': f.controls['password'].invalid && (f.controls['password'].touched || f.controls['password'].dirty)}">
-              <label for="InputPassword">Senha:</label>
-              <input type="password" formControlName="password" class="form-control" id="InputPassword"
-                placeholder="Digite aqui sua senha...">
-              <span *ngIf="f.controls['password'].valid" class="glyphicon glyphicon-ok form-control-feedback"
-                aria-hidden="true"></span>
-              <span
-                *ngIf="f.controls['password'].invalid && (f.controls['password'].touched || f.controls['password'].dirty)">
+                            <label for="InputPassword">Senha:</label>
+                            <div>
+                                <input [type]="typeInputPassword" formControlName="password" class="form-control"
+                                       id="InputPassword"
+                                       placeholder="Digite aqui sua senha...">
+                                <a class="icon_password" href="javascript:void(0);" (click)="clickVisibilityPassword()"><i
+                                        class="material-icons">{{icon_password}}</i></a>
+                            </div>
+                            <div>
+                                <span *ngIf="f.controls['password'].valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span
+                                        *ngIf="f.controls['password'].invalid && (f.controls['password'].touched || f.controls['password'].dirty)">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 <span class="text-danger">Campo obrigatório.</span>
               </span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-haniot-primary btn-block " [disabled]="f.invalid"
+                                (click)="onSubmit()"
+                                id="buttonEntrar">Entrar
+                        </button>
+                    </form>
+                    <div>Esqueceu sua senha?<a href="javascript:void(0);"> redefina aqui.</a></div>
+                </div>
+
             </div>
-
-            <button type="submit" class="btn btn-haniot-primary btn-block " [disabled]="f.invalid" (click)="onSubmit()"
-              id="buttonEntrar">Entrar</button>
-          </form>
-          <div>Esqueceu sua senha?<a href="javascript:void(0);"> redefina aqui.</a></div>
         </div>
-
-      </div>
     </div>
-  </div>
 </div>
 
 <div *ngIf="loading">
-  <div id="externa">
-    <div tabindex="-1" role="dialog" id="loading">
-      <div class="modal-dialog" role="document">
-        <div class="d-flex justify-content-around">
-          <img src="../../../../assets/img/loading.gif" alt="">
+    <div id="externa">
+        <div tabindex="-1" role="dialog" id="loading">
+            <div class="modal-dialog" role="document">
+                <div class="d-flex justify-content-around">
+                    <img src="../../../../assets/img/loading.gif" alt="">
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="modal-backdrop show">
-    <div>
-</div>
+    <div class="modal-backdrop show">
+        <div>
+        </div>
