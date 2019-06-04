@@ -115,7 +115,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
 
     load() {
         if (!this.userId || this.userId === '') {
-
             this.loadUser();
             this.load();
         }
@@ -125,7 +124,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
 
         if (this.pilotStudyId) {
             this.dashboardService.getInfoByUser(this.userId)
-                .then((response: { studiesTotal: number, patientsTotal: number, measurementsTotal: number, evaluationsTotal: number }) => {
+                .then((response: { studiesTotal: number, patientsTotal: number }) => {
                     if (response) {
                         this.studiesTotal = response.studiesTotal;
                         this.patientsTotal = response.patientsTotal;
@@ -207,10 +206,23 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
     }
 
     calcLengthStudies() {
+
+        this.dashboardService.getInfoByUser(this.userId)
+            .then((response: { studiesTotal: number, patientsTotal: number }) => {
+                if (response) {
+                    this.studiesTotal = response.studiesTotal;
+                    this.patientsTotal = response.patientsTotal;
+                }
+            })
+            .catch(error => {
+                this.toastService.error('Não foi possível carregar informações!')
+            });
+
         this.dashboardService.getNumberOfStudies(this.userId)
             .then(numberOfStudies => {
                 this.lengthStudies = numberOfStudies;
                 this.studiesTotal = numberOfStudies;
+
             })
             .catch(errorResponse => {
                 // console.log('Não foi possível buscar todos os pacientes',errorResponse);

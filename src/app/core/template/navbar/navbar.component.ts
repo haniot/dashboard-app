@@ -15,14 +15,18 @@ export declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    {path: '/dashboard', title: 'Página Inicial'},
-    {path: '/ui/administrators', title: 'Usuários - Administradores'},
-    {path: '/ui/healthprofessionals', title: 'Usuários - Profissionais de Saúde'},
-    {path: '/pilotstudies', title: 'Estudos Pilotos'},
-    {path: '/patients', title: 'Pacientes'},
-    {path: '/ui/mystudies', title: 'Meus estudos'},
-    {path: '/ui/myprofile', title: 'Meus dados'},
-    {path: '/ui/myevaluations', title: 'Minhas Avaliações'}
+    {path: '^/dashboard$', title: 'Página Inicial'},
+    {path: '^/ui/administrators$', title: 'Usuários - Administradores'},
+    {path: '^/ui/healthprofessionals$', title: 'Usuários - Profissionais de Saúde'},
+    {path: '^/pilotstudies$', title: 'Estudos Pilotos'},
+    {path: '^/patients$', title: 'Pacientes'},
+    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}$', title: 'Pacientes'},
+    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'Pacientes - Detalhes'},
+    {path: '^/ui/mystudies$', title: 'Meus estudos'},
+    {path: '^(\\/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'Estudo - Detalhes'},
+    {path: '^/ui/myprofile$', title: 'Meus dados'},
+    {path: '^/ui/myevaluations$', title: 'Minhas Avaliações'},
+    {path: '^(\\/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'Avaliações - Nutricional'}
 ];
 
 @Component({
@@ -44,6 +48,9 @@ export class NavbarComponent implements OnInit {
     userId: string;
 
     pilotStudyId: string;
+
+    /* Utilizado para deixar visivel e esconder o seletor de estudo piloto*/
+    flag = true;
 
 
     constructor(
@@ -160,14 +167,33 @@ export class NavbarComponent implements OnInit {
     };
 
     getTitle() {
-        const path_current = this.location.prepareExternalUrl(this.location.path());
+
+        const path_current = this.location.path();
 
         // path_current = '/' + path_current.split('/')[1];
         this.listTitles.forEach(element => {
-            if (element.path === path_current) {
+
+            if (RegExp(element.path).test(path_current)) {
                 this.title = element.title;
             }
         });
+        this.verifyVisibilityOfSeletorOfPilotStudy();
+    }
+
+
+    verifyVisibilityOfSeletorOfPilotStudy(): void {
+
+        switch (this.title) {
+            case 'Pacientes':
+                this.flag = true;
+                break;
+            case 'Página Inicial':
+                this.flag = true;
+                break;
+            default:
+                this.flag = false;
+                break;
+        }
     }
 
     getUserName() {

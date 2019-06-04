@@ -66,24 +66,29 @@
                             <div class="card-icon">
                                 <i class="material-icons">library_books</i>
                             </div>
-                            <span class="badge" [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active ? 'ATIVADO' : 'DESATIVADO'}}</span>
+                            <span class="badge"
+                                  [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active ? 'ATIVADO' : 'DESATIVADO'}}</span>
+
+                            <h3 class="card-title">
+                                {{study.name}}
+                            </h3>
                         </div>
                         <div class="card-footer">
                             <div class="container">
                                 <div class="row justify-content-center">
-                                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 text-center">
-                                        <p class="card-category">Nome: </p>
-                                        <h4 class="card-title">
-                                            {{study.name}}
-                                        </h4>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 text-center">
+<!--                                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 text-center">-->
+<!--                                        <p class="card-category">Nome: </p>-->
+<!--                                        <h4 class="card-title">-->
+<!--                                            {{study.name}}-->
+<!--                                        </h4>-->
+<!--                                    </div>-->
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
                                         <p class="card-category">Data ínicio: </p>
                                         <h4 class="card-title">
                                             {{study.start | date}}
                                         </h4>
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 text-center">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
                                         <p class="card-category">Data término: </p>
                                         <h4 class="card-title">
                                             {{study.end | date}}

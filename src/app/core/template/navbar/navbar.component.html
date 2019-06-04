@@ -8,7 +8,7 @@
         </div>
 
 
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 " id="div-selectPilotStudy" *ngIf="isNotAdmin()">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 " id="div-selectPilotStudy" *ngIf="isNotAdmin() && flag">
 
             <div class="d-flex justify-content-end">
                 <select class="soflow" [(ngModel)]="pilotStudyId" (change)="selectPilotStudy()"

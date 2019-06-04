@@ -377,7 +377,7 @@ export class NutritionEvaluationService {
         }
 
         const url = `${environment.api_url}/patients/${patient_id}/nutritional/evaluations`;
-        // return Promise.resolve(mock);
+        return Promise.resolve(mock);
         return this.http.get<any>(url, {params: myParams})
             .toPromise();
     }
@@ -424,14 +424,14 @@ export class NutritionEvaluationService {
         }
 
         const url = `${environment.api_url}/healthprofessionals/${healthprofessional_id}/nutritional/evaluations`;
-        // return Promise.resolve(mock);
+        return Promise.resolve(mock);
         return this.http.get<any>(url, {params: myParams})
             .toPromise();
 
     }
 
     getById(patient_id: string, nutritionevaluation_id: string): Promise<NutritionEvaluation> {
-        // return Promise.resolve(mock[0]);
+        return Promise.resolve(mock[0]);
         return this.http.get<any>(`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
             .toPromise();
     }
