@@ -49,6 +49,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
     }
 
     ngOnInit() {
+        this.loadPilotSelected();
         this.getAllPacients();
         this.calcLengthPatients();
 

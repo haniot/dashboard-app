@@ -166,8 +166,10 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
             .then(odontologicalEvaluation => {
                 this.lastEvaluation = odontologicalEvaluation;
                 this.dentalEvaluationGenerated();
+                this.generatingEvaluantion = false;
             })
             .catch(error => {
+                    this.generatingEvaluantion = false;
                     if (error.code === 404 && error.message === 'PILOTSTUDY NOT FOUND') {
                         this.toastService.error('Estudo não encontrado');
                     } else if (error.code === 404 && error.message === 'HEALTHPROFESSIONALID NOT FOUND') {

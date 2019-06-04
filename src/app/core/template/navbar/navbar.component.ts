@@ -244,17 +244,15 @@ export class NavbarComponent implements OnInit {
     }
 
     loadPilotSelected(): void {
-        setTimeout(() => {
-            if (!this.userId) {
-                this.loadUser();
-            }
-            const pilotselected = localStorage.getItem(this.userId);
-            if (pilotselected) {
-                this.pilotStudyId = pilotselected;
-            } else if (this.authService.decodeToken().sub_type !== 'admin') {
-                this.selectPilotService.open();
-            }
-        }, 2000)
+        if (!this.userId) {
+            this.loadUser();
+        }
+        const pilotselected = localStorage.getItem(this.userId);
+        if (pilotselected) {
+            this.pilotStudyId = pilotselected;
+        } else if (this.authService.decodeToken().sub_type !== 'admin') {
+            this.selectPilotService.open();
+        }
     }
 
     logout() {
