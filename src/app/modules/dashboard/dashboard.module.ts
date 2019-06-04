@@ -14,6 +14,8 @@ import { ScatterGraphComponent } from './scatter-graph/scatter-graph.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { DashboardRoutingModule } from './dashboard-routing/dashboard-routing.module';
 import { DashboardService } from './services/dashboard.service';
+import {MatPaginatorModule} from "@angular/material";
+import {ConvertInAgePipe} from "./pipes/age.pipe";
 
 
 
@@ -25,7 +27,8 @@ import { DashboardService } from './services/dashboard.service';
     SharedModule,
     DashboardRoutingModule,
 
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule
   ],
   declarations: [
     DashboardComponent,
@@ -33,7 +36,8 @@ import { DashboardService } from './services/dashboard.service';
     BarGraphComponent,
     GlucoseGraphComponent,
     LineGraphComponent,
-    ScatterGraphComponent
+    ScatterGraphComponent,
+    ConvertInAgePipe
   ],
   providers: [DashboardService],
   exports: [
@@ -41,7 +45,8 @@ import { DashboardService } from './services/dashboard.service';
     BarGraphComponent,
     GlucoseGraphComponent,
     LineGraphComponent,
-    ScatterGraphComponent
+    ScatterGraphComponent,
+    ConvertInAgePipe
   ],
 })
 export class DashboardModule { }

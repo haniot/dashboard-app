@@ -24,10 +24,10 @@
         <td colspan="5" *ngIf="listOfUserIsEmpty">Nenhum registro encontrado.</td>
       </tr>
       <tr *ngFor="let user of list; index as i">
-        <td>{{getIndex(i)}}</td>
-        <td *ngIf="userType == 'HealthProfessional'">{{user.name}}</td>
-        <td>{{user.email}}</td>
-        <td *ngIf="userType == 'HealthProfessional'">{{user.health_area | healthArea}}</td>
+        <td (click)="editUser(user.id)">{{getIndex(i)}}</td>
+        <td (click)="editUser(user.id)" *ngIf="userType == 'HealthProfessional'">{{user.name}}</td>
+        <td (click)="editUser(user.id)">{{user.email}}</td>
+        <td (click)="editUser(user.id)"*ngIf="userType == 'HealthProfessional'">{{user.health_area | healthArea}}</td>
         <td><a class="nav-link" (click)="editUser(user.id)" title="Editar usuário..."><i
               class="material-icons">edit</i></a></td>
         <td *ngIf="!verifySameUser(user)"><a class="nav-link" (click)="openModalConfirmRemove(user.id)"

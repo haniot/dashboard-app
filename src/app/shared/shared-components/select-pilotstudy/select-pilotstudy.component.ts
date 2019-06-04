@@ -5,6 +5,7 @@ import {PageEvent} from "@angular/material";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoadingService} from "../loading-component/service/loading.service";
 import {SelectPilotStudyService} from "./service/select-pilot-study.service";
+import {AuthService} from "../../../security/auth/services/auth.service";
 
 @Component({
     selector: 'select-pilotstudy',
@@ -29,39 +30,70 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     search: string;
     searchTime;
 
+    listOfStudiesIsEmpty = false;
+
+    userName: string = "";
+
     constructor(
         private pilotStudyService: PilotStudyService,
         private activeRouter: ActivatedRoute,
         private loadinService: LoadingService,
+        private selecPilotService: SelectPilotStudyService,
         private selectPilot: SelectPilotStudyService,
+        private authService: AuthService,
         private router: Router
     ) {
+        this.list = new Array<PilotStudy>();
     }
 
     ngOnInit() {
-        this.activeRouter.paramMap.subscribe((params) => {
-            this.userId = params.get('userId');
-            this.getAllPilotStudies();
-            this.getLengthPilotStudies();
-        });
+        // this.activeRouter.paramMap.subscribe((params) => {
+        //     this.userId = params.get('userId');
+        //     this.getAllPilotStudies();
+        //     this.getLengthPilotStudies();
+        // });
         const pilotstudy_id = localStorage.getItem('pilotstudi_id');
         if (pilotstudy_id && pilotstudy_id !== '') {
-            this.gotoPatients(pilotstudy_id);
+            this.selecPilotService.close();
         }
+        if (this.authService.decodeToken().sub_type === 'admin') {
+            this.selecPilotService.close();
+        }
+
         this.getAllPilotStudies();
         this.getLengthPilotStudies();
+        this.getUserName();
+    }
+
+    loadUser(): void {
+        const user_id = localStorage.getItem('user');
+
+        if (user_id) {
+            this.userId = atob(user_id);
+        }
     }
 
     getAllPilotStudies() {
-        this.userId = atob(localStorage.getItem('user'));
-        this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
-            .then(studies => {
-                this.list = studies;
-                this.loadinService.close();
-            })
-            .catch(errorResponse => {
-                console.log('Erro ao buscar pilot-studies: ', errorResponse);
-            });
+        if (!this.userId) {
+            this.loadUser();
+        }
+
+        if (this.userId) {
+            this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
+                .then(studies => {
+                    this.list = studies;
+                    this.loadinService.close();
+                    if (studies.length) {
+                        this.listOfStudiesIsEmpty = false;
+                    } else {
+                        this.listOfStudiesIsEmpty = true;
+                    }
+                })
+                .catch(errorResponse => {
+                    this.listOfStudiesIsEmpty = true;
+                    console.log('Erro ao buscar pilot-studies: ', errorResponse);
+                });
+        }
     }
 
     searchOnSubmit() {
@@ -99,16 +131,8 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
     getLengthPilotStudies() {
-        if (this.userId) {
+        if (this.userId && this.userId !== '') {
             this.pilotStudyService.getAllByUserId(this.userId, undefined, undefined, this.search)
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch(errorResponse => {
-                    console.log('Erro ao buscar pilot-studies: ', errorResponse);
-                });
-        } else {
-            this.pilotStudyService.getAll()
                 .then(studies => {
                     this.length = studies.length;
                 })
@@ -119,17 +143,36 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
     selectPilotStudy(pilotstudy_id: string): void {
-        localStorage.setItem('pilotstudi_id', pilotstudy_id);
+        if (!this.userId) {
+            this.loadUser();
+        }
+        localStorage.setItem(this.userId, pilotstudy_id);
+        this.selecPilotService.pilotStudyHasUpdated();
         this.selectPilot.close();
 
     }
 
-    gotoPatients(pilotstudy_id: string) {
-        this.router.navigate(['/patients', pilotstudy_id]);
+
+    getUserName() {
+        const username = atob(localStorage.getItem('username'));
+        if (localStorage.getItem('username')) {
+            this.userName = username;
+        }
+    }
+
+    closeModal() {
+        this.selecPilotService.close();
     }
 
     ngAfterViewChecked() {
         this.loadinService.close();
+        const pilotstudy_id = localStorage.getItem('pilotstudy_id');
+        // if (pilotstudy_id && pilotstudy_id !== '') {
+        //     this.selecPilotService.close();
+        // }
+        // if (this.authService.decodeToken().sub_type === 'admin') {
+        //     this.selecPilotService.close();
+        // }
     }
 
 }

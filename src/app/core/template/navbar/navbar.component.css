@@ -1,24 +1,75 @@
-.background-green:hover{  
-  background-color: #00a594;    
-}
-#navbarDropdownMenuLink i{
-  padding: 20px 5px;
+.background-green:hover {
+    background-color: #00a594;
 }
 
-#userName{
-  font-size: 14px;
-  font-style: italic;
+#navbarDropdownMenuLink i {
+    padding: 20px 5px;
 }
 
-#userName:hover{
-  text-decoration-line: underline;
-  text-decoration-style: solid;
+#userName {
+    font-size: 14px;
+    font-style: italic;
 }
 
-#config-graph{
-  padding: 5px 5px;
+#userName:hover {
+    text-decoration-line: underline;
+    text-decoration-style: solid;
 }
-#navbarDropdownMenuLink i:hover{
-  cursor: pointer;
-  color: #00a594;
+
+#config-graph {
+    padding: 5px 5px;
 }
+
+#navbarDropdownMenuLink i:hover {
+    cursor: pointer;
+    color: #00a594;
+}
+
+label {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#div-selectPilotStudy {
+    z-index: 999;
+    cursor: pointer;
+    position: absolute;
+    right: 15%;
+}
+
+@media (max-width: 1900px) and (min-width: 1460px) {
+    #div-selectPilotStudy {
+        position: absolute;
+        right: 20%;
+    }
+}
+
+@media (max-width: 1460px) and (min-width: 1230px) {
+    #div-selectPilotStudy {
+        position: absolute;
+        right: 25%;
+    }
+}
+
+@media (max-width: 1230px) and (min-width: 1060px) {
+    #div-selectPilotStudy {
+        position: absolute;
+        right: 30%;
+    }
+}
+
+@media (max-width: 1060px) and (min-width: 1000px) {
+    #div-selectPilotStudy {
+        position: absolute;
+        right: 32%;
+    }
+}
+
+@media (max-width: 1000px) and (min-width: 992px) {
+    #div-selectPilotStudy {
+        position: absolute;
+        right: 33%;
+    }
+}
+

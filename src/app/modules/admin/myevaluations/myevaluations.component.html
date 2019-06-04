@@ -32,10 +32,10 @@
                                 <td colspan="5" *ngIf="listOfEvaluationsIsEmpty">Nenhum registro encontrado.</td>
                             </tr>
                             <tr *ngFor="let evaluation of listOfEvaluations; index as i">
-                                <td>{{getIndex(i)}}</td>
-                                <td>{{evaluation.patient.name}}</td>
-                                <td>{{evaluation.created_at | date}}</td>
-                                <td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{getIndex(i)}}</td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.patient.name}}</td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.created_at | date}}</td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">
                                     <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus}}</span>
                                 </td>
                                 <td>

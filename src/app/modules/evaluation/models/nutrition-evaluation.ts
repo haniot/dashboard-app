@@ -1,11 +1,11 @@
 import {Evaluation, EvaluationStatus, ICounseling} from './evaluation';
-import { IMeasurement } from 'app/modules/measurement/models/measurement';
-import { HeartRate } from 'app/modules/measurement/models/heart-rate';
-import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
-import { PhysicalActivityHabitsRecord } from 'app/modules/habits/models/physicalActivity';
-import { FeedingHabitsRecord } from 'app/modules/habits/models/feeding';
-import { MedicalRecord } from 'app/modules/habits/models/medical-record';
-import { Weight } from 'app/modules/measurement/models/wieght';
+import {IMeasurement} from 'app/modules/measurement/models/measurement';
+import {HeartRate} from 'app/modules/measurement/models/heart-rate';
+import {BloodPressure} from 'app/modules/measurement/models/blood-pressure';
+import {PhysicalActivityHabitsRecord} from 'app/modules/habits/models/physicalActivity';
+import {FeedingHabitsRecord} from 'app/modules/habits/models/feeding';
+import {MedicalRecord} from 'app/modules/habits/models/medical-record';
+import {Weight} from 'app/modules/measurement/models/wieght';
 import {Patient} from "../../patient/models/patient";
 
 export enum Percentile {
@@ -24,6 +24,7 @@ export enum NutritionClassification {
     obesity = "obesity",
     severe_obesity = "severe_obesity"
 }
+
 export class NutritionalStatus {
     height: number;
     weight: number;
@@ -36,6 +37,7 @@ export enum OverWeightClassification {
     normal = "normal",
     overweight_obesity_risk = "overweight_obesity_risk"
 }
+
 export class OverWeightIndicator {
     waist_circumference: number;
     height: number;
@@ -101,6 +103,7 @@ export enum BloodPressureClassification {
     arterial_hypertension_stage_1 = "arterial_hypertension_stage_1",
     arterial_hypertension_stage_2 = "arterial_hypertension_stage_2"
 }
+
 export class BloodPressureEvaluation {
     systolic: number;
     diastolic: number;
@@ -127,12 +130,23 @@ export class NutritionalCounseling implements ICounseling {
     definitive: NutritionalCouncil;
 }
 
+export enum ClassificationTaylorCutPoint {
+    normal = "normal",
+    out_of_normality = "out_of_normality"
+}
+
+export class TaylorCutPoint {
+    waist_circumference: number;
+    classification: ClassificationTaylorCutPoint;
+}
+
 export class NutritionEvaluation extends Evaluation {
     status: EvaluationStatus;
     patient: Patient;
     counselings: ICounseling;
     nutritional_status: NutritionalStatus;
     overweight_indicator: OverWeightIndicator;
+    taylor_cut_point: TaylorCutPoint;
     heart_rate: HeartRateEvaluation;
     blood_glucose: BloodGlucoseEvaluation;
     blood_pressure: BloodPressureEvaluation;

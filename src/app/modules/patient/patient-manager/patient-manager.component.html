@@ -34,10 +34,10 @@
                                     <td colspan="5" *ngIf="listOfPatientsIsEmpty">Nenhum registro encontrado.</td>
                                 </tr>
                                 <tr *ngFor="let patient of listOfPatients; index as i">
-                                    <td>{{getIndex(i)}}</td>
-                                    <td>{{patient.name}}</td>
-                                    <td>{{patient.gender | gender}}</td>
-                                    <td>{{patient.birth_date | date}}</td>
+                                    <td [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']">{{getIndex(i)}}</td>
+                                    <td [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']">{{patient.name}}</td>
+                                    <td [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']">{{patient.gender | gender}}</td>
+                                    <td [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']">{{patient.birth_date | date}}</td>
                                     <td>
                                         <a class="nav-link"
                                             [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']"

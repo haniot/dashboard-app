@@ -1,38 +1,42 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
-import { environment } from 'environments/environment';
+import {environment} from 'environments/environment';
 import {
-    NutritionEvaluation,
-    NutritionalStatus,
-    OverWeightIndicator,
-    HeartRateEvaluation,
-    BloodGlucoseEvaluation,
-    BloodPressureEvaluation,
-    Percentile,
     BloodGlucoseClassification,
+    BloodGlucoseEvaluation,
     BloodPressureClassification,
+    BloodPressureEvaluation,
     BloodPressurePercentile,
+    ClassificationTaylorCutPoint,
+    HeartRateEvaluation,
+    NutritionalCouncil,
+    NutritionalStatus,
     NutritionClassification,
+    NutritionEvaluation,
     OverWeightClassification,
-    NutritionalCouncil
+    OverWeightIndicator,
+    Percentile,
+    TaylorCutPoint
 } from '../models/nutrition-evaluation';
-import { EvaluationStatus } from '../models/evaluation';
-import { MealType, BloodGlucose } from 'app/modules/measurement/models/blood-glucose';
-import { IMeasurement, MeasurementType, Measurement } from 'app/modules/measurement/models/measurement';
-import { PhysicalActivityHabitsRecord, ActivityFrequency } from 'app/modules/habits/models/physicalActivity';
+import {EvaluationStatus} from '../models/evaluation';
+import {BloodGlucose, MealType} from 'app/modules/measurement/models/blood-glucose';
+import {IMeasurement, MeasurementType} from 'app/modules/measurement/models/measurement';
+import {ActivityFrequency, PhysicalActivityHabitsRecord} from 'app/modules/habits/models/physicalActivity';
 import {
-    FeedingHabitsRecord,
-    WeeklyFrequency,
-    QuantityWaterGlass,
+    Breakfast,
     Breastfeeding,
+    FeedingHabitsRecord,
     FoodAllergy,
-    Breakfast
+    QuantityWaterGlass,
+    WeeklyFrequency
 } from 'app/modules/habits/models/feeding';
-import { MedicalRecord } from 'app/modules/habits/models/medical-record';
-import { HeartRate } from 'app/modules/measurement/models/heart-rate';
-import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
-import { Weight, Fat } from 'app/modules/measurement/models/wieght';
+import {MedicalRecord} from 'app/modules/habits/models/medical-record';
+import {HeartRate} from 'app/modules/measurement/models/heart-rate';
+import {BloodPressure} from 'app/modules/measurement/models/blood-pressure';
+import {Fat, Weight} from 'app/modules/measurement/models/wieght';
+import {Patient} from "../../patient/models/patient";
+import {NotificationEmail} from "../models/notification-email";
 
 const nutritionalStatus = new NutritionalStatus();
 nutritionalStatus.height = 160;
@@ -216,6 +220,14 @@ const MedicalRecordLocal: MedicalRecord = {
     ]
 }
 
+const taylorCut1 = new TaylorCutPoint();
+taylorCut1.waist_circumference = 150;
+taylorCut1.classification = ClassificationTaylorCutPoint.out_of_normality;
+
+const taylorCut2 = new TaylorCutPoint();
+taylorCut2.waist_circumference = 150;
+taylorCut2.classification = ClassificationTaylorCutPoint.normal;
+
 const mock: Array<NutritionEvaluation> = [
     {
         id: "5cb4882751b5f21ba364ba6f",
@@ -230,6 +242,7 @@ const mock: Array<NutritionEvaluation> = [
             "pilotstudy_id": "5c86d00c2239a48ea20a0134"
         },
         nutritional_status: nutritionalStatus,
+        taylor_cut_point: taylorCut1,
         overweight_indicator: overWeightIndicator,
         heart_rate: heartRateEvaluation,
         blood_glucose: bloodGlucoseEvaluation,
@@ -282,6 +295,7 @@ const mock: Array<NutritionEvaluation> = [
         },
         nutritional_status: nutritionalStatus,
         overweight_indicator: overWeightIndicator,
+        taylor_cut_point: taylorCut2,
         heart_rate: heartRateEvaluation,
         blood_glucose: bloodGlucoseEvaluation,
         blood_pressure: bloodPressureEvaluation,
@@ -319,7 +333,8 @@ const mock: Array<NutritionEvaluation> = [
 @Injectable()
 export class NutritionEvaluationService {
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
     getAll(page?: number, limit?: number, search?: string): Promise<NutritionEvaluation[]> {
         let myParams = new HttpParams();
@@ -335,12 +350,12 @@ export class NutritionEvaluationService {
         }
 
         if (search) {
-            myParams = myParams.append("?search", "*" + search + "*");
+            myParams = myParams.append("?patient.name", "*" + search + "*");
         }
 
         const url = `${environment.api_url}/nutritional/evaluations`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, {params: myParams})
             .toPromise();
     }
 
@@ -358,12 +373,12 @@ export class NutritionEvaluationService {
         }
 
         if (search) {
-            myParams = myParams.append("?search", "*" + search + "*");
+            myParams = myParams.append("?patient.name", "*" + search + "*");
         }
 
         const url = `${environment.api_url}/patients/${patient_id}/nutritional/evaluations`;
-        return Promise.resolve(mock);
-        return this.http.get<any>(url, { params: myParams })
+        // return Promise.resolve(mock);
+        return this.http.get<any>(url, {params: myParams})
             .toPromise();
     }
 
@@ -381,12 +396,12 @@ export class NutritionEvaluationService {
         }
 
         if (search) {
-            myParams = myParams.append("?search", "*" + search + "*");
+            myParams = myParams.append("?patient.name", "*" + search + "*");
         }
 
         const url = `${environment.api_url}/pilotstudies/${pilostudy_id}/nutritional/evaluations`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, {params: myParams})
             .toPromise();
     }
 
@@ -405,40 +420,40 @@ export class NutritionEvaluationService {
         }
 
         if (search) {
-            myParams = myParams.append("?search", "*" + search + "*");
+            myParams = myParams.append("?patient.name", "*" + search + "*");
         }
 
         const url = `${environment.api_url}/healthprofessionals/${healthprofessional_id}/nutritional/evaluations`;
-        return Promise.resolve(mock);
-        return this.http.get<any>(url, { params: myParams })
+        // return Promise.resolve(mock);
+        return this.http.get<any>(url, {params: myParams})
             .toPromise();
 
     }
 
     getById(patient_id: string, nutritionevaluation_id: string): Promise<NutritionEvaluation> {
-        return Promise.resolve(mock[0]);
+        // return Promise.resolve(mock[0]);
         return this.http.get<any>(`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
             .toPromise();
     }
 
     finalize(evaluation_id: string, patient_id: string, counselings: NutritionalCouncil): Promise<NutritionEvaluation> {
         return this.http.post<any>
-            (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`, counselings)
+        (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`, counselings)
             .toPromise();
     }
 
     remove(patient_id: string, nutritionevaluation_id: string): Promise<NutritionEvaluation> {
         return this.http.delete<any>
-            (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
+        (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
             .toPromise();
     }
 
-    sendNutritionalEvaluationViaEmail(email: string, nutritonalEvaluation: NutritionEvaluation): Promise<boolean> {
-        const body = {
-            email: email,
-            evaluation: nutritonalEvaluation
-        };
-        return Promise.reject(false);
+    sendNutritionalEvaluationViaEmail(patient: Patient, nutritonalEvaluation: NutritionEvaluation): Promise<boolean> {
+        const notification = new NotificationEmail();
+
+        notification.to.push({name: patient.name, email: patient.email});
+
+        return Promise.reject(true);
         // return this.http.post<any>
         //     (`${environment.api_url}/notification`, body)
         //     .toPromise();

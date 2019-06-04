@@ -1,15 +1,18 @@
-import {Component, OnInit, AfterViewInit, AfterViewChecked} from '@angular/core';
+import {Component, OnInit, AfterViewChecked} from '@angular/core';
+import {Router} from "@angular/router";
 
 import * as $ from 'jquery';
+
 import {DashboardService} from '../services/dashboard.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
 import {ToastrService} from "ngx-toastr";
 import {Unit} from "../models/unit";
-import {GraphService} from "../../../shared/shared-services/graph.service";
 import {PilotStudy} from "../../pilot-study/models/pilot.study";
-import {ModalService} from "../../../shared/shared-components/haniot-modal/service/modal.service";
 import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
+import {Patient} from "../../patient/models/patient";
+import {PageEvent} from '@angular/material/paginator';
+
 
 @Component({
     selector: 'app-dashboard',
@@ -17,6 +20,29 @@ import {SelectPilotStudyService} from "../../../shared/shared-components/select-
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewChecked {
+    /* Configurações de paginação dos pacientes */
+    // MatPaginator Inputs
+    pageSizeOptionsPatients: number[] = [10, 25, 100];
+
+    // MatPaginator Output
+    pageEventPatients: PageEvent;
+
+    /* Controles de paginação */
+    pagePatients: number = 1;
+    limitPatients: number = 10;
+    lengthPatients: number;
+
+    /* Configurações de paginação dos estudos */
+    // MatPaginator Inputs
+    pageSizeOptionsStudies: number[] = [10, 25, 100];
+
+    // MatPaginator Output
+    pageEventStudies: PageEvent;
+
+    /* Controles de paginação */
+    pageStudies: number = 1;
+    limitStudies: number = 10;
+    lengthStudies: number;
 
     userId: string;
 
@@ -27,6 +53,8 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
 
     listPacientsAndWeigth: Array<Unit>;
 
+    listPacients: Array<Patient>;
+
     listPilots: Array<PilotStudy>;
 
     pilotStudyId: string;
@@ -36,79 +64,161 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
         private authService: AuthService,
         private loadinService: LoadingService,
         private toastService: ToastrService,
-        private selectPilotService: SelectPilotStudyService
+        private selectPilotService: SelectPilotStudyService,
+        private router: Router
     ) {
         this.patientsTotal = 0;
         this.measurementsTotal = 0;
         this.evaluationsTotal = 0;
         this.listPacientsAndWeigth = new Array<Unit>();
         this.listPilots = new Array<PilotStudy>();
+        this.listPacients = new Array<Patient>();
         this.pilotStudyId = '';
     }
 
 
     ngOnInit() {
+
         $('body').css('background-color', '#ececec');
-        this.loadUserId();
+
+        this.loadPilotSelected();
+
+        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
+            this.loadPilotSelected();
+            this.load();
+        })
+
         this.load();
-        const pilotstudy_id = localStorage.getItem('pilotstudi_id');
-        if (pilotstudy_id && pilotstudy_id !== '') {
-            this.pilotStudyId = pilotstudy_id;
-        } else {
+    }
+
+    loadPilotSelected(): void {
+        if (!this.userId) {
+            this.loadUser();
+        }
+        const pilotselected = localStorage.getItem(this.userId);
+
+        if (pilotselected && pilotselected !== '') {
+            this.pilotStudyId = pilotselected;
+        } else if (this.authService.decodeToken().sub_type !== 'admin') {
             this.selectPilotService.open();
+        }
+
+    }
+
+    loadUser(): void {
+        const user_id = localStorage.getItem('user');
+
+        if (user_id) {
+            this.userId = atob(user_id);
         }
     }
 
     load() {
         if (!this.userId || this.userId === '') {
-            this.loadUserId();
+
+            this.loadUser();
             this.load();
         }
 
-        this.dashboardService.getInfoByUser(this.userId)
-            .then((response: { studiesTotal: number, patientsTotal: number, measurementsTotal: number, evaluationsTotal: number }) => {
-                if (response) {
-                    this.studiesTotal = response.studiesTotal;
-                    this.patientsTotal = response.patientsTotal;
-                    this.measurementsTotal = response.measurementsTotal;
-                    this.evaluationsTotal = response.evaluationsTotal;
-                    this.listPilots = this.dashboardService.getListStudy();
-                    const pilotstudy_id = atob(localStorage.getItem('pilotstudi_id'));
-                    if (pilotstudy_id) {
-                        this.updateGraphWeigth();
+        this.loadPilotSelected();
+
+
+        if (this.pilotStudyId) {
+            this.dashboardService.getInfoByUser(this.userId)
+                .then((response: { studiesTotal: number, patientsTotal: number, measurementsTotal: number, evaluationsTotal: number }) => {
+                    if (response) {
+                        this.studiesTotal = response.studiesTotal;
+                        this.patientsTotal = response.patientsTotal;
+                        this.listPilots = this.dashboardService.getListStudy();
+                        this.getPatients();
                     }
-                }
+                })
+                .catch(error => {
+                    this.toastService.error('Não foi possível carregar informações!')
+                });
+        }
+
+
+        if (!this.isNotUserAdmin()) {
+            {
+                this.getStudies();
+            }
+        }
+    }
+
+// updateGraphWeigth() {
+//     const pilotstudy_id = localStorage.getItem('pilotstudy_id');
+//
+//     if (pilotstudy_id && pilotstudy_id !== '') {
+//         this.dashboardService.getPatientsAndWeigth(pilotstudy_id)
+//             .then(list => {
+//                 this.listPacientsAndWeigth = list;
+//             })
+//             .catch(err => {
+//                 console.log('Não foi possível carregar informações de peso dos pacientes');
+//             });
+//     } else {
+//         this.selectPilotService.open();
+//     }
+//     this.getPatients();
+// }
+
+    clickPaginationPatients(event) {
+        this.pageEventPatients = event;
+        this.pagePatients = event.pageIndex + 1;
+        this.limitPatients = event.pageSize;
+        this.getPatients();
+    }
+
+    clickPaginationStudies(event) {
+        this.pageEventStudies = event;
+        this.pageStudies = event.pageIndex + 1;
+        this.limitStudies = event.pageSize;
+        // this.getStudies();
+    }
+
+    getPatients() {
+        this.dashboardService.getAllPatients(this.pilotStudyId, this.pagePatients, this.limitPatients)
+            .then(patients => {
+                this.listPacients = patients;
+                this.calcLengthPatients();
             })
-            .catch(error => {
-                this.toastService.error('Não foi possível carregar informações!')
+    }
+
+    calcLengthPatients() {
+        this.dashboardService.getAllPatients(this.pilotStudyId, undefined, undefined)
+            .then(patients => {
+                this.lengthPatients = patients.length;
+            })
+            .catch(errorResponse => {
+                // console.log('Não foi possível buscar todos os pacientes',errorResponse);
             });
     }
 
-    loadUserId() {
-        this.userId = this.authService.decodeToken().sub;
-    }
-
-    selectPilotStudy(): void {
-        localStorage.setItem('pilotstudi_id', this.pilotStudyId);
-        this.updateGraphWeigth();
-    }
-
-    updateGraphWeigth() {
-        const pilotstudy_id = localStorage.getItem('pilotstudi_id');
-
-        if (pilotstudy_id && pilotstudy_id !== '') {
-            this.dashboardService.getPatientsAndWeigth(pilotstudy_id)
-                .then(list => {
-                    this.listPacientsAndWeigth = list;
-                })
-                .catch(err => {
-                    console.log('Não foi possível carregar informações de peso dos pacientes');
-                });
-        } else {
-            /**
-             * FIXME: Abrir página para selecionar um estudo
-             */
+    getStudies() {
+        if (!this.userId) {
+            this.loadUser();
         }
+        this.dashboardService.getAllStudiesByUserId(this.userId, this.pageStudies, this.limitStudies)
+            .then(studies => {
+                this.listPilots = studies;
+                this.calcLengthStudies();
+            })
+    }
+
+    calcLengthStudies() {
+        this.dashboardService.getNumberOfStudies(this.userId)
+            .then(numberOfStudies => {
+                this.lengthStudies = numberOfStudies;
+                this.studiesTotal = numberOfStudies;
+            })
+            .catch(errorResponse => {
+                // console.log('Não foi possível buscar todos os pacientes',errorResponse);
+            });
+    }
+
+    isNotUserAdmin(): boolean {
+        return this.authService.decodeToken().sub_type !== 'admin';
     }
 
     ngAfterViewChecked() {

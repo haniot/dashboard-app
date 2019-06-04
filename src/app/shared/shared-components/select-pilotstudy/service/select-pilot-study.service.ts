@@ -1,14 +1,12 @@
-import {Injectable, EventEmitter} from '@angular/core';
-
-import {Error} from 'app/shared/shared-models/error'
+import {EventEmitter, Injectable} from "@angular/core";
 
 declare var $: any;
 
 @Injectable()
 export class SelectPilotStudyService {
 
-    constructor() {
-    }
+    pilotStudyUpdated = new EventEmitter();
+
 
     open() {
         $('#selectPilotStudy').modal('show');
@@ -17,4 +15,9 @@ export class SelectPilotStudyService {
     close() {
         $('#selectPilotStudy').modal('hide');
     }
+
+    pilotStudyHasUpdated() {
+        this.pilotStudyUpdated.emit();
+    }
+
 }

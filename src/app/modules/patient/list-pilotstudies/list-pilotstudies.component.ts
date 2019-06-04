@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
+import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
 
 @Component({
     selector: 'list-pilotstudies',
@@ -32,6 +33,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
         private pilotStudyService: PilotStudyService,
         private activeRouter: ActivatedRoute,
         private loadinService: LoadingService,
+        private selectPilotService: SelectPilotStudyService,
         private router: Router
     ) {
     }
@@ -42,12 +44,23 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
             this.getAllPilotStudies();
             this.getLengthPilotStudies();
         });
-        const pilotstudy_id = localStorage.getItem('pilotstudi_id');
-        if (pilotstudy_id && pilotstudy_id !== '') {
-            this.gotoPatients(pilotstudy_id);
-        }
+        this.loadPilotSelected();
         this.getAllPilotStudies();
         this.getLengthPilotStudies();
+    }
+
+    loadUser(): void {
+        this.userId = atob(localStorage.getItem('user'));
+    }
+
+    loadPilotSelected(): void {
+        if (!this.userId) {
+            this.loadUser();
+        }
+        const pilotselected = localStorage.getItem(this.userId);
+        if (pilotselected) {
+            this.gotoPatients(pilotselected);
+        }
     }
 
     getAllPilotStudies() {

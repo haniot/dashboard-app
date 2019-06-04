@@ -13,6 +13,10 @@ table tr {
   cursor: pointer;
 }
 
+td img {
+  width: 2%;
+}
+
 #modalSelectPilotStudy {
   position: relative;
   display: -ms-flexbox;
@@ -25,4 +29,34 @@ table tr {
   border: none;
   border-radius: 0.3rem;
   outline: 0;
+}
+
+#main-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00a594;
+}
+
+.second-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+}
+
+.features-describe li {
+  font-size: 16px;
+  font-weight: normal;
+  color: black;
+}
+
+::ng-deep.mat-step-header .mat-step-icon-selected {
+  background-color: #00a594;
+}
+
+::ng-deep.mat-step-header .mat-step-icon-state-edit {
+  background-color: #00a594;
+}
+
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
 }

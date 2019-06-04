@@ -1,9 +1,13 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import {Component, OnInit, ElementRef} from '@angular/core';
+import {Location} from '@angular/common';
+import {Router} from '@angular/router';
 
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { UserService } from 'app/modules/admin/services/users.service';
+import {AuthService} from 'app/security/auth/services/auth.service';
+import {UserService} from 'app/modules/admin/services/users.service';
+import {PilotStudy} from "../../../modules/pilot-study/models/pilot.study";
+import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
+import {PilotStudyService} from "../../../modules/pilot-study/services/pilot-study.service";
+import {connectableObservableDescriptor} from "rxjs/internal/observable/ConnectableObservable";
 
 export declare interface RouteInfo {
     path: string;
@@ -11,15 +15,16 @@ export declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: '/ui/dashboard', title: 'Dashboard' },
-    { path: '/ui/administrators', title: 'Usuários - Administradores' },
-    { path: '/ui/healthprofessionals', title: 'Usuários - Profissionais de Saúde' },
-    { path: '/pilotstudies', title: 'Estudos Pilotos' },
-    { path: '/patients', title: 'Pacientes' },
-    { path: '/ui/mystudies', title: 'Meus estudos' },
-    { path: '/ui/myprofile', title: 'Meus dados' },
-    { path: '/evaluations', title: 'Avaliações' }
+    {path: '/dashboard', title: 'Página Inicial'},
+    {path: '/ui/administrators', title: 'Usuários - Administradores'},
+    {path: '/ui/healthprofessionals', title: 'Usuários - Profissionais de Saúde'},
+    {path: '/pilotstudies', title: 'Estudos Pilotos'},
+    {path: '/patients', title: 'Pacientes'},
+    {path: '/ui/mystudies', title: 'Meus estudos'},
+    {path: '/ui/myprofile', title: 'Meus dados'},
+    {path: '/ui/myevaluations', title: 'Minhas Avaliações'}
 ];
+
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
@@ -31,20 +36,33 @@ export class NavbarComponent implements OnInit {
     mobile_menu_visible: any = 0;
     toggleButton: any;
     sidebarVisible: boolean;
-    userName: string = "";
+
+    userName = "";
     title: string;
+
+    listPilots: Array<PilotStudy>;
+    userId: string;
+
+    pilotStudyId: string;
+
 
     constructor(
         location: Location,
         private element: ElementRef,
         private router: Router,
         private authService: AuthService,
-        private userService: UserService) {
+        private userService: UserService,
+        private pilotStudyService: PilotStudyService,
+        private selectPilotService: SelectPilotStudyService) {
         this.location = location;
         this.sidebarVisible = false;
     }
 
     ngOnInit() {
+        this.pilotStudyId = localStorage.getItem('pilotstudy_id');
+        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
+            this.loadPilotSelected();
+        });
         this.getUserName();
         this.listTitles = ROUTES;
         const navbar: HTMLElement = this.element.nativeElement;
@@ -58,7 +76,10 @@ export class NavbarComponent implements OnInit {
             }
             this.getTitle();
         });
+        this.loadPilotSelected();
         this.getTitle();
+        this.getAllPilotStudies();
+
     }
 
     sidebarOpen() {
@@ -72,12 +93,14 @@ export class NavbarComponent implements OnInit {
 
         this.sidebarVisible = true;
     };
+
     sidebarClose() {
         const body = document.getElementsByTagName('body')[0];
         this.toggleButton.classList.remove('toggled');
         this.sidebarVisible = false;
         body.classList.remove('nav-open');
     };
+
     sidebarToggle() {
         // const toggleButton = this.toggleButton;
         // const body = document.getElementsByTagName('body')[0];
@@ -137,10 +160,11 @@ export class NavbarComponent implements OnInit {
     };
 
     getTitle() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        titlee = '/' + titlee.split('/')[1];
+        const path_current = this.location.prepareExternalUrl(this.location.path());
+
+        // path_current = '/' + path_current.split('/')[1];
         this.listTitles.forEach(element => {
-            if (element.path == titlee) {
+            if (element.path === path_current) {
                 this.title = element.title;
             }
         });
@@ -162,6 +186,49 @@ export class NavbarComponent implements OnInit {
                     console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
                 });
         }
+    }
+
+    loadUser(): void {
+        this.userId = atob(localStorage.getItem('user'));
+    }
+
+    getAllPilotStudies() {
+        if (!this.userId) {
+            this.loadUser();
+        }
+        this.pilotStudyService.getAllByUserId(this.userId)
+            .then(studies => {
+                this.listPilots = studies;
+            })
+            .catch(error => {
+                console.log('Erro ao buscar pilot-studies: ', error);
+            });
+    }
+
+    isNotAdmin(): boolean {
+        return this.authService.decodeToken().sub_type !== 'admin';
+    }
+
+    selectPilotStudy(): void {
+        if (!this.userId) {
+            this.loadUser()
+        }
+        localStorage.setItem(this.userId, this.pilotStudyId);
+        this.selectPilotService.pilotStudyHasUpdated();
+    }
+
+    loadPilotSelected(): void {
+        setTimeout(() => {
+            if (!this.userId) {
+                this.loadUser();
+            }
+            const pilotselected = localStorage.getItem(this.userId);
+            if (pilotselected) {
+                this.pilotStudyId = pilotselected;
+            } else if (this.authService.decodeToken().sub_type !== 'admin') {
+                this.selectPilotService.open();
+            }
+        }, 2000)
     }
 
     logout() {

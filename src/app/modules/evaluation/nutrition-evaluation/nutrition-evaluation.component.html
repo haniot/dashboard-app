@@ -58,7 +58,7 @@
                                          *ngIf="nutritionalEvaluation && nutritionalEvaluation.nutritional_status && nutritionalEvaluation.overweight_indicator && nutritionalEvaluation.blood_glucose && nutritionalEvaluation.blood_pressure && nutritionalEvaluation.heart_rate">
                                         <div class="row">
                                             <!-- Estado Nutricional -->
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
+                                            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 align-self-center">
                                                 <div class="card card-stats">
                                                     <div class="card-header card-header-timer card-header-icon">
                                                         <div class="card-icon">
@@ -72,32 +72,61 @@
                                                     <div class="card-footer">
                                                         <div class="stats"></div>
                                                         <div class="container">
-                                                            <div class="row">
-                                                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
                                                                     <p class="card-category">Estatura: </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.nutritional_status.height}}
                                                                         <small>cm</small>
                                                                     </h3>
                                                                 </div>
-                                                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                                                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
                                                                     <p class="card-category">Peso: </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.nutritional_status.weight}}
                                                                         <small>Kg</small>
                                                                     </h3>
                                                                 </div>
-                                                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                                                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
                                                                     <p class="card-category">IMC: </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.nutritional_status.bmi}}
                                                                     </h3>
                                                                 </div>
-                                                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                                                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
                                                                     <p class="card-category">Percentil: </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.nutritional_status.percentile}}
 
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Corte de Taylor -->
+                                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 align-self-center">
+                                                <div class="card card-stats">
+                                                    <div class="card-header card-header-timer card-header-icon">
+                                                        <div class="card-icon">
+                                                            <img src="../../../../assets/img/haniot/waist-circunference.png"
+                                                                 alt="">
+                                                        </div>
+                                                        <span class="badge badge-haniot category">Ponto de Corte de Taylor:</span>
+                                                        <span
+                                                                class="badge badge-haniot classification">{{nutritionalEvaluation.taylor_cut_point.classification | taylorCutClassification}}</span>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <div class="container">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                                                    <p class="card-category">Circunferência da
+                                                                        cintura:</p>
+                                                                    <h3 class="card-title">
+                                                                        {{nutritionalEvaluation.taylor_cut_point.waist_circumference}}
+                                                                        <small>cm</small>
                                                                     </h3>
                                                                 </div>
                                                             </div>
@@ -120,8 +149,8 @@
                                                     </div>
                                                     <div class="card-footer">
                                                         <div class="container">
-                                                            <div class="row">
-                                                                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
                                                                     <p class="card-category">Circunferência da
                                                                         cintura:</p>
                                                                     <h3 class="card-title">
@@ -129,14 +158,14 @@
                                                                         <small>cm</small>
                                                                     </h3>
                                                                 </div>
-                                                                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
                                                                     <p class="card-category">Estatura: </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.overweight_indicator.height}}
                                                                         <small>cm</small>
                                                                     </h3>
                                                                 </div>
-                                                                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                                                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center">
                                                                     <p class="card-category">Relação
                                                                         cintura/estatura:</p>
                                                                     <h3 class="card-title">
@@ -163,13 +192,13 @@
                                                     </div>
                                                     <div class="card-footer">
                                                         <div class="container">
-                                                            <div class="row">
-                                                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                                                     <p class="card-category">Tipo de refeição:</p>
                                                                     <span
                                                                             class="badge badge-haniot">{{nutritionalEvaluation.blood_glucose.meal | meal}}</span>
                                                                 </div>
-                                                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                                                     <p class="card-category">Valor:</p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.blood_glucose.value}}
@@ -196,19 +225,19 @@
                                                                     class="badge badge-haniot classification">{{nutritionalEvaluation.blood_pressure.classification | bloodpressureClassification}}</span>
                                                         </div>
                                                         <div class="card-footer">
-                                                            <div class="container row">
-                                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center row">
+                                                            <div class="container row justify-content-center">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center row">
                                                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center"><span
                                                                             class="badge badge-haniot">SISTÓLICA</span>
                                                                     </div>
-                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                                                         <p class="card-category">Valor: </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.blood_pressure.systolic}}
                                                                             <small>mmHg</small>
                                                                         </h3>
                                                                     </div>
-                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                                                         <p class="card-category">Percentil: </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.blood_pressure.systolic_percentile}}
@@ -216,18 +245,18 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center row">
-                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center row justify-content-center">
+                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
                                                                         <span class="badge badge-haniot">DIASTÓLICA</span>
                                                                     </div>
-                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                                                         <p class="card-category">Valor: </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.blood_pressure.diastolic}}
                                                                             <small>mmHg</small>
                                                                         </h3>
                                                                     </div>
-                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-self-center">
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                                                         <p class="card-category">Percentil: </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.blood_pressure.diastolic_percentile}}
@@ -242,7 +271,7 @@
 
                                             </div>
 
-                                            <!-- Pressão sanguinia -->
+                                            <!-- Frequência cardiaca -->
                                             <div class="container">
 
                                                 <div class="row">
@@ -259,9 +288,9 @@
                                                         <div class="card-footer">
                                                             <div class="container">
 
-                                                                <div class="row">
+                                                                <div class="row justify-content-center">
 
-                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 align-self-center">
+                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
                                                                         <span class="badge badge-haniot">MÍNIMA</span>
                                                                         <p class="card-category">Valor: </p>
                                                                         <h3 class="card-title">
@@ -270,7 +299,7 @@
                                                                         </h3>
                                                                     </div>
 
-                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 align-self-center">
+                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
                                                                         <span class="badge badge-haniot">MÉDIA</span>
                                                                         <p class="card-category">Valor: </p>
                                                                         <h3 class="card-title">
@@ -279,7 +308,7 @@
                                                                         </h3>
                                                                     </div>
 
-                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 align-self-center">
+                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
                                                                         <span class="badge badge-haniot">MÁXIMA</span>
                                                                         <p class="card-category">Valor: </p>
                                                                         <h3 class="card-title">
@@ -291,10 +320,10 @@
                                                                 </div>
 
                                                                 <div class="row">
-                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
+                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
                                                                         <hr>
                                                                     </div>
-                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center"
+                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center"
                                                                          [ts-chart]="option">
                                                                     </div>
                                                                 </div>

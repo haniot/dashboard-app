@@ -26,11 +26,11 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let study of list; index as i">
-                                <td>{{getIndex(i)}}</td>
-                                <td>{{study.name}}</td>
-                                <td>{{study.start | date }}</td>
-                                <td>{{study.end | date}}</td>
-                                <td>
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">{{getIndex(i)}}</td>
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.name}}</td>
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.start | date }}</td>
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.end | date}}</td>
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">
                     <span>
                       {{study.is_active ? 'ATIVADO' : 'DESATIVADO'}}
                     </span>

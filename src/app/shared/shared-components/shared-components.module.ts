@@ -13,6 +13,7 @@ import {ModalConfirmationComponent} from './modal-confirmation/modal-confirmatio
 import {LoadingService} from './loading-component/service/loading.service';
 import {SelectPilotstudyComponent} from './select-pilotstudy/select-pilotstudy.component';
 import {SelectPilotStudyService} from "./select-pilotstudy/service/select-pilot-study.service";
+import {MatStepperModule} from "@angular/material";
 
 @NgModule({
     declarations: [
@@ -27,7 +28,9 @@ import {SelectPilotStudyService} from "./select-pilotstudy/service/select-pilot-
         CommonModule,
         FormsModule,
         MatPaginatorModule,
-        SharedPipesModule
+        SharedPipesModule,
+        MatStepperModule,
+
     ],
     exports: [
         CardTopComponent,
@@ -39,8 +42,7 @@ import {SelectPilotStudyService} from "./select-pilotstudy/service/select-pilot-
     ],
     providers: [
         ModalService,
-        LoadingService,
-        SelectPilotStudyService
+        LoadingService
     ]
 })
 export class SharedComponentsModule {

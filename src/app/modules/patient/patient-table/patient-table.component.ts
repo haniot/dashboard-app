@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, AfterViewChecked, SimpleChanges} from '@angular/core';
+import {Component, OnInit, Input, AfterViewChecked, SimpleChanges, OnChanges} from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import {Patient} from '../models/patient';
 import {PatientService} from '../services/patient.service';
@@ -6,13 +6,14 @@ import {ToastrService} from 'ngx-toastr';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
+import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
 
 @Component({
     selector: 'patient-table',
     templateUrl: './patient-table.component.html',
     styleUrls: ['./patient-table.component.scss']
 })
-export class PatientTableComponent implements OnInit, AfterViewChecked {
+export class PatientTableComponent implements OnInit, AfterViewChecked, OnChanges {
     // MatPaginator Inputs
     pageSizeOptions: number[] = [10, 25, 100];
 
@@ -34,12 +35,15 @@ export class PatientTableComponent implements OnInit, AfterViewChecked {
 
     cacheIdPatientRemove: string;
 
+    userId: string;
+
     constructor(
         private patientService: PatientService,
         private pilotstudyService: PilotStudyService,
         private toastService: ToastrService,
         private modalService: ModalService,
-        private loadinService: LoadingService
+        private loadinService: LoadingService,
+        private selectStudyService: SelectPilotStudyService
     ) {
 
     }
@@ -47,6 +51,26 @@ export class PatientTableComponent implements OnInit, AfterViewChecked {
     ngOnInit() {
         this.getAllPacients();
         this.calcLengthPatients();
+
+        this.selectStudyService.pilotStudyUpdated.subscribe(() => {
+            this.loadPilotSelected();
+            this.getAllPacients();
+            this.calcLengthPatients();
+        })
+    }
+
+    loadUser(): void {
+        this.userId = atob(localStorage.getItem('user'));
+    }
+
+    loadPilotSelected(): void {
+        if (!this.userId) {
+            this.loadUser();
+        }
+        const pilotselected = localStorage.getItem(this.userId);
+        if (pilotselected) {
+            this.pilotStudyId = pilotselected;
+        }
     }
 
     searchOnSubmit() {
@@ -107,7 +131,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked {
             })
             .catch(errorResponse => {
                 this.toastService.error('Não foi possível remover usuário!');
-                //console.log('Não foi possível remover paciente!', errorResponse);
+                // console.log('Não foi possível remover paciente!', errorResponse);
             });
     }
 
@@ -130,7 +154,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked {
                 this.length = patients.length;
             })
             .catch(errorResponse => {
-                //console.log('Não foi possível buscar todos os pacientes',errorResponse);
+                // console.log('Não foi possível buscar todos os pacientes',errorResponse);
             });
     }
 

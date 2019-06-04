@@ -1,3 +1,16 @@
 img {
   width: 25%;
 }
+.modal-haniot{
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color:none;
+  border: none;
+  border-radius: 0.3rem;
+  outline: 0;
+}

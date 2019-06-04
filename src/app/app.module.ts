@@ -17,6 +17,7 @@ import { ModulesModule } from './modules/modules.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './core/app-routing/app-routing.module';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import {SelectPilotStudyService} from "./shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
 
 registerLocaleData(localePt, 'pt-BR', localePtExtra);
 
@@ -42,7 +43,8 @@ registerLocaleData(localePt, 'pt-BR', localePtExtra);
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "pt-BR" },
-    { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } }
+    { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
+    SelectPilotStudyService
   ],
   bootstrap: [AppComponent]
 })

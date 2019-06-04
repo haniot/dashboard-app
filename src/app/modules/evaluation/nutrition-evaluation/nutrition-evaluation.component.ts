@@ -125,7 +125,6 @@ export class NutritionEvaluationComponent implements OnInit {
             this.patientId = params.get('patient_id');
             this.nutritionEvaluationId = params.get('nutritionevaluation_id');
             this.getNutritionEvaluation();
-            this.getPatient();
         });
         this.getNutritionEvaluation();
     }
@@ -137,6 +136,7 @@ export class NutritionEvaluationComponent implements OnInit {
                 this.formatCounseling()
                 this.loadGraph(nutritionEvaluation.heart_rate.dataset);
                 this.separateMeasurements();
+                this.getPatient();
             })
             .catch(erroResponse => {
                 this.toastService.error("Não foi possível carregar avaliação nutricional!");
@@ -211,14 +211,7 @@ export class NutritionEvaluationComponent implements OnInit {
     }
 
     getPatient(): void {
-        this.patientService.getById(this.patientId)
-            .then(patient => {
-                this.patient = patient;
-            })
-            .catch(errorResponse => {
-                this.toastService.error('Não foi possível identificar o paciente!')
-                console.log('Não foi possível buscar paciente!', errorResponse);
-            });
+        this.patient = this.nutritionalEvaluation.patient;
 
     }
 
@@ -382,7 +375,7 @@ export class NutritionEvaluationComponent implements OnInit {
     }
 
     sendEvaluationViaEmail(): void {
-        this.nutritionService.sendNutritionalEvaluationViaEmail(this.patient.email, this.nutritionalEvaluation)
+        this.nutritionService.sendNutritionalEvaluationViaEmail(this.patient, this.nutritionalEvaluation)
             .then(() => {
                 this.toastService.info('Avaliação enviada com sucesso!');
             })

@@ -36,7 +36,7 @@ const routes = [
   {
     path: ':patientId/:pilotstudy_id/details',
     component: ViewHabitsComponent,
-    data: { scope: "patients:read" }//FIXME: Aqui acredito adicionar os escopos forms:read
+    data: { scope: "patients:read" }//FIXME: Aqui acredito que devo adicionar os escopos forms:read
   },
   { path: '**', redirectTo: 'page-not-found' }
 ];

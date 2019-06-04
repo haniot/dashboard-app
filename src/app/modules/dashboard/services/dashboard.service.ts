@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 import {environment} from 'environments/environment';
 import {Patient} from 'app/modules/patient/models/patient';
@@ -26,7 +26,7 @@ export class DashboardService {
     }
 
     async getInfoByUser(userId: string)
-        : Promise<{ studiesTotal: number, patientsTotal: number, measurementsTotal: number, evaluationsTotal: number }> {
+        : Promise<{ studiesTotal: number, patientsTotal: number }> {
 
         this.cacheListpilots = new Array<PilotStudy>();
         this.cacheListpatients = new Array<Patient>();
@@ -34,22 +34,20 @@ export class DashboardService {
 
         let patientsTotal;
         let studiesTotal;
-        let measurementsTotal;
-        let evaluationsTotal;
+        // let measurementsTotal;
+        // let evaluationsTotal;
 
         studiesTotal = await this.getNumberOfStudies(userId);
 
         patientsTotal = await this.getNumberOfPatients();
 
-        measurementsTotal = await this.getNumberOfMeasurements();
+        // measurementsTotal = await this.getNumberOfMeasurements();
 
-        evaluationsTotal = await this.getNumberOfEvaluations(userId);
+        // evaluationsTotal = await this.getNumberOfEvaluations(userId);
 
         return {
             studiesTotal: studiesTotal,
-            patientsTotal: patientsTotal,
-            measurementsTotal: measurementsTotal,
-            evaluationsTotal: evaluationsTotal
+            patientsTotal: patientsTotal
         };
     }
 
@@ -145,7 +143,16 @@ export class DashboardService {
     /**
      * get all studies from a userId
      */
-    private getAllStudiesByUserId(userId: string): Promise<PilotStudy[]> {
+    getAllStudiesByUserId(userId: string, page?: number, limit?: number): Promise<PilotStudy[]> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append("page", String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append("limit", String(limit));
+        }
 
         let url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
 
@@ -153,18 +160,27 @@ export class DashboardService {
             url = `${environment.api_url}/pilotstudies`;
         }
 
-        return this.http.get<any>(url)
+        return this.http.get<any>(url, {params: myParams})
             .toPromise();
     }
 
     /**
      * get all patients from a pilotstudyId
      */
-    private getAllPatients(pilotstudyId: string): Promise<Patient[]> {
+    getAllPatients(pilotstudyId: string, page?: number, limit?: number): Promise<Patient[]> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append("page", String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append("limit", String(limit));
+        }
 
         const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
 
-        return this.http.get<any>(url)
+        return this.http.get<any>(url, {params: myParams})
             .toPromise();
     }
 
