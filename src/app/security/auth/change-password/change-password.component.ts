@@ -20,11 +20,11 @@ export class ChangePasswordComponent implements OnInit {
 
     loading: boolean = false;
 
-    icon_password = 'visibility';
+    icon_password = 'visibility_off';
 
     typeInputPassword = 'password';
 
-    icon_password_confirm = 'visibility';
+    icon_password_confirm = 'visibility_off';
 
     typeInputPassword_confirm = 'password';
 
@@ -76,8 +76,8 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     clickVisibilityPassword(): void {
-        this.icon_password = this.icon_password === 'visibility' ? 'visibility_off' : 'visibility';
-        if (this.icon_password === 'visibility') {
+        this.icon_password = this.icon_password === 'visibility_off' ? 'visibility' : 'visibility_off';
+        if (this.icon_password === 'visibility_off') {
             this.typeInputPassword = 'password';
         } else {
             this.typeInputPassword = 'text';
@@ -85,8 +85,8 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     clickVisibilityPasswordConfirm(): void {
-        this.icon_password_confirm = this.icon_password_confirm === 'visibility' ? 'visibility_off' : 'visibility';
-        if (this.icon_password_confirm === 'visibility') {
+        this.icon_password_confirm = this.icon_password_confirm === 'visibility_off' ? 'visibility' : 'visibility_off';
+        if (this.icon_password_confirm === 'visibility_off') {
             this.typeInputPassword_confirm = 'password';
         } else {
             this.typeInputPassword_confirm = 'text';

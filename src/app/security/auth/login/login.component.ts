@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     f: FormGroup;
     loading: boolean = false;
 
-    icon_password = 'visibility';
+    icon_password = 'visibility_off';
 
     typeInputPassword = 'password';
 
@@ -58,8 +58,8 @@ export class LoginComponent implements OnInit {
     };
 
     clickVisibilityPassword(): void {
-        this.icon_password = this.icon_password === 'visibility' ? 'visibility_off' : 'visibility';
-        if (this.icon_password === 'visibility') {
+        this.icon_password = this.icon_password === 'visibility_off' ? 'visibility' : 'visibility_off';
+        if (this.icon_password === 'visibility_off') {
             this.typeInputPassword = 'password';
         } else {
             this.typeInputPassword = 'text';

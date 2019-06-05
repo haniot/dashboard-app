@@ -28,12 +28,12 @@ export class PatientFormComponent implements OnInit {
     matchPasswordTime;
 
     /* para o campo senha */
-    icon_password = 'visibility';
+    icon_password = 'visibility_off';
 
     typeInputPassword = 'password';
 
     /* para o campo confirmação de senha */
-    icon_password_confirm = 'visibility';
+    icon_password_confirm = 'visibility_off';
 
     typeInputPassword_confirm = 'password';
 
@@ -153,8 +153,8 @@ export class PatientFormComponent implements OnInit {
     }
 
     clickVisibilityPassword(): void {
-        this.icon_password = this.icon_password === 'visibility' ? 'visibility_off' : 'visibility';
-        if (this.icon_password === 'visibility') {
+        this.icon_password = this.icon_password === 'visibility_off' ? 'visibility' : 'visibility_off';
+        if (this.icon_password === 'visibility_off') {
             this.typeInputPassword = 'password';
         } else {
             this.typeInputPassword = 'text';
@@ -162,8 +162,8 @@ export class PatientFormComponent implements OnInit {
     }
 
     clickVisibilityPasswordConfirm(): void {
-        this.icon_password_confirm = this.icon_password_confirm === 'visibility' ? 'visibility_off' : 'visibility';
-        if (this.icon_password_confirm === 'visibility') {
+        this.icon_password_confirm = this.icon_password_confirm === 'visibility_off' ? 'visibility' : 'visibility_off';
+        if (this.icon_password_confirm === 'visibility_off') {
             this.typeInputPassword_confirm = 'password';
         } else {
             this.typeInputPassword_confirm = 'text';

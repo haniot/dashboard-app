@@ -38,10 +38,10 @@ export class AuthService {
                         localStorage.setItem("emailTemp", credentials.email)
                         this.router.navigate(['auth/change'], {queryParams: {redirect_link: data.redirect_link}});
                     } else {
-                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('token', data.access_token);
                         let decodedToken: { sub: string, iss: string, iat: number, exp: number, scope: string };
                         try {
-                            decodedToken = JWT_decode(data.token);
+                            decodedToken = JWT_decode(data.access_token);
                         } catch (Error) {
                             localStorage.clear();
                             return false;
@@ -75,16 +75,16 @@ export class AuthService {
     }
 
     getScopeUser(): String {
-        return this.decodeToken().scopes;
+        return this.decodeToken().scope;
     }
 
-    decodeToken(): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scopes: string } {
+    decodeToken(): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string } {
         const token = localStorage.getItem('token');
-        let decodedToken: { sub: string, sub_type: string, iss: string, iat: number, exp: number, scopes: string };
+        let decodedToken: { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string };
         try {
             decodedToken = JWT_decode(token);
         } catch (Error) {
-            decodedToken = {sub: "", sub_type: "", iss: "", iat: 0, exp: 0, scopes: ""};
+            decodedToken = {sub: "", sub_type: "", iss: "", iat: 0, exp: 0, scope: ""};
         }
         return decodedToken;
     }
