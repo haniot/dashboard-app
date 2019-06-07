@@ -1,69 +1,77 @@
 <haniot-card [title]="'Hábitos de atividades físicas do paciente'" subtitle=''>
 
-  <form [formGroup]="physicalActivityForm">
-    <div class="row">
-      <!-- <div class="form-group col-md-4">
-        <label for="created_at">
-          Data do registro:
-        </label>
-        <input matInput class="form-control" [matDatepicker]="pickerCreated" formControlName="created_at"
-          name="created_at" data-date-format="yyyy-MM-dd">
-      </div> -->
+    <form [formGroup]="physicalActivityForm">
+        <div class="row">
+            <!-- <div class="form-group col-md-4">
+              <label for="created_at">
+                Data do registro:
+              </label>
+              <input matInput class="form-control" [matDatepicker]="pickerCreated" formControlName="created_at"
+                name="created_at" data-date-format="yyyy-MM-dd">
+            </div> -->
 
-      <div class="form-group has-feedback col-md">
-        <label for="school_activity_freq">
-          Frequência de atividades físicas escolares:
-        </label>
-        <input class="form-control" type="text" formControlName="school_activity_freq" id="school_activity_freq">
-      </div>
-    </div>
+            <div class="form-group has-feedback col-md">
+                <label for="school_activity_freq">
+                    Frequência de atividades físicas escolares:
+                </label>
+                <input class="form-control" type="text" formControlName="school_activity_freq"
+                       id="school_activity_freq">
+            </div>
+        </div>
 
-    <div class="row">
-      <div class="form-group has-feedback col-md">
-        <label for="weekly_activities">
-          Lista de atividades praticadas:
-        </label>
+        <div class="row justify-content-center">
+            <div class="form-group has-feedback col-md">
+                <label for="weekly_activities">
+                    Lista de atividades praticadas:
+                </label>
+                <div class="col text-center">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"
+                            *ngFor="let activity of physicalActivityForm.get('weekly_activities').value;"
+                            id="weekly_activities">
 
-        <ul class="list-inline">
-          <li class="list-inline-item" *ngFor="let activity of physicalActivityForm.get('weekly_activities').value;"
-            id="weekly_activities">
-
-            <div class="activity">
+                            <div class="activity">
               <span class="align-top">
                 {{activity | weeklyActivity}}
               </span>
-              <img [src]="'../../../../assets/img/haniot/physicalActivities/'+activity+'.png'" alt="">
+                                <img [src]="'../../../../assets/img/haniot/physicalActivities/'+activity+'.png'" alt="">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </li>
-        </ul>
 
-      </div>
+        </div>
 
+    </form>
+
+    <div class="d-flex flex-row-reverse">
+        <div class="p-2">
+            <small class="pull-right">Data do registro:
+                {{physicalActivityForm.get('created_at').value | myDate}}</small>
+        </div>
     </div>
 
-  </form>
+    <!-- Botões Anterior e Próximo -->
+    <div class="container" *ngIf="listPhysicalActivits.length>1">
+        <div class="row">
+            <div class="col align-self-start">
+                <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" title="Anterior"
+                        (click)="prev()" [disabled]="!index">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+            </div>
 
-  <div class="d-flex flex-row-reverse">
-    <div class="p-2"><small class="pull-right">Data do registro:
-        {{physicalActivityForm.get('created_at').value | myDate}}</small></div>
-  </div>
-
-  <!-- Botões Anterior e Próximo -->
-  <div class="container" *ngIf="listPhysicalActivits.length>1">
-    <div class="row">
-      <div class="col align-self-start">
-        <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" title="Anterior"
-          (click)="prev()" [disabled]="!index">
-          <i class="material-icons">arrow_back</i>
-        </button>
-      </div>
-
-      <div class="col align-self-end">
-        <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
-          (click)="next()" title="Próximo" [disabled]="index == listPhysicalActivits.length-1">
-          <i class="material-icons">arrow_forward</i>
-        </button>
-      </div>
+            <div class="col align-self-end">
+                <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
+                        (click)="next()" title="Próximo" [disabled]="index == listPhysicalActivits.length-1">
+                    <i class="material-icons">arrow_forward</i>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <div *ngIf="listPhysicalActivits.length==0">
+        <span class="badge badge-danger badge-12">Nenhum hábito de atividades físicas cadastrado!</span>
+    </div>
 </haniot-card>

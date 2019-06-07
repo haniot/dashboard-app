@@ -4,23 +4,24 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AuthRoutingModule } from './auth-routing/auth-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    AuthRoutingModule
   ],
   declarations: [
     LoginComponent,
     ChangePasswordComponent
   ],
   providers: [
-    AuthService
+
   ]
 })
 export class AuthModule { }

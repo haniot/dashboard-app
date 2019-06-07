@@ -1,66 +1,112 @@
-.row{
-    margin-top: 20vh;
-    align-items: center;   
+.row {
+  margin-top: 20vh;
+  align-items: center;
 }
 
-label{
-    color: black;
-}  
+label {
+  color: black;
+}
 
 .card-signin {
-    border: 0;
-    border-radius: 1rem;
-    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
- } 
-  
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
 .card-signin .card-body {
-    padding: 2rem;
-    box-shadow: 0px 0px 10px 3px #ccc;
-    border-radius: 4%;
-    background-color: #ececec;
+  padding: 2rem;
+  box-shadow: 0px 0px 10px 3px #ccc;
+  border-radius: 4%;
+  background-color: #ececec;
 }
-  
+
 .form-signin {
-      width: 100%;
-}
-    
-#labelHaniot{
-    margin: auto auto; 
-    color: #00675c;
-    text-align: center;
-    font-size: 24px;    
-    margin: 5px 5px;
-    font-weight: bold;
+  width: 100%;
 }
 
-#divLogo{
-    display: flex;    
-}
-
-#divLogo img{
-    width: 50%;
-    margin: auto auto;
-}
-
-.logo{
-    display: flex;
-}
-#linkLogo{
-    margin: auto auto;
-}
-
-label{
+#labelHaniot {
+  margin: auto auto;
   color: #00675c;
   text-align: center;
-  font-size: 16px;    
+  font-size: 24px;
+  margin: 5px 5px;
+  font-weight: bold;
+}
+
+#divLogo {
+  display: flex;
+}
+
+#divLogo img {
+  width: 50%;
+  margin: auto auto;
+}
+
+.logo {
+  display: flex;
+}
+
+#linkLogo {
+  margin: auto auto;
+}
+
+label {
+  color: #00675c;
+  text-align: center;
+  font-size: 16px;
   margin: 2px 2px;
   font-weight: bold;
 }
 
-#buttonEntrar{
-    color: #f8fafa;
-    text-align: center;
-    font-size: 16px;    
-    margin: 2px 2px;
-    font-weight: bold;
+#buttonEntrar {
+  color: #f8fafa;
+  text-align: center;
+  font-size: 16px;
+  margin: 2px 2px;
+  font-weight: bold;
+}
+
+.divLoading {
+  position: absolute;
+  top: 0;
+}
+
+#externa {
+  z-index: 5;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.d-flex img {
+  width: 50%;
+  height: 50%;
+}
+
+.material-icons {
+  color: #00a594;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.icon_password {
+  position: absolute;
+  top: 30px;
+  right: 0;
+}
+
+.icon_password:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
 }

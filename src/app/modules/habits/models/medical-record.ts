@@ -1,16 +1,20 @@
-enum ChronicDiseaseType{
-    hipertension, blood_fat, diabetes
+export enum ChronicDiseaseType {
+    hipertension = "hipertension",
+    blood_fat = "blood_fat",
+    diabetes = "diabetes"
 }
 
-enum DiseaseHistory{
-    yes, no, undefined
+export enum DiseaseHistory {
+    yes = "yes",
+    no = "no",
+    undefined = "undefined"
 }
 
-export class ChronicDisease{
+export class ChronicDisease {
     type: string;
     disease_history: string;
 }
-export class MedicalRecord{
+export class MedicalRecord {
     id: string;
     created_at: string;
     chronic_diseases: Array<ChronicDisease>;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'card-top',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card-top.component.scss']
 })
 export class CardTopComponent implements OnInit {
+
+  @Input() icon;
+  @Input() category;
+  @Input() title;
 
   constructor() { }
 

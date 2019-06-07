@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /*Styles buttons HANIOT*/
 
@@ -98,14 +97,14 @@
 }
 
 .form-control, .is-focused .form-control {
-    background-image: linear-gradient(to top, #00a594 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px)!important;
+    background-image: linear-gradient(to top, #00a594 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px) !important;
 }
 
-.ui-select-choices-row.active[_ngcontent-c13]>a[_ngcontent-c13] {
+.ui-select-choices-row.active[_ngcontent-c13] > a[_ngcontent-c13] {
     color: #fff;
     text-decoration: none;
     outline: 0;
-    background-color: #00a594!important;
+    background-color: #00a594 !important;
 }
 
 /*Style tables*/
@@ -116,4 +115,99 @@ table th {
 
 table tr td {
     text-align: center;
+}
+
+/* Styles for link-bar mat-tab-group*/
+
+/* ink bar style */
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background: #00a594;
+}
+
+/* .p-2 small {
+    color: black;
+} */
+
+/* style for input type select*/
+/* -------------------- Select Box Styles: stackoverflow.com Method */
+/* -------------------- Source: http://stackoverflow.com/a/5809186 */
+select.soflow, select.soflow-color {
+    -webkit-appearance: button;
+    -webkit-border-radius: 2px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -webkit-user-select: none;
+    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+    background-position: 97% center;
+    background-repeat: no-repeat;
+    border: 1px solid #AAA;
+    color: #555;
+    font-size: inherit;
+    margin: 20px;
+    overflow: hidden;
+    padding: 5px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 300px;
+}
+
+select.soflow-color {
+    color: #fff;
+    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126);
+    background-color: #779126;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    padding-left: 15px;
+}
+
+/* CSS range datepicker*/
+
+:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-semi-selected), .cdk-keyboard-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-semi-selected), .cdk-program-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-semi-selected) {
+    background-color: #00a594;
+}
+
+:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-semi-selected, .cdk-keyboard-focused .mat-calendar-body-active > .mat-calendar-body-semi-selected, .cdk-program-focused .mat-calendar-body-active > .mat-calendar-body-semi-selected {
+    background-color: #00a594;
+    color: white;
+}
+
+.mat-calendar-body-begin-range:not(.mat-calendar-body-end-range) {
+    border-radius: 100% 0 0 100%;
+    background-color: #00a594;
+    opacity: 0.8;
+}
+
+.mat-calendar-body-end-range:not(.mat-calendar-body-begin-range) {
+    border-radius: 0 100% 100% 0;
+    background-color: #00a594;
+    opacity: 0.8;
+}
+
+.mat-calendar-body > tr .mat-calendar-cell-semi-selected ~ .mat-calendar-cell-semi-selected {
+    border-radius: 0;
+}
+
+.mat-calendar-cell-semi-selected {
+    background-color: #00a594;
+    opacity: 0.8;
+}
+
+.mat-calendar-cell-over > .mat-calendar-body-cell-content {
+    border: #00a594 1px solid;
+}
+
+.mat-calendar-body-selected {
+    background-color: #00a594;
+    color: white;
+}
+
+.mat-calendar-body-cell-content mat-calendar-body-selected {
+    background-color: white;
+}
+
+.mat-datepicker-toggle-active{
+    color: #00a594;
 }

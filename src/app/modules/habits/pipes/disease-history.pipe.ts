@@ -11,7 +11,7 @@ export class DiseaseHistoryPipe implements PipeTransform {
         return 'SIM';
 
       case 'no':
-        return 'Não';
+        return 'NÃO';
 
       case undefined:
         return 'Não respondido';

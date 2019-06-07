@@ -7,6 +7,7 @@ import { Subject, Subscription } from "rxjs";
 import * as echarts from 'echarts';
 import ECharts = echarts.ECharts;
 import EChartOption = echarts.EChartOption;
+import { GraphService } from '../shared-services/graph.service';
 
 
 @Directive({
@@ -24,7 +25,9 @@ export class echartsDirective implements OnChanges, OnInit, OnDestroy {
     @HostBinding('style.height.px')
     elHeight: number;
 
-    constructor(private el: ElementRef) {
+    constructor(
+        private el: ElementRef,
+        private graphService: GraphService) {
         this.chart = echarts.init(this.el.nativeElement, 'vintage');
     }
 
@@ -47,6 +50,9 @@ export class echartsDirective implements OnChanges, OnInit, OnDestroy {
         if (this.elHeight < 300) {
             this.elHeight = 300;
         }
+        this.graphService.refresh.subscribe(() => {
+            this.chart.setOption(this.options);
+        });
     }
 
     ngOnDestroy() {

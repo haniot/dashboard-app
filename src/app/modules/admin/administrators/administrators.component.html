@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <haniot-card title="Lista de usuário administradores" subtitle="">
-          <haniot-table [list]="admins" (onremove)="getAllAdministrators()" (onedit)="editUser($event)"
+          <haniot-table [(list)]="admins" (onremove)="getAllAdministrators()" (onedit)="editUser($event)"
             [userType]="'Admin'" (pagination)="paginationEvent($event)" [(length)]="length" [pageSize]="limit">
           </haniot-table>
         </haniot-card>
@@ -26,6 +26,5 @@
 <haniot-modal [modalId]="'modalUserEdit'">
     <app-modal-user [title]="'Editar usuário administrador'" (onsubmit)="editAdmin($event)" [userId]="userEdit.id" [typeUser]="'Admin'"></app-modal-user>
 </haniot-modal>
-
 
 

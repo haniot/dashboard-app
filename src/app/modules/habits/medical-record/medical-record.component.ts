@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { MedicalRecord, ChronicDisease } from '../models/medical-record';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MedicalRecordService } from '../services/medical-record.service';
@@ -9,11 +9,13 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './medical-record.component.html',
   styleUrls: ['./medical-record.component.scss']
 })
-export class MedicalRecordComponent implements OnInit {
+export class MedicalRecordComponent implements OnInit, OnChanges {
 
   listMedical: Array<MedicalRecord>;
   medicalForm: FormGroup;
   @Input() patientId: string;
+  @Input() medicalRecord: MedicalRecord;
+
   index: number;
 
   constructor(
@@ -34,13 +36,13 @@ export class MedicalRecordComponent implements OnInit {
     this.medicalForm = this.fb.group({
       id: [''],
       created_at: [{ value: '', disabled: true }],
-      chronic_diseases: this.fb.array([])   
+      chronic_diseases: this.fb.array([])
     });
   }
 
   createMedicalForm(medicalRecord: MedicalRecord) {
     this.medicalForm = this.fb.group({
-      id: [{value: medicalRecord.id}],
+      id: [{ value: medicalRecord.id }],
       created_at: [{ value: medicalRecord.created_at, disabled: true }],
       chronic_diseases: [{ value: medicalRecord.chronic_diseases, disabled: true }]
     });
@@ -54,9 +56,13 @@ export class MedicalRecordComponent implements OnInit {
           this.createMedicalForm(medicalRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
         })
         .catch(errorResponse => {
-          this.toastService.error('Não foi possível buscar histórico de doenças!');
-          console.log('Não foi possível buscar histórico de doenças!', errorResponse);
+          //this.toastService.error('Não foi possível buscar histórico de doenças!');
+          //console.log('Não foi possível buscar histórico de doenças!', errorResponse);
         });
+    } else if (this.medicalRecord && changes.medicalRecord.currentValue != changes.medicalRecord.previousValue) {
+      this.listMedical = new Array<MedicalRecord>();
+      this.listMedical.push(this.medicalRecord);
+      this.createMedicalForm(this.medicalRecord);
     }
   }
 

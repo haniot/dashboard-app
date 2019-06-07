@@ -1,9 +1,12 @@
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { registerLocaleData, CommonModule } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import localePtExtra from '@angular/common/locales/extra/pt';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -13,23 +16,35 @@ import { CoreModule } from './core/core.module';
 import { ModulesModule } from './modules/modules.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './core/app-routing/app-routing.module';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import {SelectPilotStudyService} from "./shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
+
+registerLocaleData(localePt, 'pt-BR', localePtExtra);
 
 @NgModule({
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
     HttpModule,
+    HttpClientModule,
     RouterModule,
+
+    ToastrModule.forRoot(),
+
     SecurityModule,
     CoreModule,
     SharedModule,
     ModulesModule,
-   ToastrModule.forRoot(),
-   AppRoutingModule
+    AppRoutingModule
   ],
   declarations: [
-    AppComponent,
+    AppComponent
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: "pt-BR" },
+    { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
+    SelectPilotStudyService
   ],
   bootstrap: [AppComponent]
 })

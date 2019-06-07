@@ -1,5 +1,12 @@
 # HANIoTDashboard
 
+[![node](https://img.shields.io/badge/node-v10.15.3-red.svg?style=?style=flat-square&logo=node.js)](https://nodejs.org/)
+[![npm](https://img.shields.io/badge/npm-v6.4.1-red.svg?style=flat-square&logo=npm)](https://nodejs.org/)
+[![npm](https://img.shields.io/badge/angular-v7.3.8-orange.svg?style=flat-square&logo=angular)](https://angular.io/)
+[![typescript](https://img.shields.io/badge/TypeScript-v3.1.6-blue.svg?style=flat-square&logo=TS)](https://www.typescriptlang.org/)
+[![bootstrap](https://img.shields.io/badge/BootStrap-v4.1.3-blue.svg?style=flat-square&logo=bootstrap)](https://getbootstrap.com/)
+[![echarts](https://img.shields.io/badge/Echarts-v4.1.0-orange.svg?style=flat-square&logo=echarts)](https://ecomfe.github.io/echarts-doc/public/en/index.html)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
 
 ## Development server

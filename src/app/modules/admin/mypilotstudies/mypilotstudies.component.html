@@ -1,57 +1,87 @@
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <haniot-card title="Lista de estudos piloto" subtitle="Selecione um estudo para visualizar seus pacientes">
-          <div class="table-responsive">
-            <div class="input-group no-border">
-              <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
-                placeholder="Pesquisar estudo..." (keyup)="searchOnSubmit()">
-              <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
-                (click)="searchOnSubmit()">
-                <i class="material-icons">search</i>
-                <div class="ripple-container"></div>
-              </button>
-            </div>
-            <table class="table table-sm table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Nome do estudo</th>
-                  <th>Início</th>
-                  <th>Término</th>
-                  <th>Situação</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let study of list; index as i">
-                  <td>{{getIndex(i)}}</td>
-                  <td>{{study.name}}</td>
-                  <td>{{study.start | date }}</td>
-                  <td>{{study.end | date}}</td>
-                  <td>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <haniot-card title="Lista de estudos piloto" subtitle="Selecione um estudo para visualizar">
+                    <div class="table-responsive">
+                        <div class="input-group no-border">
+                            <input type="text" class="form-control" id="searchMyStudy" name="searchMyStudy"
+                                   [(ngModel)]="search"
+                                   placeholder="Pesquisar estudo..." (keyup)="searchOnSubmit()">
+                            <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
+                                    (click)="searchOnSubmit()">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nome do estudo</th>
+                                <th>Início</th>
+                                <th>Término</th>
+                                <th>Situação</th>
+                                <th colspan="3">Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngIf="list.length==0">
+                                <td colspan="6" *ngIf="!listOfStudiesIsEmpty"><img
+                                        src="../../../../assets/img/loading.gif"
+                                        alt=""> carregando estudos...
+                                </td>
+                                <td colspan="6" *ngIf="listOfStudiesIsEmpty"><p class="second-title text-center">
+                                    Você não possui estudos associados.</p>
+                                    <p>
+                                        Entre em contato com o administrador.
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let study of list; index as i">
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">{{getIndex(i)}}</td>
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.name}}</td>
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.start | date }}</td>
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.end | date}}</td>
+                                <td [routerLink]="['/pilotstudies',study.id,'details']">
                     <span>
-                      {{study.is_active?'ATIVADO':'DESATIVADO'}}
+                      {{study.is_active ? 'ATIVADO' : 'DESATIVADO'}}
                     </span>
-                  </td>
-                  <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id]" title="Editar estudo..."><i
-                    class="material-icons">more_horiz</i></a>
-                  </td>
-                    
-                </tr>
-              </tbody>
-            </table>
+                                </td>
+                                <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id,'details']"
+                                       title="Visualizar estudo..."><i class="material-icons">input</i></a>
+                                <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id]"
+                                       title="Editar estudo..."><i
+                                        class="material-icons">edit</i></a>
+                                </td>
+                                <td><a class="nav-link" (click)="openModalConfirmation(study.id)"
+                                       title="Excluir estudo..."><i
+                                        class="material-icons">delete</i></a></td>
 
-          </div>
+                            </tr>
+                            </tbody>
+                        </table>
 
-          <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
-            (page)="clickPagination($event)">
-          </mat-paginator>
-          <!-- <patient-table [pilotStudyId]="'5c9538e671f8395ce5ba5585'"></patient-table> -->
-        </haniot-card>
-      </div>
-      
+                    </div>
+
+                    <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+                                   (page)="clickPagination($event)">
+                    </mat-paginator>
+                    <!-- <patient-table [pilotStudyId]="'5c9538e671f8395ce5ba5585'"></patient-table> -->
+                </haniot-card>
+
+                <!-- <div class="col-md">
+                  <button type="submit" class="btn btn-haniot-primary" (click)="newPilotStudy()">
+                    Adicionar
+                    <i class="material-icons">add</i>
+                  </button>
+                </div> -->
+
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
+
+<modal-confirmation [message]="'Tem certeza que deseja remover estudo piloto?'" (confirmation)="removeStudy()"
+                    (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

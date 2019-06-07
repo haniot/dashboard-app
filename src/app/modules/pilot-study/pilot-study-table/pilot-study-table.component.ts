@@ -13,58 +13,66 @@ import { ModalService } from 'app/shared/shared-components/haniot-modal/service/
 export class PilotStudyTableComponent implements OnInit {
   pilotStudy_id: string;
   // MatPaginator Inputs
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions: number[] = [10, 25, 100];
 
   // MatPaginator Output
   pageEvent: PageEvent;
 
   /* Controles de paginação */
   page: number = 1;
-  limit: number = 5;
+  limit: number = 10;
   length: number;
-   
+
   list: Array<PilotStudy>;
   search: string;
   searchTime;
 
   cacheStudyIdRemove; string;
 
+  listOfpilotsIsEmpty: boolean = false;
+
   constructor(
     private pilotStudyService: PilotStudyService,
     private toastService: ToastrService,
     private modalService: ModalService
-    ) { }
+  ) {
+    this.list = new Array<PilotStudy>();
+  }
 
   ngOnInit() {
     this.getAllPilotStudies();
-    this.calcLengthAdministrators();
+    this.calcLengthEstudies();
   }
 
-  getAllPilotStudies(){
+  getAllPilotStudies() {
     this.pilotStudyService.getAll(this.page, this.limit)
-        .then(studies => {
-          this.list = studies;
-        })
-        .catch(error => {
-          console.log('Erro ao buscar pilot-studies: ', error);
-        });
+      .then(studies => {
+        this.list = studies;
+        if (this.list.length == 0) {
+          this.listOfpilotsIsEmpty = true;
+        } else {
+          this.listOfpilotsIsEmpty = false;
+        }
+      })
+      .catch(error => {
+        // console.log('Erro ao buscar pilot-studies: ', error);
+      });
   }
   searchOnSubmit() {
     clearInterval(this.searchTime);
     this.searchTime = setTimeout(() => {
-      this.pilotStudyService.getAll()
+      this.pilotStudyService.getAll(this.page, this.limit, this.search)
         .then(studies => {
-          this.list = studies.filter((study) => {
-            return study.name.search(this.search) != -1;
-          });
+          this.list = studies;
+          this.calcLengthEstudies();
         })
         .catch(error => {
-          console.log('Erro ao buscar pilot-studies: ', error);
+          // console.log('Erro ao buscar pilot-studies: ', error);
         });
     }, 200);
   }
 
-  clickPagination(event){  
+  clickPagination(event) {
     this.pageEvent = event;
     this.page = event.pageIndex + 1;
     this.limit = event.pageSize;
@@ -72,7 +80,7 @@ export class PilotStudyTableComponent implements OnInit {
   }
 
   getIndex(index: number): number {
-    if(this.search){
+    if (this.search) {
       return null;
     }
     const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
@@ -85,41 +93,50 @@ export class PilotStudyTableComponent implements OnInit {
     }
   }
 
-  removeStudy(){
-    if(this.cacheStudyIdRemove){
+  removeStudy() {
+    if (this.cacheStudyIdRemove) {
       this.pilotStudyService.remove(this.cacheStudyIdRemove)
         .then(() => {
           this.toastService.info('Estudo removido com sucesso!');
           this.getAllPilotStudies();
+          this.calcLengthEstudies();
           this.closeModalConfirmation();
         })
         .catch(error => {
           this.toastService.error('Não foi possível remover estudo!');
         });
-    }else{
+    } else {
       this.toastService.error('Não foi possível remover estudo!');
     }
   }
 
-  calcLengthAdministrators(){
-    this.pilotStudyService.getAll()
-      .then( pilots => {
-        this.length = pilots.length;
-      })
-      .catch();
+  calcLengthEstudies() {
+    if (this.search && this.search != '') {
+      this.pilotStudyService.getAll(undefined, undefined, this.search)
+        .then(pilots => {
+          this.length = pilots.length;
+        })
+        .catch();
+    } else {
+      this.pilotStudyService.getAll()
+        .then(pilots => {
+          this.length = pilots.length;
+        })
+        .catch();
+    }
   }
 
-  openModalhealthProfessionals(pilotStudy_id:string){
+  openModalhealthProfessionals(pilotStudy_id: string) {
     this.pilotStudy_id = pilotStudy_id;
     this.modalService.open('healthProfessionals');
   }
 
-  openModalConfirmation(id:string){
+  openModalConfirmation(id: string) {
     this.cacheStudyIdRemove = id;
     this.modalService.open('modalConfirmation');
   }
-  
-  closeModalConfirmation(){
+
+  closeModalConfirmation() {
     this.cacheStudyIdRemove = '';
     this.modalService.close('modalConfirmation');
   }

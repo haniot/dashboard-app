@@ -1,0 +1,27 @@
+<haniot-card [title]="'Dispositivos associados ao paciente'" subtitle=''>
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center" *ngFor="let device of listDevices">
+            <div class="card card-stats">
+                <div class="card-header card-header-timer card-header-icon">
+                    <div class="card-icon">
+                        <img [src]="'../../../../assets/img/haniot/'+device.type+'.png'" alt="">
+                    </div>
+                    <span class="badge badge-haniot">{{device.type | deviceType}}</span>
+                    <p class="card-category">Nome do dispositivo: </p>
+                    <h3 class="card-title">
+                        {{device.name}}
+                    </h3>
+                    <p class="card-category">Marca do dispositivo: </p>
+                    <h3 class="card-title">
+                        {{device.manufacturer}}
+                    </h3>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</haniot-card>

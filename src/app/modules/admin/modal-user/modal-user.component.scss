@@ -1,13 +1,34 @@
-.modal-haniot{
-    position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    width: 100%;
-    pointer-events: auto;
-    background-color:none;    
-    border: none;
-    border-radius: 0.3rem;
-    outline: 0;
+.modal-haniot {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: none;
+  border: none;
+  border-radius: 0.3rem;
+  outline: 0;
+}
+
+.material-icons {
+  color: #00a594;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.icon_password {
+  position: absolute;
+  top: 35px;
+  right: 0;
+}
+
+.icon_password:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
 }

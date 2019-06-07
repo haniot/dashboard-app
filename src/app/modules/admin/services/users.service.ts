@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AdminService } from './admin.service';
 import { HealthProfessionalService } from './health-professional.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
 
 @Injectable()
 export class UserService {
@@ -11,7 +12,8 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private adminService: AdminService,
-    private healthService: HealthProfessionalService
+    private healthService: HealthProfessionalService,
+    private authService: AuthService
   ) { }
 
   removeUser(id: string): Promise<any> {
@@ -20,39 +22,23 @@ export class UserService {
   }
 
   getUserById(id: string): Promise<any> {
-    return this.healthService.getById(id)    
-      .then(healthprofessional => {
-        if(healthprofessional){
-          return Promise.resolve(healthprofessional);
-        }
+    switch (this.getTypeUser()) {
+      case 'admin':
         return this.adminService.getById(id);
-      })
-      .catch(httpError => {
-        if(httpError.error.code == 404 && httpError.error.message == 'Health Professional not found!'){
-          return this.adminService.getById(id);
-        }else{
-          console.log('| users.service | Não foi possível buscar usuário!', httpError);
-        }      
-      });
+
+      case 'health_professional':
+        return this.healthService.getById(id);
+    }
+
   }
 
-  changePassword(userId: string, credentials :{old_password: string, new_password:string} ): Promise<boolean>{
+  changePassword(userId: string, credentials: { old_password: string, new_password: string }): Promise<boolean> {
     return this.http.patch<any>(`${environment.api_url}/users/${userId}/password`, credentials)
       .toPromise();
   }
 
-  getTypeUserAndSetLocalStorage(userId: string){
-    this.healthService.getById(userId)    
-      .then(healthprofessional => {
-        if(healthprofessional){
-          localStorage.setItem('typeUser','HealthProfessional');
-        }else{
-          localStorage.setItem('typeUser','Admin');
-        }
-      })
-      .catch(httpError => {
-        localStorage.setItem('typeUser','Admin');
-      });
+  getTypeUser(): string {
+    return this.authService.decodeToken().sub_type;
   }
 
 }
