@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /*Styles buttons HANIOT*/
 
@@ -98,14 +97,14 @@
 }
 
 .form-control, .is-focused .form-control {
-    background-image: linear-gradient(to top, #00a594 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px)!important;
+    background-image: linear-gradient(to top, #00a594 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px) !important;
 }
 
-.ui-select-choices-row.active[_ngcontent-c13]>a[_ngcontent-c13] {
+.ui-select-choices-row.active[_ngcontent-c13] > a[_ngcontent-c13] {
     color: #fff;
     text-decoration: none;
     outline: 0;
-    background-color: #00a594!important;
+    background-color: #00a594 !important;
 }
 
 /*Style tables*/
@@ -164,3 +163,51 @@ select.soflow-color {
     padding-left: 15px;
 }
 
+/* CSS range datepicker*/
+
+:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-semi-selected), .cdk-keyboard-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-semi-selected), .cdk-program-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-semi-selected) {
+    background-color: #00a594;
+}
+
+:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-semi-selected, .cdk-keyboard-focused .mat-calendar-body-active > .mat-calendar-body-semi-selected, .cdk-program-focused .mat-calendar-body-active > .mat-calendar-body-semi-selected {
+    background-color: #00a594;
+    color: white;
+}
+
+.mat-calendar-body-begin-range:not(.mat-calendar-body-end-range) {
+    border-radius: 100% 0 0 100%;
+    background-color: #00a594;
+    opacity: 0.8;
+}
+
+.mat-calendar-body-end-range:not(.mat-calendar-body-begin-range) {
+    border-radius: 0 100% 100% 0;
+    background-color: #00a594;
+    opacity: 0.8;
+}
+
+.mat-calendar-body > tr .mat-calendar-cell-semi-selected ~ .mat-calendar-cell-semi-selected {
+    border-radius: 0;
+}
+
+.mat-calendar-cell-semi-selected {
+    background-color: #00a594;
+    opacity: 0.8;
+}
+
+.mat-calendar-cell-over > .mat-calendar-body-cell-content {
+    border: #00a594 1px solid;
+}
+
+.mat-calendar-body-selected {
+    background-color: #00a594;
+    color: white;
+}
+
+.mat-calendar-body-cell-content mat-calendar-body-selected {
+    background-color: white;
+}
+
+.mat-datepicker-toggle-active{
+    color: #00a594;
+}

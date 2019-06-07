@@ -29,7 +29,13 @@
                      [subtitle]="'Clique sobre o card para visualizar informações do paciente.'"
                      *ngIf="isNotUserAdmin()">
             <div class="row justify-content-center">
-
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfPatientsIsEmpty">
+                    <p class="second-title text-center">
+                        O estudo selecionado não possui pacientes cadastrados.</p>
+                    <p>
+                       Ir para a página de cadastro de pacientes: <button class="btn btn-haniot-primary" [routerLink]="['/patients',pilotStudyId,'new']">Cadastrar pacientes</button>
+                    </p>
+                </div>
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
                    *ngFor="let patient of listPacients"
                    [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']"
@@ -100,7 +106,7 @@
                         </div>
                     </div>
                 </a>
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listPilots.length===0">
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfStudiesIsEmpty">
                     <p class="second-title text-center">
                         Você não possui estudos associados.</p>
                     <p>

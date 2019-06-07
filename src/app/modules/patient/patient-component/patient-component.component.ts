@@ -40,7 +40,7 @@ export class PatientComponentComponent implements OnInit {
                 this.subtitle = 'Estudo selecionado: ' + pilot.name;
             })
             .catch(errorResponse => {
-                console.log('Não foi possível buscar estudo piloto!', errorResponse);
+                // console.log('Não foi possível buscar estudo piloto!', errorResponse);
             });
     }
 
@@ -56,7 +56,7 @@ export class PatientComponentComponent implements OnInit {
                 this.listPilots = studies;
             })
             .catch(error => {
-                console.log('Erro ao buscar pilot-studies: ', error);
+                // console.log('Erro ao buscar pilot-studies: ', error);
             });
     }
 

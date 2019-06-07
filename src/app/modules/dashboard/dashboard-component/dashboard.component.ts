@@ -59,6 +59,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
 
     pilotStudyId: string;
 
+    listOfStudiesIsEmpty: boolean;
+
+    listOfPatientsIsEmpty: boolean;
+
     constructor(
         private dashboardService: DashboardService,
         private authService: AuthService,
@@ -74,6 +78,8 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
         this.listPilots = new Array<PilotStudy>();
         this.listPacients = new Array<Patient>();
         this.pilotStudyId = '';
+        this.listOfStudiesIsEmpty = false;
+        this.listOfPatientsIsEmpty = false;
     }
 
 
@@ -181,6 +187,11 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
             .then(patients => {
                 this.listPacients = patients;
                 this.calcLengthPatients();
+                if (patients.length) {
+                    this.listOfPatientsIsEmpty = false;
+                } else {
+                    this.listOfPatientsIsEmpty = true;
+                }
             })
     }
 
@@ -202,6 +213,11 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
             .then(studies => {
                 this.listPilots = studies;
                 this.calcLengthStudies();
+                if (studies.length) {
+                    this.listOfStudiesIsEmpty = false;
+                } else {
+                    this.listOfStudiesIsEmpty = true;
+                }
             })
     }
 

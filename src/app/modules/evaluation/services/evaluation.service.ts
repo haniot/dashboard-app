@@ -32,9 +32,4 @@ export class EvaluationService {
             .toPromise();
     }
 
-    remove(patient_id: string, evaluation_id: string): Promise<any> {
-        return this.http.delete<any>
-            (`${environment.api_url}/patients/${patient_id}/evaluations/${evaluation_id}`)
-            .toPromise();
-    }
 }

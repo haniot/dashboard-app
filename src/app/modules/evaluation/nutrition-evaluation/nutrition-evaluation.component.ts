@@ -103,6 +103,10 @@ export class NutritionEvaluationComponent implements OnInit {
         private nutritionEvaluationService: NutritionEvaluationService
     ) {
 
+        this.ncSuggested = new NutritionalCouncil();
+        this.ncDefinitive = new NutritionalCouncil();
+
+
         this.patient = new Patient();
 
         this.nutritionalEvaluation = new NutritionEvaluation();
@@ -132,6 +136,7 @@ export class NutritionEvaluationComponent implements OnInit {
     getNutritionEvaluation() {
         this.nutritionService.getById(this.patientId, this.nutritionEvaluationId)
             .then(nutritionEvaluation => {
+                // console.log(nutritionEvaluation)
                 this.nutritionalEvaluation = nutritionEvaluation;
                 this.formatCounseling()
                 this.loadGraph(nutritionEvaluation.heart_rate.dataset);
@@ -140,7 +145,7 @@ export class NutritionEvaluationComponent implements OnInit {
             })
             .catch(erroResponse => {
                 this.toastService.error("Não foi possível carregar avaliação nutricional!");
-                // console.log('Não foi possível carregar avaliação!', errorResponse);
+                // console.log('Não foi possível carregar avaliação!', erroResponse);
             });
 
         this.patientService.getById(this.patientId)
@@ -149,15 +154,20 @@ export class NutritionEvaluationComponent implements OnInit {
             })
             .catch(errorResponse => {
                 this.toastService.error('Não foi possível identificar o paciente!')
-                console.log('Não foi possível buscar paciente!', errorResponse);
+                // console.log('Não foi possível buscar paciente!', errorResponse);
             });
     }
 
     formatCounseling() {
+
+        this.listChecksBmiWhr = new Array<boolean>();
+        this.listChecksGlycemia = new Array<boolean>();
+        this.listChecksBloodPressure = new Array<boolean>();
+
         this.finalCounseling = "";
 
-        this.ncSuggested = this.nutritionalEvaluation.counselings.suggested;
-        this.ncDefinitive = this.nutritionalEvaluation.counselings.definitive;
+        this.ncSuggested = this.nutritionalEvaluation.counseling.suggested;
+        this.ncDefinitive = this.nutritionalEvaluation.counseling.definitive;
 
 
         this.ncSuggested.bmi_whr.forEach((counseling, index) => {
@@ -221,21 +231,21 @@ export class NutritionEvaluationComponent implements OnInit {
 
         const counselingBwr: Array<number> = new Array<number>();
         this.listChecksBmiWhr.forEach((element, index) => {
-            if (element) {
+            if (element === true) {
                 counselingBwr.push(index);
             }
         });
 
         const counselingGlycemia: Array<number> = new Array<number>();
         this.listChecksGlycemia.forEach((element, index) => {
-            if (element) {
+            if (element === true) {
                 counselingGlycemia.push(index);
             }
         });
 
         const counselingBlood: Array<number> = new Array<number>();
         this.listChecksBloodPressure.forEach((element, index) => {
-            if (element) {
+            if (element === true) {
                 counselingBlood.push(index);
             }
         });

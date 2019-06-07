@@ -8,6 +8,7 @@ import {PilotStudy} from "../../../modules/pilot-study/models/pilot.study";
 import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
 import {PilotStudyService} from "../../../modules/pilot-study/services/pilot-study.service";
 import {connectableObservableDescriptor} from "rxjs/internal/observable/ConnectableObservable";
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 export declare interface RouteInfo {
     path: string;
@@ -60,7 +61,8 @@ export class NavbarComponent implements OnInit {
         private authService: AuthService,
         private userService: UserService,
         private pilotStudyService: PilotStudyService,
-        private selectPilotService: SelectPilotStudyService) {
+        private selectPilotService: SelectPilotStudyService,
+        private localStorageService: LocalStorageService) {
         this.location = location;
         this.sidebarVisible = false;
     }
@@ -205,11 +207,13 @@ export class NavbarComponent implements OnInit {
                 .then(user => {
                     if (user) {
                         this.userName = user.name ? user.name : user.email;
+                        const health_area = user.health_area ? user.health_area : 'admin';
                         localStorage.setItem('username', btoa(this.userName))
+                        this.localStorageService.setItem('health_area', health_area);
                     }
                 })
                 .catch(error => {
-                    console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
+                    // console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
                 });
         }
     }
@@ -227,7 +231,7 @@ export class NavbarComponent implements OnInit {
                 this.listPilots = studies;
             })
             .catch(error => {
-                console.log('Erro ao buscar pilot-studies: ', error);
+                // console.log('Erro ao buscar pilot-studies: ', error);
             });
     }
 

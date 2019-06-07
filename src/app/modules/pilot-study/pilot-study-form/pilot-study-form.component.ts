@@ -137,7 +137,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         })
         .catch(error => {
           this.toastService.error('Não foi possível atualizar estudo piloto!');
-          console.log('Não foi possível atualizar estudo!', error);
+          // console.log('Não foi possível atualizar estudo!', error);
         });
     }
   }
@@ -157,7 +157,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         this.listProf = healthProfessionals;
       })
       .catch(error => {
-        console.log('Erro ao carregar lista de profisionais!', error);
+        // console.log('Erro ao carregar lista de profisionais!', error);
       });
   }
 
@@ -169,7 +169,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
       })
       .catch(HttpError => {
         this.toastService.error('Não foi possível remover professional!');
-        console.log('Não foi possível adicionar remover!', HttpError);
+        // console.log('Não foi possível adicionar remover!', HttpError);
       });
   }
 
@@ -183,7 +183,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
       })
       .catch(HttpError => {
         this.toastService.error('Não foi possível adicionar professional!');
-        console.log('Não foi possível adicionar professional!', HttpError);
+        // console.log('Não foi possível adicionar professional!', HttpError);
       });
   }
 
@@ -194,7 +194,9 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
           this.professinalsAssociated = professionals
           this.loadProfessinalsNotAssociated();
         })
-        .catch(HttpError => console.log('Não foi possível carregar profissionais associados ao estudo!', HttpError));
+        .catch(HttpError => {
+          // console.log('Não foi possível carregar profissionais associados ao estudo!', HttpError)
+        });
     }
   }
 

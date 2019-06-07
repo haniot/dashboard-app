@@ -105,7 +105,7 @@ export class ModalUserComponent implements OnInit, OnChanges {
                             this.userForm.setValue(admin);
                         })
                         .catch(error => {
-                            console.log('Não foi possível buscar usuário!', error);
+                            // console.log('Não foi possível buscar usuário!', error);
                         });
                     break;
                 case 'HealthProfessional':
@@ -114,7 +114,7 @@ export class ModalUserComponent implements OnInit, OnChanges {
                             this.userForm.setValue(healthprofessional);
                         })
                         .catch(error => {
-                            console.log('Não foi possível buscar usuário!', error);
+                            // console.log('Não foi possível buscar usuário!', error);
                         });
                     break;
             }

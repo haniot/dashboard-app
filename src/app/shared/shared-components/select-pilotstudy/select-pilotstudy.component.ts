@@ -47,11 +47,6 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        // this.activeRouter.paramMap.subscribe((params) => {
-        //     this.userId = params.get('userId');
-        //     this.getAllPilotStudies();
-        //     this.getLengthPilotStudies();
-        // });
         const pilotstudy_id = localStorage.getItem('pilotstudi_id');
         if (pilotstudy_id && pilotstudy_id !== '') {
             this.selecPilotService.close();
@@ -59,7 +54,6 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         if (this.authService.decodeToken().sub_type === 'admin') {
             this.selecPilotService.close();
         }
-
         this.getAllPilotStudies();
         this.getLengthPilotStudies();
         this.getUserName();

@@ -10,7 +10,7 @@
             </div>
             <p class="card-category">Peso: </p>
             <h3 class="card-title" *ngIf="lastData">
-              {{lastData.value }}
+              {{lastData.value | decimalFormatter}}
               <small>{{lastData.unit }}</small>
             </h3>
             <h3 class="card-title" *ngIf="!lastData">

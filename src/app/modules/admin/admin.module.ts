@@ -22,7 +22,7 @@ import { UserService } from './services/users.service';
 import { SharedModule } from 'app/shared/shared.module';
 import { MypilotstudiesComponent } from './mypilotstudies/mypilotstudies.component';
 import { EditMypilotComponent } from './edit-mypilot/edit-mypilot.component';
-import { MatNativeDateModule } from '@angular/material';
+import {MatNativeDateModule, MatTableModule} from '@angular/material';
 import { HaniotTableComponent } from './haniot-table/haniot-table.component';
 import { MyevaluationsComponent } from './myevaluations/myevaluations.component';
 import {EvaluationModule} from "../evaluation/evaluation.module";
@@ -44,7 +44,8 @@ import {EvaluationModule} from "../evaluation/evaluation.module";
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTableModule,
   ],
   declarations: [
     AdministratorsComponent,

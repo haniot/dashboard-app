@@ -83,7 +83,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                     this.calcLengthPatients();
                 })
                 .catch(errorResponse => {
-                    console.log('Erro ao buscar pacientes: ', errorResponse);
+                    // console.log('Erro ao buscar pacientes: ', errorResponse);
                 });
         }, 200);
     }
@@ -100,7 +100,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                 }
             })
             .catch(errorResponse => {
-                console.log('Erro ao buscar pacientes: ', errorResponse);
+                // console.log('Erro ao buscar pacientes: ', errorResponse);
             });
     }
 

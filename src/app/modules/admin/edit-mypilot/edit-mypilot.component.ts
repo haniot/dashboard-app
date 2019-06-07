@@ -54,7 +54,7 @@ export class EditMypilotComponent implements OnInit {
         .then(res => {
           this.pilotStudyForm.setValue(res);
         }).catch(error => {
-          console.error('Não foi possível buscar estudo piloto!', error);
+          // console.error('Não foi possível buscar estudo piloto!', error);
         })
     }
   }
@@ -107,7 +107,7 @@ export class EditMypilotComponent implements OnInit {
         })
         .catch(error => {
           this.toastService.error('Não foi possível atualizar estudo piloto!');
-          console.log('Não foi possível atualizar estudo!', error);
+          // console.log('Não foi possível atualizar estudo!', error);
         });
     }
   }

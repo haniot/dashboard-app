@@ -110,7 +110,7 @@ export class SidebarComponent implements OnInit {
                     }
                 })
                 .catch(error => {
-                    console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
+                    // console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
                 });
         }
     }

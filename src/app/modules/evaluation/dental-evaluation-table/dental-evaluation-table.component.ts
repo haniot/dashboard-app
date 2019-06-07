@@ -17,14 +17,14 @@ import {PilotStudy} from "../../pilot-study/models/pilot.study";
 export class DentalEvaluationTableComponent implements OnInit, OnChanges {
 
     // MatPaginator Inputs
-    pageSizeOptions: number[] = [5, 10, 25, 100];
+    pageSizeOptions: number[] = [ 10, 25, 100];
 
     // MatPaginator Output
     pageEvent: PageEvent;
 
     /* Controles de paginação */
     page: number = 1;
-    limit: number = 5;
+    limit: number = 10;
     length: number;
 
     listOfEvaluations: Array<OdontologicEvaluation>;
@@ -68,7 +68,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                         this.calcLenghtNutritionEvaluations();
                     })
                     .catch(errorResponse => {
-                        console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
+                        // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                     });
             }, 200);
         }
@@ -176,10 +176,12 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                         this.toastService.error('Profissional não encontrado');
                     } else if (error.code === 400 && error.message === 'PILOTSTUDY EMPTY') {
                         this.toastService.error('O estudo selecionado não possui pacientes!');
+                    } else if (error.code === 400) {
+                        this.toastService.error('Algum paciente não possui as informações necessárias!');
                     } else {
                         this.toastService.error('Não foi possível gerar avaliação!');
                     }
-                    console.log('Não foi possível gerar avaliação!', error)
+                    // console.log('Não foi possível gerar avaliação!', error)
                 }
             )
     }

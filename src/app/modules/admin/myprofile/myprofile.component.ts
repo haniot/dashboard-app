@@ -55,7 +55,7 @@ export class MyprofileComponent implements OnInit {
         this.healthService.getById(this.userId)
           .then(healthprofessional => this.user = healthprofessional)
           .catch(HttpError => {
-            console.log('Não foi possível carregar usuário logado!', HttpError);
+            // console.log('Não foi possível carregar usuário logado!', HttpError);
           });
         break;
     }
@@ -107,7 +107,7 @@ export class MyprofileComponent implements OnInit {
         form.reset();
       })
       .catch(HttpError => {
-        console.log('Não foi possível mudar a senha!', HttpError);
+        // console.log('Não foi possível mudar a senha!', HttpError);
         this.toastr.error('Não foi posível mudar sua senha!');
         if (HttpError.error.code == 400 && HttpError.error.message == "Password does not match") {
           form.controls['old_password'].setErrors({ 'incorrect': true });

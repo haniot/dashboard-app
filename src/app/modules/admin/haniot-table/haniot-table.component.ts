@@ -119,7 +119,7 @@ export class HaniotTableComponent implements OnInit {
                 this.updatePagination();
               })
               .catch(errorResponse => {
-                console.log('Não foi possível buscar administradores!', errorResponse.error);
+                // console.log('Não foi possível buscar administradores!', errorResponse.error);
               });
           } else {
             this.adminService.getAll(page + 1, limit)
@@ -128,7 +128,7 @@ export class HaniotTableComponent implements OnInit {
                 this.updatePagination();
               })
               .catch(errorResponse => {
-                console.log('Não foi possível buscar administradores!', errorResponse.error);
+                // console.log('Não foi possível buscar administradores!', errorResponse.error);
               });
           }
           break;
@@ -140,7 +140,7 @@ export class HaniotTableComponent implements OnInit {
                 this.updatePagination();
               })
               .catch(errorResponse => {
-                console.log('Não foi possível buscar administradores!', errorResponse.error);
+                // console.log('Não foi possível buscar administradores!', errorResponse.error);
               });
           } else {
             this.healthService.getAll(page + 1, limit)
@@ -150,7 +150,7 @@ export class HaniotTableComponent implements OnInit {
                 this.updatePagination();
               })
               .catch(errorResponse => {
-                console.log('Não foi possível buscar administradores!', errorResponse.error);
+                // console.log('Não foi possível buscar administradores!', errorResponse.error);
               });
           }
 

@@ -65,7 +65,7 @@ export class PatientsComponent implements OnInit, OnChanges {
         })
         .catch(errorResponse => {
           this.listOfPatientsIsEmpty = true;
-          console.log('Erro ao buscar pacientes: ', errorResponse);
+          // console.log('Erro ao buscar pacientes: ', errorResponse);
         });
     }, 200);
   }
@@ -82,7 +82,7 @@ export class PatientsComponent implements OnInit, OnChanges {
         }
       })
       .catch(errorResponse => {
-        console.log('Erro ao buscar pacientes: ', errorResponse);
+        // console.log('Erro ao buscar pacientes: ', errorResponse);
       });
   }
 

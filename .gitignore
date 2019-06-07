@@ -1,5 +1,11 @@
-# Certificates
-.certs/
+
+# certificates and keys directories and files
+.certs
+*.pem
+*.crt
+*.key
+*.csr
+
 # Logs
 logs
 *.log

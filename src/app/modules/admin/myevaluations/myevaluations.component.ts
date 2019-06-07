@@ -33,6 +33,9 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
 
     listOfEvaluationsIsEmpty: boolean = false;
 
+    /* id utilizado para deletar uma avaliação*/
+    patientId: string;
+
     // id do profissional logado
     userId: string;
 
@@ -101,7 +104,8 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         this.getAllNutritionEvaluations();
     }
 
-    openModalConfirmation(evaluation_id: string) {
+    openModalConfirmation(patient_id: string, evaluation_id: string) {
+        this.patientId = patient_id;
         this.cacheIdEvaluationRemove = evaluation_id;
         this.modalService.open('modalConfirmation');
     }
@@ -111,19 +115,21 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         this.modalService.close('modalConfirmation');
     }
 
-    removeEvaluation(patientId) {
+    removeEvaluation() {
 
-        this.evaluationService.remove(patientId, this.cacheIdEvaluationRemove)
-            .then(() => {
-                this.getAllNutritionEvaluations();
-                this.calcLenghtNutritionEvaluations();
-                this.toastService.info('Paciente removido com sucesso!');
-                this.closeModalComfimation();
-            })
-            .catch(errorResponse => {
-                this.toastService.error('Não foi possível remover usuário!');
-                // console.log('Não foi possível remover paciente!', errorResponse);
-            });
+        if (this.patientId && this.cacheIdEvaluationRemove) {
+            this.nutritionService.remove(this.patientId, this.cacheIdEvaluationRemove)
+                .then(() => {
+                    this.getAllNutritionEvaluations();
+                    this.calcLenghtNutritionEvaluations();
+                    this.toastService.info('Paciente removido com sucesso!');
+                    this.closeModalComfimation();
+                })
+                .catch(errorResponse => {
+                    this.toastService.error('Não foi possível remover usuário!');
+                    // console.log('Não foi possível remover paciente!', errorResponse);
+                });
+        }
 
     }
 

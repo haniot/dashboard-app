@@ -55,7 +55,7 @@ export class PilotStudyTableComponent implements OnInit {
         }
       })
       .catch(error => {
-        console.log('Erro ao buscar pilot-studies: ', error);
+        // console.log('Erro ao buscar pilot-studies: ', error);
       });
   }
   searchOnSubmit() {
@@ -67,7 +67,7 @@ export class PilotStudyTableComponent implements OnInit {
           this.calcLengthEstudies();
         })
         .catch(error => {
-          console.log('Erro ao buscar pilot-studies: ', error);
+          // console.log('Erro ao buscar pilot-studies: ', error);
         });
     }, 200);
   }

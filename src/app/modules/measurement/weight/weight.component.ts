@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import {IMeasurement} from '../models/measurement';
 import {GraphService} from 'app/shared/shared-services/graph.service';
 import {Weight} from '../models/wieght';
+import {DecimalFormatterPipe} from "../pipes/decimal-formatter.pipe";
 
 
 @Component({
@@ -118,6 +119,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
+        private decimalPipe: DecimalFormatterPipe,
         private graphService: GraphService
     ) {
     }
@@ -136,7 +138,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
         this.data.forEach((element: Weight) => {
             this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
-            this.weightGraph.series[0].data.push(element.value);
+            this.weightGraph.series[0].data.push(this.decimalPipe.transform(element.value));
         });
 
         if (this.data.length > 1) {
@@ -150,8 +152,10 @@ export class WeightComponent implements OnInit, OnChanges {
         this.fatGraph.series[0].data = [];
 
         this.data.forEach((element: Weight) => {
-            this.fatGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
-            this.fatGraph.series[0].data.push(element.fat.value);
+            if (element.fat && element.fat.value) {
+                this.fatGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                this.fatGraph.series[0].data.push(element.fat.value);
+            }
         });
 
         this.graphService.refreshGraph();

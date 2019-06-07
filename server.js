@@ -19,8 +19,8 @@ if (!fs.existsSync(SSL_CERT_PATH)) {
     process.exit();
 }
 
-const privateKey  = fs.readFileSync(SSL_KEY_PATH, 'utf8');
-const  certificate = fs.readFileSync(SSL_CERT_PATH, 'utf8');
+const privateKey = fs.readFileSync(SSL_KEY_PATH, 'utf8');
+const certificate = fs.readFileSync(SSL_CERT_PATH, 'utf8');
 
 const credentials = {
     key: privateKey,
@@ -29,14 +29,17 @@ const credentials = {
 
 const app = express();
 
-app.use(express.static(__dirname + '/dist'));
+const port_http = process.env.PORT_HTTP;
+const port_https = process.env.PORT_HTTPS;
 
 // Redirect HTTP to HTTPS
 app.enable('trust proxy');
 app.use(function (req, res, next) {
     if (req.secure) {
+
         next(); // request was via https, so do no special handling
     } else {
+
         // request was via http, so redirect to https
         const host = req.headers.host || '';
         if (host.includes(':')) {
@@ -48,21 +51,22 @@ app.use(function (req, res, next) {
     }
 });
 
-app.get('/*', function(req,res) {
+app.use(express.static(__dirname + '/dist'));
+
+
+app.get('/*', function (req, res) {
     res.sendFile(__dirname + '/dist/index.html');
 });
 
-const port_http = process.env.PORT_HTTP;
-const port_https = process.env.PORT_HTTPS;
 
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
-httpServer.listen(port_http,()=>{
+httpServer.listen(port_http, () => {
     console.log('Dashboard with HTTP runing in PORT ' + port_http);
 });
 
-httpsServer.listen(port_https, ()=>{
+httpsServer.listen(port_https, () => {
     console.log('Dashboard with HTTPS runing in PORT ' + port_https);
 });
 

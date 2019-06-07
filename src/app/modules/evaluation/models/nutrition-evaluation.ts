@@ -143,7 +143,7 @@ export class TaylorCutPoint {
 export class NutritionEvaluation extends Evaluation {
     status: EvaluationStatus;
     patient: Patient;
-    counselings: ICounseling;
+    counseling: ICounseling;
     nutritional_status: NutritionalStatus;
     overweight_indicator: OverWeightIndicator;
     taylor_cut_point: TaylorCutPoint;

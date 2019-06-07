@@ -83,7 +83,7 @@ export class PatientFormComponent implements OnInit {
                     this.verifyMatchPassword();
                     this.patientForm.setValue(patient);
                 }).catch(errorResponse => {
-                console.error('Não foi possível buscar paciente!', errorResponse);
+                // console.error('Não foi possível buscar paciente!', errorResponse);
             })
         }
     }
@@ -126,7 +126,7 @@ export class PatientFormComponent implements OnInit {
                     this.listPilots = pilots;
                 })
                 .catch(errorResponse => {
-                    console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
+                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
                 });
         } else {
             const userId = atob(localStorage.getItem('user'));
@@ -135,7 +135,7 @@ export class PatientFormComponent implements OnInit {
                     this.listPilots = pilots;
                 })
                 .catch(errorResponse => {
-                    console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
+                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
                 });
         }
     }

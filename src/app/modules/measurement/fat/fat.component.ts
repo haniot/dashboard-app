@@ -37,25 +37,25 @@ export class FatComponent implements OnInit {
         }
       }
     ],
-    visualMap: {
-      top: 5,
-      right: 10,
-      pieces: [{
-        gt: 0,
-        lte: 25,
-        color: '#00a594'
-      }, {
-        gt: 25,
-        lte: 55,
-        color: '#0071a5'
-      }, {
-        gt: 55,
-        color: '#fd0808'
-      }],
-      outOfRange: {
-        color: '#999'
-      }
-    },
+    // visualMap: {
+    //   // top: 5,
+    //   // right: 10,
+    //   pieces: [{
+    //     gt: 0,
+    //     lte: 25,
+    //     color: '#00a594'
+    //   }, {
+    //     gt: 25,
+    //     lte: 55,
+    //     color: '#0071a5'
+    //   }, {
+    //     gt: 55,
+    //     color: '#fd0808'
+    //   }],
+    //   outOfRange: {
+    //     color: '#999'
+    //   }
+    // },
     dataZoom: [
       {
         type: 'slider'
@@ -65,7 +65,7 @@ export class FatComponent implements OnInit {
       {
         type: 'bar',
         data: [],
-        color: 'black',
+        color: '#00a594',
         label: {
           normal: {
             show: true,

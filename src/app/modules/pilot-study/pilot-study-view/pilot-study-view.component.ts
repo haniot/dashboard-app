@@ -8,6 +8,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {Location} from '@angular/common';
 import {PilotStudy} from "../models/pilot.study";
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
     selector: 'app-pilot-study-view',
@@ -29,6 +30,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges {
 
     pilotStudy: PilotStudy;
 
+    userHealthArea: string;
 
     constructor(
         private fb: FormBuilder,
@@ -36,12 +38,14 @@ export class PilotStudyViewComponent implements OnInit, OnChanges {
         private toastService: ToastrService,
         private router: Router,
         private activeRouter: ActivatedRoute,
-        private _location: Location
+        private _location: Location,
+        private localStorageService: LocalStorageService
     ) {
         this.pilotStudy = new PilotStudy();
     }
 
     ngOnInit() {
+        this.loaduserHealthArea();
         this.activeRouter.paramMap.subscribe((params) => {
             this.pilotStudyId = params.get('pilotStudyId');
             if (this.pilotStudyId) {
@@ -52,6 +56,10 @@ export class PilotStudyViewComponent implements OnInit, OnChanges {
 
         this.createForm();
         this.getPilotStudy();
+    }
+
+    loaduserHealthArea(): void {
+        this.userHealthArea = this.localStorageService.getItem('health_area');
     }
 
     getPilotStudy() {
@@ -116,7 +124,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges {
                 })
                 .catch(error => {
                     this.toastService.error('Não foi possível atualizar estudo piloto!');
-                    console.log('Não foi possível atualizar estudo!', error);
+                    // console.log('Não foi possível atualizar estudo!', error);
                 });
         }
     }
