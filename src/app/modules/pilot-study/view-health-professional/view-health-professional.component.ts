@@ -25,7 +25,7 @@ export class ViewHealthProfessionalComponent implements OnChanges {
           this.healthProfessionals = healthprofessionals;
         })
         .catch(error => {
-          console.log('Não foi possivel buscar profissionais de saúde');
+          // console.log('Não foi possivel buscar profissionais de saúde');
         });
     }
   }

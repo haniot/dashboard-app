@@ -14,7 +14,7 @@ label {
   font-weight: bold;
 }
 
-#externa {
+.externa {
   position: absolute;
   z-index: 2000;
   align-items: center;
@@ -28,11 +28,11 @@ label {
   left: 0;
 }
 
-#loading {
+.loading {
   align-items: center;
 }
 
-#loading img {
+.loading img {
   width: 10%;
 }
 

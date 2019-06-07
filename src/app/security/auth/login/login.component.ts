@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         $('body').css('background-color', '#00a594')
-        console.log()
+
         this.f = this.formBuilder.group({
             email: [null, [Validators.required, Validators.email]],
             password: [null, [Validators.required]]

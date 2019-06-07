@@ -5,24 +5,28 @@
     <!--        <i class="material-icons">search</i>-->
     <!--        <div class="ripple-container"></div>-->
     <!--    </button>-->
-<!--    <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
-<!--        <label>-->
-<!--            Selecionar periodo:-->
-<!--        </label>-->
-<!--        <div class="row">-->
-<!--            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-light">-->
-<!--                <input matInput-->
-<!--                       placeholder="Choose a date"-->
-<!--                       [satDatepicker]="picker"-->
-<!--                       [(ngModel)]="search"-->
-<!--                       (change)="searchOnSubmit()">-->
+    <div class="has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12 text-right">
+        <div class="row">
 
-<!--                <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>-->
-<!--                <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
-<!--            </div>-->
-<!--        </div>-->
+            <div class="col-sm-6 col-md-10 col-lg-10 col-xl-10 text-right">
+                <input matInput
+                       placeholder="Selecione um periodo"
+                       [satDatepicker]="picker"
+                       [(ngModel)]="search"
+                       (ngModelChange)="searchOnSubmit()"
+                       id="rangeDate">
 
-<!--    </div>-->
+                <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+            </div>
+
+            <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2 text-left">
+                <button class="btn btn-haniot-primary" (click)="cleanDateRange()">Limpar</button>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 <div class="table-responsive">
@@ -130,15 +134,36 @@
 </haniot-modal>
 
 <div id="generatingNewFile" *ngIf="generatingFile">
-    <div id="externa">
-
+    <div class="externa">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" id="loading">
-                                <img src="../../../../assets/img/loading.gif" alt=""> gerando avaliação odontológica...
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" class="loading">
+                                <img src="../../../../assets/img/loading.gif" alt=""> gerando arquivo ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<div id="removingFile" *ngIf="removingFile">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" class="loading">
+                                <img src="../../../../assets/img/loading.gif" alt=""> removendo arquivo ...
                             </div>
                         </div>
                     </div>

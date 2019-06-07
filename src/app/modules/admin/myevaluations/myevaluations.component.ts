@@ -70,7 +70,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
                     this.calcLenghtNutritionEvaluations();
                 })
                 .catch(errorResponse => {
-                    console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
+                    // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                 });
         }, 200);
 
@@ -92,7 +92,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
             })
             .catch(errorResponse => {
                 this.listOfEvaluationsIsEmpty = true;
-                console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
+                // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
             });
 
     }

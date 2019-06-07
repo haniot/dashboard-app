@@ -6,7 +6,7 @@ import {PilotStudy} from "../models/pilot.study";
 import {ToastrService} from "ngx-toastr";
 import {ModalService} from "../../../shared/shared-components/haniot-modal/service/modal.service";
 import {PilotStudyService} from "../services/pilot-study.service";
-
+import {DateRange} from "../models/range-date";
 
 @Component({
     selector: 'pilot-study-files',
@@ -27,7 +27,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     length: number;
 
     listOfFiles: Array<OdontologicEvaluation>;
-    search: string;
+    search: DateRange;
     searchTime;
 
     @Input() pilotStudy: PilotStudy;
@@ -40,6 +40,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     listOfFilesIsEmpty: boolean;
 
+    removingFile: boolean;
+
     constructor(
         private pilotService: PilotStudyService,
         private toastService: ToastrService,
@@ -48,6 +50,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.pilotStudy = new PilotStudy();
         this.listOfFiles = new Array<OdontologicEvaluation>();
         this.listOfFilesIsEmpty = false;
+        this.search = new DateRange();
+        this.removingFile = false;
     }
 
     ngOnInit() {
@@ -56,7 +60,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     searchOnSubmit() {
-        // console.log(this.search);
         if (this.pilotStudy && this.pilotStudy.id) {
             clearInterval(this.searchTime);
             this.searchTime = setTimeout(() => {
@@ -64,6 +67,11 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                     .then(files => {
                         this.listOfFiles = files;
                         this.calcLenghtFiles();
+                        if (files.length) {
+                            this.listOfFilesIsEmpty = false;
+                        } else {
+                            this.listOfFilesIsEmpty = true;
+                        }
                     })
                     .catch(errorResponse => {
                         console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
@@ -74,7 +82,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     getAllFiles() {
         if (this.pilotStudy && this.pilotStudy.id) {
-            this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
+            this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit)// FIXME: Adicionar this.search
                 .then(files => {
                     this.listOfFiles = files;
 
@@ -106,20 +114,24 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     closeModalComfimation() {
-        this.cacheIdFileRemove = '';
         this.modalService.close('modalConfirmation');
     }
 
     removeFile() {
+        this.removingFile = true;
+        this.closeModalComfimation();
         if (this.pilotStudy && this.pilotStudy.id) {
             this.pilotService.removeFile(this.pilotStudy.id, this.cacheIdFileRemove)
                 .then(() => {
                     this.getAllFiles();
                     this.calcLenghtFiles();
                     this.toastService.info('Arquivo removido com sucesso!');
-                    this.closeModalComfimation();
+                    this.removingFile = false;
+                    this.cacheIdFileRemove = '';
                 })
                 .catch(errorResponse => {
+                    this.removingFile = false;
+                    this.openModalConfirmation(this.cacheIdFileRemove);
                     this.toastService.error('Não foi possível remover arquivo!');
                     // console.log('Não foi possível remover paciente!', errorResponse);
                 });
@@ -141,7 +153,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     calcLenghtFiles() {
         if (this.pilotStudy && this.pilotStudy.id) {
-            this.pilotService.getAllFiles(this.pilotStudy.id, undefined, undefined, this.search)
+            this.pilotService.getAllFiles(this.pilotStudy.id, undefined, undefined)// FIXME: Adicionar this.search
                 .then(files => {
                     this.length = files.length;
                 })
@@ -182,7 +194,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                     } else {
                         this.toastService.error('Não foi possível gerar avaliação!');
                     }
-                    console.log('Não foi possível gerar avaliação!', error)
+                    // console.log('Não foi possível gerar avaliação!', error)
                 }
             )
     }
@@ -193,6 +205,11 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     closeModalFile() {
         this.modalService.close('modalFile');
+    }
+
+    cleanDateRange() {
+        this.search = new DateRange();
+        this.getAllFiles();
     }
 
 }

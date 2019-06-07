@@ -110,11 +110,11 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                 .then(() => {
                     this.getAllNutritionEvaluations();
                     this.calcLenghtNutritionEvaluations();
-                    this.toastService.info('Paciente removido com sucesso!');
+                    this.toastService.info('Avaliação removida com sucesso!');
                     this.closeModalComfimation();
                 })
                 .catch(errorResponse => {
-                    this.toastService.error('Não foi possível remover usuário!');
+                    this.toastService.error('Não foi possível remover avaliação!');
                     // console.log('Não foi possível remover paciente!', errorResponse);
                 });
         }
@@ -140,7 +140,7 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                     this.length = nutritionEvaluations.length;
                 })
                 .catch(errorResponse => {
-                    //console.log('Não foi possível buscar todos as avaliações do pacientes',errorResponse);
+                    // console.log('Não foi possível buscar todos as avaliações do pacientes',errorResponse);
                 });
         }
     }

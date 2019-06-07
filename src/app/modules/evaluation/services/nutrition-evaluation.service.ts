@@ -128,15 +128,4 @@ export class NutritionEvaluationService {
             .toPromise();
     }
 
-    sendNutritionalEvaluationViaEmail(patient: Patient, nutritonalEvaluation: NutritionEvaluation): Promise<boolean> {
-        const notification = new NotificationEmail();
-
-        notification.reply = {name: 'NOME DO PROFISSIONAL', email: 'EMAIL DO PROFISSIONAL'};
-        notification.to.push({name: patient.name, email: patient.email});
-
-        return Promise.reject(true);
-        // return this.http.post<any>
-        //     (`${environment.api_url}/notification`, body)
-        //     .toPromise();
-    }
 }

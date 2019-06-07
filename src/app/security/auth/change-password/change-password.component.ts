@@ -39,7 +39,7 @@ export class ChangePasswordComponent implements OnInit {
 
     ngOnInit() {
         $('body').css('background-color', '#00a594')
-        console.log()
+
         this.f = this.formBuilder.group({
             old_password: [null, [Validators.required]],
             new_password: [null, [Validators.required]]
@@ -92,5 +92,9 @@ export class ChangePasswordComponent implements OnInit {
             this.typeInputPassword_confirm = 'text';
         }
     }
+
+    // verifyNewPassword(): boolean {
+    //
+    // }
 
 }

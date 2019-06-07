@@ -48,7 +48,7 @@ export class MyprofileComponent implements OnInit {
         this.adminService.getById(this.userId)
           .then(admin => this.user = admin)
           .catch(HttpError => {
-            console.log('Não foi possível carregar usuário logado!', HttpError);
+            // console.log('Não foi possível carregar usuário logado!', HttpError);
           });
         break;
       case 'health_professional':

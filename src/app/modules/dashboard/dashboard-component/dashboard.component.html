@@ -9,7 +9,7 @@
                 </div>
 
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center">
-                    <card-top [category]="'Total de Pacientes'" [title]="patientsTotal" [icon]="'face'"></card-top>
+                    <card-top [category]="'Total de Pacientes do Estudo Selecionado'" [title]="listPacients.length" [icon]="'face'"></card-top>
                 </div>
 
                 <!--                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">-->
@@ -33,7 +33,10 @@
                     <p class="second-title text-center">
                         O estudo selecionado não possui pacientes cadastrados.</p>
                     <p>
-                       Ir para a página de cadastro de pacientes: <button class="btn btn-haniot-primary" [routerLink]="['/patients',pilotStudyId,'new']">Cadastrar pacientes</button>
+                        Ir para a página de cadastro de pacientes:
+                        <button class="btn btn-haniot-primary" [routerLink]="['/patients',pilotStudyId,'new']">Cadastrar
+                            pacientes
+                        </button>
                     </p>
                 </div>
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
@@ -82,12 +85,12 @@
                         <div class="card-footer">
                             <div class="container">
                                 <div class="row justify-content-center">
-<!--                                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 text-center">-->
-<!--                                        <p class="card-category">Nome: </p>-->
-<!--                                        <h4 class="card-title">-->
-<!--                                            {{study.name}}-->
-<!--                                        </h4>-->
-<!--                                    </div>-->
+                                    <!--                                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 text-center">-->
+                                    <!--                                        <p class="card-category">Nome: </p>-->
+                                    <!--                                        <h4 class="card-title">-->
+                                    <!--                                            {{study.name}}-->
+                                    <!--                                        </h4>-->
+                                    <!--                                    </div>-->
                                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
                                         <p class="card-category">Data ínicio: </p>
                                         <h4 class="card-title">

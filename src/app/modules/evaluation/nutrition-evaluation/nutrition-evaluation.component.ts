@@ -14,6 +14,7 @@ import {Weight} from 'app/modules/measurement/models/wieght';
 import {Measurement, IMeasurement, MeasurementType} from 'app/modules/measurement/models/measurement';
 import {BloodPressure} from 'app/modules/measurement/models/blood-pressure';
 import {HeartRate} from 'app/modules/measurement/models/heart-rate';
+import {NotificationService} from "../../../shared/shared-services/notification.service";
 
 @Component({
     selector: 'app-nutrition-evaluation',
@@ -93,6 +94,7 @@ export class NutritionEvaluationComponent implements OnInit {
 
     constructor(
         private nutritionService: NutritionEvaluationService,
+        private notificationService: NotificationService,
         private activeRouter: ActivatedRoute,
         private datePipe: DatePipe,
         private modalService: ModalService,
@@ -385,7 +387,7 @@ export class NutritionEvaluationComponent implements OnInit {
     }
 
     sendEvaluationViaEmail(): void {
-        this.nutritionService.sendNutritionalEvaluationViaEmail(this.patient, this.nutritionalEvaluation)
+        this.notificationService.sendNutritionalEvaluationViaEmail(this.patient, this.nutritionalEvaluation)
             .then(() => {
                 this.toastService.info('Avaliação enviada com sucesso!');
             })
