@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { PhysicalActivityHabitsRecord } from '../models/physicalActivity';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PhysicalActivityRecordService } from '../services/physical-activity-record.service';
@@ -10,11 +10,12 @@ import { PhysicalActivityPipe } from '../pipes/physical-activity-frequency.pipe'
   templateUrl: './physical-activity-habits.component.html',
   styleUrls: ['./physical-activity-habits.component.scss']
 })
-export class PhysicalActivityHabitsComponent implements OnInit {
+export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
 
   listPhysicalActivits: Array<PhysicalActivityHabitsRecord>;
   physicalActivityForm: FormGroup;
   @Input() patientId: string;
+  @Input() physicalRecord: PhysicalActivityHabitsRecord;
   index: number;
 
   constructor(
@@ -49,20 +50,24 @@ export class PhysicalActivityHabitsComponent implements OnInit {
       weekly_activities: [{ value: physicalActivity.weekly_activities, disabled: true }]
     });
     this.physicalActivityForm.get('school_activity_freq').patchValue(this.physicalActivityPipe.transform(physicalActivity.school_activity_freq));
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.patientId && changes.patientId.currentValue != changes.patientId.previousValue) {
       this.physicalActivityService.getAll(this.patientId)
-        .then(sleepRecords => {
-          this.listPhysicalActivits = sleepRecords;
-          this.createPhysicalActivityForm(sleepRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
+        .then(physicalRecords => {
+          this.listPhysicalActivits = physicalRecords;
+          this.createPhysicalActivityForm(physicalRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
         })
         .catch(errorResponse => {
-          this.toastService.error('Não foi possível buscar hábitos de sono!');
-          console.log('Não foi possível buscar hábitos de sono!', errorResponse);
+          //this.toastService.error('Não foi possível buscar hábitos de sono!');
+          //console.log('Não foi possível buscar hábitos de sono!', errorResponse);
         });
+    }else if (this.physicalRecord && changes.physicalRecord.currentValue != changes.physicalRecord.previousValue) {
+      this.listPhysicalActivits = new Array<PhysicalActivityHabitsRecord>();
+      this.listPhysicalActivits.push(this.physicalRecord);
+      this.createPhysicalActivityForm(this.physicalRecord);
     }
   }
 

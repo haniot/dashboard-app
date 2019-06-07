@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
-import { HealthProfessional } from '../models/users.models';
+import { HealthProfessional } from '../models/users';
 
 @Injectable()
 
@@ -16,14 +16,21 @@ export class HealthProfessionalService {
       .toPromise();
   }
 
-  getAll(page?: number, limit?: number): Promise<HealthProfessional[]> {
+  getAll(page?: number, limit?: number, search?: string): Promise<HealthProfessional[]> {
     let myParams = new HttpParams();
-    
-    if (page && limit) {
-      myParams = new HttpParams()
-        .set("page", String(page))
-        .set("limit", String(limit))
-        .set("sort", 'created_a');
+
+    if (page) {
+      myParams = myParams.append("page", String(page));
+    }
+
+    if (limit) {
+      myParams = myParams.append("limit", String(limit));
+    } else {
+      myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
+    }
+
+    if (search) {
+      myParams = myParams.append("?name", '*' + search + '*');
     }
 
     const url = `${environment.api_url}/users/healthprofessionals`;
@@ -39,16 +46,18 @@ export class HealthProfessionalService {
   }
 
   update(healthprofessionals: HealthProfessional): Promise<boolean> {
-    let copy_healthprofessionals = {};
-    return this.getById(healthprofessionals.id)
-      .then(healthprofessionalsOld => {
-        Object.keys(healthprofessionalsOld).forEach(key => {
-          if (healthprofessionalsOld[key] != healthprofessionals[key] || key == 'id') {
-            copy_healthprofessionals[key] =  healthprofessionals[key];
-          }
-        });
-        return this.http.patch<any>(`${environment.api_url}/users/healthprofessionals/${healthprofessionals.id}`, copy_healthprofessionals)
-          .toPromise();
-      });
+    return this.http.patch<any>(`${environment.api_url}/users/healthprofessionals/${healthprofessionals.id}`, healthprofessionals)
+      .toPromise();
+    // let copy_healthprofessionals = {};
+    // return this.getById(healthprofessionals.id)
+    //   .then(healthprofessionalsOld => {
+    //     Object.keys(healthprofessionalsOld).forEach(key => {
+    //       if (healthprofessionalsOld[key] != healthprofessionals[key] || key == 'id') {
+    //         copy_healthprofessionals[key] =  healthprofessionals[key];
+    //       }
+    //     });
+    //     return this.http.patch<any>(`${environment.api_url}/users/healthprofessionals/${healthprofessionals.id}`, copy_healthprofessionals)
+    //       .toPromise();
+    //   });
   }
 }

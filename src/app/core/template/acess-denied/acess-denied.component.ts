@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'acess-denied',
@@ -8,11 +8,11 @@ import { Location } from '@angular/common';
 })
 export class AcessDeniedComponent {
 
-  constructor(private location: Location) { }
+  constructor(private router: Router) { }
 
 
   onBack() {
-    this.location.back();
+    this.router.navigate(['/']);
   }
 
 }

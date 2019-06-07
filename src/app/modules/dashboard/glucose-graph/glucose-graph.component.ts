@@ -9,17 +9,17 @@ export class GlucoseGraphComponent implements OnInit {
 
   option = {
     xAxis: {
-        type: 'category',
-        data: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
+      type: 'category',
+      data: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
     },
     yAxis: {
-        type: 'value'
+      type: 'value'
     },
     series: [{
-        data: [200, 170, 150, 199, 186, 188, 183],
-        type: 'line'
+      data: [200, 170, 150, 199, 186, 188, 183],
+      type: 'line'
     }]
-};
+  };
 
 
   constructor() { }

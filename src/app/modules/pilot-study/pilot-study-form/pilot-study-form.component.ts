@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PilotStudyService } from '../services/pilot-study.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
-import { HealthProfessional } from 'app/modules/admin/models/users.models';
-import { Location } from '@angular/common';
+import { HealthProfessional } from 'app/modules/admin/models/users';
+import { AuthService } from 'app/security/auth/services/auth.service';
 
 @Component({
   selector: 'pilot-study-form',
@@ -25,11 +26,15 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
 
   multiSelectProfissionais: Array<any> = new Array<any>();
   multiSelectProfissionaisSelected: Array<any> = new Array<any>();
+
   color = 'accent';
   checked = false;
   disabled = false;
 
   @Input() pilotStudyId: string;
+  healthprofessionalId: string;
+
+  typeUserLogado: string;
 
   constructor(
     private fb: FormBuilder,
@@ -38,24 +43,36 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     private toastService: ToastrService,
     private router: Router,
     private activeRouter: ActivatedRoute,
-    private location: Location
+    private _location: Location,
+    private authService: AuthService
   ) {
 
   }
 
   ngOnInit() {
+    this.typeUserLogado = this.authService.decodeToken().sub_type;
     this.activeRouter.paramMap.subscribe((params) => {
+
       this.pilotStudyId = params.get('pilotStudyId');
+
       if (this.pilotStudyId) {
         this.createForm();
         this.getPilotStudy();
+      }
+
+      if (this.typeUserLogado && this.typeUserLogado == 'admin') {
         this.loadProfessinalsAssociated();
         this.getListProfissonals();
       }
     });
+
     this.createForm();
     this.getPilotStudy();
-    this.getListProfissonals();
+
+
+    if (this.typeUserLogado && this.typeUserLogado == 'admin') {
+      this.getListProfissonals();
+    }
   }
 
   getPilotStudy() {
@@ -64,7 +81,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         .then(res => {
           this.pilotStudyForm.setValue(res);
         }).catch(error => {
-          console.error('Não foi possível buscar estudo piloto!', error);
+          this.toastService.error('Não foi possível buscar estudo piloto!');
+          //console.error('Não foi possível buscar estudo piloto!', error);
         })
     }
   }
@@ -74,24 +92,30 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
       this.pilotStudyForm = this.fb.group({
         id: [''],
         name: ['', Validators.required],
+        location: ['', Validators.required],
         start: ['', Validators.required],
         end: ['', Validators.required],
-        health_professionals_id: [{ value: '', disabled: true }, Validators.required],
-        is_active: [true, Validators.required]
+        health_professionals_id: ['', Validators.required],
+        is_active: [true, Validators.required],
       });
     }
     else {//Caso seja a tela de inserção
       this.pilotStudyForm = this.fb.group({
         id: [''],
         name: ['', Validators.required],
+        location: [''],
         start: ['', Validators.required],
-        end: ['', Validators.required],
+        end: [{ value: '', disabled: true }, Validators.required],
         health_professionals_id: ['', Validators.required],
-        is_active: [true, Validators.required]
+        is_active: [true, Validators.required],
       });
     }
     this.professionalsForm = this.fb.group({
       health_professionals_id_add: ['', Validators.required],
+    });
+
+    this.pilotStudyForm.get('start').valueChanges.subscribe(val => {
+      this.pilotStudyForm.get('end').enable();
     });
   }
 
@@ -113,7 +137,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
         })
         .catch(error => {
           this.toastService.error('Não foi possível atualizar estudo piloto!');
-          console.log('Não foi possível atualizar estudo!', error);
+          // console.log('Não foi possível atualizar estudo!', error);
         });
     }
   }
@@ -124,20 +148,17 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
   }
 
   onBack() {
-    this.location.back();
+    this._location.back();
   }
 
   getListProfissonals(): Promise<any> {
-    if(localStorage.getItem('typeUser') == 'Admin'){
-      return this.healthService.getAll()
+    return this.healthService.getAll()
       .then(healthProfessionals => {
         this.listProf = healthProfessionals;
       })
       .catch(error => {
-        console.log('Erro ao carregar lista de profisionais!', error);
+        // console.log('Erro ao carregar lista de profisionais!', error);
       });
-    }
-    return Promise.resolve([]);
   }
 
   dissociateHealthProfessional(health_professionals_id: string) {
@@ -148,7 +169,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
       })
       .catch(HttpError => {
         this.toastService.error('Não foi possível remover professional!');
-        console.log('Não foi possível adicionar remover!', HttpError);
+        // console.log('Não foi possível adicionar remover!', HttpError);
       });
   }
 
@@ -162,17 +183,21 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
       })
       .catch(HttpError => {
         this.toastService.error('Não foi possível adicionar professional!');
-        console.log('Não foi possível adicionar professional!', HttpError);
+        // console.log('Não foi possível adicionar professional!', HttpError);
       });
   }
 
   loadProfessinalsAssociated() {
-    this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudyId)
-      .then(professionals => {
-        this.professinalsAssociated = professionals
-        this.loadProfessinalsNotAssociated();
-      })
-      .catch(HttpError => console.log('Não foi possível carregar profissionais associados ao estudo!', HttpError));
+    if (this.pilotStudyId) {
+      this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudyId)
+        .then(professionals => {
+          this.professinalsAssociated = professionals
+          this.loadProfessinalsNotAssociated();
+        })
+        .catch(HttpError => {
+          // console.log('Não foi possível carregar profissionais associados ao estudo!', HttpError)
+        });
+    }
   }
 
   loadProfessinalsNotAssociated() {
@@ -189,9 +214,5 @@ export class PilotStudyFormComponent implements OnInit, OnChanges {
     return listProf.find(prof => {
       return prof.id == professional.id;
     }) ? true : false;
-  }
-
-  showManagerProfessionals(): boolean{
-    return localStorage.getItem('typeUser')=='Admin';
   }
 }

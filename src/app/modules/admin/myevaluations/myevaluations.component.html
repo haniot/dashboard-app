@@ -1,0 +1,78 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <haniot-card title="Lista de avaliações" subtitle="Selecione uma avaliação para visualizar">
+                    <div class="input-group no-border">
+                        <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
+                               placeholder="Pesquisar avaliação..." (keyup)="searchOnSubmit()">
+                        <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
+                                (click)="searchOnSubmit()">
+                            <i class="material-icons">search</i>
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Paciente</th>
+                                <th>Data</th>
+                                <th>Estado</th>
+                                <th colspan="2">Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngIf="listOfEvaluations.length==0">
+                                <td colspan="5" *ngIf="!listOfEvaluationsIsEmpty"><img
+                                        src="../../../../assets/img/loading.gif" alt=""> carregando avaliações...
+                                </td>
+                                <td colspan="5" *ngIf="listOfEvaluationsIsEmpty">
+                                    <h4>Nenhuma avaliação encontrada.<br>
+                                        <small>* Utilize o aplicativo para gerar novas avaliações!</small>
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let evaluation of listOfEvaluations; index as i">
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{getIndex(i)}}</td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.patient.name}}</td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.created_at | date}}</td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">
+                                    <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus}}</span>
+                                </td>
+                                <td>
+                                    <a class="nav-link"
+                                       [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
+                                       title="Acessar avaliação...">
+                                        <i class="material-icons">input</i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="nav-link"
+                                       (click)="openModalConfirmation(evaluation.patient.id,evaluation.id)"
+                                       title="Excluir avaliação...">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+                                       (page)="clickPagination($event)">
+                        </mat-paginator>
+
+                    </div>
+
+                </haniot-card>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<modal-confirmation [message]="'Tem certeza que deseja remover avaliação?'" (confirmation)="removeEvaluation()"
+                    (noconfirmation)="closeModalComfimation()"></modal-confirmation>

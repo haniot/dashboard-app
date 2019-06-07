@@ -1,0 +1,27 @@
+#config-graph{
+    padding: 5px 5px;
+}
+
+.border-config{
+    align-items: center;
+    
+    margin-left: 5px;
+    margin-top: 5px;
+    border: 0;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.paddin55{    
+    padding: 5px 5px;
+}
+
+/* CSS to change Default/'Accent' color */
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #00a594; /*replace with your color*/
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #00a594;  /*replace with your color*/
+}

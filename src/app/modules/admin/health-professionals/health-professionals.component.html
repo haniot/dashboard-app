@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-12">
         <haniot-card title="Lista de profissionais de saúde" subtitle="">
-          <haniot-table [list]="healthProfessionals" (onremove)="getAllHealthProfessionals()"
+          <haniot-table [(list)]="healthProfessionals" (onremove)="getAllHealthProfessionals()"
             (onedit)="editUser($event)" [userType]="'HealthProfessional'" (pagination)="paginationEvent($event)"
             [(length)]="length" [pageSize]="limit"></haniot-table>
         </haniot-card>

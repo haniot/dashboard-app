@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, OnInit, AfterViewChecked } from '@angular/core';
 
 import { ToastrService } from 'ngx-toastr';
 
 import { HealthProfessionalService } from '../services/health-professional.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { IUser, HealthProfessional } from '../models/users.models';
+import { IUser, HealthProfessional } from '../models/users';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 
 @Component({
   selector: 'health-professionals',
   templateUrl: './health-professionals.component.html',
   styleUrls: ['./health-professionals.component.scss']
 })
-export class HealthProfessionalComponent {
+export class HealthProfessionalComponent implements AfterViewChecked {
   userEdit: IUser = new HealthProfessional();
   healthProfessionals: Array<IUser> = [];
 
@@ -20,20 +21,24 @@ export class HealthProfessionalComponent {
   limit: number = 5;
   length: number;
 
+  search: string;
+
   constructor(
     private healthService: HealthProfessionalService,
     private toastr: ToastrService,
-    private modalService: ModalService) {
+    private modalService: ModalService,
+    private loadinService: LoadingService) {
     this.getAllHealthProfessionals();
     /* Buscando todos profissionais de saúde cadastrados para saber a quantidade total, o length é utilizado na paginação */
     this.getLengthHealthProfessionals();
   }
 
   getAllHealthProfessionals() {
-    this.healthService.getAll(this.page, this.limit)
+    this.healthService.getAll(this.page, this.limit, this.search)
       .then(healthProfessionals => {
         this.healthProfessionals = healthProfessionals;
         this.getLengthHealthProfessionals();
+        this.loadinService.close();
       })
       .catch(errorResponse => {
         this.toastr.error('Não foi possível listar profissional de saúde!');
@@ -53,12 +58,12 @@ export class HealthProfessionalComponent {
           this.modalService.actionNotExecuted('modalUser', event);
         }
       })
-      .catch(errorResponse => {        
+      .catch(errorResponse => {
         if (errorResponse.status == 409 &&
           errorResponse.error.code == 409 &&
           errorResponse.error.message == 'A registration with the same unique data already exists!') {
           this.toastr.error('Email já cadastrado');
-        }else{
+        } else {
           this.toastr.error('Não foi possível criar profissional de saúde!');
         }
         this.modalService.actionNotExecuted('modalUser', event, errorResponse.error);
@@ -83,7 +88,7 @@ export class HealthProfessionalComponent {
           errorResponse.error.code == 409 &&
           errorResponse.error.message == 'A registration with the same unique data already exists!') {
           this.toastr.error('Email já cadastrado');
-        }else{
+        } else {
           this.toastr.error('Não foi possível atualizar profissional de saúde!');
         }
         this.modalService.actionNotExecuted('modalUserEdit', healthProfessional);
@@ -104,6 +109,7 @@ export class HealthProfessionalComponent {
   paginationEvent(event) {
     this.page = event.page;
     this.limit = event.limit;
+    this.search = event.search;
     this.getAllHealthProfessionals();
   }
 
@@ -117,4 +123,9 @@ export class HealthProfessionalComponent {
         //console.log('Não foi possível buscar todos os profissionais!', errorResponse);
       });
   }
+
+  ngAfterViewChecked() {
+    this.loadinService.close();
+  }
+
 }

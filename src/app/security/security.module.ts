@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 
-import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './guards/auth.guard';
 import { ScopeGuard } from './guards/scope.guard';
 import { AplicationErrorHandle } from 'app/app.error-handle';
@@ -14,17 +13,16 @@ import { VerifyScopeService } from './services/verify-scope.service';
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    AuthModule
+    CommonModule
   ],
-  providers:[
+  providers: [
     AuthGuard,
     ScopeGuard,
     VerifyScopeService,
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    {provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
-    {provide: HTTP_INTERCEPTORS, useClass: ChangePasswordInterceptor, multi: true },
-    {provide: ErrorHandler, useClass: AplicationErrorHandle }
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ChangePasswordInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: AplicationErrorHandle }
   ]
 })
 export class SecurityModule { }

@@ -6,7 +6,7 @@ export interface IPilotStudy {
     start: string;
     end: string;
     health_professionals_id: Array<string>;
-
+    location?: string;
 }
 
 export class PilotStudy implements IPilotStudy {
@@ -17,8 +17,9 @@ export class PilotStudy implements IPilotStudy {
     start: string;
     end: string;
     health_professionals_id: Array<string>;
+    location?: string;
 
-    constructor(){}
+    constructor() { }
 
 }
 

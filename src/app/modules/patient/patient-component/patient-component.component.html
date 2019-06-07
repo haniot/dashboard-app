@@ -1,25 +1,27 @@
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <haniot-card title="Lista de pacientes" [subtitle]="subtitle">
-          <patient-table [pilotStudyId]="pilotStudyId"></patient-table>
-        </haniot-card>
-      </div>
-      <div class="row container">
-        <div class="col-md-6">
-          <button type="submit" class="btn btn-haniot-primary" (click)="newPatient()">
-            Adicionar
-            <i class="material-icons">add</i>
-          </button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <haniot-card title="Lista de pacientes" [subtitle]="''">
+                    <patient-table [(pilotStudyId)]="pilotStudyId"></patient-table>
+                </haniot-card>
+            </div>
         </div>
-        <div class="col-md-6">
-          <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
-            <i class="material-icons">arrow_back</i>
-            Voltar
-          </button>
+        <div class="d-flex justify-content-around">
+            <div class="p-2">
+                <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
+                    <i class="material-icons">arrow_back</i>
+                    Voltar
+                </button>
+            </div>
+            <div class="p-2">
+                <button type="submit" class="btn btn-haniot-primary" (click)="newPatient()">
+                    Adicionar
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
         </div>
-      </div>
+
+
     </div>
-  </div>
 </div>

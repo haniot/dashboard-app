@@ -7,10 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class HaniotModalComponent implements OnInit {
   @Input() modalId: string;
-  
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

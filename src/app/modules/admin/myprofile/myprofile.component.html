@@ -8,7 +8,7 @@
             <div class="form-group has-feedback"
               [ngClass]="{'has-success': nomeModelEdit.valid,
                                   'has-error': nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)}"
-              *ngIf="typeUser == 'HealthProfessional'">
+              *ngIf="typeUser == 'health_professional'">
               <label for="name">Nome:</label>
               <input type="text" class="form-control" id="nomeEdit" required minlength="4" type="text" name="name"
                 #nomeModelEdit="ngModel" [(ngModel)]="user==undefined?name:user.name" placeholder="Nome"
@@ -39,7 +39,7 @@
 
             <div class="form-group has-feedback" [ngClass]="{'has-success': healthAreaModel.valid,
             'has-error': healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)}"
-              *ngIf="typeUser == 'HealthProfessional'">
+              *ngIf="typeUser == 'health_professional'">
               <label for="healthArea">Área: </label>
               <select name="health_area" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel"
                 [(ngModel)]="user==undefined?health_area:user.health_area" [disabled]="visibilityButtonSave?null:'disabled'">

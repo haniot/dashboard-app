@@ -1,64 +1,154 @@
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-2 col-md-6 col-sm-6">
-        <card-top></card-top>
-      </div>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row justify-content-center">
 
-      <div class="col-lg-2 col-md-6 col-sm-6">
-        <card-top></card-top>
-      </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center">
+                    <card-top [category]="'Total de Estudos'" [title]="studiesTotal"
+                              [icon]="'library_books'"></card-top>
+                </div>
 
-      <div class="col-lg-2 col-md-6 col-sm-6">
-        <card-top></card-top>
-      </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center">
+                    <card-top [category]="'Total de Pacientes'" [title]="patientsTotal" [icon]="'face'"></card-top>
+                </div>
 
-      <div class="col-lg-2 col-md-6 col-sm-6">
-        <card-top></card-top>
-      </div>
+                <!--                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">-->
+                <!--                    <card-top [category]="'Total de Medições'" [title]="measurementsTotal"-->
+                <!--                              [icon]="'timeline'"></card-top>-->
+                <!--                </div>-->
+
+                <!--                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">-->
+                <!--                    <card-top [category]="'Total de Avaliações'" [title]="evaluationsTotal"-->
+                <!--                              [icon]="'assignment'"></card-top>-->
+                <!--                </div>-->
+            </div>
+
+        </div>
+
+        <haniot-card [title]="'Acesse seus pacientes'"
+                     [subtitle]="'Clique sobre o card para visualizar informações do paciente.'"
+                     *ngIf="isNotUserAdmin()">
+            <div class="row justify-content-center">
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfPatientsIsEmpty">
+                    <p class="second-title text-center">
+                        O estudo selecionado não possui pacientes cadastrados.</p>
+                    <p>
+                       Ir para a página de cadastro de pacientes: <button class="btn btn-haniot-primary" [routerLink]="['/patients',pilotStudyId,'new']">Cadastrar pacientes</button>
+                    </p>
+                </div>
+                <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
+                   *ngFor="let patient of listPacients"
+                   [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']"
+                   [title]="'Visualizar ' + patient.name">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                                <img src="../../../../assets/img/haniot/x_boy.png" *ngIf="patient.gender === 'male'">
+                                <img src="../../../../assets/img/haniot/x_girl.png" *ngIf="patient.gender === 'female'">
+                            </div>
+                            <span class="badge badge-haniot category">{{patient.name}}</span><br>
+
+                            <span class="badge badge-haniot">{{patient.birth_date | convertInAge}}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <mat-paginator [length]="lengthPatients" [pageSize]="limitPatients"
+                           [pageSizeOptions]="pageSizeOptionsPatients"
+                           (page)="clickPaginationPatients($event)">
+            </mat-paginator>
+        </haniot-card>
+
+        <haniot-card [title]="'Acesse seus estudos'"
+                     [subtitle]="'Clique sobre o card para visualizar informações do estudo.'">
+            <div class="row justify-content-center">
+
+                <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
+                   *ngFor="let study of listPilots"
+                   [routerLink]="['/pilotstudies',study.id,'details']"
+                   [title]="'Visualizar ' + study.name">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">library_books</i>
+                            </div>
+                            <span class="badge"
+                                  [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active ? 'ATIVADO' : 'DESATIVADO'}}</span>
+
+                            <h3 class="card-title">
+                                {{study.name}}
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="container">
+                                <div class="row justify-content-center">
+<!--                                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 text-center">-->
+<!--                                        <p class="card-category">Nome: </p>-->
+<!--                                        <h4 class="card-title">-->
+<!--                                            {{study.name}}-->
+<!--                                        </h4>-->
+<!--                                    </div>-->
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+                                        <p class="card-category">Data ínicio: </p>
+                                        <h4 class="card-title">
+                                            {{study.start | date}}
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+                                        <p class="card-category">Data término: </p>
+                                        <h4 class="card-title">
+                                            {{study.end | date}}
+                                        </h4>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfStudiesIsEmpty">
+                    <p class="second-title text-center">
+                        Você não possui estudos associados.</p>
+                    <p>
+                        Entre em contato com o administrador.
+                    </p>
+                </div>
+            </div>
+            <mat-paginator [length]="lengthStudies" [pageSize]="limitStudies" [pageSizeOptions]="pageSizeOptionsStudies"
+                           (page)="clickPaginationStudies($event)">
+            </mat-paginator>
+        </haniot-card>
+        <!--    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">-->
+        <!--      <div class="row">-->
+        <!--        <div class="col-lg-6 col-md-6 col-sm-6">-->
+        <!--          <scatter-graph></scatter-graph>-->
+        <!--        </div>-->
+
+        <!--        <div class="col-lg-6 col-md-6 col-sm-6">-->
+        <!--          <area-graph></area-graph>-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--    </haniot-card>-->
+
+        <!--    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">-->
+        <!--      <div class="row">-->
+        <!--        <div class="col-lg-6 col-md-6 col-sm-6">-->
+        <!--          <bar-graph></bar-graph>-->
+        <!--        </div>-->
+
+        <!--        <div class="col-lg-6 col-md-6 col-sm-6">-->
+        <!--          <bar-graph></bar-graph>-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--    </haniot-card>-->
+
+        <!--    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">-->
+        <!--      <div class="row">-->
+        <!--        <div class="col-lg-12 col-md-12 col-sm-12">-->
+        <!--          <bar-graph></bar-graph>-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--    </haniot-card>-->
+
     </div>
-    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">
-      <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6">
-          <bar-graph></bar-graph>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-          <area-graph></area-graph>
-        </div>
-      </div>
-    </haniot-card>
-
-    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">
-      <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6">
-          <scatter-graph></scatter-graph>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-          <area-graph></area-graph>
-        </div>
-      </div>
-    </haniot-card>
-
-    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">
-      <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6">
-          <bar-graph></bar-graph>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-          <bar-graph></bar-graph>
-        </div>
-      </div>
-    </haniot-card>
-
-    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <bar-graph></bar-graph>
-        </div>
-      </div>
-    </haniot-card>
-  </div>
 </div>

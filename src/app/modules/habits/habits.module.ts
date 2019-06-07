@@ -23,6 +23,18 @@ import { MedicalRecordService } from './services/medical-record.service';
 import { ChronicDiseasePipe } from './pipes/chronic-disease.pipe';
 import { DiseaseHistoryPipe } from './pipes/disease-history.pipe';
 import { WeeklyFoodPipe } from './pipes/weekly-food.pipe';
+import { SociodemographicRecordComponent } from './sociodemographic-record/sociodemographic-record.component';
+import { FamilycohesionRecordComponent } from './familycohesion-record/familycohesion-record.component';
+import { OralhealthRecordComponent } from './oralhealth-record/oralhealth-record.component';
+import { FrequencyFamilyCohesionPipe } from './pipes/frequency-familycohesion.pipe';
+import { FamilyCohesionRecordService } from './services/familycohesion-record.service';
+import { OralHealthRecordService } from './services/oralhealth-record.service';
+import { SocioDemographicRecordService } from './services/sociodemographic-record.service';
+import { MotherSchoolarityPipe } from './pipes/mother-schoolarity.pipe';
+import { CorAndRacePipe } from './pipes/cor-race.pipe';
+import { TeethbushingPipe } from './pipes/teeth-brushing-frequency.pipe';
+import { ToothTypePipe } from './pipes/tooth-type.pipe';
+import { LesionTypePipe } from './pipes/lesion-type.pipe';
 
 @NgModule({
   declarations: [
@@ -41,7 +53,16 @@ import { WeeklyFoodPipe } from './pipes/weekly-food.pipe';
     ChronicDiseasePipe,
     DiseaseHistoryPipe,
     WeeklyFoodPipe,
-    PhysicalActivityPipe
+    PhysicalActivityPipe,
+    SociodemographicRecordComponent,
+    FamilycohesionRecordComponent,
+    OralhealthRecordComponent,
+    FrequencyFamilyCohesionPipe,
+    MotherSchoolarityPipe,
+    CorAndRacePipe,
+    TeethbushingPipe,
+    ToothTypePipe,
+    LesionTypePipe
   ],
   imports: [
     CommonModule,
@@ -54,7 +75,10 @@ import { WeeklyFoodPipe } from './pipes/weekly-food.pipe';
     FeedingHabitsComponent,
     SleepHabitsComponent,
     PhysicalActivityHabitsComponent,
-    MedicalRecordComponent
+    MedicalRecordComponent,
+    SociodemographicRecordComponent,
+    FamilycohesionRecordComponent,
+    OralhealthRecordComponent
   ],
   providers: [
     /**Pipes */
@@ -68,11 +92,20 @@ import { WeeklyFoodPipe } from './pipes/weekly-food.pipe';
     ChronicDiseasePipe,
     DiseaseHistoryPipe,
     WeeklyFoodPipe,
+    FrequencyFamilyCohesionPipe,
+    MotherSchoolarityPipe,
+    CorAndRacePipe,
+    TeethbushingPipe,
+    ToothTypePipe,
+    LesionTypePipe,
     /**services */
     FeedingRecordService,
     SleepRecordService,
     PhysicalActivityRecordService,
-    MedicalRecordService
+    MedicalRecordService,
+    FamilyCohesionRecordService,
+    OralHealthRecordService,
+    SocioDemographicRecordService
   ]
 })
 export class HabitsModule { }

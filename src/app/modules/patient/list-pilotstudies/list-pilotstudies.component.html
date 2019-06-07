@@ -28,8 +28,8 @@
                     title="Clique para visualizar os pacientes...">
                     <td>{{getIndex(i)}}</td>
                     <td>{{study.name}}</td>
-                    <td>{{study.start | date }}</td>
-                    <td>{{study.end | date}}</td>
+                    <td>{{study.start | date : "fullDate" : "pt-BR"}}</td>
+                    <td>{{study.end | date : "fullDate"}}</td>
                     <td>
                       <span>
                         {{study.is_active?'ATIVADO':'DESATIVADO'}}

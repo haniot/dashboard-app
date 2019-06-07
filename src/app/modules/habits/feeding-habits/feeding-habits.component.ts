@@ -17,16 +17,18 @@ import { FeedingRecordService } from '../services/feeding-record.service';
   styleUrls: ['./feeding-habits.component.scss']
 })
 export class FeedingHabitsComponent implements OnInit, OnChanges {
-  
+
   listFeeding: Array<FeedingHabitsRecord>;
   feedingForm: FormGroup;
   @Input() patientId: string;
+  @Input() feedingHabitsRecord: FeedingHabitsRecord;
+
   index: number;
 
   constructor(
     private fb: FormBuilder,
     private feedingService: FeedingRecordService,
-    private toastService: ToastrService, 
+    private toastService: ToastrService,
     private waterGlassPipe: WaterGlassPipe,
     private breakFastPipe: BreakFastPipe,
     private breastPipe: BreastFeedingPipe,
@@ -71,7 +73,7 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
     this.feedingForm.get('daily_water_glasses').patchValue(this.waterGlassPipe.transform(feedingRecord.daily_water_glasses));
     this.feedingForm.get('six_month_breast_feeding').patchValue(this.breastPipe.transform(feedingRecord.six_month_breast_feeding));
     this.feedingForm.get('breakfast_daily_frequency').patchValue(this.breakFastPipe.transform(feedingRecord.breakfast_daily_frequency));
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -82,9 +84,13 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
           this.createFeedingForm(feedingRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
         })
         .catch(errorResponse => {
-          this.toastService.error('Não foi possível buscar hábitos alimentares!');
-          console.log('Não foi possível buscar hábitos alimentares!', errorResponse);
+          //this.toastService.error('Não foi possível buscar hábitos alimentares!');
+          //console.log('Não foi possível buscar hábitos alimentares!', errorResponse);
         });
+    } else if (this.feedingHabitsRecord && changes.feedingHabitsRecord.currentValue != changes.feedingHabitsRecord.previousValue) {
+      this.listFeeding = new Array<FeedingHabitsRecord>();
+      this.listFeeding.push(this.feedingHabitsRecord);
+      this.createFeedingForm(this.feedingHabitsRecord);
     }
   }
 
