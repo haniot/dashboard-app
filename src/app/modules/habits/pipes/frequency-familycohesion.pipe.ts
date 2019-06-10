@@ -22,6 +22,9 @@ export class FrequencyFamilyCohesionPipe implements PipeTransform {
             case 'almost_aways':
                 return 'Quase sempre';
 
+            case undefined:
+                return 'Fora dos parâmetros';
+
             default:
                 return 'NÂO ENCONTRADO';
         }

@@ -211,3 +211,9 @@ select.soflow-color {
 .mat-datepicker-toggle-active{
     color: #00a594;
 }
+
+label {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}

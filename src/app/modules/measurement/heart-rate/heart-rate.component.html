@@ -1,21 +1,25 @@
 <haniot-card [title]="'Frequência cardíaca'" subtitle=''>
 
-  <div class="row">
+    <div class="row">
 
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center" [ts-chart]="optionLastData"></div>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center" [ts-chart]="optionLastData"></div>
 
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
-      <div class="d-flex flex-row-reverse">
-        <div class="p-2">
-          <small class="pull-right" *ngIf="lastData">Data do último registro:{{lastData.timestamp | myDate}}</small>
-          <small class="pull-right" *ngIf="!lastData">Data do último registro: dia/mês/ano horário</small>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2">
+                    <small class="pull-right" *ngIf="lastData">Data do último
+                        registro:{{lastData.timestamp | myDate}}</small>
+                    <small class="pull-right" *ngIf="!lastData">Data do último registro: dia/mês/ano horário</small>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center" [ts-chart]="option"></div>
+
+        <div *ngIf="data.length==0">
+            <span class="badge badge-danger badge-12">Nenhum registro de frequência cardíaca cadastrado!</span>
+        </div>
     </div>
-
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center" [ts-chart]="option"></div>
-
-  </div>
 
 
 </haniot-card>

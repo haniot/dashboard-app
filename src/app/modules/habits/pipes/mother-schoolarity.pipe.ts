@@ -22,8 +22,8 @@ export class MotherSchoolarityPipe implements PipeTransform {
             case 'graduation_complete':
                 return 'Superior completo';
 
-            case 'undefined':
-                return 'Não respondido';
+            case undefined:
+                return 'Fora dos parâmetros';
 
             default:
                 return 'NÂO ENCONTRADO';

@@ -101,7 +101,9 @@ export class FatComponent implements OnInit {
   constructor(
     private datePipe: DatePipe,
     private graphService: GraphService
-  ) { }
+  ) {
+    this.data = new Array<IMeasurement>();
+  }
 
   ngOnInit() {
 

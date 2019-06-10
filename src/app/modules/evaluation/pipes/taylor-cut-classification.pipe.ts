@@ -13,6 +13,9 @@ export class TaylorCutClassificationPipe implements PipeTransform {
             case 'out_of_normality':
                 return 'Fora da normalidade';
 
+            case undefined:
+                return 'Fora dos parâmetros';
+
             default:
                 return 'Não identificado';
         }

@@ -48,8 +48,10 @@ export class PilotStudyService {
 
 
         const url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
+
+
         /*
-        * TODO: Verficar o tipo de usuário e modificar a url. Por exemplo, se for um
+        * TODO: Verficar o tipo de usuário e modificar a url. Por exemplo, se for um:
         * healthprofessional: `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`
         * patient: `${environment.api_url}/users/patients/${userId}/pilotstudies`
         */

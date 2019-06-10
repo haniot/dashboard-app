@@ -14,6 +14,9 @@ export class OverweigthClassificationPipe implements PipeTransform {
             case 'overweight_obesity_risk':
                 return 'Risco de obesidade';
 
+            case undefined:
+                return 'Fora dos parâmetros';
+
             default:
                 return 'Não identificado';
         }

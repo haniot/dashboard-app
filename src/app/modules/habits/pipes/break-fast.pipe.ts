@@ -19,8 +19,8 @@ export class BreakFastPipe implements PipeTransform {
       case 'everyday':
         return 'Todos os dias';
 
-      case 'undefined':
-        return 'Não respondido';
+      case undefined:
+        return 'Fora dos parâmetros';
 
       default:
         return 'NÂO ENCONTRADO';

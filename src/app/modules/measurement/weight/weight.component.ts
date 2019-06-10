@@ -122,6 +122,7 @@ export class WeightComponent implements OnInit, OnChanges {
         private decimalPipe: DecimalFormatterPipe,
         private graphService: GraphService
     ) {
+        this.data = new Array<Weight>();
     }
 
     ngOnInit() {

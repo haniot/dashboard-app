@@ -1,6 +1,7 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="d-flex flex-row-reverse shared" style="height: 50px;" *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+        <div class="d-flex flex-row-reverse shared" style="height: 50px;"
+             *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
 
             <div class="p-2">
                 <i class="material-icons" title="Visualizar avaliações..."
@@ -17,31 +18,32 @@
                     <form [formGroup]="patientForm">
 
                         <div class="row">
-                            <div class="form-group has-feedback col-md"
-                                 [ngClass]="{'has-success': patientForm.controls.name.valid,
-              'has-error': patientForm.controls.name.invalid && (patientForm.controls.name.touched || patientForm.controls.name.dirty)}">
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <label for="name">
                                     Nome:
                                 </label>
                                 <input class="form-control" type="text" formControlName="name" id="name">
-                                <span *ngIf="patientForm.controls.name.valid"
-                                      class="glyphicon glyphicon-ok form-control-feedback"
-                                      aria-hidden="true"></span>
-                                <span
-                                        *ngIf="patientForm.controls.name.invalid && (patientForm.controls.name.touched || patientForm.controls.name.dirty)">
-                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Nome inválido.</span>
-                </span>
+                            </div>
+
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <label for="phone_number">
+                                    Telefone:
+                                </label>
+                                <input class="form-control" type="text" formControlName="phone_number"
+                                       id="phone_number">
                             </div>
 
                         </div>
-
-
                         <div class="row">
-
-                            <div class="form-group has-feedback col-md"
-                                 [ngClass]="{'has-success': patientForm.controls.gender.valid,
-                'has-error': patientForm.controls.gender.invalid && (patientForm.controls.gender.touched || patientForm.controls.gender.dirty)}">
+                            <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <label for="email">
+                                    Email:
+                                </label>
+                                <input class="form-control" type="text" formControlName="email" id="email">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group has-feedback col-md">
                                 <label for="gender">
                                     Gênero:
                                 </label>
@@ -49,20 +51,11 @@
                                     <option *ngFor="let itemGender of optionsGender"
                                             [value]="itemGender">{{itemGender | gender}}</option>
                                 </select>
-                                <span *ngIf="patientForm.controls.gender.valid"
-                                      class="glyphicon glyphicon-ok form-control-feedback"
-                                      aria-hidden="true"></span>
-                                <span
-                                        *ngIf="patientForm.controls.gender.invalid && (patientForm.controls.gender.touched || patientForm.controls.gender.dirty)">
-                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Gênero inválido.</span>
-                </span>
+
                             </div>
 
-                            <div class="form-group has-feedback col-md"
-                                 [ngClass]="{'has-success': patientForm.controls.birth_date.valid,
-            'has-error': patientForm.controls.birth_date.invalid && (patientForm.controls.birth_date.touched || patientForm.controls.birth_date.dirty)}">
-                                <label for="end">
+                            <div class="form-group has-feedback col-md">
+                                <label for="birth_date">
                                     Date de nascimento:
                                 </label>
                                 <div class="row">
@@ -70,25 +63,17 @@
                                         <input matInput class="form-control" [matDatepicker]="pickerBirthDate"
                                                formControlName="birth_date"
                                                name="birth_date" data-date-format="yyyy-MM-dd"
-                                               placeholder="Selecione a data de nascimento">
+                                               placeholder="Selecione a data de nascimento"
+                                               id="birth_date">
                                         <mat-datepicker #pickerBirthDate></mat-datepicker>
                                     </div>
                                 </div>
-                                <span *ngIf="patientForm.controls.birth_date.valid"
-                                      class="glyphicon glyphicon-ok form-control-feedback"
-                                      aria-hidden="true"></span>
-                                <span
-                                        *ngIf="patientForm.controls.birth_date.invalid && (patientForm.controls.birth_date.touched || patientForm.controls.birth_date.dirty)">
-                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Data de nascimento inválida.</span>
-                </span>
+
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="form-group has-feedback col-md"
-                                 [ngClass]="{'has-success': patientForm.controls.gender.valid,
-                  'has-error': patientForm.controls.gender.invalid && (patientForm.controls.gender.touched || patientForm.controls.gender.dirty)}">
+                            <div class="form-group has-feedback col-md">
                                 <label for="pilotstudy_id">
                                     Estudo associado:
                                 </label>
@@ -97,13 +82,6 @@
                                     <option value="undefined">- - - - selecione um estudo - - - -</option>
                                     <option *ngFor="let pilot of listPilots" [value]="pilot.id">{{pilot.name}}</option>
                                 </select>
-                                <span *ngIf="patientForm.controls.pilotstudy_id.valid"
-                                      class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                                <span
-                                        *ngIf="patientForm.controls.pilotstudy_id.invalid && (patientForm.controls.pilotstudy_id.touched || patientForm.controls.pilotstudy_id.dirty)">
-                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Estudo inválido.</span>
-                </span>
                             </div>
 
 
@@ -113,11 +91,13 @@
                     </form>
                 </haniot-card>
             </div>
-            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3" *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
+            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3"
+                 *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
                 <familycohesion-record [(patientId)]="patientId"></familycohesion-record>
             </div>
-            <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9" *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                <sociodemographic-record [(patientId)]="patientId" ></sociodemographic-record>
+            <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9"
+                 *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
+                <sociodemographic-record [(patientId)]="patientId"></sociodemographic-record>
             </div>
         </div>
         <div class="row">
@@ -135,15 +115,18 @@
                                     <sleep-habits [(patientId)]="patientId"></sleep-habits>
                                 </div>
 
-                                <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4" *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
-                                    <medical-record [(patientId)]="patientId" ></medical-record>
+                                <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
+                                     *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                                    <medical-record [(patientId)]="patientId"></medical-record>
                                 </div>
 
-                                <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8" *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                                <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8"
+                                     *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
                                     <physical-activity-habits [(patientId)]="patientId"></physical-activity-habits>
                                 </div>
 
-                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
                                     <oralhealth-record [(patientId)]="patientId"></oralhealth-record>
                                 </div>
 

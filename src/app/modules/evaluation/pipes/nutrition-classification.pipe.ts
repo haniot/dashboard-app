@@ -25,6 +25,9 @@ export class NutritionClassificationtPipe implements PipeTransform {
             case 'severe_obesity':
                 return 'Obesidade grave';
 
+            case undefined:
+                return 'Fora dos parâmetros';
+
             default:
                 return 'Não identificado';
         }

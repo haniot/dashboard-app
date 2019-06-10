@@ -13,8 +13,8 @@ export class LesionTypePipe implements PipeTransform {
             case 'cavitated_lesion':
                 return 'Lesão cavitada';
 
-            case 'undefined':
-                return 'Não respondido';
+            case undefined:
+                return 'Fora dos parâmetros';
 
             default:
                 return 'NÂO ENCONTRADO';

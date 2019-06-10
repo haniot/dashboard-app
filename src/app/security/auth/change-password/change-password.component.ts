@@ -35,6 +35,7 @@ export class ChangePasswordComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService
     ) {
+
     }
 
     ngOnInit() {
@@ -93,8 +94,20 @@ export class ChangePasswordComponent implements OnInit {
         }
     }
 
-    // verifyNewPassword(): boolean {
-    //
-    // }
+    validetorPassword(): void {
+        const pass = '' + this.f.get('new_password').value;
+
+        const len = pass.length;
+
+        const letter = pass.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').length;
+        const num = pass.replace(/[^\d]+/g, '').length;
+        const sym = pass.replace(/[A-Za-z0-9_]/gi, '').length;
+
+
+        if (len < 6 || letter <= 0 || num <= 0 || sym <= 0) {
+            this.f.get('new_password').setErrors({'incorrect': true});
+        }
+
+    }
 
 }

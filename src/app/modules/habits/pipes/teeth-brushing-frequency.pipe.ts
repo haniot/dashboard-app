@@ -19,8 +19,8 @@ export class TeethbushingPipe implements PipeTransform {
             case 'three_more':
                 return 'Três vezes ou mais';
 
-            case 'undefined':
-                return 'Não respondido';
+            case undefined:
+                return 'Fora dos parâmetros';
 
             default:
                 return 'NÂO ENCONTRADO';

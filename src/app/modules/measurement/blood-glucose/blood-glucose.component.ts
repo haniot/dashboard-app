@@ -111,7 +111,9 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
   constructor(
     private datePipe: DatePipe,
     private graphService: GraphService
-  ) { }
+  ) {
+    this.data = new Array<BloodGlucose>();
+  }
 
   ngOnInit() {
 

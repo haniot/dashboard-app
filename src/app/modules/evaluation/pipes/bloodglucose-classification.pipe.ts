@@ -13,6 +13,9 @@ export class BloodglucoseClassificationPipe implements PipeTransform {
             case 'great':
                 return 'Ótimo';
 
+            case undefined:
+                return 'Fora dos parâmetros';
+
             default:
                 return 'Não identificado';
         }

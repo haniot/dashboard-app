@@ -14,10 +14,7 @@ export class DiseaseHistoryPipe implements PipeTransform {
         return 'NÃO';
 
       case undefined:
-        return 'Não respondido';
-
-      case 'undefined':
-        return 'Não respondido';
+        return 'Fora dos parâmetros';
 
       default:
         return 'NÂO ENCONTRADO';

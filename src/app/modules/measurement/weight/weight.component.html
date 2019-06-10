@@ -1,61 +1,64 @@
 <haniot-card [title]="'Peso'" subtitle=''>
-  <div class="row">
+    <div class="row">
 
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-cente row">
-      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center">
-        <div class="card card-stats">
-          <div class="card-header card-header-timer card-header-icon">
-            <div class="card-icon">
-              <img src="../../../../assets/img/haniot/weight.png" alt="">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-cente row">
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center">
+                <div class="card card-stats">
+                    <div class="card-header card-header-timer card-header-icon">
+                        <div class="card-icon">
+                            <img src="../../../../assets/img/haniot/weight.png" alt="">
+                        </div>
+                        <p class="card-category">Peso: </p>
+                        <h3 class="card-title" *ngIf="lastData">
+                            {{lastData.value | decimalFormatter}}
+                            <small>{{lastData.unit }}</small>
+                        </h3>
+                        <h3 class="card-title" *ngIf="!lastData">
+                            Valor
+                            <small>unidade</small>
+                        </h3>
+                    </div>
+
+                </div>
+
             </div>
-            <p class="card-category">Peso: </p>
-            <h3 class="card-title" *ngIf="lastData">
-              {{lastData.value | decimalFormatter}}
-              <small>{{lastData.unit }}</small>
-            </h3>
-            <h3 class="card-title" *ngIf="!lastData">
-              Valor
-              <small>unidade</small>
-            </h3>
-          </div>
 
+            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center" [ts-chart]="weightGraph"></div>
         </div>
 
-      </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-cente row">
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center">
+                <div class="card card-stats">
+                    <div class="card-header card-header-timer card-header-icon">
+                        <div class="card-icon">
+                            <img src="../../../../assets/img/haniot/fat.png" alt="">
+                        </div>
+                        <p class="card-category">Gordura: </p>
+                        <h3 class="card-title" *ngIf="lastData">
+                            {{lastData.fat.value }}
+                            <small>{{lastData.fat.unit }}</small>
+                        </h3>
+                        <h3 class="card-title" *ngIf="!lastData">
+                            Valor
+                            <small>unidade</small>
+                        </h3>
+                    </div>
 
-      <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center" [ts-chart]="weightGraph"></div>
-    </div>
-
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-cente row">
-      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center">
-        <div class="card card-stats">
-          <div class="card-header card-header-timer card-header-icon">
-            <div class="card-icon">
-              <img src="../../../../assets/img/haniot/fat.png" alt="">
+                </div>
+                <div class="d-flex flex-row-reverse">
+                    <div class="p-2">
+                        <small class="pull-right" *ngIf="lastData">Data do último
+                            registro:{{lastData.timestamp | myDate}}</small>
+                        <small class="pull-right" *ngIf="!lastData">Data do último registro: dia/mês/ano horário</small>
+                    </div>
+                </div>
             </div>
-            <p class="card-category">Gordura: </p>
-            <h3 class="card-title" *ngIf="lastData && lastData.fat">
-              {{lastData.fat.value }}
-              <small>{{lastData.fat.unit }}</small>
-            </h3>
-            <h3 class="card-title" *ngIf="!lastData && !lastData.fat">
-              Valor
-              <small>unidade</small>
-            </h3>
-          </div>
 
+            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center" [ts-chart]="fatGraph"></div>
         </div>
-        <div class="d-flex flex-row-reverse">
-          <div class="p-2">
-            <small class="pull-right" *ngIf="lastData">Data do último registro:{{lastData.timestamp | myDate}}</small>
-            <small class="pull-right" *ngIf="!lastData">Data do último registro: dia/mês/ano horário</small>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center" [ts-chart]="fatGraph"></div>
+        <div *ngIf="data.length==0">
+            <span class="badge badge-danger badge-12">Nenhum registro de estatura cadastrado!</span>
+        </div>
     </div>
-
-
-  </div>
 </haniot-card>

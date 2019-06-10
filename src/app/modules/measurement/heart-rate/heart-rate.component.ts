@@ -89,7 +89,9 @@ export class HeartRateComponent implements OnInit {
   constructor(
     private datePipe: DatePipe,
     private graphService: GraphService
-  ) { }
+  ) {
+    this.data = new Array<HeartRate>();
+  }
 
   ngOnInit() {
 

@@ -28,8 +28,8 @@ export class FoodAllergyPipe implements PipeTransform {
             case 'other':
                 return 'Outro';
 
-            case 'undefined':
-                return 'Não respondido';
+            case undefined:
+                return 'Fora dos parâmetros';
 
             default:
                 return 'NÂO ENCONTRADO';

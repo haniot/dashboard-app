@@ -165,3 +165,9 @@ label {
     font-weight: bold;
     color: black;
 }
+.card-patients img{
+    width: 10%;
+}
+.card-studies img{
+    width: 10%;
+}

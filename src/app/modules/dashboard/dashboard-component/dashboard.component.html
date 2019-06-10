@@ -9,7 +9,8 @@
                 </div>
 
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center">
-                    <card-top [category]="'Total de Pacientes do Estudo Selecionado'" [title]="listPacients.length" [icon]="'face'"></card-top>
+                    <card-top [category]="'Total de Pacientes do Estudo Selecionado'" [title]="listPacients.length"
+                              [icon]="'face'"></card-top>
                 </div>
 
                 <!--                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">-->
@@ -28,6 +29,11 @@
         <haniot-card [title]="'Acesse seus pacientes'"
                      [subtitle]="'Clique sobre o card para visualizar informações do paciente.'"
                      *ngIf="isNotUserAdmin()">
+            <div class="row justify-content-center" *ngIf="!listPacients.length">
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patients">
+                    <img src="../../../../assets/img/loading.gif" alt="Carregando pacientes"> carregando pacientes ...
+                </div>
+            </div>
             <div class="row justify-content-center">
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfPatientsIsEmpty">
                     <p class="second-title text-center">
@@ -64,6 +70,11 @@
 
         <haniot-card [title]="'Acesse seus estudos'"
                      [subtitle]="'Clique sobre o card para visualizar informações do estudo.'">
+            <div class="row justify-content-center" *ngIf="!listPilots.length">
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-studies">
+                    <img src="../../../../assets/img/loading.gif" alt="Carregando pacientes"> carregando estudos ...
+                </div>
+            </div>
             <div class="row justify-content-center">
 
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"

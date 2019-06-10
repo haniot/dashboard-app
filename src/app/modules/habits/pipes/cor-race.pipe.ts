@@ -20,8 +20,8 @@ export class CorAndRacePipe implements PipeTransform {
             case 'yellow':
                 return 'Amarelo(a)';
 
-            case 'undefined':
-                return 'Não respondido';
+            case undefined:
+                return 'Fora dos parâmetros';
 
             default:
                 return 'NÂO ENCONTRADO';

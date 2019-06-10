@@ -19,6 +19,9 @@ export class BloodpressureClassificationPipe implements PipeTransform {
             case 'arterial_hypertension_stage_2':
                 return 'Hipertensão estágio 2';
 
+            case undefined:
+                return 'Fora dos parâmetros';
+
             default:
                 return 'Não identificado';
         }

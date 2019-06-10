@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {AuthService} from './../services/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -14,7 +14,7 @@ import {LoadingService} from 'app/shared/shared-components/loading-component/ser
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewChecked{
 
     f: FormGroup;
     loading: boolean = false;
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
         private authService: AuthService,
         private router: Router,
         private toastr: ToastrService,
-        private loadingService: LoadingService
+        private loadinService: LoadingService
     ) {
     }
 
@@ -65,5 +65,10 @@ export class LoginComponent implements OnInit {
             this.typeInputPassword = 'text';
         }
     }
+
+    ngAfterViewChecked() {
+        this.loadinService.close();
+    }
+
 
 }

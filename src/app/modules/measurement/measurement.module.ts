@@ -56,7 +56,8 @@ import {DecimalFormatterPipe} from './pipes/decimal-formatter.pipe';
         BloodGlucoseComponent,
         BloodPressureComponent,
         HeartRateComponent,
-        FatComponent
+        FatComponent,
+        DecimalFormatterPipe
     ],
     providers: [
         MeasurementService,

@@ -72,6 +72,9 @@ export class WeeklyActivityPipe implements PipeTransform {
             case 'no activity':
                 return 'Nenhuma atividade';
 
+            case undefined:
+                return 'Fora dos parâmetros';
+
             default:
                 return 'NÂO ENCONTRADO';
         }

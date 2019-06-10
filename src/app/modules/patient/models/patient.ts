@@ -4,6 +4,7 @@ export interface IPatient {
     pilotstudy_id: string;
     name: string;
     email: string;
+    phone_number: string;
     gender: string;
     birth_date: string;
     password?: string;
@@ -21,6 +22,7 @@ export class Patient implements IPatient {
     pilotstudy_id: string;
     name: string;
     email: string;
+    phone_number: string;
     gender: string;
     birth_date: string;
     password?: string;

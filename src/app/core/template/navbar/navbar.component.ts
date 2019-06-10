@@ -9,6 +9,7 @@ import {SelectPilotStudyService} from "../../../shared/shared-components/select-
 import {PilotStudyService} from "../../../modules/pilot-study/services/pilot-study.service";
 import {connectableObservableDescriptor} from "rxjs/internal/observable/ConnectableObservable";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
 
 export declare interface RouteInfo {
     path: string;
@@ -62,7 +63,8 @@ export class NavbarComponent implements OnInit {
         private userService: UserService,
         private pilotStudyService: PilotStudyService,
         private selectPilotService: SelectPilotStudyService,
-        private localStorageService: LocalStorageService) {
+        private localStorageService: LocalStorageService,
+        private loadingService: LoadingService) {
         this.location = location;
         this.sidebarVisible = false;
     }
@@ -260,6 +262,7 @@ export class NavbarComponent implements OnInit {
     }
 
     logout() {
+        this.loadingService.open();
         this.authService.logout();
     }
 }

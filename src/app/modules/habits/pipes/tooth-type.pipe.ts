@@ -13,8 +13,8 @@ export class ToothTypePipe implements PipeTransform {
       case 'permanent_tooth':
         return 'Dente permante';
 
-      case 'undefined':
-        return 'Não respondido';
+      case undefined:
+        return 'Fora dos parâmetros';
 
       default:
         return 'NÂO ENCONTRADO';

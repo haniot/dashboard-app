@@ -1,113 +1,143 @@
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <haniot-card title="Meus dados" subtitle="Clique no botão habilitar edição para alterar suas informações">
-          <form #formMyProfile="ngForm" (ngSubmit)="onSubmit(formMyProfile)">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <haniot-card title="Meus dados"
+                             subtitle="Clique no botão habilitar edição para alterar suas informações">
+                    <form #formMyProfile="ngForm" (ngSubmit)="onSubmit(formMyProfile)">
 
-            <div class="form-group has-feedback"
-              [ngClass]="{'has-success': nomeModelEdit.valid,
+                        <div class="form-group has-feedback"
+                             [ngClass]="{'has-success': nomeModelEdit.valid,
                                   'has-error': nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)}"
-              *ngIf="typeUser == 'health_professional'">
-              <label for="name">Nome:</label>
-              <input type="text" class="form-control" id="nomeEdit" required minlength="4" type="text" name="name"
-                #nomeModelEdit="ngModel" [(ngModel)]="user==undefined?name:user.name" placeholder="Nome"
-                [disabled]="visibilityButtonSave?null:'disabled'">
-              <span *ngIf="nomeModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                aria-hidden="true"></span>
-              <span
-                *ngIf="nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty) && visibilityButtonSave">
+                             *ngIf="typeUser == 'health_professional'">
+                            <label for="nomeEdit">Nome:</label>
+                            <input type="text" class="form-control" id="nomeEdit" required minlength="4" type="text"
+                                   name="name"
+                                   #nomeModelEdit="ngModel" [(ngModel)]="user==undefined?name:user.name"
+                                   placeholder="Nome"
+                                   [disabled]="visibilityButtonSave?null:'disabled'">
+                            <span *ngIf="nomeModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                  aria-hidden="true"></span>
+                            <span
+                                    *ngIf="nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty) && visibilityButtonSave">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 <span class="text-danger">Nome inválido.</span>
               </span>
-            </div>
+                        </div>
 
-            <div class="form-group has-feedback" [ngClass]="{'has-success': emailModelEdit.valid,
+                        <div class="form-group has-feedback" [ngClass]="{'has-success': emailModelEdit.valid,
                     'has-error': emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty)}">
-              <label for="email">Email:</label>
-              <input type="email" class="form-control" id="emailEdit" required minlength="4" type="text" name="email"
-                #emailModelEdit="ngModel" [(ngModel)]="user==undefined?email:user.email" placeholder="Email"
-                [disabled]="visibilityButtonSave?null:'disabled'">
-              <span *ngIf="emailModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                aria-hidden="true"></span>
-              <span
-                *ngIf="emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty) && visibilityButtonSave">
+                            <label for="emailEdit">Email:</label>
+                            <input type="email" class="form-control" id="emailEdit" required minlength="4" type="text"
+                                   name="email"
+                                   #emailModelEdit="ngModel" [(ngModel)]="user==undefined?email:user.email"
+                                   placeholder="Email"
+                                   [disabled]="visibilityButtonSave?null:'disabled'">
+                            <span *ngIf="emailModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                  aria-hidden="true"></span>
+                            <span
+                                    *ngIf="emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty) && visibilityButtonSave">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 <span class="text-danger">E-mail inválido.</span>
               </span>
-            </div>
+                        </div>
 
-            <div class="form-group has-feedback" [ngClass]="{'has-success': healthAreaModel.valid,
+                        <div class="form-group has-feedback" [ngClass]="{'has-success': healthAreaModel.valid,
             'has-error': healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)}"
-              *ngIf="typeUser == 'health_professional'">
-              <label for="healthArea">Área: </label>
-              <select name="health_area" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel"
-                [(ngModel)]="user==undefined?health_area:user.health_area" [disabled]="visibilityButtonSave?null:'disabled'">
-                <option *ngFor="let area of healthAreaOptions; index as i" [value]="area">{{area | healthArea}}</option>
-              </select>
-              <span *ngIf="healthAreaModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                aria-hidden="true"></span>
-              <span *ngIf="healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)">
+                             *ngIf="typeUser == 'health_professional'">
+                            <label for="healthAreaEdit">Área: </label>
+                            <select name="health_area" id="healthAreaEdit" class="form-control" required
+                                    #healthAreaModel="ngModel"
+                                    [(ngModel)]="user==undefined?health_area:user.health_area"
+                                    [disabled]="visibilityButtonSave?null:'disabled'">
+                                <option *ngFor="let area of healthAreaOptions; index as i"
+                                        [value]="area">{{area | healthArea}}</option>
+                            </select>
+                            <span *ngIf="healthAreaModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                  aria-hidden="true"></span>
+                            <span *ngIf="healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 <span class="text-danger">Área inválida.</span>
               </span>
-            </div>
+                        </div>
 
-            <div class="row container-fluid">
-              <div class="col-md">
-                <button type="button" class="btn btn-haniot-primary" (click)="enabledEdit()"
-                  [disabled]="disabledButtonEdit">Habilitar edição</button>
-              </div>
-              <div class="col-md" *ngIf="visibilityButtonSave">
-                <button type="submit" class="btn btn-haniot-primary" [disabled]="!formMyProfile.valid">Salvar</button>
-              </div>
+                        <div class="row container-fluid">
+                            <div class="col-md">
+                                <button type="button" class="btn btn-haniot-primary" (click)="enabledEdit()"
+                                        [disabled]="disabledButtonEdit">Habilitar edição
+                                </button>
+                            </div>
+                            <div class="col-md" *ngIf="visibilityButtonSave">
+                                <button type="submit" class="btn btn-haniot-primary" [disabled]="!formMyProfile.valid">
+                                    Salvar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </haniot-card>
             </div>
-          </form>
-        </haniot-card>
-      </div>
-      <div class="col-md-12">
-        <haniot-card title="Configurações de acesso" subtitle="Para mudar sua senha de acesso preencha as informações abaixo e clique em alterar">
-          <form #formPassword="ngForm" (ngSubmit)="onChangePassword(formPassword)">
+            <div class="col-md-12">
+                <haniot-card title="Configurações de acesso"
+                             subtitle="Para mudar sua senha de acesso preencha as informações abaixo e clique em alterar">
+                    <form #formPassword="ngForm" (ngSubmit)="onChangePassword(formPassword)">
 
-            <div class="form-group has-feedback"
-              [ngClass]="{'has-success': passwordOldModel.valid,
+                        <div class="form-group has-feedback"
+                             [ngClass]="{'has-success': passwordOldModel.valid,
                                   'has-error': passwordOldModel.invalid && (passwordOldModel.touched || passwordOldModel.dirty)}">
-              <label for="old_password">Senha antiga:</label>
-              <input type="password" class="form-control" id="old_password" required minlength="4" name="old_password"
-                #passwordOldModel="ngModel" [(ngModel)]="old_password">
-              <span *ngIf="passwordOldModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                aria-hidden="true"></span>
-              <span
-                *ngIf="passwordOldModel.invalid && (passwordOldModel.touched || passwordOldModel.dirty)">
+                            <label for="old_password">Senha antiga:</label>
+                            <div>
+                                <input [type]="typeInputPassword" class="form-control" id="old_password" required
+                                       minlength="4"
+                                       name="old_password"
+                                       #passwordOldModel="ngModel" [(ngModel)]="old_password">
+                                <a class="icon_password" href="javascript:void(0);" (click)="clickVisibilityPassword()"><i
+                                        class="material-icons">{{icon_password}}</i></a>
+                            </div>
+
+                            <span *ngIf="passwordOldModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                  aria-hidden="true"></span>
+                            <span
+                                    *ngIf="passwordOldModel.invalid && (passwordOldModel.touched || passwordOldModel.dirty)">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 <span class="text-danger">Senha incorreta.</span>
               </span>
-            </div>  
+                        </div>
 
-            <div class="form-group has-feedback"
-              [ngClass]="{'has-success': passwordNewModel.valid,
+                        <div class="form-group has-feedback"
+                             [ngClass]="{'has-success': passwordNewModel.valid,
                                   'has-error': passwordNewModel.invalid && (passwordNewModel.touched || passwordNewModel.dirty)}">
-              <label for="new_password">Nova senha:</label>
-              <input type="password" class="form-control" id="new_password" required minlength="4" name="new_password"
-                #passwordNewModel="ngModel" [(ngModel)]="new_password">
-              <span *ngIf="passwordNewModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                aria-hidden="true"></span>
-              <span
-                *ngIf="passwordNewModel.invalid && (passwordNewModel.touched || passwordNewModel.dirty)">
-                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                <span class="text-danger">Senha inválida.</span>
-              </span>
-            </div>            
-           
+                            <label for="new_password">Nova senha:</label>
+                            <div>
+                                <input [type]="typeInputPassword_confirm" class="form-control" id="new_password"
+                                       required minlength="6"
+                                       name="new_password"
+                                       #passwordNewModel="ngModel" [(ngModel)]="new_password"
+                                       (keyup)="validetorPassword()">
+                                <a class="icon_password" href="javascript:void(0);"
+                                   (click)="clickVisibilityPasswordConfirm()"><i
+                                        class="material-icons">{{icon_password_confirm}}</i></a>
+                            </div>
 
-            <div class="row container-fluid">
-              <div class="col-md">
-                <button type="submit" class="btn btn-haniot-primary" [disabled]="!formPassword.valid">Alterar senha</button>
-              </div>
+                            <span *ngIf="passwordNewModel.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                  aria-hidden="true"></span>
+                            <span *ngIf="passwordNewModel.invalid && (passwordNewModel.touched || passwordNewModel.dirty) || !passwordIsValid">
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="text-danger">Senha inválida! Sua senha deve ter no mínimo 6 caracteres incluindo letras, números e símbolos.</span>
+              </span>
+                        </div>
+
+
+                        <div class="row container-fluid">
+                            <div class="col-md">
+                                <button type="submit" class="btn btn-haniot-primary" [disabled]="!formPassword.valid || !passwordIsValid">
+                                    Alterar senha
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </haniot-card>
             </div>
-          </form>
-        </haniot-card>
-      </div>
+        </div>
     </div>
-  </div>
 </div>

@@ -110,7 +110,9 @@ export class BloodPressureComponent implements OnInit, OnChanges {
   constructor(
     private datePipe: DatePipe,
     private graphService: GraphService
-  ) { }
+  ) {
+    this.data = new Array<BloodPressure>();
+  }
 
   ngOnInit() {
 

@@ -51,7 +51,10 @@ export class HeightComponent implements OnInit, OnChanges {
   constructor(
     private datePipe: DatePipe,
     private graphService: GraphService
-  ) { }
+  ) {
+    this.data = new Array<IMeasurement>();
+
+  }
 
   ngOnInit() {
 

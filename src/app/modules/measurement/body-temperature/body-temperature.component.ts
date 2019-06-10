@@ -60,6 +60,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         private decimalPipe: DecimalFormatterPipe,
         private graphService: GraphService
     ) {
+        this.data = new Array<IMeasurement>();
     }
 
     ngOnInit() {

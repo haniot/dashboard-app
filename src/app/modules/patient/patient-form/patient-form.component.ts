@@ -1,8 +1,8 @@
-import {Component, OnInit, Input, OnChanges} from '@angular/core';
+import {Component, OnInit, Input, OnChanges, AfterViewChecked} from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import {PatientService} from '../services/patient.service';
 import {ToastrService} from 'ngx-toastr';
-import {Gender} from '../models/patient';
+import {Gender, Patient} from '../models/patient';
 import {Router, ActivatedRoute} from '@angular/router';
 import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
@@ -15,7 +15,7 @@ import {AuthService} from 'app/security/auth/services/auth.service';
     templateUrl: './patient-form.component.html',
     styleUrls: ['./patient-form.component.scss']
 })
-export class PatientFormComponent implements OnInit {
+export class PatientFormComponent implements OnInit, AfterViewChecked {
     patientForm: FormGroup;
     optionsGender: Array<string> = Object.keys(Gender);
     listPilots: Array<PilotStudy>;
@@ -37,6 +37,8 @@ export class PatientFormComponent implements OnInit {
 
     typeInputPassword_confirm = 'password';
 
+    min_birth_date: Date;
+
     constructor(
         private fb: FormBuilder,
         private patientService: PatientService,
@@ -47,9 +49,11 @@ export class PatientFormComponent implements OnInit {
         private location: Location,
         private authService: AuthService
     ) {
+        this.min_birth_date = new Date();
     }
 
     ngOnInit() {
+        this.calMinBirthDate();
         this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
             this.pilotStudyId = params.get('pilotstudy_id');
@@ -61,16 +65,36 @@ export class PatientFormComponent implements OnInit {
         this.getAllPilotStudies();
     }
 
+    calMinBirthDate(): void {
+        const today = new Date();
+        this.min_birth_date.setFullYear(today.getFullYear() - 10, today.getMonth(), today.getDate());
+    }
+
     createForm() {
         this.patientForm = this.fb.group({
             id: [''],
             pilotstudy_id: [this.pilotStudyId, Validators.required],
             name: ['', Validators.required],
-            email: ['', Validators.compose([Validators.required, Validators.email])],
+            phone_number: [''],
+            email: ['', Validators.compose([Validators.email])],
             password: [''],
             password_confirm: [''],
             gender: ['', Validators.required],
             birth_date: ['', Validators.required]
+        });
+    }
+
+    setPatientInForm(patient: Patient) {
+        this.patientForm = this.fb.group({
+            id: [patient.id],
+            pilotstudy_id: [patient.pilotstudy_id],
+            name: [patient.name],
+            phone_number: [patient.phone_number],
+            email: [patient.email],
+            password: [''],
+            password_confirm: [''],
+            gender: [patient.gender],
+            birth_date: [patient.birth_date]
         });
     }
 
@@ -81,7 +105,8 @@ export class PatientFormComponent implements OnInit {
                     patient.password = '';
                     patient.password_confirm = '';
                     this.verifyMatchPassword();
-                    this.patientForm.setValue(patient);
+                    this.setPatientInForm(patient);
+                    // this.patientForm.setValue(patient);
                 }).catch(errorResponse => {
                 // console.error('Não foi possível buscar paciente!', errorResponse);
             })
@@ -90,6 +115,7 @@ export class PatientFormComponent implements OnInit {
 
     onSubimt() {
         const form = this.patientForm.getRawValue();
+        console.log(form)
         form.birth_date = new Date(form.birth_date).toISOString().split('T')[0];
         if (!this.patientId) {
             this.patientService.create(form)
@@ -168,5 +194,20 @@ export class PatientFormComponent implements OnInit {
         } else {
             this.typeInputPassword_confirm = 'text';
         }
+    }
+
+    toApplyMaskPhoneNumber() {
+        let number: string;
+        number = this.patientForm.get('phone_number').value;
+
+        number = number.replace(/\D/g, "");             //Remove tudo o que não é dígito
+        number = number.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+        number = number.replace(/(\d)(\d{4})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+
+        this.patientForm.get('phone_number').patchValue(number);
+    }
+
+    ngAfterViewChecked(): void {
+        this.calMinBirthDate();
     }
 }

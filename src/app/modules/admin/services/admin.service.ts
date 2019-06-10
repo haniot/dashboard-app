@@ -38,12 +38,12 @@ export class AdminService {
       .toPromise();
   }
 
-  create(administrator: Admin): Promise<boolean> {
+  create(administrator: Admin): Promise<IUser> {
     return this.http.post<any>(`${environment.api_url}/users/admins`, administrator)
       .toPromise();
   }
 
-  update(administrator: Admin): Promise<boolean> {
+  update(administrator: Admin): Promise<IUser> {
 
     return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
       .toPromise();

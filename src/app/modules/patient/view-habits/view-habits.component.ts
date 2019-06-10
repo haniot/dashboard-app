@@ -69,6 +69,8 @@ export class ViewHabitsComponent implements OnInit {
             id: [''],
             pilotstudy_id: [{value: '', disabled: true}],
             name: [{value: '', disabled: true}],
+            email: [{value: '', disabled: true}],
+            phone_number: [{value: '', disabled: true}],
             gender: [{value: '', disabled: true}],
             birth_date: [{value: '', disabled: true}]
         });
@@ -79,6 +81,8 @@ export class ViewHabitsComponent implements OnInit {
             id: [patient.id],
             pilotstudy_id: [this.pilotStudyId],
             name: [{value: patient.name, disabled: true}],
+            email: [{value: patient.email, disabled: true}],
+            phone_number: [{value: patient.phone_number, disabled: true}],
             gender: [{value: patient.gender, disabled: true}],
             birth_date: [{value: patient.birth_date, disabled: true}]
         });
@@ -87,13 +91,25 @@ export class ViewHabitsComponent implements OnInit {
 
     getAllPilotStudies() {
         const userId = atob(localStorage.getItem('user'));
-        this.pilotStudiesService.getAllByUserId(userId)
-            .then(pilots => {
-                this.listPilots = pilots;
-            })
-            .catch(errorResponse => {
-                // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
-            });
+
+        if (this.localStorageService.getItem('health_area') === 'admin') {
+            this.pilotStudiesService.getAll()
+                .then(pilots => {
+                    this.listPilots = pilots;
+                })
+                .catch(errorResponse => {
+                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
+                });
+        } else {
+            this.pilotStudiesService.getAllByUserId(userId)
+                .then(pilots => {
+                    this.listPilots = pilots;
+                })
+                .catch(errorResponse => {
+                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
+                });
+        }
+
     }
 
 }
