@@ -10,20 +10,17 @@ export class BloodpressureClassificationPipe implements PipeTransform {
             case 'normal':
                 return 'Normal';
 
-            case 'pre_hypertension':
+            case 'borderline':
                 return 'Limítrofe';
 
-            case 'arterial_hypertension_stage_1':
+            case 'hypertension_stage_1':
                 return 'Hipertensão estágio 1';
 
-            case 'arterial_hypertension_stage_2':
+            case 'hypertension_stage_2':
                 return 'Hipertensão estágio 2';
 
-            case undefined:
-                return 'Fora dos parâmetros';
-
             default:
-                return 'Não identificado';
+                return 'Fora dos padrões definidos';
         }
     }
 }

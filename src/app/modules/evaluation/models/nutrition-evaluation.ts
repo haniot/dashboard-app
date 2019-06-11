@@ -8,12 +8,13 @@ import {MedicalRecord} from 'app/modules/habits/models/medical-record';
 import {Weight} from 'app/modules/measurement/models/wieght';
 import {Patient} from "../../patient/models/patient";
 
-export enum Percentile {
+export enum NutritionalStatusPercentile {
     p01 = "p01",
     p3 = "p3",
     p85 = "p85",
     p97 = "p97",
-    p999 = "p999"
+    p999 = "p999",
+    undefined = "undefined"
 }
 
 export enum NutritionClassification {
@@ -29,7 +30,7 @@ export class NutritionalStatus {
     height: number;
     weight: number;
     bmi: number;
-    percentile: Percentile;
+    percentile: NutritionalStatusPercentile;
     classification: NutritionClassification;
 }
 
@@ -71,14 +72,26 @@ export enum BloodGlucoseClassification {
     undefined = "undefined"
 }
 
-export enum BloodPressurePercentile {
+export enum BloodPressurePercentileSystolic {
     pas5 = "pas5",
     pas10 = "pas10",
     pas25 = "pas25",
     pas50 = "pas50",
     pas75 = "pas75",
     pas90 = "pas90",
-    pas95 = "pas95"
+    pas95 = "pas95",
+    undefined = "undefined"
+}
+
+export enum BloodPressurePercentileDiastolic {
+    pad5 = "pad5",
+    pad10 = "pad10",
+    pad25 = "pad25",
+    pad50 = "pad50",
+    pad75 = "pad75",
+    pad90 = "pad90",
+    pad95 = "pad95",
+    undefined = "undefined"
 }
 
 export interface IZoneBloodGlucose {
@@ -99,16 +112,17 @@ export class BloodGlucoseEvaluation {
 
 export enum BloodPressureClassification {
     normal = "normal",
-    pre_hypertension = "pre_hypertension",
-    arterial_hypertension_stage_1 = "arterial_hypertension_stage_1",
-    arterial_hypertension_stage_2 = "arterial_hypertension_stage_2"
+    borderline = "borderline",
+    hypertension_stage_1 = "hypertension_stage_1",
+    hypertension_stage_2 = "hypertension_stage_2",
+    undefined = "undefined"
 }
 
 export class BloodPressureEvaluation {
     systolic: number;
     diastolic: number;
-    systolic_percentile: BloodPressurePercentile;
-    diastolic_percentile: BloodPressurePercentile;
+    systolic_percentile: BloodPressurePercentileSystolic;
+    diastolic_percentile: BloodPressurePercentileDiastolic;
     classification: BloodPressureClassification;
 }
 

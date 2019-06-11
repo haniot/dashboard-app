@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
     name: 'lesionType'
@@ -13,11 +13,8 @@ export class LesionTypePipe implements PipeTransform {
             case 'cavitated_lesion':
                 return 'Lesão cavitada';
 
-            case undefined:
-                return 'Fora dos parâmetros';
-
             default:
-                return 'NÂO ENCONTRADO';
+                return 'Fora dos parâmetros';
         }
 
     }

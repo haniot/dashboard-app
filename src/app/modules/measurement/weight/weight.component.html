@@ -34,7 +34,7 @@
                             <img src="../../../../assets/img/haniot/fat.png" alt="">
                         </div>
                         <p class="card-category">Gordura: </p>
-                        <h3 class="card-title" *ngIf="lastData">
+                        <h3 class="card-title" *ngIf="lastData && lastData.fat">
                             {{lastData.fat.value }}
                             <small>{{lastData.fat.unit }}</small>
                         </h3>

@@ -165,7 +165,9 @@ export class WeightComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.data && changes.data.currentValue !== undefined && changes.data.previousValue == undefined) {
+        if ((changes.data.currentValue && changes.data.previousValue
+            && changes.data.currentValue.length !== changes.data.previousValue.length) ||
+            (changes.data.currentValue.length && !changes.data.previousValue)) {
             this.loadGraph();
         }
     }

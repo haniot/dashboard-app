@@ -1,4 +1,4 @@
-<haniot-card [title]="'Informações sobre a saúde bucal'" subtitle='' *ngIf="listOralhealthRecords.length!=0">
+<haniot-card [title]="'Informações sobre a saúde bucal'" subtitle=''>
     <form [formGroup]="oralhealthForm">
 
         <div class="row justify-content-md-center">
@@ -24,7 +24,9 @@
                     </div>
                     <div class="card-footer">
                         <div class="row  justify-content-md-center">
-
+                            <div *ngIf="oralhealthForm.get('teeth_lesions').value.length==0">
+                                <span class="badge badge-danger badge-12">Nenhuma lesão cadastrada!</span>
+                            </div>
                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" class="diseases"
                                  *ngFor="let disease of oralhealthForm.get('teeth_lesions').value">
                                 <div class="card card-stats diseaseHistory">
@@ -57,48 +59,6 @@
                 </div>
             </div>
         </div>
-        <!--        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
-        <!--            <div class="container">-->
-        <!--                <div class="row">-->
-        <!--                    <div class="col">-->
-        <!--                        <label>-->
-        <!--                            Lista lesões:-->
-        <!--                        </label>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-
-        <!--            <div class="row  justify-content-md-center">-->
-
-        <!--                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" class="diseases"-->
-        <!--                     *ngFor="let disease of oralhealthForm.get('teeth_lesions').value">-->
-        <!--                    <div class="card card-stats diseaseHistory">-->
-        <!--                        <div class="row container">-->
-        <!--                            <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">-->
-        <!--                                <div class="card-icon-disease">-->
-        <!--                                    <img src="../../../../assets/img/haniot/oral-lesion.png" alt="">-->
-        <!--                                </div>-->
-        <!--                            </div>-->
-        <!--                            <div class="col-md row">-->
-        <!--                                <div class="col-sm">-->
-        <!--                                    <label for="">-->
-        <!--                                        Tipo de dente:-->
-        <!--                                    </label>-->
-        <!--                                    <h4 class="card-category">{{disease.tooth_type | toothType}}</h4>-->
-        <!--                                </div>-->
-        <!--                                <div class="col-sm">-->
-        <!--                                    <label for="">-->
-        <!--                                        Tipo de lesão:-->
-        <!--                                    </label>-->
-        <!--                                    <h4 class="card-category">{{disease.lesion_type | lesionType}}</h4>-->
-        <!--                                </div>-->
-        <!--                            </div>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-
-        <!--            </div>-->
-        <!--        </div>-->
 
     </form>
     <div class="d-flex flex-row-reverse">

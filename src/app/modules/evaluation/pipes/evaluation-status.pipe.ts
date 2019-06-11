@@ -13,11 +13,8 @@ export class EvaluationStatustPipe implements PipeTransform {
             case 'incomplete':
                 return 'INCOMPLETA';
 
-            case undefined:
-                return 'Fora dos parâmetros';
-
             default:
-                return 'Não identificado';
+                return 'Fora dos padrões definidos';
         }
 
     }

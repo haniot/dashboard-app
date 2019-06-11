@@ -86,7 +86,7 @@
             </label>
             <div class="row container justify-content-center">
 
-                <div class="col-sm-2 text-center foodAllergy" *ngFor="let food of feedingForm.get('food_allergy_intolerance').value;"
+                <div class="col-sm-4 text-center foodAllergy" *ngFor="let food of feedingForm.get('food_allergy_intolerance').value;"
                      id="food_allergy_intolerance">
                     <span>{{food | foodAllergy}}</span>
                 </div>
