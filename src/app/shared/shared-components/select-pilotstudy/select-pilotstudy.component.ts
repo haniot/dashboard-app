@@ -85,7 +85,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
                 })
                 .catch(errorResponse => {
                     this.listOfStudiesIsEmpty = true;
-                    console.log('Erro ao buscar pilot-studies: ', errorResponse);
+                    // console.log('Erro ao buscar pilot-studies: ', errorResponse);
                 });
         }
     }
@@ -99,7 +99,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
                     this.getLengthPilotStudies();
                 })
                 .catch(errorResponse => {
-                    console.log('Erro ao buscar pilot-studies: ', errorResponse);
+                    // console.log('Erro ao buscar pilot-studies: ', errorResponse);
                 });
         }, 200);
     }
@@ -131,7 +131,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
                     this.length = studies.length;
                 })
                 .catch(errorResponse => {
-                    console.log('Erro ao buscar pilot-studies: ', errorResponse);
+                    // console.log('Erro ao buscar pilot-studies: ', errorResponse);
                 });
         }
     }

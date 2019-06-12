@@ -8,7 +8,7 @@
             <div class="d-flex flex-row-reverse">
                 <div class="p-2">
                     <small class="pull-right" *ngIf="lastData">Data do último
-                        registro:{{lastData.timestamp | myDate}}</small>
+                        registro: {{lastData.dataset[0].timestamp | date}}</small>
                     <small class="pull-right" *ngIf="!lastData">Data do último registro: dia/mês/ano horário</small>
                 </div>
             </div>

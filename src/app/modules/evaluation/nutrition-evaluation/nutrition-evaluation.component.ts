@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DatePipe, Location} from '@angular/common';
 
 import {ToastrService} from 'ngx-toastr';
+import {ISubscription} from 'rxjs/Subscription';
 
 import {NutritionEvaluationService} from '../services/nutrition-evaluation.service';
 import {NutritionEvaluation, NutritionalCouncil} from '../models/nutrition-evaluation';
@@ -15,13 +16,15 @@ import {Measurement, IMeasurement, MeasurementType} from 'app/modules/measuremen
 import {BloodPressure} from 'app/modules/measurement/models/blood-pressure';
 import {HeartRate} from 'app/modules/measurement/models/heart-rate';
 import {NotificationService} from "../../../shared/shared-services/notification.service";
+import {_switch} from "rxjs-compat/operator/switch";
+import {MealType} from "../../measurement/models/blood-glucose";
 
 @Component({
     selector: 'app-nutrition-evaluation',
     templateUrl: './nutrition-evaluation.component.html',
     styleUrls: ['./nutrition-evaluation.component.scss']
 })
-export class NutritionEvaluationComponent implements OnInit {
+export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     typeCousenling = ['Estado Nutricional', 'Resistência a insulina / Diabetes', 'Hipertensão'];
 
@@ -91,6 +94,10 @@ export class NutritionEvaluationComponent implements OnInit {
 
     finalingEvaluantion = false;
 
+    /* flag utilizada para controlar a visibilidade das zonas de classsificação*/
+    showZonesClassification: boolean;
+
+    private subscriptions: Array<ISubscription>;
 
     constructor(
         private nutritionService: NutritionEvaluationService,
@@ -104,6 +111,7 @@ export class NutritionEvaluationComponent implements OnInit {
         private toastService: ToastrService,
         private nutritionEvaluationService: NutritionEvaluationService
     ) {
+        this.subscriptions = new Array<ISubscription>();
 
         this.ncSuggested = new NutritionalCouncil();
         this.ncDefinitive = new NutritionalCouncil();
@@ -124,14 +132,16 @@ export class NutritionEvaluationComponent implements OnInit {
         this.listBloodGlucose = new Array<IMeasurement>();
         this.listBloodPressure = new Array<BloodPressure>();
         this.listHeartRate = new Array<HeartRate>();
+
+        this.showZonesClassification = false;
     }
 
     ngOnInit() {
-        this.activeRouter.paramMap.subscribe((params) => {
+        this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patient_id');
             this.nutritionEvaluationId = params.get('nutritionevaluation_id');
             this.getNutritionEvaluation();
-        });
+        }));
         this.getNutritionEvaluation();
     }
 
@@ -140,6 +150,7 @@ export class NutritionEvaluationComponent implements OnInit {
             .then(nutritionEvaluation => {
                 // console.log(nutritionEvaluation)
                 this.nutritionalEvaluation = nutritionEvaluation;
+                this.verifyVisibityZonesClassification();
                 this.formatCounseling()
                 this.loadGraph(nutritionEvaluation.heart_rate.dataset);
                 this.separateMeasurements();
@@ -158,6 +169,17 @@ export class NutritionEvaluationComponent implements OnInit {
                 this.toastService.error('Não foi possível identificar o paciente!')
                 // console.log('Não foi possível buscar paciente!', errorResponse);
             });
+    }
+
+    verifyVisibityZonesClassification(): void {
+        if (this.nutritionalEvaluation.blood_glucose.meal === MealType.preprandial
+            || this.nutritionalEvaluation.blood_glucose.meal === MealType.postprandial
+            || this.nutritionalEvaluation.blood_glucose.meal === MealType.bedtime) {
+            this.showZonesClassification = true;
+        } else {
+            this.showZonesClassification = false;
+        }
+
     }
 
     formatCounseling() {
@@ -394,6 +416,49 @@ export class NutritionEvaluationComponent implements OnInit {
             .catch(err => {
                 this.toastService.error('Não foi possível enviar avaliação com sucesso!');
             });
+    }
+
+    getZoneGood(): { min: number, max: number } {
+        const meal = this.nutritionalEvaluation.blood_glucose.meal;
+        const zones = this.nutritionalEvaluation.blood_glucose.zones;
+        switch (meal) {
+            case MealType.preprandial:
+                return zones[0][MealType.preprandial].good;
+
+            case MealType.postprandial:
+                return zones[0][MealType.postprandial].good;
+
+            case MealType.bedtime:
+                return zones[0][MealType.bedtime].good;
+
+            default:
+                return {min: 0, max: 0}
+        }
+    }
+
+    getZoneGreat(): { min: number, max: number } {
+        const meal = this.nutritionalEvaluation.blood_glucose.meal;
+        const zones = this.nutritionalEvaluation.blood_glucose.zones;
+        switch (meal) {
+            case MealType.preprandial:
+                return zones[0][MealType.preprandial].great;
+
+            case MealType.postprandial:
+                return zones[0][MealType.postprandial].great;
+
+            case MealType.bedtime:
+                return zones[0][MealType.bedtime].great;
+
+            default:
+                return {min: 0, max: 0}
+        }
+    }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
     }
 
 }

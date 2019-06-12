@@ -1,9 +1,5 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
-
-import * as _ from 'lodash';
-
-import {IMeasurement} from '../models/measurement';
 import {GraphService} from 'app/shared/shared-services/graph.service';
 import {Weight} from '../models/wieght';
 import {DecimalFormatterPipe} from "../pipes/decimal-formatter.pipe";

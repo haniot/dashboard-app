@@ -1,17 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
-import {AuthService} from '../services/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import * as $ from 'jquery';
+
 import {ToastrService} from 'ngx-toastr';
+import {ISubscription} from 'rxjs/Subscription';
+import * as $ from 'jquery';
+
+import {AuthService} from '../services/auth.service';
 
 @Component({
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.scss']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit, OnDestroy {
 
 
     f: FormGroup;
@@ -28,6 +31,8 @@ export class ChangePasswordComponent implements OnInit {
 
     typeInputPassword_confirm = 'password';
 
+    private subscriptions: Array<ISubscription>;
+
     constructor(
         private formBuilder: FormBuilder,
         private authService: AuthService,
@@ -35,7 +40,7 @@ export class ChangePasswordComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService
     ) {
-
+        this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
@@ -47,17 +52,17 @@ export class ChangePasswordComponent implements OnInit {
         });
 
 
-        this.route
+        this.subscriptions.push(this.route
             .queryParams
             .subscribe(params => {
                 this.redirect_link = params['redirect_link'];
-            });
+            }));
     }
 
     onSubmit() {
         this.loading = true;
         this.errorCredentials = false;
-        this.authService.changePassowrd(this.f.value, this.redirect_link).subscribe(
+        this.subscriptions.push(this.authService.changePassowrd(this.f.value, this.redirect_link).subscribe(
             (resp) => {
                 this.loading = false;
                 this.toastr.info("Senha alterada com sucesso!");
@@ -73,7 +78,7 @@ export class ChangePasswordComponent implements OnInit {
                 }
                 this.loading = false;
             }
-        );
+        ));
     }
 
     clickVisibilityPassword(): void {
@@ -109,5 +114,13 @@ export class ChangePasswordComponent implements OnInit {
         }
 
     }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
+    }
+
 
 }

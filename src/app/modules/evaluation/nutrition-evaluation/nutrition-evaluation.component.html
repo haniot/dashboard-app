@@ -205,7 +205,8 @@
                                                     <div class="card-footer">
                                                         <div class="container">
                                                             <div class="row justify-content-center">
-                                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-start">
+                                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-start"
+                                                                     *ngIf="showZonesClassification">
                                                                     <div class="col-sm-8 col-md-10 col-lg-10 col-xl-10 text-right">
                                                                         <p class="card-category">Zonas de
                                                                             Classificação: </p>
@@ -224,16 +225,16 @@
                                                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
                                                                                 <p class="card-category">Ideal:</p>
                                                                                 <p class="card-category">
-                                                                                    Entre {{nutritionalEvaluation.blood_glucose.zones[0][nutritionalEvaluation.blood_glucose.meal].good.min}}
-                                                                                    e {{nutritionalEvaluation.blood_glucose.zones[0][nutritionalEvaluation.blood_glucose.meal].good.max}}</p>
+                                                                                    Entre {{getZoneGood().min}}
+                                                                                    e {{getZoneGood().max}}</p>
 
 
                                                                             </div>
                                                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
                                                                                 <p class="card-category">Ótimo:</p>
                                                                                 <p class="card-category">
-                                                                                    Entre {{nutritionalEvaluation.blood_glucose.zones[0][nutritionalEvaluation.blood_glucose.meal].great.min}}
-                                                                                    e {{nutritionalEvaluation.blood_glucose.zones[0][nutritionalEvaluation.blood_glucose.meal].great.max}}
+                                                                                    Entre {{getZoneGreat().min}}
+                                                                                    e {{getZoneGreat().max}}
                                                                                 </p>
                                                                             </div>
 
@@ -405,9 +406,13 @@
                                                 </feeding-habits>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                                 <medical-record
                                                         [(medicalRecord)]="nutritionalEvaluation.medical_record"></medical-record>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                                <sleep-habits [(sleepHabit)]="nutritionalEvaluation.sleep_habit"></sleep-habits>
                                             </div>
 
                                         </div>

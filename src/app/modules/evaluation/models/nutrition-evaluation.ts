@@ -7,6 +7,7 @@ import {FeedingHabitsRecord} from 'app/modules/habits/models/feeding';
 import {MedicalRecord} from 'app/modules/habits/models/medical-record';
 import {Weight} from 'app/modules/measurement/models/wieght';
 import {Patient} from "../../patient/models/patient";
+import {SleepHabitsRecord} from "../../habits/models/sleep";
 
 export enum NutritionalStatusPercentile {
     p01 = "p01",
@@ -168,9 +169,9 @@ export class NutritionEvaluation extends Evaluation {
     physical_activity_habits: PhysicalActivityHabitsRecord;
     feeding_habits_record: FeedingHabitsRecord;
     medical_record: MedicalRecord
+    sleep_habit: SleepHabitsRecord
 
     constructor() {
-        super()
+        super();
     }
-
 }

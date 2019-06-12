@@ -74,7 +74,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                         }
                     })
                     .catch(errorResponse => {
-                        console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
+                        // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                     });
             }, 200);
         }

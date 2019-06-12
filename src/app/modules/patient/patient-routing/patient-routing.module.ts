@@ -38,7 +38,7 @@ const routes = [
     component: ViewHabitsComponent,
     data: { scope: "patients:read" }//FIXME: Aqui acredito que devo adicionar os escopos forms:read
   },
-  { path: '**', redirectTo: 'page-not-found' }
+  { path: '**', redirectTo: '/page-not-found' }
 ];
 
 @NgModule({

@@ -99,7 +99,7 @@ export class HeartRateComponent implements OnInit, OnChanges{
     loadGraph() {
 
         if (this.data.length > 0) {
-            //Limpando o grafico
+            // Limpando o grafico
             this.option.xAxis.data = [];
             this.option.series[0].data = [];
 
@@ -129,14 +129,14 @@ export class HeartRateComponent implements OnInit, OnChanges{
                 this.lastData = this.data[0];
             }
 
-            //Inserindo dados no gráfico da ultima medião
-            //Limpando o grafico
+            // Inserindo dados no gráfico da ultima medião
+            // Limpando o grafico
             this.optionLastData.xAxis.data = [];
             this.optionLastData.series[0].data = [];
 
             this.lastData.dataset.forEach((date: { value: number, timestamp: string }) => {
 
-                this.optionLastData.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+                this.optionLastData.xAxis.data.push(this.datePipe.transform(date.timestamp, "mediumTime"));
 
                 this.optionLastData.series[0].data.push(date.value);
 

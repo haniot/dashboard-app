@@ -1,57 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
-import { environment } from 'environments/environment';
-import { OralHealthRecord, TeethBrushingFrequency, ToothType, LesionType } from '../models/oralhealth-record';
-
-const mock = [
-    {
-        id: "5cc0be311f7cca39e6de1e7d",
-        created_at: "2018-11-19T14:40:00Z",
-        teeth_brushing_freq: TeethBrushingFrequency.none,
-        teeth_lesions: [
-            {
-                "tooth_type": ToothType.deciduous_tooth,
-                "lesion_type": LesionType.cavitated_lesion
-            },
-            {
-                "tooth_type": ToothType.permanent_tooth,
-                "lesion_type": LesionType.white_spot_lesion
-            }
-        ]
-    },
-    {
-        id: "5cc0be311f7cca39e6de1e7d",
-        created_at: "2018-11-19T14:40:00Z",
-        teeth_brushing_freq: TeethBrushingFrequency.once,
-        teeth_lesions: [
-            {
-                "tooth_type": ToothType.deciduous_tooth,
-                "lesion_type": LesionType.white_spot_lesion
-            },
-            {
-                "tooth_type": ToothType.permanent_tooth,
-                "lesion_type": LesionType.white_spot_lesion
-            }
-        ]
-    },
-    {
-        id: "5cc0be311f7cca39e6de1e7d",
-        created_at: "2018-11-19T14:40:00Z",
-        teeth_brushing_freq: TeethBrushingFrequency.three_more,
-        teeth_lesions: [
-            {
-                "tooth_type": ToothType.deciduous_tooth,
-                "lesion_type": LesionType.white_spot_lesion
-            },
-            {
-                "tooth_type": ToothType.permanent_tooth,
-                "lesion_type": LesionType.cavitated_lesion
-            }
-        ]
-    }
-
-];
+import {environment} from 'environments/environment';
+import {OralHealthRecord} from '../models/oralhealth-record';
 
 @Injectable()
 export class OralHealthRecordService {
