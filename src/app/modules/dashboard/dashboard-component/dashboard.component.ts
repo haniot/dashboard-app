@@ -1,7 +1,8 @@
-import {Component, OnInit, AfterViewChecked} from '@angular/core';
+import {Component, OnInit, AfterViewChecked, OnDestroy} from '@angular/core';
 import {Router} from "@angular/router";
 
 import * as $ from 'jquery';
+import {ISubscription} from 'rxjs/Subscription';
 
 import {DashboardService} from '../services/dashboard.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
@@ -19,7 +20,7 @@ import {PageEvent} from '@angular/material/paginator';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, AfterViewChecked {
+export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     /* Configurações de paginação dos pacientes */
     // MatPaginator Inputs
     pageSizeOptionsPatients: number[] = [10, 25, 100];
@@ -63,6 +64,8 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
 
     listOfPatientsIsEmpty: boolean;
 
+    private subscriptions: Array<ISubscription>;
+
     constructor(
         private dashboardService: DashboardService,
         private authService: AuthService,
@@ -80,6 +83,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
         this.pilotStudyId = '';
         this.listOfStudiesIsEmpty = false;
         this.listOfPatientsIsEmpty = false;
+        this.subscriptions = new Array<ISubscription>();
     }
 
 
@@ -89,10 +93,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
 
         this.loadPilotSelected();
 
-        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
+        this.subscriptions.push(this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
             this.load();
-        })
+        }));
 
         this.load();
     }
@@ -151,22 +155,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
         }
     }
 
-// updateGraphWeigth() {
-//     const pilotstudy_id = localStorage.getItem('pilotstudy_id');
-//
-//     if (pilotstudy_id && pilotstudy_id !== '') {
-//         this.dashboardService.getPatientsAndWeigth(pilotstudy_id)
-//             .then(list => {
-//                 this.listPacientsAndWeigth = list;
-//             })
-//             .catch(err => {
-//                 console.log('Não foi possível carregar informações de peso dos pacientes');
-//             });
-//     } else {
-//         this.selectPilotService.open();
-//     }
-//     this.getPatients();
-// }
 
     clickPaginationPatients(event) {
         this.pageEventPatients = event;
@@ -251,6 +239,13 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
 
     ngAfterViewChecked() {
         this.loadinService.close();
+    }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
     }
 
 

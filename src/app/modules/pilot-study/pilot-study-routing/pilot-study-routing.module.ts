@@ -34,7 +34,7 @@ const routes = [
     component: PilotStudyFormComponent,
     data: { scope: "pilots:update" }
   },
-  { path: '**', redirectTo: 'page-not-found' }
+  { path: '**', redirectTo: '/page-not-found' }
 ];
 
 @NgModule({

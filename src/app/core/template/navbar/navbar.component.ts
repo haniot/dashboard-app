@@ -1,14 +1,17 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Component, OnInit, ElementRef, OnDestroy} from '@angular/core';
 import {Location} from '@angular/common';
 import {Router} from '@angular/router';
+
+import {ISubscription} from "rxjs-compat/Subscription";
 
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {UserService} from 'app/modules/admin/services/users.service';
 import {PilotStudy} from "../../../modules/pilot-study/models/pilot.study";
 import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
 import {PilotStudyService} from "../../../modules/pilot-study/services/pilot-study.service";
-import {connectableObservableDescriptor} from "rxjs/internal/observable/ConnectableObservable";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
+
 
 export declare interface RouteInfo {
     path: string;
@@ -35,7 +38,7 @@ export const ROUTES: RouteInfo[] = [
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
     listTitles: RouteInfo[];
     location: Location;
     mobile_menu_visible: any = 0;
@@ -53,6 +56,8 @@ export class NavbarComponent implements OnInit {
     /* Utilizado para deixar visivel e esconder o seletor de estudo piloto*/
     flag = true;
 
+    private subscriptions: Array<ISubscription>;
+
 
     constructor(
         location: Location,
@@ -62,21 +67,19 @@ export class NavbarComponent implements OnInit {
         private userService: UserService,
         private pilotStudyService: PilotStudyService,
         private selectPilotService: SelectPilotStudyService,
-        private localStorageService: LocalStorageService) {
+        private localStorageService: LocalStorageService,
+        private loadingService: LoadingService) {
         this.location = location;
         this.sidebarVisible = false;
+        this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
-        this.pilotStudyId = localStorage.getItem('pilotstudy_id');
-        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
+        /* subscriptions */
+        this.subscriptions.push(this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
-        });
-        this.getUserName();
-        this.listTitles = ROUTES;
-        const navbar: HTMLElement = this.element.nativeElement;
-        this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-        this.router.events.subscribe((event) => {
+        }));
+        this.subscriptions.push(this.router.events.subscribe((event) => {
             this.sidebarClose();
             var $layer: any = document.getElementsByClassName('close-layer')[0];
             if ($layer) {
@@ -84,7 +87,13 @@ export class NavbarComponent implements OnInit {
                 this.mobile_menu_visible = 0;
             }
             this.getTitle();
-        });
+        }));
+
+        this.pilotStudyId = localStorage.getItem('pilotstudy_id');
+        this.getUserName();
+        this.listTitles = ROUTES;
+        const navbar: HTMLElement = this.element.nativeElement;
+        this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
         this.loadPilotSelected();
         this.getTitle();
         this.getAllPilotStudies();
@@ -152,7 +161,7 @@ export class NavbarComponent implements OnInit {
                 $layer.classList.add('visible');
             }, 100);
 
-            $layer.onclick = function () { //asign a function
+            $layer.onclick = function () { // asign a function
                 body.classList.remove('nav-open');
                 this.mobile_menu_visible = 0;
                 $layer.classList.remove('visible');
@@ -260,6 +269,14 @@ export class NavbarComponent implements OnInit {
     }
 
     logout() {
+        this.loadingService.open();
         this.authService.logout();
+    }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
     }
 }

@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
     name: 'foodAllergy'
@@ -28,11 +28,8 @@ export class FoodAllergyPipe implements PipeTransform {
             case 'other':
                 return 'Outro';
 
-            case 'undefined':
-                return 'Não respondido';
-
             default:
-                return 'NÂO ENCONTRADO';
+                return 'Não sei/Não lembro';
         }
 
     }

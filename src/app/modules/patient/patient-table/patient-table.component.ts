@@ -1,19 +1,22 @@
-import {Component, OnInit, Input, AfterViewChecked, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, OnInit, Input, AfterViewChecked, SimpleChanges, OnChanges, OnDestroy} from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
-import {Patient} from '../models/patient';
-import {PatientService} from '../services/patient.service';
+
 import {ToastrService} from 'ngx-toastr';
+import {ISubscription} from 'rxjs/Subscription';
+
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
 import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
+import {Patient} from '../models/patient';
+import {PatientService} from '../services/patient.service';
 
 @Component({
     selector: 'patient-table',
     templateUrl: './patient-table.component.html',
     styleUrls: ['./patient-table.component.scss']
 })
-export class PatientTableComponent implements OnInit, AfterViewChecked, OnChanges {
+export class PatientTableComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
     // MatPaginator Inputs
     pageSizeOptions: number[] = [10, 25, 100];
 
@@ -37,6 +40,8 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
 
     userId: string;
 
+    private subscriptions: Array<ISubscription>;
+
     constructor(
         private patientService: PatientService,
         private pilotstudyService: PilotStudyService,
@@ -45,7 +50,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         private loadinService: LoadingService,
         private selectStudyService: SelectPilotStudyService
     ) {
-
+        this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
@@ -53,11 +58,11 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         this.getAllPacients();
         this.calcLengthPatients();
 
-        this.selectStudyService.pilotStudyUpdated.subscribe(() => {
+        this.subscriptions.push(this.selectStudyService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
             this.getAllPacients();
             this.calcLengthPatients();
-        })
+        }));
     }
 
     loadUser(): void {
@@ -169,6 +174,13 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
 
     ngAfterViewChecked() {
         this.loadinService.close();
+    }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
     }
 
 }

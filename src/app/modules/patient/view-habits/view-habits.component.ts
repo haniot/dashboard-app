@@ -1,13 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder} from '@angular/forms';
+
+import {ToastrService} from 'ngx-toastr';
+import {ISubscription} from 'rxjs/Subscription';
+
 import {PatientService} from '../services/patient.service';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {ToastrService} from 'ngx-toastr';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Patient, Gender} from '../models/patient';
 import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
 import {FeedingRecordService} from '../../habits/services/feeding-record.service';
-import {AuthService} from "../../../security/auth/services/auth.service";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
@@ -15,7 +17,7 @@ import {LocalStorageService} from "../../../shared/shared-services/localstorage.
     templateUrl: './view-habits.component.html',
     styleUrls: ['./view-habits.component.scss']
 })
-export class ViewHabitsComponent implements OnInit {
+export class ViewHabitsComponent implements OnInit, OnDestroy {
 
     patientForm: FormGroup;
 
@@ -28,6 +30,8 @@ export class ViewHabitsComponent implements OnInit {
 
     userHealthArea: string;
 
+    private subscriptions: Array<ISubscription>;
+
     constructor(
         private fb: FormBuilder,
         private patientService: PatientService,
@@ -38,7 +42,7 @@ export class ViewHabitsComponent implements OnInit {
         private activeRouter: ActivatedRoute,
         private localStorageService: LocalStorageService
     ) {
-
+        this.subscriptions = new Array<ISubscription>();
     }
 
     loaduserHealthArea(): void {
@@ -49,7 +53,8 @@ export class ViewHabitsComponent implements OnInit {
         this.loaduserHealthArea();
         this.createPatientFormInit();
         this.getAllPilotStudies();
-        this.activeRouter.paramMap.subscribe((params) => {
+
+        this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
             this.pilotStudyId = params.get('pilotstudy_id');
             this.patientService.getById(this.patientId)
@@ -60,7 +65,7 @@ export class ViewHabitsComponent implements OnInit {
                     this.toastService.error('Não foi possível buscar paciente!');
                     // console.log('Não foi possível buscar paciente!',errorResponse);
                 });
-        });
+        }));
     }
 
     /** Create  form patient */
@@ -69,6 +74,8 @@ export class ViewHabitsComponent implements OnInit {
             id: [''],
             pilotstudy_id: [{value: '', disabled: true}],
             name: [{value: '', disabled: true}],
+            email: [{value: '', disabled: true}],
+            phone_number: [{value: '', disabled: true}],
             gender: [{value: '', disabled: true}],
             birth_date: [{value: '', disabled: true}]
         });
@@ -79,6 +86,8 @@ export class ViewHabitsComponent implements OnInit {
             id: [patient.id],
             pilotstudy_id: [this.pilotStudyId],
             name: [{value: patient.name, disabled: true}],
+            email: [{value: patient.email, disabled: true}],
+            phone_number: [{value: patient.phone_number, disabled: true}],
             gender: [{value: patient.gender, disabled: true}],
             birth_date: [{value: patient.birth_date, disabled: true}]
         });
@@ -87,13 +96,33 @@ export class ViewHabitsComponent implements OnInit {
 
     getAllPilotStudies() {
         const userId = atob(localStorage.getItem('user'));
-        this.pilotStudiesService.getAllByUserId(userId)
-            .then(pilots => {
-                this.listPilots = pilots;
-            })
-            .catch(errorResponse => {
-                // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
-            });
+
+        if (this.localStorageService.getItem('health_area') === 'admin') {
+            this.pilotStudiesService.getAll()
+                .then(pilots => {
+                    this.listPilots = pilots;
+                })
+                .catch(errorResponse => {
+                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
+                });
+        } else {
+            this.pilotStudiesService.getAllByUserId(userId)
+                .then(pilots => {
+                    this.listPilots = pilots;
+                })
+                .catch(errorResponse => {
+                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
+                });
+        }
+
     }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
+    }
+
 
 }

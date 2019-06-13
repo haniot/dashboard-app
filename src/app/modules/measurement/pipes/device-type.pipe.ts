@@ -27,11 +27,11 @@ export class DeviceTypePipe implements PipeTransform {
 
       case 'smartband':
         return 'SmartBand';
-        
-      case undefined:
-        return '';
 
-        default:
+      case undefined:
+        return 'Fora dos parâmetros';
+
+      default:
         return 'NÂO ENCONTRADO';
     }
 

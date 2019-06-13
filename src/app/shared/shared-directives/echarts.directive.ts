@@ -2,12 +2,13 @@ import {
     Directive, ElementRef, Input, OnInit, HostBinding, OnChanges, OnDestroy
 } from '@angular/core';
 
-import { Subject, Subscription } from "rxjs";
+import {Subject, Subscription} from "rxjs";
+import {ISubscription} from 'rxjs/Subscription';
 
 import * as echarts from 'echarts';
 import ECharts = echarts.ECharts;
 import EChartOption = echarts.EChartOption;
-import { GraphService } from '../shared-services/graph.service';
+import {GraphService} from '../shared-services/graph.service';
 
 
 @Directive({
@@ -25,15 +26,18 @@ export class echartsDirective implements OnChanges, OnInit, OnDestroy {
     @HostBinding('style.height.px')
     elHeight: number;
 
+    private subscriptions: Array<ISubscription>;
+
     constructor(
         private el: ElementRef,
         private graphService: GraphService) {
         this.chart = echarts.init(this.el.nativeElement, 'vintage');
+        this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnChanges(changes) {
         if (this.options) {
-            //console.log('Options', this.options)
+            // console.log('Options', this.options)
             this.chart.setOption(this.options);
         }
     }
@@ -45,14 +49,14 @@ export class echartsDirective implements OnChanges, OnInit, OnDestroy {
         this.onResize = this.reSize$
             .distinctUntilChanged()
             .subscribe((_) => this.chart.resize());
-
+        this.subscriptions.push(this.onResize);
         this.elHeight = this.el.nativeElement.offsetHeight;
         if (this.elHeight < 300) {
             this.elHeight = 300;
         }
-        this.graphService.refresh.subscribe(() => {
+        this.subscriptions.push(this.graphService.refresh.subscribe(() => {
             this.chart.setOption(this.options);
-        });
+        }));
     }
 
     ngOnDestroy() {
@@ -63,5 +67,9 @@ export class echartsDirective implements OnChanges, OnInit, OnDestroy {
         if (this.onResize) {
             this.onResize.unsubscribe();
         }
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
     }
 }

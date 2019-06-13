@@ -13,6 +13,9 @@ export class GenderPipe implements PipeTransform {
       case 'female':
        return 'FEMININO';
 
+      case undefined:
+        return 'Fora dos parâmetros';
+
       default:
         return 'NÂO ENCONTRADO';      
     }

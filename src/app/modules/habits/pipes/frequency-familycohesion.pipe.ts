@@ -23,7 +23,7 @@ export class FrequencyFamilyCohesionPipe implements PipeTransform {
                 return 'Quase sempre';
 
             default:
-                return 'NÂO ENCONTRADO';
+                return 'Fora dos parâmetros';
         }
 
     }

@@ -1,6 +1,8 @@
-import {Component, OnInit, AfterViewInit, AfterViewChecked} from '@angular/core';
+import {Component, OnInit, AfterViewInit, AfterViewChecked, OnDestroy} from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import {ActivatedRoute, Router} from '@angular/router';
+
+import {ISubscription} from 'rxjs/Subscription';
 
 import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
@@ -12,7 +14,7 @@ import {SelectPilotStudyService} from "../../../shared/shared-components/select-
     templateUrl: './list-pilotstudies.component.html',
     styleUrls: ['./list-pilotstudies.component.scss']
 })
-export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
+export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDestroy {
     userId: string;
     // MatPaginator Inputs
     pageSizeOptions: number[] = [10, 25, 100];
@@ -29,6 +31,8 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
     search: string;
     searchTime;
 
+    private subscriptions: Array<ISubscription>;
+
     constructor(
         private pilotStudyService: PilotStudyService,
         private activeRouter: ActivatedRoute,
@@ -36,14 +40,15 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
         private selectPilotService: SelectPilotStudyService,
         private router: Router
     ) {
+        this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
-        this.activeRouter.paramMap.subscribe((params) => {
+        this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.userId = params.get('userId');
             this.getAllPilotStudies();
             this.getLengthPilotStudies();
-        });
+        }));
         this.loadPilotSelected();
         this.getAllPilotStudies();
         this.getLengthPilotStudies();
@@ -136,5 +141,13 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked {
     ngAfterViewChecked() {
         this.loadinService.close();
     }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
+    }
+
 
 }

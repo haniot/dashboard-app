@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {PilotStudy} from '../models/pilot.study';
 import {environment} from 'environments/environment';
 import {OdontologicEvaluation} from "../../evaluation/models/odontologic-evaluation";
+import {DateRange} from "../models/range-date";
 
 const dental = new OdontologicEvaluation();
 dental.total_patients = 20;
@@ -47,8 +48,10 @@ export class PilotStudyService {
 
 
         const url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
+
+
         /*
-        * TODO: Verficar o tipo de usuário e modificar a url. Por exemplo, se for um
+        * TODO: Verficar o tipo de usuário e modificar a url. Por exemplo, se for um:
         * healthprofessional: `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`
         * patient: `${environment.api_url}/users/patients/${userId}/pilotstudies`
         */
@@ -82,8 +85,9 @@ export class PilotStudyService {
             .toPromise();
     }
 
-    getAllFiles(pilotstudy_id: string, page?: number, limit?: number, search?: string): Promise<OdontologicEvaluation[]> {
+    getAllFiles(pilotstudy_id: string, page?: number, limit?: number, search?: DateRange): Promise<OdontologicEvaluation[]> {
         let myParams = new HttpParams();
+
 
         if (page) {
             myParams = myParams.append("page", String(page));
@@ -95,14 +99,16 @@ export class PilotStudyService {
             myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
         }
 
+
         if (search) {
 
-            console.log(search)
+            myParams = myParams.append("created_at", 'gte:' + search.begin.toISOString());
 
+            myParams = myParams.append("created_at", 'lte:' + search.end.toISOString());
 
-            myParams = myParams.append("?created_at", search);
 
         }
+        // timestamp=gte:${date_start}&timestamp=lte:${date_end}`
 
         myParams = myParams.append("sort", "+created_at");
 

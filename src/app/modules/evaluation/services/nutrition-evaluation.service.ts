@@ -2,12 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
 import {environment} from 'environments/environment';
-import {Patient} from "../../patient/models/patient";
-import {NotificationEmail} from "../models/notification-email";
-import {
-    NutritionalCouncil,
-    NutritionEvaluation
-} from "../models/nutrition-evaluation";
+import {NutritionalCouncil, NutritionEvaluation} from "../models/nutrition-evaluation";
 
 @Injectable()
 export class NutritionEvaluationService {
@@ -116,7 +111,7 @@ export class NutritionEvaluationService {
     }
 
     finalize(evaluation_id: string, patient_id: string, counselings: NutritionalCouncil): Promise<NutritionEvaluation> {
-        // console.log(counselings)
+
         return this.http.post<any>
         (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`, counselings)
             .toPromise();
@@ -128,15 +123,4 @@ export class NutritionEvaluationService {
             .toPromise();
     }
 
-    sendNutritionalEvaluationViaEmail(patient: Patient, nutritonalEvaluation: NutritionEvaluation): Promise<boolean> {
-        const notification = new NotificationEmail();
-
-        notification.reply = {name: 'NOME DO PROFISSIONAL', email: 'EMAIL DO PROFISSIONAL'};
-        notification.to.push({name: patient.name, email: patient.email});
-
-        return Promise.reject(true);
-        // return this.http.post<any>
-        //     (`${environment.api_url}/notification`, body)
-        //     .toPromise();
-    }
 }

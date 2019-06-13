@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
-import { HealthProfessional } from '../models/users';
+import {HealthProfessional, IUser} from '../models/users';
 
 @Injectable()
 
@@ -40,12 +40,12 @@ export class HealthProfessionalService {
 
   }
 
-  create(healthprofessionals: HealthProfessional): Promise<boolean> {
+  create(healthprofessionals: HealthProfessional): Promise<IUser> {
     return this.http.post<any>(`${environment.api_url}/users/healthprofessionals`, healthprofessionals)
       .toPromise();
   }
 
-  update(healthprofessionals: HealthProfessional): Promise<boolean> {
+  update(healthprofessionals: HealthProfessional): Promise<IUser> {
     return this.http.patch<any>(`${environment.api_url}/users/healthprofessionals/${healthprofessionals.id}`, healthprofessionals)
       .toPromise();
     // let copy_healthprofessionals = {};

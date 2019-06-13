@@ -16,6 +16,9 @@ export class ChronicDiseasePipe implements PipeTransform {
       case 'diabetes':
         return 'Diabetes';
 
+      case undefined:
+        return 'Fora dos parâmetros';
+
       default:
         return 'NÂO ENCONTRADO';
     }

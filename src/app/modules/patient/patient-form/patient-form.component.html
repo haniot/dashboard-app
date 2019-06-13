@@ -6,7 +6,7 @@
                     <form [formGroup]="patientForm">
 
                         <div class="row">
-                            <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
                                  [ngClass]="{'has-success': patientForm.controls.name.valid,
               'has-error': patientForm.controls.name.invalid && (patientForm.controls.name.touched || patientForm.controls.name.dirty)}">
                                 <label for="name">
@@ -20,6 +20,24 @@
                                         *ngIf="patientForm.controls.name.invalid && (patientForm.controls.name.touched || patientForm.controls.name.dirty)">
                   <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                   <span class="text-danger">Nome inválido.</span>
+                </span>
+                            </div>
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                 [ngClass]="{'has-success': patientForm.controls.phone_number.valid,
+              'has-error': patientForm.controls.phone_number.invalid && (patientForm.controls.phone_number.touched || patientForm.controls.phone_number.dirty)}">
+                                <label for="phone_number">
+                                    Telefone:
+                                    <small>(Informe apenas numeros)</small>
+                                </label>
+                                <input class="form-control" type="text" formControlName="phone_number" id="phone_number"
+                                       (keyup)="toApplyMaskPhoneNumber()">
+                                <span *ngIf="patientForm.controls.phone_number.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.phone_number.invalid && (patientForm.controls.phone_number.touched || patientForm.controls.phone_number.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">Telefone inválido.</span>
                 </span>
                             </div>
                         </div>
@@ -80,9 +98,12 @@
                                                placeholder="Selecione a data de nascimento">
                                     </div>
                                     <div class="col-md-2">
+                                        <!--                                        <mat-datepicker-toggle matSuffix  [for]="pickerBirthDate"></mat-datepicker-toggle>-->
+                                        <!--                                        <mat-datepicker #pickerBirthDate></mat-datepicker>-->
                                         <mat-datepicker-toggle matSuffix
                                                                [for]="pickerBirthDate"></mat-datepicker-toggle>
-                                        <mat-datepicker #pickerBirthDate></mat-datepicker>
+                                        <mat-datepicker #pickerBirthDate startView="year"
+                                                        [startAt]="min_birth_date"></mat-datepicker>
                                     </div>
                                 </div>
                                 <span *ngIf="patientForm.controls.birth_date.valid"

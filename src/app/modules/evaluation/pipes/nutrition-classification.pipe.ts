@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
     name: 'nutritionClassification'
@@ -26,7 +26,7 @@ export class NutritionClassificationtPipe implements PipeTransform {
                 return 'Obesidade grave';
 
             default:
-                return 'NÂO ENCONTRADO';
+                return 'Fora dos padrões definidos';
         }
 
     }

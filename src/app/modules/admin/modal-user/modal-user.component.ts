@@ -1,17 +1,18 @@
-import {Component, Input, Output, EventEmitter, OnInit, OnChanges} from '@angular/core';
-import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
+import {Component, Input, Output, EventEmitter, OnInit, OnChanges, OnDestroy} from '@angular/core';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {AdminService} from '../services/admin.service';
 import {HealthProfessionalService} from '../services/health-professional.service';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {HealtArea} from '../models/users';
+import {ISubscription} from "rxjs-compat/Subscription";
 
 @Component({
     selector: 'app-modal-user',
     templateUrl: './modal-user.component.html',
     styleUrls: ['./modal-user.component.scss']
 })
-export class ModalUserComponent implements OnInit, OnChanges {
+export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     @Input() title: string;
     @Input() subtitle: string;
     @Output() onsubmit = new EventEmitter();
@@ -39,6 +40,8 @@ export class ModalUserComponent implements OnInit, OnChanges {
 
     timerVerifyPassword;
 
+    private subscriptions: Array<ISubscription>;
+
     constructor(
         private fb: FormBuilder,
         private activeRouter: ActivatedRoute,
@@ -46,15 +49,16 @@ export class ModalUserComponent implements OnInit, OnChanges {
         private healthService: HealthProfessionalService,
         private modalService: ModalService
     ) {
+        this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
         this.createForm();
         this.loadUserInForm();
-        this.modalService.eventActionNotExecuted.subscribe((res) => {
+        this.subscriptions.push(this.modalService.eventActionNotExecuted.subscribe((res) => {
             this.createFormForUser(res.user);
             this.userForm.setValue(res.user);
-        });
+        }));
     }
 
     onSubmit() {
@@ -169,5 +173,12 @@ export class ModalUserComponent implements OnInit, OnChanges {
         } else {
             this.typeInputPassword_confirm = 'text';
         }
+    }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
     }
 }

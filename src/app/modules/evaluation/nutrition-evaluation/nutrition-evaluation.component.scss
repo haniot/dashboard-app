@@ -3,11 +3,13 @@ label {
   font-size: 14px;
   font-weight: bold;
 }
+
 .card-category {
   color: black;
   font-size: 14px;
   font-weight: bold;
 }
+
 .shared .material-icons {
   cursor: pointer;
   color: #00a594;
@@ -16,6 +18,7 @@ label {
   -webkit-transition: font-size 500ms; /* Safari */
   transition: font-size 500ms;
 }
+
 .shared .material-icons:hover {
   font-size: 35px;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
@@ -26,6 +29,7 @@ textarea {
   font-size: 0.8rem;
   letter-spacing: 1px;
 }
+
 textarea {
   padding: 10px;
   line-height: 1.5;
@@ -33,6 +37,7 @@ textarea {
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px #999;
 }
+
 label {
   color: black;
   font-size: 14px;
@@ -42,20 +47,24 @@ label {
 .card-header-timer div {
   background-color: #00a594;
 }
+
 #alarm_on {
   width: 40px;
   height: 50px;
 }
+
 #alarm {
   width: 40px;
   height: 50px;
 }
+
 .badge-haniot {
   color: white;
   font-size: 12px;
   font-weight: bold;
   background-color: #00a594;
 }
+
 .category {
   color: rgb(0, 0, 0);
   font-size: 16px;
@@ -65,6 +74,7 @@ label {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+
 .classification {
   color: #00a594;
   font-size: 20px;
@@ -88,22 +98,28 @@ label {
 .counselings {
   margin-left: 5px;
 }
+
 .counselings textarea {
   max-height: 500px;
 }
+
 .haniot-card-icon {
   border: 1px solid white;
 }
+
 .haniot-card-icon img {
   border: 1px solid black;
 }
+
 .card-category {
   color: black;
   font-weight: bold;
 }
+
 #heartRateGraph {
   border-top: 1px solid #eeeeee;
 }
+
 #finalingEvaluantion img {
   width: 8%;
 }
@@ -120,4 +136,14 @@ label {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+.nav-link .material-icons {
+  color: #00a594;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
 }

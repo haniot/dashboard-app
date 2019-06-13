@@ -13,14 +13,8 @@ export class DiseaseHistoryPipe implements PipeTransform {
       case 'no':
         return 'NÃO';
 
-      case undefined:
-        return 'Não respondido';
-
-      case 'undefined':
-        return 'Não respondido';
-
       default:
-        return 'NÂO ENCONTRADO';
+        return 'Não sei/Não lembro';
     }
 
   }

@@ -19,11 +19,8 @@ export class WaterGlassPipe implements PipeTransform {
       case 'five_more':
         return 'Cinco ou mais';
 
-      case 'undefined':
-        return 'Não respondido';
-
       default:
-        return 'NÂO ENCONTRADO';
+        return 'Não sei/Não lembro';
     }
 
   }

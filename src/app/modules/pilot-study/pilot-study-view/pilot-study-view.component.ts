@@ -1,12 +1,13 @@
-import {Component, OnInit, Input, OnChanges} from '@angular/core';
+import {Component, OnInit, Input, OnChanges, OnDestroy} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {HealthProfessional} from 'app/modules/admin/models/users';
-import {PilotStudyService} from '../services/pilot-study.service';
+import {Router, ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 import {ToastrService} from 'ngx-toastr';
-import {Router, ActivatedRoute} from '@angular/router';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {Location} from '@angular/common';
+import {ISubscription} from 'rxjs/Subscription';
+
+import {HealthProfessional} from 'app/modules/admin/models/users';
+import {PilotStudyService} from '../services/pilot-study.service';
 import {PilotStudy} from "../models/pilot.study";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
@@ -15,7 +16,7 @@ import {LocalStorageService} from "../../../shared/shared-services/localstorage.
     templateUrl: './pilot-study-view.component.html',
     styleUrls: ['./pilot-study-view.component.scss']
 })
-export class PilotStudyViewComponent implements OnInit, OnChanges {
+export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
 
     pilotStudyForm: FormGroup;
     professionalsForm: FormGroup;
@@ -32,6 +33,8 @@ export class PilotStudyViewComponent implements OnInit, OnChanges {
 
     userHealthArea: string;
 
+    private subscriptions: Array<ISubscription>;
+
     constructor(
         private fb: FormBuilder,
         private pilotStudyService: PilotStudyService,
@@ -42,17 +45,18 @@ export class PilotStudyViewComponent implements OnInit, OnChanges {
         private localStorageService: LocalStorageService
     ) {
         this.pilotStudy = new PilotStudy();
+        this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
         this.loaduserHealthArea();
-        this.activeRouter.paramMap.subscribe((params) => {
+        this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.pilotStudyId = params.get('pilotStudyId');
             if (this.pilotStudyId) {
                 this.createForm();
                 this.getPilotStudy();
             }
-        });
+        }));
 
         this.createForm();
         this.getPilotStudy();
@@ -101,9 +105,9 @@ export class PilotStudyViewComponent implements OnInit, OnChanges {
             health_professionals_id_add: ['', Validators.required],
         });
 
-        this.pilotStudyForm.get('start').valueChanges.subscribe(val => {
+        this.subscriptions.push(this.pilotStudyForm.get('start').valueChanges.subscribe(val => {
             this.pilotStudyForm.get('end').enable();
-        });
+        }));
     }
 
     onSubimt() {
@@ -137,4 +141,12 @@ export class PilotStudyViewComponent implements OnInit, OnChanges {
     onBack() {
         this._location.back();
     }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
+    }
+
 }

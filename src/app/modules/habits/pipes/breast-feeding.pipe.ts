@@ -14,16 +14,13 @@ export class BreastFeedingPipe implements PipeTransform {
         return 'Complementar';
 
       case 'infant_formulas':
-        return 'Fórmula infantil';
+        return 'Fórmulas infantis';
 
       case 'other':
-        return 'Outro';
-
-      case 'undefined':
-        return 'Não respondido';
+        return 'Outros';
 
       default:
-        return 'NÂO ENCONTRADO';
+        return 'Não sei/Não lembro';
     }
 
   }

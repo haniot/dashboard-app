@@ -21,11 +21,11 @@ export class MealPipe implements PipeTransform {
 
       case 'bedtime':
         return 'Antes de dormir';
-        
-      case undefined:
-        return '';
 
-        default:
+      case undefined:
+        return 'Fora dos parâmetros';
+
+      default:
         return 'NÂO ENCONTRADO';
     }
 

@@ -9,16 +9,16 @@ export class WeeklyFoodPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     switch (value) {
-      case 'fish, chicken or red meat':
+      case 'fish_chicken_meat':
         return 'Peixe, frango ou carne vermelha';
 
       case 'soda':
         return 'Refrigerante';
 
-      case 'raw salad, greens or vegetables':
+      case 'salad_vegetable':
         return 'Salada, legumes ou vegetais';
 
-      case 'fried':
+      case 'fried_salt_food':
         return 'Salgados fritos';
 
       case 'milk':
@@ -30,17 +30,14 @@ export class WeeklyFoodPipe implements PipeTransform {
       case 'fruits':
         return 'Frutas';
 
-      case 'goodies':
+      case 'candy_sugar_cookie':
         return 'Guloseimas';
       
-      case 'hamburger or sausages':
+      case 'burger_sausage':
         return 'Hamburgues, salsicha ou outros embutidos';
 
       case undefined:
-        return 'Não respondido';
-
-      case 'undefined':
-        return 'Não respondido';
+        return 'Fora dos parâmetros';
 
       default:
         return 'NÂO ENCONTRADO';
@@ -48,14 +45,3 @@ export class WeeklyFoodPipe implements PipeTransform {
 
   }
 }
-/*
-public static final String FISH_CHICKEN_BEEF = "fish, chicken or red meat";
-public static final String SODA = "soda";
-public static final String SALAD = "raw salad, greens or vegetables";
-public static final String FRIED = "fried";
-public static final String MILK = "milk";
-public static final String BEAN = "bean";
-public static final String FRUITS = "fruits";
-public static final String GOODIES = "goodies";
-public static final String HAMBURGER_SAUSAGE_OTHERS = "hamburger or sausages";
-*/

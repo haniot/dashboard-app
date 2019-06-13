@@ -47,7 +47,7 @@ export class DentalEvaluationListComponent implements OnInit, AfterViewChecked {
                 this.pilotStudy = pilotstudy
             })
             .catch(error => {
-                console.log('Não foi possível buscar estudo!', error);
+                // console.log('Não foi possível buscar estudo!', error);
             })
 
     }

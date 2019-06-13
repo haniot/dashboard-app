@@ -1,5 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+
+import {ISubscription} from 'rxjs/Subscription';
+
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
 import {PilotStudy} from "../../pilot-study/models/pilot.study";
 
@@ -8,24 +11,27 @@ import {PilotStudy} from "../../pilot-study/models/pilot.study";
     templateUrl: './patient-component.component.html',
     styleUrls: ['./patient-component.component.scss']
 })
-export class PatientComponentComponent implements OnInit {
+export class PatientComponentComponent implements OnInit, OnDestroy {
     pilotStudyId: string;
     subtitle: string;
 
     listPilots: Array<PilotStudy>;
+
+    private subscriptions: Array<ISubscription>;
 
     constructor(
         private router: Router,
         private activeRouter: ActivatedRoute,
         private pilotStudyService: PilotStudyService) {
         this.listPilots = new Array<PilotStudy>();
+        this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
-        this.activeRouter.paramMap.subscribe((params) => {
+        this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.pilotStudyId = params.get('pilotstudy_id');
             this.router.navigate(['patients', this.pilotStudyId]);
-        });
+        }));
         this.buildSubtitle();
         this.getAllPilotStudies();
     }
@@ -62,6 +68,13 @@ export class PatientComponentComponent implements OnInit {
 
     onBack() {
         this.router.navigate(['patients']);
+    }
+
+    ngOnDestroy(): void {
+        /* cancel all subscribtions */
+        this.subscriptions.forEach(subscription => {
+            subscription.unsubscribe();
+        });
     }
 
 }

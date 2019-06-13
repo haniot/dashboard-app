@@ -1,9 +1,5 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
-
-import * as _ from 'lodash';
-
-import {IMeasurement} from '../models/measurement';
 import {GraphService} from 'app/shared/shared-services/graph.service';
 import {Weight} from '../models/wieght';
 import {DecimalFormatterPipe} from "../pipes/decimal-formatter.pipe";
@@ -122,6 +118,7 @@ export class WeightComponent implements OnInit, OnChanges {
         private decimalPipe: DecimalFormatterPipe,
         private graphService: GraphService
     ) {
+        this.data = new Array<Weight>();
     }
 
     ngOnInit() {
@@ -164,7 +161,9 @@ export class WeightComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.data && changes.data.currentValue !== undefined && changes.data.previousValue == undefined) {
+        if ((changes.data.currentValue && changes.data.previousValue
+            && changes.data.currentValue.length !== changes.data.previousValue.length) ||
+            (changes.data.currentValue.length && !changes.data.previousValue)) {
             this.loadGraph();
         }
     }

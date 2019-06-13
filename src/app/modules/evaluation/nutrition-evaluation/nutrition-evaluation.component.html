@@ -25,6 +25,21 @@
                             <p>{{patient.birth_date | date}}</p>
                         </div>
 
+                        <div class="form-group col-md" *ngIf="patient.phone_number && (patient.phone_number !== '')">
+                            <label>
+                                Telefone:
+                            </label>
+                            <p>{{patient.phone_number}}</p>
+                        </div>
+
+                        <div class="form-group col-md" *ngIf="patient.email && (patient.email !== '')">
+                            <label>
+                                Email:
+                            </label>
+                            <p>{{patient.email}}</p>
+                        </div>
+
+
                     </div>
                 </haniot-card>
             </div>
@@ -34,9 +49,6 @@
             <div class="p-2" *ngIf="patient && patient.email && patient.email != ''">
                 <i class="material-icons" title="Compartilhar via email"
                    (click)="sendEvaluationViaEmail()">mail_outline</i>
-            </div>
-            <div class="p-2">
-                <i class="material-icons" title="Baixar em CSV">get_app</i>
             </div>
             <div class="p-2">
                 <i class="material-icons" title="Baixar em PDF">picture_as_pdf</i>
@@ -83,7 +95,7 @@
                                                                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
                                                                     <p class="card-category">Peso: </p>
                                                                     <h3 class="card-title">
-                                                                        {{nutritionalEvaluation.nutritional_status.weight}}
+                                                                        {{nutritionalEvaluation.nutritional_status.weight | decimalFormatter}}
                                                                         <small>Kg</small>
                                                                     </h3>
                                                                 </div>
@@ -96,7 +108,7 @@
                                                                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
                                                                     <p class="card-category">Percentil: </p>
                                                                     <h3 class="card-title">
-                                                                        {{nutritionalEvaluation.nutritional_status.percentile}}
+                                                                        {{nutritionalEvaluation.nutritional_status.percentile === 'undefined' ? 'Fora dos padrões definidos' : nutritionalEvaluation.nutritional_status.percentile}}
 
                                                                     </h3>
                                                                 </div>
@@ -187,12 +199,48 @@
                                                                  alt="">
                                                         </div>
                                                         <span class="badge badge-haniot category">Glicemia:</span>
-                                                        <span
-                                                                class="badge badge-haniot classification">{{nutritionalEvaluation.blood_glucose.classification | bloodglucoseClassification}}</span>
+                                                        <span class="badge badge-haniot classification">{{nutritionalEvaluation.blood_glucose.classification | bloodglucoseClassification}}</span>
+
                                                     </div>
                                                     <div class="card-footer">
                                                         <div class="container">
                                                             <div class="row justify-content-center">
+                                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-start"
+                                                                     *ngIf="showZonesClassification">
+                                                                    <div class="col-sm-8 col-md-10 col-lg-10 col-xl-10 text-right">
+                                                                        <p class="card-category">Zonas de
+                                                                            Classificação: </p>
+                                                                    </div>
+                                                                    <div class="col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                                                                        <a class="nav-link text-right"
+                                                                           href="http://example.com"
+                                                                           id="navbarDropdownZones"
+                                                                           data-toggle="dropdown" aria-haspopup="true"
+                                                                           aria-expanded="false"> <i
+                                                                                class="material-icons">open_in_new</i>
+
+                                                                        </a>
+                                                                        <div class="dropdown-menu row justify-content-center"
+                                                                             aria-labelledby="navbarDropdownZones">
+                                                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                                                                <p class="card-category">Ideal:</p>
+                                                                                <p class="card-category">
+                                                                                    Entre {{getZoneGood().min}}
+                                                                                    e {{getZoneGood().max}}</p>
+
+
+                                                                            </div>
+                                                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                                                                <p class="card-category">Ótimo:</p>
+                                                                                <p class="card-category">
+                                                                                    Entre {{getZoneGreat().min}}
+                                                                                    e {{getZoneGreat().max}}
+                                                                                </p>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                                                     <p class="card-category">Tipo de refeição:</p>
                                                                     <span
@@ -240,7 +288,7 @@
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                                                         <p class="card-category">Percentil: </p>
                                                                         <h3 class="card-title">
-                                                                            {{nutritionalEvaluation.blood_pressure.systolic_percentile}}
+                                                                            {{nutritionalEvaluation.blood_pressure.systolic_percentile === 'undefined' ? 'Fora dos padrões definidos' : nutritionalEvaluation.blood_pressure.systolic_percentile}}
                                                                         </h3>
                                                                     </div>
                                                                 </div>
@@ -259,7 +307,7 @@
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
                                                                         <p class="card-category">Percentil: </p>
                                                                         <h3 class="card-title">
-                                                                            {{nutritionalEvaluation.blood_pressure.diastolic_percentile}}
+                                                                            {{nutritionalEvaluation.blood_pressure.diastolic_percentile === 'undefined' ? 'Fora dos padrões definidos' : nutritionalEvaluation.blood_pressure.diastolic_percentile}}
                                                                         </h3>
                                                                     </div>
                                                                 </div>
@@ -358,9 +406,13 @@
                                                 </feeding-habits>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                                 <medical-record
                                                         [(medicalRecord)]="nutritionalEvaluation.medical_record"></medical-record>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                                <sleep-habits [(sleepHabit)]="nutritionalEvaluation.sleep_habit"></sleep-habits>
                                             </div>
 
                                         </div>

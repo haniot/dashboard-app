@@ -22,6 +22,9 @@ export class PhysicalActivityPipe implements PipeTransform {
       case 'none':
         return 'Nenhuma vez';
 
+      case undefined:
+        return 'Fora dos parâmetros';
+
       default:
         return 'NÂO ENCONTRADO';
     }

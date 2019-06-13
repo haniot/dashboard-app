@@ -13,6 +13,9 @@ export class HealthAreaPipe implements PipeTransform {
       case 'dentistry':
        return 'DENTISTA';
 
+      case undefined:
+        return 'Fora dos parâmetros';
+
       default:
         return 'NÂO ENCONTRADO';      
     }
