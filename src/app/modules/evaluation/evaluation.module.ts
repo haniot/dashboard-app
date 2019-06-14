@@ -6,6 +6,7 @@ import {MatPaginatorModule, MatInputModule, MatFormFieldModule} from '@angular/m
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material';
+import {NgxEchartsModule} from "ngx-echarts";
 
 import {EvaluationComponentComponent} from './evaluation-component/evaluation-component.component';
 import {EvaluationRoutingModule} from './evaluation-routing/evaluation-routing.module';
@@ -28,6 +29,7 @@ import {DentalEvaluationTableComponent} from './dental-evaluation-table/dental-e
 import {DentalEvaluationService} from './services/dental-evaluation.service';
 import {DentalEvaluationListComponent} from './dental-evaluation-list/dental-evaluation-list.component';
 import {TaylorCutClassificationPipe} from "./pipes/taylor-cut-classification.pipe";
+
 
 @NgModule({
     declarations: [
@@ -59,6 +61,8 @@ import {TaylorCutClassificationPipe} from "./pipes/taylor-cut-classification.pip
         MatInputModule,
         MatCheckboxModule,
         MatTabsModule,
+        NgxEchartsModule,
+
 
         SharedModule,
         HabitsModule,

@@ -1,10 +1,11 @@
-import { MeasurementType } from './measurement';
+import {IMeasurement, MeasurementType} from './measurement';
+
 export class DataSetUnit {
     value: number;
     timestamp: string;
 }
 
-export class HeartRate {
+export class HeartRate implements IMeasurement {
     id: string;
     dataset: Array<DataSetUnit>;
     unit: string;

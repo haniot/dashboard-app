@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {NgxEchartsModule} from 'ngx-echarts';
 
 import {MeasurementComponentComponent} from './measurement-component/measurement-component.component';
 import {SharedModule} from 'app/shared/shared.module';
@@ -42,8 +43,10 @@ import {DecimalFormatterPipe} from './pipes/decimal-formatter.pipe';
         CommonModule,
         FormsModule,
         SharedModule,
+
         MatExpansionModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        NgxEchartsModule
     ],
     exports: [
         MeasurementComponentComponent,

@@ -52,6 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     userId: string;
 
     pilotStudyId: string;
+    pilotStudyName: string;
 
     /* Utilizado para deixar visivel e esconder o seletor de estudo piloto*/
     flag = true;
@@ -72,12 +73,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.location = location;
         this.sidebarVisible = false;
         this.subscriptions = new Array<ISubscription>();
+        this.listPilots = new Array<PilotStudy>();
     }
 
     ngOnInit() {
         /* subscriptions */
         this.subscriptions.push(this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
+            this.getNamePilotStudy();
         }));
         this.subscriptions.push(this.router.events.subscribe((event) => {
             this.sidebarClose();
@@ -238,6 +241,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.pilotStudyService.getAllByUserId(this.userId)
             .then(studies => {
                 this.listPilots = studies;
+                this.getNamePilotStudy();
             })
             .catch(error => {
                 // console.log('Erro ao buscar pilot-studies: ', error);
@@ -248,7 +252,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
         return this.authService.decodeToken().sub_type !== 'admin';
     }
 
-    selectPilotStudy(): void {
+    getNamePilotStudy(): void {
+        this.listPilots.forEach(pilot => {
+            if (pilot.id === this.pilotStudyId) {
+                this.pilotStudyName = pilot.name;
+            }
+        })
+    }
+
+    selectPilotStudy(pilot_id: string): void {
+        this.pilotStudyId = pilot_id;
         if (!this.userId) {
             this.loadUser()
         }

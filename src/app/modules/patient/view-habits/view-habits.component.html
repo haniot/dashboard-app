@@ -102,7 +102,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <mat-tab-group mat-align-tabs="center">
+                <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">
                     <mat-tab label="HÁBITOS">
 
                         <div class="container-fluid">
@@ -136,12 +136,13 @@
                     </mat-tab>
 
                     <mat-tab label="MEDIÇÕES">
-                        <measurement-component [(patientId)]="patientId"></measurement-component>
+                        <measurement-component [(patientId)]="patientId"
+                                               [configVisibility]="configVisibility"></measurement-component>
                     </mat-tab>
 
-                    <!-- <mat-tab label="SAÚDE BUCAL">
-                      <oralhealth-record [(patientId)]="patientId"></oralhealth-record>
-                    </mat-tab> -->
+                    <!--                    <mat-tab label="SAÚDE BUCAL">-->
+                    <!--                      <oralhealth-record [(patientId)]="patientId"></oralhealth-record>-->
+                    <!--                    </mat-tab>-->
 
                 </mat-tab-group>
             </div>

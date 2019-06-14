@@ -1,10 +1,7 @@
-import {Component, OnInit, Input, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 
-import * as _ from 'lodash';
-
-import {IMeasurement} from '../models/measurement';
-import {GraphService} from 'app/shared/shared-services/graph.service';
+import {IMeasurement, Measurement} from '../models/measurement';
 
 @Component({
     selector: 'height',
@@ -17,59 +14,20 @@ export class HeightComponent implements OnInit, OnChanges {
 
     lastData: IMeasurement;
 
-    option = {
-        tooltip: {
-            trigger: 'axis',
-            formatter: "Altura: {c} cm <br> Data: {b}"
-        },
-        xAxis: {
-            type: 'category',
-            data: []
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} cm'
-            }
-        },
-        dataZoom: [
-            {
-                type: 'slider'
-            }
-        ],
-        series: [
-            {
-                name: 'Altura',
-                type: 'line',
-                step: 'start',
-                data: []
-            }
-        ]
-    };
+    options: any;
 
 
     constructor(
-        private datePipe: DatePipe,
-        private graphService: GraphService
+        private datePipe: DatePipe
     ) {
-        this.data = new Array<IMeasurement>();
-
+        this.data = new Array<Measurement>();
     }
 
-    ngOnInit() {
-
+    ngOnInit(): void {
+        this.loadGraph();
     }
 
     loadGraph() {
-
-        //Limpando o grafico
-        this.option.xAxis.data = [];
-        this.option.series[0].data = [];
-
-        this.data.forEach((element: IMeasurement) => {
-            this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
-            this.option.series[0].data.push(element.value);
-        });
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -77,7 +35,43 @@ export class HeightComponent implements OnInit, OnChanges {
             this.lastData = this.data[0];
         }
 
-        this.graphService.refreshGraph();
+        const xAxis = {
+            type: 'category',
+            data: []
+        };
+
+        const series = {
+            name: 'Altura',
+            type: 'line',
+            step: 'start',
+            data: []
+        };
+
+        this.data.forEach((element: Measurement) => {
+            xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            series.data.push(element.value);
+        });
+
+
+        this.options = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: "Altura: {c} cm <br> Data: {b}"
+            },
+            xAxis: xAxis,
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} cm'
+                }
+            },
+            dataZoom: [
+                {
+                    type: 'slider'
+                }
+            ],
+            series: series
+        };
 
 
     }

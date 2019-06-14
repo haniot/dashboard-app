@@ -1,10 +1,7 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 
-import * as _ from 'lodash';
-
-import {IMeasurement} from '../models/measurement';
-import {GraphService} from 'app/shared/shared-services/graph.service';
+import {IMeasurement, Measurement} from '../models/measurement';
 
 @Component({
     selector: 'waist-circunference',
@@ -17,80 +14,19 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
 
     lastData: IMeasurement;
 
-    option = {
-        color: ['#3398DB'],
-        tooltip: {
-            formatter: "Circunferência : {c} cm <br> Data: {b}",
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        xAxis: [
-            {
-                type: 'category',
-                data: [],
-                axisTick: {
-                    alignWithLabel: true
-                }
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value',
-                axisLabel: {
-                    formatter: '{value} cm'
-                }
-            }
-        ],
-        dataZoom: [
-            {
-                type: 'slider'
-            }
-        ],
-        series: [
-            {
-                type: 'bar',
-                barWidth: '60%',
-                color: '#00a594',
-                data: [],
-                markLine: {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "Valor médio : {c} cm"
-                    },
-                    lineStyle: {
-                        color: 'black',
-                    },
-                    data: [
-                        {type: 'average', name: 'Média'}
-                    ]
-                }
-            }
-        ]
-    };
+    options: any;
 
     constructor(
-        private datePipe: DatePipe,
-        private graphService: GraphService
+        private datePipe: DatePipe
     ) {
-        this.data = new Array<IMeasurement>();
+        this.data = new Array<Measurement>();
     }
 
-    ngOnInit() {
-
+    ngOnInit(): void {
+        this.loadGraph();
     }
 
     loadGraph() {
-
-        //Limpando o grafico
-        this.option.xAxis[0].data = [];
-        this.option.series[0].data = [];
-
-        this.data.forEach((element: IMeasurement) => {
-            this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate"));
-            this.option.series[0].data.push(element.value);
-        });
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -98,8 +34,65 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
             this.lastData = this.data[0];
         }
 
-        this.graphService.refreshGraph();
+        const xAxis = {
+            type: 'category',
+            data: [],
+            axisTick: {
+                alignWithLabel: true
+            }
+        };
 
+        const series = {
+            type: 'bar',
+            barWidth: '60%',
+            color: '#00a594',
+            data: [],
+            markLine: {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "Valor médio : {c} cm"
+                },
+                lineStyle: {
+                    color: 'black',
+                },
+                data: [
+                    {type: 'average', name: 'Média'}
+                ]
+            }
+        };
+
+
+        this.data.forEach((element: Measurement) => {
+            xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            series.data.push(element.value);
+        });
+
+
+        this.options = {
+            color: ['#3398DB'],
+            tooltip: {
+                formatter: "Circunferência : {c} cm <br> Data: {b}",
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            xAxis: xAxis,
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} cm'
+                    }
+                }
+            ],
+            dataZoom: [
+                {
+                    type: 'slider'
+                }
+            ],
+            series: series
+        };
 
     }
 

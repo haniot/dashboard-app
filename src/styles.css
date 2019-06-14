@@ -125,44 +125,6 @@ table tr td {
     background: #00a594;
 }
 
-/* .p-2 small {
-    color: black;
-} */
-
-/* style for input type select*/
-/* -------------------- Select Box Styles: stackoverflow.com Method */
-/* -------------------- Source: http://stackoverflow.com/a/5809186 */
-select.soflow, select.soflow-color {
-    -webkit-appearance: button;
-    -webkit-border-radius: 2px;
-    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-    -webkit-padding-end: 20px;
-    -webkit-padding-start: 2px;
-    -webkit-user-select: none;
-    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
-    background-position: 97% center;
-    background-repeat: no-repeat;
-    border: 1px solid #AAA;
-    color: #555;
-    font-size: inherit;
-    margin: 20px;
-    overflow: hidden;
-    padding: 5px 10px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 250px;
-}
-
-select.soflow-color {
-    color: #fff;
-    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126);
-    background-color: #779126;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    padding-left: 15px;
-}
-
 /* CSS range datepicker*/
 
 :not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-semi-selected), .cdk-keyboard-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-semi-selected), .cdk-program-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-semi-selected) {
@@ -208,7 +170,7 @@ select.soflow-color {
     background-color: white;
 }
 
-.mat-datepicker-toggle-active{
+.mat-datepicker-toggle-active {
     color: #00a594;
 }
 
@@ -216,4 +178,8 @@ label {
     color: black;
     font-size: 14px;
     font-weight: bold;
+}
+
+.echarts-div-graph {
+    height: 300px;
 }

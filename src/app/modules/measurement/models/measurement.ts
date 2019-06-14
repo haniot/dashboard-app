@@ -11,10 +11,8 @@ export enum MeasurementType {
 
 export interface IMeasurement {
     id: string;
-    value: number;
     unit: string;
     type: MeasurementType;
-    timestamp: string;
     user_id: string;
     device_id?: string;
 }
@@ -28,5 +26,6 @@ export class Measurement implements IMeasurement {
     user_id: string;
     device_id?: string;
 
-    constructor() { }
+    constructor() {
+    }
 }

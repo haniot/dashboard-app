@@ -29,7 +29,7 @@
         <haniot-card [title]="'Acesse seus pacientes'"
                      [subtitle]="'Clique sobre o card para visualizar informações do paciente.'"
                      *ngIf="isNotUserAdmin()">
-            <div class="row justify-content-center" *ngIf="!listPacients.length">
+            <div class="row justify-content-center" *ngIf="!listPacients.length && !listOfPatientsIsEmpty">
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patients">
                     <img src="../../../../assets/img/loading.gif" alt="Carregando pacientes"> carregando pacientes ...
                 </div>

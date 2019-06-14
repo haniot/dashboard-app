@@ -1,15 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { echartsDirective } from './echarts.directive';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
-  declarations: [
-    echartsDirective
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [ echartsDirective]
+    declarations: [
+
+    ],
+    imports: [
+        CommonModule
+    ],
+    exports: []
 })
-export class SharedDirectivesModule { }
+export class SharedDirectivesModule {
+}

@@ -23,7 +23,9 @@
 
             </div>
 
-            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center" [ts-chart]="weightGraph"></div>
+            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center echarts-div-graph" echarts
+                 [options]="weightGraph"></div>
+
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-cente row">
@@ -54,7 +56,9 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center" [ts-chart]="fatGraph"></div>
+            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center echarts-div-graph" echarts
+                 [options]="fatGraph"></div>
+
         </div>
 
         <div *ngIf="data.length==0">

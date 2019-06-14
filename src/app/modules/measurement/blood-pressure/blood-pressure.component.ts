@@ -1,10 +1,7 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
-
-import * as _ from 'lodash';
-
-import {GraphService} from 'app/shared/shared-services/graph.service';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {BloodPressure} from '../models/blood-pressure';
+import {GraphService} from "../../../shared/shared-services/graph.service";
 
 @Component({
     selector: 'blood-pressure',
@@ -17,30 +14,33 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     lastData: BloodPressure;
 
-    option = {
-        tooltip: {
-            trigger: 'item',
-            formatter: "Pressão : {c} mmHg<br>  Data: {b}"
-        },
-        legend: {
-            data: ['Sistólica', 'Diastólica', "Pulso"]
-        },
-        xAxis: {
+    options: any;
+
+    constructor(
+        private datePipe: DatePipe,
+        private graphService: GraphService
+    ) {
+        this.data = new Array<BloodPressure>();
+    }
+
+    ngOnInit(): void {
+        this.loadGraph();
+    }
+
+    loadGraph() {
+
+        if (this.data.length > 1) {
+            this.lastData = this.data[this.data.length - 1];
+        } else {
+            this.lastData = this.data[0];
+        }
+
+        const xAxis = {
             type: 'category',
             data: []
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} mmHg'
-            }
-        },
-        dataZoom: [
-            {
-                type: 'slider'
-            }
-        ],
-        series: [
+        };
+
+        const series = [
             {
                 name: "Sistólica",
                 data: [],
@@ -105,51 +105,47 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 }
             }
         ]
-    };
-
-    constructor(
-        private datePipe: DatePipe,
-        private graphService: GraphService
-    ) {
-        this.data = new Array<BloodPressure>();
-    }
-
-    ngOnInit() {
-
-    }
-
-    loadGraph() {
-
-        //Limpando o grafico
-        this.option.xAxis.data = [];
-        this.option.series[0].data = [];
-        this.option.series[1].data = [];
 
         this.data.forEach((element: BloodPressure) => {
-            const find = this.option.xAxis.data.find((ele) => {
-                return ele == this.datePipe.transform(element.timestamp, "shortDate");
+            const find = xAxis.data.find((ele) => {
+                return ele === this.datePipe.transform(element.timestamp, "shortDate");
             });
 
             if (!find) {
-                this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
             }
             // Adicionando Sistólica
-            this.option.series[0].data.push(element.systolic);
+            series[0].data.push(element.systolic);
 
             // Adicionando Diastólica
-            this.option.series[1].data.push(element.diastolic);
+            series[1].data.push(element.diastolic);
 
             // Adicionando Pulso
-            this.option.series[2].data.push(element.pulse);
+            series[2].data.push(element.pulse);
         });
 
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
-        } else {
-            this.lastData = this.data[0];
-        }
-
-        this.graphService.refreshGraph();
+        this.options = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "Pressão : {c} mmHg<br>  Data: {b}"
+            },
+            legend: {
+                data: ['Sistólica', 'Diastólica', "Pulso"]
+            },
+            xAxis: xAxis,
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} mmHg'
+                }
+            },
+            dataZoom: [
+                {
+                    type: 'slider'
+                }
+            ],
+            series: series
+        };
 
 
     }

@@ -25,7 +25,7 @@
             </td>
             <td colspan="6" *ngIf="listOfPatientsIsEmpty">
                 <img src="../../../../assets/img/haniot/no_patient.png" alt="Nenhum paciente cadastrado" id="listOfPatientsIsEmpty"><br>
-                Nenhum paciente cadastrado.
+                Nenhum paciente cadastrado.<br>Utilize o botão "Adicionar" para adicionar pacientes ao estudo.
             </td>
         </tr>
         <tr *ngFor="let patient of listOfPatients; index as i">

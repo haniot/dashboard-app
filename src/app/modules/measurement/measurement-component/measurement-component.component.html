@@ -15,7 +15,7 @@
 
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
                         <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityWeight">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="configVisibility.weight">
                             </mat-slide-toggle>
                         </div>
                         <div class="p-2"><label> Peso: </label></div>
@@ -23,7 +23,7 @@
 
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
                         <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityHeight">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="configVisibility.height">
                             </mat-slide-toggle>
                         </div>
                         <div class="p-2"><label> Altura: </label></div>
@@ -33,7 +33,7 @@
                          *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
                         <div class="p-2">
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="visibilityFat"></mat-slide-toggle>
+                                              [(ngModel)]="configVisibility.fat"></mat-slide-toggle>
                         </div>
                         <div class="p-2"><label> Gordura corporal: </label></div>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
                         <div class="p-2">
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="visibilityWaist"></mat-slide-toggle>
+                                              [(ngModel)]="configVisibility.circumference"></mat-slide-toggle>
                         </div>
                         <div class="p-2"><label> Circunferência da cintura: </label></div>
                     </div>
@@ -50,14 +50,15 @@
                          *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
                         <div class="p-2">
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="visibilityBody"></mat-slide-toggle>
+                                              [(ngModel)]="configVisibility.temperature"></mat-slide-toggle>
                         </div>
                         <div class="p-2"><label> Temperatura corporal: </label></div>
                     </div>
 
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
                         <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityGlucose">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'"
+                                              [(ngModel)]="configVisibility.glucose">
                             </mat-slide-toggle>
                         </div>
                         <div class="p-2"><label> Glicose no sangue: </label></div>
@@ -66,7 +67,8 @@
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"
                          *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
                         <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="visibilityPressure">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'"
+                                              [(ngModel)]="configVisibility.pressure">
                             </mat-slide-toggle>
                         </div>
                         <div class="p-2"><label> Pressão sanguínea: </label></div>
@@ -77,7 +79,7 @@
                          *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
                         <div class="p-2">
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="visibilityHeart"></mat-slide-toggle>
+                                              [(ngModel)]="configVisibility.heartRate"></mat-slide-toggle>
                         </div>
                         <div class="p-2"><label> Frequência cardíaca: </label></div>
                     </div>
@@ -91,39 +93,39 @@
     <div class="row">
 
 
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityWeight">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.weight">
             <weight [data]="listWeight"></weight>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityHeight">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.height">
             <height [data]="listHeight"></height>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             *ngIf="visibilityFat && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+             *ngIf="configVisibility.fat && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
             <fat [data]="listFat"></fat>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityWaist">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.circumference">
             <waist-circunference [data]="listWaistCircunference"></waist-circunference>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             *ngIf="visibilityBody && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+             *ngIf="configVisibility.temperature && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
             <body-temperature [data]="listBodyTemperature"></body-temperature>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="visibilityGlucose">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.glucose">
             <blood-glucose [data]="listBloodGlucose"></blood-glucose>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             *ngIf="visibilityPressure && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+             *ngIf="configVisibility.pressure && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
             <blood-pressure [data]="listBloodPressure"></blood-pressure>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             *ngIf="visibilityHeart && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+             *ngIf="configVisibility.heartRate && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
             <heart-rate [data]="listHeartRate"></heart-rate>
         </div>
 

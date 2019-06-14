@@ -1,11 +1,9 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 
-import * as _ from 'lodash';
-
-import {IMeasurement} from '../models/measurement';
-import {GraphService} from 'app/shared/shared-services/graph.service';
+import {IMeasurement, Measurement} from '../models/measurement';
 import {DecimalFormatterPipe} from "../pipes/decimal-formatter.pipe";
+import {GraphService} from "../../../shared/shared-services/graph.service";
 
 @Component({
     selector: 'body-temperature',
@@ -18,65 +16,22 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
     lastData: IMeasurement;
 
-    option = {
-        tooltip: {
-            formatter: "Temperatura: {c} °C <br> Data: {b}",
-            trigger: 'axis'
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: []
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} °C'
-            }
-        },
-        dataZoom: [
-            {
-                type: 'slider'
-            }
-        ],
-        series: [
-            {
-                name: 'Histórico de temperatura',
-                type: 'line',
-                data: [],
-                markPoint: {
-                    data: [
-                        {type: 'max', name: 'Maximo'},
-                        {type: 'min', name: 'Minimo'}
-                    ]
-                }
-            }
-        ]
-    };
-
+    options: any;
 
     constructor(
         private datePipe: DatePipe,
         private decimalPipe: DecimalFormatterPipe,
         private graphService: GraphService
     ) {
-        this.data = new Array<IMeasurement>();
+        this.data = new Array<Measurement>();
+        this.lastData = new Measurement();
     }
 
-    ngOnInit() {
-
+    ngOnInit(): void {
+        this.loadGraph();
     }
 
     loadGraph() {
-
-        // Limpando o grafico
-        this.option.xAxis.data = [];
-        this.option.series[0].data = [];
-
-        this.data.forEach((element: IMeasurement) => {
-            this.option.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
-            this.option.series[0].data.push(this.decimalPipe.transform(element.value));
-        });
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -84,7 +39,49 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
             this.lastData = this.data[0];
         }
 
-        this.graphService.refreshGraph();
+        const xAxis = {
+            type: 'category',
+            boundaryGap: false,
+            data: []
+        };
+
+        const series = {
+            name: 'Histórico de temperatura',
+            type: 'line',
+            data: [],
+            markPoint: {
+                data: [
+                    {type: 'max', name: 'Maximo'},
+                    {type: 'min', name: 'Minimo'}
+                ]
+            }
+        };
+
+        this.data.forEach((element: Measurement) => {
+            xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            series.data.push(this.decimalPipe.transform(element.value));
+        });
+
+
+        this.options = {
+            tooltip: {
+                formatter: "Temperatura: {c} °C <br> Data: {b}",
+                trigger: 'axis'
+            },
+            xAxis: xAxis,
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} °C'
+                }
+            },
+            dataZoom: [
+                {
+                    type: 'slider'
+                }
+            ],
+            series: series
+        };
 
 
     }

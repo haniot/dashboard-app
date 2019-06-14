@@ -32,7 +32,8 @@
         </div>
 
 
-        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center" [ts-chart]="option"></div>
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center echarts-div-graph" echarts
+             [options]="options"></div>
 
         <div *ngIf="data.length==0">
             <span class="badge badge-danger badge-12">Nenhum registro de glicose cadastrado!</span>

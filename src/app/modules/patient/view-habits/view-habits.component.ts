@@ -30,6 +30,17 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
     userHealthArea: string;
 
+    configVisibility = {
+        weight: false,
+        height: false,
+        fat: false,
+        circumference: false,
+        temperature: false,
+        glucose: false,
+        pressure: false,
+        heartRate: false
+    };
+
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -45,9 +56,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.subscriptions = new Array<ISubscription>();
     }
 
-    loaduserHealthArea(): void {
-        this.userHealthArea = this.localStorageService.getItem('health_area');
-    }
 
     ngOnInit() {
         this.loaduserHealthArea();
@@ -68,7 +76,11 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         }));
     }
 
-    /** Create  form patient */
+    loaduserHealthArea(): void {
+        this.userHealthArea = this.localStorageService.getItem('health_area');
+    }
+
+
     createPatientFormInit() {
         this.patientForm = this.fb.group({
             id: [''],
@@ -115,6 +127,21 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                 });
         }
 
+    }
+
+    clickOnMatTab(event) {
+        if (event.index === 1) {
+            this.configVisibility = {
+                weight: true,
+                height: true,
+                fat: true,
+                circumference: true,
+                temperature: true,
+                glucose: true,
+                pressure: true,
+                heartRate: true
+            };
+        }
     }
 
     ngOnDestroy(): void {

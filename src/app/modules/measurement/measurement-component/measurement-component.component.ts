@@ -1,12 +1,34 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
-import {IMeasurement, Measurement, MeasurementType} from '../models/measurement';
+import {IMeasurement, MeasurementType} from '../models/measurement';
 import {MeasurementService} from '../services/measurement.service';
 import {BloodPressure} from '../models/blood-pressure';
 import {HeartRate} from '../models/heart-rate';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {ToastrService} from 'ngx-toastr';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+
+class ConfigVisibility {
+    weight: boolean;
+    height: boolean;
+    fat: boolean;
+    circumference: boolean;
+    temperature: boolean;
+    glucose: boolean;
+    pressure: boolean;
+    heartRate: boolean;
+
+    constructor() {
+        this.weight = false;
+        this.height = false;
+        this.fat = false;
+        this.circumference = false;
+        this.temperature = false;
+        this.glucose = false;
+        this.pressure = false;
+        this.heartRate = false;
+    }
+};
 
 @Component({
     selector: 'measurement-component',
@@ -15,29 +37,23 @@ import {LocalStorageService} from "../../../shared/shared-services/localstorage.
 })
 export class MeasurementComponentComponent implements OnInit, OnChanges {
 
+    @Input() configVisibility: ConfigVisibility;
+
     listWeight: Array<IMeasurement>;
-    visibilityWeight: boolean = true;
 
     listHeight: Array<IMeasurement>;
-    visibilityHeight: boolean = true;
 
     listFat: Array<IMeasurement>;
-    visibilityFat: boolean = true;
 
     listWaistCircunference: Array<IMeasurement>;
-    visibilityWaist: boolean = true;
 
     listBodyTemperature: Array<IMeasurement>;
-    visibilityBody: boolean = true;
 
     listBloodGlucose: Array<IMeasurement>;
-    visibilityGlucose: boolean = true;
 
-    listBloodPressure: Array<BloodPressure>;
-    visibilityPressure: boolean = true;
+    listBloodPressure: Array<IMeasurement>;
 
-    listHeartRate: Array<HeartRate>;
-    visibilityHeart: boolean = true;
+    listHeartRate: Array<IMeasurement>;
 
     userHealthArea: string;
 
@@ -57,6 +73,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
         this.listBloodGlucose = new Array<IMeasurement>();
         this.listBloodPressure = new Array<BloodPressure>();
         this.listHeartRate = new Array<HeartRate>();
+        this.configVisibility = new ConfigVisibility();
     }
 
     ngOnInit() {
@@ -71,57 +88,57 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     loadMeasurements() {
         this.measurementService.getAllByUser(this.patientId)
             .then((measurements: Array<any>) => {
-                this.listWeight = measurements.filter((element: Measurement) => {
-                    return element.type === MeasurementType.weight
-                });
 
-                this.listHeight = measurements.filter((element: Measurement) => {
-                    return element.type === MeasurementType.height
-                });
 
-                this.listFat = measurements.filter((element: Measurement) => {
-                    return element.type === MeasurementType.fat
-                });
+                measurements.forEach((measurement: IMeasurement) => {
 
-                this.listWaistCircunference = measurements.filter((element: Measurement) => {
-                    return element.type === MeasurementType.waist_circumference
-                });
+                    switch (measurement.type) {
+                        case MeasurementType.weight:
+                            this.listWeight.push(measurement);
+                            break;
 
-                this.listBodyTemperature = measurements.filter((element: Measurement) => {
-                    return element.type === MeasurementType.body_temperature
-                });
+                        case MeasurementType.height:
+                            this.listHeight.push(measurement);
+                            break;
 
-                this.listBloodGlucose = measurements.filter((element: Measurement) => {
-                    return element.type === MeasurementType.blood_glucose
-                });
+                        case MeasurementType.fat:
+                            this.listFat.push(measurement);
+                            break;
 
-                this.listBloodPressure = measurements.filter((element: Measurement) => {
-                    return element.type === MeasurementType.blood_pressure
-                });
+                        case MeasurementType.waist_circumference:
+                            this.listWaistCircunference.push(measurement);
+                            break;
 
-                this.listHeartRate = measurements.filter((element: Measurement) => {
-                    return element.type === MeasurementType.heart_rate
-                });
+                        case MeasurementType.body_temperature:
+                            this.listBodyTemperature.push(measurement);
+                            break;
+
+                        case MeasurementType.blood_glucose:
+                            this.listBloodGlucose.push(measurement);
+                            break;
+
+                        case MeasurementType.blood_pressure:
+                            this.listBloodPressure.push(measurement);
+                            break;
+
+                        case MeasurementType.heart_rate:
+                            this.listHeartRate.push(measurement);
+                            break;
+                    }
+
+                })
 
             })
             .catch(errorResponse => {
-                //this.toastService.error('Não foi possível buscar medições!');
-                //console.log('Não foi possível buscar medições!', errorResponse);
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
             });
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue != changes.patientId.previousValue) {
+        if (this.patientId && changes.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
             this.loadMeasurements();
         }
-    }
-
-    showModalConfigGraph() {
-        this.modalService.open('modalConfigGraph');
-    }
-
-    hiddenModalConfigGraph() {
-        this.modalService.close('modalConfigGraph');
     }
 
 }

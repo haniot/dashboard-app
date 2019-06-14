@@ -1,6 +1,6 @@
-import { MeasurementType } from './measurement';
+import {IMeasurement, MeasurementType} from './measurement';
 
-export class BloodPressure {
+export class BloodPressure implements IMeasurement {
     id: string;
     systolic: number;
     diastolic: number;

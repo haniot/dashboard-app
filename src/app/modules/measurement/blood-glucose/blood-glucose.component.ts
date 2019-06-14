@@ -1,11 +1,7 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
-
-import * as _ from 'lodash';
-
-import {IMeasurement} from '../models/measurement';
-import {GraphService} from 'app/shared/shared-services/graph.service';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {BloodGlucose, MealType} from '../models/blood-glucose';
+import {GraphService} from "../../../shared/shared-services/graph.service";
 
 @Component({
     selector: 'blood-glucose',
@@ -16,38 +12,37 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     @Input() data: Array<BloodGlucose>;
 
-    lastData: IMeasurement;
+    lastData: BloodGlucose;
 
-    option = {
+    options: any;
 
-        tooltip: {
-            trigger: 'item',
-            formatter: "Glicose : {c} mg/dl<br> Data: {b}"
-        },
-        legend: {
-            data: ['Pré-prandial', 'Pós-prandial', 'Jejum', 'Casual', 'Antes de dormir']
-        },
 
-        xAxis: [
-            {
-                type: 'category',
-                data: []
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value',
-                axisLabel: {
-                    formatter: '{value} mg/dl'
-                }
-            }
-        ],
-        dataZoom: [
-            {
-                type: 'slider'
-            }
-        ],
-        series: [
+    constructor(
+        private datePipe: DatePipe,
+        private graphService: GraphService
+    ) {
+        this.data = new Array<BloodGlucose>();
+        this.lastData = new BloodGlucose();
+    }
+
+    ngOnInit(): void {
+        this.loadGraph();
+    }
+
+    loadGraph() {
+
+        if (this.data.length > 1) {
+            this.lastData = this.data[this.data.length - 1];
+        } else {
+            this.lastData = this.data[0];
+        }
+
+        const xAxis = {
+            type: 'category',
+            data: []
+        };
+
+        const series = [
             {
                 name: 'Pré-prandial',
                 type: 'bar',
@@ -103,63 +98,61 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                     ]
                 }
             }
-        ]
-    };
+        ];
 
-
-    constructor(
-        private datePipe: DatePipe,
-        private graphService: GraphService
-    ) {
-        this.data = new Array<BloodGlucose>();
-    }
-
-    ngOnInit() {
-
-    }
-
-    loadGraph() {
-
-        if (this.data.length > 0) {
-            //Limpando o grafico
-            this.option.xAxis[0].data = [];
-            this.option.series[0].data = [];
-
-            this.data.forEach((element: BloodGlucose) => {
-                const find = this.option.xAxis[0].data.find((ele) => {
-                    return ele == this.datePipe.transform(element.timestamp, "shortDate");
-                });
-
-                if (!find) {
-                    this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate"));
-                }
-                switch (element.meal) {
-                    case MealType.preprandial:
-                        this.option.series[0].data.push(element.value);
-                        break;
-                    case MealType.postprandial:
-                        this.option.series[1].data.push(element.value);
-                        break;
-                    case MealType.fasting:
-                        this.option.series[2].data.push(element.value);
-                        break;
-                    case MealType.casual:
-                        this.option.series[3].data.push(element.value);
-                        break;
-                    case MealType.bedtime:
-                        this.option.series[4].data.push(element.value);
-                        break;
-                }
+        this.data.forEach((element: BloodGlucose) => {
+            const find = xAxis.data.find((ele) => {
+                return ele === this.datePipe.transform(element.timestamp, "shortDate");
             });
 
-            if (this.data.length > 1) {
-                this.lastData = this.data[this.data.length - 1];
-            } else {
-                this.lastData = this.data[0];
+            if (!find) {
+                xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
             }
+            switch (element.meal) {
+                case MealType.preprandial:
+                    series[0].data.push(element.value);
+                    break;
+                case MealType.postprandial:
+                    series[1].data.push(element.value);
+                    break;
+                case MealType.fasting:
+                    series[2].data.push(element.value);
+                    break;
+                case MealType.casual:
+                    series[3].data.push(element.value);
+                    break;
+                case MealType.bedtime:
+                    series[4].data.push(element.value);
+                    break;
+            }
+        });
 
-            this.graphService.refreshGraph();
-        }
+        this.options = {
+
+            tooltip: {
+                trigger: 'item',
+                formatter: "Glicose : {c} mg/dl<br> Data: {b}"
+            },
+            legend: {
+                data: ['Pré-prandial', 'Pós-prandial', 'Jejum', 'Casual', 'Antes de dormir']
+            },
+
+            xAxis: xAxis,
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} mg/dl'
+                    }
+                }
+            ],
+            dataZoom: [
+                {
+                    type: 'slider'
+                }
+            ],
+            series: series
+        };
 
 
     }

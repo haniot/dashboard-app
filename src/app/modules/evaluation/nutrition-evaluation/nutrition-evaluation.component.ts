@@ -32,42 +32,10 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     nutritionEvaluationId: string;
 
-    option = {
-        title: {
-            text: 'Medições coletas',
-        },
-        tooltip: {
-            formatter: "Frequência: {c} bpm <br> Data: {b}",
-            trigger: 'axis'
-        },
-        xAxis: {
-            data: []
-        },
-        yAxis: {
-            splitLine: {
-                show: false
-            },
-            axisLabel: {
-                formatter: '{value} bpm'
-            }
-        },
-        dataZoom: [
-            {
-                type: 'slider'
-            }
-        ],
-        series: [
-            {
-                type: 'line',
-                data: []
-            }
-        ]
-    };
+    optionsHeartRate: any;
 
     patientId: string;
     patient: Patient;
-
-    sharedEmail: boolean;
 
     ncSuggested: NutritionalCouncil;
     ncDefinitive: NutritionalCouncil;
@@ -225,22 +193,50 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     loadGraph(dataset: Array<any>) {
 
-        // console.log(dataset);
+        const xAxis = {
+            data: []
+        };
+
+        const series = {
+            type: 'line',
+            data: []
+        };
+
         if (dataset && dataset.length > 0) {
-            // Limpando o grafico
-            this.option.xAxis.data = [];
-            this.option.series[0].data = [];
 
             dataset.forEach((date: { value: number, timestamp: string }) => {
 
-                this.option.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+                xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
 
-                this.option.series[0].data.push(date.value);
+                series.data.push(date.value);
 
             });
-
-            this.graphService.refreshGraph();
         }
+
+        this.optionsHeartRate = {
+            title: {
+                text: 'Medições coletas',
+            },
+            tooltip: {
+                formatter: "Frequência: {c} bpm <br> Data: {b}",
+                trigger: 'axis'
+            },
+            xAxis: xAxis,
+            yAxis: {
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    formatter: '{value} bpm'
+                }
+            },
+            dataZoom: [
+                {
+                    type: 'slider'
+                }
+            ],
+            series: series
+        };
 
     }
 

@@ -1,13 +1,14 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import {Injectable, Output, EventEmitter} from '@angular/core';
 
 @Injectable()
 export class GraphService {
 
-  @Output() refresh = new EventEmitter<any>();
+    @Output() refresh = new EventEmitter<any>();
 
-  constructor() { }
+    constructor() {
+    }
 
-  refreshGraph(){
-    this.refresh.emit();
-  }
+    refreshGraph() {
+        this.refresh.emit();
+    }
 }
