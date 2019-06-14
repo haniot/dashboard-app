@@ -70,16 +70,8 @@ export class EditMypilotComponent implements OnInit, OnChanges, OnDestroy {
                 health_professionals_id: [{value: '', disabled: true}, Validators.required],
                 is_active: [true, Validators.required]
             });
-        } else {//Caso seja a tela de inserção
-            this.pilotStudyForm = this.fb.group({
-                id: [''],
-                name: ['', Validators.required],
-                start: ['', Validators.required],
-                end: [{value: '', disabled: true}, Validators.required],
-                health_professionals_id: ['', Validators.required],
-                is_active: [true, Validators.required]
-            });
         }
+
         this.professionalsForm = this.fb.group({
             health_professionals_id_add: ['', Validators.required],
         });
@@ -91,34 +83,24 @@ export class EditMypilotComponent implements OnInit, OnChanges, OnDestroy {
 
     onSubimt() {
         const form = this.pilotStudyForm.getRawValue();
-        if (!this.pilotStudyId) {
-            this.pilotStudyService.create(form)
-                .then(pilotStudy => {
-                    this.pilotStudyForm.reset();
-                    this.toastService.info('Estudo Piloto criado!');
-                })
-                .catch(error => {
-                    this.toastService.error('Não foi possível criar estudo piloto!');
-                });
-        } else {
-            this.pilotStudyService.update(form)
-                .then(() => {
-                    this.toastService.info('Estudo Piloto atualizado!');
-                })
-                .catch(error => {
-                    this.toastService.error('Não foi possível atualizar estudo piloto!');
-                    // console.log('Não foi possível atualizar estudo!', error);
-                });
-        }
+
+        this.pilotStudyService.update(form)
+            .then(() => {
+                this.toastService.info('Estudo Piloto atualizado!');
+            })
+            .catch(error => {
+                this.toastService.error('Não foi possível atualizar estudo piloto!');
+                // console.log('Não foi possível atualizar estudo!', error);
+            });
+    }
+
+    onBack() {
+        this.location.back();
     }
 
     ngOnChanges() {
         this.createForm();
         this.getPilotStudy();
-    }
-
-    onBack() {
-        this.location.back();
     }
 
     ngOnDestroy(): void {

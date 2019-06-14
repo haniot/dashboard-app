@@ -1,25 +1,26 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-  name: 'gender'
+    name: 'gender',
+    pure: true
 })
 export class GenderPipe implements PipeTransform {
 
-  transform(value: any, args?: any): any {
-    switch(value){
-      case 'male':
-       return 'MASCULINO';
-      
-      case 'female':
-       return 'FEMININO';
+    transform(value: any, args?: any): any {
+        switch (value) {
+            case 'male':
+                return 'MASCULINO';
 
-      case undefined:
-        return 'Fora dos parâmetros';
+            case 'female':
+                return 'FEMININO';
 
-      default:
-        return 'NÂO ENCONTRADO';      
+            case undefined:
+                return 'Fora dos parâmetros';
+
+            default:
+                return 'NÂO ENCONTRADO';
+        }
+
     }
-    
-  }
 
 }

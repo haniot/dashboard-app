@@ -167,14 +167,14 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         this.listClass[local_index] = 'tr-selected';
     }
 
+    trackById(index, item) {
+        return item.id;
+    }
+
     ngAfterViewInit() {
         setTimeout(() => {
             this.loadinService.close();
         }, 500);
-    }
-
-    getClass(index) {
-        this.listClass[index];
     }
 
 }

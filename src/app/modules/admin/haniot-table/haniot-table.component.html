@@ -23,7 +23,7 @@
           usuários...</td>
         <td colspan="5" *ngIf="listOfUserIsEmpty">Nenhum registro encontrado.</td>
       </tr>
-      <tr *ngFor="let user of list; index as i">
+      <tr *ngFor="let user of list; index as i;trackBy: trackById">
         <td (click)="editUser(user.id)">{{getIndex(i)}}</td>
         <td (click)="editUser(user.id)" *ngIf="userType == 'HealthProfessional'">{{user.name}}</td>
         <td (click)="editUser(user.id)">{{user.email}}</td>

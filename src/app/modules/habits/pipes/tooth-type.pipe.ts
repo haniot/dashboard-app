@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'toothType'
+    name: 'toothType',
+    pure: true
 })
 export class ToothTypePipe implements PipeTransform {
 

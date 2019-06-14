@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'deviceType'
+  name: 'deviceType',
+  pure: true
 })
 export class DeviceTypePipe implements PipeTransform {
 

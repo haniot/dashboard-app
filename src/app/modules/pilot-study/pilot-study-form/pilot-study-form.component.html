@@ -113,7 +113,7 @@
                   <mat-label>Profissionais:</mat-label>
                   <mat-select formControlName="health_professionals_id" name="health_professionals_id"
                     id="health_professionals_id" multiple>
-                    <mat-option *ngFor="let prof of listProf" [value]="prof.id">{{prof.name}},
+                    <mat-option *ngFor="let prof of listProf;trackBy: trackById" [value]="prof.id">{{prof.name}},
                       {{prof.health_area | healthArea}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -152,7 +152,7 @@
                   <mat-label>Adiconar novo profissional:</mat-label>
                   <mat-select formControlName="health_professionals_id_add" name="health_professionals_id_add"
                     id="health_professionals_id_add">
-                    <mat-option *ngFor="let prof of professinalsNotAssociated" [value]="prof.id">{{prof.name}},
+                    <mat-option *ngFor="let prof of professinalsNotAssociated;trackBy: trackById" [value]="prof.id">{{prof.name}},
                       {{prof.health_area | healthArea}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -185,7 +185,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let professional of professinalsAssociated; index as i">
+                <tr *ngFor="let professional of professinalsAssociated; index as i;trackBy: trackById">
                   <td>{{professional.name}}</td>
                   <td>{{professional.health_area | healthArea}}</td>
                   <td><a class="nav-link" (click)="dissociateHealthProfessional(professional.id)"

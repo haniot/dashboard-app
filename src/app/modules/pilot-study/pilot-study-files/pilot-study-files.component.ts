@@ -212,4 +212,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.getAllFiles();
     }
 
+    trackById(index, item) {
+        return item.id;
+    }
+
 }

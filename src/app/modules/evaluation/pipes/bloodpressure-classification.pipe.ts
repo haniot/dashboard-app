@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'bloodpressureClassification'
+    name: 'bloodpressureClassification',
+    pure: true
 })
 export class BloodpressureClassificationPipe implements PipeTransform {
 

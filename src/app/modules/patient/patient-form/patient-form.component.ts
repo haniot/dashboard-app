@@ -212,6 +212,10 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         this.patientForm.get('phone_number').patchValue(number);
     }
 
+    trackById(index, item) {
+        return item.id;
+    }
+
     ngAfterViewChecked(): void {
         this.calMinBirthDate();
     }

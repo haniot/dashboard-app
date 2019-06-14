@@ -219,6 +219,10 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         }) ? true : false;
     }
 
+    trackById(index, item) {
+        return item.id;
+    }
+
     ngOnDestroy(): void {
         /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {

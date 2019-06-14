@@ -23,7 +23,7 @@
           pacientes...</td>
         <td colspan="5" *ngIf="listOfPatientsIsEmpty">Nenhum registro encontrado.</td>
       </tr>
-      <tr *ngFor="let patient of listOfPatients; index as i" (click)="selectPatient(patient.id)"
+      <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById" (click)="selectPatient(patient.id)"
         [(ngClass)]="listClass[i]">
         <td>{{getIndex(i)}}</td>
         <td>{{patient.name}}</td>

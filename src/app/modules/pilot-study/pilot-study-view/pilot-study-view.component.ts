@@ -133,13 +133,17 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges() {// Caso o componente receba o id ele carrega o form com o estudo piloto correspondente.
-        this.createForm();
-        this.getPilotStudy();
+    trackById(index, item) {
+        return item.id;
     }
 
     onBack() {
         this._location.back();
+    }
+
+    ngOnChanges() {
+        this.createForm();
+        this.getPilotStudy();
     }
 
     ngOnDestroy(): void {

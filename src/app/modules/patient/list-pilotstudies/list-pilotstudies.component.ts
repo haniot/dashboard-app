@@ -46,12 +46,9 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
     ngOnInit() {
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.userId = params.get('userId');
-            this.getAllPilotStudies();
-            this.getLengthPilotStudies();
+            this.loadPilotSelected();
+
         }));
-        this.loadPilotSelected();
-        this.getAllPilotStudies();
-        this.getLengthPilotStudies();
     }
 
     loadUser(): void {
@@ -65,6 +62,8 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         const pilotselected = localStorage.getItem(this.userId);
         if (pilotselected) {
             this.gotoPatients(pilotselected);
+        } else {
+            this.getAllPilotStudies();
         }
     }
 
@@ -74,6 +73,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
             .then(studies => {
                 this.list = studies;
                 this.loadinService.close();
+                this.getLengthPilotStudies();
             })
             .catch(errorResponse => {
                 // console.log('Erro ao buscar pilot-studies: ', errorResponse);
@@ -136,6 +136,10 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
 
     gotoPatients(pilotstudy_id: string) {
         this.router.navigate(['/patients', pilotstudy_id]);
+    }
+
+    trackById(index, item) {
+        return item.id;
     }
 
     ngAfterViewChecked() {

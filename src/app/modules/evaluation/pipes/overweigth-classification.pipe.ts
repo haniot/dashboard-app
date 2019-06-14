@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'overweigthClassification'
+    name: 'overweigthClassification',
+    pure: true
 })
 export class OverweigthClassificationPipe implements PipeTransform {
 

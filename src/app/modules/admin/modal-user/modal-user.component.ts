@@ -16,7 +16,9 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     @Input() title: string;
     @Input() subtitle: string;
     @Output() onsubmit = new EventEmitter();
-    @Input() typeUser: string;// Admin or HealthProfessional
+    // Admin or HealthProfessional
+    @Input() typeUser: string;
+
 
     userForm: FormGroup;
 
@@ -125,11 +127,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges() {
-        this.createForm();
-        this.loadUserInForm();
-    }
-
     close() {
         if (!this.userId) {
             this.userForm.reset();
@@ -173,6 +170,15 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.typeInputPassword_confirm = 'text';
         }
+    }
+
+    trackById(index, item) {
+        return item.id;
+    }
+
+    ngOnChanges() {
+        this.createForm();
+        this.loadUserInForm();
     }
 
     ngOnDestroy(): void {

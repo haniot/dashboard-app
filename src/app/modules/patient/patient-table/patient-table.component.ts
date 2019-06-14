@@ -1,10 +1,8 @@
-import {Component, OnInit, Input, AfterViewChecked, SimpleChanges, OnChanges, OnDestroy} from '@angular/core';
+import {AfterViewChecked, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 
 import {ToastrService} from 'ngx-toastr';
 import {ISubscription} from 'rxjs/Subscription';
-
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
 import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
@@ -24,11 +22,11 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
     pageEvent: PageEvent;
 
     /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page = 1;
+    limit = 10;
     length: number;
 
-    listOfPatientsIsEmpty: boolean = false;
+    listOfPatientsIsEmpty = false;
 
     listOfPatients = new Array<Patient>();
     search: string;
@@ -44,7 +42,6 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
 
     constructor(
         private patientService: PatientService,
-        private pilotstudyService: PilotStudyService,
         private toastService: ToastrService,
         private modalService: ModalService,
         private loadinService: LoadingService,
@@ -54,14 +51,9 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
     }
 
     ngOnInit() {
-        this.loadPilotSelected();
-        this.getAllPacients();
-        this.calcLengthPatients();
-
         this.subscriptions.push(this.selectStudyService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
             this.getAllPacients();
-            this.calcLengthPatients();
         }));
     }
 
@@ -98,7 +90,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
             .then(patients => {
                 this.listOfPatients = patients;
                 this.calcLengthPatients();
-                if (this.listOfPatients.length == 0) {
+                if (this.listOfPatients.length === 0) {
                     this.listOfPatientsIsEmpty = true;
                 } else {
                     this.listOfPatientsIsEmpty = false;
@@ -164,11 +156,13 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
             });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    trackById(index, item) {
+        return item.id;
+    }
 
+    ngOnChanges(changes: SimpleChanges) {
         if ((this.pilotStudyId && changes.pilotStudyId.currentValue !== changes.pilotStudyId.previousValue)) {
             this.getAllPacients();
-            this.calcLengthPatients();
         }
     }
 

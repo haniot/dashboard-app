@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, AfterViewChecked} from '@angular/core';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import {Router} from '@angular/router';
 
@@ -8,7 +8,6 @@ import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.se
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
 import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
-import {MatTableDataSource} from "@angular/material";
 
 @Component({
     selector: 'mypilotstudies',
@@ -51,7 +50,6 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
     ngOnInit() {
         this.loadUserId();
         this.getAllPilotStudies();
-        this.getLengthPilotStudies();
     }
 
     loadUserId() {
@@ -63,6 +61,7 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
         this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
             .then(studies => {
                 this.list = studies;
+                this.getLengthPilotStudies();
                 if (studies.length) {
                     this.listOfStudiesIsEmpty = false;
                 } else {
@@ -82,8 +81,14 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
                 .then(studies => {
                     this.list = studies;
                     this.getLengthPilotStudies();
+                    if (studies.length) {
+                        this.listOfStudiesIsEmpty = false;
+                    } else {
+                        this.listOfStudiesIsEmpty = true;
+                    }
                 })
                 .catch(error => {
+                    this.listOfStudiesIsEmpty = true;
                     // console.log('Erro ao buscar pilot-studies: ', error);
                 });
         }, 200);
@@ -158,6 +163,10 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
     closeModalConfirmation() {
         this.cacheStudyIdRemove = '';
         this.modalService.close('modalConfirmation');
+    }
+
+    trackById(index, item) {
+        return item.id;
     }
 
     ngAfterViewChecked() {

@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'taylorCutClassification'
+    name: 'taylorCutClassification',
+    pure: true
 })
 export class TaylorCutClassificationPipe implements PipeTransform {
 

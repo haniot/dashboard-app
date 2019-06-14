@@ -2,7 +2,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'corAndRace'
+    name: 'corAndRace',
+    pure: true
 })
 export class CorAndRacePipe implements PipeTransform {
 

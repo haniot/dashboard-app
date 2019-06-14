@@ -70,7 +70,7 @@
                                         </p>
                                     </td>
                                 </tr>
-                                <tr *ngFor="let study of list; index as i"
+                                <tr *ngFor="let study of list; index as i; trackBy: trackById"
                                     title="Clique para visualizar os pacientes..."
                                     (click)="selectPilotStudy(study.id)">
                                     <td>{{getIndex(i)}}</td>

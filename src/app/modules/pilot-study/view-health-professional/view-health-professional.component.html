@@ -11,7 +11,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let prof of healthProfessionals">
+            <tr *ngFor="let prof of healthProfessionals;trackBy: trackById">
               <td>{{prof.name}}</td>
               <td>{{prof.health_area | healthArea}}</td>
             </tr>

@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'teethBushing'
+    name: 'teethBushing',
+    pure: true
 })
 export class TeethbushingPipe implements PipeTransform {
 

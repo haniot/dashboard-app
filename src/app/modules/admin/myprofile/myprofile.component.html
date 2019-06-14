@@ -50,7 +50,7 @@
                                     #healthAreaModel="ngModel"
                                     [(ngModel)]="user==undefined?health_area:user.health_area"
                                     [disabled]="visibilityButtonSave?null:'disabled'">
-                                <option *ngFor="let area of healthAreaOptions; index as i"
+                                <option *ngFor="let area of healthAreaOptions; index as i;trackBy: trackById"
                                         [value]="area">{{area | healthArea}}</option>
                             </select>
                             <span *ngIf="healthAreaModel.valid" class="glyphicon glyphicon-ok form-control-feedback"

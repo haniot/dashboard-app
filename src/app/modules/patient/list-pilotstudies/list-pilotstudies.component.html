@@ -24,7 +24,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let study of list; index as i" [routerLink]="['/patients',study.id]"
+                  <tr *ngFor="let study of list; index as i;trackBy: trackById" [routerLink]="['/patients',study.id]"
                     title="Clique para visualizar os pacientes...">
                     <td>{{getIndex(i)}}</td>
                     <td>{{study.name}}</td>

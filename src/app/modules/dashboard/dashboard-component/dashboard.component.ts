@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
 
         this.subscriptions.push(this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
-            this.load();
+            this.getPatients();
         }));
 
         this.load();
@@ -131,28 +131,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
 
         this.loadPilotSelected();
 
-
         if (this.pilotStudyId) {
-            this.dashboardService.getInfoByUser(this.userId)
-                .then((response: { studiesTotal: number, patientsTotal: number }) => {
-                    if (response) {
-                        this.studiesTotal = response.studiesTotal;
-                        this.patientsTotal = response.patientsTotal;
-                        this.listPilots = this.dashboardService.getListStudy();
-                        this.getPatients();
-                    }
-                })
-                .catch(error => {
-                    this.toastService.error('Não foi possível carregar informações!')
-                });
+            this.getPatients();
         }
 
+        this.getStudies();
 
-        if (!this.isNotUserAdmin()) {
-            {
-                this.getStudies();
-            }
-        }
     }
 
 
@@ -171,6 +155,9 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     getPatients() {
+        if (!this.pilotStudyId) {
+            this.loadPilotSelected();
+        }
         this.dashboardService.getAllPatients(this.pilotStudyId, this.pagePatients, this.limitPatients)
             .then(patients => {
                 this.listPacients = patients;
@@ -211,30 +198,40 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     calcLengthStudies() {
 
-        this.dashboardService.getInfoByUser(this.userId)
-            .then((response: { studiesTotal: number, patientsTotal: number }) => {
-                if (response) {
-                    this.studiesTotal = response.studiesTotal;
-                    this.patientsTotal = response.patientsTotal;
-                }
-            })
-            .catch(error => {
-                this.toastService.error('Não foi possível carregar informações!')
-            });
+        if (this.isNotUserAdmin()) {
+            this.dashboardService.getNumberOfStudies(this.userId)
+                .then(numberOfStudies => {
+                    this.lengthStudies = numberOfStudies;
+                    this.studiesTotal = numberOfStudies;
 
-        this.dashboardService.getNumberOfStudies(this.userId)
-            .then(numberOfStudies => {
-                this.lengthStudies = numberOfStudies;
-                this.studiesTotal = numberOfStudies;
+                })
+                .catch(errorResponse => {
+                    // console.log('Não foi possível buscar todos os pacientes',errorResponse);
+                });
+        } else {
+            this.dashboardService.getInfoByUser(this.userId)
+                .then((response: { studiesTotal: number, patientsTotal: number }) => {
+                    if (response) {
+                        this.studiesTotal = response.studiesTotal;
+                        this.lengthStudies = response.studiesTotal;
+                        this.patientsTotal = response.patientsTotal;
+                    }
+                })
+                .catch(error => {
+                    this.toastService.error('Não foi possível carregar informações!')
+                });
+        }
 
-            })
-            .catch(errorResponse => {
-                // console.log('Não foi possível buscar todos os pacientes',errorResponse);
-            });
+
+
     }
 
     isNotUserAdmin(): boolean {
         return this.authService.decodeToken().sub_type !== 'admin';
+    }
+
+    trackById(index, item) {
+        return item.id;
     }
 
     ngAfterViewChecked() {

@@ -84,26 +84,6 @@
               </div>
             </div>
 
-            <div class="form-group has-feedback"
-              [ngClass]="{'has-success': pilotStudyForm.controls.health_professionals_id.valid,
-          'has-error': pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)}"
-              *ngIf="!pilotStudyId">
-              <mat-form-field>
-                <mat-label>Profissionais:</mat-label>
-                <mat-select formControlName="health_professionals_id" name="health_professionals_id"
-                  id="health_professionals_id" multiple>
-                  <mat-option *ngFor="let prof of listProf" [value]="prof.id">{{prof.name}},
-                    {{prof.health_area | healthArea}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <span *ngIf="pilotStudyForm.controls.health_professionals_id.valid"
-                class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-              <span
-                *ngIf="pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)">
-                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                <span class="text-danger">Selecione profissionais.</span>
-              </span>
-            </div>
 
             <div class="row container">
               <div class="col-md">

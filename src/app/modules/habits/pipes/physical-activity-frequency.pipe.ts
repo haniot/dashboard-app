@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'physicalActivity'
+  name: 'physicalActivity',
+  pure: true
 })
 export class PhysicalActivityPipe implements PipeTransform {
 

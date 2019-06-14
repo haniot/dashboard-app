@@ -144,6 +144,10 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         }
     }
 
+    trackById(index, item) {
+        return item.id;
+    }
+
     ngOnDestroy(): void {
         /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {

@@ -145,6 +145,10 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
         }
     }
 
+    trackById(index, item) {
+        return item.id;
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes.patientId.currentValue != undefined && changes.patientId.previousValue == undefined) {
             this.getAllNutritionEvaluations();

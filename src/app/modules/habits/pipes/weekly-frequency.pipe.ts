@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'weeklyFrequency'
+    name: 'weeklyFrequency',
+    pure: true
 })
 export class WeeklyFrequencyPipe implements PipeTransform {
 

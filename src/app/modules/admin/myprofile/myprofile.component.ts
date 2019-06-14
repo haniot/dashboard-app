@@ -148,6 +148,10 @@ export class MyprofileComponent implements OnInit {
         }
     }
 
+    trackById(index, item) {
+        return item.id;
+    }
+
     validetorPassword(): void {
         const pass = '' + this.new_password;
 

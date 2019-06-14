@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'frequency'
+    name: 'frequency',
+    pure: true
 })
 export class FrequencyFamilyCohesionPipe implements PipeTransform {
 

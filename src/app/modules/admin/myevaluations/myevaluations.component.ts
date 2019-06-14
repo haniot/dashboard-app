@@ -21,8 +21,8 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
     pageEvent: PageEvent;
 
     /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page = 1;
+    limit = 10;
     length: number;
 
     listOfEvaluations: Array<NutritionEvaluation>;
@@ -31,7 +31,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
 
     cacheIdEvaluationRemove: string;
 
-    listOfEvaluationsIsEmpty: boolean = false;
+    listOfEvaluationsIsEmpty = false;
 
     /* id utilizado para deletar uma avaliação*/
     patientId: string;
@@ -51,7 +51,6 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
 
     ngOnInit() {
         this.getAllNutritionEvaluations();
-        this.calcLenghtNutritionEvaluations();
     }
 
     loadUserId() {
@@ -67,9 +66,15 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
             this.nutritionService.getAllByHealthprofessional(this.userId, this.page, this.limit, this.search)
                 .then(nutritionsEvaluations => {
                     this.listOfEvaluations = nutritionsEvaluations;
+                    if (nutritionsEvaluations.length) {
+                        this.listOfEvaluationsIsEmpty = false;
+                    } else {
+                        this.listOfEvaluationsIsEmpty = true;
+                    }
                     this.calcLenghtNutritionEvaluations();
                 })
                 .catch(errorResponse => {
+                    this.listOfEvaluationsIsEmpty = true;
                     // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                 });
         }, 200);
@@ -158,6 +163,10 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
                 // console.log('Não foi possível buscar todos as avaliações do pacientes',errorResponse);
             });
 
+    }
+
+    trackById(index, item) {
+        return item.id;
     }
 
     ngOnChanges(changes: SimpleChanges) {

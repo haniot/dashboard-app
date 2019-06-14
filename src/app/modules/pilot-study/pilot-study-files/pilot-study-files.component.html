@@ -50,7 +50,7 @@
                 </h4>
             </td>
         </tr>
-        <tr *ngFor="let evaluation of listOfFiles; index as i">
+        <tr *ngFor="let evaluation of listOfFiles; index as i;trackBy: trackById">
             <td>{{getIndex(i)}}</td>
             <td>{{evaluation.total_patients}}</td>
             <td>{{evaluation.created_at | date}}</td>

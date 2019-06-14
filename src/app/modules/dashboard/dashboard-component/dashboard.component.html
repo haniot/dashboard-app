@@ -4,24 +4,20 @@
             <div class="row justify-content-center">
 
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center">
-                    <card-top [category]="'Total de Estudos'" [title]="studiesTotal"
+                    <card-top [category]="'Total de Estudos'" [title]="lengthStudies"
                               [icon]="'library_books'"></card-top>
                 </div>
 
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center" *ngIf="isNotUserAdmin()">
                     <card-top [category]="'Total de Pacientes do Estudo Selecionado'" [title]="listPacients.length"
                               [icon]="'face'"></card-top>
                 </div>
 
-                <!--                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">-->
-                <!--                    <card-top [category]="'Total de Medições'" [title]="measurementsTotal"-->
-                <!--                              [icon]="'timeline'"></card-top>-->
-                <!--                </div>-->
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center" *ngIf="!isNotUserAdmin()">
+                    <card-top [category]="'Total de Pacientes'" [title]="patientsTotal"
+                              [icon]="'face'"></card-top>
+                </div>
 
-                <!--                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">-->
-                <!--                    <card-top [category]="'Total de Avaliações'" [title]="evaluationsTotal"-->
-                <!--                              [icon]="'assignment'"></card-top>-->
-                <!--                </div>-->
             </div>
 
         </div>
@@ -46,7 +42,7 @@
                     </p>
                 </div>
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
-                   *ngFor="let patient of listPacients"
+                   *ngFor="let patient of listPacients;trackBy: trackById"
                    [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']"
                    [title]="'Visualizar ' + patient.name">
                     <div class="card card-stats">
@@ -78,7 +74,7 @@
             <div class="row justify-content-center">
 
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
-                   *ngFor="let study of listPilots"
+                   *ngFor="let study of listPilots;trackBy: trackById"
                    [routerLink]="['/pilotstudies',study.id,'details']"
                    [title]="'Visualizar ' + study.name">
                     <div class="card card-stats">

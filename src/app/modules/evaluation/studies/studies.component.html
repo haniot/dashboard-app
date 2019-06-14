@@ -23,7 +23,7 @@
           estudoos...</td>
         <td colspan="8" *ngIf="listOfpilotsIsEmpty">Nenhum registro encontrado.</td>
       </tr>
-      <tr *ngFor="let study of list; index as i" (click)="selectStudy(study.id)" [(ngClass)]="listClass[i]">
+      <tr *ngFor="let study of list; index as i;trackBy: trackById" (click)="selectStudy(study.id)" [(ngClass)]="listClass[i]">
         <td>{{getIndex(i)}}</td>
         <td>{{study.name}}</td>
         <td>{{study.start | date }}</td>

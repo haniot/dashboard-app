@@ -17,7 +17,7 @@ import {PilotStudy} from "../../pilot-study/models/pilot.study";
 export class DentalEvaluationTableComponent implements OnInit, OnChanges {
 
     // MatPaginator Inputs
-    pageSizeOptions: number[] = [ 10, 25, 100];
+    pageSizeOptions: number[] = [10, 25, 100];
 
     // MatPaginator Output
     pageEvent: PageEvent;
@@ -192,6 +192,10 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
 
     closeModalDentalEvaluation() {
         this.modalService.close('dentalEvaluation');
+    }
+
+    trackById(index, item) {
+        return item.id;
     }
 
 }

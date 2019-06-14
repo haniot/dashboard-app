@@ -38,7 +38,7 @@
                                     </p>
                                 </td>
                             </tr>
-                            <tr *ngFor="let study of list; index as i">
+                            <tr *ngFor="let study of list; index as i;trackBy: trackById">
                                 <td [routerLink]="['/pilotstudies',study.id,'details']">{{getIndex(i)}}</td>
                                 <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.name}}</td>
                                 <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.start | date }}</td>

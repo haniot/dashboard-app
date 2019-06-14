@@ -32,7 +32,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
 
     listOfStudiesIsEmpty = false;
 
-    userName: string = "";
+    userName = "";
 
     constructor(
         private pilotStudyService: PilotStudyService,
@@ -47,15 +47,11 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        const pilotstudy_id = localStorage.getItem('pilotstudi_id');
-        if (pilotstudy_id && pilotstudy_id !== '') {
-            this.selecPilotService.close();
-        }
+
         if (this.authService.decodeToken().sub_type === 'admin') {
             this.selecPilotService.close();
         }
         this.getAllPilotStudies();
-        this.getLengthPilotStudies();
         this.getUserName();
     }
 
@@ -76,6 +72,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
                 .then(studies => {
                     this.list = studies;
+                    this.getLengthPilotStudies();
                     this.loadinService.close();
                     if (studies.length) {
                         this.listOfStudiesIsEmpty = false;
@@ -158,15 +155,12 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         this.selecPilotService.close();
     }
 
+    trackById(index, item) {
+        return item.id;
+    }
+
     ngAfterViewChecked() {
         this.loadinService.close();
-        const pilotstudy_id = localStorage.getItem('pilotstudy_id');
-        // if (pilotstudy_id && pilotstudy_id !== '') {
-        //     this.selecPilotService.close();
-        // }
-        // if (this.authService.decodeToken().sub_type === 'admin') {
-        //     this.selecPilotService.close();
-        // }
     }
 
 }

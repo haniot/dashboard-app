@@ -64,7 +64,7 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{pilotStudyName}}
                 </button>
                 <div class="dropdown-menu" id="dropdownSelectPilot" aria-labelledby="dropdownPilotSelected">
-                    <a class="dropdown-item background-green" *ngFor="let pilot of listPilots"
+                    <a class="dropdown-item background-green" *ngFor="let pilot of listPilots;trackBy: trackById"
                        (click)="selectPilotStudy(pilot.id)">{{pilot.name}}</a>
                 </div>
             </div>

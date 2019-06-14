@@ -28,7 +28,7 @@
                 Nenhum paciente cadastrado.<br>Utilize o botão "Adicionar" para adicionar pacientes ao estudo.
             </td>
         </tr>
-        <tr *ngFor="let patient of listOfPatients; index as i">
+        <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">
             <td [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']">{{getIndex(i)}}</td>
             <td [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']">{{patient.name}}</td>
             <td [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']">{{patient.gender | gender}}</td>

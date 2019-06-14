@@ -37,7 +37,7 @@
                  *ngIf="typeUser == 'HealthProfessional'">
                 <label>Área: </label>
                 <select class="form-control" formControlName="health_area">
-                    <option *ngFor="let area of healthAreaOptions; index as i"
+                    <option *ngFor="let area of healthAreaOptions; index as i;trackBy: trackById"
                             [value]="area">{{area | healthArea}}</option>
                 </select>
                 <span *ngIf="userForm.controls.health_area.valid" class="glyphicon glyphicon-ok form-control-feedback"

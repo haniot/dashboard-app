@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'breakFast'
+    name: 'breakFast',
+    pure: true
 })
 export class BreakFastPipe implements PipeTransform {
 

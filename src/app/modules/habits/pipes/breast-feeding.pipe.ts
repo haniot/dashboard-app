@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'breastFeeding'
+  name: 'breastFeeding',
+  pure: true
 })
 export class BreastFeedingPipe implements PipeTransform {
 

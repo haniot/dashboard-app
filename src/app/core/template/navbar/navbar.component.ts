@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, OnDestroy} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {Router} from '@angular/router';
 
@@ -99,7 +99,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
         this.loadPilotSelected();
         this.getTitle();
+
         this.getAllPilotStudies();
+
 
     }
 
@@ -279,6 +281,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         } else if (this.authService.decodeToken().sub_type !== 'admin') {
             this.selectPilotService.open();
         }
+    }
+
+    trackById(index, item) {
+        return item.id;
     }
 
     logout() {

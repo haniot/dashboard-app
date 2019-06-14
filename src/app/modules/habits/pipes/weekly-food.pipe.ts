@@ -3,7 +3,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'weeklyFood'
+  name: 'weeklyFood',
+  pure: true
 })
 export class WeeklyFoodPipe implements PipeTransform {
 

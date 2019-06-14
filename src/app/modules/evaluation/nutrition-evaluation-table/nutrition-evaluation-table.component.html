@@ -28,7 +28,7 @@
             </td>
         </tr>
 
-        <tr *ngFor="let evaluation of listOfEvaluations; index as i">
+        <tr *ngFor="let evaluation of listOfEvaluations; index as i;trackBy: trackById">
             <td [routerLink]="['/evaluations',patientId, 'nutritional', evaluation.id]">{{getIndex(i)}}</td>
             <td [routerLink]="['/evaluations',patientId, 'nutritional', evaluation.id]">{{evaluation.created_at | date}}</td>
             <td [routerLink]="['/evaluations',patientId, 'nutritional', evaluation.id]">

@@ -1,25 +1,26 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-  name: 'healthArea'
+    name: 'healthArea',
+    pure: true
 })
 export class HealthAreaPipe implements PipeTransform {
 
-  transform(value: any, args?: any): any {
-    switch(value){
-      case 'nutrition':
-       return 'NUTRIÇÃO';
-      
-      case 'dentistry':
-       return 'DENTISTA';
+    transform(value: any, args?: any): any {
+        switch (value) {
+            case 'nutrition':
+                return 'NUTRIÇÃO';
 
-      case undefined:
-        return 'Fora dos parâmetros';
+            case 'dentistry':
+                return 'DENTISTA';
 
-      default:
-        return 'NÂO ENCONTRADO';      
+            case undefined:
+                return 'Fora dos parâmetros';
+
+            default:
+                return 'NÂO ENCONTRADO';
+        }
+
     }
-    
-  }
 
 }
