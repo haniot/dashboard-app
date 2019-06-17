@@ -60,11 +60,11 @@
              *ngIf="isNotAdmin() && flag">
             <div class="dropdown" style="margin-top: 60px">
                 <label for="dropdownPilotSelected">Estudo selecionado: </label>
-                <button class="btn btn-haniot-primary dropdown-toggle" type="button" id="dropdownPilotSelected"
+                <button class="btn btn-haniot-primary dropdown-toggle ellipsis" type="button" id="dropdownPilotSelected"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{pilotStudyName}}
                 </button>
                 <div class="dropdown-menu" id="dropdownSelectPilot" aria-labelledby="dropdownPilotSelected">
-                    <a class="dropdown-item background-green" *ngFor="let pilot of listPilots;trackBy: trackById"
+                    <a class="dropdown-item background-green " *ngFor="let pilot of listPilots;trackBy: trackById"
                        (click)="selectPilotStudy(pilot.id)">{{pilot.name}}</a>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 }
 
 #dropdownSelectPilot {
+    max-width: 300px;
     max-height: 250px;
     overflow-y: scroll;
 }
@@ -46,8 +47,9 @@ label {
 }
 
 #dropdownPilotSelected {
-    z-index: 99999;
+    z-index: 1040;
     cursor: pointer;
+    max-width: 300px;
 }
 
 

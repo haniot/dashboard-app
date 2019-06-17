@@ -212,33 +212,39 @@
                                                                             Classificação: </p>
                                                                     </div>
                                                                     <div class="col-sm-4 col-md-2 col-lg-2 col-xl-2">
-                                                                        <a class="nav-link text-right"
-                                                                           href="http://example.com"
-                                                                           id="navbarDropdownZones"
-                                                                           data-toggle="dropdown" aria-haspopup="true"
-                                                                           aria-expanded="false"> <i
-                                                                                class="material-icons">open_in_new</i>
 
-                                                                        </a>
-                                                                        <div class="dropdown-menu row justify-content-center"
-                                                                             aria-labelledby="navbarDropdownZones">
-                                                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                                                                <p class="card-category">Ideal:</p>
-                                                                                <p class="card-category">
-                                                                                    Entre {{getZoneGood().min}}
-                                                                                    e {{getZoneGood().max}}</p>
+                                                                        <div class="dropright">
+                                                                            <a class="nav-link text-right"
+                                                                               href="http://example.com"
+                                                                               id="navbarDropdownZones"
+                                                                               data-toggle="dropdown"
+                                                                               aria-haspopup="true"
+                                                                               aria-expanded="false"> <i
+                                                                                    class="material-icons">open_in_new</i>
+                                                                            </a>
 
+                                                                            <div class="dropdown-menu row justify-content-center"
+                                                                                 aria-labelledby="navbarDropdownZones">
+                                                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                                                                    <p class="card-category">Ideal:</p>
+                                                                                    <p class="card-category">
+                                                                                        Entre {{getZoneGood().min}}
+                                                                                        e {{getZoneGood().max}}</p>
+
+
+                                                                                </div>
+                                                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                                                                    <p class="card-category">Ótimo:</p>
+                                                                                    <p class="card-category">
+                                                                                        Entre {{getZoneGreat().min}}
+                                                                                        e {{getZoneGreat().max}}
+                                                                                    </p>
+                                                                                </div>
 
                                                                             </div>
-                                                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                                                                <p class="card-category">Ótimo:</p>
-                                                                                <p class="card-category">
-                                                                                    Entre {{getZoneGreat().min}}
-                                                                                    e {{getZoneGreat().max}}
-                                                                                </p>
-                                                                            </div>
-
                                                                         </div>
+
+
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
@@ -670,17 +676,17 @@
 
 
 <haniot-modal [modalId]="'finalingEvaluantion'">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div id="finalingEvaluantion" class="container">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                            <spinner message="Finalizando avaliação"></spinner>
-                        </div>
+    <div class="modal-content">
+        <div class="modal-body">
+            <div id="finalingEvaluantion" class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                        <spinner message="Finalizando avaliação"></spinner>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </haniot-modal>
 
 
