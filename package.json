@@ -10,7 +10,7 @@
     "start": "ng serve",
     "start:dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 && npm start",
     "start:prod": "npm run build && node server.js",
-    "build": "ng build --aot=true --buildOptimizer=true",
+    "build": "ng build --prod=true --buildOptimizer=true",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

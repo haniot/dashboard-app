@@ -4,7 +4,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
 import {AdminService} from '../services/admin.service';
 import {HealthProfessionalService} from '../services/health-professional.service';
-import {IUser, HealtArea} from '../models/users';
+import {IUser, HealtArea, Admin} from '../models/users';
 import {UserService} from '../services/users.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
@@ -20,7 +20,7 @@ export class MyprofileComponent implements OnInit {
     visibilityButtonSave: boolean;
     disabledButtonEdit: boolean;
     user: IUser;
-    typeUser: string;// Admin or HealthProfessional
+
     healthAreaOptions = Object.keys(HealtArea);
 
     email: string;
@@ -48,31 +48,20 @@ export class MyprofileComponent implements OnInit {
         private localStorageService: LocalStorageService
     ) {
         this.passwordIsValid = true;
+        this.user = new Admin();
     }
 
     ngOnInit() {
-        this.typeUser = this.authService.decodeToken().sub_type;
         this.getUser();
     }
 
     getUser() {
         this.userId = atob(localStorage.getItem('user'));
-        switch (this.typeUser) {
-            case 'admin':
-                this.adminService.getById(this.userId)
-                    .then(admin => this.user = admin)
-                    .catch(HttpError => {
-                        // console.log('Não foi possível carregar usuário logado!', HttpError);
-                    });
-                break;
-            case 'health_professional':
-                this.healthService.getById(this.userId)
-                    .then(healthprofessional => this.user = healthprofessional)
-                    .catch(HttpError => {
-                        // console.log('Não foi possível carregar usuário logado!', HttpError);
-                    });
-                break;
-        }
+        this.adminService.getById(this.userId)
+            .then(admin => this.user = admin)
+            .catch(HttpError => {
+                // console.log('Não foi possível carregar usuário logado!', HttpError);
+            });
 
     }
 
@@ -82,37 +71,18 @@ export class MyprofileComponent implements OnInit {
     }
 
     onSubmit(form) {
-        switch (this.typeUser) {
-            case 'admin':
-                const admin = form.value;
-                admin.id = atob(localStorage.getItem('user'));
-                this.adminService.update(admin)
-                    .then((userAdmin) => {
-                        this.user = userAdmin;
-                        this.toastr.info('Informações atualizadas!');
-                        this.visibilityButtonSave = false;
-                        this.disabledButtonEdit = false;
-                    })
-                    .catch((errorResponse: HttpErrorResponse) => {
-                        this.toastr.error('Não foi possível atualizar informações!');
-                    });
-                break;
-            case 'health_professional':
-                const healthProfessional = form.value;
-                healthProfessional.id = atob(localStorage.getItem('user'));
-                this.healthService.update(healthProfessional)
-                    .then((healthprofesional) => {
-                        this.user = healthprofesional;
-                        this.localStorageService.setItem('health_area', this.user.health_area);
-                        this.toastr.info('Informações atualizadas!');
-                        this.visibilityButtonSave = false;
-                        this.disabledButtonEdit = false;
-                    })
-                    .catch((errorResponse: HttpErrorResponse) => {
-                        this.toastr.error('Não foi possível atualizar informações!');
-                    });
-                break;
-        }
+        const admin = form.value;
+        admin.id = atob(localStorage.getItem('user'));
+        this.adminService.update(admin)
+            .then((userAdmin) => {
+                this.user = userAdmin;
+                this.toastr.info('Informações atualizadas!');
+                this.visibilityButtonSave = false;
+                this.disabledButtonEdit = false;
+            })
+            .catch((errorResponse: HttpErrorResponse) => {
+                this.toastr.error('Não foi possível atualizar informações!');
+            });
     }
 
     onChangePassword(form) {
@@ -124,7 +94,7 @@ export class MyprofileComponent implements OnInit {
             .catch(HttpError => {
                 // console.log('Não foi possível mudar a senha!', HttpError);
                 this.toastr.error('Não foi posível mudar sua senha!');
-                if (HttpError.error.code == 400 && HttpError.error.message == "Password does not match") {
+                if (HttpError.error.code === 400 && HttpError.error.message === "Password does not match") {
                     form.controls['old_password'].setErrors({'incorrect': true});
                 }
             });

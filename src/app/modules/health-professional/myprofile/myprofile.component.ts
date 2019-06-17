@@ -5,7 +5,7 @@ import {ToastrService} from 'ngx-toastr';
 
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {HealtArea, IUser} from "../../admin/models/users";
+import {HealtArea, HealthProfessional, IUser} from "../../admin/models/users";
 import {HealthProfessionalService} from "../../admin/services/health-professional.service";
 import {UserService} from "../../admin/services/users.service";
 
@@ -46,6 +46,7 @@ export class MyprofileComponent implements OnInit {
         private localStorageService: LocalStorageService
     ) {
         this.passwordIsValid = true;
+        this.user = new HealthProfessional();
     }
 
     ngOnInit() {

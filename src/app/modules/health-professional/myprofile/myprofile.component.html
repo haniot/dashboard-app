@@ -12,7 +12,7 @@
                             <label for="nomeEdit">Nome:</label>
                             <input type="text" class="form-control" id="nomeEdit" required minlength="4" type="text"
                                    name="name"
-                                   #nomeModelEdit="ngModel" [(ngModel)]="user==undefined?name:user.name"
+                                   #nomeModelEdit="ngModel" [(ngModel)]="user.name"
                                    placeholder="Nome"
                                    [disabled]="visibilityButtonSave?null:'disabled'">
                             <span *ngIf="nomeModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
@@ -46,7 +46,7 @@
                             <label for="healthAreaEdit">Área: </label>
                             <select name="health_area" id="healthAreaEdit" class="form-control" required
                                     #healthAreaModel="ngModel"
-                                    [(ngModel)]="user==undefined?health_area:user.health_area"
+                                    [(ngModel)]="user.health_area"
                                     [disabled]="visibilityButtonSave?null:'disabled'">
                                 <option *ngFor="let area of healthAreaOptions; index as i;trackBy: trackById"
                                         [value]="area">{{area | healthArea}}</option>
@@ -127,7 +127,8 @@
 
                         <div class="row container-fluid">
                             <div class="col-md">
-                                <button type="submit" class="btn btn-haniot-primary" [disabled]="!formPassword.valid || !passwordIsValid">
+                                <button type="submit" class="btn btn-haniot-primary"
+                                        [disabled]="!formPassword.valid || !passwordIsValid">
                                     Alterar senha
                                 </button>
                             </div>
