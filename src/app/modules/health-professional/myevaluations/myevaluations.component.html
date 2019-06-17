@@ -25,8 +25,8 @@
                             </thead>
                             <tbody>
                             <tr *ngIf="listOfEvaluations.length==0">
-                                <td colspan="5" *ngIf="!listOfEvaluationsIsEmpty"><img
-                                        src="../../../../assets/img/loading.gif" alt=""> carregando avaliações...
+                                <td colspan="5" *ngIf="!listOfEvaluationsIsEmpty">
+                                    <spinner message="Carregando avaliações"></spinner>
                                 </td>
                                 <td colspan="5" *ngIf="listOfEvaluationsIsEmpty">
                                     <h4>Nenhuma avaliação encontrada.<br>

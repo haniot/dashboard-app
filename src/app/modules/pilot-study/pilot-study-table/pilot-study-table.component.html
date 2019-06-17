@@ -21,8 +21,9 @@
     </thead>
     <tbody>
       <tr *ngIf="list.length==0">
-        <td colspan="8" *ngIf="!listOfpilotsIsEmpty"><img src="../../../../assets/img/loading.gif" alt=""> carregando
-          estudoos...</td>
+        <td colspan="8" *ngIf="!listOfpilotsIsEmpty">
+          <spinner message="Carregando estudos"></spinner>
+        </td>
         <td colspan="8" *ngIf="listOfpilotsIsEmpty">Nenhum registro encontrado.</td>
       </tr>
       <tr *ngFor="let study of list; index as i;trackBy: trackById">

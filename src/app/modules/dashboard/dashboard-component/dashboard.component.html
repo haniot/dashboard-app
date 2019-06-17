@@ -27,7 +27,7 @@
                      *ngIf="isNotUserAdmin()">
             <div class="row justify-content-center" *ngIf="!listPacients.length && !listOfPatientsIsEmpty">
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patients">
-                    <img src="../../../../assets/img/loading.gif" alt="Carregando pacientes"> carregando pacientes ...
+                    <spinner message="Carregando pacientes"></spinner>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -68,7 +68,7 @@
                      [subtitle]="'Clique sobre o card para visualizar informações do estudo.'">
             <div class="row justify-content-center" *ngIf="!listPilots.length">
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-studies">
-                    <img src="../../../../assets/img/loading.gif" alt="Carregando pacientes"> carregando estudos ...
+                    <spinner message="Carregando estudos"></spinner>
                 </div>
             </div>
             <div class="row justify-content-center">

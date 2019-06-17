@@ -78,6 +78,11 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                 .then(patients => {
                     this.listOfPatients = patients;
                     this.calcLengthPatients();
+                    if (this.listOfPatients.length === 0) {
+                        this.listOfPatientsIsEmpty = true;
+                    } else {
+                        this.listOfPatientsIsEmpty = false;
+                    }
                 })
                 .catch(errorResponse => {
                     // console.log('Erro ao buscar pacientes: ', errorResponse);

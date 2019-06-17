@@ -21,7 +21,7 @@
         <tbody>
         <tr *ngIf="listOfPatients.length==0">
             <td colspan="6" *ngIf="!listOfPatientsIsEmpty">
-                <img src="../../../../assets/img/loading.gif" alt="Carregando pacientes"> carregando pacientes...
+                <spinner message="Carregando pacientes"></spinner>
             </td>
             <td colspan="6" *ngIf="listOfPatientsIsEmpty">
                 <img src="../../../../assets/img/haniot/no_patient.png" alt="Nenhum paciente cadastrado" id="listOfPatientsIsEmpty"><br>

@@ -102,6 +102,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         this.listHeartRate = new Array<HeartRate>();
 
         this.showZonesClassification = false;
+
     }
 
     ngOnInit() {

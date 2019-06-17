@@ -12,8 +12,8 @@ import {LoadingComponentComponent} from './loading-component/loading-component.c
 import {ModalConfirmationComponent} from './modal-confirmation/modal-confirmation.component';
 import {LoadingService} from './loading-component/service/loading.service';
 import {SelectPilotstudyComponent} from './select-pilotstudy/select-pilotstudy.component';
-import {SelectPilotStudyService} from "./select-pilotstudy/service/select-pilot-study.service";
 import {MatStepperModule} from "@angular/material";
+import {SpinnerComponent} from './spinner/spinner.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +22,8 @@ import {MatStepperModule} from "@angular/material";
         HaniotModalComponent,
         LoadingComponentComponent,
         ModalConfirmationComponent,
-        SelectPilotstudyComponent
+        SelectPilotstudyComponent,
+        SpinnerComponent
     ],
     imports: [
         CommonModule,
@@ -38,7 +39,8 @@ import {MatStepperModule} from "@angular/material";
         HaniotModalComponent,
         LoadingComponentComponent,
         ModalConfirmationComponent,
-        SelectPilotstudyComponent
+        SelectPilotstudyComponent,
+        SpinnerComponent
     ],
     providers: [
         ModalService,

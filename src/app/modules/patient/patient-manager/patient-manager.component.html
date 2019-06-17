@@ -26,11 +26,10 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             <tr *ngIf="listOfPatients.length==0">
-                                <td colspan="5" *ngIf="!listOfPatientsIsEmpty"><img
-                                        src="../../../../assets/img/loading.gif" alt="">
-                                    carregando
-                                    pacientes...
+                                <td colspan="5" *ngIf="!listOfPatientsIsEmpty">
+                                    <spinner message="Carregando pacientes"></spinner>
                                 </td>
                                 <td colspan="5" *ngIf="listOfPatientsIsEmpty">Nenhum registro encontrado.</td>
                             </tr>

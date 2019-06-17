@@ -27,9 +27,8 @@
                             </thead>
                             <tbody>
                             <tr *ngIf="list.length==0">
-                                <td colspan="6" *ngIf="!listOfStudiesIsEmpty"><img
-                                        src="../../../../assets/img/loading.gif"
-                                        alt=""> carregando estudos...
+                                <td colspan="6" *ngIf="!listOfStudiesIsEmpty">
+                                    <spinner message="Carregando estudos"></spinner>
                                 </td>
                                 <td colspan="6" *ngIf="listOfStudiesIsEmpty"><p class="second-title text-center">
                                     Você não possui estudos associados.</p>

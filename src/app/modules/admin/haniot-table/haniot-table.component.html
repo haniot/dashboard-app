@@ -19,8 +19,9 @@
     </thead>
     <tbody>
       <tr *ngIf="list.length==0">
-        <td colspan="5" *ngIf="!listOfUserIsEmpty"><img src="../../../../assets/img/loading.gif" alt=""> carregando
-          usuários...</td>
+        <td colspan="5" *ngIf="!listOfUserIsEmpty">
+          <spinner message="Carregando usuários"></spinner>
+        </td>
         <td colspan="5" *ngIf="listOfUserIsEmpty">Nenhum registro encontrado.</td>
       </tr>
       <tr *ngFor="let user of list; index as i;trackBy: trackById">

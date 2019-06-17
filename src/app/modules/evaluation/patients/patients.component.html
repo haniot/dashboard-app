@@ -19,8 +19,9 @@
     </thead>
     <tbody>
       <tr *ngIf="listOfPatients.length==0">
-        <td colspan="5" *ngIf="!listOfPatientsIsEmpty"><img src="../../../../assets/img/loading.gif" alt=""> carregando
-          pacientes...</td>
+        <td colspan="5" *ngIf="!listOfPatientsIsEmpty">
+          <spinner message="Carregando pacientes"></spinner>
+        </td>
         <td colspan="5" *ngIf="listOfPatientsIsEmpty">Nenhum registro encontrado.</td>
       </tr>
       <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById" (click)="selectPatient(patient.id)"

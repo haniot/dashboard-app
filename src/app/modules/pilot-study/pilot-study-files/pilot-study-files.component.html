@@ -41,8 +41,8 @@
         </thead>
         <tbody>
         <tr *ngIf="listOfFiles.length==0">
-            <td colspan="5" *ngIf="!listOfFilesIsEmpty"><img src="../../../../assets/img/loading.gif" alt="">
-                carregando arquivos disponíveis...
+            <td colspan="5" *ngIf="!listOfFilesIsEmpty">
+                <spinner message="Carregando arquivos disponíveis"></spinner>
             </td>
             <td colspan="5" *ngIf="listOfFilesIsEmpty">
                 <h4>Nenhum arquivo encontrado.<br>
@@ -140,8 +140,8 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" class="loading">
-                                <img src="../../../../assets/img/loading.gif" alt=""> gerando arquivo ...
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner message="Gerando arquivo"></spinner>
                             </div>
                         </div>
                     </div>
@@ -162,8 +162,8 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" class="loading">
-                                <img src="../../../../assets/img/loading.gif" alt=""> removendo arquivo ...
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner message="Removendo arquivo"></spinner>
                             </div>
                         </div>
                     </div>
