@@ -57,14 +57,15 @@
             </a>
             <ul class="collapse list-unstyled submenu" id="pageSubmenu">
                 <li routerLinkActive="active" class="nav-subitem">
-                    <a class="nav-link" [routerLink]="['/ui/administrators']" *ngIf="verifyScopes('Administradores')"
+                    <a class="nav-link" [routerLink]="['/admin/new/administrators']" *ngIf="verifyScopes('Administradores')"
                        (click)="openLoading()">
                         <i class="material-icons">supervisor_account</i>
                         <p>Administradores</p>
                     </a>
                 </li>
                 <li routerLinkActive="active" class="nav-subitem">
-                    <a class="nav-link" [routerLink]="['/ui/healthprofessionals']" *ngIf="verifyScopes('P. de Saúde')"
+                    <a class="nav-link" [routerLink]="['/admin/new/healthprofessionals']"
+                       *ngIf="verifyScopes('P. de Saúde')"
                        (click)="openLoading()">
                         <i class="material-icons">accessibility</i>
                         <p>Profissionais de Saúde</p>
@@ -82,7 +83,7 @@
         </li>
 
         <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()">
-            <a class="nav-link" [routerLink]="['/ui/mystudies']" *ngIf="verifyScopes('Meus estudos')"
+            <a class="nav-link" [routerLink]="['/healthprofessional/mystudies']" *ngIf="verifyScopes('Meus estudos')"
                (click)="openLoading()">
                 <i class="material-icons">library_books</i>
                 <p>Meus estudos</p>
@@ -90,7 +91,8 @@
         </li>
 
         <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()">
-            <a class="nav-link" [routerLink]="['/ui/myevaluations']" *ngIf="verifyScopes('Minhas avaliações')"
+            <a class="nav-link" [routerLink]="['/healthprofessional/myevaluations']"
+               *ngIf="verifyScopes('Minhas avaliações')"
                (click)="openLoading()">
                 <i class="material-icons">assignment</i>
                 <p>Minhas avaliações</p>
@@ -104,32 +106,32 @@
             </a>
         </li>
 
-<!--        <li routerLinkActive="active" class="nav-item">-->
-<!--            <a class="nav-link" href="#pageSubmenuEvaluation" data-toggle="collapse" aria-expanded="false"-->
-<!--               (click)="onClickMenuEvaluation()">-->
-<!--                <p>-->
-<!--                    Avaliações-->
-<!--                    <i class="material-icons">{{iconEvaluatioinMenu}}</i>-->
-<!--                </p>-->
+        <!--        <li routerLinkActive="active" class="nav-item">-->
+        <!--            <a class="nav-link" href="#pageSubmenuEvaluation" data-toggle="collapse" aria-expanded="false"-->
+        <!--               (click)="onClickMenuEvaluation()">-->
+        <!--                <p>-->
+        <!--                    Avaliações-->
+        <!--                    <i class="material-icons">{{iconEvaluatioinMenu}}</i>-->
+        <!--                </p>-->
 
-<!--            </a>-->
-<!--            <ul class="collapse list-unstyled submenu" id="pageSubmenuEvaluation">-->
-<!--                <li routerLinkActive="active" class="nav-subitem">-->
-<!--                    <a class="nav-link" [routerLink]="['/evaluations/nutritional']" *ngIf="verifyScopes('Avaliações')"-->
-<!--                       (click)="openLoading()">-->
-<!--                        <i class="material-icons">accessibility</i>-->
-<!--                        <p>Nutricionais</p>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--                <li routerLinkActive="active" class="nav-subitem">-->
-<!--                    <a class="nav-link" [routerLink]="['/evaluations/odontological']" *ngIf="verifyScopes('Avaliações')"-->
-<!--                       (click)="openLoading()">-->
-<!--                        <i class="material-icons">mood</i>-->
-<!--                        <p>Odontológicas</p>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </li>-->
+        <!--            </a>-->
+        <!--            <ul class="collapse list-unstyled submenu" id="pageSubmenuEvaluation">-->
+        <!--                <li routerLinkActive="active" class="nav-subitem">-->
+        <!--                    <a class="nav-link" [routerLink]="['/evaluations/nutritional']" *ngIf="verifyScopes('Avaliações')"-->
+        <!--                       (click)="openLoading()">-->
+        <!--                        <i class="material-icons">accessibility</i>-->
+        <!--                        <p>Nutricionais</p>-->
+        <!--                    </a>-->
+        <!--                </li>-->
+        <!--                <li routerLinkActive="active" class="nav-subitem">-->
+        <!--                    <a class="nav-link" [routerLink]="['/evaluations/odontological']" *ngIf="verifyScopes('Avaliações')"-->
+        <!--                       (click)="openLoading()">-->
+        <!--                        <i class="material-icons">mood</i>-->
+        <!--                        <p>Odontológicas</p>-->
+        <!--                    </a>-->
+        <!--                </li>-->
+        <!--            </ul>-->
+        <!--        </li>-->
 
     </ul>
 

@@ -1,11 +1,11 @@
-import { Component, AfterViewInit, OnInit, AfterViewChecked } from '@angular/core';
+import {AfterViewChecked, Component} from '@angular/core';
 
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 
-import { HealthProfessionalService } from '../services/health-professional.service';
-import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { IUser, HealthProfessional } from '../models/users';
-import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import {HealthProfessionalService} from '../services/health-professional.service';
+import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import {HealthProfessional, IUser} from '../models/users';
+import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
 
 @Component({
   selector: 'health-professionals',
@@ -17,8 +17,8 @@ export class HealthProfessionalComponent implements AfterViewChecked {
   healthProfessionals: Array<IUser> = [];
 
   /* Controles de paginação */
-  page: number = 1;
-  limit: number = 5;
+  page = 1;
+  limit = 5;
   length: number;
 
   search: string;
@@ -42,7 +42,7 @@ export class HealthProfessionalComponent implements AfterViewChecked {
       })
       .catch(errorResponse => {
         this.toastr.error('Não foi possível listar profissional de saúde!');
-        //console.log('Erro ao buscar profissionais de saúde: ',errorResponse);
+        // console.log('Erro ao buscar profissionais de saúde: ',errorResponse);
       });
   }
 
@@ -59,15 +59,15 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         }
       })
       .catch(errorResponse => {
-        if (errorResponse.status == 409 &&
-          errorResponse.error.code == 409 &&
-          errorResponse.error.message == 'A registration with the same unique data already exists!') {
+        if (errorResponse.status === 409 &&
+          errorResponse.error.code === 409 &&
+          errorResponse.error.message === 'A registration with the same unique data already exists!') {
           this.toastr.error('Email já cadastrado');
         } else {
           this.toastr.error('Não foi possível criar profissional de saúde!');
         }
         this.modalService.actionNotExecuted('modalUser', event, errorResponse.error);
-        //console.log('Não foi possível criar profissional de saúde!',errorResponse);
+        // console.log('Não foi possível criar profissional de saúde!',errorResponse);
       });
   }
 
@@ -84,15 +84,15 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         }
       })
       .catch(errorResponse => {
-        if (errorResponse.status == 409 &&
-          errorResponse.error.code == 409 &&
-          errorResponse.error.message == 'A registration with the same unique data already exists!') {
+        if (errorResponse.status === 409 &&
+          errorResponse.error.code === 409 &&
+          errorResponse.error.message === 'A registration with the same unique data already exists!') {
           this.toastr.error('Email já cadastrado');
         } else {
           this.toastr.error('Não foi possível atualizar profissional de saúde!');
         }
         this.modalService.actionNotExecuted('modalUserEdit', healthProfessional);
-        //console.log('Não foi possível atualizar profissional de saúde!', errorResponse);
+        // console.log('Não foi possível atualizar profissional de saúde!', errorResponse);
       });
   }
 
@@ -120,7 +120,7 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         this.length = caregivers.length;
       })
       .catch(errorResponse => {
-        //console.log('Não foi possível buscar todos os profissionais!', errorResponse);
+        // console.log('Não foi possível buscar todos os profissionais!', errorResponse);
       });
   }
 

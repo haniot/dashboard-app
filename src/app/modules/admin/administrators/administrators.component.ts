@@ -47,7 +47,7 @@ export class AdministratorsComponent implements AfterViewChecked {
           this.errorCredentials = true;
         }
         this.toastr.error('Não foi possível listar administrador!');
-        //console.log('Não foi possível listar administrador!',errorResponse);
+        // console.log('Não foi possível listar administrador!',errorResponse);
       });
 
   }
@@ -72,7 +72,7 @@ export class AdministratorsComponent implements AfterViewChecked {
         if (errorResponse.status === 401) {
           this.errorCredentials = true;
         }
-        //console.log('Não foi possível criar administrador!',errorResponse);
+        // console.log('Não foi possível criar administrador!',errorResponse);
       });
   }
 
@@ -95,7 +95,7 @@ export class AdministratorsComponent implements AfterViewChecked {
         if (errorResponse.status === 401) {
           this.errorCredentials = true;
         }
-        //console.log('Não foi possível atualizar administrador!', errorResponse);
+        // console.log('Não foi possível atualizar administrador!', errorResponse);
       });
   }
 
@@ -123,7 +123,7 @@ export class AdministratorsComponent implements AfterViewChecked {
         this.length = admins.length;
       })
       .catch(errorResponse => {
-        //console.log('Error ao buscar administradores!', errorResponse);
+        // console.log('Error ao buscar administradores!', errorResponse);
       });
   }
 

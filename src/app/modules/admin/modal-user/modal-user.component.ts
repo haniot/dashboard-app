@@ -1,11 +1,13 @@
-import {Component, Input, Output, EventEmitter, OnInit, OnChanges, OnDestroy} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
+
+import {ISubscription} from "rxjs-compat/Subscription";
+
 import {AdminService} from '../services/admin.service';
 import {HealthProfessionalService} from '../services/health-professional.service';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {HealtArea} from '../models/users';
-import {ISubscription} from "rxjs-compat/Subscription";
+import {HealtArea} from "../models/users";
 
 @Component({
     selector: 'app-modal-user',
@@ -24,9 +26,9 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() userId: string;
 
-    name: string = '';
-    email: string = '';
-    password: string = '';
+    name = '';
+    email = '';
+    password = '';
     health_area: HealtArea;
     healthAreaOptions = Object.keys(HealtArea);
 

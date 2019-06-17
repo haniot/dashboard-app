@@ -57,9 +57,15 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                 this.nutritionService.getAllByPatient(this.patientId, this.page, this.limit, this.search)
                     .then(nutritionsEvaluations => {
                         this.listOfEvaluations = nutritionsEvaluations;
+                        if (nutritionsEvaluations && nutritionsEvaluations.length) {
+                            this.listOfEvaluationsIsEmpty = false;
+                        } else {
+                            this.listOfEvaluationsIsEmpty = true;
+                        }
                         this.calcLenghtNutritionEvaluations();
                     })
                     .catch(errorResponse => {
+                        this.listOfEvaluationsIsEmpty = true;
                         // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                     });
             }, 200);

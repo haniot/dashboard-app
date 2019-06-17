@@ -242,7 +242,6 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     getPatient(): void {
         this.patient = this.nutritionalEvaluation.patient;
-
     }
 
     finalizeEvaluation() {

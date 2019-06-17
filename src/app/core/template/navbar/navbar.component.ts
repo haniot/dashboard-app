@@ -20,16 +20,17 @@ export declare interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
     {path: '^/dashboard$', title: 'Página Inicial'},
-    {path: '^/ui/administrators$', title: 'Usuários - Administradores'},
-    {path: '^/ui/healthprofessionals$', title: 'Usuários - Profissionais de Saúde'},
+    {path: '^/admin/new/administrators$', title: 'Usuários - Administradores'},
+    {path: '^/admin/new/healthprofessionals$', title: 'Usuários - Profissionais de Saúde'},
     {path: '^/pilotstudies$', title: 'Estudos Pilotos'},
     {path: '^/patients$', title: 'Pacientes'},
     {path: '^(\\/patients\\/)[a-fA-F0-9]{24}$', title: 'Pacientes'},
     {path: '^(\\/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'Pacientes - Detalhes'},
-    {path: '^/ui/mystudies$', title: 'Meus estudos'},
+    {path: '^/healthprofessional/mystudies$', title: 'Meus estudos'},
     {path: '^(\\/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'Estudo - Detalhes'},
-    {path: '^/ui/myprofile$', title: 'Meus dados'},
-    {path: '^/ui/myevaluations$', title: 'Minhas Avaliações'},
+    {path: '^/admin/myprofile$', title: 'Dados do Administrador'},
+    {path: '^/healthprofessional/myprofile$', title: 'Meus dados'},
+    {path: '^/healthprofessional/myevaluations$', title: 'Minhas Avaliações'},
     {path: '^(\\/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'Avaliações - Nutricional'}
 ];
 
@@ -280,6 +281,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.pilotStudyId = pilotselected;
         } else if (this.authService.decodeToken().sub_type !== 'admin') {
             this.selectPilotService.open();
+        }
+    }
+
+    myprofile() {
+        if (this.isNotAdmin()) {
+            this.router.navigate(['healthprofessional/myprofile']);
+        } else {
+            this.router.navigate(['admin/myprofile']);
         }
     }
 
