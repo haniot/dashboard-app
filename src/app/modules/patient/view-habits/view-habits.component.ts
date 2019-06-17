@@ -30,6 +30,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
     userHealthArea: string;
 
+    showMeasurements: boolean;
+
     configVisibility = {
         weight: false,
         height: false,
@@ -54,6 +56,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         private localStorageService: LocalStorageService
     ) {
         this.subscriptions = new Array<ISubscription>();
+        this.showMeasurements = false;
     }
 
 
@@ -130,6 +133,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     }
 
     clickOnMatTab(event) {
+        this.showMeasurements = true;
         if (event.index === 1) {
             this.configVisibility = {
                 weight: true,

@@ -77,57 +77,106 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.loaduserHealthArea();
+        this.loadUserHealthArea();
         this.loadMeasurements();
     }
 
-    loaduserHealthArea(): void {
+    loadUserHealthArea(): void {
         this.userHealthArea = this.localStorageService.getItem('health_area');
     }
 
     loadMeasurements() {
-        this.measurementService.getAllByUser(this.patientId)
+        this.loadWeight();
+        this.loadHeight();
+        this.loadFat();
+        this.loadWaistCircumference();
+        this.loadBodyTemperature();
+        this.loadBloodGlucose();
+        this.loadBloodPressure();
+        this.loadHeartRate()
+    }
+
+    loadWeight() {
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.weight)
             .then((measurements: Array<any>) => {
+                this.listWeight = measurements;
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
 
+    loadHeight() {
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.height)
+            .then((measurements: Array<any>) => {
+                this.listHeight = measurements;
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
 
-                measurements.forEach((measurement: IMeasurement) => {
+    loadFat() {
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.fat)
+            .then((measurements: Array<any>) => {
+                this.listFat = measurements;
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
 
-                    switch (measurement.type) {
-                        case MeasurementType.weight:
-                            this.listWeight.push(measurement);
-                            break;
+    loadWaistCircumference() {
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.waist_circumference)
+            .then((measurements: Array<any>) => {
+                this.listWaistCircunference = measurements;
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
 
-                        case MeasurementType.height:
-                            this.listHeight.push(measurement);
-                            break;
+    loadBodyTemperature() {
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_temperature)
+            .then((measurements: Array<any>) => {
+                this.listBodyTemperature = measurements;
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
 
-                        case MeasurementType.fat:
-                            this.listFat.push(measurement);
-                            break;
+    loadBloodGlucose() {
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_glucose)
+            .then((measurements: Array<any>) => {
+                this.listBloodGlucose = measurements;
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
 
-                        case MeasurementType.waist_circumference:
-                            this.listWaistCircunference.push(measurement);
-                            break;
+    loadBloodPressure() {
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_pressure)
+            .then((measurements: Array<any>) => {
+                this.listBloodPressure = measurements;
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
 
-                        case MeasurementType.body_temperature:
-                            this.listBodyTemperature.push(measurement);
-                            break;
-
-                        case MeasurementType.blood_glucose:
-                            this.listBloodGlucose.push(measurement);
-                            break;
-
-                        case MeasurementType.blood_pressure:
-                            this.listBloodPressure.push(measurement);
-                            break;
-
-                        case MeasurementType.heart_rate:
-                            this.listHeartRate.push(measurement);
-                            break;
-                    }
-
-                })
-
+    loadHeartRate() {
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.heart_rate)
+            .then((measurements: Array<any>) => {
+                this.listHeartRate = measurements;
             })
             .catch(errorResponse => {
                 // this.toastService.error('Não foi possível buscar medições!');

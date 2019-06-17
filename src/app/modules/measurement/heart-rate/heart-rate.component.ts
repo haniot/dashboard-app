@@ -51,23 +51,26 @@ export class HeartRateComponent implements OnInit, OnChanges {
         };
 
         this.data.forEach((heartRate) => {
-            heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
-                xAxisOptions.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
-                seriesOptions.data.push(date.value);
-            });
+            if (heartRate.dataset) {
+                heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
+                    xAxisOptions.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+                    seriesOptions.data.push(date.value);
+                });
+            }
         });
 
 
         if (this.lastData) {
             // Inserindo dados no gráfico da ultima medião
+            if (this.lastData.dataset) {
+                this.lastData.dataset.forEach((date: { value: number, timestamp: string }) => {
 
-            this.lastData.dataset.forEach((date: { value: number, timestamp: string }) => {
+                    xAxisOptionsLastDate.data.push(this.datePipe.transform(date.timestamp, "mediumTime"));
 
-                xAxisOptionsLastDate.data.push(this.datePipe.transform(date.timestamp, "mediumTime"));
+                    seriesOptionsLastDate.data.push(date.value);
 
-                seriesOptionsLastDate.data.push(date.value);
-
-            });
+                });
+            }
         }
 
         this.options = {

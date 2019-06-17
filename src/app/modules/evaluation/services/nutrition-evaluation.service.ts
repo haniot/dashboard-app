@@ -19,8 +19,6 @@ export class NutritionEvaluationService {
 
         if (limit) {
             myParams = myParams.append("limit", String(limit));
-        } else {
-            myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
         }
 
         if (search) {
@@ -42,8 +40,6 @@ export class NutritionEvaluationService {
 
         if (limit) {
             myParams = myParams.append("limit", String(limit));
-        } else {
-            myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
         }
 
         if (search) {
@@ -65,8 +61,6 @@ export class NutritionEvaluationService {
 
         if (limit) {
             myParams = myParams.append("limit", String(limit));
-        } else {
-            myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
         }
 
         if (search) {
@@ -89,8 +83,6 @@ export class NutritionEvaluationService {
 
         if (limit) {
             myParams = myParams.append("limit", String(limit));
-        } else {
-            myParams = myParams.append("limit", String(Number.MAX_SAFE_INTEGER));
         }
 
         if (search) {

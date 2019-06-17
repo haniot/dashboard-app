@@ -80,7 +80,8 @@
                                 <select class="form-control" formControlName="pilotstudy_id" name="pilotstudy_id"
                                         id="pilotstudy_id">
                                     <option value="undefined">- - - - selecione um estudo - - - -</option>
-                                    <option *ngFor="let pilot of listPilots;trackBy: trackById" [value]="pilot.id">{{pilot.name}}</option>
+                                    <option *ngFor="let pilot of listPilots;trackBy: trackById"
+                                            [value]="pilot.id">{{pilot.name}}</option>
                                 </select>
                             </div>
 
@@ -137,7 +138,8 @@
 
                     <mat-tab label="MEDIÇÕES">
                         <measurement-component [(patientId)]="patientId"
-                                               [configVisibility]="configVisibility"></measurement-component>
+                                               [configVisibility]="configVisibility"
+                                               *ngIf="showMeasurements"></measurement-component>
                     </mat-tab>
 
                     <!--                    <mat-tab label="SAÚDE BUCAL">-->
