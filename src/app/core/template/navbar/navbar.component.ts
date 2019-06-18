@@ -93,7 +93,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getTitle();
         }));
 
-        this.pilotStudyId = localStorage.getItem('pilotstudy_id');
+        this.pilotStudyId = this.localStorageService.getItem('pilotstudy_id');
         this.getUserName();
         this.listTitles = ROUTES;
         const navbar: HTMLElement = this.element.nativeElement;
@@ -214,16 +214,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     getUserName() {
-        const username = atob(localStorage.getItem('username'));
-        if (localStorage.getItem('username')) {
+        const username = this.localStorageService.getItem('username');
+
+        if (username) {
             this.userName = username;
         } else {
-            this.userService.getUserById(atob(localStorage.getItem('user')))
+
+            this.userService.getUserById(this.localStorageService.getItem('user'))
                 .then(user => {
                     if (user) {
                         this.userName = user.name ? user.name : user.email;
                         const health_area = user.health_area ? user.health_area : 'admin';
-                        localStorage.setItem('username', btoa(this.userName))
+                        this.localStorageService.setItem('username', this.userName);
                         this.localStorageService.setItem('health_area', health_area);
                     }
                 })
@@ -234,7 +236,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     loadUser(): void {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
     }
 
     getAllPilotStudies() {
@@ -268,7 +270,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (!this.userId) {
             this.loadUser()
         }
-        localStorage.setItem(this.userId, this.pilotStudyId);
+        this.localStorageService.setItem(this.userId, this.pilotStudyId);
         this.selectPilotService.pilotStudyHasUpdated();
     }
 
@@ -276,7 +278,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (!this.userId) {
             this.loadUser();
         }
-        const pilotselected = localStorage.getItem(this.userId);
+        const pilotselected = this.localStorageService.getItem(this.userId);
         if (pilotselected) {
             this.pilotStudyId = pilotselected;
         } else if (this.authService.decodeToken().sub_type !== 'admin') {

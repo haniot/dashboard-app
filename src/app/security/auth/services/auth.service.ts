@@ -9,12 +9,15 @@ import 'rxjs/add/operator/toPromise';
 import * as JWT_decode from "jwt-decode";
 
 import {tap} from 'rxjs/operators';
-import {User} from '../interfaces/users.interfaces';
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Injectable()
 export class AuthService {
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(
+        private http: HttpClient,
+        private localStorageService: LocalStorageService,
+        private router: Router) {
     }
 
     check(): boolean {
@@ -22,7 +25,7 @@ export class AuthService {
         if (!token) {
             return false;
         }
-        const user = atob(localStorage.getItem('user'));
+        const user = this.localStorageService.getItem('user');
 
         return user === token.sub;
     }
@@ -38,30 +41,28 @@ export class AuthService {
                         localStorage.setItem("emailTemp", credentials.email)
                         this.router.navigate(['auth/change'], {queryParams: {redirect_link: data.redirect_link}});
                     } else {
-                        localStorage.setItem('token', data.access_token);
+                        this.localStorageService.setItem('token', data.access_token)
                         let decodedToken: { sub: string, iss: string, iat: number, exp: number, scope: string };
                         try {
                             decodedToken = JWT_decode(data.access_token);
                         } catch (Error) {
-                            localStorage.clear();
+                            this.localStorageService.logout();//clean local storage
                             return false;
                         }
-                        localStorage.setItem('user', btoa(decodedToken.sub));
+                        this.localStorageService.setItem('user', decodedToken.sub);
                     }
                 })
             );
     }
 
     logout(): void {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('user');
+        this.localStorageService.logout();
         this.router.navigate(['auth/login']);
     }
 
-    getUser(): User {
-        return localStorage.getItem('user') ? JSON.parse(atob(localStorage.getItem('user')))[0] : null;
-    }
+    // getUser(): User {
+    //     return localStorage.getItem('user') ? JSON.parse(atob(localStorage.getItem('user')))[0] : null;
+    // }
 
     changePassowrd(credentials: { name: string, email: string, password: string }, redirect_link): Observable<boolean> {
         return this.http.patch<any>(`${environment.api_url}${redirect_link}`, credentials)
@@ -79,7 +80,7 @@ export class AuthService {
     }
 
     decodeToken(): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string } {
-        const token = localStorage.getItem('token');
+        const token = this.localStorageService.getItem('token');
         let decodedToken: { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string };
         try {
             decodedToken = JWT_decode(token);

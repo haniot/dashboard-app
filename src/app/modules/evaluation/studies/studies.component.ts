@@ -5,6 +5,7 @@ import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
     selector: 'studies',
@@ -39,7 +40,8 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     constructor(
         private pilotStudyService: PilotStudyService,
         private authService: AuthService,
-        private loadinService: LoadingService
+        private loadinService: LoadingService,
+        private localStorageService: LocalStorageService
     ) {
         this.list = new Array<PilotStudy>();
         this.listClass = new Array<string>();
@@ -52,7 +54,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     }
 
     loadUserId() {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
     }
 
     getAllPilotStudies() {
@@ -71,7 +73,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                     // console.log('Erro ao buscar pilot-studies: ', error);
                 });
         } else {
-            this.userId = atob(localStorage.getItem('user'));
+            this.userId = this.localStorageService.getItem('user');
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                 .then(studies => {
                     this.list = studies;

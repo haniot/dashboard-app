@@ -7,6 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {ModalService} from "../../../shared/shared-components/haniot-modal/service/modal.service";
 import {PilotStudyService} from "../services/pilot-study.service";
 import {DateRange} from "../models/range-date";
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
     selector: 'pilot-study-files',
@@ -45,7 +46,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     constructor(
         private pilotService: PilotStudyService,
         private toastService: ToastrService,
-        private modalService: ModalService
+        private modalService: ModalService,
+        private localStorageService: LocalStorageService
     ) {
         this.pilotStudy = new PilotStudy();
         this.listOfFiles = new Array<OdontologicEvaluation>();
@@ -172,7 +174,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     generateFile() {
-        const user_id = atob(localStorage.getItem('user'));
+        const user_id = this.localStorageService.getItem('user');
         this.generatingFile = true;
         this.pilotService.generateNewFile(this.pilotStudy, user_id)
             .then(newFile => {

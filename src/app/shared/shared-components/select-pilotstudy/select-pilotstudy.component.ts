@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {LoadingService} from "../loading-component/service/loading.service";
 import {SelectPilotStudyService} from "./service/select-pilot-study.service";
 import {AuthService} from "../../../security/auth/services/auth.service";
+import {LocalStorageService} from "../../shared-services/localstorage.service";
 
 @Component({
     selector: 'select-pilotstudy',
@@ -41,7 +42,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         private selecPilotService: SelectPilotStudyService,
         private selectPilot: SelectPilotStudyService,
         private authService: AuthService,
-        private router: Router
+        private localStorageService: LocalStorageService
     ) {
         this.list = new Array<PilotStudy>();
     }
@@ -56,10 +57,10 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
     loadUser(): void {
-        const user_id = localStorage.getItem('user');
+        const user_id = this.localStorageService.getItem('user');
 
         if (user_id) {
-            this.userId = atob(user_id);
+            this.userId = user_id;
         }
     }
 
@@ -137,7 +138,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         if (!this.userId) {
             this.loadUser();
         }
-        localStorage.setItem(this.userId, pilotstudy_id);
+        this.localStorageService.setItem(this.userId, pilotstudy_id);
         this.selecPilotService.pilotStudyHasUpdated();
         this.selectPilot.close();
 
@@ -145,8 +146,8 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
 
 
     getUserName() {
-        const username = atob(localStorage.getItem('username'));
-        if (localStorage.getItem('username')) {
+        const username = this.localStorageService.getItem('username');
+        if (username) {
             this.userName = username;
         }
     }

@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, AfterViewChecked, OnDestroy} from '@angular/core';
+import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -8,6 +8,7 @@ import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
 import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
     selector: 'list-pilotstudies',
@@ -38,7 +39,8 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         private activeRouter: ActivatedRoute,
         private loadinService: LoadingService,
         private selectPilotService: SelectPilotStudyService,
-        private router: Router
+        private router: Router,
+        private localStorageService: LocalStorageService
     ) {
         this.subscriptions = new Array<ISubscription>();
     }
@@ -52,14 +54,14 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
     }
 
     loadUser(): void {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
     }
 
     loadPilotSelected(): void {
         if (!this.userId) {
             this.loadUser();
         }
-        const pilotselected = localStorage.getItem(this.userId);
+        const pilotselected = this.localStorageService.getItem(this.userId);
         if (pilotselected) {
             this.gotoPatients(pilotselected);
         } else {
@@ -68,7 +70,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
     }
 
     getAllPilotStudies() {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
         this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
             .then(studies => {
                 this.list = studies;

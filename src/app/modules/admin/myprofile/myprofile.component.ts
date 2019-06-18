@@ -56,7 +56,7 @@ export class MyprofileComponent implements OnInit {
     }
 
     getUser() {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
         this.adminService.getById(this.userId)
             .then(admin => this.user = admin)
             .catch(HttpError => {
@@ -72,7 +72,7 @@ export class MyprofileComponent implements OnInit {
 
     onSubmit(form) {
         const admin = form.value;
-        admin.id = atob(localStorage.getItem('user'));
+        admin.id = this.localStorageService.getItem('user');
         this.adminService.update(admin)
             .then((userAdmin) => {
                 this.user = userAdmin;

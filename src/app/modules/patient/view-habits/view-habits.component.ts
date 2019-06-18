@@ -110,7 +110,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
 
     getAllPilotStudies() {
-        const userId = atob(localStorage.getItem('user'));
+        const userId = this.localStorageService.getItem('user');
 
         if (this.localStorageService.getItem('health_area') === 'admin') {
             this.pilotStudiesService.getAll()

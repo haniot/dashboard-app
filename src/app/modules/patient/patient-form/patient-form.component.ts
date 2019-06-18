@@ -11,6 +11,7 @@ import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
 import {PatientService} from '../services/patient.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
     selector: 'patient-form',
@@ -51,7 +52,8 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         private router: Router,
         private activeRouter: ActivatedRoute,
         private location: Location,
-        private authService: AuthService
+        private authService: AuthService,
+        private localStorageService: LocalStorageService
     ) {
         this.min_birth_date = new Date();
         this.subscriptions = new Array<ISubscription>();
@@ -160,7 +162,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
                     // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
                 });
         } else {
-            const userId = atob(localStorage.getItem('user'));
+            const userId = this.localStorageService.getItem('user');
             this.pilotStudiesService.getAllByUserId(userId)
                 .then(pilots => {
                     this.listPilots = pilots;

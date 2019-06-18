@@ -6,6 +6,7 @@ import {EvaluationService} from "../../evaluation/services/evaluation.service";
 import {NutritionEvaluationService} from "../../evaluation/services/nutrition-evaluation.service";
 import {ToastrService} from "ngx-toastr";
 import {ModalService} from "../../../shared/shared-components/haniot-modal/service/modal.service";
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
     selector: 'app-myevaluations',
@@ -44,7 +45,8 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         private nutritionService: NutritionEvaluationService,
         private toastService: ToastrService,
         private modalService: ModalService,
-        private loadingService: LoadingService
+        private loadingService: LoadingService,
+        private localStorageService: LocalStorageService
     ) {
         this.listOfEvaluations = new Array<NutritionEvaluation>();
     }
@@ -54,7 +56,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
     }
 
     loadUserId() {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
     }
 
     searchOnSubmit() {

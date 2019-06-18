@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from 'app/modules/admin/services/users.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {VerifyScopeService} from 'app/security/services/verify-scope.service';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 declare const $: any;
 
@@ -67,7 +67,8 @@ export class SidebarComponent implements OnInit {
         private authService: AuthService,
         private verifyScopesService: VerifyScopeService,
         private userService: UserService,
-        private loadingService: LoadingService
+        private loadingService: LoadingService,
+        private locaStorageService: LocalStorageService
     ) {
     }
 
@@ -98,15 +99,16 @@ export class SidebarComponent implements OnInit {
     }
 
     getUserName() {
-        this.userId = atob(localStorage.getItem('user'));
-        const username = atob(localStorage.getItem('username'));
-        if (localStorage.getItem('username')) {
+        this.userId = this.locaStorageService.getItem('user');
+        const username = this.locaStorageService.getItem('username');
+        if (username) {
             this.userName = username;
         } else {
             this.userService.getUserById(this.userId)
                 .then(user => {
                     if (user && user.name) {
                         this.userName = user.name;
+                        this.locaStorageService.setItem('username', this.userName.toString());
                     }
                 })
                 .catch(error => {

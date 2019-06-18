@@ -8,6 +8,7 @@ import {ModalService} from 'app/shared/shared-components/haniot-modal/service/mo
 import {OdontologicEvaluation} from '../models/odontologic-evaluation';
 import {DentalEvaluationService} from '../services/dental-evaluation.service';
 import {PilotStudy} from "../../pilot-study/models/pilot.study";
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
     selector: 'dental-evaluation-table',
@@ -46,7 +47,8 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
         private dentalEvaluation: DentalEvaluationService,
         private dentalService: DentalEvaluationService,
         private toastService: ToastrService,
-        private modalService: ModalService
+        private modalService: ModalService,
+        private localStorageService: LocalStorageService
     ) {
         this.pilotStudy = new PilotStudy();
         this.listOfEvaluations = new Array<OdontologicEvaluation>();
@@ -160,7 +162,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
     }
 
     generateEvaluation() {
-        const user_id = atob(localStorage.getItem('user'));
+        const user_id = this.localStorageService.getItem('user');
         this.generatingEvaluantion = true;
         this.dentalService.generateNewEvaluation(this.pilotStudy, user_id)
             .then(odontologicalEvaluation => {

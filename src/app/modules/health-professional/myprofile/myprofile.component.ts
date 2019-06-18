@@ -54,7 +54,7 @@ export class MyprofileComponent implements OnInit {
     }
 
     getUser() {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
         this.healthService.getById(this.userId)
             .then(healthprofessional => this.user = healthprofessional)
             .catch(HttpError => {
@@ -70,7 +70,7 @@ export class MyprofileComponent implements OnInit {
 
     onSubmit(form) {
         const healthProfessional = form.value;
-        healthProfessional.id = atob(localStorage.getItem('user'));
+        healthProfessional.id = this.localStorageService.getItem('user');
         this.healthService.update(healthProfessional)
             .then((healthprofesional) => {
                 this.user = healthprofesional;

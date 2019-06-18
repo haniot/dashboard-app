@@ -13,6 +13,7 @@ import {PilotStudy} from "../../pilot-study/models/pilot.study";
 import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
 import {Patient} from "../../patient/models/patient";
 import {PageEvent} from '@angular/material/paginator';
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 
 @Component({
@@ -70,6 +71,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         private dashboardService: DashboardService,
         private authService: AuthService,
         private loadinService: LoadingService,
+        private localStorageService: LocalStorageService,
         private toastService: ToastrService,
         private selectPilotService: SelectPilotStudyService,
         private router: Router
@@ -105,7 +107,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         if (!this.userId) {
             this.loadUser();
         }
-        const pilotselected = localStorage.getItem(this.userId);
+        const pilotselected = this.localStorageService.getItem(this.userId);
 
         if (pilotselected && pilotselected !== '') {
             this.pilotStudyId = pilotselected;
@@ -116,11 +118,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     loadUser(): void {
-        const user_id = localStorage.getItem('user');
-
-        if (user_id) {
-            this.userId = atob(user_id);
-        }
+        this.userId = this.localStorageService.getItem('user');
     }
 
     load() {
@@ -221,7 +219,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
                     this.toastService.error('Não foi possível carregar informações!')
                 });
         }
-
 
 
     }

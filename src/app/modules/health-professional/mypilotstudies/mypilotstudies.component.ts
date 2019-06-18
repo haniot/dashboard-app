@@ -8,6 +8,7 @@ import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.se
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
 import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
     selector: 'mypilotstudies',
@@ -41,7 +42,8 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
         private loadinService: LoadingService,
         private router: Router,
         private modalService: ModalService,
-        private toastService: ToastrService
+        private toastService: ToastrService,
+        private localStorageService: LocalStorageService
     ) {
         this.list = new Array<PilotStudy>();
         this.listOfStudiesIsEmpty = false;
@@ -53,11 +55,11 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
     }
 
     loadUserId() {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
     }
 
     getAllPilotStudies() {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
         this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
             .then(studies => {
                 this.list = studies;

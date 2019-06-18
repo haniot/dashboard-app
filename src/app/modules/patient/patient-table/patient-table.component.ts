@@ -8,6 +8,7 @@ import {LoadingService} from "../../../shared/shared-components/loading-componen
 import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
 import {Patient} from '../models/patient';
 import {PatientService} from '../services/patient.service';
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 @Component({
     selector: 'patient-table',
@@ -45,7 +46,8 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         private toastService: ToastrService,
         private modalService: ModalService,
         private loadinService: LoadingService,
-        private selectStudyService: SelectPilotStudyService
+        private selectStudyService: SelectPilotStudyService,
+        private localStorageService: LocalStorageService
     ) {
         this.subscriptions = new Array<ISubscription>();
     }
@@ -58,14 +60,14 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
     }
 
     loadUser(): void {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
     }
 
     loadPilotSelected(): void {
         if (!this.userId) {
             this.loadUser();
         }
-        const pilotselected = localStorage.getItem(this.userId);
+        const pilotselected = this.localStorageService.getItem(this.userId);
         if (pilotselected) {
             this.pilotStudyId = pilotselected;
         }
