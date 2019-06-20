@@ -51,8 +51,11 @@
                                 <img src="../../../../assets/img/haniot/x_boy.png" *ngIf="patient.gender === 'male'">
                                 <img src="../../../../assets/img/haniot/x_girl.png" *ngIf="patient.gender === 'female'">
                             </div>
-                            <span class="badge badge-haniot category">{{patient.name}}</span><br>
-
+                            
+                            <h4 class="card-title ellipsis">
+                                {{patient.name}}
+                            </h4>
+                            
                             <span class="badge badge-haniot">{{patient.birth_date | convertInAge}}</span>
                         </div>
                     </div>
@@ -85,7 +88,7 @@
                             <span class="badge"
                                   [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active ? 'ATIVADO' : 'DESATIVADO'}}</span>
 
-                            <h3 class="card-title">
+                            <h3 class="card-title ellipsis">
                                 {{study.name}}
                             </h3>
                         </div>

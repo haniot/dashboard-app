@@ -26,7 +26,7 @@ export class AuthService {
             return false;
         }
         const user = this.localStorageService.getItem('user');
-
+        
         return user === token.sub;
     }
 

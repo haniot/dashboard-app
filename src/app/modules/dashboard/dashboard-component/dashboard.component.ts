@@ -241,7 +241,5 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
             subscription.unsubscribe();
         });
     }
-
-
 }
 
