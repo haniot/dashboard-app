@@ -1,14 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {HealthProfessionalRoutingModule} from "./health-professional-routing/health-professional-routing.module";
-
-import {MypilotstudiesComponent} from "./mypilotstudies/mypilotstudies.component";
-import {EditMypilotComponent} from "./edit-mypilot/edit-mypilot.component";
-import {MyevaluationsComponent} from "./myevaluations/myevaluations.component";
-import {MyprofileComponent} from "./myprofile/myprofile.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
-import {SharedModule} from "../../shared/shared.module";
+
 import {
     MatDatepickerModule,
     MatFormFieldModule,
@@ -17,11 +11,19 @@ import {
     MatSelectModule,
     MatSlideToggleModule, MatTableModule
 } from "@angular/material";
+
+import {MypilotstudiesComponent} from "./mypilotstudies/mypilotstudies.component";
+import {EditMypilotComponent} from "./edit-mypilot/edit-mypilot.component";
+import {MyevaluationsComponent} from "./myevaluations/myevaluations.component";
+import {HealthprofessionalConfigComponent} from "./configurations/configurations.component";
+import {HealthProfessionalRoutingModule} from "./health-professional-routing/health-professional-routing.module";
+import {SharedModule} from "../../shared/shared.module";
 import {EvaluationModule} from "../evaluation/evaluation.module";
+import { SettingsModule } from '../settings/settings.module';
 
 @NgModule({
     declarations: [
-        MyprofileComponent,
+        HealthprofessionalConfigComponent,
         MypilotstudiesComponent,
         EditMypilotComponent,
         MyevaluationsComponent
@@ -34,6 +36,7 @@ import {EvaluationModule} from "../evaluation/evaluation.module";
         HealthProfessionalRoutingModule,
         SharedModule,
         EvaluationModule,
+        SettingsModule,
 
         MatPaginatorModule,
         MatSelectModule,
@@ -41,7 +44,7 @@ import {EvaluationModule} from "../evaluation/evaluation.module";
         MatNativeDateModule,
         MatFormFieldModule,
         MatSlideToggleModule,
-        MatTableModule,
+        MatTableModule
     ],
     exports: [
         MypilotstudiesComponent

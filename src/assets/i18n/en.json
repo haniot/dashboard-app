@@ -1,0 +1,59 @@
+{
+  "APP":{
+    "TITLE":"HANIoT",
+    "DEVELOP-ORGNAZATION": "NUTES"
+  },
+  "CONFIG":{
+    "CONFIG-MYDATES-TITLE": "My data",
+    "CONFIG-MYDATES-SUBTITLE": "Click the enable edit button to change your information",
+    "CONFIG-MYDATES-ENABLE-EDITING":"Enable editing",
+    "CONFIG-ACESS-TITLE": "Access settings",
+    "CONFIG-ACESS-SUBTITLE": "To change your password, fill in the information below and click on CHANGE PASSWORD",
+    "CONFIG-LANGUAGE-TITLE": "Language Settings",
+    "CONFIG-LANGUAGE-SUBTITLE": "Use the selector to select the desired language",
+    "CONFIG-LANGUAGE-LABEL": "Select the desired language"
+  },
+  "FOOTER":{
+    "ABOUT-US": "About us",
+    "PRIVACY": "Privacy"
+  },
+  "NAVBAR": {
+    "ADMIN-USERS":"Users - Admins",
+    "HEALTH-PRO-USERS":"Users - Health Professionals",
+    "DETAILS-PATIENT":"Patient - Details",
+    "DETAILS-STUDY": "Study - Details",
+    "NUTRITION-EVALUATIONS":"Evaluations - Nutritional",
+    "WELCOME": "Welcome",
+    "SELECT-STUDY": "Selected study"
+  },
+  "SIDEBAR":{
+    "USERS": "Users",
+    "ADMINS": "Admins",
+    "HEALTHPROFESSIONALS": "Health professionals"
+  },
+  "SHARED":{
+    "NAME": "Name",
+    "INVALID-NAME": "Invalid name",
+    "EMAIL": "Email",
+    "INVALID-EMAIL": "Invalid email",
+    "AREA": "Area",
+    "INVALID-AREA": "Invalid area",
+    "HEALTH-AREA-NUTRITION":"Nutrition",
+    "HEALTH-AREA-DENTISTRY":"Dentist",
+    "HEALTH-AREA-UNDEFINED":"Out of parameters",
+    "NOT-FOUND":"Not found",
+    "SAVE": "Save",
+    "PASSWORD-OLD":"Current password",
+    "PASSWORD-NEW":"New password",
+    "INCORRECT-PASSWORD": "Incorret password",
+    "PASSWORD-RULES-MESSAGE": "Your password must be at least 6 characters long including letters, numbers, and symbols",
+    "CHANGE-PASSWORD": "Change password",
+    "CONFIG": "Settings",
+    "LOGOUT": "Logout",
+    "HOME-PAGE": "Home page",
+    "MY-STUDIES": "My studies",
+    "MY-EVALUATIONS": "My evaluations",
+    "PILOTSTUDIES": "Pilot studies",
+    "PATIENTS": "Patients"
+  }
+}

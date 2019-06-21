@@ -3,13 +3,13 @@ import {RouterModule} from '@angular/router';
 
 import {AdministratorsComponent} from '../administrators/administrators.component';
 import {HealthProfessionalComponent} from '../health-professionals/health-professionals.component';
-import {MyprofileComponent} from '../myprofile/myprofile.component';
+import {AdminConfigurationsComponent} from '../configurations/configurations.component';
 
 const routes = [
     {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
     {
-        path: 'myprofile',
-        component: MyprofileComponent,
+        path: 'configurations',
+        component: AdminConfigurationsComponent,
         data: {scope: ""}
     },
     {

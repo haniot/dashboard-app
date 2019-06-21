@@ -1,7 +1,7 @@
 <div class="logo">
     <a [routerLink]="['/dashboard']" id="linkLogo">
         <img src="/assets/img/haniot/silhueta-50x40.png"/>
-        <span id="haniotTitle">HANIoT</span>
+        <span id="haniotTitle">{{'APP.TITLE' | translate}}</span>
     </a>
 </div>
 <div class="sidebar-wrapper">
@@ -27,10 +27,9 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
                     <a class="dropdown-item background-green" href="javascript:void(0);"
-                       [routerLink]="['/myprofile']">Meus
-                        dados</a>
+                       >{{'SHARED.CONFIG' | translate}}</a>
 
-                    <a class="dropdown-item background-green" href="javascript:void(0);" (click)="logout()">Sair</a>
+                    <a class="dropdown-item background-green" href="javascript:void(0);" (click)="logout()">{{'SHARED.LOGOUT' | translate}}</a>
 
                 </div>
             </li>
@@ -42,7 +41,7 @@
         <li routerLinkActive="active" class="nav-item">
             <a class="nav-link" [routerLink]="['/dashboard']" *ngIf="verifyScopes('Dashboard')" (click)="openLoading()">
                 <i class="material-icons">dashboard</i>
-                <p>Página Inicial</p>
+                <p>{{'SHARED.HOME-PAGE' | translate}}</p>
             </a>
         </li>
 
@@ -50,7 +49,7 @@
             <a class="nav-link" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
                (click)="onclickMenuUser()">
                 <p>
-                    Usuários
+                    {{'SIDEBAR.USERS' | translate}}
                     <i class="material-icons">{{iconUserMenu}}</i>
                 </p>
 
@@ -60,7 +59,7 @@
                     <a class="nav-link" [routerLink]="['/admin/new/administrators']" *ngIf="verifyScopes('Administradores')"
                        (click)="openLoading()">
                         <i class="material-icons">supervisor_account</i>
-                        <p>Administradores</p>
+                        <p>{{'SIDEBAR.ADMINS' | translate}}</p>
                     </a>
                 </li>
                 <li routerLinkActive="active" class="nav-subitem">
@@ -68,7 +67,7 @@
                        *ngIf="verifyScopes('P. de Saúde')"
                        (click)="openLoading()">
                         <i class="material-icons">accessibility</i>
-                        <p>Profissionais de Saúde</p>
+                        <p>{{'SIDEBAR.HEALTHPROFESSIONALS' | translate}}</p>
                     </a>
                 </li>
             </ul>
@@ -78,7 +77,7 @@
             <a class="nav-link" [routerLink]="['/pilotstudies']" *ngIf="verifyScopes('Estudos Pilotos')"
                (click)="openLoading()">
                 <i class="material-icons">find_replace</i>
-                <p>Estudos Pilotos</p>
+                <p>{{'SHARED.PILOTSTUDIES' | translate}}</p>
             </a>
         </li>
 
@@ -86,7 +85,7 @@
             <a class="nav-link" [routerLink]="['/healthprofessional/mystudies']" *ngIf="verifyScopes('Meus estudos')"
                (click)="openLoading()">
                 <i class="material-icons">library_books</i>
-                <p>Meus estudos</p>
+                <p>{{'SHARED.MY-STUDIES' | translate}}</p>
             </a>
         </li>
 
@@ -95,14 +94,14 @@
                *ngIf="verifyScopes('Minhas avaliações')"
                (click)="openLoading()">
                 <i class="material-icons">assignment</i>
-                <p>Minhas avaliações</p>
+                <p>{{'SHARED.MY-EVALUATIONS' | translate}}</p>
             </a>
         </li>
 
         <li routerLinkActive="active" class="nav-item">
             <a class="nav-link" [routerLink]="['/patients']" *ngIf="verifyScopes('Pacientes')" (click)="openLoading()">
                 <i class="material-icons">face</i>
-                <p>Pacientes</p>
+                <p>{{'SHARED.PATIENTS' | translate}}</p>
             </a>
         </li>
 

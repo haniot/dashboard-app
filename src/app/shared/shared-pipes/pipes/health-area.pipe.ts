@@ -9,16 +9,16 @@ export class HealthAreaPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'nutrition':
-                return 'NUTRIÇÃO';
+                return 'SHARED.HEALTH-AREA-NUTRITION';
 
             case 'dentistry':
-                return 'DENTISTA';
+                return 'SHARED.HEALTH-AREA-DENTISTRY';
 
             case undefined:
-                return 'Fora dos parâmetros';
+                return 'SHARED.HEALTH-AREA-UNDEFINED';
 
             default:
-                return 'NÂO ENCONTRADO';
+                return 'SHARED.NOT-FOUND';
         }
 
     }

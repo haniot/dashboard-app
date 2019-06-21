@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,19 +6,25 @@ import { Router } from '@angular/router';
   templateUrl: './page-not-found.component.html',
   styleUrls: ['./page-not-found.component.scss']
 })
-export class NotfoundComponent implements OnInit {
-  time = 5000;  
+export class NotfoundComponent implements OnInit, OnDestroy {
+  time = 5000;
+
+  timeout: any;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
-    setTimeout(() => {
+    this.timeout = setTimeout(() => {
       this.router.navigate(['dashboard']);
     }, this.time);
     setInterval(() => {
       this.time -= 1000;
     }, 1000);
-    
+
+  }
+
+  ngOnDestroy() {
+    clearTimeout(this.timeout);
   }
 
 }

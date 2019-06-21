@@ -11,13 +11,13 @@ if (!fs.existsSync(envsPath)) {
 
 const api_url = process.env.API_GATEWAY_SERVICE;
 const node_env = process.env.NODE_ENV;
-const ls_sercret_key = process.env.LS_SECRET_KEY;
+const ls_secret_key = process.env.LS_SECRET_KEY;
 
 var wstream = fs.createWriteStream(envsPath + '/environment.ts');
 wstream.write('export const environment = {\n');
 wstream.write(`\tproduction: ${node_env === 'production'},\n`);
 wstream.write('\tapi_url: "' + api_url + '",\n');
-wstream.write('\tls_sercret_key: "' + ls_sercret_key + '",\n');
+wstream.write('\tls_secret_key: "' + ls_secret_key + '",\n');
 wstream.write('};\n');
 wstream.end();
 
@@ -25,6 +25,6 @@ var wstream = fs.createWriteStream(envsPath + '/environment.prod.ts');
 wstream.write('export const environment = {\n');
 wstream.write(`\tproduction: ${node_env === 'production'},\n`);
 wstream.write('\tapi_url: "' + api_url + '",\n');
-wstream.write('\tls_sercret_key: "' + ls_sercret_key + '",\n');
+wstream.write('\tls_secret_key: "' + ls_secret_key + '",\n');
 wstream.write('};\n');
 wstream.end();

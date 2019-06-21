@@ -7,8 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() { }
-
   ngOnInit() {
     console.log("%cHANIoT%cby NUTES/UEPB", '\nfont-size: 40px;\nfont-weight: bold;\nfont-style: italic;\ncolor: #00a594;\nfont-style: italic;\n', '\n    font-size: 12px;\n    font-weight: bold;\n    font-style: italic;\n    padding-left: 5px;\n    color: #555;\n')
   }

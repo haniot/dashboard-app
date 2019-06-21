@@ -1,7 +1,7 @@
 <div class="row" id="div-body">
     <div id="top" class="col-md-12">
       <div class="d-flex justify-content-center">
-        <span id="haniotTitle">HANIoT</span>
+        <span id="haniotTitle">{{'APP.TITLE' | translate}}</span>
       </div>
     </div>
   
@@ -16,9 +16,9 @@
   
           </div>
           <div class="col-md-8 tabcontent" id="div-message">
-            <h2>Página não encontrada!</h2>
-            <p>Você tentou acessar uma página não encontrada pelo nosso servidor.<br>
-            Redirecionando para página inicial em {{time/1000}} segundos. </p>
+            <h2>{{'PAGE-NOT-FOUND.TITLE' | translate}}!</h2>
+            <p>{{'PAGE-NOT-FOUND.MESSAGE' | translate}}.</p>
+            <p>{{'PAGE-NOT-FOUND.REDIRECT-PART1' | translate}} {{time/1000}} {{'PAGE-NOT-FOUND.REDIRECT-PART2' | translate}}.</p>
           </div>
         </div>
       </div>

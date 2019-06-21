@@ -19,19 +19,19 @@ export declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    {path: '^/dashboard$', title: 'Página Inicial'},
-    {path: '^/admin/new/administrators$', title: 'Usuários - Administradores'},
-    {path: '^/admin/new/healthprofessionals$', title: 'Usuários - Profissionais de Saúde'},
-    {path: '^/pilotstudies$', title: 'Estudos Pilotos'},
-    {path: '^/patients$', title: 'Pacientes'},
-    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}$', title: 'Pacientes'},
-    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'Pacientes - Detalhes'},
-    {path: '^/healthprofessional/mystudies$', title: 'Meus estudos'},
-    {path: '^(\\/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'Estudo - Detalhes'},
-    {path: '^/admin/myprofile$', title: 'Dados do Administrador'},
-    {path: '^/healthprofessional/myprofile$', title: 'Meus dados'},
-    {path: '^/healthprofessional/myevaluations$', title: 'Minhas Avaliações'},
-    {path: '^(\\/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'Avaliações - Nutricional'}
+    {path: '^/dashboard$', title: 'SHARED.HOME-PAGE'},
+    {path: '^/admin/new/administrators$', title: 'NAVBAR.ADMINS-USERS'},
+    {path: '^/admin/new/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS'},
+    {path: '^/pilotstudies$', title: 'SHARED.PILOTSTUDIES'},
+    {path: '^/patients$', title: 'SHARED.PATIENTS'},
+    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS'},
+    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-PATIENT'},
+    {path: '^/healthprofessional/mystudies$', title: 'SHARED.MY-STUDIES'},
+    {path: '^(\\/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-STUDY'},
+    {path: '^/admin/configurations$', title: 'SHARED.CONFIG'},
+    {path: '^/healthprofessional/configurations$', title: 'SHARED.CONFIG'},
+    {path: '^/healthprofessional/myevaluations$', title: 'SHARED.MY-EVALUATIONS'},
+    {path: '^(\\/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'NUTRITION-EVALUATIONS'}
 ];
 
 @Component({
@@ -201,10 +201,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     verifyVisibilityOfSeletorOfPilotStudy(): void {
 
         switch (this.title) {
-            case 'Pacientes':
+            case 'SHARED.PATIENTS':
                 this.flag = true;
                 break;
-            case 'Página Inicial':
+            case 'SHARED.HOME-PAGE':
                 this.flag = true;
                 break;
             default:
@@ -286,12 +286,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    myprofile() {
+    config(): void{
         if (this.isNotAdmin()) {
-            this.router.navigate(['healthprofessional/myprofile']);
+            this.router.navigate(['/healthprofessional/configurations']);
         } else {
-            this.router.navigate(['admin/myprofile']);
-        }
+            this.router.navigate(['/admin/configurations']);
+        }        
     }
 
     trackById(index, item) {

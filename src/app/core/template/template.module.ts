@@ -1,6 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
+import {MatSelectModule} from "@angular/material";
+import {FormsModule} from "@angular/forms";
+
+import { TranslateModule } from '@ngx-translate/core';
 
 import {FooterComponent} from './footer/footer.component';
 import {NavbarComponent} from './navbar/navbar.component';
@@ -8,8 +12,6 @@ import {SidebarComponent} from './sidebar/sidebar.component';
 import {NotfoundComponent} from './page-not-found/page-not-found.component';
 import {AcessDeniedComponent} from './acess-denied/acess-denied.component';
 import {TemplateComponent} from './template-component/template.component';
-import {MatSelectModule} from "@angular/material";
-import {FormsModule} from "@angular/forms";
 import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
@@ -18,6 +20,7 @@ import {SharedModule} from "../../shared/shared.module";
         FormsModule,
         RouterModule,
         MatSelectModule,
+        TranslateModule,
         SharedModule
     ],
     declarations: [

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
+
 import {UserService} from 'app/modules/admin/services/users.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {VerifyScopeService} from 'app/security/services/verify-scope.service';
@@ -68,7 +70,8 @@ export class SidebarComponent implements OnInit {
         private verifyScopesService: VerifyScopeService,
         private userService: UserService,
         private loadingService: LoadingService,
-        private locaStorageService: LocalStorageService
+        private locaStorageService: LocalStorageService,
+        private router:Router
     ) {
     }
 
@@ -135,5 +138,17 @@ export class SidebarComponent implements OnInit {
 
     openLoading() {
         this.loadingService.open();
+    }
+
+    isNotAdmin(): boolean {
+        return this.authService.decodeToken().sub_type !== 'admin';
+    }
+
+    config(): void{
+        if (this.isNotAdmin()) {
+            this.router.navigate(['/healthprofessional/configurations']);
+        } else {
+            this.router.navigate(['/admin/configurations']);
+        }        
     }
 }

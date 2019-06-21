@@ -4,7 +4,7 @@
 
 
         <div class="col navbar-wrapper">
-            <a class="navbar-brand">{{title}}</a>
+            <a class="navbar-brand">{{title | translate}}</a>
         </div>
 
 
@@ -34,16 +34,16 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        Bem vindo, <span id="userName">{{userName}}.</span><i class="material-icons">settings</i>
+                        {{'NAVBAR.WELCOME' | translate}}, <span id="userName">{{userName}}.</span><i class="material-icons">settings</i>
 
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
                         <a class="dropdown-item background-green" href="javascript:void(0);"
-                           (click)="myprofile()">Meus dados</a>
+                           (click)="config()">{{'SHARED.CONFIG' | translate}}</a>
 
                         <a class="dropdown-item background-green" href="javascript:void(0);"
-                           (click)="logout()">Sair</a>
+                           (click)="logout()">{{'SHARED.LOGOUT' | translate}}</a>
 
                     </div>
                 </li>
@@ -59,7 +59,7 @@
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center"
              *ngIf="isNotAdmin() && flag">
             <div class="dropdown" style="margin-top: 60px">
-                <label for="dropdownPilotSelected">Estudo selecionado: </label>
+                <label for="dropdownPilotSelected">{{'NAVBAR.SELECT-STUDY' | translate}}:</label>
                 <button class="btn btn-haniot-primary dropdown-toggle ellipsis" type="button" id="dropdownPilotSelected"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{pilotStudyName}}
                 </button>

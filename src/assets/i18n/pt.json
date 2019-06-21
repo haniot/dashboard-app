@@ -1,0 +1,70 @@
+{
+  "APP":{
+    "TITLE":"HANIoT",
+    "DEVELOP-ORGNAZATION": "NUTES"
+  },
+  "ACESS-DENIED":{
+    "TITLE": "Acesso negado",
+    "MESSSAGE": "Desculpe, seu acesso foi recusado devido a razões de segurança do nosso servidor e também aos nossos dados confidenciais",
+    "MESSSAGE-GO-BACK": "Por favor, volte para a página principal clicando no botão abaixo"
+  },
+  "CONFIG": {
+    "CONFIG-MYDATES-TITLE": "Meus dados",
+    "CONFIG-MYDATES-SUBTITLE": "Clique no botão habilitar edição para alterar suas informações",
+    "CONFIG-MYDATES-ENABLE-EDITING":"Habilitar edição",
+    "CONFIG-ACESS-TITLE": "Configurações de acesso",
+    "CONFIG-ACESS-SUBTITLE": "Para mudar sua senha de acesso preencha as informações abaixo e clique em ALTERAR SENHA",
+    "CONFIG-LANGUAGE-TITLE": "Configurações de idioma",
+    "CONFIG-LANGUAGE-SUBTITLE": "Utilize o seletor para selecionar o  idioma desejado",
+    "CONFIG-LANGUAGE-LABEL": "Selecione o idioma desejado"
+  },
+  "FOOTER":{
+    "ABOUT-US": "Sobre nós",
+    "PRIVACY": "Privacidade"
+  },
+  "NAVBAR": {
+    "ADMIN-USERS":"Usuários - Administradores",
+    "HEALTH-PRO-USERS":"Usuários - Profissionais de Saúde",
+    "DETAILS-PATIENT":"Paciente - Detalhes",
+    "DETAILS-STUDY": "Estudo - Detalhes",
+    "NUTRITION-EVALUATIONS":"Avaliações - Nutricional",
+    "WELCOME": "Bem vindo",
+    "SELECT-STUDY": "Estudo selecionado"
+  },
+  "PAGE-NOT-FOUND":{
+    "TITLE":"Página não encontrada",
+    "MESSAGE": "Você tentou acessar uma página não encontrada pelo nosso servidor",
+    "REDIRECT-PART1": "Redirecionando para página inicial em",
+    "REDIRECT-PART2": "segundos"
+  },
+  "SIDEBAR":{
+    "USERS": "Usuários",
+    "ADMINS": "Administradores",
+    "HEALTHPROFESSIONALS": "Profissionais de Saúde"
+  },
+  "SHARED":{
+    "NAME": "Nome",
+    "INVALID-NAME": "Nome inválido",
+    "EMAIL": "Email",
+    "INVALID-EMAIL": "Email inválido",
+    "AREA": "Área",
+    "INVALID-AREA": "Área inválida",
+    "HEALTH-AREA-NUTRITION":"Nutrição",
+    "HEALTH-AREA-DENTISTRY":"Dentista",
+    "HEALTH-AREA-UNDEFINED":"Fora dos parâmetros",
+    "NOT-FOUND":"Não encontrado",
+    "SAVE": "Salvar",
+    "PASSWORD-OLD":"Senha atual",
+    "PASSWORD-NEW":"Senha nova",
+    "INCORRECT-PASSWORD": "Senha incorreta",
+    "PASSWORD-RULES-MESSAGE": "Sua senha deve ter no mínimo 6 caracteres incluindo letras, números e símbolos",
+    "CHANGE-PASSWORD": "Alterar senha",
+    "CONFIG": "Configurações",
+    "LOGOUT": "Sair",
+    "HOME-PAGE": "Página Inicial",
+    "MY-STUDIES": "Meus estudos",
+    "MY-EVALUATIONS": "Minhas avaliações",
+    "PILOTSTUDIES": "Estudos piloto",
+    "PATIENTS": "Pacientes"
+  }
+}

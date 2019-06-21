@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
-
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -15,7 +14,7 @@ import {AdminRoutingModule} from './admin-routing/admin-routing.module';
 import {AdministratorsComponent} from './administrators/administrators.component';
 import {HealthProfessionalComponent} from './health-professionals/health-professionals.component';
 import {ModalUserComponent} from './modal-user/modal-user.component';
-import {MyprofileComponent} from './myprofile/myprofile.component';
+import {AdminConfigurationsComponent} from './configurations/configurations.component';
 import {AdminService} from './services/admin.service';
 import {HealthProfessionalService} from './services/health-professional.service';
 import {UserService} from './services/users.service';
@@ -23,6 +22,7 @@ import {SharedModule} from 'app/shared/shared.module';
 import {MatNativeDateModule, MatTableModule} from '@angular/material';
 import {HaniotTableComponent} from './haniot-table/haniot-table.component';
 import {EvaluationModule} from "../evaluation/evaluation.module";
+import { SettingsModule } from '../settings/settings.module';
 
 @NgModule({
     imports: [
@@ -35,6 +35,7 @@ import {EvaluationModule} from "../evaluation/evaluation.module";
         TemplateModule,
         SharedModule,
         EvaluationModule,
+        SettingsModule,
 
         MatPaginatorModule,
         MatSelectModule,
@@ -42,13 +43,13 @@ import {EvaluationModule} from "../evaluation/evaluation.module";
         MatNativeDateModule,
         MatFormFieldModule,
         MatSlideToggleModule,
-        MatTableModule,
+        MatTableModule
     ],
     declarations: [
         AdministratorsComponent,
         HealthProfessionalComponent,
         ModalUserComponent,
-        MyprofileComponent,
+        AdminConfigurationsComponent,
         HaniotTableComponent,
 
     ],
@@ -56,8 +57,7 @@ import {EvaluationModule} from "../evaluation/evaluation.module";
         UserService,
         AdminService,
         HealthProfessionalService
-    ],
-    exports: []
+    ]
 })
 export class AdminModule {
 }
