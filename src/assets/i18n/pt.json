@@ -8,6 +8,12 @@
     "MESSSAGE": "Desculpe, seu acesso foi recusado devido a razões de segurança do nosso servidor e também aos nossos dados confidenciais",
     "MESSSAGE-GO-BACK": "Por favor, volte para a página principal clicando no botão abaixo"
   },
+  "ADMINISTRADORS":{
+    "TITLE":"Lista de usuário administradores",
+    "SUBTITLE":"",
+    "TITLE-ADD":"Criar usuário administrador",
+    "TITLE-EDIT": "Editar usuário administrador"
+  },
   "CONFIG": {
     "CONFIG-MYDATES-TITLE": "Meus dados",
     "CONFIG-MYDATES-SUBTITLE": "Clique no botão habilitar edição para alterar suas informações",
@@ -22,8 +28,14 @@
     "ABOUT-US": "Sobre nós",
     "PRIVACY": "Privacidade"
   },
+  "HEALTHPROFESSIONALS":{
+    "TITLE":"Lista de profissionais de saúde",
+    "SUBTITLE": "",
+    "TITLE-ADD":"Criar profissional de saúde",
+    "TITLE-EDIT": "Editar profissional de saúde"
+  },
   "NAVBAR": {
-    "ADMIN-USERS":"Usuários - Administradores",
+    "ADMINS-USERS":"Usuários - Administradores",
     "HEALTH-PRO-USERS":"Usuários - Profissionais de Saúde",
     "DETAILS-PATIENT":"Paciente - Detalhes",
     "DETAILS-STUDY": "Estudo - Detalhes",
@@ -65,6 +77,21 @@
     "MY-STUDIES": "Meus estudos",
     "MY-EVALUATIONS": "Minhas avaliações",
     "PILOTSTUDIES": "Estudos piloto",
-    "PATIENTS": "Pacientes"
+    "PATIENTS": "Pacientes",
+    "ADD": "Adicionar",
+    "ACTIONS": "Ações",
+    "PASSWORD": "Senha",
+    "PASSWORD-CONFIRM": "Confirme a senha",
+    "PASSWORD-NOTMATCH": "Informe a mesma senha",
+    "REQUERID-FIELD":"Campo obrigatório",
+    "CLOSE":"Fechar"
+  },
+  "TABLE-USER":{
+    "PLACEHOLDER-SEARCH":"Pesquisar usuário...",
+    "SPINNER-MESSAGE":"Carregando usuários",
+    "LIST-EMPTY":"Nenhum registro encontrado",
+    "EDIT":"Editar usuário...",
+    "DELETE":"Excluir usuário...",
+    "DELETE-CONFIRMATION":"Tem certeza que deseja remover usuário?"
   }
 }

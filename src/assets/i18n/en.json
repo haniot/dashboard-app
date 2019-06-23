@@ -3,6 +3,17 @@
     "TITLE":"HANIoT",
     "DEVELOP-ORGNAZATION": "NUTES"
   },
+  "ACESS-DENIED":{
+    "TITLE": "Access denied",
+    "MESSSAGE": "Sorry, your access has been declined due to security reasons of our server and also to our confidential data",
+    "MESSSAGE-GO-BACK": "Please return to the main page by clicking on the button below"
+  },
+  "ADMINISTRADORS":{
+    "TITLE":"User list administrators",
+    "SUBTITLE":"",
+    "TITLE-ADD":"Create admin user",
+    "TITLE-EDIT": "Edit admin user"
+  },
   "CONFIG":{
     "CONFIG-MYDATES-TITLE": "My data",
     "CONFIG-MYDATES-SUBTITLE": "Click the enable edit button to change your information",
@@ -17,14 +28,26 @@
     "ABOUT-US": "About us",
     "PRIVACY": "Privacy"
   },
+  "HEALTHPROFESSIONALS":{
+    "TITLE":"List of health professionals",
+    "SUBTITLE": "",
+    "TITLE-ADD":"Create health professional",
+    "TITLE-EDIT": "Edit health professional"
+  },  
   "NAVBAR": {
-    "ADMIN-USERS":"Users - Admins",
+    "ADMINS-USERS":"Users - Admins",
     "HEALTH-PRO-USERS":"Users - Health Professionals",
     "DETAILS-PATIENT":"Patient - Details",
     "DETAILS-STUDY": "Study - Details",
     "NUTRITION-EVALUATIONS":"Evaluations - Nutritional",
     "WELCOME": "Welcome",
     "SELECT-STUDY": "Selected study"
+  },
+  "PAGE-NOT-FOUND":{
+    "TITLE":"Page not found",
+    "MESSAGE": "You tried to access a page not found by our server",
+    "REDIRECT-PART1": "Redirecting to homepage at",
+    "REDIRECT-PART2": "seconds"
   },
   "SIDEBAR":{
     "USERS": "Users",
@@ -54,6 +77,21 @@
     "MY-STUDIES": "My studies",
     "MY-EVALUATIONS": "My evaluations",
     "PILOTSTUDIES": "Pilot studies",
-    "PATIENTS": "Patients"
+    "PATIENTS": "Patients",
+    "ADD": "Add",
+    "ACTIONS": "Actions",
+    "PASSWORD": "Password",
+    "PASSWORD-CONFIRM": "Confirm the password",
+    "PASSWORD-NOTMATCH": "Enter the same password",
+    "REQUERID-FIELD":"Required field",
+    "CLOSE":"Close"
+  },
+  "TABLE-USER":{
+    "PLACEHOLDER-SEARCH":"Search for user ...",
+    "SPINNER-MESSAGE":"Loading users",
+    "LIST-EMPTY":"No records found",
+    "EDIT":"Edit user ...",
+    "DELETE":"Delete user ...",
+    "DELETE-CONFIRMATION":"Are you sure you want to remove user?"
   }
 }

@@ -2,93 +2,82 @@
 
     <haniot-card [title]="title" [subtitle]="subtitle">
         <form [formGroup]="userForm">
-            <div class="form-group has-feedback"
-                 [ngClass]="{'has-success': userForm.controls.name.valid,
+            <div class="form-group has-feedback" [ngClass]="{'has-success': userForm.controls.name.valid,
                           'has-error': userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)}"
-                 *ngIf="typeUser == 'HealthProfessional'">
-                <label>Nome:</label>
+                *ngIf="typeUser == 'HealthProfessional'">
+                <label>{{'SHARED.NAME'|translate}}:</label>
                 <input type="text" class="form-control" formControlName="name">
-                <span *ngIf="userForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                      aria-hidden="true"></span>
-                <span
-                        *ngIf="userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)">
-          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-          <span class="text-danger">Nome inválido.</span>
-        </span>
+                <span *ngIf="userForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span *ngIf="userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span class="text-danger">{{'SHARED.INVALID-NAME'|translate}}.</span>
+                </span>
             </div>
 
-            <div class="form-group has-feedback"
-                 [ngClass]="{'has-success': userForm.controls.email.valid,
+            <div class="form-group has-feedback" [ngClass]="{'has-success': userForm.controls.email.valid,
             'has-error': userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)}">
-                <label>Email:</label>
+                <label>{{'SHARED.EMAIL'|translate}}:</label>
                 <input type="email" class="form-control" formControlName="email">
-                <span *ngIf="userForm.controls.email.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                      aria-hidden="true"></span>
-                <span
-                        *ngIf="userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)">
-          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-          <span class="text-danger">E-mail inválido.</span>
-        </span>
+                <span *ngIf="userForm.controls.email.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span *ngIf="userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span class="text-danger">{{'SHARED.INVALID-EMAIL'|translate}}.</span>
+                </span>
             </div>
 
-            <div class="form-group has-feedback"
-                 [ngClass]="{'has-success': userForm.controls.health_area.valid,
+            <div class="form-group has-feedback" [ngClass]="{'has-success': userForm.controls.health_area.valid,
             'has-error': userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)}"
-                 *ngIf="typeUser == 'HealthProfessional'">
-                <label>Área: </label>
+                *ngIf="typeUser == 'HealthProfessional'">
+                <label>{{'SHARED.AREA'|translate}}: </label>
                 <select class="form-control" formControlName="health_area">
-                    <option *ngFor="let area of healthAreaOptions; index as i;trackBy: trackById"
-                            [value]="area">{{area | healthArea}}</option>
+                    <option *ngFor="let area of healthAreaOptions; index as i;trackBy: trackById" [value]="area">{{area | healthArea | translate}}</option>
                 </select>
-                <span *ngIf="userForm.controls.health_area.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                      aria-hidden="true"></span>
-                <span
-                        *ngIf="userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)">
-          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-          <span class="text-danger">Área inválida.</span>
-        </span>
+                <span *ngIf="userForm.controls.health_area.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span *ngIf="userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span class="text-danger">{{'SHARED.INVALID-AREA'|translate}}.</span>
+                </span>
             </div>
 
-            <div class="form-group"
-                 [ngClass]="{'has-success': userForm.controls.password.valid,
+            <div class="form-group" [ngClass]="{'has-success': userForm.controls.password.valid,
              'has-error': userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)}"
-                 *ngIf="!userId && userForm.controls.password">
-                <label>Senha:</label>
+                *ngIf="!userId && userForm.controls.password">
+                <label>{{'SHARED.PASSWORD'|translate}}:</label>
                 <div>
                     <input [type]="typeInputPassword" class="form-control" formControlName="password">
-                    <a class="icon_password" href="javascript:void(0);" (click)="clickVisibilityPassword()"><i
-                            class="material-icons">{{icon_password}}</i></a>
+                    <a class="icon_password" href="javascript:void(0);" (click)="clickVisibilityPassword()">
+                        <i class="material-icons">{{icon_password}}</i>
+                    </a>
                 </div>
 
-                <span class="text-danger"
-                      *ngIf="userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)">Campo
-          obrigatório.</span>
+                <span class="text-danger" *ngIf="userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)">
+                    {{'SHARED.REQUERID-FIELD'| translate}}
+                </span>
             </div>
 
-            <div class="form-group"
-                 [ngClass]="{'has-success': userForm.controls.password_confirm.valid,
+            <div class="form-group" [ngClass]="{'has-success': userForm.controls.password_confirm.valid,
              'has-error': userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty)}"
-                 *ngIf="!userId && userForm.controls.password_confirm">
-                <label>Confirme a senha:</label>
+                *ngIf="!userId && userForm.controls.password_confirm">
+                <label>{{'SHARED.PASSWORD-CONFIRM'| translate}}:</label>
                 <div>
-                    <input [type]="typeInputPassword_confirm" class="form-control" formControlName="password_confirm"
-                           (keyup)="verifyMatchPassword()">
-                    <a class="icon_password" href="javascript:void(0);"
-                       (click)="clickVisibilityPasswordConfirm()"><i
-                            class="material-icons">{{icon_password_confirm}}</i></a>
+                    <input [type]="typeInputPassword_confirm" class="form-control" formControlName="password_confirm" (keyup)="verifyMatchPassword()">
+                    <a class="icon_password" href="javascript:void(0);" (click)="clickVisibilityPasswordConfirm()">
+                        <i class="material-icons">{{icon_password_confirm}}</i>
+                    </a>
                 </div>
-                <span class="text-danger"
-                      *ngIf="userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty) || passwordNotMatch">Informe a mesma senha.</span>
+                <span class="text-danger" *ngIf="userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty) || passwordNotMatch">
+                        {{'SHARED.PASSWORD-NOTMATCH'| translate}}.
+                </span>
             </div>
             <div class="row justify-content-center">
                 <div class="col text-center">
-                    <button type="submit" class="btn btn-haniot-primary" [disabled]="!userForm.valid"
-                            (click)="onSubmit()">Salvar
+                    <button type="submit" class="btn btn-haniot-primary" [disabled]="!userForm.valid" (click)="onSubmit()">
+                        {{'SHARED.SAVE'|translate}}
                     </button>
                 </div>
                 <div class="col text-center">
                     <button type="button" class="btn btn-haniot-secondary" data-dismiss="modal" (click)="close()">
-                        Fechar
+                            {{'SHARED.CLOSE'|translate}}
                     </button>
                 </div>
             </div>
