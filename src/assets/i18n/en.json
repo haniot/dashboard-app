@@ -24,6 +24,28 @@
     "CONFIG-LANGUAGE-SUBTITLE": "Use the selector to select the desired language",
     "CONFIG-LANGUAGE-LABEL": "Select the desired language"
   },
+  "DASHBOARD":{
+    "CARD-STUDIES-TOTAL":"Total Number of Studies",
+    "CARD-PATIENTS-FROM-THE-STUDY":"Total Patients in Selected Study",
+    "CARD-PATIENTS-TOTAL":"Total Patients",
+    "CARD-PATIENTS":{
+      "TITLE":"Access your patients",
+      "SUBTITLE": "Click on the card to view patient information.",
+      "SPINNER-MESSAGE":"Loading Patients",
+      "STUDY-EMPTY":"The selected study does not have registered patients",
+      "STUDY-EMPTY-MESSAGE":"Go to the patient record page",
+      "REGISTER-PATIENTS":"Register patients",
+      "VIEW": "View Patient"
+    },
+    "CARD-STUDIES":{
+      "TITLE":"Access your studies",
+      "SUBTITLE": "Click on the card to view study information.",
+      "SPINNER-MESSAGE":"Loading studies",
+      "VIEW": "View study",
+      "STUDIES-EMPTY": "You have no associated studies.",
+      "STUDIES-EMPTY-MESSAGE": "Please contact your administrator."
+    }
+  },
   "FOOTER":{
     "ABOUT-US": "About us",
     "PRIVACY": "Privacy"
@@ -48,6 +70,12 @@
     "MESSAGE": "You tried to access a page not found by our server",
     "REDIRECT-PART1": "Redirecting to homepage at",
     "REDIRECT-PART2": "seconds"
+  },
+  "PAGINATOR":{
+    "ITEMS_PER_PAGE": "Items per page",
+    "NEXT_PAGE": "Next page",
+    "PREVIOUS_PAGE": "Previous page",
+    "OF": "of"
   },
   "SIDEBAR":{
     "USERS": "Users",
@@ -84,7 +112,11 @@
     "PASSWORD-CONFIRM": "Confirm the password",
     "PASSWORD-NOTMATCH": "Enter the same password",
     "REQUERID-FIELD":"Required field",
-    "CLOSE":"Close"
+    "CLOSE":"Close",
+    "DATE-START":"Start date",
+    "DATE-END": "End date",
+    "STUDY-ACTIVATED": "ACTIVATED",
+    "STUDY-DISABLED": "DISABLED"
   },
   "TABLE-USER":{
     "PLACEHOLDER-SEARCH":"Search for user ...",

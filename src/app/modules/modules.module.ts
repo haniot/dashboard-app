@@ -1,7 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+
 import {MatPaginatorIntl} from '@angular/material';
-import {getConfigPaginator} from './config-matpaginator';
+import { TranslateService } from '@ngx-translate/core';
+
+import {PaginatorIntlService} from './config-matpaginator';
 
 @NgModule({
     declarations: [],
@@ -9,7 +12,15 @@ import {getConfigPaginator} from './config-matpaginator';
         CommonModule
     ],
     providers: [
-        {provide: MatPaginatorIntl, useValue: getConfigPaginator()}
+        {
+            provide: MatPaginatorIntl,
+            useFactory: (translate) => {
+              const service = new PaginatorIntlService();
+              service.injectTranslateService(translate);
+              return service;
+            },
+            deps: [TranslateService]
+          }
     ]
 })
 export class ModulesModule {

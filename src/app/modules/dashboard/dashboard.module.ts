@@ -10,6 +10,7 @@ import {DashboardComponent} from './dashboard-component/dashboard.component';
 import {SharedModule} from 'app/shared/shared.module';
 import {DashboardRoutingModule} from './dashboard-routing/dashboard-routing.module';
 import {DashboardService} from './services/dashboard.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {DashboardService} from './services/dashboard.service';
         DashboardRoutingModule,
 
         MatSelectModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        TranslateModule
     ],
     declarations: [
         DashboardComponent

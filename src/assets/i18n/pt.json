@@ -24,6 +24,28 @@
     "CONFIG-LANGUAGE-SUBTITLE": "Utilize o seletor para selecionar o  idioma desejado",
     "CONFIG-LANGUAGE-LABEL": "Selecione o idioma desejado"
   },
+  "DASHBOARD":{
+    "CARD-STUDIES-TOTAL":"Total de Estudos",
+    "CARD-PATIENTS-FROM-THE-STUDY":"Total de Pacientes do Estudo Selecionado",
+    "CARD-PATIENTS-TOTAL":"Total de Pacientes",
+    "CARD-PATIENTS":{
+      "TITLE":"Acesse seus pacientes",
+      "SUBTITLE": "Clique sobre o card para visualizar informações do paciente.",
+      "SPINNER-MESSAGE":"Carregando pacientes",
+      "STUDY-EMPTY":"O estudo selecionado não possui pacientes cadastrados",
+      "STUDY-EMPTY-MESSAGE":"Ir para a página de cadastro de pacientes",
+      "REGISTER-PATIENTS":"Cadastrar pacientes",
+      "VIEW": "Visualizar paciente"
+    },
+    "CARD-STUDIES":{
+      "TITLE":"Acesse seus estudos",
+      "SUBTITLE": "Clique sobre o card para visualizar informações do estudo.",
+      "SPINNER-MESSAGE":"Carregando estudos",
+      "VIEW": "Visualizar estudo",
+      "STUDIES-EMPTY": "Você não possui estudos associados.",
+      "STUDIES-EMPTY-MESSAGE": "Entre em contato com o administrador."
+    }
+  },
   "FOOTER":{
     "ABOUT-US": "Sobre nós",
     "PRIVACY": "Privacidade"
@@ -48,6 +70,12 @@
     "MESSAGE": "Você tentou acessar uma página não encontrada pelo nosso servidor",
     "REDIRECT-PART1": "Redirecionando para página inicial em",
     "REDIRECT-PART2": "segundos"
+  },
+  "PAGINATOR":{
+    "ITEMS_PER_PAGE": "Itens por página",
+    "NEXT_PAGE": "Proxima página",
+    "PREVIOUS_PAGE": "Página anterior",
+    "OF": "de"
   },
   "SIDEBAR":{
     "USERS": "Usuários",
@@ -84,7 +112,11 @@
     "PASSWORD-CONFIRM": "Confirme a senha",
     "PASSWORD-NOTMATCH": "Informe a mesma senha",
     "REQUERID-FIELD":"Campo obrigatório",
-    "CLOSE":"Fechar"
+    "CLOSE":"Fechar",
+    "DATE-START":"Data ínicio",
+    "DATE-END": "Data término",
+    "STUDY-ACTIVATED": "ATIVADO",
+    "STUDY-DISABLED": "DESATIVADO"
   },
   "TABLE-USER":{
     "PLACEHOLDER-SEARCH":"Pesquisar usuário...",

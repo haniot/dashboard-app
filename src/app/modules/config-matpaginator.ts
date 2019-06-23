@@ -1,29 +1,42 @@
-import {MatPaginatorIntl} from '@angular/material';
+import { Injectable } from '@angular/core';
 
-const dutchRangeLabel = (page: number, pageSize: number, length: number) => {
-    if (length == 0 || pageSize == 0) {
-        return `0 de ${length}`;
+import { MatPaginatorIntl } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+
+export class PaginatorIntlService extends MatPaginatorIntl {
+  translate: TranslateService;
+  itemsPerPageLabel: string;
+  nextPageLabel: string;
+  previousPageLabel: string;
+  
+  getRangeLabel = function (page, pageSize, length) {
+    const of = this.translate ? this.translate.instant('PAGINATOR.OF') : 'de';
+    if (length === 0 || pageSize === 0) {
+      return '0 ' + of + ' ' + length;
     }
-
     length = Math.max(length, 0);
-
     const startIndex = page * pageSize;
-
+    // If the start index exceeds the list length, do not try and fix the end index to the end.
     const endIndex = startIndex < length ?
-        Math.min(startIndex + pageSize, length) :
-        startIndex + pageSize;
+      Math.min(startIndex + pageSize, length) :
+      startIndex + pageSize;
+    return startIndex + 1 + ' - ' + endIndex + ' ' + of + ' ' + length;
+  };
 
-    return `${startIndex + 1} - ${endIndex} de ${length}`;
-}
+  injectTranslateService(translate: TranslateService) {
+    this.translate = translate;
 
+    this.translate.onLangChange.subscribe(() => {
+      this.translateLabels();
+    });
 
-export function getConfigPaginator() {
-    const paginatorIntl = new MatPaginatorIntl();
+    this.translateLabels();
+  }
 
-    paginatorIntl.itemsPerPageLabel = 'Itens por página:';
-    paginatorIntl.nextPageLabel = 'Próxima página';
-    paginatorIntl.previousPageLabel = 'Voltar página';
-    paginatorIntl.getRangeLabel = dutchRangeLabel;
+  translateLabels() {
+    this.itemsPerPageLabel = this.translate.instant('PAGINATOR.ITEMS_PER_PAGE');
+    this.nextPageLabel = this.translate.instant('PAGINATOR.NEXT_PAGE');
+    this.previousPageLabel = this.translate.instant('PAGINATOR.PREVIOUS_PAGE');
+  }
 
-    return paginatorIntl;
 }
