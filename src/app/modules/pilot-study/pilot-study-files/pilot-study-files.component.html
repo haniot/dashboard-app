@@ -1,27 +1,17 @@
 <div class="input-group no-border">
-    <!--    <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"-->
-    <!--           placeholder="Pesquisar arquivo..." (keyup)="searchOnSubmit()">-->
-    <!--    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">-->
-    <!--        <i class="material-icons">search</i>-->
-    <!--        <div class="ripple-container"></div>-->
-    <!--    </button>-->
     <div class="has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12 text-right">
         <div class="row">
 
             <div class="col-sm-6 col-md-10 col-lg-10 col-xl-10 text-right">
-                <input matInput
-                       placeholder="Selecione um periodo"
-                       [satDatepicker]="picker"
-                       [(ngModel)]="search"
-                       (ngModelChange)="searchOnSubmit()"
-                       id="rangeDate">
+                <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate" [satDatepicker]="picker" [(ngModel)]="search"
+                    (ngModelChange)="searchOnSubmit()" id="rangeDate">
 
                 <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
                 <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
             </div>
 
             <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2 text-left">
-                <button class="btn btn-haniot-primary" (click)="cleanDateRange()">Limpar</button>
+                <button class="btn btn-haniot-primary" (click)="cleanDateRange()">{{'SHARED.TOCLEAN'|translate}}</button>
             </div>
 
         </div>
@@ -32,50 +22,53 @@
 <div class="table-responsive">
     <table class="table table-hover table-sm">
         <thead>
-        <tr>
-            <th>#</th>
-            <th>Total de pacientes</th>
-            <th>Data</th>
-            <th colspan="2">Ações</th>
-        </tr>
+            <tr>
+                <th>#</th>
+                <th>{{'PILOT-STUDY.TOTAL-PATIENTS'|translate}}</th>
+                <th>{{'SHARED.DATE'|translate}}</th>
+                <th colspan="2">{{'SHARED.ACTIONS'|translate}}</th>
+            </tr>
         </thead>
         <tbody>
-        <tr *ngIf="listOfFiles.length==0">
-            <td colspan="5" *ngIf="!listOfFilesIsEmpty">
-                <spinner message="Carregando arquivos disponíveis"></spinner>
-            </td>
-            <td colspan="5" *ngIf="listOfFilesIsEmpty">
-                <h4>Nenhum arquivo encontrado.<br>
-                    <small>* Utilize o botão abaixo para solicitar um novo arquivo!</small>
-                </h4>
-            </td>
-        </tr>
-        <tr *ngFor="let evaluation of listOfFiles; index as i;trackBy: trackById">
-            <td>{{getIndex(i)}}</td>
-            <td>{{evaluation.total_patients}}</td>
-            <td>{{evaluation.created_at | date}}</td>
-            <td>
-                <a class="nav-link" title="Excluir avaliação...">
-                    <i class="material-icons" (click)="openModalConfirmation(evaluation.id)">delete</i>
-                </a>
-            </td>
-            <td>
-                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false" title="Opções de download...">
-                    <i class="material-icons">more_vert</i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <tr *ngIf="listOfFiles.length==0">
+                <td colspan="5" *ngIf="!listOfFilesIsEmpty">
+                    <spinner [message]="'PILOT-STUDY.SPINNER-MESSAGE'|translate"></spinner>
+                </td>
+                <td colspan="5" *ngIf="listOfFilesIsEmpty">
+                    <h4>{{'PILOT-STUDY.FILESEMPTY'|translate}}
+                        <br>
+                        <small>{{'PILOT-STUDY.FILESEMPTY-MESSAGE'|translate}}</small>
+                    </h4>
+                </td>
+            </tr>
+            <tr *ngFor="let evaluation of listOfFiles; index as i;trackBy: trackById">
+                <td>{{getIndex(i)}}</td>
+                <td>{{evaluation.total_patients}}</td>
+                <td>{{evaluation.created_at | date}}</td>
+                <td>
+                    <a class="nav-link" [title]="'PILOT-STUDY.DELETE'|translate">
+                        <i class="material-icons" (click)="openModalConfirmation(evaluation.id)">delete</i>
+                    </a>
+                </td>
+                <td>
+                    <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        [title]="'PILOT-STUDY.OPTIONS-DOWNLOAD'|translate">
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
-                    <a class="dropdown-item background-green" [href]="evaluation.file_csv" download target="_blank">Baixar
-                        CSV</a>
+                        <a class="dropdown-item background-green" [href]="evaluation.file_csv" download target="_blank">
+                            {{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}
+                        </a>
 
-                    <a class="dropdown-item background-green" [href]="evaluation.file_xls" download target="_blank">Baixar
-                        XLS</a>
+                        <a class="dropdown-item background-green" [href]="evaluation.file_xls" download target="_blank">
+                            {{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}
+                        </a>
 
-                </div>
-            </td>
+                    </div>
+                </td>
 
-        </tr>
+            </tr>
         </tbody>
     </table>
 
@@ -83,24 +76,22 @@
 <div class="row">
     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
         <button type="button" class="btn btn-haniot-primary" (click)="generateFile()">
-            Solicitar Novo Arquivo
+            {{'PILOT-STUDY.NEW-FILE'|translate}}
         </button>
     </div>
     <div class="col-sm col-md col-lg col-xl">
-        <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
-                       (page)="clickPagination($event)">
+        <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions" (page)="clickPagination($event)">
         </mat-paginator>
     </div>
 </div>
 
 
-<modal-confirmation [message]="'Tem certeza que deseja remover avaliação?'" (confirmation)="removeFile()"
-                    (noconfirmation)="closeModalComfimation()"></modal-confirmation>
+<modal-confirmation [message]="'PILOT-STUDY.DELETE-CONFIRMATION'|translate" (confirmation)="removeFile()" (noconfirmation)="closeModalComfimation()"></modal-confirmation>
 
 <haniot-modal [modalId]="'modalFile'">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Avaliação odontológica</h5>
+            <h5 class="modal-title">{{'PILOT-STUDY.NUTRITIONEVALUATON'|translate}}</h5>
             <button type="button" class="close" aria-label="Close" (click)="closeModalFile()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -109,22 +100,24 @@
             <div class="container">
                 <div class="row" *ngIf="lastFiles">
                     <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <label>Total de pacientes:</label>
+                        <label>{{'PILOT-STUDY.TOTAL-PATIENTS'|translate}}:</label>
                         <p>{{lastFiles.total_patients}}</p>
                     </div>
                     <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <label>Data:</label>
+                        <label>{{'SHARED.DATE'|translate}}:</label>
                         <p>{{lastFiles.created_at | date}}</p>
                     </div>
                     <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <label>Arquivo CSV:</label>
-                        <a class="btn btn-haniot-primary" [href]="lastFiles.file_csv" download target="_blank">Baixar
-                            CSV</a>
+                        <label>{{'PILOT-STUDY.FILECSV'|translate}}:</label>
+                        <a class="btn btn-haniot-primary" [href]="lastFiles.file_csv" download target="_blank">
+                            {{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}
+                        </a>
                     </div>
                     <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <label>Arquivo XLS:</label>
-                        <a class="btn btn-haniot-primary" [href]="lastFiles.file_xls" download target="_blank">Baixar
-                            XLS</a>
+                        <label>{{'PILOT-STUDY.FILEXLS'|translate}}:</label>
+                        <a class="btn btn-haniot-primary" [href]="lastFiles.file_xls" download target="_blank">
+                            {{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -141,7 +134,7 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner message="Gerando arquivo"></spinner>
+                                <spinner [message]="'PILOT-STUDY.GENERATINGFILE'|translate"></spinner>
                             </div>
                         </div>
                     </div>
@@ -163,7 +156,7 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner message="Removendo arquivo"></spinner>
+                                <spinner [message]="'PILOT-STUDY.REMOVINGFILE'|translate"></spinner>
                             </div>
                         </div>
                     </div>

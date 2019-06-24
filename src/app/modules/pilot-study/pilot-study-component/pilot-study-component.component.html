@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <haniot-card title="Lista de estudos piloto" subtitle="">
+        <haniot-card [title]="'PILOT-STUDY.CARD-PILOTSTUDIES.TITLE'|translate" [subtitle]="'PILOT-STUDY.CARD-PILOTSTUDIES.SUBTITLE'|translate">
           <pilot-study-table ></pilot-study-table>
         </haniot-card>
       </div>
       <div class="col-md">
         <button type="submit" class="btn btn-haniot-primary" (click)="newPilotStudy()">
-          Adicionar
+          {{'SHARED.ADD'|translate}}
           <i class="material-icons">add</i>
         </button>
       </div>      

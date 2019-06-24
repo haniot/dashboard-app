@@ -23,6 +23,7 @@ import {PilotStudyViewComponent} from './pilot-study-view/pilot-study-view.compo
 
 import {EvaluationModule} from '../evaluation/evaluation.module';
 import {PilotStudyFilesComponent} from './pilot-study-files/pilot-study-files.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import {PilotStudyFilesComponent} from './pilot-study-files/pilot-study-files.co
         MatFormFieldModule,
         MatSlideToggleModule,
         SatDatepickerModule,
+        TranslateModule,
 
         SharedModule,
         PilotStudyRoutingModule,

@@ -1,128 +1,111 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12">
-        <haniot-card [title]="pilotStudyId?'Editar um estudo piloto':'Criar um estudo piloto'" subtitle=''>
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <haniot-card [title]="'PILOT-STUDY.CARD-PILOTSTUDIES.TITLE-EDIT'|translate"
+          [subtitle]="'PILOT-STUDY.CARD-PILOTSTUDIES.SUBTITLE'|translate">
           <form [formGroup]="pilotStudyForm">
 
             <div class="row">
-              <div class="form-group has-feedback col-sm-12 col-md-6"
-                [ngClass]="{'has-success': pilotStudyForm.controls.name.valid,
+              <div class="form-group has-feedback col-sm-12 col-md-6" [ngClass]="{'has-success': pilotStudyForm.controls.name.valid,
           'has-error': pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)}">
                 <label for="name">
-                  Nome:
+                  {{'SHARED.NAME'|translate}}:
                 </label>
                 <input class="form-control" type="text" formControlName="name" id="name">
-                <span *ngIf="pilotStudyForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                  aria-hidden="true"></span>
-                <span
-                  *ngIf="pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)">
+                <span *ngIf="pilotStudyForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span *ngIf="pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)">
                   <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Nome de estudo inválido.</span>
+                  <span class="text-danger">{{'SHARED.INVALID-NAME'|translate}}.</span>
                 </span>
               </div>
-              <div class="form-group has-feedback col-sm-12 col-md-6"
-                [ngClass]="{'has-success': pilotStudyForm.controls.location.valid,
+              <div class="form-group has-feedback col-sm-12 col-md-6" [ngClass]="{'has-success': pilotStudyForm.controls.location.valid,
           'has-error': pilotStudyForm.controls.location.invalid && (pilotStudyForm.controls.location.touched || pilotStudyForm.controls.location.dirty)}">
                 <label for="location">
-                  Local:
+                  {{'SHARED.LOCAL'|translate}}:
                 </label>
                 <input class="form-control" type="text" formControlName="location" id="location">
-                <span *ngIf="pilotStudyForm.controls.location.valid"
-                  class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                <span
-                  *ngIf="pilotStudyForm.controls.location.invalid && (pilotStudyForm.controls.location.touched || pilotStudyForm.controls.location.dirty)">
+                <span *ngIf="pilotStudyForm.controls.location.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span *ngIf="pilotStudyForm.controls.location.invalid && (pilotStudyForm.controls.location.touched || pilotStudyForm.controls.location.dirty)">
                   <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Local inválido.</span>
+                  <span class="text-danger">{{'SHARED.INVALID-LOCAL'|translate}}.</span>
                 </span>
               </div>
 
             </div>
 
             <div class="row">
-              <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4"
-                [ngClass]="{'has-success': pilotStudyForm.controls.start.valid,
+              <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4" [ngClass]="{'has-success': pilotStudyForm.controls.start.valid,
           'has-error': pilotStudyForm.controls.start.invalid && (pilotStudyForm.controls.start.touched || pilotStudyForm.controls.start.dirty)}">
                 <label for="start">
-                  Inicio:
+                  {{'PILOT-STUDY.START'|translate}}:
                 </label>
                 <div class="row">
                   <div class="col-md-10">
-                    <input matInput [matDatepicker]="pickerStart" class="form-control" formControlName="start"
-                      id="start" placeholder="Selecione a data de inicio">
+                    <input matInput [matDatepicker]="pickerStart" class="form-control" formControlName="start" id="start" [placeholder]="'PILOT-STUDY.PLACEHOLDER-DATE-START'|translate">
                   </div>
                   <div class="col-md-2">
                     <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
                     <mat-datepicker #pickerStart></mat-datepicker>
                   </div>
                 </div>
-                <span *ngIf="pilotStudyForm.controls.start.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                  aria-hidden="true"></span>
-                <span
-                  *ngIf="pilotStudyForm.controls.start.invalid && (pilotStudyForm.controls.start.touched || pilotStudyForm.controls.start.dirty)">
+                <span *ngIf="pilotStudyForm.controls.start.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span *ngIf="pilotStudyForm.controls.start.invalid && (pilotStudyForm.controls.start.touched || pilotStudyForm.controls.start.dirty)">
                   <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Data de início inválida.</span>
+                  <span class="text-danger">{{'PILOT-STUDY.INVALID-DATE-START'|translate}}.</span>
                 </span>
               </div>
 
 
 
-              <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4"
-                [ngClass]="{'has-success': pilotStudyForm.controls.end.valid,
+              <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4" [ngClass]="{'has-success': pilotStudyForm.controls.end.valid,
           'has-error': pilotStudyForm.controls.end.invalid && (pilotStudyForm.controls.end.touched || pilotStudyForm.controls.end.dirty)}">
                 <label for="end">
-                  Término:
+                  {{'PILOT-STUDY.END'|translate}}:
                 </label>
                 <div class="row">
                   <div class="col-md-10">
-                    <input matInput class="form-control" [matDatepicker]="pickerEnd"
-                      [min]="pilotStudyForm.get('start').value" formControlName="end" id="end"
-                      placeholder="Selecione a data de término">
+                    <input matInput class="form-control" [matDatepicker]="pickerEnd" [min]="pilotStudyForm.get('start').value" formControlName="end"
+                      id="end" [placeholder]="'PILOT-STUDY.PLACEHOLDER-DATE-END'|translate">
                   </div>
                   <div class="col-md-2">
                     <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
                     <mat-datepicker #pickerEnd></mat-datepicker>
                   </div>
                 </div>
-                <span *ngIf="pilotStudyForm.controls.end.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                  aria-hidden="true"></span>
-                <span
-                  *ngIf="pilotStudyForm.controls.end.invalid && (pilotStudyForm.controls.end.touched || pilotStudyForm.controls.end.dirty)">
+                <span *ngIf="pilotStudyForm.controls.end.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span *ngIf="pilotStudyForm.controls.end.invalid && (pilotStudyForm.controls.end.touched || pilotStudyForm.controls.end.dirty)">
                   <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Data de término inválida.</span>
+                  <span class="text-danger">{{'PILOT-STUDY.INVALID-DATE-END'|translate}}.</span>
                 </span>
               </div>
               <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <label for="end">
-                  Situação:
+                  {{'PILOT-STUDY.SITUATION'|translate}}:
                 </label>
                 <div class="container">
                   <mat-slide-toggle class="example-margin" [color]="color" formControlName="is_active" id="is_active">
-                    {{pilotStudyForm.controls.is_active.value?'Ativado':'Desativado'}}
+                    {{pilotStudyForm.controls.is_active.value | pilotStudySituation | translate}}
                   </mat-slide-toggle>
                 </div>
               </div>
             </div>
 
             <div class="row">
-              <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                [ngClass]="{'has-success': pilotStudyForm.controls.health_professionals_id.valid,
+              <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12" [ngClass]="{'has-success': pilotStudyForm.controls.health_professionals_id.valid,
             'has-error': pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)}"
                 *ngIf="!pilotStudyId">
                 <mat-form-field>
-                  <mat-label>Profissionais:</mat-label>
-                  <mat-select formControlName="health_professionals_id" name="health_professionals_id"
-                    id="health_professionals_id" multiple>
-                    <mat-option *ngFor="let prof of listProf;trackBy: trackById" [value]="prof.id">{{prof.name}},
-                      {{prof.health_area | healthArea}}</mat-option>
+                  <mat-label>{{'PILOT-STUDY.PROFESSIONALS'|translate}}:</mat-label>
+                  <mat-select formControlName="health_professionals_id" name="health_professionals_id" id="health_professionals_id" multiple>
+                    <mat-option *ngFor="let prof of listProf;trackBy: trackById" [value]="prof.id">{{prof.name}}, {{prof.health_area | healthArea}}</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <span *ngIf="pilotStudyForm.controls.health_professionals_id.valid"
-                  class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                <span
-                  *ngIf="pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)">
+                <span *ngIf="pilotStudyForm.controls.health_professionals_id.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                  aria-hidden="true"></span>
+                <span *ngIf="pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)">
                   <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Selecione profissionais.</span>
+                  <span class="text-danger">{{'PILOT-STUDY.SELECT-PROFESSIONALS'|translate}}.</span>
                 </span>
               </div>
             </div>
@@ -131,12 +114,13 @@
               <div class="p-2">
                 <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
                   <i class="material-icons" id="iconBack">arrow_back</i>
-                  Voltar
+                  {{'SHARED.TOBACK'|translate}}
                 </button>
               </div>
               <div class="p-2">
-                <button type="button" class="btn btn-haniot-primary" (click)="onSubimt()"
-                  [disabled]="!pilotStudyForm.valid">Salvar</button>
+                <button type="button" class="btn btn-haniot-primary" (click)="onSubimt()" [disabled]="!pilotStudyForm.valid">
+                    {{'SHARED.SAVE'|translate}}
+                </button>
               </div>
             </div>
 
@@ -144,30 +128,22 @@
         </haniot-card>
       </div>
       <div class="col-md-12" *ngIf="pilotStudyId && typeUserLogado=='admin'">
-        <haniot-card [title]="'Gerenciar professionais'" subtitle=''>
+        <haniot-card [title]="'PILOT-STUDY.MANAGE-PROFESSIONALS.TITLE'|translate" [subtitle]="'PILOT-STUDY.MANAGE-PROFESSIONALS.SUBTITLE'|translate">
           <form [formGroup]="professionalsForm">
             <div class="row container">
               <div class="form-group has-feedback col-md-10">
                 <mat-form-field>
-                  <mat-label>Adiconar novo profissional:</mat-label>
-                  <mat-select formControlName="health_professionals_id_add" name="health_professionals_id_add"
-                    id="health_professionals_id_add">
-                    <mat-option *ngFor="let prof of professinalsNotAssociated;trackBy: trackById" [value]="prof.id">{{prof.name}},
-                      {{prof.health_area | healthArea}}</mat-option>
+                  <mat-label>{{'PILOT-STUDY.MANAGE-PROFESSIONALS.ADDPROFESSIONAL'|translate}}:</mat-label>
+                  <mat-select formControlName="health_professionals_id_add" name="health_professionals_id_add" id="health_professionals_id_add">
+                    <mat-option *ngFor="let prof of professinalsNotAssociated;trackBy: trackById" [value]="prof.id">{{prof.name}}, {{prof.health_area | healthArea | translate}}</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <!-- <span *ngIf="professionalsForm.controls.health_professionals_id_add.valid"
-                  class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                <span
-                  *ngIf="professionalsForm.controls.health_professionals_id_add.invalid && (professionalsForm.controls.health_professionals_id_add.touched || professionalsForm.controls.health_professionals_id_add.dirty)">
-                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Selecione profissionais.</span>
-                </span> -->
               </div>
 
               <div class="col-md-2">
-                <button type="button" class="btn btn-haniot-primary" (click)="addProfessionalInStudy()"
-                  [disabled]="!professionalsForm.valid">Adicionar</button>
+                <button type="button" class="btn btn-haniot-primary" (click)="addProfessionalInStudy()" [disabled]="!professionalsForm.valid">
+                    {{'SHARED.ADD'|translate}}
+                </button>
               </div>
 
             </div>
@@ -175,21 +151,24 @@
 
           <!-- Form para gerenciar profissionais de saude no estudo piloto -->
           <div class="form-group table-responsive" id="listProfessionals">
-            <label for="">Profissionais associados:</label>
+            <label for="">{{'PILOT-STUDY.MANAGE-PROFESSIONALS.ASSOCIATE-PROFESSIONALS'|translate}}:</label>
             <table class="table table-sm table-hover">
               <thead>
                 <tr>
-                  <th>Nome</th>
-                  <th>Área</th>
-                  <th>Remover</th>
+                  <th>{{'SHARED.NAME'|translate}}</th>
+                  <th>{{'SHARED.AREA'|translate}}</th>
+                  <th>{{'PILOT-STUDY.MANAGE-PROFESSIONALS.REMOVE'|translate}}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let professional of professinalsAssociated; index as i;trackBy: trackById">
                   <td>{{professional.name}}</td>
-                  <td>{{professional.health_area | healthArea}}</td>
-                  <td><a class="nav-link" (click)="dissociateHealthProfessional(professional.id)"
-                      title="Desassociar profissional..."><i class="material-icons">close</i></a></td>
+                  <td>{{professional.health_area | healthArea | translate}}</td>
+                  <td>
+                    <a class="nav-link" (click)="dissociateHealthProfessional(professional.id)" [title]="'PILOT-STUDY.MANAGE-PROFESSIONALS.DISASSOCIATE-PROFESSIONAL'|translate">
+                      <i class="material-icons">close</i>
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>

@@ -75,7 +75,7 @@
                             <div class="card-icon">
                                 <i class="material-icons">library_books</i>
                             </div>
-                            <span class="badge" [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active | pilotStudyState | translate}}</span>
+                            <span class="badge" [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active | pilotStudySituation | translate}}</span>
 
                             <h3 class="card-title ellipsis">
                                 {{study.name}}

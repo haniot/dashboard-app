@@ -77,6 +77,61 @@
     "PREVIOUS_PAGE": "Página anterior",
     "OF": "de"
   },
+  "PILOT-STUDY":{
+    "CARD-PILOTSTUDIES":{
+      "TITLE": "Lista de estudos piloto",
+      "TITLE-CREATE":"Criar um estudo piloto",
+      "TITLE-EDIT":"Editar um estudo piloto",
+      "SUBTITLE": ""
+    },
+    "PLACEHOLDER-PERIOD":"Selecione um período",
+    "TOTAL-PATIENTS":"Total de pacientes",
+    "SPINNER-MESSAGE":"Carregando arquivos disponíveis",
+    "FILESEMPTY": "Nenhum arquivo encontrado.",
+    "FILESEMPTY-MESSAGE": "* Utilize o botão abaixo para solicitar um novo arquivo!",
+    "DELETE": "Excluir avaliação...",
+    "OPTIONS-DOWNLOAD": "Opções de download...",
+    "DOWNLOAD-CSV": "Baixar CSV",
+    "DOWNLOAD-XLS":"Baixar XLS",
+    "NEW-FILE": "Solicitar Novo Arquivo",
+    "DELETE-CONFIRMATION":"Tem certeza que deseja remover avaliação?",
+    "NUTRITIONEVALUATION": "Avaliação odontológica",
+    "FILECSV":"Arquivo CSV",
+    "FILEXLS": "Arquivo XLS",
+    "GENERATINGFILE":"Gerando arquivo",
+    "REMOVINGFILE":"Removendo arquivo",
+    "START":"Ínicio",
+    "END": "Término",
+    "INVALID-DATE-START":"Data de início inválida",
+    "INVALID-DATE-END":"Data de término inválida",
+    "PLACEHOLDER-DATE-START":"Selecione a data de ínicio",
+    "PLACEHOLDER-DATE-END":"Selecione a data de término",
+    "SITUATION": "Situação",
+    "PROFESSIONALS": "Profissionais",
+    "SELECT-PROFESSIONALS": "Selecione profissionais",
+    "MANAGE-PROFESSIONALS": {
+      "TITLE": "Gerenciar profissionais",
+      "SUBTITLE": "",
+      "ADDPROFESSIONAL": "Adicionar novo profissional",
+      "ASSOCIATE-PROFESSIONALS":"Profissionais associados",
+      "DISASSOCIATE-PROFESSIONAL":"Disassociar profissional...",
+      "REMOVE": "Remover"
+    },
+    "PLACEHOLDER-SEARCH": "Pesquisar estudo...",
+    "NAME-OF-STUDY":"Nome do estudo",
+    "TOVIEW-STUDY":"Visualizar estudo...",
+    "EDIT-STUDY":"Editar estudo...",
+    "DELETE-STUDY": "Remover estudo...",
+    "PROFESSIONAL": "Profissional",
+    "CARD-PILOT-STUDY": {
+      "TITLE": "Estudo piloto",
+      "SUBTITLE": ""      
+    },
+    "CARD-FILES": {
+      "TITLE": "Arquivos disponíveis para download",
+      "SUBTITLE": ""      
+    }
+  },
   "SIDEBAR":{
     "USERS": "Usuários",
     "ADMINS": "Administradores",
@@ -113,10 +168,17 @@
     "PASSWORD-NOTMATCH": "Informe a mesma senha",
     "REQUERID-FIELD":"Campo obrigatório",
     "CLOSE":"Fechar",
+    "DATE":"Data",
     "DATE-START":"Data ínicio",
     "DATE-END": "Data término",
     "STUDY-ACTIVATED": "ATIVADO",
-    "STUDY-DISABLED": "DESATIVADO"
+    "STUDY-DISABLED": "DESATIVADO",
+    "TOCLEAN":"Limpar",
+    "LOCAL": "Local",
+    "INVALID-LOCAL": "Local inválido",
+    "TOBACK": "Voltar",
+    "LIST-EMPTY":"Nenhum registro encontrado",
+    "TOVIEW": "Visualizar"
   },
   "TABLE-USER":{
     "PLACEHOLDER-SEARCH":"Pesquisar usuário...",

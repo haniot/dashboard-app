@@ -77,6 +77,61 @@
     "PREVIOUS_PAGE": "Previous page",
     "OF": "of"
   },
+  "PILOT-STUDY":{
+    "CARD-PILOTSTUDIES":{
+      "TITLE": "List of pilot studies",
+      "TITLE-CREATE":"Create a pilot study",
+      "TITLE-EDIT":"Edit a pilot study",
+      "SUBTITLE": ""
+    },
+    "PLACEHOLDER-PERIOD":"Select a period",
+    "TOTAL-PATIENTS":"Total patients",
+    "SPINNER-MESSAGE":"Loading available files",
+    "FILESEMPTY": "No files found.",
+    "FILESEMPTY-MESSAGE": "* Use the button below to request a new file!",
+    "DELETE": "Delete evaluation ...",
+    "OPTIONS-DOWNLOAD": "Download options ...",
+    "DOWNLOAD-CSV": "Download CSV",
+    "DOWNLOAD-XLS":"Download XLS",
+    "NEW-FILE": "Request New File",
+    "DELETE-CONFIRMATION":"Are you sure you want to remove rating?",
+    "NUTRITIONEVALUATION": "Dental evaluation",
+    "FILECSV":"File CSV",
+    "FILEXLS": "File XLS",
+    "GENERATINGFILE":"Generating file",
+    "REMOVINGFILE":"Removing file",
+    "START":"Start",
+    "END": "End",
+    "INVALID-DATE-START":"Invalid start date",
+    "INVALID-DATE-END":"Invalid end date",
+    "PLACEHOLDER-DATE-START":"Select start date",
+    "PLACEHOLDER-DATE-END":"Select the end date",
+    "SITUATION": "Situation",
+    "PROFESSIONALS": "Professionals",
+    "SELECT-PROFESSIONALS": "Select professionals",
+    "MANAGE-PROFESSIONALS": {
+      "TITLE": "Manage professionals",
+      "SUBTITLE": "",
+      "ADDPROFESSIONAL": "Add new professional",
+      "ASSOCIATE-PROFESSIONALS":"Associate professionals",
+      "DISASSOCIATE-PROFESSIONAL":"Disassociate professional...",
+      "REMOVE": "To remove"
+    },
+    "PLACEHOLDER-SEARCH": "Search for study...",
+    "NAME-OF-STUDY":"Name of study",
+    "TOVIEW-STUDY":"To view study...",
+    "EDIT-STUDY":"Edit study...",
+    "DELETE-STUDY": "Delete study...",
+    "PROFESSIONAL": "Professional",
+    "CARD-PILOT-STUDY": {
+      "TITLE": "Pilot study",
+      "SUBTITLE": ""      
+    },
+    "CARD-FILES": {
+      "TITLE": "Files available for download",
+      "SUBTITLE": ""      
+    }
+  },
   "SIDEBAR":{
     "USERS": "Users",
     "ADMINS": "Admins",
@@ -113,10 +168,17 @@
     "PASSWORD-NOTMATCH": "Enter the same password",
     "REQUERID-FIELD":"Required field",
     "CLOSE":"Close",
+    "DATE":"Date",
     "DATE-START":"Start date",
     "DATE-END": "End date",
     "STUDY-ACTIVATED": "ACTIVATED",
-    "STUDY-DISABLED": "DISABLED"
+    "STUDY-DISABLED": "DISABLED",
+    "TOCLEAN":"To clean",
+    "LOCAL": "Local",
+    "INVALID-LOCAL": "Invalid local",
+    "TOBACK": "To back",
+    "LIST-EMPTY":"No records found",
+    "TOVIEW": "To view"
   },
   "TABLE-USER":{
     "PLACEHOLDER-SEARCH":"Search for user ...",
