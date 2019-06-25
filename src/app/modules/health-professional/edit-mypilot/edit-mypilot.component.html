@@ -2,83 +2,73 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <haniot-card [title]="'Editar um estudo piloto'" subtitle=''>
+        <haniot-card [title]="'EDIT-PILOT.EDIT-MYPILOT.TITLE'|translate" [subtitle]="'EDIT-PILOT.EDIT-MYPILOT.SUBTITLE'|translate">
           <form [formGroup]="pilotStudyForm">
-            <div class="form-group has-feedback"
-              [ngClass]="{'has-success': pilotStudyForm.controls.name.valid,
+            <div class="form-group has-feedback" [ngClass]="{'has-success': pilotStudyForm.controls.name.valid,
           'has-error': pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)}">
               <label for="name">
-                Nome:
+                {{'SHARED.NAME'|translate}}:
               </label>
               <input class="form-control" type="text" formControlName="name" id="name">
-              <span *ngIf="pilotStudyForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                aria-hidden="true"></span>
-              <span
-                *ngIf="pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)">
+              <span *ngIf="pilotStudyForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+              <span *ngIf="pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                <span class="text-danger">Nome de estudo inválido.</span>
+                <span class="text-danger">{{'SHARED.INVALID-NAME'|translate}}.</span>
               </span>
             </div>
 
             <div class="row">
-              <div class="form-group has-feedback col-md"
-                [ngClass]="{'has-success': pilotStudyForm.controls.start.valid,
+              <div class="form-group has-feedback col-md" [ngClass]="{'has-success': pilotStudyForm.controls.start.valid,
           'has-error': pilotStudyForm.controls.start.invalid && (pilotStudyForm.controls.start.touched || pilotStudyForm.controls.start.dirty)}">
                 <label for="start">
-                  Inicio:
+                  {{'PILOT-STUDY.START'|translate}}:
                 </label>
                 <div class="row">
                   <div class="col-md-10">
-                    <input matInput [matDatepicker]="pickerStart" class="form-control" formControlName="start"
-                      id="start" placeholder="Selecione a data de inicio">
+                    <input matInput [matDatepicker]="pickerStart" class="form-control" formControlName="start" id="start" [placeholder]="'PILOT-STUDY.PLACEHOLDER-DATE-START'|translate">
                   </div>
                   <div class="col-md-2">
                     <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
                     <mat-datepicker #pickerStart></mat-datepicker>
                   </div>
                 </div>
-                <span *ngIf="pilotStudyForm.controls.start.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                  aria-hidden="true"></span>
-                <span
-                  *ngIf="pilotStudyForm.controls.start.invalid && (pilotStudyForm.controls.start.touched || pilotStudyForm.controls.start.dirty)">
+                <span *ngIf="pilotStudyForm.controls.start.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span *ngIf="pilotStudyForm.controls.start.invalid && (pilotStudyForm.controls.start.touched || pilotStudyForm.controls.start.dirty)">
                   <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Data de início inválida.</span>
+                  <span class="text-danger">{{'PILOT-STUDY.INVALID-DATE-START'}}.</span>
                 </span>
               </div>
 
 
 
-              <div class="form-group has-feedback col-md"
-                [ngClass]="{'has-success': pilotStudyForm.controls.end.valid,
+              <div class="form-group has-feedback col-md" [ngClass]="{'has-success': pilotStudyForm.controls.end.valid,
           'has-error': pilotStudyForm.controls.end.invalid && (pilotStudyForm.controls.end.touched || pilotStudyForm.controls.end.dirty)}">
                 <label for="end">
-                  Término:
+                  {{'PILOT-STUDY.END'|translate}}:
                 </label>
                 <div class="row">
                   <div class="col-md-10">
-                    <input matInput class="form-control" [matDatepicker]="pickerEnd" [min]="pilotStudyForm.get('start').value" formControlName="end" id="end"
-                      placeholder="Selecione a data de término">
+                    <input matInput class="form-control" [matDatepicker]="pickerEnd" [min]="pilotStudyForm.get('start').value" formControlName="end"
+                      id="end" [placeholder]="'PILOT-STUDY.PLACEHOLDER-DATE-END'|translate">
                   </div>
                   <div class="col-md-2">
                     <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
                     <mat-datepicker #pickerEnd></mat-datepicker>
                   </div>
                 </div>
-                <span *ngIf="pilotStudyForm.controls.end.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                  aria-hidden="true"></span>
-                <span
-                  *ngIf="pilotStudyForm.controls.end.invalid && (pilotStudyForm.controls.end.touched || pilotStudyForm.controls.end.dirty)">
+                <span *ngIf="pilotStudyForm.controls.end.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span *ngIf="pilotStudyForm.controls.end.invalid && (pilotStudyForm.controls.end.touched || pilotStudyForm.controls.end.dirty)">
                   <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                  <span class="text-danger">Data de término inválida.</span>
+                  <span class="text-danger">{{'PILOT-STUDY.END'|translate}}.</span>
                 </span>
               </div>
               <div class="col-md-2">
                 <label for="end">
-                  Situação:
+                  {{'PILOT-STUDY.SITUATION'|translate}}:
                 </label>
                 <div class="row">
                   <mat-slide-toggle class="example-margin" [color]="color" formControlName="is_active" id="is_active">
-                    {{pilotStudyForm.controls.is_active.value?'Ativado':'Desativado'}}
+                    {{pilotStudyForm.controls.is_active.value | pilotStudySituation | translate}}
                   </mat-slide-toggle>
                 </div>
               </div>
@@ -87,21 +77,22 @@
 
             <div class="row container">
               <div class="col-md">
-                <button type="button" class="btn btn-haniot-primary" (click)="onSubimt()"
-                  [disabled]="!pilotStudyForm.valid">Salvar</button>
+                <button type="button" class="btn btn-haniot-primary" (click)="onSubimt()" [disabled]="!pilotStudyForm.valid">
+                  {{'SHARED.SAVE'|translate}}
+                </button>
               </div>
 
               <div class="col-md">
                 <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
                   <i class="material-icons" id="iconBack">arrow_back</i>
-                  Voltar
+                  {{'SHARED.TOBACK'|translate}}
                 </button>
               </div>
             </div>
           </form>
         </haniot-card>
       </div>
-     
+
     </div>
   </div>
 </div>

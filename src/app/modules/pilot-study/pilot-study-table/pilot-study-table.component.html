@@ -60,5 +60,5 @@
 </mat-paginator>
 <view-health-professional [pilotstudyid]="pilotStudy_id"></view-health-professional>
 
-<modal-confirmation [message]="'Tem certeza que deseja remover estudo piloto?'" (confirmation)="removeStudy()"
+<modal-confirmation [message]="'PILOT-STUDY.DELETE-CONFIRMATION'|translate" (confirmation)="removeStudy()"
   (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

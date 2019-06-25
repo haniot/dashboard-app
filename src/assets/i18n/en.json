@@ -55,7 +55,29 @@
     "SUBTITLE": "",
     "TITLE-ADD":"Create health professional",
     "TITLE-EDIT": "Edit health professional"
-  },  
+  }, 
+  "EDIT-MYPILOT":{
+    "TITLE":"Edit a pilot study",
+    "SUBTITLE": "",
+    "TITLE-ADD":"Create health professional",
+    "TITLE-EDIT": "Edit health professional"
+  },
+  "MYEVALUATIONS":{
+    "TITLE": "List of reviews",
+    "SUBTITLE": "Below are the evaluations related to your profile"
+  },
+  "EVALUATIONS":{
+    "PLACEHOLDER-SEARCH":"Search evaluations ...",
+    "SPINNER-MESSAGE":"Loading evaluations",
+    "LIST-EMPTY": "No evaluation found",
+    "LIST-EMPTY-MESSAGE": "* Use the app to generate new evaluations",
+    "STATUS-COMPLETE":"COMPLETE",
+    "STATUS-INCOMPLETE":"INCOMPLETE",
+    "ACCESS-EVALUATION":"Access evaluation ...",
+    "DELETE-EVALUATION": "Delete evaluation ...",
+    "DELETE-CONFIRMATION":"Are you sure you want to delete evaluation?",
+    "STATE":"State"
+  }, 
   "NAVBAR": {
     "ADMINS-USERS":"Users - Admins",
     "HEALTH-PRO-USERS":"Users - Health Professionals",
@@ -178,7 +200,8 @@
     "INVALID-LOCAL": "Invalid local",
     "TOBACK": "To back",
     "LIST-EMPTY":"No records found",
-    "TOVIEW": "To view"
+    "TOVIEW": "To view",
+    "PATIENT": "Patient"
   },
   "TABLE-USER":{
     "PLACEHOLDER-SEARCH":"Search for user ...",

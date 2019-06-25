@@ -2,10 +2,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <haniot-card title="Lista de avaliações" subtitle="Selecione uma avaliação para visualizar">
+                <haniot-card [title]="'MYEVALUATIONS.TITLE'|translate" [subtitle]="'MYEVALUATIONS.SUBTITLE'|translate">
                     <div class="input-group no-border">
                         <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
-                               placeholder="Pesquisar avaliação..." (keyup)="searchOnSubmit()">
+                               [placeholder]="'EVALUATIONS.PLACEHOLDER-SEARCH'|translate" (keyup)="searchOnSubmit()">
                         <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
                                 (click)="searchOnSubmit()">
                             <i class="material-icons">search</i>
@@ -17,20 +17,20 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Paciente</th>
-                                <th>Data</th>
-                                <th>Estado</th>
-                                <th colspan="2">Ações</th>
+                                <th>{{'SHARED.PATIENT'|translate}}</th>
+                                <th>{{'SHARED.DATE'|translate}}</th>
+                                <th>{{'EVALUATIONS.STATE'|translate}}</th>
+                                <th colspan="2">{{'SHARED.ACTIONS'|translate}}</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngIf="listOfEvaluations.length==0">
                                 <td colspan="5" *ngIf="!listOfEvaluationsIsEmpty">
-                                    <spinner message="Carregando avaliações"></spinner>
+                                    <spinner [message]="'EVALUATIONS.SPINNER-MESSAGE'|translate"></spinner>
                                 </td>
                                 <td colspan="5" *ngIf="listOfEvaluationsIsEmpty">
-                                    <h4>Nenhuma avaliação encontrada.<br>
-                                        <small>* Utilize o aplicativo para gerar novas avaliações!</small>
+                                    <h4>{{'EVALUATIONS.LIST-EMPTY'|translate}}.<br>
+                                        <small>{{'EVALUATIONS.LIST-EMPTY-MESSAGE'|translate}}!</small>
                                     </h4>
                                 </td>
                             </tr>
@@ -39,19 +39,19 @@
                                 <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.patient.name}}</td>
                                 <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.created_at | date}}</td>
                                 <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">
-                                    <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus}}</span>
+                                    <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus | translate}}</span>
                                 </td>
                                 <td>
                                     <a class="nav-link"
                                        [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
-                                       title="Acessar avaliação...">
+                                       [title]="'EVALUATIONS.ACCESS-EVALUATION'|translate">
                                         <i class="material-icons">input</i>
                                     </a>
                                 </td>
                                 <td>
                                     <a class="nav-link"
                                        (click)="openModalConfirmation(evaluation.patient.id,evaluation.id)"
-                                       title="Excluir avaliação...">
+                                       [title]="'EVALUATIONS.DELETE-EVALUATION'|translate">
                                         <i class="material-icons">delete</i>
                                     </a>
                                 </td>
@@ -74,5 +74,5 @@
     </div>
 </div>
 
-<modal-confirmation [message]="'Tem certeza que deseja remover avaliação?'" (confirmation)="removeEvaluation()"
+<modal-confirmation [message]="'EVALUATIONS.DELETE-CONFIRMATION'|translate" (confirmation)="removeEvaluation()"
                     (noconfirmation)="closeModalComfimation()"></modal-confirmation>
