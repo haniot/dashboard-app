@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { FeedingHabitsComponent } from './feeding-habits/feeding-habits.component';
 import { SharedModule } from 'app/shared/shared.module';
@@ -70,6 +71,7 @@ import { LesionTypePipe } from './pipes/lesion-type.pipe';
     ReactiveFormsModule,
     SharedModule,
     MatDatepickerModule,
+    TranslateModule
   ],
   exports: [
     FeedingHabitsComponent,

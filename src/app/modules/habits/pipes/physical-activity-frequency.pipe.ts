@@ -9,25 +9,25 @@ export class PhysicalActivityPipe implements PipeTransform {
   transform(value: any, args?: any): any {
     switch (value) {
       case 'one_per_week':
-        return 'Uma vez por semana';
+        return 'HABITS.PIPES.PHYSICAL-ACTIVITY-FREQUENCY.ONE-PER-WEEK';
 
       case 'two_per_week':
-        return 'Duas vezes por semana';
+        return 'HABITS.PIPES.PHYSICAL-ACTIVITY-FREQUENCY.TWO-PER-WEEK';
 
       case 'three_per_week':
-        return 'Trẽs vezes por semana';
+        return 'HABITS.PIPES.PHYSICAL-ACTIVITY-FREQUENCY.THREE-PER-WEEK';
 
       case 'four_more_per_week':
-        return 'Quatro vezes por semana';
+        return 'HABITS.PIPES.PHYSICAL-ACTIVITY-FREQUENCY.FOUR-MORE-PER-WEEK';
 
       case 'none':
-        return 'Nenhuma vez';
+        return 'HABITS.PIPES.PHYSICAL-ACTIVITY-FREQUENCY.NONE';
 
       case undefined:
-        return 'Fora dos parâmetros';
+        return 'HABITS.PIPES.UNDEFINED';
 
       default:
-        return 'NÂO ENCONTRADO';
+        return 'HABITS.PIPES.NOTFOUND';
     }
 
   }

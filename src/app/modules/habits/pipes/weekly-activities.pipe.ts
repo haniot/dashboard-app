@@ -11,73 +11,73 @@ export class WeeklyActivityPipe implements PipeTransform {
         switch (value) {
 
             case 'soccer':
-                return 'Futebol';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.SOCCER';
 
             case 'futsal':
-                return 'Futsal';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.FUTSAL';
 
             case 'handball':
-                return 'Handebol';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.HANDBALL';
 
             case 'basketball':
-                return 'Basquete';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.BASKETBALL';
 
             case 'skates':
-                return 'Andar de patins ou skate';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.SKATES';
 
             case 'athletics':
-                return 'Atletismo';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.ATHLETICS';
 
             case 'swim':
-                return 'Natação';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.SWIM';
 
             case 'gymnastics':
-                return 'Gisnática olímpica ou rítmica';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.GYMNASTICS';
 
             case 'fight':
-                return 'Judõ, Karatê, Capoeira ou outras lutas';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.FIGHT';
 
             case 'dance':
-                return 'Ballet ou outros tipos de danças';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.DANCE';
 
             case 'run':
-                return 'Correr';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.RUN';
 
             case 'ride a bike':
-                return 'Andar de bicicleta';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.RIDE-BIKE';
 
             case 'walking as a physical exercise':
-                return 'Caminhada como exercício físico';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.WALKING-PHYSICAL-EXERCISE';
 
             case 'walking as a means of transport':
-                return 'Caminhada como meio de transporte';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.WALKING-MEANS-TRANSPORT';
 
             case 'volleyball':
-                return 'Vôlei de quadra';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.VOLLEYBALL';
 
             case 'musculation':
-                return 'Musculação';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.MUSCULATION';
 
             case 'abdominal exercise':
-                return 'Exercicios abdominais';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES-ABDOMINAL-EXERCISE';
 
             case 'tennis':
-                return 'Tênis de quadra ou de mesa';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.TENNIS';
 
             case 'walk with dog':
-                return 'Passear com o cachorro';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.WALK-WITH-DOG';
 
             case 'gymnastics gym':
-                return 'Ginástica de academia';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.GYMNASTICS-GYM';
 
             case 'no activity':
-                return 'Nenhuma atividade';
+                return 'HABITS.PIPES.WEEKLY-ACTIVITIES.NO-ACTIVITY';
 
             case undefined:
-                return 'Fora dos parâmetros';
+                return 'HABITS.PIPES.UNDEFINED';
 
             default:
-                return 'NÂO ENCONTRADO';
+                return 'HABITS.PIPES.NOTFOUND';
         }
 
     }

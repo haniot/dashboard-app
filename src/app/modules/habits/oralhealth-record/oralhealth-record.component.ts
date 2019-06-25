@@ -2,7 +2,6 @@ import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { OralHealthRecord } from '../models/oralhealth-record';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { OralHealthRecordService } from '../services/oralhealth-record.service';
-import { TeethbushingPipe } from '../pipes/teeth-brushing-frequency.pipe';
 
 @Component({
   selector: 'oralhealth-record',
@@ -18,8 +17,7 @@ export class OralhealthRecordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private oralhealthService: OralHealthRecordService,
-    private teethBrushingPipe: TeethbushingPipe
+    private oralhealthService: OralHealthRecordService
   ) {
     this.index = 0;
     this.listOralhealthRecords = new Array<OralHealthRecord>();
@@ -47,9 +45,6 @@ export class OralhealthRecordComponent implements OnInit {
       teeth_brushing_freq: [{ value: oralhealthRecord.teeth_brushing_freq, disabled: true }],
       teeth_lesions: [{ value: oralhealthRecord.teeth_lesions, disabled: true }]
     });
-    
-    this.oralhealthForm.get('teeth_brushing_freq')
-      .patchValue(this.teethBrushingPipe.transform(oralhealthRecord.teeth_brushing_freq));
   }
 
   ngOnChanges(changes: SimpleChanges) {

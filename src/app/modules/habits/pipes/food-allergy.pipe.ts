@@ -9,28 +9,28 @@ export class FoodAllergyPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'gluten':
-                return 'Glúten';
+                return 'HABITS.PIPES.FOOD-ALLERGY.GLUTEN';
 
             case 'aplv':
-                return 'APLV';
+                return 'HABITS.PIPES.FOOD-ALLERGY.APLV';
 
             case 'lactose':
-                return 'Lactose';
+                return 'HABITS.PIPES.FOOD-ALLERGY.LACTOSE';
 
             case 'dye':
-                return 'Corante';
+                return 'HABITS.PIPES.FOOD-ALLERGY.DYE';
 
             case 'egg':
-                return 'Ovos';
+                return 'HABITS.PIPES.FOOD-ALLERGY.EGG';
 
             case 'peanut':
-                return 'Amendoim';
+                return 'HABITS.PIPES.FOOD-ALLERGY.PEANUT';
 
             case 'other':
-                return 'Outro';
+                return 'HABITS.PIPES.FOOD-ALLERGY.OTHER';
 
             default:
-                return 'Não sei/Não lembro';
+                return 'HABITS.PIPES.DO-NOT-KNOW';
         }
 
     }

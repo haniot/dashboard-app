@@ -9,13 +9,13 @@ export class LesionTypePipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'white_spot_lesion':
-                return 'Mancha branca';
+                return 'HABITS.PIPES.TYPE-LESION.WHITE-SPOT-LESION';
 
             case 'cavitated_lesion':
-                return 'Lesão cavitada';
+                return 'HABITS.PIPES.TYPE-LESION.CAVITATED-LESION';
 
             default:
-                return 'Fora dos parâmetros';
+                return 'HABITS.PIPES.UNDEFINED';
         }
 
     }

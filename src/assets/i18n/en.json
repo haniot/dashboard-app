@@ -81,6 +81,20 @@
     "DELETE-EVALUATION": "Delete evaluation ...",
     "DELETE-CONFIRMATION":"Are you sure you want to delete evaluation?",
     "STATE":"State"
+  },
+  "HABITS":{
+    "FAMILY-COHESION":{
+      "TITLE":"Family cohesion",
+      "SUBTITLE":"",
+      "UNAVAILABLE-DATA":"Family cohesion data unavailable!"
+    },
+    "REGISTER-DATE":"Date of registration",
+    "PRVIOUS":"Previous",
+    "NEXT":"Next"
+  },
+  "MYDATEPIPE":{
+    "AT": "at",
+    "HOURS": "hours."
   }, 
   "NAVBAR": {
     "ADMINS-USERS":"Users - Admins",

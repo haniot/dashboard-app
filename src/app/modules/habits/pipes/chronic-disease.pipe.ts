@@ -9,19 +9,19 @@ export class ChronicDiseasePipe implements PipeTransform {
   transform(value: any, args?: any): any {
     switch (value) {
       case 'hypertension':
-        return 'Hipertensão';
+        return 'HABITS.PIPES.CHORNIC-DISEASE.HYPERTENSION';
 
       case 'blood_fat':
-        return 'Gordura no sangue';
+        return 'HABITS.PIPES.CHORNIC-DISEASE.BLOOD-FAT';
 
       case 'diabetes':
-        return 'Diabetes';
+        return 'HABITS.PIPES.CHORNIC-DISEASE.DIABETES';
 
       case undefined:
-        return 'Fora dos parâmetros';
+        return 'HABITS.PIPES.UNDEFINED';
 
       default:
-        return 'NÂO ENCONTRADO';
+        return 'HABITS.PIPES.NOTFOUND';
     }
 
   }

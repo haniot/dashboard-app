@@ -9,13 +9,13 @@ export class ToothTypePipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'deciduous_tooth':
-                return 'Dente decíduo';
+                return 'HABITS.PIPES.TOOTH-TYPE.DECIDUOUS-TOOTH';
 
             case 'permanent_tooth':
-                return 'Dente permante';
+                return 'HABITS.PIPES.TOOTH-TYPE.PERMANENT-TOOTH';
 
             default:
-                return 'Fora dos parâmetros';
+                return 'HABITS.PIPES.UNDEFINED';
         }
 
     }

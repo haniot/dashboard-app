@@ -9,13 +9,13 @@ export class DiseaseHistoryPipe implements PipeTransform {
   transform(value: any, args?: any): any {
     switch (value) {
       case 'yes':
-        return 'SIM';
+        return 'HABITS.PIPES.DISEASE-HISTORY.YES';
 
       case 'no':
-        return 'NÃO';
+        return 'HABITS.PIPES.DISEASE-HISTORY.NO';
 
       default:
-        return 'Não sei/Não lembro';
+        return 'HABITS.PIPES.DO-NOT-KNOW';
     }
 
   }

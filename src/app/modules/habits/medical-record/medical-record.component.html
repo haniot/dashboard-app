@@ -1,9 +1,9 @@
-<haniot-card [title]="'Histórico de doenças do paciente'" subtitle=''>
+<haniot-card [title]="'HABITS.MEDICAL-RECORD.TITLE'|translate" [subtitle]="'HABITS.MEDICAL-RECORD.SUBTITLE'|translate">
 
   <form [formGroup]="medicalForm">
 
     <label for="">
-      Lista de doenças crônicas:
+      {{'HABITS.MEDICAL-RECORD.LIST-CHRONIC-DISEASES'|translate}}:
     </label>
 
     <div class="container">
@@ -29,15 +29,15 @@
             <div class="col-md row">
               <div class="col-sm">
                 <label for="">
-                  Doença:
+                    {{'HABITS.MEDICAL-RECORD.DISEASE'|translate}}:
                 </label>
-                <h4 class="card-category">{{disease.type | chronicDisease}}</h4>
+                <h4 class="card-category">{{disease.type | chronicDisease | translate}}</h4>
               </div>
               <div class="col-sm">
                 <label for="">
-                  Histórico:
+                    {{'HABITS.MEDICAL-RECORD.HISTORIC'|translate}}:
                 </label>
-                <h4 class="card-category">{{disease.disease_history | diseaseHistory}}</h4>
+                <h4 class="card-category">{{disease.disease_history | diseaseHistory | translate}}</h4>
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="d-flex flex-row-reverse">
-      <div class="p-2"><small class="pull-right">Data do registro:
+      <div class="p-2"><small class="pull-right">{{'HABITS.REGISTER-DATE'|translate}}:
           {{medicalForm.get('created_at').value | myDate}}</small></div>
     </div>
 
@@ -66,7 +66,7 @@
   <div class="container" *ngIf="listMedical.length>1">
     <div class="row">
       <div class="col align-self-start">
-        <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" title="Anterior"
+        <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" [title]="'HABITS.PREVIOUS'|translate"
           (click)="prev()" [disabled]="!index">
           <i class="material-icons">arrow_back</i>
         </button>
@@ -74,7 +74,7 @@
 
       <div class="col align-self-end">
         <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
-          (click)="next()" title="Próximo" [disabled]="index == listMedical.length-1">
+          (click)="next()" [title]="'HABITS.NEXT'|translate" [disabled]="index == listMedical.length-1">
           <i class="material-icons">arrow_forward</i>
         </button>
       </div>
@@ -82,6 +82,6 @@
   </div>
 
   <div *ngIf="listMedical.length==0">
-    <span class="badge badge-danger badge-12">Nenhum histórico de doenças cadastrado!</span>
+    <span class="badge badge-danger badge-12 ellipsis">{{'HABITS.MEDICAL-RECORD.UNAVAILABLE-DATA'|translate}}</span>
   </div>
 </haniot-card>

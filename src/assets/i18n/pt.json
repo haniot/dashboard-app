@@ -82,6 +82,134 @@
     "DELETE-CONFIRMATION": "Tem certeza que deseja remover avaliação?",
     "STATE": "Estado"
   },
+  "HABITS":{
+    "FAMILY-COHESION":{
+      "TITLE":"Coesão familiar",
+      "SUBTITLE":"",
+      "UNAVAILABLE-DATA":"Dados de coesão familiar indisponível!"
+    },
+    "FEEDING":{
+      "TITLE":"Hábitos alimentares do paciente",
+      "SUBTITLE":"",
+      "NUMBER-WATER-GLASSES":"Quantidade de copos de água",
+      "BREAST-FEEDING":"Amamentação",
+      "BREAKFAST":"Café da manhã",
+      "LIST-OF-WEEKLY-FOOD":"Lista de alimentos semanais e relação de consumo",
+      "LAST-7-DAYS":"Últimos 7 dias",
+      "UNAVAILABLE-DATA":"Nenhum hábito alimentar cadastrado!",
+      "LIST-ALLERGIC-FOODS":"Lista de alimentos alérgicos"
+    },
+    "MEDICAL-RECORD":{
+      "TITLE":"Histórico de doenças do paciente",
+      "SUBTITLE":"",
+      "LIST-CHRONIC-DISEASES":"Lista de doenças crônicas",
+      "DISEASE":"Doença",
+      "HISTORIC":"Histórico",
+      "UNAVAILABLE-DATA":"Nenhum histórico de doenças cadastrado!"
+    },
+    "ORAL-HEALTH":{
+      "TITLE":"Informações sobre a saúde bucal",
+      "SUBTITLE":"",
+      "FREQUENCY-ORAL-HEALTH":"Frequência que realiza a saúde bucal",
+      "LIST-OF-LESIONS":"Lista de lesões",
+      "NONE-LESION":"Nenhuma lesão cadastrada!",
+      "TYPE-TEETH":"Tipo de dente",
+      "TYPE-LESION":"Tipo de lesão",
+      "UNAVAILABLE-DATA":"Dados sobre saúde bucal indisponível!"
+    },
+    "PHYSICAL-ACTIVITY":{
+      "TITLE":"Hábitos de atividades físicas do paciente",
+      "SUBTITLE":"",
+      "SCHOOL-ACTIVITY-FREQUENCY":"Frequência de atividades físicas escolares",
+      "LIST-ACTIVITY-PRATICED":"Lista de atividades praticadas",
+      "UNAVAILABLE-DATA":"Nenhum hábito de atividades físicas cadastrado!"
+    },
+    "PIPES":{
+      "WEEKLY-FOOD":{
+        "FISH-CHICKEN-MEAT":"Peixe, frango ou carne vermelha",
+        "SODA": "Refrigerante",
+        "SALAD-VEGETABLE":"Salada, legumes ou vegetais",
+        "FRIED-SALT-FOOD":"Salgados fritos",
+        "MILK":"Leite",
+        "BEAN":"Feijão",
+        "FRUITS":"Frutas",
+        "CANDY-SUGAR-COOKIE":"Guloseimas",
+        "BURGER-SAUSAGE":"Hamburgues, salsicha ou outros embutidos"
+      },
+      "FOOD-ALLERGY":{
+        "GLUTEN":"Glúten",
+        "APLV":"APLV",
+        "LACTOSE":"Lactose",
+        "DYE":"Corante",
+        "EGG":"Ovos",
+        "PEANUT":"Amendoim",
+        "OTHER":"Outro"
+      },
+      "CHORNIC-DISEASE":{
+        "HYPERTENSION":"Hipertensão",
+        "BLOOD-FAT":"Gordura no sangue",
+        "DIABETES":"Diabetes"
+      },
+      "DISEASE-HISTORY":{
+        "NO":"NÃO",
+        "YES":"SIM"
+      },
+      "TEETH-BRUSHING":{
+        "NONE":"Nenhuma",
+        "ONCE":"Uma vez",
+        "TWICE":"Duas vezes",
+        "THREE-MORE":"Três vezes ou mais"
+      },
+      "TOOTH-TYPE":{
+        "DECIDUOUS-TOOTH":"Dente decíduo",
+        "PERMANET-TOOTH":"Dente permante"
+      },
+      "TYPE-LESION":{
+        "WHITE-SPOT-LESION":"Mancha branca",
+        "CAVITATED-LESION":"Lesão cavitada"
+      },
+      "WEEKLY-ACTIVITIES":{
+        "SOCCER":"Futebol",
+        "FUTSAL":"Futsal",
+        "HANDBALL":"Handebol",
+        "BASKETBALL":"Basquete",
+        "SKATES":"Andar de patins ou skate",
+        "ATHLETICS":"Atletismo",
+        "SWIM":"Natação",
+        "GYMNASTICS":"Gisnática olímpica ou rítmica",
+        "FIGHT":"Judõ, Karatê, Capoeira ou outras lutas",
+        "DANCE":"Ballet ou outros tipos de danças",
+        "RUN":"Correr",
+        "RIDE-BIKE":"Andar de biblicleta",
+        "WALKING-PHYSICAL-EXERCISE":"Caminhada como exercício físico",
+        "WALKING-MEANS-TRANSPORT":"Caminhada como meio de transporte",
+        "VOLLEYBALL":"Vôlei de quadra",
+        "MUSCULATION": "Musculação",
+        "ABDOMINAL-EXERCISE":"Exercicios abdominais",
+        "TENNIS":"Tênis de quadra ou de mesa",
+        "WALK-WITH-DOG":"Passear com o cachorro",
+        "GYMNASTICS-GYM":"Ginástica de academia",
+        "NO-ACTIVITY":"Nenhuma atividade"
+      },
+      "PHYSICAL-ACTIVITY-FREQUENCY":{
+        "NONE":"Nenhuma vez",
+        "ONE-PER-WEEK":"Uma vez por semana",
+        "TWO-PER-WEEK":"Duas vezes por semana",
+        "THREE-PER-WEEK":"Três vezes por semana",
+        "FOUR-MORE-PER-WEEK":"Quatro vezes, ou mais, por semana"
+      },
+      "UNDEFINED":"Fora dos parâmetros",
+      "NOTFOUND":"NÃO ENCONTRADO",
+      "DO-NOT-KNOW":"Não sei/Não lembro"
+    },
+    "REGISTER-DATE":"Data do registro",
+    "PREVIOUS":"Anterior",
+    "NEXT":"Próximo"
+  },
+  "MYDATEPIPE":{
+    "AT": "as",
+    "HOURS": "horas."
+  },
   "NAVBAR": {
     "ADMINS-USERS": "Usuários - Administradores",
     "HEALTH-PRO-USERS": "Usuários - Profissionais de Saúde",

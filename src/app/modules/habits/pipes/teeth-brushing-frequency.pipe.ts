@@ -9,19 +9,19 @@ export class TeethbushingPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'none':
-                return 'Nenhuma';
+                return 'HABITS.PIPES.TEETH-BRUSHING.NONE';
 
             case 'once':
-                return 'Uma vez';
+                return 'HABITS.PIPES.TEETH-BRUSHING.ONCE';
 
             case 'twice':
-                return 'Duas vezes';
+                return 'HABITS.PIPES.TEETH-BRUSHING.TWICE';
 
             case 'three_more':
-                return 'Três vezes ou mais';
+                return 'HABITS.PIPES.TEETH-BRUSHING.THREE-MORE';
 
             default:
-                return 'Fora dos parâmetros';
+                return 'HABITS.PIPES.UNDEFINED';
         }
 
     }

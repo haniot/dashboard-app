@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { PhysicalActivityRecordService } from '../services/physical-activity-record.service';
 import { ToastrService } from 'ngx-toastr';
 import { PhysicalActivityPipe } from '../pipes/physical-activity-frequency.pipe';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'physical-activity-habits',
@@ -22,6 +23,7 @@ export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private physicalActivityService: PhysicalActivityRecordService,
     private physicalActivityPipe: PhysicalActivityPipe,
+    private translateService: TranslateService,
     private toastService: ToastrService
   ) {
     this.index = 0;
@@ -49,7 +51,8 @@ export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
       school_activity_freq: [{ value: physicalActivity.school_activity_freq, disabled: true }],
       weekly_activities: [{ value: physicalActivity.weekly_activities, disabled: true }]
     });
-    this.physicalActivityForm.get('school_activity_freq').patchValue(this.physicalActivityPipe.transform(physicalActivity.school_activity_freq));
+    this.physicalActivityForm.get('school_activity_freq')
+      .patchValue(this.translateService.instant(this.physicalActivityPipe.transform(physicalActivity.school_activity_freq)));
 
   }
 
