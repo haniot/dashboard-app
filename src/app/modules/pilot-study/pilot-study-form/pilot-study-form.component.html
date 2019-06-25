@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <haniot-card [title]="'PILOT-STUDY.CARD-PILOTSTUDIES.TITLE-EDIT'|translate"
+        <haniot-card [title]="pilotStudyId?('PILOT-STUDY.CARD-PILOTSTUDIES.TITLE-EDIT'|translate):('PILOT-STUDY.CARD-PILOTSTUDIES.TITLE-CREATE'|translate)"
           [subtitle]="'PILOT-STUDY.CARD-PILOTSTUDIES.SUBTITLE'|translate">
           <form [formGroup]="pilotStudyForm">
 

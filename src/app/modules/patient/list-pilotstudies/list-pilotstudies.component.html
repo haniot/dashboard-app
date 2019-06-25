@@ -2,11 +2,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <haniot-card title="Lista de estudos piloto" subtitle="Selecione um estudo para visualizar seus pacientes">
+          <haniot-card [title]="'MYPILOTS.TITLE'|translate" subtitle="'MYPILOTS.SUBTITLE'|translate">
             <div class="table-responsive">
               <div class="input-group no-border">
                 <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
-                  placeholder="Pesquisar estudo..." (keyup)="searchOnSubmit()">
+                  [placeholder]="'PILOT-STUDY.PLACEHOLDER-SEARCH'|translate" (keyup)="searchOnSubmit()">
                 <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
                   (click)="searchOnSubmit()">
                   <i class="material-icons">search</i>
@@ -17,22 +17,22 @@
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Nome do estudo</th>
-                    <th>Início</th>
-                    <th>Término</th>
-                    <th>Situação</th>
+                    <th>{{'PILOT-STUDY.NAME-OF-STUDY'|translate}}</th>
+                    <th>{{'PILOT-STUDY.START'|translate}</th>
+                    <th>{{'PILOT-STUDY.END'|translate}</th>
+                    <th>{{'PILOT-STUDY.SITUATION'|translate}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let study of list; index as i;trackBy: trackById" [routerLink]="['/patients',study.id]"
-                    title="Clique para visualizar os pacientes...">
+                    [title]="'PATIENTS.LIST-PILOTSTUDIES.TOVIEW-PATIENTS'|translate">
                     <td>{{getIndex(i)}}</td>
                     <td>{{study.name}}</td>
-                    <td>{{study.start | date : "fullDate" : "pt-BR"}}</td>
+                    <td>{{study.start | date : "fullDate"}}</td>
                     <td>{{study.end | date : "fullDate"}}</td>
                     <td>
                       <span>
-                        {{study.is_active?'ATIVADO':'DESATIVADO'}}
+                        {{study.is_active | pilotStudySituation | translate}}
                       </span>
                     </td>
                   </tr>

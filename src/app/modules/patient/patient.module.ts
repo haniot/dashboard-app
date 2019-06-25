@@ -8,6 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PatientTableComponent } from './patient-table/patient-table.component';
@@ -42,6 +43,7 @@ import { PatientManagerComponent } from './patient-manager/patient-manager.compo
     MatNativeDateModule,
     MatFormFieldModule,
     MatTabsModule,
+    TranslateModule,
 
     PatientRoutingModule,
     HabitsModule,

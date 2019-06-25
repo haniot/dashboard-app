@@ -1,137 +1,174 @@
 {
-  "APP":{
-    "TITLE":"HANIoT",
+  "APP": {
+    "TITLE": "HANIoT",
     "DEVELOP-ORGNAZATION": "NUTES"
   },
-  "ACESS-DENIED":{
+  "ACESS-DENIED": {
     "TITLE": "Acesso negado",
     "MESSSAGE": "Desculpe, seu acesso foi recusado devido a razões de segurança do nosso servidor e também aos nossos dados confidenciais",
     "MESSSAGE-GO-BACK": "Por favor, volte para a página principal clicando no botão abaixo"
   },
-  "ADMINISTRADORS":{
-    "TITLE":"Lista de usuário administradores",
-    "SUBTITLE":"",
-    "TITLE-ADD":"Criar usuário administrador",
+  "ADMINISTRADORS": {
+    "TITLE": "Lista de usuário administradores",
+    "SUBTITLE": "",
+    "TITLE-ADD": "Criar usuário administrador",
     "TITLE-EDIT": "Editar usuário administrador"
   },
   "CONFIG": {
     "CONFIG-MYDATES-TITLE": "Meus dados",
     "CONFIG-MYDATES-SUBTITLE": "Clique no botão habilitar edição para alterar suas informações",
-    "CONFIG-MYDATES-ENABLE-EDITING":"Habilitar edição",
+    "CONFIG-MYDATES-ENABLE-EDITING": "Habilitar edição",
     "CONFIG-ACESS-TITLE": "Configurações de acesso",
     "CONFIG-ACESS-SUBTITLE": "Para mudar sua senha de acesso preencha as informações abaixo e clique em ALTERAR SENHA",
     "CONFIG-LANGUAGE-TITLE": "Configurações de idioma",
     "CONFIG-LANGUAGE-SUBTITLE": "Utilize o seletor para selecionar o  idioma desejado",
     "CONFIG-LANGUAGE-LABEL": "Selecione o idioma desejado"
   },
-  "DASHBOARD":{
-    "CARD-STUDIES-TOTAL":"Total de Estudos",
-    "CARD-PATIENTS-FROM-THE-STUDY":"Total de Pacientes do Estudo Selecionado",
-    "CARD-PATIENTS-TOTAL":"Total de Pacientes",
-    "CARD-PATIENTS":{
-      "TITLE":"Acesse seus pacientes",
+  "DASHBOARD": {
+    "CARD-STUDIES-TOTAL": "Total de Estudos",
+    "CARD-PATIENTS-FROM-THE-STUDY": "Total de Pacientes do Estudo Selecionado",
+    "CARD-PATIENTS-TOTAL": "Total de Pacientes",
+    "CARD-PATIENTS": {
+      "TITLE": "Acesse seus pacientes",
       "SUBTITLE": "Clique sobre o card para visualizar informações do paciente.",
-      "SPINNER-MESSAGE":"Carregando pacientes",
-      "STUDY-EMPTY":"O estudo selecionado não possui pacientes cadastrados",
-      "STUDY-EMPTY-MESSAGE":"Ir para a página de cadastro de pacientes",
-      "REGISTER-PATIENTS":"Cadastrar pacientes",
+      "SPINNER-MESSAGE": "Carregando pacientes",
+      "STUDY-EMPTY": "O estudo selecionado não possui pacientes cadastrados",
+      "STUDY-EMPTY-MESSAGE": "Ir para a página de cadastro de pacientes",
+      "REGISTER-PATIENTS": "Cadastrar pacientes",
       "VIEW": "Visualizar paciente"
     },
-    "CARD-STUDIES":{
-      "TITLE":"Acesse seus estudos",
+    "CARD-STUDIES": {
+      "TITLE": "Acesse seus estudos",
       "SUBTITLE": "Clique sobre o card para visualizar informações do estudo.",
-      "SPINNER-MESSAGE":"Carregando estudos",
+      "SPINNER-MESSAGE": "Carregando estudos",
       "VIEW": "Visualizar estudo",
       "STUDIES-EMPTY": "Você não possui estudos associados.",
       "STUDIES-EMPTY-MESSAGE": "Entre em contato com o administrador."
     }
   },
-  "FOOTER":{
+  "FOOTER": {
     "ABOUT-US": "Sobre nós",
     "PRIVACY": "Privacidade"
   },
-  "HEALTHPROFESSIONALS":{
-    "TITLE":"Lista de profissionais de saúde",
+  "HEALTHPROFESSIONALS": {
+    "TITLE": "Lista de profissionais de saúde",
     "SUBTITLE": "",
-    "TITLE-ADD":"Criar profissional de saúde",
+    "TITLE-ADD": "Criar profissional de saúde",
     "TITLE-EDIT": "Editar profissional de saúde"
   },
-  "EDIT-MYPILOT":{
-    "TITLE":"Editar um estudo piloto",
+  "EDIT-MYPILOT": {
+    "TITLE": "Editar um estudo piloto",
     "SUBTITLE": "",
-    "TITLE-ADD":"Criar profissional de saúde",
+    "TITLE-ADD": "Criar profissional de saúde",
     "TITLE-EDIT": "Editar profissional de saúde"
   },
-  "MYEVALUATIONS":{
+  "MYEVALUATIONS": {
     "TITLE": "Lista de avaliações",
     "SUBTITLE": "Abaixo estão as avaliações relacionadas a seu perfil"
   },
-  "MYPILOTS":{
+  "MYPILOTS": {
     "TITLE": "Lista de estudos piloto",
     "SUBTITLE": "Selecione um estudo piloto para visualizar"
   },
-  "EVALUATIONS":{
-    "PLACEHOLDER-SEARCH":"Pesquisar avaliação...",
-    "SPINNER-MESSAGE":"Carregando avaliações",
+  "EVALUATIONS": {
+    "PLACEHOLDER-SEARCH": "Pesquisar avaliação...",
+    "SPINNER-MESSAGE": "Carregando avaliações",
     "LIST-EMPTY": "Nenhuma avaliação encontrada",
     "LIST-EMPTY-MESSAGE": "* Utilize o aplicativo para gerar novas avaliações",
-    "STATUS-COMPLETE":"COMPLETA",
-    "STATUS-INCOMPLETE":"INCOMPLETA",
-    "ACCESS-EVALUATION":"Acessar avaliação...",
+    "STATUS-COMPLETE": "COMPLETA",
+    "STATUS-INCOMPLETE": "INCOMPLETA",
+    "ACCESS-EVALUATION": "Acessar avaliação...",
     "DELETE-EVALUATION": "Excluir avaliação...",
-    "DELETE-CONFIRMATION":"Tem certeza que deseja remover avaliação?",
-    "STATE":"Estado"
+    "DELETE-CONFIRMATION": "Tem certeza que deseja remover avaliação?",
+    "STATE": "Estado"
   },
   "NAVBAR": {
-    "ADMINS-USERS":"Usuários - Administradores",
-    "HEALTH-PRO-USERS":"Usuários - Profissionais de Saúde",
-    "DETAILS-PATIENT":"Paciente - Detalhes",
+    "ADMINS-USERS": "Usuários - Administradores",
+    "HEALTH-PRO-USERS": "Usuários - Profissionais de Saúde",
+    "DETAILS-PATIENT": "Paciente - Detalhes",
     "DETAILS-STUDY": "Estudo - Detalhes",
-    "NUTRITION-EVALUATIONS":"Avaliações - Nutricional",
+    "NUTRITION-EVALUATIONS": "Avaliações - Nutricional",
     "WELCOME": "Bem vindo",
     "SELECT-STUDY": "Estudo selecionado"
   },
-  "PAGE-NOT-FOUND":{
-    "TITLE":"Página não encontrada",
+  "PAGE-NOT-FOUND": {
+    "TITLE": "Página não encontrada",
     "MESSAGE": "Você tentou acessar uma página não encontrada pelo nosso servidor",
     "REDIRECT-PART1": "Redirecionando para página inicial em",
     "REDIRECT-PART2": "segundos"
   },
-  "PAGINATOR":{
+  "PAGINATOR": {
     "ITEMS_PER_PAGE": "Itens por página",
     "NEXT_PAGE": "Proxima página",
     "PREVIOUS_PAGE": "Página anterior",
     "OF": "de"
   },
-  "PILOT-STUDY":{
-    "CARD-PILOTSTUDIES":{
-      "TITLE": "Lista de estudos piloto",
-      "TITLE-CREATE":"Criar um estudo piloto",
-      "TITLE-EDIT":"Editar um estudo piloto",
+  "PATIENTS": {
+    "LIST-PILOTSTUDIES": {
+      "TOVIEW-PATIENTS": "Clique para visualizar os pacientes..."
+    },
+    "PATIENTS-COMPONENT": {
+      "TITLE": "Lista de pacientes",
       "SUBTITLE": ""
     },
-    "PLACEHOLDER-PERIOD":"Selecione um período",
-    "TOTAL-PATIENTS":"Total de pacientes",
-    "SPINNER-MESSAGE":"Carregando arquivos disponíveis",
+    "PATIENTS-FORM": {
+      "TITLE-CREATE": "Criar um paciente",
+      "TITLE-EDIT": "Editar paciente",
+      "SUBTITLE": "",
+      "SELECT-BIRTH-DATE": "Selecione a data de nascimento",
+      "ASSOCIATE-STUDY": "Estudo associado",
+      "SELECT-STUDY": "- - - - selecione um estudo - - - -",
+      "INVALID-STUDY": "Estudo inválido"
+    },
+    "PATIENTS-TABLE": {
+      "PLACEHOLDER-SEARCH": "Pesquisar paciente...",
+      "LIST-EMPTY": "Nenhum paciente cadastrado",
+      "LIST-EMPTY-MESSAGE": "Utilize o botão 'Adicionar' para adicionar pacientes ao estudo",
+      "TOVIEW-PATIENT": "Visualizar detalhes...",
+      "EDIT-PATIENT": "Editar paciente...",
+      "DELETE-PATIENT": "Excluir paciente...",
+      "DELETE-CONFIRMATION": "'Tem certeza que deseja remover paciente?'"
+    },
+    "VIEW-HABITS": {
+      "TOVIEW-EVALUATIONS": "Visualizar avaliações...",
+      "NUTRITION-EVALUATIONS": "Avaliações nutricionais",
+      "CARD-PERSONAL-INFO": {
+        "TITLE": "Informações pessoais do paciente",
+        "SUBTITLE": ""
+      },
+      "HABITS": "HÁBITOS",
+      "MEASUREMENTS": "MEDIÇÕES"
+    }
+  },
+  "PILOT-STUDY": {
+    "CARD-PILOTSTUDIES": {
+      "TITLE": "Lista de estudos piloto",
+      "TITLE-CREATE": "Criar um estudo piloto",
+      "TITLE-EDIT": "Editar um estudo piloto",
+      "SUBTITLE": ""
+    },
+    "PLACEHOLDER-PERIOD": "Selecione um período",
+    "TOTAL-PATIENTS": "Total de pacientes",
+    "SPINNER-MESSAGE": "Carregando arquivos disponíveis",
     "FILESEMPTY": "Nenhum arquivo encontrado.",
     "FILESEMPTY-MESSAGE": "* Utilize o botão abaixo para solicitar um novo arquivo!",
     "DELETE": "Excluir avaliação...",
     "OPTIONS-DOWNLOAD": "Opções de download...",
     "DOWNLOAD-CSV": "Baixar CSV",
-    "DOWNLOAD-XLS":"Baixar XLS",
+    "DOWNLOAD-XLS": "Baixar XLS",
     "NEW-FILE": "Solicitar Novo Arquivo",
-    "DELETE-CONFIRMATION":"Tem certeza que deseja remover estudo piloto?",
+    "DELETE-CONFIRMATION": "Tem certeza que deseja remover estudo piloto?",
     "NUTRITIONEVALUATION": "Avaliação odontológica",
-    "FILECSV":"Arquivo CSV",
+    "FILECSV": "Arquivo CSV",
     "FILEXLS": "Arquivo XLS",
-    "GENERATINGFILE":"Gerando arquivo",
-    "REMOVINGFILE":"Removendo arquivo",
-    "START":"Ínicio",
+    "GENERATINGFILE": "Gerando arquivo",
+    "REMOVINGFILE": "Removendo arquivo",
+    "START": "Ínicio",
     "END": "Término",
-    "INVALID-DATE-START":"Data de início inválida",
-    "INVALID-DATE-END":"Data de término inválida",
-    "PLACEHOLDER-DATE-START":"Selecione a data de ínicio",
-    "PLACEHOLDER-DATE-END":"Selecione a data de término",
+    "INVALID-DATE-START": "Data de início inválida",
+    "INVALID-DATE-END": "Data de término inválida",
+    "PLACEHOLDER-DATE-START": "Selecione a data de ínicio",
+    "PLACEHOLDER-DATE-END": "Selecione a data de término",
     "SITUATION": "Situação",
     "PROFESSIONALS": "Profissionais",
     "SELECT-PROFESSIONALS": "Selecione profissionais",
@@ -139,44 +176,44 @@
       "TITLE": "Gerenciar profissionais",
       "SUBTITLE": "",
       "ADDPROFESSIONAL": "Adicionar novo profissional",
-      "ASSOCIATE-PROFESSIONALS":"Profissionais associados",
-      "DISASSOCIATE-PROFESSIONAL":"Disassociar profissional...",
+      "ASSOCIATE-PROFESSIONALS": "Profissionais associados",
+      "DISASSOCIATE-PROFESSIONAL": "Disassociar profissional...",
       "REMOVE": "Remover"
     },
     "PLACEHOLDER-SEARCH": "Pesquisar estudo...",
-    "NAME-OF-STUDY":"Nome do estudo",
-    "TOVIEW-STUDY":"Visualizar estudo...",
-    "EDIT-STUDY":"Editar estudo...",
+    "NAME-OF-STUDY": "Nome do estudo",
+    "TOVIEW-STUDY": "Visualizar estudo...",
+    "EDIT-STUDY": "Editar estudo...",
     "DELETE-STUDY": "Remover estudo...",
     "PROFESSIONAL": "Profissional",
     "CARD-PILOT-STUDY": {
       "TITLE": "Estudo piloto",
-      "SUBTITLE": ""      
+      "SUBTITLE": ""
     },
     "CARD-FILES": {
       "TITLE": "Arquivos disponíveis para download",
-      "SUBTITLE": ""      
+      "SUBTITLE": ""
     }
   },
-  "SIDEBAR":{
+  "SIDEBAR": {
     "USERS": "Usuários",
     "ADMINS": "Administradores",
     "HEALTHPROFESSIONALS": "Profissionais de Saúde"
   },
-  "SHARED":{
+  "SHARED": {
     "NAME": "Nome",
     "INVALID-NAME": "Nome inválido",
     "EMAIL": "Email",
     "INVALID-EMAIL": "Email inválido",
     "AREA": "Área",
     "INVALID-AREA": "Área inválida",
-    "HEALTH-AREA-NUTRITION":"Nutrição",
-    "HEALTH-AREA-DENTISTRY":"Dentista",
-    "HEALTH-AREA-UNDEFINED":"Fora dos parâmetros",
-    "NOT-FOUND":"Não encontrado",
+    "HEALTH-AREA-NUTRITION": "Nutrição",
+    "HEALTH-AREA-DENTISTRY": "Dentista",
+    "HEALTH-AREA-UNDEFINED": "Fora dos parâmetros",
+    "NOT-FOUND": "Não encontrado",
     "SAVE": "Salvar",
-    "PASSWORD-OLD":"Senha atual",
-    "PASSWORD-NEW":"Senha nova",
+    "PASSWORD-OLD": "Senha atual",
+    "PASSWORD-NEW": "Senha nova",
     "INCORRECT-PASSWORD": "Senha incorreta",
     "PASSWORD-RULES-MESSAGE": "Sua senha deve ter no mínimo 6 caracteres incluindo letras, números e símbolos",
     "CHANGE-PASSWORD": "Alterar senha",
@@ -191,28 +228,41 @@
     "ACTIONS": "Ações",
     "PASSWORD": "Senha",
     "PASSWORD-CONFIRM": "Confirme a senha",
+    "INVALID-PASSWORD": "Senha inválida",
     "PASSWORD-NOTMATCH": "Informe a mesma senha",
-    "REQUERID-FIELD":"Campo obrigatório",
-    "CLOSE":"Fechar",
-    "DATE":"Data",
-    "DATE-START":"Data ínicio",
+    "REQUERID-FIELD": "Campo obrigatório",
+    "CLOSE": "Fechar",
+    "DATE": "Data",
+    "DATE-START": "Data ínicio",
     "DATE-END": "Data término",
     "STUDY-ACTIVATED": "ATIVADO",
     "STUDY-DISABLED": "DESATIVADO",
-    "TOCLEAN":"Limpar",
+    "TOCLEAN": "Limpar",
     "LOCAL": "Local",
     "INVALID-LOCAL": "Local inválido",
     "TOBACK": "Voltar",
-    "LIST-EMPTY":"Nenhum registro encontrado",
+    "LIST-EMPTY": "Nenhum registro encontrado",
     "TOVIEW": "Visualizar",
-    "PATIENT": "Paciente"
+    "PATIENT": "Paciente",
+    "PHONE": "Telefone",
+    "INVALID-PHONE": "Telefone inválido",
+    "ONLY-NUMBERS": "Informe apenas numeros",
+    "GENDER": "Gênero",
+    "INVALID-GENDER": "Gênero inválido",
+    "GENDER-MALE": "MASCULINO",
+    "GENDER-FEMALE": "FEMININO",
+    "BIRTH-DATE": "Date de nascimento",
+    "INVALID-BIRTH-DATE": "Date de nascimento inválida",
+    "NAME-OF-PATIENT": "Nome do paciente",
+    "YEARS": "ANOS",
+    "AGE": "Idade"
   },
-  "TABLE-USER":{
-    "PLACEHOLDER-SEARCH":"Pesquisar usuário...",
-    "SPINNER-MESSAGE":"Carregando usuários",
-    "LIST-EMPTY":"Nenhum registro encontrado",
-    "EDIT":"Editar usuário...",
-    "DELETE":"Excluir usuário...",
-    "DELETE-CONFIRMATION":"Tem certeza que deseja remover usuário?"
+  "TABLE-USER": {
+    "PLACEHOLDER-SEARCH": "Pesquisar usuário...",
+    "SPINNER-MESSAGE": "Carregando usuários",
+    "LIST-EMPTY": "Nenhum registro encontrado",
+    "EDIT": "Editar usuário...",
+    "DELETE": "Excluir usuário...",
+    "DELETE-CONFIRMATION": "Tem certeza que deseja remover usuário?"
   }
 }

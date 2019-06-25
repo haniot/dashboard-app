@@ -66,6 +66,10 @@
     "TITLE": "List of reviews",
     "SUBTITLE": "Below are the evaluations related to your profile"
   },
+  "MYPILOTS":{
+    "TITLE": "List of pilot studies",
+    "SUBTITLE": "Select a pilot study to view"
+  },
   "EVALUATIONS":{
     "PLACEHOLDER-SEARCH":"Search evaluations ...",
     "SPINNER-MESSAGE":"Loading evaluations",
@@ -99,6 +103,43 @@
     "PREVIOUS_PAGE": "Previous page",
     "OF": "of"
   },
+  "PATIENTS":{
+    "LIST-PILOTSTUDIES":{
+        "TOVIEW-PATIENTS":"Click to view patients ..."
+    },
+    "PATIENTS-COMPONENT": {
+      "TITLE": "List of patients",
+      "SUBTITLE": ""
+    },
+    "PATIENTS-FORM":{
+      "TITLE-CREATE": "Create a patient",
+      "TITLE-EDIT": "Edit patient",
+      "SUBTITLE": "",
+      "SELECT-BIRTH-DATE":"Select the date of birth",
+      "ASSOCIATE-STUDY":"Associated study",
+      "SELECT-STUDY":"- - - - select a study - - - -",
+      "INVALID-STUDY":"Invalid study"
+    },
+    "PATIENTS-TABLE":{
+      "PLACEHOLDER-SEARCH":"Search patient ...",
+      "LIST-EMPTY": "No patient registered",
+      "LIST-EMPTY-MESSAGE": "Use the 'Add' button to add patients to the study",
+      "TOVIEW-PATIENT":"View details ...",
+      "EDIT-PATIENT":"Edit patient ...",
+      "DELETE-PATIENT": "Delete patient ...",
+      "DELETE-CONFIRMATION": "Are you sure you want to remove patient?"
+    },
+    "VIEW-HABITS": {
+      "TOVIEW-EVALUATIONS": "View evaluations...",
+      "NUTRITION-EVALUATIONS": "Nutritional evaluations",
+      "CARD-PERSONAL-INFO": {
+        "TITLE": "Patient personal information",
+        "SUBTITLE": ""
+      },
+      "HABITS": "HABITS",
+      "MEASUREMENTS": "MEASUREMENTS"
+    }
+  },  
   "PILOT-STUDY":{
     "CARD-PILOTSTUDIES":{
       "TITLE": "List of pilot studies",
@@ -187,6 +228,7 @@
     "ACTIONS": "Actions",
     "PASSWORD": "Password",
     "PASSWORD-CONFIRM": "Confirm the password",
+    "INVALID-PASSWORD": "Invalid password",
     "PASSWORD-NOTMATCH": "Enter the same password",
     "REQUERID-FIELD":"Required field",
     "CLOSE":"Close",
@@ -201,7 +243,19 @@
     "TOBACK": "To back",
     "LIST-EMPTY":"No records found",
     "TOVIEW": "To view",
-    "PATIENT": "Patient"
+    "PATIENT": "Patient",
+    "PHONE": "Phone",
+    "INVALID-PHONE": "Invalid phone",
+    "ONLY-NUMBERS":"Enter numbers only",
+    "GENDER":"Gender",
+    "INVALID-GENDER":"Invalid gender",
+    "GENDER-MALE":"MALE",
+    "GENDER-FEMALE":"FEMALE",
+    "BIRTH-DATE":"Birth date",
+    "INVALID-BIRTH-DATE":"Invalid birth date",
+    "NAME-OF-PATIENT":"Name of patient",
+    "AGE":"Age",
+    "YEARS": "YEARS"
   },
   "TABLE-USER":{
     "PLACEHOLDER-SEARCH":"Search for user ...",
