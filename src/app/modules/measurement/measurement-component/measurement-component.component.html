@@ -4,10 +4,10 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Configurar gráficos visíveis
+                        {{'MEASUREMENTS.COMPONENT.CONFIG-GRAPH'|translate}}
                     </mat-panel-title>
                     <mat-panel-description>
-                        Clique para expandir/retrair...
+                        {{'MEASUREMENTS.COMPONENT.EXPAND-COLLAPSE'|translate}}
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 
@@ -18,7 +18,7 @@
                             <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="configVisibility.weight">
                             </mat-slide-toggle>
                         </div>
-                        <div class="p-2"><label> Peso: </label></div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.WEIGHT'|translate}}: </label></div>
                     </div>
 
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
@@ -26,7 +26,7 @@
                             <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="configVisibility.height">
                             </mat-slide-toggle>
                         </div>
-                        <div class="p-2"><label> Altura: </label></div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.WEIGHT'|translate}}: </label></div>
                     </div>
 
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"
@@ -35,7 +35,7 @@
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
                                               [(ngModel)]="configVisibility.fat"></mat-slide-toggle>
                         </div>
-                        <div class="p-2"><label> Gordura corporal: </label></div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.FAT'|translate}}: </label></div>
                     </div>
 
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
@@ -43,7 +43,8 @@
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
                                               [(ngModel)]="configVisibility.circumference"></mat-slide-toggle>
                         </div>
-                        <div class="p-2"><label> Circunferência da cintura: </label></div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.WAIST-CIRCUMFERENCE'|translate}}: </label>
+                        </div>
                     </div>
 
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"
@@ -52,7 +53,7 @@
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
                                               [(ngModel)]="configVisibility.temperature"></mat-slide-toggle>
                         </div>
-                        <div class="p-2"><label> Temperatura corporal: </label></div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.TEMPERATURE'|translate}}: </label></div>
                     </div>
 
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
@@ -61,7 +62,7 @@
                                               [(ngModel)]="configVisibility.glucose">
                             </mat-slide-toggle>
                         </div>
-                        <div class="p-2"><label> Glicose no sangue: </label></div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.GLUCOSE'|translate}}: </label></div>
                     </div>
 
                     <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"
@@ -71,7 +72,7 @@
                                               [(ngModel)]="configVisibility.pressure">
                             </mat-slide-toggle>
                         </div>
-                        <div class="p-2"><label> Pressão sanguínea: </label></div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.PRESSURE'|translate}}: </label></div>
                     </div>
 
 
@@ -81,7 +82,7 @@
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
                                               [(ngModel)]="configVisibility.heartRate"></mat-slide-toggle>
                         </div>
-                        <div class="p-2"><label> Frequência cardíaca: </label></div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.HEART-RATE'|translate}}: </label></div>
                     </div>
 
                 </div>

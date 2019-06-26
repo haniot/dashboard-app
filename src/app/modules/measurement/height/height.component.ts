@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {DatePipe} from '@angular/common';
 
 import {IMeasurement, Measurement} from '../models/measurement';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'height',
@@ -18,7 +19,8 @@ export class HeightComponent implements OnInit, OnChanges {
 
 
     constructor(
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private translateService: TranslateService
     ) {
         this.data = new Array<Measurement>();
     }
@@ -28,6 +30,8 @@ export class HeightComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
+
+        const height = this.translateService.instant('MEASUREMENTS.HEIGHT.HEIGHT');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -41,7 +45,7 @@ export class HeightComponent implements OnInit, OnChanges {
         };
 
         const series = {
-            name: 'Altura',
+            name: height,
             type: 'line',
             step: 'start',
             data: []
@@ -56,7 +60,7 @@ export class HeightComponent implements OnInit, OnChanges {
         this.options = {
             tooltip: {
                 trigger: 'axis',
-                formatter: "Altura: {c} cm <br> Data: {b}"
+                formatter: height + ": {c} cm <br> Data: {b}"
             },
             xAxis: xAxis,
             yAxis: {

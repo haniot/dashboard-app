@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {BloodPressure} from '../models/blood-pressure';
-import {GraphService} from "../../../shared/shared-services/graph.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'blood-pressure',
@@ -18,7 +18,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
-        private graphService: GraphService
+        private translateService: TranslateService
     ) {
         this.data = new Array<BloodPressure>();
     }
@@ -28,6 +28,11 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
+
+        const systolic = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.SYSTOLIC');
+        const diastolic = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.DIASTOLIC');
+        const pulse = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PULSE');
+        const pressure = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PRESSURE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -42,7 +47,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
         const series = [
             {
-                name: "Sistólica",
+                name: systolic,
                 data: [],
                 type: 'line',
                 symbol: 'circle',
@@ -63,7 +68,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 }
             },
             {
-                name: "Diastólica",
+                name: diastolic,
                 data: [],
                 type: 'line',
                 symbol: 'triangle',
@@ -84,7 +89,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 }
             },
             {
-                name: "Pulso",
+                name: pulse,
                 data: [],
                 type: 'line',
                 symbol: 'line',
@@ -127,10 +132,10 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.options = {
             tooltip: {
                 trigger: 'item',
-                formatter: "Pressão : {c} mmHg<br>  Data: {b}"
+                formatter: pressure + " : {c} mmHg<br>  Data: {b}"
             },
             legend: {
-                data: ['Sistólica', 'Diastólica', "Pulso"]
+                data: [systolic, diastolic, pulse]
             },
             xAxis: xAxis,
             yAxis: {

@@ -22,6 +22,7 @@ import {DeviceTypePipe} from './pipes/device-type.pipe';
 import {DeviceComponent} from './device/device.component';
 import {DeviceService} from './services/device.service';
 import {DecimalFormatterPipe} from './pipes/decimal-formatter.pipe';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import {DecimalFormatterPipe} from './pipes/decimal-formatter.pipe';
 
         MatExpansionModule,
         MatSlideToggleModule,
-        NgxEchartsModule
+        NgxEchartsModule,
+        TranslateModule
     ],
     exports: [
         MeasurementComponentComponent,

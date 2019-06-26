@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {BloodGlucose, MealType} from '../models/blood-glucose';
-import {GraphService} from "../../../shared/shared-services/graph.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'blood-glucose',
@@ -19,7 +19,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
-        private graphService: GraphService
+        private translateService: TranslateService
     ) {
         this.data = new Array<BloodGlucose>();
         this.lastData = new BloodGlucose();
@@ -30,6 +30,15 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
+
+        const preprandial = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.PREPRANDIAL');
+        const postprandial = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.POSTPRANDIAL');
+        const fasting = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.FASTING');
+        const casual = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.CASUAL');
+        const bedtime = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.BEDTIME');
+        const max = this.translateService.instant('MEASUREMENTS.MAX');
+        const min = this.translateService.instant('MEASUREMENTS.MIN');
+        const glucose = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.GLUCOSE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -44,57 +53,57 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
         const series = [
             {
-                name: 'Pré-prandial',
+                name: preprandial,
                 type: 'bar',
                 data: [],
                 markPoint: {
                     data: [
-                        {type: 'max', name: 'Máximo'},
-                        {type: 'min', name: 'Mínimo'}
+                        {type: 'max', name: max},
+                        {type: 'min', name: min}
                     ]
                 }
             },
             {
-                name: 'Pós-prandial',
+                name: postprandial,
                 type: 'bar',
                 data: [],
                 markPoint: {
                     data: [
-                        {type: 'max', name: 'Máximo'},
-                        {type: 'min', name: 'Mínimo'}
+                        {type: 'max', name: max},
+                        {type: 'min', name: min}
                     ]
                 }
             },
             {
-                name: 'Jejum',
+                name: fasting,
                 type: 'bar',
                 data: [],
                 markPoint: {
                     data: [
-                        {type: 'max', name: 'Máximo'},
-                        {type: 'min', name: 'Mínimo'}
+                        {type: 'max', name: max},
+                        {type: 'min', name: min}
                     ]
                 }
             },
             {
-                name: 'Casual',
+                name: casual,
                 type: 'bar',
                 data: [],
                 markPoint: {
                     data: [
-                        {type: 'max', name: 'Máximo'},
-                        {type: 'min', name: 'Mínimo'}
+                        {type: 'max', name: max},
+                        {type: 'min', name: min}
                     ]
                 }
             },
             {
-                name: 'Antes de dormir',
+                name: bedtime,
                 type: 'bar',
                 data: [],
                 markPoint: {
                     data: [
-                        {type: 'max', name: 'Máximo'},
-                        {type: 'min', name: 'Mínimo'}
+                        {type: 'max', name: max},
+                        {type: 'min', name: min}
                     ]
                 }
             }
@@ -131,10 +140,10 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
             tooltip: {
                 trigger: 'item',
-                formatter: "Glicose : {c} mg/dl<br> Data: {b}"
+                formatter: glucose + " : {c} mg/dl<br> Data: {b}"
             },
             legend: {
-                data: ['Pré-prandial', 'Pós-prandial', 'Jejum', 'Casual', 'Antes de dormir']
+                data: [preprandial, postprandial, fasting, casual, bedtime]
             },
 
             xAxis: xAxis,

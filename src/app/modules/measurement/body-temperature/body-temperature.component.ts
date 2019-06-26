@@ -3,7 +3,7 @@ import {DatePipe} from '@angular/common';
 
 import {IMeasurement, Measurement} from '../models/measurement';
 import {DecimalFormatterPipe} from "../pipes/decimal-formatter.pipe";
-import {GraphService} from "../../../shared/shared-services/graph.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'body-temperature',
@@ -21,7 +21,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
     constructor(
         private datePipe: DatePipe,
         private decimalPipe: DecimalFormatterPipe,
-        private graphService: GraphService
+        private translateService: TranslateService
     ) {
         this.data = new Array<Measurement>();
         this.lastData = new Measurement();
@@ -32,6 +32,11 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
+
+        const historic_temperature = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.TEMPERATURE-HISTORIC');
+        const max = this.translateService.instant('MEASUREMENTS.MAX');
+        const min = this.translateService.instant('MEASUREMENTS.MIN');
+        const temperature = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.TEMPERATURE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -46,13 +51,13 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         };
 
         const series = {
-            name: 'Histórico de temperatura',
+            name: historic_temperature,
             type: 'line',
             data: [],
             markPoint: {
                 data: [
-                    {type: 'max', name: 'Maximo'},
-                    {type: 'min', name: 'Minimo'}
+                    {type: 'max', name: max},
+                    {type: 'min', name: min}
                 ]
             }
         };
@@ -65,7 +70,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
         this.options = {
             tooltip: {
-                formatter: "Temperatura: {c} °C <br> Data: {b}",
+                formatter: temperature + ": {c} °C <br> Data: {b}",
                 trigger: 'axis'
             },
             xAxis: xAxis,

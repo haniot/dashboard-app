@@ -3,6 +3,7 @@ import {DatePipe} from '@angular/common';
 
 import {Weight} from '../models/wieght';
 import {DecimalFormatterPipe} from "../pipes/decimal-formatter.pipe";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -25,7 +26,8 @@ export class WeightComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
-        private decimalPipe: DecimalFormatterPipe
+        private decimalPipe: DecimalFormatterPipe,
+        private translateService: TranslateService
     ) {
         this.data = new Array<Weight>();
     }
@@ -35,6 +37,10 @@ export class WeightComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
+
+        const weigth = this.translateService.instant('MEASUREMENTS.WEIGHT.TITLE');
+        const body_fat = this.translateService.instant('MEASUREMENTS.WEIGHT.BODY-FAT');
+        const fat = this.translateService.instant('MEASUREMENTS.WEIGHT.FAT');
 
         this.lastIndex = 0;
 
@@ -51,7 +57,7 @@ export class WeightComponent implements OnInit, OnChanges {
         }
 
         const seriesWeight = {
-            name: "Peso",
+            name: weigth,
             data: [],
             type: 'line',
             symbol: 'circle',
@@ -76,7 +82,7 @@ export class WeightComponent implements OnInit, OnChanges {
         const xAxisFat = {type: 'category', data: []};
 
         const seriesFat = {
-            name: "Gordura corporal",
+            name: body_fat,
             data: [],
             type: 'bar',
             symbol: 'circle',
@@ -108,7 +114,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
         this.weightGraph = {
             tooltip: {
-                formatter: "Peso: {c} Kg <br> Data: {b}"
+                formatter: weigth + ": {c} Kg <br> Data: {b}"
             },
             xAxis: xAxisWeight,
             yAxis: {
@@ -118,7 +124,7 @@ export class WeightComponent implements OnInit, OnChanges {
                 }
             },
             legend: {
-                data: ['Peso']
+                data: [weigth]
             },
             dataZoom: [
                 {
@@ -130,7 +136,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
         this.fatGraph = {
             tooltip: {
-                formatter: "Gordura: {c} % <br> Data: {b}"
+                formatter: fat + ": {c} % <br> Data: {b}"
             },
             xAxis: xAxisFat,
             yAxis: {
@@ -140,7 +146,7 @@ export class WeightComponent implements OnInit, OnChanges {
                 }
             },
             legend: {
-                data: ['Gordura corporal']
+                data: [fat]
             },
             dataZoom: [
                 {

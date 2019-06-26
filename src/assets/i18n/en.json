@@ -1,7 +1,7 @@
 {
   "APP": {
     "TITLE": "HANIoT",
-    "DEVELOP-ORGNAZATION": "NUTES"
+    "DEVELOP-ORGANIZATION": "NUTES"
   },
   "ACESS-DENIED": {
     "TITLE": "Access denied",
@@ -69,6 +69,102 @@
   "MYPILOTS": {
     "TITLE": "List of pilot studies",
     "SUBTITLE": "Select a pilot study to view"
+  },
+  "MEASUREMENTS": {
+    "BLOOD-GLUCOSE": {
+      "TITLE": "Blood glucose",
+      "SUBTITLE": "",
+      "GLUCOSE": "Glucose",
+      "PERIOD": "Measurement period",
+      "UNAVAILABLE-DATA":"No record of glucose enrolled!"
+    },
+    "BLOOD-PRESSURE": {
+      "TITLE": "Blood pressure",
+      "SUBTITLE": "",
+      "PRESSURE": "Pressure",
+      "SYSTOLIC": "Systolic",
+      "PULSE": "Pulse",
+      "DIASTOLIC": "Diastolic",
+      "UNAVAILABLE-DATA":"No record of blood pressure recorded!"
+    },
+    "BODY-TEMPERATURE": {
+      "TITLE": "Body temperature",
+      "SUBTITLE": "",
+      "TEMPERATURE-HISTORIC": "Temperature historic",
+      "TEMPERATURE": "Temperature",
+      "UNAVAILABLE-DATA":"No record of body temperature recorded!"
+    },
+    "FAT": {
+      "TITLE": "Body fat",
+      "SUBTITLE": "",
+      "FAT": "Fat",
+      "UNAVAILABLE-DATA":"No record of body fat recorded!"
+    },
+    "HEART-RATE": {
+      "TITLE": "Heart rate",
+      "SUBTITLE": "",
+      "HISTORIC": {
+        "TEXT": "Measurement historic",
+        "SUBTEXT": "The graph below represents all the values captured in all the measurements made"
+      },
+      "LAST-DATE": {
+        "TEXT": "Last measurement performed",
+        "SUBTEXT": "The graph below represents all the values captured in the last measurement performed"
+      },
+      "FREQUENCY": "Frequency",
+      "UNAVAILABLE-DATA":"No registered heart rate record!"
+    },
+    "HEIGHT": {
+      "TITLE": "Stature",
+      "SUBTITLE": "",
+      "HEIGHT": "Height",
+      "UNAVAILABLE-DATA":"No record of height registered!"
+    },
+    "WAIST-CIRCUMFERENCE": {
+      "TITLE": "Waist circumference",
+      "SUBTITLE": "",
+      "CIRCUMFERENCE": "Circumference",
+      "UNAVAILABLE-DATA":"No record of waist circumference recorded!"
+    },
+    "WEIGHT": {
+      "TITLE": "Weight",
+      "SUBTITLE": "",
+      "BODY-FAT": "Body fat",
+      "FAT": "Fat",
+      "UNAVAILABLE-DATA":"No record of height registered!"
+    },
+    "COMPONENT": {
+      "CONFIG-GRAPH": "Set up visible graphics",
+      "EXPAND-COLLAPSE": "Click to expand/collapse...",
+      "WEIGHT": "Weight",
+      "HEIGHT": "Height",
+      "FAT": "Body fat",
+      "WAIST-CIRCUMFERENCE": "Waist circumference",
+      "TEMPERATURE": "Body temperature",
+      "GLUCOSE": "Blood Glucose",
+      "PRESSURE": "Blood pressure",
+      "HEART-RATE": "Heart rate"
+    },
+    "PIPES": {
+      "MEAL": {
+        "PREPRANDIAL": "Pre-prandial",
+        "POSTPRANDIAL": "Pos-prandial",
+        "FASTING": "Fasting",
+        "CASUAL": "Casual",
+        "BEDTIME": "Before bedtime"
+      },
+      "UNDEFINED": "Out of parameters",
+      "NOTFOUND": "NOT FOUND"
+    },
+    "LAST-REGISTER": "Last register",
+    "LAST-REGISTER-DATE":"Date of last record",
+    "PATTERN-DATE":"month/day/year hour",
+    "VALUE": "Value",
+    "UNIT": "Unit",
+    "MIN": "Minimum",
+    "MAX": "Maximum",
+    "AVERAGE": "Average",
+    "AVERAGE-VALUE": "Average value"
   },
   "EVALUATIONS": {
     "PLACEHOLDER-SEARCH": "Search evaluations ...",

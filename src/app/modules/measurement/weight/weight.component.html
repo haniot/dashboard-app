@@ -1,4 +1,4 @@
-<haniot-card [title]="'Peso'">
+<haniot-card [title]="'MEASUREMENTS.WEIGHT.TITLE'|translate" [subtitle]="'MEASUREMENTS.WEIGHT.SUBTITLE'|translate">
     <div class="row">
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-cente row">
@@ -8,14 +8,14 @@
                         <div class="card-icon">
                             <img src="../../../../assets/img/haniot/weight.png" alt="">
                         </div>
-                        <p class="card-category">Peso: </p>
+                        <p class="card-category">{{'MEASUREMENTS.COMPONENT.WEIGHT'|translate}}: </p>
                         <h3 class="card-title" *ngIf="lastData">
                             {{lastData.value | decimalFormatter}}
                             <small>{{lastData.unit }}</small>
                         </h3>
                         <h3 class="card-title" *ngIf="!lastData">
-                            Valor
-                            <small>unidade</small>
+                            {{'MEASUREMENTS.VALUE'|translate}}
+                            <small>{{'MEASUREMENTS.UNIT'|translate}}</small>
                         </h3>
                     </div>
 
@@ -35,23 +35,25 @@
                         <div class="card-icon">
                             <img src="../../../../assets/img/haniot/fat.png" alt="">
                         </div>
-                        <p class="card-category">Gordura: </p>
+                        <p class="card-category">{{'MEASUREMENTS.COMPONENT.FAT'|translate}}: </p>
                         <h3 class="card-title" *ngIf="lastData && lastData.fat">
                             {{lastData.fat.value }}
                             <small>{{lastData.fat.unit }}</small>
                         </h3>
                         <h3 class="card-title" *ngIf="!lastData">
-                            Valor
-                            <small>unidade</small>
+                            {{'MEASUREMENTS.VALUE'|translate}}
+                            <small>{{'MEASUREMENTS.UNIT'|translate}}</small>
                         </h3>
                     </div>
 
                 </div>
                 <div class="d-flex flex-row-reverse">
                     <div class="p-2">
-                        <small class="pull-right" *ngIf="lastData">Data do último
-                            registro:{{lastData.timestamp | myDate}}</small>
-                        <small class="pull-right" *ngIf="!lastData">Data do último registro: dia/mês/ano horário</small>
+                        <small class="pull-right" *ngIf="lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            :{{lastData.timestamp | myDate}}</small>
+                        <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:
+                            {{'MEASUREMENTS.PATTERN-DATE'|translate}}
+                        </small>
                     </div>
                 </div>
             </div>
@@ -62,7 +64,7 @@
         </div>
 
         <div *ngIf="data.length==0">
-            <span class="badge badge-danger badge-12">Nenhum registro de estatura cadastrado!</span>
+            <span class="badge badge-danger badge-12 ellipsis">{{'MEASUREMENTS.WEIGHT.UNAVAILABLE-DATA'|translate}}</span>
         </div>
     </div>
 </haniot-card>

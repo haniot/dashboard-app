@@ -1,4 +1,5 @@
-<haniot-card [title]="'Frequência cardíaca'" subtitle=''>
+<haniot-card [title]="'MEASUREMENTS.HEART-RATE.TITLE'|translate"
+             [subtitle]="'MEASUREMENTS.HEART-RATE.SUBTITLE'|translate">
 
     <div class="row">
 
@@ -8,9 +9,10 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
             <div class="d-flex flex-row-reverse">
                 <div class="p-2">
-                    <small class="pull-right" *ngIf="lastData && lastData.dataset">Data do último
-                        registro: {{lastData.dataset[0].timestamp | date}}</small>
-                    <small class="pull-right" *ngIf="!lastData">Data do último registro: dia/mês/ano horário</small>
+                    <small class="pull-right" *ngIf="lastData && lastData.dataset">
+                        {{'MEASUREMENTS.LAST-REGISTER'|translate}}: {{lastData.dataset[0].timestamp | date}}</small>
+                    <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                        : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
                 </div>
             </div>
         </div>
@@ -19,7 +21,7 @@
              [options]="options"></div>
 
         <div *ngIf="data.length==0">
-            <span class="badge badge-danger badge-12">Nenhum registro de frequência cardíaca cadastrado!</span>
+            <span class="badge badge-danger badge-12 ellipsis">{{'MEASUREMENTS.HEART-RATE.UNAVAILABLE-DATA'|translate}}</span>
         </div>
     </div>
 

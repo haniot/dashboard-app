@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {HeartRate} from '../models/heart-rate';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'heart-rate',
@@ -19,7 +20,8 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
 
     constructor(
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private translateService: TranslateService
     ) {
         this.data = new Array<HeartRate>();
     }
@@ -29,6 +31,13 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
+
+        const historic_text = this.translateService.instant('MEASUREMENTS.HEART-RATE.HISTORIC.TEXT');
+        const historic_subtext = this.translateService.instant('MEASUREMENTS.HEART-RATE.HISTORIC.SUBTEXT');
+        const frequency = this.translateService.instant('MEASUREMENTS.HEART-RATE.FREQUENCY');
+
+        const last_date_text = this.translateService.instant('MEASUREMENTS.HEART-RATE.LAST-DATE.TEXT');
+        const last_date_subtext = this.translateService.instant('MEASUREMENTS.HEART-RATE.LAST-DATE.SUBTEXT');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -75,11 +84,11 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
         this.options = {
             title: {
-                text: 'Histório de medições',
-                subtext: 'O gráfico abaixo representa todos os valores captados em todas as medições realizadas'
+                text: historic_text,
+                subtext: historic_subtext
             },
             tooltip: {
-                formatter: "Frequência: {c} bpm <br> Data: {b}",
+                formatter: frequency + " : {c} bpm <br> Data: {b}",
                 trigger: 'axis'
             },
             xAxis: xAxisOptions,
@@ -101,11 +110,11 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
         this.optionsLastData = {
             title: {
-                text: 'Última medição realizada',
-                subtext: 'O gráfico abaixo representa todos os valores captados na última medição realizada'
+                text: last_date_text,
+                subtext: last_date_subtext
             },
             tooltip: {
-                formatter: "Frequência: {c} bpm <br> Data: {b}",
+                formatter: frequency + " : {c} bpm <br> Data: {b}",
                 trigger: 'axis'
             },
             xAxis: xAxisOptionsLastDate,

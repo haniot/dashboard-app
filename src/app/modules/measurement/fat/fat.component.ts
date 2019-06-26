@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {IMeasurement, Measurement} from '../models/measurement';
-import {GraphService} from "../../../shared/shared-services/graph.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'fat',
@@ -18,7 +18,7 @@ export class FatComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
-        private graphService: GraphService
+        private translateService: TranslateService
     ) {
         this.data = new Array<Measurement>();
     }
@@ -28,6 +28,10 @@ export class FatComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
+
+        const average_value = this.translateService.instant('MEASUREMENTS.AVERAGE-VALUE');
+        const average = this.translateService.instant('MEASUREMENTS.AVERAGE');
+        const fat = this.translateService.instant('MEASUREMENTS.FAT.FAT');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -63,7 +67,7 @@ export class FatComponent implements OnInit, OnChanges {
                     tooltip: {
                         trigger: 'item',
                         formatter:
-                            "Valor médio : {c} %"
+                            average_value + " : {c} %"
                     }
                     ,
                     lineStyle: {
@@ -71,7 +75,7 @@ export class FatComponent implements OnInit, OnChanges {
                     }
                     ,
                     data: [
-                        {type: 'average', name: 'Média'}
+                        {type: 'average', name: average}
                     ]
                 }
         };
@@ -94,7 +98,7 @@ export class FatComponent implements OnInit, OnChanges {
 
             tooltip: {
                 trigger: 'item',
-                formatter: "Gordura : {c} %<br> Data: {b}"
+                formatter: fat + " : {c} %<br> Data: {b}"
             },
             xAxis: xAxis,
             yAxis: [

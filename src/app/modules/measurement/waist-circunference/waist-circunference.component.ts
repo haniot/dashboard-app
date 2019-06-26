@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {DatePipe} from '@angular/common';
 
 import {IMeasurement, Measurement} from '../models/measurement';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'waist-circunference',
@@ -17,7 +18,8 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
     options: any;
 
     constructor(
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private translateService: TranslateService
     ) {
         this.data = new Array<Measurement>();
     }
@@ -27,6 +29,10 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
+
+        const circumference = this.translateService.instant('MEASUREMENTS.WAIST-CIRCUMFERENCE.CIRCUMFERENCE');
+        const average = this.translateService.instant('MEASUREMENTS.AVERAGE');
+        const average_value = this.translateService.instant('MEASUREMENTS.AVERAGE-VALUE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -50,13 +56,13 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
             markLine: {
                 tooltip: {
                     trigger: 'item',
-                    formatter: "Valor médio : {c} cm"
+                    formatter: average_value + " : {c} cm"
                 },
                 lineStyle: {
                     color: 'black',
                 },
                 data: [
-                    {type: 'average', name: 'Média'}
+                    {type: 'average', name: average}
                 ]
             }
         };
@@ -71,7 +77,7 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
         this.options = {
             color: ['#3398DB'],
             tooltip: {
-                formatter: "Circunferência : {c} cm <br> Data: {b}",
+                formatter: circumference + " : {c} cm <br> Data: {b}",
                 trigger: 'axis',
                 axisPointer: {
                     type: 'shadow'
