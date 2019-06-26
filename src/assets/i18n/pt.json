@@ -1,7 +1,7 @@
 {
   "APP": {
     "TITLE": "HANIoT",
-    "DEVELOP-ORGNAZATION": "NUTES"
+    "DEVELOP-ORGANIZATION": "NUTES"
   },
   "ACESS-DENIED": {
     "TITLE": "Acesso negado",
@@ -82,131 +82,193 @@
     "DELETE-CONFIRMATION": "Tem certeza que deseja remover avaliação?",
     "STATE": "Estado"
   },
-  "HABITS":{
-    "FAMILY-COHESION":{
-      "TITLE":"Coesão familiar",
-      "SUBTITLE":"",
-      "UNAVAILABLE-DATA":"Dados de coesão familiar indisponível!"
+  "HABITS": {
+    "FAMILY-COHESION": {
+      "TITLE": "Coesão familiar",
+      "SUBTITLE": "",
+      "UNAVAILABLE-DATA": "Dados de coesão familiar indisponível!"
     },
-    "FEEDING":{
-      "TITLE":"Hábitos alimentares do paciente",
-      "SUBTITLE":"",
-      "NUMBER-WATER-GLASSES":"Quantidade de copos de água",
-      "BREAST-FEEDING":"Amamentação",
-      "BREAKFAST":"Café da manhã",
-      "LIST-OF-WEEKLY-FOOD":"Lista de alimentos semanais e relação de consumo",
-      "LAST-7-DAYS":"Últimos 7 dias",
-      "UNAVAILABLE-DATA":"Nenhum hábito alimentar cadastrado!",
-      "LIST-ALLERGIC-FOODS":"Lista de alimentos alérgicos"
+    "FEEDING": {
+      "TITLE": "Hábitos alimentares do paciente",
+      "SUBTITLE": "",
+      "NUMBER-WATER-GLASSES": "Quantidade de copos de água",
+      "BREAST-FEEDING": "Amamentação",
+      "BREAKFAST": "Café da manhã",
+      "LIST-OF-WEEKLY-FOOD": "Lista de alimentos semanais e relação de consumo",
+      "LAST-7-DAYS": "Últimos 7 dias",
+      "UNAVAILABLE-DATA": "Nenhum hábito alimentar cadastrado!",
+      "LIST-ALLERGIC-FOODS": "Lista de alimentos alérgicos"
     },
-    "MEDICAL-RECORD":{
-      "TITLE":"Histórico de doenças do paciente",
-      "SUBTITLE":"",
-      "LIST-CHRONIC-DISEASES":"Lista de doenças crônicas",
-      "DISEASE":"Doença",
-      "HISTORIC":"Histórico",
-      "UNAVAILABLE-DATA":"Nenhum histórico de doenças cadastrado!"
+    "MEDICAL-RECORD": {
+      "TITLE": "Histórico de doenças do paciente",
+      "SUBTITLE": "",
+      "LIST-CHRONIC-DISEASES": "Lista de doenças crônicas",
+      "DISEASE": "Doença",
+      "HISTORIC": "Histórico",
+      "UNAVAILABLE-DATA": "Nenhum histórico de doenças cadastrado!"
     },
-    "ORAL-HEALTH":{
-      "TITLE":"Informações sobre a saúde bucal",
-      "SUBTITLE":"",
-      "FREQUENCY-ORAL-HEALTH":"Frequência que realiza a saúde bucal",
-      "LIST-OF-LESIONS":"Lista de lesões",
-      "NONE-LESION":"Nenhuma lesão cadastrada!",
-      "TYPE-TEETH":"Tipo de dente",
-      "TYPE-LESION":"Tipo de lesão",
-      "UNAVAILABLE-DATA":"Dados sobre saúde bucal indisponível!"
+    "ORAL-HEALTH": {
+      "TITLE": "Informações sobre a saúde bucal",
+      "SUBTITLE": "",
+      "FREQUENCY-ORAL-HEALTH": "Frequência que realiza a saúde bucal",
+      "LIST-OF-LESIONS": "Lista de lesões",
+      "NONE-LESION": "Nenhuma lesão cadastrada!",
+      "TYPE-TEETH": "Tipo de dente",
+      "TYPE-LESION": "Tipo de lesão",
+      "UNAVAILABLE-DATA": "Dados sobre saúde bucal indisponível!"
     },
-    "PHYSICAL-ACTIVITY":{
-      "TITLE":"Hábitos de atividades físicas do paciente",
-      "SUBTITLE":"",
-      "SCHOOL-ACTIVITY-FREQUENCY":"Frequência de atividades físicas escolares",
-      "LIST-ACTIVITY-PRATICED":"Lista de atividades praticadas",
-      "UNAVAILABLE-DATA":"Nenhum hábito de atividades físicas cadastrado!"
+    "PHYSICAL-ACTIVITY": {
+      "TITLE": "Hábitos de atividades físicas do paciente",
+      "SUBTITLE": "",
+      "SCHOOL-ACTIVITY-FREQUENCY": "Frequência de atividades físicas escolares",
+      "LIST-ACTIVITY-PRATICED": "Lista de atividades praticadas",
+      "UNAVAILABLE-DATA": "Nenhum hábito de atividades físicas cadastrado!"
     },
-    "PIPES":{
-      "WEEKLY-FOOD":{
-        "FISH-CHICKEN-MEAT":"Peixe, frango ou carne vermelha",
+    "SLEEP": {
+      "TITLE": "Hábitos de sono do paciente",
+      "SUBTITLE": "",
+      "WAKE-UP-TIME": "Horário que acorda",
+      "TIME-TO-SLEEP": "Horário que vai dormir",
+      "UNAVAILABLE-DATA": "Nenhum hábito de sono cadastrado!",
+      "TIME-ABBREVIATION": "hs"
+    },
+    "SOCIO-DEMOGRAPHIC": {
+      "TITLE": "Informações sócio-demográficas",
+      "SUBTITLE": "",
+      "COLOR-RACE": "Cor ou raça",
+      "MOTHER-EDUCATION": "Escolaridade da mãe",
+      "NUMBER-PEOPLE-HOME": "Quantidade de pessoas em casa",
+      "UNAVAILABLE-DATA": "Dados de sócio-demográficos indisponível!"
+    },
+    "PIPES": {
+      "WEEKLY-FOOD": {
+        "FISH-CHICKEN-MEAT": "Peixe, frango ou carne vermelha",
         "SODA": "Refrigerante",
-        "SALAD-VEGETABLE":"Salada, legumes ou vegetais",
-        "FRIED-SALT-FOOD":"Salgados fritos",
-        "MILK":"Leite",
-        "BEAN":"Feijão",
-        "FRUITS":"Frutas",
-        "CANDY-SUGAR-COOKIE":"Guloseimas",
-        "BURGER-SAUSAGE":"Hamburgues, salsicha ou outros embutidos"
+        "SALAD-VEGETABLE": "Salada, legumes ou vegetais",
+        "FRIED-SALT-FOOD": "Salgados fritos",
+        "MILK": "Leite",
+        "BEAN": "Feijão",
+        "FRUITS": "Frutas",
+        "CANDY-SUGAR-COOKIE": "Guloseimas",
+        "BURGER-SAUSAGE": "Hamburgues, salsicha ou outros embutidos"
       },
-      "FOOD-ALLERGY":{
-        "GLUTEN":"Glúten",
-        "APLV":"APLV",
-        "LACTOSE":"Lactose",
-        "DYE":"Corante",
-        "EGG":"Ovos",
-        "PEANUT":"Amendoim",
-        "OTHER":"Outro"
+      "FOOD-ALLERGY": {
+        "GLUTEN": "Glúten",
+        "APLV": "APLV",
+        "LACTOSE": "Lactose",
+        "DYE": "Corante",
+        "EGG": "Ovos",
+        "PEANUT": "Amendoim",
+        "OTHER": "Outro"
       },
-      "CHORNIC-DISEASE":{
-        "HYPERTENSION":"Hipertensão",
-        "BLOOD-FAT":"Gordura no sangue",
-        "DIABETES":"Diabetes"
+      "CHORNIC-DISEASE": {
+        "HYPERTENSION": "Hipertensão",
+        "BLOOD-FAT": "Gordura no sangue",
+        "DIABETES": "Diabetes"
       },
-      "DISEASE-HISTORY":{
-        "NO":"NÃO",
-        "YES":"SIM"
+      "DISEASE-HISTORY": {
+        "NO": "NÃO",
+        "YES": "SIM"
       },
-      "TEETH-BRUSHING":{
-        "NONE":"Nenhuma",
-        "ONCE":"Uma vez",
-        "TWICE":"Duas vezes",
-        "THREE-MORE":"Três vezes ou mais"
+      "TEETH-BRUSHING": {
+        "NONE": "Nenhuma",
+        "ONCE": "Uma vez",
+        "TWICE": "Duas vezes",
+        "THREE-MORE": "Três vezes ou mais"
       },
-      "TOOTH-TYPE":{
-        "DECIDUOUS-TOOTH":"Dente decíduo",
-        "PERMANET-TOOTH":"Dente permante"
+      "TOOTH-TYPE": {
+        "DECIDUOUS-TOOTH": "Dente decíduo",
+        "PERMANET-TOOTH": "Dente permanente"
       },
-      "TYPE-LESION":{
-        "WHITE-SPOT-LESION":"Mancha branca",
-        "CAVITATED-LESION":"Lesão cavitada"
+      "TYPE-LESION": {
+        "WHITE-SPOT-LESION": "Mancha branca",
+        "CAVITATED-LESION": "Lesão cavitada"
       },
-      "WEEKLY-ACTIVITIES":{
-        "SOCCER":"Futebol",
-        "FUTSAL":"Futsal",
-        "HANDBALL":"Handebol",
-        "BASKETBALL":"Basquete",
-        "SKATES":"Andar de patins ou skate",
-        "ATHLETICS":"Atletismo",
-        "SWIM":"Natação",
-        "GYMNASTICS":"Gisnática olímpica ou rítmica",
-        "FIGHT":"Judõ, Karatê, Capoeira ou outras lutas",
-        "DANCE":"Ballet ou outros tipos de danças",
-        "RUN":"Correr",
-        "RIDE-BIKE":"Andar de biblicleta",
-        "WALKING-PHYSICAL-EXERCISE":"Caminhada como exercício físico",
-        "WALKING-MEANS-TRANSPORT":"Caminhada como meio de transporte",
-        "VOLLEYBALL":"Vôlei de quadra",
+      "WEEKLY-ACTIVITIES": {
+        "SOCCER": "Futebol",
+        "FUTSAL": "Futsal",
+        "HANDBALL": "Handebol",
+        "BASKETBALL": "Basquete",
+        "SKATES": "Andar de patins ou skate",
+        "ATHLETICS": "Atletismo",
+        "SWIM": "Natação",
+        "GYMNASTICS": "Ginástica olímpica ou rítmica",
+        "FIGHT": "Judõ, Karatê, Capoeira ou outras lutas",
+        "DANCE": "Balé ou outros tipos de danças",
+        "RUN": "Correr",
+        "RIDE-BIKE": "Andar de bicicleta",
+        "WALKING-PHYSICAL-EXERCISE": "Caminhada como exercício físico",
+        "WALKING-MEANS-TRANSPORT": "Caminhada como meio de transporte",
+        "VOLLEYBALL": "Vôlei de quadra",
         "MUSCULATION": "Musculação",
-        "ABDOMINAL-EXERCISE":"Exercicios abdominais",
-        "TENNIS":"Tênis de quadra ou de mesa",
-        "WALK-WITH-DOG":"Passear com o cachorro",
-        "GYMNASTICS-GYM":"Ginástica de academia",
-        "NO-ACTIVITY":"Nenhuma atividade"
+        "ABDOMINAL-EXERCISE": "Exercícios abdominais",
+        "TENNIS": "Tênis de quadra ou de mesa",
+        "WALK-WITH-DOG": "Passear com o cachorro",
+        "GYMNASTICS-GYM": "Ginástica de academia",
+        "NO-ACTIVITY": "Nenhuma atividade"
       },
-      "PHYSICAL-ACTIVITY-FREQUENCY":{
-        "NONE":"Nenhuma vez",
-        "ONE-PER-WEEK":"Uma vez por semana",
-        "TWO-PER-WEEK":"Duas vezes por semana",
-        "THREE-PER-WEEK":"Três vezes por semana",
-        "FOUR-MORE-PER-WEEK":"Quatro vezes, ou mais, por semana"
+      "PHYSICAL-ACTIVITY-FREQUENCY": {
+        "NONE": "Nenhuma vez",
+        "ONE-PER-WEEK": "Uma vez por semana",
+        "TWO-PER-WEEK": "Duas vezes por semana",
+        "THREE-PER-WEEK": "Três vezes por semana",
+        "FOUR-MORE-PER-WEEK": "Quatro vezes, ou mais, por semana"
       },
-      "UNDEFINED":"Fora dos parâmetros",
-      "NOTFOUND":"NÃO ENCONTRADO",
-      "DO-NOT-KNOW":"Não sei/Não lembro"
+      "MOTHER-SCHOOLARITY": {
+        "UNLETTERED": "Analfabeto/\nFundamental 1 Incompleto",
+        "ELEMENTARY-ONE-TWO-INCOMPLETE": "Fundamental 1 Completo/\nFundamental 2 Incompleto",
+        "ELEMENTARY-TWO-HIGH-SCHOOL": "Fundamental 2 Completo/\nMédio Incompleto",
+        "MEDIUM-GRADUATION-INCOMPLETE": "Médio Completo/\nSuperior Incompleto",
+        "GRADUATION-COMPLETE": "Superior Completo"
+      },
+      "BREAST-FEEDING": {
+        "EXCLUSIVE": "Exclusico",
+        "COMPLEMENTARY": "Complementar",
+        "INFANT-FORMULAS": "Fórmulas infantis",
+        "OTHER": "Outros"
+      },
+      "BREAKFAST": {
+        "NEVER": "Nunca",
+        "SOMETIMES": "As vezes",
+        "ALMOST-EVERYDAY": "Quase todos os dias",
+        "EVERYDAY": "Todos os dias"
+      },
+      "WATER-GLASS": {
+        "NONE": "Nenhum",
+        "ONE-TWO": "Entre um e dois",
+        "THREE-FOUR": "Entre três e quatro",
+        "FIVE-MORE": "Cinco ou mais"
+      },
+      "WEEKLY-FREQUENCY": {
+        "NEVER": "Nunca",
+        "IN-DAY": "No dia",
+        "ONE-TWO-DAYS": "Entre uma e duas vezes",
+        "THREE-FOUR-DAYS": "Entre três e quatro vezes",
+        "FIVE-SIX-DAYS": "Entre cinco e seis vezes",
+        "ALL-DAYS": "Todos os dias"
+      },
+      "COLOR-RACE": {
+        "WHITE": "Branco(a)",
+        "BLACK": "Negro(a)",
+        "PARDA": "Pardo(a)",
+        "YELLOW": "Amarelo(a)"
+      },
+      "FAMILY-COHESION-FREQUENCY": {
+        "ALMOST-NEVER": "Quase nunca",
+        "RARELY": "Raramente",
+        "SOMETIMES": "As vezes",
+        "OFTEN": "Frequentemente",
+        "ALMOST-ALWAYS": "Quase sempre"
+      },
+      "UNDEFINED": "Fora dos parâmetros",
+      "NOTFOUND": "NÃO ENCONTRADO",
+      "DO-NOT-KNOW": "Não sei/Não lembro"
     },
-    "REGISTER-DATE":"Data do registro",
-    "PREVIOUS":"Anterior",
-    "NEXT":"Próximo"
+    "REGISTER-DATE": "Data do registro",
+    "PREVIOUS": "Anterior",
+    "NEXT": "Próximo"
   },
-  "MYDATEPIPE":{
+  "MYDATEPIPE": {
     "AT": "as",
     "HOURS": "horas."
   },

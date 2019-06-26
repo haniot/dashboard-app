@@ -9,19 +9,19 @@ export class WaterGlassPipe implements PipeTransform {
   transform(value: any, args?: any): any {
     switch (value) {
       case 'none':
-        return 'Nenhum';
+        return 'HABITS.PIPES.WATER-GLASS.NONE';
 
       case 'one_two':
-        return 'Entre um e dois';
+        return 'HABITS.PIPES.WATER-GLASS.ONE-TWO';
 
       case 'three_four':
-        return 'Entre três e quatro';
+        return 'HABITS.PIPES.WATER-GLASS.THREE-FOUR';
 
       case 'five_more':
-        return 'Cinco ou mais';
+        return 'HABITS.PIPES.WATER-GLASS.FIVE-MORE';
 
       default:
-        return 'Não sei/Não lembro';
+        return 'HABITS.PIPES.DO-NOT-KNOW';
     }
 
   }

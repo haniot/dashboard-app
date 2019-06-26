@@ -9,25 +9,25 @@ export class WeeklyFrequencyPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'never':
-                return 'Nunca';
+                return 'HABITS.PIPES.WEEKLY-FREQUENCY.NEVER';
 
             case 'no_day':
-                return 'No dia';
+                return 'HABITS.PIPES.WEEKLY-FREQUENCY.IN-DAY';
 
             case 'one_two_days':
-                return 'Entre uma e duas vezes';
+                return 'HABITS.PIPES.WEEKLY-FREQUENCY.ONE-TWO-DAYS';
 
             case 'three_four_days':
-                return 'Entre três e quatro vezes';
+                return 'HABITS.PIPES.WEEKLY-FREQUENCY.THREE-FOUR-DAYS';
 
             case 'five_six_days':
-                return 'Entre cinco e seis vezes';
+                return 'HABITS.PIPES.WEEKLY-FREQUENCY.FIVE-SIX-DAYS';
 
             case 'all_days':
-                return 'Todos os dias';
+                return 'HABITS.PIPES.WEEKLY-FREQUENCY.ALL-DAYS';
 
             default:
-                return 'Não sei/Não lembro';
+                return 'HABITS.PIPES.DO-NOT-KNOW';
         }
 
     }

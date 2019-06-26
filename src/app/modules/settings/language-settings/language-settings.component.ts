@@ -13,7 +13,7 @@ export class LanguageSettingsComponent implements OnInit {
     'en': 'Inglês'
   };
 
-  constructor(protected translate: TranslateService) { }
+  constructor(public translate: TranslateService) { }
 
   ngOnInit() {
   }

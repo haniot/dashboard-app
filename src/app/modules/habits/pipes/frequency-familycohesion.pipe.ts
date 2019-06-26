@@ -9,22 +9,22 @@ export class FrequencyFamilyCohesionPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'almost_never':
-                return 'Quase nunca';
+                return 'HABITS.PIPES.FAMILY-COHESION-FREQUENCY.ALMOST-NEVER';
 
             case 'rarely':
-                return 'Raramente';
+                return 'HABITS.PIPES.FAMILY-COHESION-FREQUENCY.RARELY';
 
             case 'sometimes':
-                return 'As vezes';
+                return 'HABITS.PIPES.FAMILY-COHESION-FREQUENCY.SOMETIMES';
 
             case 'often':
-                return 'Frequentemente';
+                return 'HABITS.PIPES.FAMILY-COHESION-FREQUENCY.OFTEN';
 
             case 'almost_aways':
-                return 'Quase sempre';
+                return 'HABITS.PIPES.FAMILY-COHESION-FREQUENCY.ALMOST-ALWAYS';
 
             default:
-                return 'Fora dos parâmetros';
+                return 'HABITS.PIPES.UNDEFINED';
         }
 
     }

@@ -1,4 +1,3 @@
-
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
@@ -10,19 +9,19 @@ export class CorAndRacePipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'white':
-                return 'Branco(a)';
+                return 'HABITS.PIPES.COLOR-RACE.WHITE';
 
             case 'black':
-                return 'Negro(a)';
+                return 'HABITS.PIPES.COLOR-RACE.BLACK';
 
             case 'parda':
-                return 'Pardo(a)';
+                return 'HABITS.PIPES.COLOR-RACE.PARDA';
 
             case 'yellow':
-                return 'Amarelo(a)';
+                return 'HABITS.PIPES.COLOR-RACE.YELLOW';
 
             default:
-                return 'Fora dos parâmetros';
+                return 'HABITS.PIPES.UNDEFINED';
         }
 
     }

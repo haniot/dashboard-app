@@ -9,19 +9,19 @@ export class BreakFastPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'never':
-                return 'Nunca';
+                return 'HABITS.PIPES.BREAKFAST.NEVER';
 
             case 'sometimes':
-                return 'As vezes';
+                return 'HABITS.PIPES.BREAKFAST.SOMETIMES';
 
             case 'almost_everyday':
-                return 'Quase todos os dias';
+                return 'HABITS.PIPES.BREAKFAST.ALMOST-EVERYDAY';
 
             case 'everyday':
-                return 'Todos os dias';
+                return 'HABITS.PIPES.BREAKFAST.EVERYDAY';
 
             default:
-                return 'Não sei/Não lembro';
+                return 'HABITS.PIPES.DO-NOT-KNOW';
         }
 
     }

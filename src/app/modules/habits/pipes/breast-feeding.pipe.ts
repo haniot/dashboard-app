@@ -9,19 +9,19 @@ export class BreastFeedingPipe implements PipeTransform {
   transform(value: any, args?: any): any {
     switch (value) {
       case 'exclusive':
-        return 'Exclusivo';
+        return 'HABITS.PIPES.BREAST-FEEDING.EXCLUSIVE';
 
       case 'complementary':
-        return 'Complementar';
+        return 'HABITS.PIPES.BREAST-FEEDING.COMPLEMENTARY';
 
       case 'infant_formulas':
-        return 'Fórmulas infantis';
+        return 'HABITS.PIPES.BREAST-FEEDING.INFANT-FORMULAS';
 
       case 'other':
-        return 'Outros';
+        return 'HABITS.PIPES.BREAST-FEEDING.OTHER';
 
       default:
-        return 'Não sei/Não lembro';
+        return 'HABITS.PIPES.BREAST-FEEDING.DO-NOT-KNOW';
     }
 
   }

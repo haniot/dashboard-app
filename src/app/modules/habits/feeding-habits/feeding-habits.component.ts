@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 
-import { WaterGlassPipe } from '../pipes/water-glass.pipe';
-import { BreakFastPipe } from '../pipes/break-fast.pipe';
-import { FoodAllergyPipe } from '../pipes/food-allergy.pipe';
-import { WeeklyFrequencyPipe } from '../pipes/weekly-frequency.pipe';
-import { BreastFeedingPipe } from '../pipes/breast-feeding.pipe';
-import { FeedingHabitsRecord } from '../models/feeding';
-import { FeedingRecordService } from '../services/feeding-record.service';
+import {WaterGlassPipe} from '../pipes/water-glass.pipe';
+import {BreakFastPipe} from '../pipes/break-fast.pipe';
+import {BreastFeedingPipe} from '../pipes/breast-feeding.pipe';
+import {FeedingHabitsRecord} from '../models/feeding';
+import {FeedingRecordService} from '../services/feeding-record.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'feeding-habits',
@@ -29,11 +28,10 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private feedingService: FeedingRecordService,
     private toastService: ToastrService,
+    private translateService: TranslateService,
     private waterGlassPipe: WaterGlassPipe,
     private breakFastPipe: BreakFastPipe,
-    private breastPipe: BreastFeedingPipe,
-    private foodAllergyPipe: FoodAllergyPipe,
-    private weeklyPipe: WeeklyFrequencyPipe
+    private breastPipe: BreastFeedingPipe
   ) {
     this.index = 0;
     this.listFeeding = new Array<FeedingHabitsRecord>();
@@ -70,24 +68,28 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
       food_allergy_intolerance: [{ value: feedingRecord.food_allergy_intolerance, disabled: true }],
       breakfast_daily_frequency: [{ value: feedingRecord.breakfast_daily_frequency, disabled: true }]
     });
-    this.feedingForm.get('daily_water_glasses').patchValue(this.waterGlassPipe.transform(feedingRecord.daily_water_glasses));
-    this.feedingForm.get('six_month_breast_feeding').patchValue(this.breastPipe.transform(feedingRecord.six_month_breast_feeding));
-    this.feedingForm.get('breakfast_daily_frequency').patchValue(this.breakFastPipe.transform(feedingRecord.breakfast_daily_frequency));
+    this.feedingForm.get('daily_water_glasses')
+          .patchValue(this.translateService.instant(this.waterGlassPipe.transform(feedingRecord.daily_water_glasses)));
+    this.feedingForm.get('six_month_breast_feeding')
+        .patchValue(this.translateService.instant(this.breastPipe.transform(feedingRecord.six_month_breast_feeding)));
+    this.feedingForm.get('breakfast_daily_frequency')
+        .patchValue(this.translateService.instant(this.breakFastPipe.transform(feedingRecord.breakfast_daily_frequency)));
 
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.patientId && changes.patientId.currentValue != changes.patientId.previousValue) {
+    if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
       this.feedingService.getAll(this.patientId)
         .then(feedingRecords => {
           this.listFeeding = feedingRecords;
-          this.createFeedingForm(feedingRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro 
+          this.createFeedingForm(feedingRecords[0]);
+          // FIXME: Aqui estou pegando apenas o primeiro registro
         })
         .catch(errorResponse => {
-          //this.toastService.error('Não foi possível buscar hábitos alimentares!');
-          //console.log('Não foi possível buscar hábitos alimentares!', errorResponse);
+          // this.toastService.error('Não foi possível buscar hábitos alimentares!');
+          // console.log('Não foi possível buscar hábitos alimentares!', errorResponse);
         });
-    } else if (this.feedingHabitsRecord && changes.feedingHabitsRecord.currentValue != changes.feedingHabitsRecord.previousValue) {
+    } else if (this.feedingHabitsRecord && changes.feedingHabitsRecord.currentValue !== changes.feedingHabitsRecord.previousValue) {
       this.listFeeding = new Array<FeedingHabitsRecord>();
       this.listFeeding.push(this.feedingHabitsRecord);
       this.createFeedingForm(this.feedingHabitsRecord);

@@ -29,7 +29,7 @@ export class WeeklyFoodPipe implements PipeTransform {
         return 'HABITS.PIPES.WEEKLY-FOOD.BEAN';
 
       case 'fruits':
-        return 'HABITS.PIPES.WEEKLY-FOOD.Frutas';
+        return 'HABITS.PIPES.WEEKLY-FOOD.FRUITS';
 
       case 'candy_sugar_cookie':
         return 'HABITS.PIPES.WEEKLY-FOOD.CANDY-SUGAR-COOKIE';

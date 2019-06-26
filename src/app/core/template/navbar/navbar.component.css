@@ -35,6 +35,10 @@
     padding: 5px 5px;
 }
 
+.nav-link{
+    cursor: pointer;
+}
+
 #navbarDropdownMenuLink i:hover {
     cursor: pointer;
     color: #00a594;

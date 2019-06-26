@@ -9,22 +9,22 @@ export class MotherSchoolarityPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'unlettered_elementary_one_incomplete':
-                return 'Analfabeto/\nFundamental 1 Incompleto';
+                return 'HABITS.PIPES.MOTHER-SCHOOLARITY.UNLETTERED';
 
             case 'elementary_one_elementary_two_incomplete':
-                return 'Fundamental 1 Completo/\nFundamental 2 Incompleto';
+                return 'HABITS.PIPES.MOTHER-SCHOOLARITY.ELEMENTARY-ONE-TWO-INCOMPLETE';
 
             case 'elementary_two_high_school_incomplete':
-                return 'Fundamental 2 Completo/\nMédio Incompleto';
+                return 'HABITS.PIPES.MOTHER-SCHOOLARITY.ELEMENTARY-TWO-HIGH-SCHOOL';
 
             case 'medium_graduation_incomplete':
-                return 'Médio Completo/\nSuperior Incompleto';
+                return 'HABITS.PIPES.MOTHER-SCHOOLARITY.MEDIUM-GRADUATION-INCOMPLETE';
 
             case 'graduation_complete':
-                return 'Superior Completo';
+                return 'HABITS.PIPES.MOTHER-SCHOOLARITY.GRADUATION-COMPLETE';
 
             default:
-                return 'Fora dos parâmetros';
+                return 'HABITS.PIPES.UNDEFINED';
         }
 
     }
