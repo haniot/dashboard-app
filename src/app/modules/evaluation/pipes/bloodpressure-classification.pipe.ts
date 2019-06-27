@@ -9,19 +9,19 @@ export class BloodpressureClassificationPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'normal':
-                return 'Normal';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.BLOOD-PRESSURE.NORMAL';
 
             case 'borderline':
-                return 'Limítrofe';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.BLOOD-PRESSURE.BORDERLINE';
 
             case 'hypertension_stage_1':
-                return 'Hipertensão estágio 1';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.BLOOD-PRESSURE.HYPERTENSION-STAGE-1';
 
             case 'hypertension_stage_2':
-                return 'Hipertensão estágio 2';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.BLOOD-PRESSURE.HYPERTENSION-STAGE-2';
 
             default:
-                return 'Fora dos padrões definidos';
+                return 'SHARED.PIPES.UNDEFINED';
         }
     }
 }

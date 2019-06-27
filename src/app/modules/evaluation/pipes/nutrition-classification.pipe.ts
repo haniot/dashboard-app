@@ -9,25 +9,25 @@ export class NutritionClassificationtPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'accentuated_thinness':
-                return 'Magreza acentuada';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.CLASSIFICATION.ACCENTUATED-THINNESS';
 
             case 'thinness':
-                return 'Magreza';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.CLASSIFICATION.THINNESS';
 
             case 'eutrophy':
-                return 'Eutrofia';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.CLASSIFICATION.EUTROPHY';
 
             case 'overweight':
-                return 'Excesso de peso';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.CLASSIFICATION.OVERWEIGHT';
 
             case 'obesity':
-                return 'Obesidade';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.CLASSIFICATION.OBESITY';
 
             case 'severe_obesity':
-                return 'Obesidade grave';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.CLASSIFICATION.SEVERE-OBESITY';
 
             default:
-                return 'Fora dos padrões definidos';
+                return 'SHARED.PIPES.UNDEFINED';
         }
 
     }

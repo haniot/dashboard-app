@@ -2,11 +2,11 @@ import {NgModule} from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import {MatPaginatorModule, MatInputModule, MatFormFieldModule} from '@angular/material';
+import {MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTabsModule} from '@angular/material';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatTabsModule} from '@angular/material';
 import {NgxEchartsModule} from "ngx-echarts";
+import {TranslateModule} from "@ngx-translate/core";
 
 import {EvaluationComponentComponent} from './evaluation-component/evaluation-component.component';
 import {EvaluationRoutingModule} from './evaluation-routing/evaluation-routing.module';
@@ -62,6 +62,7 @@ import {TaylorCutClassificationPipe} from "./pipes/taylor-cut-classification.pip
         MatCheckboxModule,
         MatTabsModule,
         NgxEchartsModule,
+        TranslateModule,
 
 
         SharedModule,

@@ -9,13 +9,13 @@ export class TaylorCutClassificationPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'normal':
-                return 'Normal';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.TAYLOR-CUT.NORMAL';
 
             case 'out_of_normality':
-                return 'Fora da normalidade';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.TAYLOR-CUT.OUT-OF-NORMALITY';
 
             default:
-                return 'Fora dos padrões definidos';
+                return 'SHARED.PIPES.UNDEFINED';
         }
     }
 

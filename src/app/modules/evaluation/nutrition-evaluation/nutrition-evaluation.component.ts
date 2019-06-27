@@ -6,18 +6,18 @@ import {ToastrService} from 'ngx-toastr';
 import {ISubscription} from 'rxjs/Subscription';
 
 import {NutritionEvaluationService} from '../services/nutrition-evaluation.service';
-import {NutritionEvaluation, NutritionalCouncil} from '../models/nutrition-evaluation';
+import {NutritionalCouncil, NutritionEvaluation} from '../models/nutrition-evaluation';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {GraphService} from 'app/shared/shared-services/graph.service';
 import {PatientService} from 'app/modules/patient/services/patient.service';
 import {Patient} from 'app/modules/patient/models/patient';
 import {Weight} from 'app/modules/measurement/models/wieght';
-import {Measurement, IMeasurement, MeasurementType} from 'app/modules/measurement/models/measurement';
+import {IMeasurement, Measurement, MeasurementType} from 'app/modules/measurement/models/measurement';
 import {BloodPressure} from 'app/modules/measurement/models/blood-pressure';
 import {HeartRate} from 'app/modules/measurement/models/heart-rate';
 import {NotificationService} from "../../../shared/shared-services/notification.service";
-import {_switch} from "rxjs-compat/operator/switch";
 import {MealType} from "../../measurement/models/blood-glucose";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-nutrition-evaluation',
@@ -26,7 +26,7 @@ import {MealType} from "../../measurement/models/blood-glucose";
 })
 export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
-    typeCousenling = ['Estado Nutricional', 'Resistência a insulina / Diabetes', 'Hipertensão'];
+    typeCousenling: Array<string>;
 
     nutritionalEvaluation: NutritionEvaluation;
 
@@ -77,7 +77,8 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         private graphService: GraphService,
         private patientService: PatientService,
         private toastService: ToastrService,
-        private nutritionEvaluationService: NutritionEvaluationService
+        private nutritionEvaluationService: NutritionEvaluationService,
+        private translateService: TranslateService
     ) {
         this.subscriptions = new Array<ISubscription>();
 
@@ -102,6 +103,11 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         this.listHeartRate = new Array<HeartRate>();
 
         this.showZonesClassification = false;
+        this.typeCousenling = [
+            this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.STATE-NUTRITION'),
+            this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.DIABETES'),
+            this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HYPERTENSION')
+        ];
 
     }
 
@@ -194,6 +200,11 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     loadGraph(dataset: Array<any>) {
 
+        const colleted_measurements = this.translateService
+            .instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.COLLECTED-MEASUREMENTS');
+        const frequency = this.translateService
+            .instant('MEASUREMENTS.HEART-RATE.FREQUENCY');
+
         const xAxis = {
             data: []
         };
@@ -216,10 +227,10 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
         this.optionsHeartRate = {
             title: {
-                text: 'Medições coletas',
+                text: colleted_measurements,
             },
             tooltip: {
-                formatter: "Frequência: {c} bpm <br> Data: {b}",
+                formatter: frequency + ": {c} bpm <br> Data: {b}",
                 trigger: 'axis'
             },
             xAxis: xAxis,

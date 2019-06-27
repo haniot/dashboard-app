@@ -9,13 +9,13 @@ export class BloodglucoseClassificationPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'good':
-                return 'Ideal';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.BLOOD-GLUCOSE.GOOD';
 
             case 'great':
-                return 'Ótimo';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.BLOOD-GLUCOSE.GREAT';
 
             default:
-                return 'Fora dos padrões definidos';
+                return 'SHARED.PIPES.UNDEFINED';
         }
     }
 

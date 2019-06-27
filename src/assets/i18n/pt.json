@@ -46,6 +46,97 @@
       "STUDIES-EMPTY-MESSAGE": "Entre em contato com o administrador."
     }
   },
+  "EVALUATION": {
+    "NUTRITION-EVALUATION": {
+      "CARD-PATIENT": {
+        "TITLE": "Paciente selecionado",
+        "SUBTITLE": ""
+      },
+      "SHARED-EMAIL": "Compartilhar via email",
+      "DOWNLOAD-PDF": "Baixar em PDF",
+      "CARD-NUTRITION": {
+        "TITLE": "Avaliação nutricional",
+        "SUBTITLE": "",
+        "EVALUATION": "AVALIAÇÃO",
+        "NUTRITION-STATE": "Estado Nutricional",
+        "BMI": "IMC",
+        "CENTIMETER": "cm",
+        "KILOGRAM": "Kg",
+        "PERCENTIL": "Percentil",
+        "CUT-TAYLOR": "Ponto de Corte de Taylor",
+        "INDICATORS-OVERWEIGHT": "Indicadores de sobrepeso",
+        "STATE-NUTRITION": "Estado Nutricional",
+        "DIABETES": "Resistência a insulina / Diabetes",
+        "HYPERTENSION": "Hipertensão",
+        "RELATION-WAIST-HEIGHT": "Relação cintura/estatura",
+        "GLYCEMIA": "Glicemia",
+        "CLASSIFICATION-ZONES": "Zonas de Classificação",
+        "GOOD": "Ideal",
+        "GREAT": "Ótimo",
+        "BETWEEN": "Entre",
+        "AND": "e",
+        "TYPE-OF-MEAL": "Tipo de refeição",
+        "GLYCEMIA-UNIT": "mg/dl",
+        "BLOOD-PRESSURE": "Pressão arterial",
+        "SYSTOLIC": "SISTÓLICA",
+        "DIASTOLIC": "DIASTÓLICA",
+        "BLOOD-PRESSURE-UNIT": "mmHg",
+        "HEART-RATE": "Frequência cardíaca",
+        "HEART-RATE-MIN": "MÍNIMA",
+        "HEART-RATE-AVERAGE": "MÉDIA",
+        "HEART-RATE-MAX": "MÁXIMA",
+        "HEART-RATE-UNIT": "bpm",
+        "COLLECTED-MEASUREMENTS": "Medições coletadas",
+        "SUGGESTED-COUNSELING": "Sugestões de aconselhamentos",
+        "SELECT-ALL": "Selecionar todos",
+        "COUNSELINGS": "Aconselhamentos",
+        "COUNSELING": "Aconselhamento",
+        "EVALUATION-STATUS": "Estado da avaliação",
+        "EVALUATION-DATE": "Data da avaliação",
+        "FINISH-EVALUATION": "Finalizar avaliação",
+        "FINALIZING-EVALUATION": "Finalizando avaliação",
+        "ADD-EVALUATION": "Adicionar aconselhamento"
+      },
+      "PIPES": {
+        "CLASSIFICATION": {
+          "ACCENTUATED-THINNESS": "Magreza acentuada",
+          "THINNESS": "Magreza",
+          "EUTROPHY": "Eutrofia",
+          "OVERWEIGHT": "Excesso de peso",
+          "OBESITY": "Obesidade",
+          "SEVERE-OBESITY": "Obesidade grave"
+        },
+        "TAYLOR-CUT": {
+          "NORMAL": "Normal",
+          "OUT-OF-NORMALITY": "Fora da normalidade"
+        },
+        "BLOOD-GLUCOSE": {
+          "GOOD": "Ideal",
+          "GREAT": "Ótimo"
+        },
+        "BLOOD-PRESSURE": {
+          "NORMAL": "Normal",
+          "BORDERLINE": "Limítrofe",
+          "HYPERTENSION-STAGE-1": "Hipertensão estágio 1",
+          "HYPERTENSION-STAGE-2": "Hipertensão estágio 2"
+        },
+        "OVERWEIGHT": {
+          "NORMAL": "Normal",
+          "OVERWEIGHT-OBESITY-RISK": "Risco de obesidate"
+        }
+      }
+    },
+    "PLACEHOLDER-SEARCH": "Pesquisar avaliação...",
+    "SPINNER-MESSAGE": "Carregando avaliações",
+    "LIST-EMPTY": "Nenhuma avaliação encontrada",
+    "LIST-EMPTY-MESSAGE": "* Utilize o aplicativo para gerar novas avaliações",
+    "STATUS-COMPLETE": "COMPLETA",
+    "STATUS-INCOMPLETE": "INCOMPLETA",
+    "ACCESS-EVALUATION": "Acessar avaliação...",
+    "DELETE-EVALUATION": "Excluir avaliação...",
+    "DELETE-CONFIRMATION": "Tem certeza que deseja remover avaliação?",
+    "STATE": "Estado"
+  },
   "FOOTER": {
     "ABOUT-US": "Sobre nós",
     "PRIVACY": "Privacidade"
@@ -166,18 +257,6 @@
     "AVERAGE": "Média",
     "AVERAGE-VALUE": "Valor médio"
   },
-  "EVALUATIONS": {
-    "PLACEHOLDER-SEARCH": "Pesquisar avaliação...",
-    "SPINNER-MESSAGE": "Carregando avaliações",
-    "LIST-EMPTY": "Nenhuma avaliação encontrada",
-    "LIST-EMPTY-MESSAGE": "* Utilize o aplicativo para gerar novas avaliações",
-    "STATUS-COMPLETE": "COMPLETA",
-    "STATUS-INCOMPLETE": "INCOMPLETA",
-    "ACCESS-EVALUATION": "Acessar avaliação...",
-    "DELETE-EVALUATION": "Excluir avaliação...",
-    "DELETE-CONFIRMATION": "Tem certeza que deseja remover avaliação?",
-    "STATE": "Estado"
-  },
   "HABITS": {
     "FAMILY-COHESION": {
       "TITLE": "Coesão familiar",
@@ -274,7 +353,7 @@
       },
       "TOOTH-TYPE": {
         "DECIDUOUS-TOOTH": "Dente decíduo",
-        "PERMANET-TOOTH": "Dente permanente"
+        "PERMANENT-TOOTH": "Dente permanente"
       },
       "TYPE-LESION": {
         "WHITE-SPOT-LESION": "Mancha branca",
@@ -535,13 +614,20 @@
     "ONLY-NUMBERS": "Informe apenas numeros",
     "GENDER": "Gênero",
     "INVALID-GENDER": "Gênero inválido",
-    "GENDER-MALE": "MASCULINO",
-    "GENDER-FEMALE": "FEMININO",
     "BIRTH-DATE": "Date de nascimento",
     "INVALID-BIRTH-DATE": "Date de nascimento inválida",
     "NAME-OF-PATIENT": "Nome do paciente",
     "YEARS": "ANOS",
-    "AGE": "Idade"
+    "AGE": "Idade",
+    "CANCEL": "Cancelar",
+    "PIPES": {
+      "GENDER": {
+        "MALE": "MASCULINO",
+        "FEMALE": "FEMININO"
+      },
+      "UNDEFINED": "Fora dos parâmetros",
+      "NOTFOUND": "NÃO ENCONTRADO"
+    }
   },
   "TABLE-USER": {
     "PLACEHOLDER-SEARCH": "Pesquisar usuário...",

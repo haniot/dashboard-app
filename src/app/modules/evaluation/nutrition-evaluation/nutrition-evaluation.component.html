@@ -2,44 +2,43 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <haniot-card title="Paciente selecionado" subtitle="">
+                <haniot-card [title]="'EVALUATION.NUTRITION-EVALUATION.CARD-PATIENT.TITLE'|translate"
+                             [subtitle]="'EVALUATION.NUTRITION-EVALUATION.CARD-PATIENT.SUBTITLE'|translate">
                     <div class="row">
                         <div class="form-group col-md">
                             <label>
-                                Nome:
+                                {{'SHARED.NAME'|translate}}:
                             </label>
                             <p>{{patient.name}}</p>
                         </div>
 
                         <div class="form-group has-feedback col-md">
                             <label>
-                                Gênero:
+                                {{'SHARED.GENDER'|translate}}:
                             </label>
-                            <p>{{patient.gender | gender}}</p>
+                            <p>{{patient.gender | gender | translate}}</p>
                         </div>
 
                         <div class="form-group col-md">
                             <label>
-                                Data de nascimento:
+                                {{'SHARED.BIRTH-DATE'|translate}}:
                             </label>
                             <p>{{patient.birth_date | date}}</p>
                         </div>
 
                         <div class="form-group col-md" *ngIf="patient.phone_number && (patient.phone_number !== '')">
                             <label>
-                                Telefone:
+                                {{'SHARED.PHONE'|translate}}:
                             </label>
                             <p>{{patient.phone_number}}</p>
                         </div>
 
                         <div class="form-group col-md" *ngIf="patient.email && (patient.email !== '')">
                             <label>
-                                Email:
+                                {{'SHARED.EMAIL'|translate}}:
                             </label>
                             <p>{{patient.email}}</p>
                         </div>
-
-
                     </div>
                 </haniot-card>
             </div>
@@ -47,25 +46,27 @@
 
         <div class="d-flex flex-row-reverse shared" style="height: 50px;">
             <div class="p-2" *ngIf="patient && patient.email && patient.email != ''">
-                <i class="material-icons" title="Compartilhar via email"
+                <i class="material-icons" [title]="'EVALUATION.NUTRITION-EVALUATION.SHARED-EMAIL'|translate"
                    (click)="sendEvaluationViaEmail()">mail_outline</i>
             </div>
             <div class="p-2">
-                <i class="material-icons" title="Baixar em PDF">picture_as_pdf</i>
+                <i class="material-icons" [title]="'EVALUATION.NUTRITION-EVALUATION.DOWNLOAD-PDF'|translate">picture_as_pdf</i>
             </div>
         </div>
 
         <div class="row">
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <haniot-card title="Avaliação nutricional" subtitle=''>
+                <haniot-card [title]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.TITLE'|translate"
+                             [subtitle]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SUBTITLE'|translate">
 
                     <div class="row">
 
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <mat-tab-group mat-align-tabs="center">
 
-                                <mat-tab label="AVALIAÇÃO">
+                                <mat-tab
+                                        [label]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.EVALUATION'|translate">
                                     <div class="container"
                                          *ngIf="nutritionalEvaluation && nutritionalEvaluation.nutritional_status && nutritionalEvaluation.overweight_indicator && nutritionalEvaluation.blood_glucose && nutritionalEvaluation.blood_pressure && nutritionalEvaluation.heart_rate">
                                         <div class="row">
@@ -77,36 +78,41 @@
                                                             <img src="../../../../assets/img/haniot/nutrition.png"
                                                                  alt="">
                                                         </div>
-                                                        <span class="badge badge-haniot category">Estado Nutricional:</span>
+                                                        <span class="badge badge-haniot category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.NUTRITION-STATE'|translate}}
+                                                            :</span>
                                                         <span
-                                                                class="badge badge-haniot classification">{{nutritionalEvaluation.nutritional_status.classification | nutritionClassification}}</span>
+                                                                class="badge badge-haniot classification">{{nutritionalEvaluation.nutritional_status.classification | nutritionClassification | translate}}</span>
                                                     </div>
                                                     <div class="card-footer">
                                                         <div class="stats"></div>
                                                         <div class="container">
                                                             <div class="row justify-content-center">
                                                                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
-                                                                    <p class="card-category">Estatura: </p>
+                                                                    <p class="card-category">{{'MEASUREMENTS.HEIGHT.TITLE'|translate}}
+                                                                        : </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.nutritional_status.height}}
-                                                                        <small>cm</small>
+                                                                        <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.CENTIMETER'|translate}}</small>
                                                                     </h3>
                                                                 </div>
                                                                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
-                                                                    <p class="card-category">Peso: </p>
+                                                                    <p class="card-category">{{'MEASUREMENTS.WEIGHT.TITLE'|translate}}
+                                                                        : </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.nutritional_status.weight | decimalFormatter}}
-                                                                        <small>Kg</small>
+                                                                        <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.KILOGRAM'|translate}}</small>
                                                                     </h3>
                                                                 </div>
                                                                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
-                                                                    <p class="card-category">IMC: </p>
+                                                                    <p class="card-category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.BMI'|translate}}
+                                                                        : </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.nutritional_status.bmi}}
                                                                     </h3>
                                                                 </div>
                                                                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
-                                                                    <p class="card-category">Percentil: </p>
+                                                                    <p class="card-category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.PERCENTIL'|translate}}
+                                                                        : </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.nutritional_status.percentile === 'undefined' ? 'Fora dos padrões definidos' : nutritionalEvaluation.nutritional_status.percentile}}
 
@@ -126,19 +132,20 @@
                                                             <img src="../../../../assets/img/haniot/waist-circunference.png"
                                                                  alt="">
                                                         </div>
-                                                        <span class="badge badge-haniot category">Ponto de Corte de Taylor:</span>
-                                                        <span
-                                                                class="badge badge-haniot classification">{{nutritionalEvaluation.taylor_cut_point.classification | taylorCutClassification}}</span>
+                                                        <span class="badge badge-haniot category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.CUT-TAYLOR'|translate}}
+                                                            :</span>
+                                                        <span class="badge badge-haniot classification">{{nutritionalEvaluation.taylor_cut_point.classification | taylorCutClassification | translate}}</span>
                                                     </div>
                                                     <div class="card-footer">
                                                         <div class="container">
                                                             <div class="row justify-content-center">
                                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                                                    <p class="card-category">Circunferência da
-                                                                        cintura:</p>
+                                                                    <p class="card-category">
+                                                                        {{'MEASUREMENTS.WAIST-CIRCUMFERENCE.TITLE'|translate}}
+                                                                        :</p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.taylor_cut_point.waist_circumference}}
-                                                                        <small>cm</small>
+                                                                        <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.CENTIMETER'|translate}}</small>
                                                                     </h3>
                                                                 </div>
                                                             </div>
@@ -155,31 +162,34 @@
                                                             <img src="../../../../assets/img/haniot/waist-circunference.png"
                                                                  alt="">
                                                         </div>
-                                                        <span class="badge badge-haniot category">Indicadores de sobrepeso:</span>
-                                                        <span
-                                                                class="badge badge-haniot classification">{{nutritionalEvaluation.overweight_indicator.classification | overweigthClassification}}</span>
+                                                        <span class="badge badge-haniot category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.INDICATORS-OVERWEIGHT'|translate}}
+                                                            :</span>
+                                                        <span class="badge badge-haniot classification">{{nutritionalEvaluation.overweight_indicator.classification | overweigthClassification | translate}}</span>
                                                     </div>
                                                     <div class="card-footer">
                                                         <div class="container">
                                                             <div class="row justify-content-center">
                                                                 <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
-                                                                    <p class="card-category">Circunferência da
-                                                                        cintura:</p>
+                                                                    <p class="card-category">
+                                                                        {{'MEASUREMENTS.WAIST-CIRCUMFERENCE.TITLE'|translate}}
+                                                                        :</p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.overweight_indicator.waist_circumference}}
-                                                                        <small>cm</small>
+                                                                        <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.CENTIMETER'|translate}}</small>
                                                                     </h3>
                                                                 </div>
                                                                 <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
-                                                                    <p class="card-category">Estatura: </p>
+                                                                    <p class="card-category">{{'MEASUREMENTS.HEIGHT.TITLE'|translate}}
+                                                                        : </p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.overweight_indicator.height}}
-                                                                        <small>cm</small>
+                                                                        <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.CENTIMETER'|translate}}</small>
                                                                     </h3>
                                                                 </div>
                                                                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center">
-                                                                    <p class="card-category">Relação
-                                                                        cintura/estatura:</p>
+                                                                    <p class="card-category">
+                                                                        {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.RELATION-WAIST-HEIGHT'|translate}}
+                                                                        :</p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.overweight_indicator.waist_height_relation}}
                                                                     </h3>
@@ -198,8 +208,9 @@
                                                             <img src="../../../../assets/img/haniot/blood-glucose.png"
                                                                  alt="">
                                                         </div>
-                                                        <span class="badge badge-haniot category">Glicemia:</span>
-                                                        <span class="badge badge-haniot classification">{{nutritionalEvaluation.blood_glucose.classification | bloodglucoseClassification}}</span>
+                                                        <span class="badge badge-haniot category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.GLYCEMIA'|translate}}
+                                                            :</span>
+                                                        <span class="badge badge-haniot classification">{{nutritionalEvaluation.blood_glucose.classification | bloodglucoseClassification | translate}}</span>
 
                                                     </div>
                                                     <div class="card-footer">
@@ -208,8 +219,9 @@
                                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-start"
                                                                      *ngIf="showZonesClassification">
                                                                     <div class="col-sm-8 col-md-10 col-lg-10 col-xl-10 text-right">
-                                                                        <p class="card-category">Zonas de
-                                                                            Classificação: </p>
+                                                                        <p class="card-category">
+                                                                            {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.CLASSIFICATION-ZONES'|translate}}
+                                                                            : </p>
                                                                     </div>
                                                                     <div class="col-sm-4 col-md-2 col-lg-2 col-xl-2">
 
@@ -226,18 +238,20 @@
                                                                             <div class="dropdown-menu row justify-content-center"
                                                                                  aria-labelledby="navbarDropdownZones">
                                                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                                                                    <p class="card-category">Ideal:</p>
+                                                                                    <p class="card-category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.GOOD'|translate}}
+                                                                                        :</p>
                                                                                     <p class="card-category">
-                                                                                        Entre {{getZoneGood().min}}
-                                                                                        e {{getZoneGood().max}}</p>
+                                                                                        {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.BETWEEN'|translate}} {{getZoneGood().min}}
+                                                                                        {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.AND'|translate}} {{getZoneGood().max}}</p>
 
 
                                                                                 </div>
                                                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                                                                    <p class="card-category">Ótimo:</p>
+                                                                                    <p class="card-category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.GREAT'|translate}}
+                                                                                        :</p>
                                                                                     <p class="card-category">
-                                                                                        Entre {{getZoneGreat().min}}
-                                                                                        e {{getZoneGreat().max}}
+                                                                                        {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.BETWEEN'|translate}} {{getZoneGreat().min}}
+                                                                                        {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.AND'|translate}} {{getZoneGreat().max}}
                                                                                     </p>
                                                                                 </div>
 
@@ -248,15 +262,16 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                                                    <p class="card-category">Tipo de refeição:</p>
-                                                                    <span
-                                                                            class="badge badge-haniot">{{nutritionalEvaluation.blood_glucose.meal | meal}}</span>
+                                                                    <p class="card-category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.TYPE-OF-MEAL'|translate}}
+                                                                        :</p>
+                                                                    <span class="badge badge-haniot">{{nutritionalEvaluation.blood_glucose.meal | meal | translate}}</span>
                                                                 </div>
                                                                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                                                    <p class="card-category">Valor:</p>
+                                                                    <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}
+                                                                        :</p>
                                                                     <h3 class="card-title">
                                                                         {{nutritionalEvaluation.blood_glucose.value}}
-                                                                        <small>mg/dl</small>
+                                                                        <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.GLYCEMIA-UNIT'|translate}}</small>
                                                                     </h3>
                                                                 </div>
                                                             </div>
@@ -274,25 +289,27 @@
                                                                 <img src="../../../../assets/img/haniot/blood-pressure.png"
                                                                      alt="">
                                                             </div>
-                                                            <span class="badge badge-haniot category">Pressão arterial:</span>
-                                                            <span
-                                                                    class="badge badge-haniot classification">{{nutritionalEvaluation.blood_pressure.classification | bloodpressureClassification}}</span>
+                                                            <span class="badge badge-haniot category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.BLOOD-PRESSURE'|translate}}
+                                                                :</span>
+                                                            <span class="badge badge-haniot classification">{{nutritionalEvaluation.blood_pressure.classification | bloodpressureClassification | translate}}</span>
                                                         </div>
                                                         <div class="card-footer">
                                                             <div class="container row justify-content-center">
                                                                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center row">
                                                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center"><span
-                                                                            class="badge badge-haniot">SISTÓLICA</span>
+                                                                            class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SYSTOLIC'|translate}}</span>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                                                        <p class="card-category">Valor: </p>
+                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}
+                                                                            : </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.blood_pressure.systolic}}
-                                                                            <small>mmHg</small>
+                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.BLOOD-PRESSURE-UNIT'|translate}}</small>
                                                                         </h3>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                                                        <p class="card-category">Percentil: </p>
+                                                                        <p class="card-category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.PERCENTIL'|translate}}
+                                                                            : </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.blood_pressure.systolic_percentile === 'undefined' ? 'Fora dos padrões definidos' : nutritionalEvaluation.blood_pressure.systolic_percentile}}
                                                                         </h3>
@@ -301,17 +318,19 @@
 
                                                                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center row justify-content-center">
                                                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                                                        <span class="badge badge-haniot">DIASTÓLICA</span>
+                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.DIASTOLIC'|translate}}</span>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                                                        <p class="card-category">Valor: </p>
+                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}
+                                                                            : </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.blood_pressure.diastolic}}
-                                                                            <small>mmHg</small>
+                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.BLOOD-PRESSURE-UNIT'|translate}}</small>
                                                                         </h3>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                                                        <p class="card-category">Percentil: </p>
+                                                                        <p class="card-category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.PERCENTIL'|translate}}
+                                                                            : </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.blood_pressure.diastolic_percentile === 'undefined' ? 'Fora dos padrões definidos' : nutritionalEvaluation.blood_pressure.diastolic_percentile}}
                                                                         </h3>
@@ -336,8 +355,7 @@
                                                                 <img src="../../../../assets/img/haniot/heart-rate.png"
                                                                      alt="">
                                                             </div>
-                                                            <span class="badge badge-haniot category">Frequência cardíaca </span>
-
+                                                            <span class="badge badge-haniot category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE'|translate}}</span>
                                                         </div>
                                                         <div class="card-footer">
                                                             <div class="container">
@@ -345,29 +363,32 @@
                                                                 <div class="row justify-content-center">
 
                                                                     <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
-                                                                        <span class="badge badge-haniot">MÍNIMA</span>
-                                                                        <p class="card-category">Valor: </p>
+                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-MIN'|translate}}</span>
+                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}
+                                                                            : </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.heart_rate.min}}
-                                                                            <small>bpm</small>
+                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>
                                                                         </h3>
                                                                     </div>
 
                                                                     <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
-                                                                        <span class="badge badge-haniot">MÉDIA</span>
-                                                                        <p class="card-category">Valor: </p>
+                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-AVERAGE'|translate}}</span>
+                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}
+                                                                            : </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.heart_rate.average}}
-                                                                            <small>bpm</small>
+                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>
                                                                         </h3>
                                                                     </div>
 
                                                                     <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
-                                                                        <span class="badge badge-haniot">MÁXIMA</span>
-                                                                        <p class="card-category">Valor: </p>
+                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-MAX'|translate}}</span>
+                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}
+                                                                            : </p>
                                                                         <h3 class="card-title">
                                                                             {{nutritionalEvaluation.heart_rate.max}}
-                                                                            <small>bpm</small>
+                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>
                                                                         </h3>
                                                                     </div>
 
@@ -394,7 +415,7 @@
                                     </div>
                                 </mat-tab>
 
-                                <mat-tab label="HÁBITOS">
+                                <mat-tab [label]="'PATIENTS.VIEW-HABITS.HABITS'|translate">
 
                                     <div class="container">
                                         <div class="row">
@@ -426,7 +447,7 @@
 
                                 </mat-tab>
 
-                                <mat-tab label="MEDIÇÕES">
+                                <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">
                                     <div class="container">
                                         <div class="row">
 
@@ -487,7 +508,8 @@
                                     <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                          *ngIf="nutritionalEvaluation.status==='incomplete'">
                                         <label>
-                                            Sugestões de aconselhamentos:
+                                            {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SUGGESTED-COUNSELING'|translate}}
+                                            :
                                         </label>
 
                                         <div class="counselings">
@@ -496,19 +518,19 @@
                                                 <div class="form-group col-sm-12 col-md-4">
                                                     <mat-checkbox class="example-margin" [(ngModel)]="allCounselings"
                                                                   (click)="clickCheckAll()">
-                                                        Selecionar todos
+                                                        {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
                                                     </mat-checkbox>
                                                 </div>
                                                 <div class="form-group col-sm-12 col-md-4">
                                                     <button type="button" class="btn btn-haniot-primary btn-sm"
                                                             (click)="showNewCounseling()">
-                                                        Adiconar
+                                                        {{'SHARED.ADD'|translate}}
                                                         <i class="material-icons">add</i>
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row" *ngIf="ncSuggested.bmi_whr && ncSuggested.bmi_whr.length">
                                                 <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
                                                     <label>
                                                         {{typeCousenling[0]}}
@@ -523,7 +545,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row"
+                                                 *ngIf="ncSuggested.glycemia && ncSuggested.glycemia.length">
                                                 <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
                                                     <label>
                                                         {{typeCousenling[1]}}
@@ -538,7 +561,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row"
+                                                 *ngIf="ncSuggested.blood_pressure && ncSuggested.blood_pressure.length">
                                                 <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
                                                     <label>
                                                         {{typeCousenling[2]}}
@@ -572,12 +596,13 @@
                                     <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                          *ngIf="nutritionalEvaluation.status==='complete'">
                                         <label>
-                                            Aconselhamentos:
+                                            {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.COUNSELINGS'|translate}}:
                                         </label>
 
                                         <div class="counselings">
 
-                                            <div class="row">
+                                            <div class="row"
+                                                 *ngIf="ncDefinitive.bmi_whr && ncDefinitive.bmi_whr.length">
                                                 <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
                                                     <label>
                                                         {{typeCousenling[0]}}
@@ -590,7 +615,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row"
+                                                 *ngIf="ncDefinitive.glycemia && ncDefinitive.glycemia.length">
                                                 <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
                                                     <label>
                                                         {{typeCousenling[1]}}
@@ -603,7 +629,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row"
+                                                 *ngIf="ncDefinitive.blood_pressure && ncDefinitive.blood_pressure.length">
                                                 <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
                                                     <label>
                                                         {{typeCousenling[2]}}
@@ -633,13 +660,15 @@
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
                                         <div class="form-group has-feedback col">
                                             <label>
-                                                Estado da avaliação:
+                                                {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.EVALUATION-STATUS'|translate}}
+                                                :
                                             </label>
-                                            <p> {{nutritionalEvaluation.status | evaluationStatus}}</p>
+                                            <p> {{nutritionalEvaluation.status | evaluationStatus | translate}}</p>
                                         </div>
                                         <div class="form-group has-feedback col">
                                             <label>
-                                                Data da avaliação:
+                                                {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.EVALUATION-DATE'|translate}}
+                                                :
                                             </label>
                                             <p>{{nutritionalEvaluation.created_at | date:"short"}}
                                             <p>
@@ -655,13 +684,13 @@
                         <div class="p-2">
                             <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
                                 <i class="material-icons">arrow_back</i>
-                                Voltar
+                                {{'SHARED.TOBACK'|translate}}
                             </button>
                         </div>
                         <div class="p-2" *ngIf="nutritionalEvaluation.status==='incomplete'">
                             <button type="submit" class="btn btn-haniot-primary" (click)="finalizeEvaluation()"
                                     [disabled]="allChecksDisabled() && !allCounselings">
-                                Finalizar avaliação
+                                {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.FINISH-EVALUATION'|translate}}
                             </button>
                         </div>
                     </div>
@@ -681,7 +710,8 @@
             <div id="finalingEvaluantion" class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                        <spinner message="Finalizando avaliação"></spinner>
+                        <spinner
+                                [message]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.FINALIZING-EVALUATION'|translate"></spinner>
                     </div>
                 </div>
             </div>
@@ -693,7 +723,7 @@
 <haniot-modal [modalId]="'newCounseling'">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Adicionar conselho</h5>
+            <h5 class="modal-title">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.ADD-EVALUATION'|translate}}</h5>
             <button type="button" class="close" aria-label="Close" (click)="hiddenNewCounseling()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -703,7 +733,8 @@
                 <div class="row">
 
                     <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <label for="counseling">Aconselhamento:</label>
+                        <label for="counseling">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.COUNSELING'|translate}}
+                            :</label>
                         <textarea class="form-control" required name="counseling" id="counseling" rows="5"
                                   #counselingModel="ngModel" [(ngModel)]="newCounseling"></textarea>
                     </div>
@@ -722,9 +753,11 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-haniot-primary" (click)="addNewCounseling()"
-                    [disabled]="(!counselingModel.valid && !counselingTypeModel.valid) || newCounseling == ''">Adicionar
+                    [disabled]="(!counselingModel.valid && !counselingTypeModel.valid) || newCounseling == ''">
+                {{'SHARED.ADD'|translate}}
             </button>
-            <button type="button" class="btn btn-haniot-secondary" (click)="hiddenNewCounseling()">Cancelar</button>
+            <button type="button" class="btn btn-haniot-secondary"
+                    (click)="hiddenNewCounseling()">{{'SHARED.CANCEL'|translate}}</button>
         </div>
     </div>
 </haniot-modal>

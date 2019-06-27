@@ -16,7 +16,6 @@ export class EvaluationComponentComponent implements OnInit, OnChanges, OnDestro
 
     @Input() patientId: string;
     @Input() pilotStudyId: string;
-    subtitle: string;
     patient: Patient;
 
     optionsGender: Array<string> = Object.keys(Gender);

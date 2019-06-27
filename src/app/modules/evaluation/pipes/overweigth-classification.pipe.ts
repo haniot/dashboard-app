@@ -10,13 +10,13 @@ export class OverweigthClassificationPipe implements PipeTransform {
         switch (value) {
 
             case 'normal':
-                return 'Normal';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.OVERWEIGHT.NORMAL';
 
             case 'overweight_obesity_risk':
-                return 'Risco de obesidade';
+                return 'EVALUATION.NUTRITION-EVALUATION.PIPES.OVERWEIGHT.OVERWEIGHT-OBESITY-RISK';
 
             default:
-                return 'Fora dos padrões definidos';
+                return 'SHARED.PIPES.UNDEFINED';
         }
     }
 

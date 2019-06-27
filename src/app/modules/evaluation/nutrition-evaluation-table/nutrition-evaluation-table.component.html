@@ -1,6 +1,6 @@
 <div class="input-group no-border">
     <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
-           placeholder="Pesquisar avaliação..." (keyup)="searchOnSubmit()">
+           [placeholder]="'EVALUATION.PLACEHOLDER-SEARCH'|translate" (keyup)="searchOnSubmit()">
     <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
         <i class="material-icons">search</i>
         <div class="ripple-container"></div>
@@ -11,19 +11,19 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>Data</th>
-            <th>Estado</th>
-            <th colspan="2">Ações</th>
+            <th>{{'SHARED.DATE'|translate}}</th>
+            <th>{{'EVALUATION.STATE'|translate}}</th>
+            <th colspan="2">{{'SHARED.ACTIONS'|translate}}</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngIf="listOfEvaluations.length==0">
             <td colspan="5" *ngIf="!listOfEvaluationsIsEmpty">
-                <spinner message="Carregando avaliações"></spinner>
+                <spinner [message]="'EVALUATION.SPINNER-MESSAGE'|translate"></spinner>
             </td>
             <td colspan="5" *ngIf="listOfEvaluationsIsEmpty">
-                <h4>Nenhuma avaliação encontrada.<br>
-                    <small>* Utilize o aplicativo para gerar novas avaliações!</small>
+                <h4>{{'EVALUATION.LIST-EMPTY'|translate}}.<br>
+                    <small>{{'EVALUATION.LIST-EMPTY-MESSAGE'|translate}}!</small>
                 </h4>
             </td>
         </tr>
@@ -32,17 +32,17 @@
             <td [routerLink]="['/evaluations',patientId, 'nutritional', evaluation.id]">{{getIndex(i)}}</td>
             <td [routerLink]="['/evaluations',patientId, 'nutritional', evaluation.id]">{{evaluation.created_at | date}}</td>
             <td [routerLink]="['/evaluations',patientId, 'nutritional', evaluation.id]">
-                <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus}}</span>
+                <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus | translate}}</span>
             </td>
             <td>
                 <a class="nav-link" [routerLink]="['/evaluations',patientId, 'nutritional', evaluation.id]"
-                   title="Acessar avaliação...">
+                   [title]="'EVALUATION.ACCESS-EVALUATION'|translate">
                     <i class="material-icons">input</i>
                 </a>
             </td>
             <td>
                 <a class="nav-link" (click)="openModalConfirmation(evaluation.patient.id,evaluation.id)"
-                   title="Excluir avaliação...">
+                   [title]="'EVALUATION.DELETE-EVALUATION'|translate">
                     <i class="material-icons">delete</i>
                 </a>
             </td>
@@ -56,5 +56,5 @@
                (page)="clickPagination($event)">
 </mat-paginator>
 
-<modal-confirmation [message]="'Tem certeza que deseja remover avaliação?'" (confirmation)="removeEvaluation()"
+<modal-confirmation [message]="'EVALUATION.DELETE-CONFIRMATION'|translate" (confirmation)="removeEvaluation()"
                     (noconfirmation)="closeModalComfimation()"></modal-confirmation>

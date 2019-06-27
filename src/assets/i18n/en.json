@@ -46,6 +46,97 @@
       "STUDIES-EMPTY-MESSAGE": "Please contact your administrator."
     }
   },
+  "EVALUATION": {
+    "NUTRITION-EVALUATION": {
+      "CARD-PATIENT": {
+        "TITLE": "Selected patient",
+        "SUBTITLE": ""
+      },
+      "SHARED-EMAIL": "Share via email",
+      "DOWNLOAD-PDF": "Download PDF",
+      "CARD-NUTRITION": {
+        "TITLE": "Nutrition evaluation",
+        "SUBTITLE": "",
+        "EVALUATION": "EVALUATION",
+        "NUTRITION-STATE": "Nutritional Status",
+        "BMI": "BMI",
+        "CENTIMETER": "cm",
+        "KILOGRAM": "Kg",
+        "PERCENTIL": "Percentil",
+        "CUT-TAYLOR": "Taylor Cutting Point",
+        "INDICATORS-OVERWEIGHT": "Indicators of overweight",
+        "STATE-NUTRITION": "Nutritional status",
+        "DIABETES": "Insulin Resistance / Diabetes",
+        "HYPERTENSION": "Hypertension",
+        "RELATION-WAIST-HEIGHT": "Relation waist / height",
+        "GLYCEMIA": "Glycemia",
+        "CLASSIFICATION-ZONES": "Classification Zones",
+        "GOOD": "Ideal",
+        "GREAT": "Great",
+        "BETWEEN": "Between",
+        "AND": "and",
+        "TYPE-OF-MEAL": "Type of meal",
+        "GLYCEMIA-UNIT": "mg/dl",
+        "BLOOD-PRESSURE": "Blood pressure",
+        "SYSTOLIC": "SYSTOLIC",
+        "DIASTOLIC": "DIASTOLIC",
+        "BLOOD-PRESSURE-UNIT": "mmHg",
+        "HEART-RATE": "Heart rate",
+        "HEART-RATE-MIN": "MINIMUM",
+        "HEART-RATE-AVERAGE": "AVERAGE",
+        "HEART-RATE-MAX": "MAXIMUM",
+        "HEART-RATE-UNIT": "bpm",
+        "COLLECTED-MEASUREMENTS": "Collected measurements",
+        "SUGGESTED-COUNSELING": "Suggestions for counselings",
+        "SELECT-ALL": "Select all",
+        "COUNSELINGS": "Counselings",
+        "COUNSELING": "Counseling",
+        "EVALUATION-STATUS": "Evaluation status",
+        "EVALUATION-DATE": "Evaluation date",
+        "FINISH-EVALUATION": "Finish evaluation",
+        "FINALIZING-EVALUATION": "Finalizing evaluation",
+        "ADD-EVALUATION": "Add counseling"
+      },
+      "PIPES": {
+        "CLASSIFICATION": {
+          "ACCENTUATED-THINNESS": "Sharp emaciation",
+          "THINNESS": "Thinness",
+          "EUTROPHY": "Eutrophy",
+          "OVERWEIGHT": "Overweight",
+          "OBESITY": "Obesity",
+          "SEVERE-OBESITY": "Severe obesity"
+        },
+        "TAYLOR-CUT": {
+          "NORMAL": "Normal",
+          "OUT-OF-NORMALITY": "Out of normality"
+        },
+        "BLOOD-GLUCOSE": {
+          "GOOD": "Ideal",
+          "GREAT": "Great"
+        },
+        "BLOOD-PRESSURE": {
+          "NORMAL": "Normal",
+          "BORDERLINE": "Bordering",
+          "HYPERTENSION-STAGE-1": "Hypertension stage 1",
+          "HYPERTENSION-STAGE-2": "Hypertension stage 2"
+        },
+        "OVERWEIGHT": {
+          "NORMAL": "Normal",
+          "OVERWEIGHT-OBESITY-RISK": "Overweith obesity risk"
+        }
+      }
+    },
+    "PLACEHOLDER-SEARCH": "Search for evaluation...",
+    "SPINNER-MESSAGE": "Loading evaluations",
+    "LIST-EMPTY": "No evaluation found",
+    "LIST-EMPTY-MESSAGE": "* Use the app to generate new evaluations",
+    "STATUS-COMPLETE": "COMPLETE",
+    "STATUS-INCOMPLETE": "INCOMPLETE",
+    "ACCESS-EVALUATION": "Access evaluation...",
+    "DELETE-EVALUATION": "Delete evaluation...",
+    "DELETE-CONFIRMATION": "Are you sure you want to remove evaluation?",
+    "STATE": "State"
+  },
   "FOOTER": {
     "ABOUT-US": "About us",
     "PRIVACY": "Privacy"
@@ -76,7 +167,7 @@
       "SUBTITLE": "",
       "GLUCOSE": "Glucose",
       "PERIOD": "Measurement period",
-      "UNAVAILABLE-DATA":"No record of glucose enrolled!"
+      "UNAVAILABLE-DATA": "No record of glucose enrolled!"
     },
     "BLOOD-PRESSURE": {
       "TITLE": "Blood pressure",
@@ -85,20 +176,20 @@
       "SYSTOLIC": "Systolic",
       "PULSE": "Pulse",
       "DIASTOLIC": "Diastolic",
-      "UNAVAILABLE-DATA":"No record of blood pressure recorded!"
+      "UNAVAILABLE-DATA": "No record of blood pressure recorded!"
     },
     "BODY-TEMPERATURE": {
       "TITLE": "Body temperature",
       "SUBTITLE": "",
       "TEMPERATURE-HISTORIC": "Temperature historic",
       "TEMPERATURE": "Temperature",
-      "UNAVAILABLE-DATA":"No record of body temperature recorded!"
+      "UNAVAILABLE-DATA": "No record of body temperature recorded!"
     },
     "FAT": {
       "TITLE": "Body fat",
       "SUBTITLE": "",
       "FAT": "Fat",
-      "UNAVAILABLE-DATA":"No record of body fat recorded!"
+      "UNAVAILABLE-DATA": "No record of body fat recorded!"
     },
     "HEART-RATE": {
       "TITLE": "Heart rate",
@@ -112,26 +203,26 @@
         "SUBTEXT": "The graph below represents all the values captured in the last measurement performed"
       },
       "FREQUENCY": "Frequency",
-      "UNAVAILABLE-DATA":"No registered heart rate record!"
+      "UNAVAILABLE-DATA": "No registered heart rate record!"
     },
     "HEIGHT": {
       "TITLE": "Stature",
       "SUBTITLE": "",
       "HEIGHT": "Height",
-      "UNAVAILABLE-DATA":"No record of height registered!"
+      "UNAVAILABLE-DATA": "No record of height registered!"
     },
     "WAIST-CIRCUMFERENCE": {
       "TITLE": "Waist circumference",
       "SUBTITLE": "",
       "CIRCUMFERENCE": "Circumference",
-      "UNAVAILABLE-DATA":"No record of waist circumference recorded!"
+      "UNAVAILABLE-DATA": "No record of waist circumference recorded!"
     },
     "WEIGHT": {
       "TITLE": "Weight",
       "SUBTITLE": "",
       "BODY-FAT": "Body fat",
       "FAT": "Fat",
-      "UNAVAILABLE-DATA":"No record of height registered!"
+      "UNAVAILABLE-DATA": "No record of height registered!"
     },
     "COMPONENT": {
       "CONFIG-GRAPH": "Set up visible graphics",
@@ -157,26 +248,14 @@
       "NOTFOUND": "NOT FOUND"
     },
     "LAST-REGISTER": "Last register",
-    "LAST-REGISTER-DATE":"Date of last record",
-    "PATTERN-DATE":"month/day/year hour",
+    "LAST-REGISTER-DATE": "Date of last record",
+    "PATTERN-DATE": "month/day/year hour",
     "VALUE": "Value",
     "UNIT": "Unit",
     "MIN": "Minimum",
     "MAX": "Maximum",
     "AVERAGE": "Average",
     "AVERAGE-VALUE": "Average value"
-  },
-  "EVALUATIONS": {
-    "PLACEHOLDER-SEARCH": "Search evaluations ...",
-    "SPINNER-MESSAGE": "Loading evaluations",
-    "LIST-EMPTY": "No evaluation found",
-    "LIST-EMPTY-MESSAGE": "* Use the app to generate new evaluations",
-    "STATUS-COMPLETE": "COMPLETE",
-    "STATUS-INCOMPLETE": "INCOMPLETE",
-    "ACCESS-EVALUATION": "Access evaluation ...",
-    "DELETE-EVALUATION": "Delete evaluation ...",
-    "DELETE-CONFIRMATION": "Are you sure you want to delete evaluation?",
-    "STATE": "State"
   },
   "HABITS": {
     "FAMILY-COHESION": {
@@ -535,13 +614,20 @@
     "ONLY-NUMBERS": "Enter numbers only",
     "GENDER": "Gender",
     "INVALID-GENDER": "Invalid gender",
-    "GENDER-MALE": "MALE",
-    "GENDER-FEMALE": "FEMALE",
     "BIRTH-DATE": "Birth date",
     "INVALID-BIRTH-DATE": "Invalid birth date",
     "NAME-OF-PATIENT": "Name of patient",
     "AGE": "Age",
-    "YEARS": "YEARS"
+    "YEARS": "YEARS",
+    "CANCEL": "Cancel",
+    "PIPES": {
+      "GENDER": {
+        "MALE": "MALE",
+        "FEMALE": "FEMALE"
+      },
+      "UNDEFINED": "Out of parameters",
+      "NOTFOUND": "NOT FOUND"
+    }
   },
   "TABLE-USER": {
     "PLACEHOLDER-SEARCH": "Search for user ...",

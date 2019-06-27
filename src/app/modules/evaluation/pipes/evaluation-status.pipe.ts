@@ -9,13 +9,13 @@ export class EvaluationStatustPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'complete':
-                return 'EVALUATIONS.STATUS-COMPLETE';
+                return 'EVALUATION.STATUS-COMPLETE';
 
             case 'incomplete':
-                return 'EVALUATIONS.STATUS-INCOMPLETE';
+                return 'EVALUATION.STATUS-INCOMPLETE';
 
             default:
-                return 'Fora dos padrões definidos';
+                return 'SHARED.PIPES.UNDEFINED';
         }
 
     }

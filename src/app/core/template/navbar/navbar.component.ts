@@ -1,18 +1,18 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
+import {Router} from '@angular/router';
 
-import { ISubscription } from "rxjs-compat/Subscription";
+import {ISubscription} from "rxjs-compat/Subscription";
 
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { UserService } from 'app/modules/admin/services/users.service';
-import { PilotStudy } from "../../../modules/pilot-study/models/pilot.study";
-import { SelectPilotStudyService } from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
-import { PilotStudyService } from "../../../modules/pilot-study/services/pilot-study.service";
-import { LocalStorageService } from "../../../shared/shared-services/localstorage.service";
-import { LoadingService } from "../../../shared/shared-components/loading-component/service/loading.service";
-import { IUser } from '../../../modules/admin/models/users';
-import { TranslateService } from '@ngx-translate/core';
+import {AuthService} from 'app/security/auth/services/auth.service';
+import {UserService} from 'app/modules/admin/services/users.service';
+import {PilotStudy} from "../../../modules/pilot-study/models/pilot.study";
+import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
+import {PilotStudyService} from "../../../modules/pilot-study/services/pilot-study.service";
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
+import {IUser} from '../../../modules/admin/models/users';
+import {TranslateService} from '@ngx-translate/core';
 
 
 export declare interface RouteInfo {
@@ -21,19 +21,19 @@ export declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: '^/dashboard$', title: 'SHARED.HOME-PAGE' },
-    { path: '^/admin/new/administrators$', title: 'NAVBAR.ADMINS-USERS' },
-    { path: '^/admin/new/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS' },
-    { path: '^/pilotstudies$', title: 'SHARED.PILOTSTUDIES' },
-    { path: '^/patients$', title: 'SHARED.PATIENTS' },
-    { path: '^(\\/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS' },
-    { path: '^(\\/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-PATIENT' },
-    { path: '^/healthprofessional/mystudies$', title: 'SHARED.MY-STUDIES' },
-    { path: '^(\\/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-STUDY' },
-    { path: '^/admin/configurations$', title: 'SHARED.CONFIG' },
-    { path: '^/healthprofessional/configurations$', title: 'SHARED.CONFIG' },
-    { path: '^/healthprofessional/myevaluations$', title: 'SHARED.MY-EVALUATIONS' },
-    { path: '^(\\/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'NUTRITION-EVALUATIONS' }
+    {path: '^/dashboard$', title: 'SHARED.HOME-PAGE'},
+    {path: '^/admin/new/administrators$', title: 'NAVBAR.ADMINS-USERS'},
+    {path: '^/admin/new/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS'},
+    {path: '^/pilotstudies$', title: 'SHARED.PILOTSTUDIES'},
+    {path: '^/patients$', title: 'SHARED.PATIENTS'},
+    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS'},
+    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-PATIENT'},
+    {path: '^/healthprofessional/mystudies$', title: 'SHARED.MY-STUDIES'},
+    {path: '^(\\/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-STUDY'},
+    {path: '^/admin/configurations$', title: 'SHARED.CONFIG'},
+    {path: '^/healthprofessional/configurations$', title: 'SHARED.CONFIG'},
+    {path: '^/healthprofessional/myevaluations$', title: 'SHARED.MY-EVALUATIONS'},
+    {path: '^(\\/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'NAVBAR.NUTRITION-EVALUATIONS'}
 ];
 
 @Component({
@@ -300,9 +300,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     configLanguage(user: IUser) {
         user.language = 'pt';
-        if(user && user.language){
+        if (user && user.language) {
             this.translateService.use(user.language);
-        }else{
+        } else {
             const browserLang = this.translateService.getBrowserLang();
             this.translateService.use(browserLang.match(/en|pt/) ? browserLang : 'en');
         }

@@ -9,16 +9,16 @@ export class GenderPipe implements PipeTransform {
     transform(value: any, args?: any): any {
         switch (value) {
             case 'male':
-                return 'SHARED.GENDER-MALE';
+                return 'SHARED.PIPES.GENDER.MALE';
 
             case 'female':
-                return 'SHARED.GENDER-FEMALE';
+                return 'SHARED.PIPES.GENDER.FEMALE';
 
             case undefined:
-                return 'Fora dos parâmetros';
+                return 'SHARED.PIPES.UNDEFINED'
 
             default:
-                return 'NÂO ENCONTRADO';
+                return 'SHARED.PIPES.NOTFOUND';
         }
 
     }
