@@ -126,6 +126,13 @@
         }
       }
     },
+    "NUTRITION-EVALUATION-LIST": {
+      "SELECT-STUDY-PILOT": "SELECIONE UM ESTUDO PILOTO",
+      "SELECT-PATIENT": "SELECIONE UM PACIENTE",
+      "NEXT": "Pŕoximo",
+      "PREVIOUS": "Anterior",
+      "EVALUATIONS": "AVALIAÇÕES"
+    },
     "PLACEHOLDER-SEARCH": "Pesquisar avaliação...",
     "SPINNER-MESSAGE": "Carregando avaliações",
     "LIST-EMPTY": "Nenhuma avaliação encontrada",
@@ -135,7 +142,9 @@
     "ACCESS-EVALUATION": "Acessar avaliação...",
     "DELETE-EVALUATION": "Excluir avaliação...",
     "DELETE-CONFIRMATION": "Tem certeza que deseja remover avaliação?",
-    "STATE": "Estado"
+    "STATE": "Estado",
+    "OPTIONS-DOWNLOAD": "Opções de download...",
+    "GENERATING-ODONTOLOGICAL-EVALUATIONS": "Gerando avaliações odontológica"
   },
   "FOOTER": {
     "ABOUT-US": "Sobre nós",
@@ -523,7 +532,7 @@
     "DOWNLOAD-XLS": "Baixar XLS",
     "NEW-FILE": "Solicitar Novo Arquivo",
     "DELETE-CONFIRMATION": "Tem certeza que deseja remover estudo piloto?",
-    "NUTRITIONEVALUATION": "Avaliação odontológica",
+    "ODONTOLOGICAL-EVALUATON": "Avaliação odontológica",
     "FILECSV": "Arquivo CSV",
     "FILEXLS": "Arquivo XLS",
     "GENERATINGFILE": "Gerando arquivo",

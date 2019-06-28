@@ -1,25 +1,29 @@
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <mat-horizontal-stepper linear #stepper>
-          <mat-step [stepControl]="pilotForm">
-            <form [formGroup]="pilotForm">
-              <ng-template matStepLabel>SELECIONE UM ESTUDO PILOTO</ng-template>
-              <studies (selected)="selectStudy($event)"></studies>
-              <div class="d-flex justify-content-center">
-                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                  <button class="btn btn-haniot-primary" matStepperNext [disabled]="!pilotForm.valid">Próximo</button>
-                </div>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step>
-            <ng-template matStepLabel>AVALIAÇÕES</ng-template>
-            <dental-evaluation-table [(pilotStudy)]="pilotStudy"></dental-evaluation-table>
-          </mat-step>
-        </mat-horizontal-stepper>
-      </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <mat-horizontal-stepper linear #stepper>
+                    <mat-step [stepControl]="pilotForm">
+                        <form [formGroup]="pilotForm">
+                            <ng-template
+                                    matStepLabel>{{'EVALUATION.NUTRITION-EVALUATION-LIST.SELECT-STUDY-PILOT'|translate}}</ng-template>
+                            <studies (selected)="selectStudy($event)"></studies>
+                            <div class="d-flex justify-content-center">
+                                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                                    <button class="btn btn-haniot-primary" matStepperNext [disabled]="!pilotForm.valid">
+                                        {{'EVALUATION.NUTRITION-EVALUATION-LIST.SELECT-STUDY-PILOT'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template
+                                matStepLabel>{{'EVALUATION.NUTRITION-EVALUATION-LIST.EVALUATIONS'|translate}}</ng-template>
+                        <dental-evaluation-table [(pilotStudy)]="pilotStudy"></dental-evaluation-table>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

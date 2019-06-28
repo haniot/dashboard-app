@@ -1,45 +1,42 @@
 <div class="input-group no-border">
-  <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
-    placeholder="Pesquisar paciente..." (keyup)="searchOnSubmit()">
-  <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
-    <i class="material-icons">search</i>
-    <div class="ripple-container"></div>
-  </button>
+    <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
+           [placeholder]="'PATIENTS.PATIENTS-TABLE.PLACEHOLDER-SEARCH'|translate" (keyup)="searchOnSubmit()">
+    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
+        <i class="material-icons">search</i>
+        <div class="ripple-container"></div>
+    </button>
 </div>
 <div class="table-responsive">
-  <table class="table table-sm table-hover">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nome do paciente</th>
-        <th>Email</th>
-        <th>Gênero</th>
-        <th>Data de Nascimento</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngIf="listOfPatients.length==0">
-        <td colspan="5" *ngIf="!listOfPatientsIsEmpty">
-          <spinner message="Carregando pacientes"></spinner>
-        </td>
-        <td colspan="5" *ngIf="listOfPatientsIsEmpty">Nenhum registro encontrado.</td>
-      </tr>
-      <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById" (click)="selectPatient(patient.id)"
-        [(ngClass)]="listClass[i]">
-        <td>{{getIndex(i)}}</td>
-        <td>{{patient.name}}</td>
-        <td>{{patient.email}}</td>
-        <td>{{patient.gender | gender}}</td>
-        <td>{{patient.birth_date | date}}</td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table table-sm table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>{{'SHARED.NAME-OF-PATIENT'|translate}}</th>
+            <th>{{'SHARED.EMAIL'|translate}}</th>
+            <th>{{'SHARED.GENDER'|translate}}</th>
+            <th>{{'SHARED.BIRTH-DATE'|translate}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="listOfPatients.length==0">
+            <td colspan="5" *ngIf="!listOfPatientsIsEmpty">
+                <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
+            </td>
+            <td colspan="5" *ngIf="listOfPatientsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
+        </tr>
+        <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById" (click)="selectPatient(patient.id)"
+            [(ngClass)]="listClass[i]">
+            <td>{{getIndex(i)}}</td>
+            <td>{{patient.name}}</td>
+            <td>{{patient.email}}</td>
+            <td>{{patient.gender | gender | translate}}</td>
+            <td>{{patient.birth_date | date}}</td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 
 <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
-  (page)="clickPagination($event)">
+               (page)="clickPagination($event)">
 </mat-paginator>
-
-<modal-confirmation [message]="'Tem certeza que deseja remover paciente?'" (confirmation)="removePatient()"
-  (noconfirmation)="closeModalComfimation()"></modal-confirmation>

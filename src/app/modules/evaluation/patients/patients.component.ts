@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {PageEvent} from '@angular/material';
 import {Patient} from 'app/modules/patient/models/patient';
 import {PatientService} from 'app/modules/patient/services/patient.service';
@@ -102,20 +102,6 @@ export class PatientsComponent implements OnInit, OnChanges {
     closeModalComfimation() {
         this.cacheIdPatientRemove = '';
         this.modalService.close('modalConfirmation');
-    }
-
-    removePatient() {
-        this.patientService.remove(this.cacheIdPatientRemove)
-            .then(() => {
-                this.getAllPacients();
-                this.calcLengthPatients();
-                this.toastService.info('Paciente removido com sucesso!');
-                this.closeModalComfimation();
-            })
-            .catch(errorResponse => {
-                this.toastService.error('Não foi possível remover usuário!');
-                //console.log('Não foi possível remover paciente!', errorResponse);
-            });
     }
 
     getIndex(index: number): number {

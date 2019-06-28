@@ -126,6 +126,13 @@
         }
       }
     },
+    "NUTRITION-EVALUATION-LIST": {
+      "SELECT-STUDY-PILOT": "SELECT A PILOT STUDY",
+      "SELECT-PATIENT": "SELECT A PATIENT",
+      "NEXT": "Next",
+      "PREVIOUS": "Previuos",
+      "EVALUATIONS": "EVALUATIONS"
+    },
     "PLACEHOLDER-SEARCH": "Search for evaluation...",
     "SPINNER-MESSAGE": "Loading evaluations",
     "LIST-EMPTY": "No evaluation found",
