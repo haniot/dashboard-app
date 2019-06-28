@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { PhysicalActivityHabitsRecord } from '../models/physicalActivity';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { PhysicalActivityRecordService } from '../services/physical-activity-record.service';
-import { ToastrService } from 'ngx-toastr';
-import { PhysicalActivityPipe } from '../pipes/physical-activity-frequency.pipe';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {PhysicalActivityHabitsRecord} from '../models/physicalActivity';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {PhysicalActivityRecordService} from '../services/physical-activity-record.service';
+import {PhysicalActivityPipe} from '../pipes/physical-activity-frequency.pipe';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'physical-activity-habits',
@@ -23,8 +22,7 @@ export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private physicalActivityService: PhysicalActivityRecordService,
     private physicalActivityPipe: PhysicalActivityPipe,
-    private translateService: TranslateService,
-    private toastService: ToastrService
+    private translateService: TranslateService
   ) {
     this.index = 0;
     this.listPhysicalActivits = new Array<PhysicalActivityHabitsRecord>();

@@ -5,7 +5,6 @@ import {MeasurementService} from '../services/measurement.service';
 import {BloodPressure} from '../models/blood-pressure';
 import {HeartRate} from '../models/heart-rate';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {ToastrService} from 'ngx-toastr';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 
 class ConfigVisibility {
@@ -62,7 +61,6 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     constructor(
         private measurementService: MeasurementService,
         private modalService: ModalService,
-        private toastService: ToastrService,
         private localStorageService: LocalStorageService
     ) {
         this.listWeight = new Array<IMeasurement>();

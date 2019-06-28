@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {PageEvent} from '@angular/material';
 
 import {NutritionEvaluation} from '../models/nutrition-evaluation';
@@ -6,7 +6,7 @@ import {NutritionEvaluationService} from '../services/nutrition-evaluation.servi
 import {ToastrService} from 'ngx-toastr';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {EvaluationService} from '../services/evaluation.service';
-import {Patient} from 'app/modules/patient/models/patient';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'nutrition-evaluation-table',
@@ -40,7 +40,8 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
         private evaluationService: EvaluationService,
         private nutritionService: NutritionEvaluationService,
         private toastService: ToastrService,
-        private modalService: ModalService
+        private modalService: ModalService,
+        private translateService: TranslateService
     ) {
         this.listOfEvaluations = new Array<NutritionEvaluation>();
     }
@@ -116,11 +117,11 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                 .then(() => {
                     this.getAllNutritionEvaluations();
                     this.calcLenghtNutritionEvaluations();
-                    this.toastService.info('Avaliação removida com sucesso!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-REMOVED'));
                     this.closeModalComfimation();
                 })
                 .catch(errorResponse => {
-                    this.toastService.error('Não foi possível remover avaliação!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-REMOVED'));
                     // console.log('Não foi possível remover paciente!', errorResponse);
                 });
         }
@@ -156,7 +157,7 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.patientId.currentValue != undefined && changes.patientId.previousValue == undefined) {
+        if (changes.patientId.currentValue !== undefined && changes.patientId.previousValue === undefined) {
             this.getAllNutritionEvaluations();
             this.calcLenghtNutritionEvaluations();
         }

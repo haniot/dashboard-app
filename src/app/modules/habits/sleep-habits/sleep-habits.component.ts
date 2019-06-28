@@ -1,10 +1,8 @@
-import {Component, OnInit, Input, SimpleChanges, OnChanges} from '@angular/core';
-import {FormGroup, FormBuilder} from '@angular/forms';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 import {SleepHabitsRecord} from '../models/sleep';
-import {ToastrService} from 'ngx-toastr';
 import {SleepRecordService} from '../services/sleep-record.service';
-import {PhysicalActivityHabitsRecord} from "../models/physicalActivity";
 
 @Component({
     selector: 'sleep-habits',
@@ -21,8 +19,7 @@ export class SleepHabitsComponent implements OnInit, OnChanges {
 
     constructor(
         private fb: FormBuilder,
-        private sleepService: SleepRecordService,
-        private toastService: ToastrService
+        private sleepService: SleepRecordService
     ) {
         this.index = 0;
         this.listSleep = new Array<SleepHabitsRecord>();

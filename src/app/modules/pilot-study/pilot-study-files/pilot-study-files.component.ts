@@ -8,6 +8,7 @@ import {ModalService} from "../../../shared/shared-components/haniot-modal/servi
 import {PilotStudyService} from "../services/pilot-study.service";
 import {DateRange} from "../models/range-date";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'pilot-study-files',
@@ -47,7 +48,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         private pilotService: PilotStudyService,
         private toastService: ToastrService,
         private modalService: ModalService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private translateService: TranslateService
     ) {
         this.pilotStudy = new PilotStudy();
         this.listOfFiles = new Array<OdontologicEvaluation>();
@@ -127,14 +129,14 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                 .then(() => {
                     this.getAllFiles();
                     this.calcLenghtFiles();
-                    this.toastService.info('Arquivo removido com sucesso!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.FILE-REMOVED'));
                     this.removingFile = false;
                     this.cacheIdFileRemove = '';
                 })
                 .catch(errorResponse => {
                     this.removingFile = false;
                     this.openModalConfirmation(this.cacheIdFileRemove);
-                    this.toastService.error('Não foi possível remover arquivo!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.FILE-NOT-REMOVED'));
                     // console.log('Não foi possível remover paciente!', errorResponse);
                 });
         }
@@ -167,7 +169,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
 
-        if (changes.pilotStudy.currentValue != changes.pilotStudy.previousValue) {
+        if (changes.pilotStudy.currentValue !== changes.pilotStudy.previousValue) {
             this.getAllFiles();
             this.calcLenghtFiles();
         }
@@ -186,15 +188,15 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             .catch(error => {
                     this.generatingFile = false;
                     if (error.code === 404 && error.message === 'PILOTSTUDY NOT FOUND') {
-                        this.toastService.error('Estudo não encontrado');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FOUND'));
                     } else if (error.code === 404 && error.message === 'HEALTHPROFESSIONALID NOT FOUND') {
-                        this.toastService.error('Profissional não encontrado');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONALS-NOTFOUND'));
                     } else if (error.code === 400 && error.message === 'PILOTSTUDY EMPTY') {
-                        this.toastService.error('O estudo selecionado não possui pacientes!');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-EMPTY'));
                     } else if (error.code === 400) {
-                        this.toastService.error('Algum paciente não possui as informações necessárias!');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-ERROR'));
                     } else {
-                        this.toastService.error('Não foi possível gerar avaliação!');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-GENERATED'));
                     }
                     // console.log('Não foi possível gerar avaliação!', error)
                 }

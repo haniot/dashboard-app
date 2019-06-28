@@ -1,5 +1,5 @@
 import {Component, OnChanges, OnDestroy, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 
@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ISubscription} from 'rxjs/Subscription';
 
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-edit-mypilot',
@@ -32,7 +33,8 @@ export class EditMypilotComponent implements OnInit, OnChanges, OnDestroy {
         private toastService: ToastrService,
         private router: Router,
         private activeRouter: ActivatedRoute,
-        private location: Location
+        private location: Location,
+        private translateService: TranslateService
     ) {
         this.subscriptions = new Array<ISubscription>();
     }
@@ -86,10 +88,10 @@ export class EditMypilotComponent implements OnInit, OnChanges, OnDestroy {
 
         this.pilotStudyService.update(form)
             .then(() => {
-                this.toastService.info('Estudo Piloto atualizado!');
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-UPDATED'));
             })
             .catch(error => {
-                this.toastService.error('Não foi possível atualizar estudo piloto!');
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-UPDATED'));
                 // console.log('Não foi possível atualizar estudo!', error);
             });
     }

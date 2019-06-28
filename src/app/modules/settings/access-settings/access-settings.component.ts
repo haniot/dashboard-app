@@ -1,92 +1,92 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
-import { TranslateService } from '@ngx-translate/core';
-import { UserService } from '../../admin/services/users.service';
-import { ToastrService } from 'ngx-toastr';
+import {TranslateService} from '@ngx-translate/core';
+import {UserService} from '../../admin/services/users.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
-  selector: 'access-settings',
-  templateUrl: './access-settings.component.html',
-  styleUrls: ['./access-settings.component.scss']
+    selector: 'access-settings',
+    templateUrl: './access-settings.component.html',
+    styleUrls: ['./access-settings.component.scss']
 })
 export class AccessSettingsComponent implements OnInit {
 
-  @Input() userId: string;
+    @Input() userId: string;
 
-  old_password: string;
-  
-  new_password: string;
+    old_password: string;
 
-  icon_password = 'visibility_off';
+    new_password: string;
 
-  typeInputPassword = 'password';
+    icon_password = 'visibility_off';
 
-  icon_password_confirm = 'visibility_off';
+    typeInputPassword = 'password';
 
-  typeInputPassword_confirm = 'password';
+    icon_password_confirm = 'visibility_off';
 
-  passwordIsValid: boolean;
+    typeInputPassword_confirm = 'password';
 
-  constructor(
-    private userService: UserService,
-    protected translate: TranslateService,
-    private toastr: ToastrService,
-  ) {
-    this.passwordIsValid = true;
-  }
+    passwordIsValid: boolean;
 
-  ngOnInit() {
-  }
+    constructor(
+        private userService: UserService,
+        protected translate: TranslateService,
+        private toastr: ToastrService,
+    ) {
+        this.passwordIsValid = true;
+    }
 
-  onChangePassword(form) {
-    this.userService.changePassword(this.userId, form.value)
-      .then(() => {
-        this.toastr.info('Senha modificada com sucesso!');
-        form.reset();
-      })
-      .catch(HttpError => {
-        // console.log('Não foi possível mudar a senha!', HttpError);
-        this.toastr.error('Não foi posível mudar sua senha!');
-        if (HttpError.error.code === 400 && HttpError.error.message == "Password does not match") {
-          form.controls['old_password'].setErrors({ 'incorrect': true });
+    ngOnInit() {
+    }
+
+    onChangePassword(form) {
+        this.userService.changePassword(this.userId, form.value)
+            .then(() => {
+                this.toastr.info(this.translate.instant('TOAST-MESSAGES.PASSWORD-UPDATED'));
+                form.reset();
+            })
+            .catch(HttpError => {
+                // console.log('Não foi possível mudar a senha!', HttpError);
+                this.toastr.error(this.translate.instant('TOAST-MESSAGES.PASSWORD-NOT-UPDATED'));
+                if (HttpError.error.code === 400 && HttpError.error.message == "Password does not match") {
+                    form.controls['old_password'].setErrors({'incorrect': true});
+                }
+            });
+    }
+
+    clickVisibilityPassword(): void {
+        this.icon_password = this.icon_password === 'visibility_off' ? 'visibility' : 'visibility_off';
+        if (this.icon_password === 'visibility_off') {
+            this.typeInputPassword = 'password';
+        } else {
+            this.typeInputPassword = 'text';
         }
-      });
-  }
-
-  clickVisibilityPassword(): void {
-    this.icon_password = this.icon_password === 'visibility_off' ? 'visibility' : 'visibility_off';
-    if (this.icon_password === 'visibility_off') {
-      this.typeInputPassword = 'password';
-    } else {
-      this.typeInputPassword = 'text';
-    }
-  }
-
-  clickVisibilityPasswordConfirm(): void {
-    this.icon_password_confirm = this.icon_password_confirm === 'visibility_off' ? 'visibility' : 'visibility_off';
-    if (this.icon_password_confirm === 'visibility_off') {
-      this.typeInputPassword_confirm = 'password';
-    } else {
-      this.typeInputPassword_confirm = 'text';
-    }
-  }
-
-  validetorPassword(): void {
-    const pass = '' + this.new_password;
-
-    const len = pass.length;
-
-    const letter = pass.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').length;
-    const num = pass.replace(/[^\d]+/g, '').length;
-    const sym = pass.replace(/[A-Za-z0-9_]/gi, '').length;
-
-
-    if (len >= 6 && letter > 0 && num > 0 && sym > 0) {
-      this.passwordIsValid = true;
-    } else {
-      this.passwordIsValid = false;
     }
 
-  }
+    clickVisibilityPasswordConfirm(): void {
+        this.icon_password_confirm = this.icon_password_confirm === 'visibility_off' ? 'visibility' : 'visibility_off';
+        if (this.icon_password_confirm === 'visibility_off') {
+            this.typeInputPassword_confirm = 'password';
+        } else {
+            this.typeInputPassword_confirm = 'text';
+        }
+    }
+
+    validetorPassword(): void {
+        const pass = '' + this.new_password;
+
+        const len = pass.length;
+
+        const letter = pass.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').length;
+        const num = pass.replace(/[^\d]+/g, '').length;
+        const sym = pass.replace(/[A-Za-z0-9_]/gi, '').length;
+
+
+        if (len >= 6 && letter > 0 && num > 0 && sym > 0) {
+            this.passwordIsValid = true;
+        } else {
+            this.passwordIsValid = false;
+        }
+
+    }
 
 }

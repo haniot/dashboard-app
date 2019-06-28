@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-evaluation-list',

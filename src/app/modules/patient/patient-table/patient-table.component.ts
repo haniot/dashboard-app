@@ -9,6 +9,7 @@ import {SelectPilotStudyService} from "../../../shared/shared-components/select-
 import {Patient} from '../models/patient';
 import {PatientService} from '../services/patient.service';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'patient-table',
@@ -47,7 +48,8 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         private modalService: ModalService,
         private loadinService: LoadingService,
         private selectStudyService: SelectPilotStudyService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private translateService: TranslateService
     ) {
         this.subscriptions = new Array<ISubscription>();
     }
@@ -131,11 +133,11 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
             .then(() => {
                 this.getAllPacients();
                 this.calcLengthPatients();
-                this.toastService.info('Paciente removido com sucesso!');
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
                 this.closeModalComfimation();
             })
             .catch(errorResponse => {
-                this.toastService.error('Não foi possível remover usuário!');
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-REMOVED'));
                 // console.log('Não foi possível remover paciente!', errorResponse);
             });
     }

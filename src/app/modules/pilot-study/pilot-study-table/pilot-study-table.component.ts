@@ -4,6 +4,7 @@ import {PilotStudy} from '../models/pilot.study';
 import {PageEvent} from '@angular/material/paginator';
 import {ToastrService} from 'ngx-toastr';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'pilot-study-table',
@@ -35,7 +36,8 @@ export class PilotStudyTableComponent implements OnInit {
     constructor(
         private pilotStudyService: PilotStudyService,
         private toastService: ToastrService,
-        private modalService: ModalService
+        private modalService: ModalService,
+        private translateService: TranslateService
     ) {
         this.list = new Array<PilotStudy>();
     }
@@ -98,16 +100,16 @@ export class PilotStudyTableComponent implements OnInit {
         if (this.cacheStudyIdRemove) {
             this.pilotStudyService.remove(this.cacheStudyIdRemove)
                 .then(() => {
-                    this.toastService.info('Estudo removido com sucesso!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-REMOVED'));
                     this.getAllPilotStudies();
                     this.calcLengthEstudies();
                     this.closeModalConfirmation();
                 })
                 .catch(error => {
-                    this.toastService.error('Não foi possível remover estudo!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-REMOVED'));
                 });
         } else {
-            this.toastService.error('Não foi possível remover estudo!');
+            this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-REMOVED'));
         }
     }
 

@@ -9,7 +9,6 @@ import {ISubscription} from 'rxjs/Subscription';
 
 import {ToastrService} from 'ngx-toastr';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
-import {IUser} from "../../../modules/admin/models/users";
 import {TranslateService} from "@ngx-translate/core";
 
 
@@ -60,7 +59,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
             },
             (error: HttpErrorResponse) => {
                 if (error.status === 401) {
-                    this.toastr.error('Dados inválidos', 'Não foi possível entar');
+                    this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
+                        this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
                 }
                 this.loading = false;
             }

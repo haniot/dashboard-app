@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
 import {Router} from '@angular/router';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-patient-manager',
@@ -39,7 +40,8 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         private toastService: ToastrService,
         private modalService: ModalService,
         private loadinService: LoadingService,
-        private router: Router
+        private router: Router,
+        private translateService: TranslateService
     ) {
     }
 
@@ -103,11 +105,10 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
             .then(() => {
                 this.getAllPacients();
                 this.calcLengthPatients();
-                this.toastService.info('Paciente removido com sucesso!');
-                this.closeModalComfimation();
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
             })
             .catch(errorResponse => {
-                this.toastService.error('Não foi possível remover usuário!');
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-REMOVED'));
                 // console.log('Não foi possível remover paciente!', errorResponse);
             });
     }
@@ -138,7 +139,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
     }
 
     IsAdmin(): boolean {
-        return this.authService.decodeToken().sub_type == 'admin';
+        return this.authService.decodeToken().sub_type === 'admin';
     }
 
     newPatient() {

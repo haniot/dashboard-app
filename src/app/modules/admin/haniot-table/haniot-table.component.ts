@@ -9,6 +9,7 @@ import {HealthProfessionalService} from 'app/modules/admin/services/health-profe
 import {UserService} from 'app/modules/admin/services/users.service';
 import {IUser} from 'app/modules/admin/models/users';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -45,7 +46,8 @@ export class HaniotTableComponent implements OnInit {
         private healthService: HealthProfessionalService,
         private userService: UserService,
         private toastr: ToastrService,
-        private modalService: ModalService) {
+        private modalService: ModalService,
+        private translateService: TranslateService) {
         this.list = new Array<IUser>();
         this.listOfUserIsEmpty = false;
     }
@@ -55,7 +57,7 @@ export class HaniotTableComponent implements OnInit {
     }
 
     verifySameUser(user: any): boolean {
-        return user.id == this.authService.decodeToken().sub;
+        return user.id === this.authService.decodeToken().sub;
     }
 
     openModalConfirmRemove(id: string) {
@@ -72,16 +74,18 @@ export class HaniotTableComponent implements OnInit {
         this.userService.removeUser(this.cacheIdRemove)
             .then(() => {
                 this.onremove.emit();
-                this.toastr.info('Usuário excluido com sucesso!');
+                this.toastr.info(this.translateService.instant('TOAST-MESSAGES.USER-DELETED'));
                 this.closeModalConfirmRemove();
             })
             .catch(error => {
-                this.toastr.error('Não foi possível excluir usuário!');
+                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-USER-DELETED'));
             });
 
     }
 
     editUser(id: string) {
+
+        const not_find_user = this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER');
 
         switch (this.userType) {
             case 'Admin':
@@ -90,7 +94,7 @@ export class HaniotTableComponent implements OnInit {
                         this.onedit.emit(user);
                     })
                     .catch(error => {
-                        this.toastr.error('Não foi possível buscar usuário!');
+                        this.toastr.error(not_find_user);
                     });
                 break;
 
@@ -100,7 +104,7 @@ export class HaniotTableComponent implements OnInit {
                         this.onedit.emit(user);
                     })
                     .catch(error => {
-                        this.toastr.error('Não foi possível buscar usuário!');
+                        this.toastr.error(not_find_user);
                     });
                 break;
         }

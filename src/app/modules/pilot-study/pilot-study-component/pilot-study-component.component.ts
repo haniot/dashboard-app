@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
 
 @Component({
   selector: 'app-pilot-study-component',

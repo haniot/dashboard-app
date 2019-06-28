@@ -11,6 +11,7 @@ import {Patient, Gender} from '../models/patient';
 import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
 import {FeedingRecordService} from '../../habits/services/feeding-record.service';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-view-habits',
@@ -53,7 +54,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         private toastService: ToastrService,
         private router: Router,
         private activeRouter: ActivatedRoute,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private translateService: TranslateService
     ) {
         this.subscriptions = new Array<ISubscription>();
         this.showMeasurements = false;
@@ -73,7 +75,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                     this.createPatientForm(patient);
                 })
                 .catch(errorResponse => {
-                    this.toastService.error('Não foi possível buscar paciente!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                     // console.log('Não foi possível buscar paciente!',errorResponse);
                 });
         }));

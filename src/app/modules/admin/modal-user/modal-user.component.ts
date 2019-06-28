@@ -88,7 +88,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             password_confirm: ['', Validators.required],
             health_area: ['', Validators.required]
         });
-        if (this.typeUser == 'Admin') {
+        if (this.typeUser === 'Admin') {
             this.userForm.removeControl("health_area");
             this.userForm.removeControl("name");
         }

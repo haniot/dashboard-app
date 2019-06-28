@@ -2,7 +2,7 @@ import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {PilotStudyService} from "../../../modules/pilot-study/services/pilot-study.service";
 import {PilotStudy} from "../../../modules/pilot-study/models/pilot.study";
 import {PageEvent} from "@angular/material";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {LoadingService} from "../loading-component/service/loading.service";
 import {SelectPilotStudyService} from "./service/select-pilot-study.service";
 import {AuthService} from "../../../security/auth/services/auth.service";

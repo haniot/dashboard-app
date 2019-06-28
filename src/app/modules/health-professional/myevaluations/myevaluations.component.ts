@@ -7,6 +7,7 @@ import {NutritionEvaluationService} from "../../evaluation/services/nutrition-ev
 import {ToastrService} from "ngx-toastr";
 import {ModalService} from "../../../shared/shared-components/haniot-modal/service/modal.service";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-myevaluations',
@@ -46,7 +47,8 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         private toastService: ToastrService,
         private modalService: ModalService,
         private loadingService: LoadingService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private translateService: TranslateService
     ) {
         this.listOfEvaluations = new Array<NutritionEvaluation>();
     }
@@ -129,12 +131,12 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
                 .then(() => {
                     this.getAllNutritionEvaluations();
                     this.calcLenghtNutritionEvaluations();
-                    this.toastService.info('Paciente removido com sucesso!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-REMOVED'));
                     this.closeModalComfimation();
                 })
                 .catch(errorResponse => {
-                    this.toastService.error('Não foi possível remover usuário!');
-                    // console.log('Não foi possível remover paciente!', errorResponse);
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-REMOVED'));
+                    // console.log('Não foi possível remover avaliação!', errorResponse);
                 });
         }
 
@@ -172,7 +174,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.patientId.currentValue != undefined && changes.patientId.previousValue == undefined) {
+        if (changes.patientId.currentValue !== undefined && changes.patientId.previousValue === undefined) {
             this.getAllNutritionEvaluations();
             this.calcLenghtNutritionEvaluations();
         }

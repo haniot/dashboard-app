@@ -3,6 +3,7 @@ import {Component, OnInit, Input, SimpleChanges, OnChanges} from '@angular/core'
 import {DeviceService} from '../services/device.service';
 import {IDevice} from '../models/device';
 import {ToastrService} from 'ngx-toastr';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'device',
@@ -17,7 +18,8 @@ export class DeviceComponent implements OnInit, OnChanges {
 
     constructor(
         private deviceService: DeviceService,
-        private toastService: ToastrService
+        private toastService: ToastrService,
+        private translateService: TranslateService
     ) {
     }
 
@@ -32,8 +34,8 @@ export class DeviceComponent implements OnInit, OnChanges {
                     this.listDevices = devices;
                 })
                 .catch(errorResponse => {
-                    this.toastService.error('Não foi possível buscar dispositivos!');
-                    //console.log('Não foi possível bsucar dispositivos!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-DEVICES'));
+                    // console.log('Não foi possível bsucar dispositivos!');
                 });
         }
     }

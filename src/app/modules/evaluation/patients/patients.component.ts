@@ -3,7 +3,6 @@ import {PageEvent} from '@angular/material';
 import {Patient} from 'app/modules/patient/models/patient';
 import {PatientService} from 'app/modules/patient/services/patient.service';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {ToastrService} from 'ngx-toastr';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 
 @Component({
@@ -39,7 +38,6 @@ export class PatientsComponent implements OnInit, OnChanges {
     constructor(
         private patientService: PatientService,
         private pilotstudyService: PilotStudyService,
-        private toastService: ToastrService,
         private modalService: ModalService
     ) {
         this.listOfPatients = new Array<Patient>();
@@ -75,7 +73,7 @@ export class PatientsComponent implements OnInit, OnChanges {
             .then(patients => {
                 this.listOfPatients = patients;
                 this.calcLengthPatients();
-                if (patients.length == 0) {
+                if (patients.length === 0) {
                     this.listOfPatientsIsEmpty = true;
                 } else {
                     this.listOfPatientsIsEmpty = false;
@@ -123,7 +121,7 @@ export class PatientsComponent implements OnInit, OnChanges {
                 this.length = patients.length;
             })
             .catch(errorResponse => {
-                //console.log('Não foi possível buscar todos os pacientes',errorResponse);
+                // console.log('Não foi possível buscar todos os pacientes',errorResponse);
             });
     }
 
@@ -132,7 +130,7 @@ export class PatientsComponent implements OnInit, OnChanges {
         let local_index = 0;
         this.selected.emit(patient_id);
         this.listOfPatients.forEach((patient, index) => {
-            if (patient.id == patient_id) {
+            if (patient.id === patient_id) {
                 local_index = index;
                 return;
             }
@@ -145,7 +143,7 @@ export class PatientsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.pilotStudyId.currentValue != '' && changes.pilotStudyId.currentValue != changes.pilotStudyId.previousValue) {
+        if (changes.pilotStudyId.currentValue !== '' && changes.pilotStudyId.currentValue !== changes.pilotStudyId.previousValue) {
             this.getAllPacients();
             this.calcLengthPatients();
         }

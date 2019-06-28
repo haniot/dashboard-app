@@ -1,5 +1,4 @@
-import {Component, OnInit, AfterViewChecked, OnDestroy} from '@angular/core';
-import {Router} from "@angular/router";
+import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
 
 import * as $ from 'jquery';
 import {ISubscription} from 'rxjs/Subscription';
@@ -14,6 +13,7 @@ import {SelectPilotStudyService} from "../../../shared/shared-components/select-
 import {Patient} from "../../patient/models/patient";
 import {PageEvent} from '@angular/material/paginator';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         private localStorageService: LocalStorageService,
         private toastService: ToastrService,
         private selectPilotService: SelectPilotStudyService,
-        private router: Router
+        private translateService: TranslateService
     ) {
         this.patientsTotal = 0;
         this.measurementsTotal = 0;
@@ -216,7 +216,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
                     }
                 })
                 .catch(error => {
-                    this.toastService.error('Não foi possível carregar informações!')
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'))
                 });
         }
 

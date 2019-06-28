@@ -4,10 +4,11 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
 import {AdminService} from '../services/admin.service';
 import {HealthProfessionalService} from '../services/health-professional.service';
-import {IUser, HealtArea, Admin} from '../models/users';
+import {Admin, HealtArea, IUser} from '../models/users';
 import {UserService} from '../services/users.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'admin-configurations',
@@ -24,7 +25,7 @@ export class AdminConfigurationsComponent implements OnInit {
     healthAreaOptions = Object.keys(HealtArea);
 
     email: string;
-    password: string;  
+    password: string;
 
     constructor(
         private adminService: AdminService,
@@ -32,7 +33,8 @@ export class AdminConfigurationsComponent implements OnInit {
         private userService: UserService,
         private authService: AuthService,
         private toastr: ToastrService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private translateService: TranslateService
     ) {
         this.user = new Admin();
     }
@@ -62,12 +64,12 @@ export class AdminConfigurationsComponent implements OnInit {
         this.adminService.update(admin)
             .then((userAdmin) => {
                 this.user = userAdmin;
-                this.toastr.info('Informações atualizadas!');
+                this.toastr.info(this.translateService.instant('TOAST-MESSAGES.INFO-UPDATED'));
                 this.visibilityButtonSave = false;
                 this.disabledButtonEdit = false;
             })
             .catch((errorResponse: HttpErrorResponse) => {
-                this.toastr.error('Não foi possível atualizar informações!');
+                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-UPDATED-INFO'));
             });
     }
 

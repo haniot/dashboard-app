@@ -10,6 +10,7 @@ import {HealthProfessional} from 'app/modules/admin/models/users';
 import {PilotStudyService} from '../services/pilot-study.service';
 import {PilotStudy} from "../models/pilot.study";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-pilot-study-view',
@@ -42,7 +43,8 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         private router: Router,
         private activeRouter: ActivatedRoute,
         private _location: Location,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private translateService: TranslateService
     ) {
         this.pilotStudy = new PilotStudy();
         this.subscriptions = new Array<ISubscription>();
@@ -73,7 +75,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
                     this.pilotStudyForm.setValue(res);
                     this.pilotStudy = res;
                 }).catch(error => {
-                this.toastService.error('Não foi possível buscar estudo piloto!');
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FIND'));
                 // console.error('Não foi possível buscar estudo piloto!', error);
             })
         }
@@ -116,18 +118,18 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
             this.pilotStudyService.create(form)
                 .then(pilotStudy => {
                     this.pilotStudyForm.reset();
-                    this.toastService.info('Estudo Piloto criado!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-CREATED'));
                 })
                 .catch(error => {
-                    this.toastService.error('Não foi possível criar estudo piloto!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-CREATED'));
                 });
         } else {
             this.pilotStudyService.update(form)
                 .then(() => {
-                    this.toastService.info('Estudo Piloto atualizado!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-UPDATED'));
                 })
                 .catch(error => {
-                    this.toastService.error('Não foi possível atualizar estudo piloto!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-UPDATED'));
                     // console.log('Não foi possível atualizar estudo!', error);
                 });
         }

@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
 
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { LocalStorageService } from "../../../shared/shared-services/localstorage.service";
-import { HealtArea, HealthProfessional, IUser } from "../../admin/models/users";
-import { HealthProfessionalService } from "../../admin/services/health-professional.service";
-import { UserService } from "../../admin/services/users.service";
+import {AuthService} from 'app/security/auth/services/auth.service';
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {HealtArea, HealthProfessional, IUser} from "../../admin/models/users";
+import {HealthProfessionalService} from "../../admin/services/health-professional.service";
+import {UserService} from "../../admin/services/users.service";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -33,7 +34,7 @@ export class HealthprofessionalConfigComponent implements OnInit {
         private authService: AuthService,
         private toastr: ToastrService,
         private localStorageService: LocalStorageService,
-
+        private translateService: TranslateService
     ) {
         this.user = new HealthProfessional();
     }
@@ -64,12 +65,12 @@ export class HealthprofessionalConfigComponent implements OnInit {
             .then((healthprofesional) => {
                 this.user = healthprofesional;
                 this.localStorageService.setItem('health_area', this.user.health_area);
-                this.toastr.info('Informações atualizadas!');
+                this.toastr.info(this.translateService.instant('TOAST-MESSAGES.INFO-UPDATED'));
                 this.visibilityButtonSave = false;
                 this.disabledButtonEdit = false;
             })
             .catch((errorResponse: HttpErrorResponse) => {
-                this.toastr.error('Não foi possível atualizar informações!');
+                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-UPDATED-INFO'));
             });
     }
 }

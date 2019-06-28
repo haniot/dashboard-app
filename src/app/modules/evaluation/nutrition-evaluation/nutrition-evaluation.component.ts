@@ -132,7 +132,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 this.getPatient();
             })
             .catch(erroResponse => {
-                this.toastService.error("Não foi possível carregar avaliação nutricional!");
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.NOT-LOAD-NUTRITION-EVALUATION'));
                 // console.log('Não foi possível carregar avaliação!', erroResponse);
             });
 
@@ -141,7 +141,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 this.patient = patient;
             })
             .catch(errorResponse => {
-                this.toastService.error('Não foi possível identificar o paciente!')
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-IDENTIFIED'))
                 // console.log('Não foi possível buscar paciente!', errorResponse);
             });
     }
@@ -297,7 +297,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         this.nutritionEvaluationService.finalize(this.nutritionalEvaluation.id, this.nutritionalEvaluation.patient.id, nutritionalCouncil)
             .then(nutritionEvaluation => {
                 this.getNutritionEvaluation();
-                this.toastService.info("Avaliação finalizada com sucesso!");
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-COMPLETED'));
                 setTimeout(() => {
                     this.modalService.close('finalingEvaluantion');
                 }, 2000)
@@ -306,7 +306,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 setTimeout(() => {
                     this.modalService.close('finalingEvaluantion');
                 }, 2000)
-                this.toastService.error("Não foi possível atualizar avaliação!");
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-COMPLETED'));
                 // console.log("Não foi possível atualizar avaliação!", errorResponse);
             });
     }
@@ -408,7 +408,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 this.listChecksBloodPressure[this.ncSuggested.blood_pressure.length - 1] = true;
                 break;
             default:
-                this.toastService.error("Não foi possível adicionar conselho!");
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COUNSELING-NOT-ADD'));
                 break;
         }
         this.hiddenNewCounseling();
@@ -418,10 +418,10 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     sendEvaluationViaEmail(): void {
         this.notificationService.sendNutritionalEvaluationViaEmail(this.patient, this.nutritionalEvaluation)
             .then(() => {
-                this.toastService.info('Avaliação enviada com sucesso!');
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-SEND'));
             })
             .catch(err => {
-                this.toastService.error('Não foi possível enviar avaliação com sucesso!');
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-SEND'));
             });
     }
 

@@ -10,6 +10,7 @@ import {PilotStudyService} from '../services/pilot-study.service';
 import {HealthProfessionalService} from 'app/modules/admin/services/health-professional.service';
 import {HealthProfessional} from 'app/modules/admin/models/users';
 import {AuthService} from 'app/security/auth/services/auth.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'pilot-study-form',
@@ -47,7 +48,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         private router: Router,
         private activeRouter: ActivatedRoute,
         private _location: Location,
-        private authService: AuthService
+        private authService: AuthService,
+        private translateService: TranslateService
     ) {
         this.subscriptions = new Array<ISubscription>();
     }
@@ -81,12 +83,11 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     getPilotStudy() {
         if (this.pilotStudyId) {
             this.pilotStudyService.getById(this.pilotStudyId)
-                .then(res => {
-                    this.pilotStudyForm.setValue(res);
-                }).catch(error => {
-                this.toastService.error('Não foi possível buscar estudo piloto!');
-                // console.error('Não foi possível buscar estudo piloto!', error);
-            })
+                .then(res => this.pilotStudyForm.setValue(res))
+                .catch(error => {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FIND'));
+                    // console.error('Não foi possível buscar estudo piloto!', error);
+                })
         }
     }
 
@@ -101,7 +102,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 health_professionals_id: ['', Validators.required],
                 is_active: [true, Validators.required],
             });
-        } else {//Caso seja a tela de inserção
+        } else {// Caso seja a tela de inserção
             this.pilotStudyForm = this.fb.group({
                 id: [''],
                 name: ['', Validators.required],
@@ -127,18 +128,18 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
             this.pilotStudyService.create(form)
                 .then(pilotStudy => {
                     this.pilotStudyForm.reset();
-                    this.toastService.info('Estudo Piloto criado!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-CREATED'));
                 })
                 .catch(error => {
-                    this.toastService.error('Não foi possível criar estudo piloto!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-CREATED'));
                 });
         } else {
             this.pilotStudyService.update(form)
                 .then(() => {
-                    this.toastService.info('Estudo Piloto atualizado!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-UPDATED'));
                 })
                 .catch(error => {
-                    this.toastService.error('Não foi possível atualizar estudo piloto!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-UPDATED'));
                     // console.log('Não foi possível atualizar estudo!', error);
                 });
         }
@@ -167,11 +168,11 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         this.pilotStudyService.dissociateHealthProfessionalsFromPilotStudy(this.pilotStudyId, health_professionals_id)
             .then(() => {
                 this.loadProfessinalsAssociated();
-                this.toastService.info("Profissional removido com sucesso!");
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-REMOVED'));
             })
             .catch(HttpError => {
-                this.toastService.error('Não foi possível remover professional!');
-                // console.log('Não foi possível adicionar remover!', HttpError);
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-NOT-REMOVED'));
+                // console.log('Não foi possível remover profissional!', HttpError);
             });
     }
 
@@ -181,10 +182,10 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
             .then((healthProfessional) => {
                 this.professionalsForm.reset();
                 this.loadProfessinalsAssociated();
-                this.toastService.info("Profissional adicionado com sucesso!");
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-ADD'));
             })
             .catch(HttpError => {
-                this.toastService.error('Não foi possível adicionar professional!');
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-NOT-ADD'));
                 // console.log('Não foi possível adicionar professional!', HttpError);
             });
     }

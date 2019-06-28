@@ -8,6 +8,7 @@ import {ISubscription} from 'rxjs/Subscription';
 import * as $ from 'jquery';
 
 import {AuthService} from '../services/auth.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-change-password',
@@ -38,7 +39,8 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private router: Router,
         private route: ActivatedRoute,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private translateService: TranslateService
     ) {
         this.subscriptions = new Array<ISubscription>();
     }
@@ -65,16 +67,16 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.authService.changePassowrd(this.f.value, this.redirect_link).subscribe(
             (resp) => {
                 this.loading = false;
-                this.toastr.info("Senha alterada com sucesso!");
+                this.toastr.info(this.translateService.instant('TOAST-MESSAGES.PASSWORD-UPDATED'));
             },
             (errorResponse: HttpErrorResponse) => {
                 // console.log(errorResponse)
                 if (errorResponse.status === 400 && errorResponse.error.code === 400
                     && errorResponse.error.message
                     === 'Password does not match!') {
-                    this.toastr.error("Senha antiga informada incorreta!");
+                    this.toastr.error(this.translateService.instant('TOAST-MESSAGES.PASSWORD-OLD-INCORRECT'));
                 } else {
-                    this.toastr.error("Não foi possível mudar a senha!");
+                    this.toastr.error(this.translateService.instant('TOAST-MESSAGES.PASSWORD-NOT-UPDATED'));
                 }
                 this.loading = false;
             }

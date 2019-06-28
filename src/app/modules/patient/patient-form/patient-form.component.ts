@@ -12,6 +12,7 @@ import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.se
 import {PatientService} from '../services/patient.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'patient-form',
@@ -53,7 +54,8 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         private activeRouter: ActivatedRoute,
         private location: Location,
         private authService: AuthService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private translateService: TranslateService
     ) {
         this.min_birth_date = new Date();
         this.subscriptions = new Array<ISubscription>();
@@ -128,10 +130,10 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             this.patientService.create(form)
                 .then(patient => {
                     this.patientForm.reset();
-                    this.toastService.info('Paciente criado!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-CREATED'));
                 })
                 .catch(errorResponse => {
-                    this.toastService.error('Não foi possível criar paciente!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-CREATED'));
                 });
         } else {
             delete form.password;
@@ -139,10 +141,10 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             delete form.pilotstudy_id;
             this.patientService.update(form)
                 .then(patient => {
-                    this.toastService.info('Paciente atualizado!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-UPDATED'));
                 })
                 .catch(errorResponse => {
-                    this.toastService.error('Não foi possível atualizar paciente!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-UPDATED'));
                 });
         }
     }

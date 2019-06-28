@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 import {PageEvent} from '@angular/material';
 import {ToastrService} from 'ngx-toastr';
@@ -9,6 +9,7 @@ import {OdontologicEvaluation} from '../models/odontologic-evaluation';
 import {DentalEvaluationService} from '../services/dental-evaluation.service';
 import {PilotStudy} from "../../pilot-study/models/pilot.study";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'dental-evaluation-table',
@@ -48,7 +49,8 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
         private dentalService: DentalEvaluationService,
         private toastService: ToastrService,
         private modalService: ModalService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private translateService: TranslateService
     ) {
         this.pilotStudy = new PilotStudy();
         this.listOfEvaluations = new Array<OdontologicEvaluation>();
@@ -119,11 +121,11 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                 .then(() => {
                     this.getAllNutritionEvaluations();
                     this.calcLenghtNutritionEvaluations();
-                    this.toastService.info('Paciente removido com sucesso!');
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-REMOVED'));
                     this.closeModalComfimation();
                 })
                 .catch(errorResponse => {
-                    this.toastService.error('Não foi possível remover usuário!');
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-REMOVED'));
                     // console.log('Não foi possível remover paciente!', errorResponse);
                 });
         }
@@ -155,7 +157,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.pilotStudy.currentValue != changes.pilotStudy.previousValue) {
+        if (changes.pilotStudy.currentValue !== changes.pilotStudy.previousValue) {
             this.getAllNutritionEvaluations();
             this.calcLenghtNutritionEvaluations();
         }
@@ -173,15 +175,15 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
             .catch(error => {
                     this.generatingEvaluantion = false;
                     if (error.code === 404 && error.message === 'PILOTSTUDY NOT FOUND') {
-                        this.toastService.error('Estudo não encontrado');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FOUND'));
                     } else if (error.code === 404 && error.message === 'HEALTHPROFESSIONALID NOT FOUND') {
-                        this.toastService.error('Profissional não encontrado');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONALS-NOTFOUND'));
                     } else if (error.code === 400 && error.message === 'PILOTSTUDY EMPTY') {
-                        this.toastService.error('O estudo selecionado não possui pacientes!');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-EMPTY'));
                     } else if (error.code === 400) {
-                        this.toastService.error('Algum paciente não possui as informações necessárias!');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-ERROR'));
                     } else {
-                        this.toastService.error('Não foi possível gerar avaliação!');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-GENERATED'));
                     }
                     // console.log('Não foi possível gerar avaliação!', error)
                 }
