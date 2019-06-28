@@ -8,6 +8,7 @@ import {LoginComponent} from './login/login.component';
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {AuthRoutingModule} from './auth-routing/auth-routing.module';
 import {SharedModule} from "../../shared/shared.module";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import {SharedModule} from "../../shared/shared.module";
         HttpClientModule,
         RouterModule,
         AuthRoutingModule,
-        SharedModule
+        SharedModule,
+        TranslateModule
     ],
     declarations: [
         LoginComponent,

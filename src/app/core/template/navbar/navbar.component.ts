@@ -299,7 +299,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     configLanguage(user: IUser) {
-        user.language = 'en-US';
+        user.language = 'pt-BR';
         if (user && user.language) {
             this.translateService.use(user.language);
         } else {

@@ -657,6 +657,22 @@
       }
     }
   },
+  "SECURITY": {
+    "LOGIN": {
+      "PLACEHOLDER-EMAIL": "Enter your email here...",
+      "PLACEHOLDER-PASSWORD": "Enter your password here...",
+      "LOGIN": "Login",
+      "FORGOT-PASSWORD": "Forgot your password?",
+      "RESET-HERE": "reset here"
+    },
+    "CHANGE": {
+      "FIRST-ACCESS": "First access",
+      "PASSWORD-OLD": "Old password",
+      "PLACEHOLDER-PASSWORD-OLD": "Enter your old password here...",
+      "PASSWORD-NEW": "New password",
+      "PLACEHOLDER-PASSWORD-NEW": "Enter your new password here..."
+    }
+  },
   "TABLE-USER": {
     "PLACEHOLDER-SEARCH": "Search for user ...",
     "SPINNER-MESSAGE": "Loading users",

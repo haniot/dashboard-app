@@ -1,5 +1,5 @@
 import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from './../services/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
@@ -9,6 +9,8 @@ import {ISubscription} from 'rxjs/Subscription';
 
 import {ToastrService} from 'ngx-toastr';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
+import {IUser} from "../../../modules/admin/models/users";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -32,7 +34,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         private authService: AuthService,
         private router: Router,
         private toastr: ToastrService,
-        private loadinService: LoadingService
+        private loadinService: LoadingService,
+        private translateService: TranslateService
     ) {
         this.subscriptions = new Array<ISubscription>();
     }
@@ -44,6 +47,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
             email: [null, [Validators.required, Validators.email]],
             password: [null, [Validators.required]]
         });
+
+        this.configLanguage();
     }
 
     onSubmit() {
@@ -69,6 +74,22 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         } else {
             this.typeInputPassword = 'text';
         }
+    }
+
+    configLanguage() {
+        const browserLang = this.translateService.getBrowserLang();
+        switch (browserLang) {
+            case 'en':
+                this.translateService.use('en-US');
+                break;
+            case 'pt':
+                this.translateService.use('pt-BR');
+                break;
+            default:
+                this.translateService.use('en-US');
+                break;
+        }
+
     }
 
     ngAfterViewChecked() {

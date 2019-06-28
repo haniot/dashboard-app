@@ -659,6 +659,22 @@
       }
     }
   },
+  "SECURITY": {
+    "LOGIN": {
+      "PLACEHOLDER-EMAIL": "Digite aqui seu email...",
+      "PLACEHOLDER-PASSWORD": "Digite aqui sua senha...",
+      "LOGIN": "Entrar",
+      "FORGOT-PASSWORD": "Esqueceu sua senha?",
+      "RESET-HERE": "redefina aqui"
+    },
+    "CHANGE": {
+      "FIRST-ACCESS": "Primeiro acesso",
+      "PASSWORD-OLD": "Senha antiga",
+      "PLACEHOLDER-PASSWORD-OLD": "Digite aqui sua senha antiga...",
+      "PASSWORD-NEW": "Senha nova",
+      "PLACEHOLDER-PASSWORD-NEW": "Digite aqui sua senha nova..."
+    }
+  },
   "TABLE-USER": {
     "PLACEHOLDER-SEARCH": "Pesquisar usuário...",
     "SPINNER-MESSAGE": "Carregando usuários",
