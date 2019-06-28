@@ -636,6 +636,27 @@
       },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"
+    },
+    "COMPONENTS": {
+      "MODAL-CONFIRMATION": {
+        "TITLE": "Confirmação",
+        "NO": "Não",
+        "YES": "Sim"
+      },
+      "SELECT-PILOT-STUDY": {
+        "WELCOME": "Seja bem vindo(a)",
+        "HERE-YOU-CAN": "Aqui você pode",
+        "MANAGE-YOUR-STUDIES": "Gerenciar seus estudos",
+        "MANAGE-YOUR-PATIENTES": "Gerenciar seus pacientes",
+        "MANAGE-YOUR-EVALUATIONS": "Gerenciar suas avaliações",
+        "VIEW-HABITS": "Visualizar hábitos e medições de seus pacientes",
+        "MANY-MORE": "e muitos mais...",
+        "SELECT-FOR-CONTINUE": "Para continuarmos você precisa selecionar um estudo piloto",
+        "PROCEED": "Prosseguir",
+        "SEARCH-STUDIES": "* Você pode utilizar a barra de pesquisar utilizando o nome do estudo desejado",
+        "CLICK-FOR-SELECT": "Clique sobre o estudo para selecioná-lo.",
+        "UNDERSTOOD": "Entendido"
+      }
     }
   },
   "TABLE-USER": {

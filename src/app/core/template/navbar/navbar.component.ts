@@ -299,12 +299,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     configLanguage(user: IUser) {
-        user.language = 'pt';
+        user.language = 'en-US';
         if (user && user.language) {
             this.translateService.use(user.language);
         } else {
             const browserLang = this.translateService.getBrowserLang();
-            this.translateService.use(browserLang.match(/en|pt/) ? browserLang : 'en');
+            this.translateService.use(browserLang.match(/en-US|pt-BR/) ? browserLang : 'en-US');
         }
     }
 

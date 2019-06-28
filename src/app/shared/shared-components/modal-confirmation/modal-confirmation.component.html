@@ -1,7 +1,7 @@
 <haniot-modal [modalId]="'modalConfirmation'">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Confirmação</h5>
+            <h5 class="modal-title">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.TITLE'|translate}}</h5>
             <button type="button" class="close" aria-label="Close" (click)="no()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -10,8 +10,10 @@
             <p>{{message}}</p>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-haniot-secondary" (click)="no()">Não</button>
-            <button type="button" class="btn btn-haniot-primary" (click)="yes()">Sim</button>
+            <button type="button" class="btn btn-haniot-secondary"
+                    (click)="no()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.NO'|translate}}</button>
+            <button type="button" class="btn btn-haniot-primary"
+                    (click)="yes()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.YES'|translate}}</button>
         </div>
     </div>
 

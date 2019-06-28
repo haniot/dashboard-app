@@ -634,6 +634,27 @@
       },
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND"
+    },
+    "COMPONENTS": {
+      "MODAL-CONFIRMATION": {
+        "TITLE": "Confirmação",
+        "NO": "Não",
+        "YES": "Sim"
+      },
+      "SELECT-PILOT-STUDY": {
+        "WELCOME": "Welcome",
+        "HERE-YOU-CAN": "Here you can",
+        "MANAGE-YOUR-STUDIES": "Manage your studies",
+        "MANAGE-YOUR-PATIENTES": "Manage your patientes",
+        "MANAGE-YOUR-EVALUATIONS": "Manage your evaluations",
+        "VIEW-HABITS": "View habits and measurements of your patients",
+        "MANY-MORE": "and many more...",
+        "SELECT-FOR-CONTINUE": "To continue we need to select a pilot study",
+        "PROCEED": "Proceed",
+        "SEARCH-STUDIES": "* You can use the search bar using the name of the study you want",
+        "CLICK-FOR-SELECT": "Click on the study to select it.",
+        "UNDERSTOOD": "Understood"
+      }
     }
   },
   "TABLE-USER": {

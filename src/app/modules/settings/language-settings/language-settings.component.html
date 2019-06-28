@@ -1,8 +1,10 @@
-<haniot-card [title]="'CONFIG.CONFIG-LANGUAGE-TITLE' | translate" [subtitle]="'CONFIG.CONFIG-LANGUAGE-LABEL' | translate">
+<haniot-card [title]="'CONFIG.CONFIG-LANGUAGE-TITLE' | translate"
+             [subtitle]="'CONFIG.CONFIG-LANGUAGE-LABEL' | translate">
     <div class="form-group">
         <label for="language">{{ 'CONFIG.CONFIG-LANGUAGE-LABEL' | translate}}:</label>
-        <select class="form-control" #langSelect (change)="translate.use(langSelect.value)">
-            <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ languages[lang] }}</option>
+        <select class="form-control" #langSelect (change)="changeLanguage(langSelect.value)" id="language">
+            <option *ngFor="let lang of listOflanguages" [value]="lang"
+                    [selected]="lang === translate.currentLang">{{ languages[lang] }}</option>
         </select>
     </div>
 </haniot-card>

@@ -22,7 +22,7 @@ import { AppRoutingModule } from './core/app-routing/app-routing.module';
 import { SelectPilotStudyService } from "./shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
 import { environment } from "../environments/environment";
 
-registerLocaleData(localePt, 'pt', localePtExtra);
+registerLocaleData(localePt, 'pt-BR', localePtExtra);
 
 if (environment.production) {
     enableProdMode();
@@ -79,12 +79,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
     constructor(public translate: TranslateService) {
-        translate.addLangs(['en', 'pt']);
-        translate.setDefaultLang('en');
-    
+        translate.addLangs(['en-US', 'pt-BR']);
+        translate.setDefaultLang('en-US');
+
         const browserLang = translate.getBrowserLang();
-        translate.use(browserLang.match(/en|pt/) ? browserLang : 'en');
-      }
+
+        translate.use(browserLang.match(/en-US|pt-BR/) ? browserLang : 'en-US');
+    }
 }
 
 

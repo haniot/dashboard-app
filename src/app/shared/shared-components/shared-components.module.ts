@@ -14,6 +14,7 @@ import {LoadingService} from './loading-component/service/loading.service';
 import {SelectPilotstudyComponent} from './select-pilotstudy/select-pilotstudy.component';
 import {MatStepperModule} from "@angular/material";
 import {SpinnerComponent} from './spinner/spinner.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import {SpinnerComponent} from './spinner/spinner.component';
         MatPaginatorModule,
         SharedPipesModule,
         MatStepperModule,
+        TranslateModule
 
     ],
     exports: [
