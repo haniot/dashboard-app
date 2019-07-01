@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {MedicalRecord} from '../models/medical-record';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MedicalRecordService} from '../services/medical-record.service';
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'medical-record',
@@ -19,7 +20,8 @@ export class MedicalRecordComponent implements OnInit, OnChanges {
 
     constructor(
         private fb: FormBuilder,
-        private medcalService: MedicalRecordService
+        private medcalService: MedicalRecordService,
+        private sanitizer: DomSanitizer
     ) {
         this.index = 0;
         this.listMedical = new Array<MedicalRecord>();
@@ -74,6 +76,10 @@ export class MedicalRecordComponent implements OnInit, OnChanges {
     next() {
         this.index++;
         this.createMedicalForm(this.listMedical[this.index]);
+    }
+
+    getTrustedUrl(url: string) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 
 }

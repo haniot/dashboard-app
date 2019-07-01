@@ -10,6 +10,7 @@ import {DentalEvaluationService} from '../services/dental-evaluation.service';
 import {PilotStudy} from "../../pilot-study/models/pilot.study";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 import {TranslateService} from "@ngx-translate/core";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'dental-evaluation-table',
@@ -50,7 +51,8 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
         private toastService: ToastrService,
         private modalService: ModalService,
         private localStorageService: LocalStorageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private sanitizer: DomSanitizer
     ) {
         this.pilotStudy = new PilotStudy();
         this.listOfEvaluations = new Array<OdontologicEvaluation>();
@@ -200,6 +202,10 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
 
     trackById(index, item) {
         return item.id;
+    }
+
+    getTrustedUrl(url: string) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 
 }

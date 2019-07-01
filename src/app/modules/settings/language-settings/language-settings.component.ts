@@ -49,7 +49,7 @@ export class LanguageSettingsComponent implements OnInit {
             })
             .catch(errorResponse => {
                 this.toastService.error('\'Não foi possível alterar idioma!\'');
-                console.log('Não foi possível alterar idioma!', connectableObservableDescriptor);
+                console.log('Não foi possível alterar idioma!', errorResponse);
             })
     }
 

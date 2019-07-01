@@ -41,10 +41,10 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
                     <a class="dropdown-item background-green"
-                       [href]="evaluation.file_csv">{{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}</a>
+                       [href]="getTrustedUrl(evaluation.file_csv)">{{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}</a>
 
                     <a class="dropdown-item background-green"
-                       [href]="evaluation.file_xls">{{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}</a>
+                       [href]="getTrustedUrl(evaluation.file_xls)">{{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}</a>
 
                 </div>
             </td>
@@ -94,12 +94,12 @@
                     <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
                         <label>{{'PILOT-STUDY.FILECSV'|translate}}:</label>
                         <a class="btn btn-haniot-primary"
-                           [href]="lastEvaluation.file_csv"> {{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}</a>
+                           [href]="getTrustedUrl(lastEvaluation.file_csv)"> {{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}</a>
                     </div>
                     <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
                         <label>{{'PILOT-STUDY.FILEXLS'|translate}}:</label>
                         <a class="btn btn-haniot-primary"
-                           [href]="lastEvaluation.file_xls">{{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}</a>
+                           [href]="getTrustedUrl(lastEvaluation.file_xls)">{{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}</a>
                     </div>
                 </div>
             </div>

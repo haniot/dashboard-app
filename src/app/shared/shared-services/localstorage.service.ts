@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as CryptoJS from 'crypto-js'
-import { environment } from 'environments/environment';
+import {environment} from 'environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -35,6 +35,7 @@ export class LocalStorageService {
         localStorage.removeItem(this.encryptKey('username'));
         localStorage.removeItem(this.encryptKey('user'));
         localStorage.removeItem(this.encryptKey('health_area'));
+        localStorage.removeItem(this.encryptKey('language'));
     }
 
     /** functions for encryt and decrypt key using base64 */

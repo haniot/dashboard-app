@@ -18,6 +18,7 @@ import {HeartRate} from 'app/modules/measurement/models/heart-rate';
 import {NotificationService} from "../../../shared/shared-services/notification.service";
 import {MealType} from "../../measurement/models/blood-glucose";
 import {TranslateService} from "@ngx-translate/core";
+import {EvaluationStatus} from "../models/evaluation";
 
 @Component({
     selector: 'app-nutrition-evaluation',
@@ -124,6 +125,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         this.nutritionService.getById(this.patientId, this.nutritionEvaluationId)
             .then(nutritionEvaluation => {
                 // console.log(nutritionEvaluation)
+                nutritionEvaluation.status = EvaluationStatus.incomplete;
                 this.nutritionalEvaluation = nutritionEvaluation;
                 this.verifyVisibityZonesClassification();
                 this.formatCounseling()

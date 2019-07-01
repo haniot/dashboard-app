@@ -26,7 +26,7 @@ export class AuthService {
             return false;
         }
         const user = this.localStorageService.getItem('user');
-        
+
         return user === token.sub;
     }
 
@@ -46,7 +46,7 @@ export class AuthService {
                         try {
                             decodedToken = JWT_decode(data.access_token);
                         } catch (Error) {
-                            this.localStorageService.logout();//clean local storage
+                            this.localStorageService.logout();// clean local storage
                             return false;
                         }
                         this.localStorageService.setItem('user', decodedToken.sub);

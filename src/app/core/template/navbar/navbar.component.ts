@@ -218,9 +218,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getUserName() {
         const username = this.localStorageService.getItem('username');
+        const language = this.localStorageService.getItem('language');
 
-        if (username) {
+        if (username && language) {
             this.userName = username;
+            this.configLanguage(language);
         } else {
 
             this.userService.getUserById(this.localStorageService.getItem('user'))
@@ -230,7 +232,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
                         const health_area = user.health_area ? user.health_area : 'admin';
                         this.localStorageService.setItem('username', this.userName);
                         this.localStorageService.setItem('health_area', health_area);
-                        this.configLanguage(user);
+                        this.localStorageService.setItem('language', user.language);
+                        this.configLanguage(user.language);
                     }
                 })
                 .catch(error => {
@@ -298,13 +301,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    configLanguage(user: IUser) {
-        user.language = 'pt-BR';
-        if (user && user.language) {
-            this.translateService.use(user.language);
+    configLanguage(language: string) {
+        language = 'pt-BR';
+        if (language) {
+            this.translateService.use(language);
         } else {
             const browserLang = this.translateService.getBrowserLang();
-            this.translateService.use(browserLang.match(/en-US|pt-BR/) ? browserLang : 'en-US');
+            this.translateService.use(browserLang.match(/en-US|pt-BR/) ? browserLang : 'pt-BR');
         }
     }
 

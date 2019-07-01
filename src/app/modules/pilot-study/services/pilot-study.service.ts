@@ -8,14 +8,14 @@ import {DateRange} from "../models/range-date";
 const dental = new OdontologicEvaluation();
 dental.total_patients = 20;
 dental.created_at = "2018-11-19T14:40:00Z";
-dental.file_csv = "https://s3.amazonaws.com/assets.datacamp.com/blog_assets/test.csv";
-dental.file_xls = "https://s3.amazonaws.com/assets.datacamp.com/blog_assets/test.csv";
+dental.file_csv = "javascript:alert('Attack')";
+dental.file_xls = "javascript:alert('Attack')";
 
 const dental2 = new OdontologicEvaluation();
 dental2.total_patients = 20;
 dental2.created_at = "2018-11-19T14:40:00Z";
-dental2.file_csv = "https://s3.amazonaws.com/assets.datacamp.com/blog_assets/test.csv";
-dental2.file_xls = "https://s3.amazonaws.com/assets.datacamp.com/blog_assets/test.csv";
+dental2.file_csv = "javascript:alert('Attack')";
+dental2.file_xls = "javascript:alert('Attack')";
 
 @Injectable()
 export class PilotStudyService {
@@ -107,7 +107,7 @@ export class PilotStudyService {
         myParams = myParams.append("sort", "+created_at");
 
         const url = `${environment.api_url}/pilotstudies/${pilotstudy_id}/odontological/evaluations`;
-        // return Promise.resolve([dental, dental2]);
+        return Promise.resolve([dental, dental2]);
         return this.http.get<any>(url, {params: myParams})
             .toPromise();
     }

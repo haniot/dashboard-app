@@ -9,6 +9,7 @@ import {PilotStudyService} from "../services/pilot-study.service";
 import {DateRange} from "../models/range-date";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 import {TranslateService} from "@ngx-translate/core";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'pilot-study-files',
@@ -49,7 +50,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         private toastService: ToastrService,
         private modalService: ModalService,
         private localStorageService: LocalStorageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private sanitizer: DomSanitizer
     ) {
         this.pilotStudy = new PilotStudy();
         this.listOfFiles = new Array<OdontologicEvaluation>();
@@ -218,6 +220,10 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     trackById(index, item) {
         return item.id;
+    }
+
+    getTrustedUrl(url: string) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 
 }
