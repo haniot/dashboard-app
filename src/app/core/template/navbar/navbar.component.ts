@@ -3,6 +3,7 @@ import {Location} from '@angular/common';
 import {Router} from '@angular/router';
 
 import {ISubscription} from "rxjs-compat/Subscription";
+import {TranslateService} from '@ngx-translate/core';
 
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {UserService} from 'app/modules/admin/services/users.service';
@@ -11,8 +12,6 @@ import {SelectPilotStudyService} from "../../../shared/shared-components/select-
 import {PilotStudyService} from "../../../modules/pilot-study/services/pilot-study.service";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
-import {IUser} from '../../../modules/admin/models/users';
-import {TranslateService} from '@ngx-translate/core';
 
 
 export declare interface RouteInfo {

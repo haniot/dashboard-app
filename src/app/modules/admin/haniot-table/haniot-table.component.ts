@@ -7,9 +7,9 @@ import {AuthService} from 'app/security/auth/services/auth.service';
 import {AdminService} from 'app/modules/admin/services/admin.service';
 import {HealthProfessionalService} from 'app/modules/admin/services/health-professional.service';
 import {UserService} from 'app/modules/admin/services/users.service';
-import {IUser} from 'app/modules/admin/models/users';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import {TranslateService} from "@ngx-translate/core";
+import {IUser} from "../../../shared/shared-models/user";
 
 
 @Component({

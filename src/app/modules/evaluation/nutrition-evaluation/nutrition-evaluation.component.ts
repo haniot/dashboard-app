@@ -19,6 +19,7 @@ import {NotificationService} from "../../../shared/shared-services/notification.
 import {MealType} from "../../measurement/models/blood-glucose";
 import {TranslateService} from "@ngx-translate/core";
 import {EvaluationStatus} from "../models/evaluation";
+import {GeneratePdfService} from "../services/generate-pdf.service";
 
 @Component({
     selector: 'app-nutrition-evaluation',
@@ -79,7 +80,8 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         private patientService: PatientService,
         private toastService: ToastrService,
         private nutritionEvaluationService: NutritionEvaluationService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private generatePDF: GeneratePdfService
     ) {
         this.subscriptions = new Array<ISubscription>();
 
@@ -109,7 +111,6 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.DIABETES'),
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HYPERTENSION')
         ];
-
     }
 
     ngOnInit() {
@@ -119,13 +120,19 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             this.getNutritionEvaluation();
         }));
         this.getNutritionEvaluation();
+        this.translateService.onLangChange.subscribe(() => {
+            this.typeCousenling = [
+                this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.STATE-NUTRITION'),
+                this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.DIABETES'),
+                this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HYPERTENSION')
+            ];
+        })
     }
 
     getNutritionEvaluation() {
         this.nutritionService.getById(this.patientId, this.nutritionEvaluationId)
             .then(nutritionEvaluation => {
                 // console.log(nutritionEvaluation)
-                nutritionEvaluation.status = EvaluationStatus.incomplete;
                 this.nutritionalEvaluation = nutritionEvaluation;
                 this.verifyVisibityZonesClassification();
                 this.formatCounseling()
@@ -461,6 +468,10 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             default:
                 return {min: 0, max: 0}
         }
+    }
+
+    exportPDF(): void {
+        this.generatePDF.exportPDF(this.nutritionalEvaluation);
     }
 
     ngOnDestroy(): void {

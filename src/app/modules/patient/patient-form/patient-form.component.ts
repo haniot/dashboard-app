@@ -96,7 +96,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     setPatientInForm(patient: Patient) {
         this.patientForm = this.fb.group({
             id: [patient.id],
-            pilotstudy_id: [patient.pilotstudy_id],
+            pilotstudy_id: [patient.selected_pilot_study],
             name: [patient.name],
             phone_number: [patient.phone_number],
             email: [patient.email],

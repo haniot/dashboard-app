@@ -5,9 +5,10 @@ import {ToastrService} from 'ngx-toastr';
 
 import {AdminService} from '../services/admin.service';
 import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {Admin, IUser} from '../models/users';
+import {Admin} from '../models/users';
 import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
 import {TranslateService} from "@ngx-translate/core";
+import {IUser} from "../../../shared/shared-models/user";
 
 @Component({
     selector: 'app-administrators',

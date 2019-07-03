@@ -1,12 +1,8 @@
-export interface IPatient {
+import {IUser, User} from "../../../shared/shared-models/user";
 
-    id: string;
-    pilotstudy_id: string;
+export interface IPatient extends IUser {
     name: string;
-    email: string;
-    phone_number: string;
-    gender: string;
-    birth_date: string;
+    gender: Gender;
     password?: string;
     password_confirm?: string;
 }
@@ -16,19 +12,19 @@ export enum Gender {
     female = 'female'
 }
 
-export class Patient implements IPatient {
+export class Patient extends User implements IPatient {
 
-    id: string;
-    pilotstudy_id: string;
     name: string;
-    email: string;
-    phone_number: string;
-    gender: string;
-    birth_date: string;
+    gender: Gender;
     password?: string;
     password_confirm?: string;
 
-    constructor() { }
+    constructor() {
+        super();
+        this.name = "";
+        this.password = "";
+        this.password_confirm = "";
+    }
 
 }
 

@@ -29,6 +29,7 @@ import {DentalEvaluationTableComponent} from './dental-evaluation-table/dental-e
 import {DentalEvaluationService} from './services/dental-evaluation.service';
 import {DentalEvaluationListComponent} from './dental-evaluation-list/dental-evaluation-list.component';
 import {TaylorCutClassificationPipe} from "./pipes/taylor-cut-classification.pipe";
+import {GeneratePdfService} from "./services/generate-pdf.service";
 
 
 @NgModule({
@@ -64,7 +65,6 @@ import {TaylorCutClassificationPipe} from "./pipes/taylor-cut-classification.pip
         NgxEchartsModule,
         TranslateModule,
 
-
         SharedModule,
         HabitsModule,
         MeasurementModule,
@@ -76,6 +76,7 @@ import {TaylorCutClassificationPipe} from "./pipes/taylor-cut-classification.pip
         EvaluationService,
         NutritionEvaluationService,
         DentalEvaluationService,
+        GeneratePdfService,
         /** pipes */
         EvaluationStatustPipe,
         DatePipe,

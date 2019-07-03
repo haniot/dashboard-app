@@ -4,11 +4,12 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
 import {AdminService} from '../services/admin.service';
 import {HealthProfessionalService} from '../services/health-professional.service';
-import {Admin, HealtArea, IUser} from '../models/users';
+import {Admin, HealtArea} from '../models/users';
 import {UserService} from '../services/users.service';
 import {AuthService} from 'app/security/auth/services/auth.service';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
 import {TranslateService} from "@ngx-translate/core";
+import {IUser} from "../../../shared/shared-models/user";
 
 @Component({
     selector: 'admin-configurations',

@@ -50,7 +50,8 @@
                    (click)="sendEvaluationViaEmail()">mail_outline</i>
             </div>
             <div class="p-2">
-                <i class="material-icons" [title]="'EVALUATION.NUTRITION-EVALUATION.DOWNLOAD-PDF'|translate">picture_as_pdf</i>
+                <i class="material-icons" [title]="'EVALUATION.NUTRITION-EVALUATION.DOWNLOAD-PDF'|translate"
+                   (click)="exportPDF()">picture_as_pdf</i>
             </div>
         </div>
 
@@ -68,7 +69,9 @@
                                 <mat-tab
                                         [label]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.EVALUATION'|translate">
                                     <div class="container"
-                                         *ngIf="nutritionalEvaluation && nutritionalEvaluation.nutritional_status && nutritionalEvaluation.overweight_indicator && nutritionalEvaluation.blood_glucose && nutritionalEvaluation.blood_pressure && nutritionalEvaluation.heart_rate">
+                                         *ngIf="nutritionalEvaluation && nutritionalEvaluation.nutritional_status &&
+                                         nutritionalEvaluation.overweight_indicator && nutritionalEvaluation.blood_glucose &&
+                                         nutritionalEvaluation.blood_pressure && nutritionalEvaluation.heart_rate">
                                         <div class="row">
                                             <!-- Estado Nutricional -->
                                             <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 align-self-center">
