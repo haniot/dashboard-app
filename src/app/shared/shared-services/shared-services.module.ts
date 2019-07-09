@@ -9,9 +9,9 @@ import {HealthProfessionalService} from 'app/modules/admin/services/health-profe
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
 import {PatientService} from 'app/modules/patient/services/patient.service';
 import {LocalStorageService} from "./localstorage.service";
+import {NotificationService} from "./notification.service";
 
 @NgModule({
-    declarations: [],
     imports: [
         CommonModule
     ],
@@ -23,7 +23,8 @@ import {LocalStorageService} from "./localstorage.service";
         AdminService,
         HealthProfessionalService,
         PatientService,
-        LocalStorageService
+        LocalStorageService,
+        NotificationService
     ]
 })
 export class SharedServicesModule {

@@ -124,17 +124,16 @@ label {
   width: 8%;
 }
 
-#externa {
+.externa {
+  position: absolute;
   z-index: 2000;
   align-items: center;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  position: absolute;
   top: 0;
   right: 0;
-  bottom: 0;
   left: 0;
 }
 
@@ -146,4 +145,25 @@ label {
 .nav-link i:hover {
   border-radius: 20px;
   background: rgb(212, 207, 207);
+}
+
+.disabled .material-icons{
+  color: gray;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 30px;
+}
+
+.disabled .material-icons:hover {
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+}
+
+.borderNone{
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }

@@ -18,8 +18,9 @@ import {HeartRate} from 'app/modules/measurement/models/heart-rate';
 import {NotificationService} from "../../../shared/shared-services/notification.service";
 import {MealType} from "../../measurement/models/blood-glucose";
 import {TranslateService} from "@ngx-translate/core";
-import {EvaluationStatus} from "../models/evaluation";
 import {GeneratePdfService} from "../services/generate-pdf.service";
+import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import {EvaluationStatus} from "../models/evaluation";
 
 @Component({
     selector: 'app-nutrition-evaluation',
@@ -67,6 +68,12 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     /* flag utilizada para controlar a visibilidade das zonas de classsificação*/
     showZonesClassification: boolean;
 
+    /* flag utilizada para controlar a visibilidade das zonas de classsificação*/
+    generatingPDF: boolean;
+
+    /* flag utilizada para controlar a visibilidade das zonas de classsificação*/
+    sendingEvaluation: boolean;
+
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -81,7 +88,8 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         private toastService: ToastrService,
         private nutritionEvaluationService: NutritionEvaluationService,
         private translateService: TranslateService,
-        private generatePDF: GeneratePdfService
+        private generatePDF: GeneratePdfService,
+        private localStorageService: LocalStorageService
     ) {
         this.subscriptions = new Array<ISubscription>();
 
@@ -111,6 +119,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.DIABETES'),
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HYPERTENSION')
         ];
+
+        this.generatingPDF = false;
+        this.sendingEvaluation = false;
     }
 
     ngOnInit() {
@@ -424,12 +435,28 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     }
 
-    sendEvaluationViaEmail(): void {
-        this.notificationService.sendNutritionalEvaluationViaEmail(this.patient, this.nutritionalEvaluation)
+    sendEvaluationViaEmail() {
+
+        this.sendingEvaluation = true;
+
+        const health_professional_name = this.localStorageService.getItem('username');
+
+        const health_professional_email = this.localStorageService.getItem('email');
+
+        const health_professinal = {
+            name: health_professional_name,
+            email: health_professional_email
+        }
+
+        const pdf = this.generatePDF.getPDF(this.nutritionalEvaluation, health_professional_name);
+
+        this.notificationService.sendNutritionalEvaluationViaEmail(health_professinal, this.nutritionalEvaluation, pdf)
             .then(() => {
+                this.sendingEvaluation = false;
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-SEND'));
             })
             .catch(err => {
+                this.sendingEvaluation = false;
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-SEND'));
             });
     }
@@ -470,8 +497,11 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         }
     }
 
-    exportPDF(): void {
-        this.generatePDF.exportPDF(this.nutritionalEvaluation);
+    async exportPDF() {
+        this.generatingPDF = true;
+        const health_professional = this.localStorageService.getItem('username');
+        await this.generatePDF.exportPDF(this.nutritionalEvaluation, health_professional);
+        this.generatingPDF = false;
     }
 
     ngOnDestroy(): void {

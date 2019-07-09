@@ -230,6 +230,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                         this.userName = user.name ? user.name : user.email;
                         const health_area = user.health_area ? user.health_area : 'admin';
                         this.localStorageService.setItem('username', this.userName);
+                        this.localStorageService.setItem('email', user.email);
                         this.localStorageService.setItem('health_area', health_area);
                         this.localStorageService.setItem('language', user.language);
                         this.configLanguage(user.language);

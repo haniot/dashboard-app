@@ -45,13 +45,21 @@
         </div>
 
         <div class="d-flex flex-row-reverse shared" style="height: 50px;">
-            <div class="p-2" *ngIf="patient && patient.email && patient.email != ''">
-                <i class="material-icons" [title]="'EVALUATION.NUTRITION-EVALUATION.SHARED-EMAIL'|translate"
-                   (click)="sendEvaluationViaEmail()">mail_outline</i>
+            <div class="p-2" [ngClass]="((nutritionalEvaluation.status!=='incomplete')
+                || (nutritionalEvaluation.patient.email && nutritionalEvaluation.patient.email !== ''))?'':'disabled'">
+                <button class="borderNone" type="button"
+                        [disabled]="(nutritionalEvaluation.status!=='complete')||(nutritionalEvaluation.patient.email==='')"
+                        (click)="sendEvaluationViaEmail()">
+                    <i class="material-icons"
+                       [title]="'EVALUATION.NUTRITION-EVALUATION.SHARED-EMAIL'|translate">mail_outline</i>
+                </button>
             </div>
-            <div class="p-2">
-                <i class="material-icons" [title]="'EVALUATION.NUTRITION-EVALUATION.DOWNLOAD-PDF'|translate"
-                   (click)="exportPDF()">picture_as_pdf</i>
+            <div class="p-2" [ngClass]="(nutritionalEvaluation.status!=='incomplete')?'':'disabled'">
+                <button class="borderNone" [disabled]="nutritionalEvaluation.status!=='complete'" (click)="exportPDF()">
+                    <i class="material-icons"
+                       [title]="'EVALUATION.NUTRITION-EVALUATION.DOWNLOAD-PDF'|translate">picture_as_pdf</i>
+                </button>
+
             </div>
         </div>
 
@@ -722,7 +730,6 @@
     </div>
 </haniot-modal>
 
-
 <haniot-modal [modalId]="'newCounseling'">
     <div class="modal-content">
         <div class="modal-header">
@@ -764,3 +771,50 @@
         </div>
     </div>
 </haniot-modal>
+
+<div id="generatingPDF" *ngIf="generatingPDF">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner
+                                        [message]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.GENERATING-PDF'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<div id="sendingEvaluation" *ngIf="sendingEvaluation">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner
+                                        [message]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SENDING'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+

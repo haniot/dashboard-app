@@ -95,7 +95,9 @@
         "EVALUATION-DATE": "Data da avaliação",
         "FINISH-EVALUATION": "Finalizar avaliação",
         "FINALIZING-EVALUATION": "Finalizando avaliação",
-        "ADD-EVALUATION": "Adicionar aconselhamento"
+        "ADD-EVALUATION": "Adicionar aconselhamento",
+        "GENERATING-PDF": "Gerando PDF...",
+        "SENDING": "Enviando..."
       },
       "PIPES": {
         "CLASSIFICATION": {
@@ -713,7 +715,7 @@
     "EVALUATION-COMPLETED": "Avaliação finalizada com sucesso!",
     "EVALUATION-NOT-COMPLETED": "Não foi possível finalizar avaliação!",
     "COUNSELING-NOT-ADD": "Não foi possível adicionar conselho",
-    "EVALUATION-SEND": "Avaliação enviada com sucesso!,",
+    "EVALUATION-SEND": "Avaliação enviada com sucesso!",
     "EVALUATION-NOT-SEND": "Não foi possível enviar avaliação com sucesso!",
     "STUDY-UPDATED": "Estudo Piloto atualizado!",
     "STUDY-NOT-UPDATED": "Não foi possível atualizar estudo piloto!",

@@ -173,5 +173,6 @@ export class NutritionEvaluation extends Evaluation {
 
     constructor() {
         super();
+        this.patient = new Patient();
     }
 }

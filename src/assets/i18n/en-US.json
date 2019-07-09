@@ -95,7 +95,9 @@
         "EVALUATION-DATE": "Evaluation date",
         "FINISH-EVALUATION": "Finish evaluation",
         "FINALIZING-EVALUATION": "Finalizing evaluation",
-        "ADD-EVALUATION": "Add counseling"
+        "ADD-EVALUATION": "Add counseling",
+        "GENERATING-PDF": "Generating PDF...",
+        "SENDING": "Sending..."
       },
       "PIPES": {
         "CLASSIFICATION": {
