@@ -30,6 +30,7 @@ import {DentalEvaluationService} from './services/dental-evaluation.service';
 import {DentalEvaluationListComponent} from './dental-evaluation-list/dental-evaluation-list.component';
 import {TaylorCutClassificationPipe} from "./pipes/taylor-cut-classification.pipe";
 import {GeneratePdfService} from "./services/generate-pdf.service";
+import {SendEmailService} from "./services/send-email.service";
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import {GeneratePdfService} from "./services/generate-pdf.service";
         NutritionEvaluationService,
         DentalEvaluationService,
         GeneratePdfService,
+        SendEmailService,
         /** pipes */
         EvaluationStatustPipe,
         DatePipe,

@@ -46,7 +46,7 @@
 
         <div class="d-flex flex-row-reverse shared" style="height: 50px;">
             <div class="p-2" [ngClass]="((nutritionalEvaluation.status!=='incomplete')
-                || (nutritionalEvaluation.patient.email && nutritionalEvaluation.patient.email !== ''))?'':'disabled'">
+                || (nutritionalEvaluation.patient.email && nutritionalEvaluation.patient.email !== ''))?'actived':'disabled'">
                 <button class="borderNone" type="button"
                         [disabled]="(nutritionalEvaluation.status!=='complete')||(nutritionalEvaluation.patient.email==='')"
                         (click)="sendEvaluationViaEmail()">
@@ -54,7 +54,7 @@
                        [title]="'EVALUATION.NUTRITION-EVALUATION.SHARED-EMAIL'|translate">mail_outline</i>
                 </button>
             </div>
-            <div class="p-2" [ngClass]="(nutritionalEvaluation.status!=='incomplete')?'':'disabled'">
+            <div class="p-2" [ngClass]="(nutritionalEvaluation.status!=='incomplete')?'actived':'disabled'">
                 <button class="borderNone" [disabled]="nutritionalEvaluation.status!=='complete'" (click)="exportPDF()">
                     <i class="material-icons"
                        [title]="'EVALUATION.NUTRITION-EVALUATION.DOWNLOAD-PDF'|translate">picture_as_pdf</i>

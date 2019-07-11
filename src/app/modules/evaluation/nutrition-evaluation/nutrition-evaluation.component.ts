@@ -20,7 +20,7 @@ import {MealType} from "../../measurement/models/blood-glucose";
 import {TranslateService} from "@ngx-translate/core";
 import {GeneratePdfService} from "../services/generate-pdf.service";
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {EvaluationStatus} from "../models/evaluation";
+import {SendEmailService} from "../services/send-email.service";
 
 @Component({
     selector: 'app-nutrition-evaluation',
@@ -78,7 +78,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     constructor(
         private nutritionService: NutritionEvaluationService,
-        private notificationService: NotificationService,
+        private sendEmailService: SendEmailService,
         private activeRouter: ActivatedRoute,
         private datePipe: DatePipe,
         private modalService: ModalService,
@@ -143,7 +143,6 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     getNutritionEvaluation() {
         this.nutritionService.getById(this.patientId, this.nutritionEvaluationId)
             .then(nutritionEvaluation => {
-                // console.log(nutritionEvaluation)
                 this.nutritionalEvaluation = nutritionEvaluation;
                 this.verifyVisibityZonesClassification();
                 this.formatCounseling()
@@ -450,7 +449,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
         const pdf = this.generatePDF.getPDF(this.nutritionalEvaluation, health_professional_name);
 
-        this.notificationService.sendNutritionalEvaluationViaEmail(health_professinal, this.nutritionalEvaluation, pdf)
+        this.sendEmailService.sendNutritionalEvaluationViaEmail(health_professinal, this.nutritionalEvaluation, pdf)
             .then(() => {
                 this.sendingEvaluation = false;
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-SEND'));

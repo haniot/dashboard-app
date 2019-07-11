@@ -13,15 +13,16 @@ label {
 .shared .material-icons {
   cursor: pointer;
   color: #00a594;
-  border-radius: 10px;
   font-size: 30px;
-  -webkit-transition: font-size 500ms; /* Safari */
   transition: font-size 500ms;
 }
 
-.shared .material-icons:hover {
+
+.shared .actived .material-icons:hover {
   font-size: 35px;
+  border-radius: 10px;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+  -webkit-transition: font-size 500ms; /* Safari */
 }
 
 label,
@@ -147,7 +148,7 @@ label {
   background: rgb(212, 207, 207);
 }
 
-.disabled .material-icons{
+.disabled .material-icons {
   color: gray;
   cursor: pointer;
   border-radius: 10px;
@@ -155,10 +156,10 @@ label {
 }
 
 .disabled .material-icons:hover {
-  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+  box-shadow: none;
 }
 
-.borderNone{
+.borderNone {
   background: none;
   color: inherit;
   border: none;
