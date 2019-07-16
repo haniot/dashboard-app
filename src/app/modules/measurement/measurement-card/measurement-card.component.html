@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-header card-header-danger">
+        <h4 class="card-title">{{title}}</h4>
+        <p class="card-category"> {{subtitle}}</p>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-center" *ngIf="filter_visibility">
+            <div class="col-sm-12 col-md-10 col-lg-7 col-xl-6">
+                <button class="btn btn-haniot-primary btn-sm btn-disabled">Hoje</button>
+                <button class="btn btn-haniot-primary btn-sm btn-disabled">Semana</button>
+                <button class="btn btn-haniot-primary btn-sm btn-disabled">Mês</button>
+                <button class="btn btn-haniot-primary btn-sm btn-actived">Ano</button>
+            </div>
+            <div class="col-sm-12 col-md-2 col-lg-5 col-xl-6 d-flex flex-row-reverse">
+                <div class="p-2">
+                    <mat-form-field>
+                        <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
+                               [satDatepicker]="picker"
+                               [(ngModel)]="search"
+                               (ngModelChange)="searchOnSubmit()">
+                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </div>
+        <ng-content></ng-content>
+    </div>
+</div>

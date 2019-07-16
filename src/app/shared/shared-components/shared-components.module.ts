@@ -15,6 +15,7 @@ import {SelectPilotstudyComponent} from './select-pilotstudy/select-pilotstudy.c
 import {MatStepperModule} from "@angular/material";
 import {SpinnerComponent} from './spinner/spinner.component';
 import {TranslateModule} from "@ngx-translate/core";
+import {ResponsiveTableComponent} from "./responsive-table/responsive-table.component";
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import {TranslateModule} from "@ngx-translate/core";
         LoadingComponentComponent,
         ModalConfirmationComponent,
         SelectPilotstudyComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        ResponsiveTableComponent
     ],
     imports: [
         CommonModule,
@@ -42,7 +44,8 @@ import {TranslateModule} from "@ngx-translate/core";
         LoadingComponentComponent,
         ModalConfirmationComponent,
         SelectPilotstudyComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        ResponsiveTableComponent
     ],
     providers: [
         ModalService,

@@ -11,6 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class BloodPressureComponent implements OnInit, OnChanges {
 
     @Input() data: Array<BloodPressure>;
+    @Input() filter_visibility: boolean;
 
     lastData: BloodPressure;
 
@@ -21,6 +22,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         private translateService: TranslateService
     ) {
         this.data = new Array<BloodPressure>();
+        this.filter_visibility = false;
     }
 
     ngOnInit(): void {
@@ -33,6 +35,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         const diastolic = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.DIASTOLIC');
         const pulse = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PULSE');
         const pressure = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PRESSURE');
+        const date = this.translateService.instant('SHARED.DATE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -132,7 +135,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.options = {
             tooltip: {
                 trigger: 'item',
-                formatter: pressure + " : {c} mmHg<br>  Data: {b}"
+                formatter: pressure + `: {c} mmHg<br> ${date}: {b}`
             },
             legend: {
                 data: [systolic, diastolic, pulse]

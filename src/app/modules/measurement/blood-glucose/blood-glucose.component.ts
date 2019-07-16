@@ -11,6 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     @Input() data: Array<BloodGlucose>;
+    @Input() filter_visibility: boolean;
 
     lastData: BloodGlucose;
 
@@ -23,6 +24,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     ) {
         this.data = new Array<BloodGlucose>();
         this.lastData = new BloodGlucose();
+        this.filter_visibility = false;
     }
 
     ngOnInit(): void {
@@ -39,6 +41,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
         const glucose = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.GLUCOSE');
+        const date = this.translateService.instant('SHARED.DATE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -140,7 +143,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
             tooltip: {
                 trigger: 'item',
-                formatter: glucose + " : {c} mg/dl<br> Data: {b}"
+                formatter: glucose + ` : {c} mg/dl<br> ${date}: {b}`
             },
             legend: {
                 data: [preprandial, postprandial, fasting, casual, bedtime]

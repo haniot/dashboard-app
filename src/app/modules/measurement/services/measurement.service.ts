@@ -73,7 +73,7 @@ export class MeasurementService {
             myParams = myParams.append("limit", String(limit));
         }
 
-        if (search) {
+        if (typeMeasurement) {
             myParams = myParams.append("?type", typeMeasurement);
         }
 

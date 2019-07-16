@@ -23,6 +23,10 @@ import {DeviceComponent} from './device/device.component';
 import {DeviceService} from './services/device.service';
 import {DecimalFormatterPipe} from './pipes/decimal-formatter.pipe';
 import {TranslateModule} from "@ngx-translate/core";
+import {MeasurementCardComponent} from './measurement-card/measurement-card.component';
+import {MatDatepickerModule, MatFormFieldModule, MatInputModule} from "@angular/material";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule} from "saturn-datepicker";
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from "@angular/material-moment-adapter";
 
 @NgModule({
     declarations: [
@@ -38,7 +42,8 @@ import {TranslateModule} from "@ngx-translate/core";
         DeviceTypePipe,
         FatComponent,
         DeviceComponent,
-        DecimalFormatterPipe
+        DecimalFormatterPipe,
+        MeasurementCardComponent
     ],
     imports: [
         CommonModule,
@@ -48,7 +53,11 @@ import {TranslateModule} from "@ngx-translate/core";
         MatExpansionModule,
         MatSlideToggleModule,
         NgxEchartsModule,
-        TranslateModule
+        TranslateModule,
+        MatDatepickerModule,
+        SatDatepickerModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
     exports: [
         MeasurementComponentComponent,
@@ -70,7 +79,10 @@ import {TranslateModule} from "@ngx-translate/core";
         DatePipe,
         MealPipe,
         DeviceTypePipe,
-        DecimalFormatterPipe
+        DecimalFormatterPipe,
+        MatDatepickerModule,
+        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
     ]
 })
 export class MeasurementModule {

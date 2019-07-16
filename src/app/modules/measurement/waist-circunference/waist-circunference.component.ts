@@ -12,6 +12,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class WaistCircunferenceComponent implements OnInit, OnChanges {
 
     @Input() data: Array<IMeasurement>;
+    @Input() filter_visibility: boolean;
 
     lastData: IMeasurement;
 
@@ -22,6 +23,7 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
         private translateService: TranslateService
     ) {
         this.data = new Array<Measurement>();
+        this.filter_visibility = false;
     }
 
     ngOnInit(): void {
@@ -33,6 +35,7 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
         const circumference = this.translateService.instant('MEASUREMENTS.WAIST-CIRCUMFERENCE.CIRCUMFERENCE');
         const average = this.translateService.instant('MEASUREMENTS.AVERAGE');
         const average_value = this.translateService.instant('MEASUREMENTS.AVERAGE-VALUE');
+        const date = this.translateService.instant('SHARED.DATE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -77,7 +80,7 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
         this.options = {
             color: ['#3398DB'],
             tooltip: {
-                formatter: circumference + " : {c} cm <br> Data: {b}",
+                formatter: circumference + `: {c} cm <br> ${date}: {b}`,
                 trigger: 'axis',
                 axisPointer: {
                     type: 'shadow'

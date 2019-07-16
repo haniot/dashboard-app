@@ -49,8 +49,10 @@
 
     <div class="d-flex flex-row-reverse">
         <div class="p-2">
-            <small class="pull-right">{{'HABITS.REGISTER-DATE'|translate}}
+            <small class="pull-right" *ngIf="physicalActivityForm.get('created_at').value">{{'HABITS.REGISTER-DATE'|translate}}
                 : {{physicalActivityForm.get('created_at').value | myDate}}</small>
+            <small class="pull-right" *ngIf="!physicalActivityForm.get('created_at').value">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
         </div>
     </div>
 

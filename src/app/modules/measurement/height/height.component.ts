@@ -12,6 +12,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class HeightComponent implements OnInit, OnChanges {
 
     @Input() data: Array<IMeasurement>;
+    @Input() filter_visibility: boolean;
 
     lastData: IMeasurement;
 
@@ -23,6 +24,7 @@ export class HeightComponent implements OnInit, OnChanges {
         private translateService: TranslateService
     ) {
         this.data = new Array<Measurement>();
+        this.filter_visibility = false;
     }
 
     ngOnInit(): void {
@@ -32,6 +34,7 @@ export class HeightComponent implements OnInit, OnChanges {
     loadGraph() {
 
         const height = this.translateService.instant('MEASUREMENTS.HEIGHT.HEIGHT');
+        const date = this.translateService.instant('SHARED.DATE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -60,7 +63,7 @@ export class HeightComponent implements OnInit, OnChanges {
         this.options = {
             tooltip: {
                 trigger: 'axis',
-                formatter: height + ": {c} cm <br> Data: {b}"
+                formatter: height + `: {c} cm <br> ${date}: {b}`
             },
             xAxis: xAxis,
             yAxis: {

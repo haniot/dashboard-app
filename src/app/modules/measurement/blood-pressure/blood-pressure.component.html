@@ -1,5 +1,6 @@
-<haniot-card [title]="'MEASUREMENTS.BLOOD-PRESSURE.TITLE'|translate"
-             [subtitle]="'MEASUREMENTS.BLOOD-PRESSURE.SUBTITLE'|translate">
+<measurement-card [title]="'MEASUREMENTS.BLOOD-PRESSURE.TITLE'|translate"
+                  [subtitle]="'MEASUREMENTS.BLOOD-PRESSURE.SUBTITLE'|translate"
+                  [filter_visibility]="filter_visibility">
 
     <div class="row">
 
@@ -33,6 +34,26 @@
                             <div class="card-icon">
                                 <img src="../../../../assets/img/haniot/blood-pressure.png" alt="">
                             </div>
+                            <span class="badge badge-haniot">{{'MEASUREMENTS.BLOOD-PRESSURE.DIASTOLIC'|translate}}</span>
+                            <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}:</p>
+                            <h3 class="card-title" *ngIf="lastData">
+                                {{lastData.diastolic }}
+                                <small>{{lastData.unit }}</small>
+                            </h3>
+                            <h3 class="card-title" *ngIf="!lastData">
+                                {{'MEASUREMENTS.VALUE'|translate}}
+                                <small>{{'MEASUREMENTS.UNIT'|translate}}</small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                                <img src="../../../../assets/img/haniot/blood-pressure.png" alt="">
+                            </div>
                             <span class="badge badge-haniot">{{'MEASUREMENTS.BLOOD-PRESSURE.PULSE'|translate}}</span>
                             <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>
                             <h3 class="card-title" *ngIf="lastData">
@@ -49,30 +70,13 @@
 
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
-                    <div class="card card-stats">
-                        <div class="card-header card-header-timer card-header-icon">
-                            <div class="card-icon">
-                                <img src="../../../../assets/img/haniot/blood-pressure.png" alt="">
-                            </div>
-                            <span class="badge badge-haniot">{{'MEASUREMENTS.BLOOD-PRESSURE.DIASTOLIC'|translate}}</span>
-                            <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}:</p>
-                            <h3 class="card-title" *ngIf="lastData">
-                                {{lastData.diastolic }}
-                                <small>{{lastData.unit }}</small>
-                            </h3>
-                            <h3 class="card-title" *ngIf="!lastData">
-                                {{'MEASUREMENTS.VALUE'|translate}}
-                                <small>{{'MEASUREMENTS.UNIT'|translate}}</small>
-                            </h3>
-                        </div>
-
-                    </div>
                     <div class="d-flex flex-row-reverse">
                         <div class="p-2">
                             <small class="pull-right" *ngIf="lastData">
                                 {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:{{lastData.timestamp | myDate}}</small>
                             <small class="pull-right" *ngIf="!lastData">
-                                {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}: {{'MEASUREMENTS.PATTERN-DATE'|translate}}
+                                {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                                : {{'MEASUREMENTS.PATTERN-DATE'|translate}}
                             </small>
                         </div>
                     </div>
@@ -89,4 +93,4 @@
         </div>
     </div>
 
-</haniot-card>
+</measurement-card>

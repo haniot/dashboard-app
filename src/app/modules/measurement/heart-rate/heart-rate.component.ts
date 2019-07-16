@@ -11,6 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class HeartRateComponent implements OnInit, OnChanges {
 
     @Input() data: Array<HeartRate>;
+    @Input() filter_visibility: boolean;
 
     lastData: HeartRate;
 
@@ -24,6 +25,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
         private translateService: TranslateService
     ) {
         this.data = new Array<HeartRate>();
+        this.filter_visibility = false;
     }
 
     ngOnInit(): void {
@@ -38,6 +40,8 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
         const last_date_text = this.translateService.instant('MEASUREMENTS.HEART-RATE.LAST-DATE.TEXT');
         const last_date_subtext = this.translateService.instant('MEASUREMENTS.HEART-RATE.LAST-DATE.SUBTEXT');
+
+        const date = this.translateService.instant('SHARED.DATE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -88,7 +92,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 subtext: historic_subtext
             },
             tooltip: {
-                formatter: frequency + " : {c} bpm <br> Data: {b}",
+                formatter: frequency + ` : {c} bpm <br> ${date}: {b}`,
                 trigger: 'axis'
             },
             xAxis: xAxisOptions,
@@ -114,7 +118,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 subtext: last_date_subtext
             },
             tooltip: {
-                formatter: frequency + " : {c} bpm <br> Data: {b}",
+                formatter: frequency + ` : {c} bpm <br> ${date}: {b}`,
                 trigger: 'axis'
             },
             xAxis: xAxisOptionsLastDate,

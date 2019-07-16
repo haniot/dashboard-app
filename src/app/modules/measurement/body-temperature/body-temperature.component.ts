@@ -13,6 +13,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class BodyTemperatureComponent implements OnInit, OnChanges {
 
     @Input() data: Array<IMeasurement>;
+    @Input() filter_visibility: boolean;
 
     lastData: IMeasurement;
 
@@ -25,6 +26,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
     ) {
         this.data = new Array<Measurement>();
         this.lastData = new Measurement();
+        this.filter_visibility = false;
     }
 
     ngOnInit(): void {
@@ -37,6 +39,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
         const temperature = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.TEMPERATURE');
+        const date = this.translateService.instant('SHARED.DATE');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -70,7 +73,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
         this.options = {
             tooltip: {
-                formatter: temperature + ": {c} °C <br> Data: {b}",
+                formatter: temperature + `: {c} °C <br> ${date}: {b}`,
                 trigger: 'axis'
             },
             xAxis: xAxis,

@@ -14,6 +14,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class WeightComponent implements OnInit, OnChanges {
 
     @Input() data: Array<Weight>;
+    @Input() filter_visibility: boolean;
 
     lastData: Weight;
 
@@ -21,15 +22,13 @@ export class WeightComponent implements OnInit, OnChanges {
 
     weightGraph: any;
 
-    fatGraph: any;
-
-
     constructor(
         private datePipe: DatePipe,
         private decimalPipe: DecimalFormatterPipe,
         private translateService: TranslateService
     ) {
         this.data = new Array<Weight>();
+        this.filter_visibility = false;
     }
 
     ngOnInit(): void {
@@ -40,7 +39,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
         const weigth = this.translateService.instant('MEASUREMENTS.WEIGHT.TITLE');
         const body_fat = this.translateService.instant('MEASUREMENTS.WEIGHT.BODY-FAT');
-        const fat = this.translateService.instant('MEASUREMENTS.WEIGHT.FAT');
+        const date = this.translateService.instant('SHARED.DATE');
 
         this.lastIndex = 0;
 
@@ -84,12 +83,12 @@ export class WeightComponent implements OnInit, OnChanges {
         const seriesFat = {
             name: body_fat,
             data: [],
-            type: 'bar',
-            symbol: 'circle',
+            type: 'line',
+            symbol: 'square',
             symbolSize: 20,
             lineStyle: {
                 normal: {
-                    color: 'green',
+                    color: 'orange',
                     width: 4,
                     type: 'dashed'
                 }
@@ -106,6 +105,7 @@ export class WeightComponent implements OnInit, OnChanges {
         this.data.forEach((element: Weight) => {
             xAxisWeight.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
             seriesWeight.data.push(this.decimalPipe.transform(element.value));
+            seriesFat.data.push(25);
             if (element.fat && element.fat.value) {
                 xAxisFat.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
                 seriesFat.data.push(element.fat.value);
@@ -114,46 +114,34 @@ export class WeightComponent implements OnInit, OnChanges {
 
         this.weightGraph = {
             tooltip: {
-                formatter: weigth + ": {c} Kg <br> Data: {b}"
+                formatter: function (params) {
+                    if (params.seriesName === weigth) {
+                        return weigth +
+                            `: ${params.data} Kg <br> ${date}: ${params.name}`;
+                    }
+                    return body_fat +
+                        `: ${params.data} % <br> ${date}: ${params.name}`;
+                }
             },
             xAxis: xAxisWeight,
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value} kg'
+                    formatter: '{value}'
                 }
             },
             legend: {
-                data: [weigth]
+                data: [weigth, body_fat]
             },
             dataZoom: [
                 {
                     type: 'slider'
                 }
             ],
-            series: seriesWeight
-        };
-
-        this.fatGraph = {
-            tooltip: {
-                formatter: fat + ": {c} % <br> Data: {b}"
-            },
-            xAxis: xAxisFat,
-            yAxis: {
-                type: 'value',
-                axisLabel: {
-                    formatter: '{value} %'
-                }
-            },
-            legend: {
-                data: [fat]
-            },
-            dataZoom: [
-                {
-                    type: 'slider'
-                }
-            ],
-            series: seriesFat
+            series: [
+                seriesWeight,
+                seriesFat
+            ]
         };
     }
 

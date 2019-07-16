@@ -245,9 +245,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         }
 
         this.optionsHeartRate = {
-            title: {
-                text: colleted_measurements,
-            },
+            // title: {
+            //     text: colleted_measurements,
+            // },
             tooltip: {
                 formatter: frequency + ": {c} bpm <br> Data: {b}",
                 trigger: 'axis'

@@ -464,18 +464,16 @@
 
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                  *ngIf="listWeight.length">
-                                                <weight [(data)]="listWeight"></weight>
+                                                <weight [(data)]="listWeight" [filter_visibility]="false"></weight>
                                             </div>
 
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listFat.length">
+                                                <fat [data]="listFat"></fat>
+                                            </div>
 
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                  *ngIf="listHeight.length">
                                                 <height [data]="listHeight"></height>
-                                            </div>
-
-
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="listFat.length">
-                                                <fat [data]="listFat"></fat>
                                             </div>
 
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
