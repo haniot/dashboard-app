@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {NgxEchartsModule} from 'ngx-echarts';
 
 import {MeasurementComponentComponent} from './measurement-component/measurement-component.component';
 import {SharedModule} from 'app/shared/shared.module';
@@ -27,6 +26,7 @@ import {MeasurementCardComponent} from './measurement-card/measurement-card.comp
 import {MatDatepickerModule, MatFormFieldModule, MatInputModule} from "@angular/material";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule} from "saturn-datepicker";
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from "@angular/material-moment-adapter";
+import {NgxEchartsModule} from "ngx-echarts";
 
 @NgModule({
     declarations: [

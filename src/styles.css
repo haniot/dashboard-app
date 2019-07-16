@@ -185,6 +185,11 @@ label {
     height: 300px;
 }
 
+.unavailable-data {
+    position: absolute;
+    margin-top: 100px;
+}
+
 
 /**
  * Classe auxiliar para truncar e adicionar reticências a uma

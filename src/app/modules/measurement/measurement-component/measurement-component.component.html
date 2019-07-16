@@ -95,34 +95,37 @@
 
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.weight">
-            <weight [data]="listWeight" [filter_visibility]="true"></weight>
+            <weight [data]="listWeight" [filter_visibility]="true" [patientId]="patientId"></weight>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              *ngIf="configVisibility.fat && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
-            <fat [data]="listFat" [filter_visibility]="true"></fat>
+            <fat [data]="listFat" [filter_visibility]="true" [patientId]="patientId"></fat>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.height">
-            <height [data]="listHeight" [filter_visibility]="true"></height>
+            <height [data]="listHeight" [filter_visibility]="true" [patientId]="patientId"></height>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.circumference">
-            <waist-circunference [data]="listWaistCircunference" [filter_visibility]="true"></waist-circunference>
+            <waist-circunference [data]="listWaistCircunference" [filter_visibility]="true"
+                                 [patientId]="patientId"></waist-circunference>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              *ngIf="configVisibility.temperature && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
-            <body-temperature [data]="listBodyTemperature" [filter_visibility]="true"></body-temperature>
+            <body-temperature [data]="listBodyTemperature" [filter_visibility]="true"
+                              [patientId]="patientId"></body-temperature>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.glucose">
-            <blood-glucose [data]="listBloodGlucose" [filter_visibility]="true"></blood-glucose>
+            <blood-glucose [data]="listBloodGlucose" [filter_visibility]="true" [patientId]="patientId"></blood-glucose>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              *ngIf="configVisibility.pressure && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
-            <blood-pressure [data]="listBloodPressure" [filter_visibility]="true"></blood-pressure>
+            <blood-pressure [data]="listBloodPressure" [filter_visibility]="true"
+                            [patientId]="patientId"></blood-pressure>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"

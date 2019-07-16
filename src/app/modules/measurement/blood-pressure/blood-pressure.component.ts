@@ -2,6 +2,9 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {DatePipe} from '@angular/common';
 import {BloodPressure} from '../models/blood-pressure';
 import {TranslateService} from "@ngx-translate/core";
+import {MeasurementType} from "../models/measurement";
+import {BloodGlucose, MealType} from "../models/blood-glucose";
+import {MeasurementService} from "../services/measurement.service";
 
 @Component({
     selector: 'blood-pressure',
@@ -12,21 +15,33 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     @Input() data: Array<BloodPressure>;
     @Input() filter_visibility: boolean;
+    @Input() patientId: string;
 
     lastData: BloodPressure;
 
     options: any;
 
+    showSpinner: boolean;
+
+    echartsInstance: any;
+
     constructor(
         private datePipe: DatePipe,
+        private measurementService: MeasurementService,
         private translateService: TranslateService
     ) {
         this.data = new Array<BloodPressure>();
         this.filter_visibility = false;
+        this.patientId = "";
+        this.showSpinner = false;
     }
 
     ngOnInit(): void {
         this.loadGraph();
+    }
+
+    onChartInit(event) {
+        this.echartsInstance = event;
     }
 
     loadGraph() {
@@ -156,6 +171,53 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         };
 
 
+    }
+
+    applyFilter(event: any) {
+        let filter: { start_at: string, end_at: string, period: string };
+        if (event === 'today' || event === '1w' || event === '1m' || event === '1y') {
+            filter = {start_at: null, end_at: new Date().toISOString().split('T')[0], period: event};
+        } else {
+            const start_at = event.begin.toISOString().split('T')[0];
+            const end_at = event.end.toISOString().split('T')[0];
+            filter = {start_at, end_at, period: null};
+        }
+        this.showSpinner = true;
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_pressure, null, null, filter)
+            .then((measurements: Array<any>) => {
+                this.data = measurements;
+                this.showSpinner = false;
+                this.updateGraph(measurements);
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
+
+    updateGraph(measurements: Array<any>): void {
+        // clean
+        this.options.xAxis.data = new Array<any>();
+        this.options.series.data = new Array<any>();
+
+        measurements.forEach((element: BloodPressure) => {
+            const find = this.options.xAxis.data.find((ele) => {
+                return ele === this.datePipe.transform(element.timestamp, "shortDate");
+            });
+
+            if (!find) {
+                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            }
+            // Adicionando Sistólica
+            this.options.series[0].data.push(element.systolic);
+
+            // Adicionando Diastólica
+            this.options.series[1].data.push(element.diastolic);
+
+            // Adicionando Pulso
+            this.options.series[2].data.push(element.pulse);
+        });
+        this.echartsInstance.setOption(this.options);
     }
 
     ngOnChanges(changes: SimpleChanges) {

@@ -1,5 +1,5 @@
 <measurement-card [title]="'MEASUREMENTS.FAT.TITLE'|translate" [subtitle]="'MEASUREMENTS.FAT.SUBTITLE'|translate"
-                  [filter_visibility]="filter_visibility">
+                  [filter_visibility]="filter_visibility" (filter_change)="applyFilter($event)">
 
     <div class="row">
 
@@ -31,12 +31,19 @@
             </div>
         </div>
 
-        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center echarts-div-graph" echarts
-             [options]="options"></div>
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center"
+             style="display: flex; justify-content: center;">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center echarts-div-graph" echarts
+                 [options]="options" (chartInit)="onChartInit($event)">
+            </div>
 
-        <div *ngIf="data.length==0">
-            <span class="badge badge-danger badge-12 ellipsis">{{'MEASUREMENTS.FAT.UNAVAILABLE-DATA'|translate}}</span>
+            <div class="unavailable-data">
+                <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
+                <span *ngIf="data.length==0 && !showSpinner"
+                      class="badge badge-danger badge-12 ellipsis">{{'MEASUREMENTS.FAT.UNAVAILABLE-DATA'|translate}}</span>
+            </div>
         </div>
+
     </div>
 
 </measurement-card>

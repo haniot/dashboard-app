@@ -6,10 +6,18 @@
     <div class="card-body">
         <div class="row justify-content-center" *ngIf="filter_visibility">
             <div class="col-sm-12 col-md-10 col-lg-7 col-xl-6">
-                <button class="btn btn-haniot-primary btn-sm btn-disabled">Hoje</button>
-                <button class="btn btn-haniot-primary btn-sm btn-disabled">Semana</button>
-                <button class="btn btn-haniot-primary btn-sm btn-disabled">Mês</button>
-                <button class="btn btn-haniot-primary btn-sm btn-actived">Ano</button>
+                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_today" (click)="filterChange('today')">
+                    Hoje
+                </button>
+                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_week" (click)="filterChange('1w')">
+                    Semana
+                </button>
+                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_month" (click)="filterChange('1m')">
+                    Mês
+                </button>
+                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_year" (click)="filterChange('1y')">
+                    Ano
+                </button>
             </div>
             <div class="col-sm-12 col-md-2 col-lg-5 col-xl-6 d-flex flex-row-reverse">
                 <div class="p-2">
@@ -17,7 +25,7 @@
                         <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
                                [satDatepicker]="picker"
                                [(ngModel)]="search"
-                               (ngModelChange)="searchOnSubmit()">
+                               (ngModelChange)="filterChange('period')">
                         <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
                     </mat-form-field>

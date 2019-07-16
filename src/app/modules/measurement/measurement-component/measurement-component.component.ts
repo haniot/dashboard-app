@@ -38,6 +38,8 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
 
     @Input() configVisibility: ConfigVisibility;
 
+    @Input() patientId;
+
     listWeight: Array<IMeasurement>;
 
     listHeight: Array<IMeasurement>;
@@ -56,7 +58,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
 
     userHealthArea: string;
 
-    @Input() patientId;
+    filter: { start_at: string, end_at: string, period: string };
 
     constructor(
         private measurementService: MeasurementService,
@@ -72,6 +74,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
         this.listBloodPressure = new Array<BloodPressure>();
         this.listHeartRate = new Array<HeartRate>();
         this.configVisibility = new ConfigVisibility();
+        this.filter = {start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today'};
     }
 
     ngOnInit() {
@@ -95,7 +98,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
 
     loadWeight() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.weight)
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.weight, null, null, this.filter)
             .then((measurements: Array<any>) => {
                 this.listWeight = measurements;
             })
@@ -106,7 +109,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
 
     loadHeight() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.height)
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.height, null, null, this.filter)
             .then((measurements: Array<any>) => {
                 this.listHeight = measurements;
             })
@@ -117,7 +120,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
 
     loadFat() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.fat)
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.fat, null, null, this.filter)
             .then((measurements: Array<any>) => {
                 this.listFat = measurements;
             })
@@ -128,7 +131,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
 
     loadWaistCircumference() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.waist_circumference)
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.waist_circumference, null, null, this.filter)
             .then((measurements: Array<any>) => {
                 this.listWaistCircunference = measurements;
             })
@@ -139,7 +142,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
 
     loadBodyTemperature() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_temperature)
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_temperature, null, null, this.filter)
             .then((measurements: Array<any>) => {
                 this.listBodyTemperature = measurements;
             })
@@ -150,7 +153,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
 
     loadBloodGlucose() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_glucose)
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_glucose, null, null, this.filter)
             .then((measurements: Array<any>) => {
                 this.listBloodGlucose = measurements;
             })
@@ -161,7 +164,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
 
     loadBloodPressure() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_pressure)
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_pressure, null, null, this.filter)
             .then((measurements: Array<any>) => {
                 this.listBloodPressure = measurements;
             })
@@ -172,7 +175,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
     }
 
     loadHeartRate() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.heart_rate)
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.heart_rate, null, null, this.filter)
             .then((measurements: Array<any>) => {
                 this.listHeartRate = measurements;
             })

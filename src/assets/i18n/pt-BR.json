@@ -178,7 +178,7 @@
       "SUBTITLE": "",
       "PERIOD": "Período da medição",
       "GLUCOSE": "Glicose",
-      "UNAVAILABLE-DATA": "Nenhum registro de glicose cadastrado!"
+      "UNAVAILABLE-DATA": "Nenhum registro de glicose para o período selecionado!"
     },
     "BLOOD-PRESSURE": {
       "TITLE": "Pressão arterial",
@@ -187,20 +187,20 @@
       "SYSTOLIC": "Sistólica",
       "PULSE": "Pulso",
       "DIASTOLIC": "Diastólica",
-      "UNAVAILABLE-DATA": "Nenhum registro de pressão arterial cadastrado!"
+      "UNAVAILABLE-DATA": "Nenhum registro de pressão arterial para o período selecionado!"
     },
     "BODY-TEMPERATURE": {
       "TITLE": "Temperatura corporal",
       "SUBTITLE": "",
       "TEMPERATURE-HISTORIC": "Histórico de temperatura",
       "TEMPERATURE": "Temperatura",
-      "UNAVAILABLE-DATA": "Nenhum registro de temperatura corporal cadastrado!"
+      "UNAVAILABLE-DATA": "Nenhum registro de temperatura corporal para o período selecionado!"
     },
     "FAT": {
       "TITLE": "Gordura corporal",
       "SUBTITLE": "",
       "FAT": "Gordura",
-      "UNAVAILABLE-DATA": "Nenhum registro de gordura corporal cadastrado!"
+      "UNAVAILABLE-DATA": "Nenhum registro de gordura corporal para o período selecionado!"
     },
     "HEART-RATE": {
       "TITLE": "Frequência cardíaca",
@@ -214,26 +214,26 @@
         "SUBTEXT": "O gráfico abaixo representa todos os valores captados na última medição realizada"
       },
       "FREQUENCY": "Frequência",
-      "UNAVAILABLE-DATA": "Nenhum registro de frequência cardíaca cadastrado!"
+      "UNAVAILABLE-DATA": "Nenhum registro de frequência cardíaca para o período selecionado!"
     },
     "HEIGHT": {
       "TITLE": "Estatura",
       "SUBTITLE": "",
       "HEIGHT": "Altura",
-      "UNAVAILABLE-DATA": "Nenhum registro de estatura cadastrado!"
+      "UNAVAILABLE-DATA": "Nenhum registro de estatura para o período selecionado!"
     },
     "WAIST-CIRCUMFERENCE": {
       "TITLE": "Circunferência da cintura",
       "SUBTITLE": "",
       "CIRCUMFERENCE": "Circunferência",
-      "UNAVAILABLE-DATA": "Nenhum registro de circunferência da cintura cadastrado!"
+      "UNAVAILABLE-DATA": "Nenhum registro de circunferência da cintura para o período selecionado!"
     },
     "WEIGHT": {
       "TITLE": "Peso",
       "SUBTITLE": "",
       "BODY-FAT": "Gordura corporal",
       "FAT": "Gordura",
-      "UNAVAILABLE-DATA": "Nenhum registro de estatura cadastrado!"
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
     },
     "COMPONENT": {
       "CONFIG-GRAPH": "Configurar gráficos visíveis",

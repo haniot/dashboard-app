@@ -1,8 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DatePipe} from '@angular/common';
 
-import {IMeasurement, Measurement} from '../models/measurement';
+import {IMeasurement, Measurement, MeasurementType} from '../models/measurement';
 import {TranslateService} from "@ngx-translate/core";
+import {Weight} from "../models/wieght";
+import {MeasurementService} from "../services/measurement.service";
 
 @Component({
     selector: 'height',
@@ -13,22 +15,33 @@ export class HeightComponent implements OnInit, OnChanges {
 
     @Input() data: Array<IMeasurement>;
     @Input() filter_visibility: boolean;
+    @Input() patientId: string;
 
     lastData: IMeasurement;
 
     options: any;
 
+    showSpinner: boolean;
+
+    echartsInstance: any;
 
     constructor(
         private datePipe: DatePipe,
+        private measurementService: MeasurementService,
         private translateService: TranslateService
     ) {
         this.data = new Array<Measurement>();
         this.filter_visibility = false;
+        this.patientId = "";
+        this.showSpinner = false;
     }
 
     ngOnInit(): void {
         this.loadGraph();
+    }
+
+    onChartInit(event) {
+        this.echartsInstance = event;
     }
 
     loadGraph() {
@@ -81,6 +94,40 @@ export class HeightComponent implements OnInit, OnChanges {
         };
 
 
+    }
+
+    applyFilter(event: any) {
+        let filter: { start_at: string, end_at: string, period: string };
+        if (event === 'today' || event === '1w' || event === '1m' || event === '1y') {
+            filter = {start_at: null, end_at: new Date().toISOString().split('T')[0], period: event};
+        } else {
+            const start_at = event.begin.toISOString().split('T')[0];
+            const end_at = event.end.toISOString().split('T')[0];
+            filter = {start_at, end_at, period: null};
+        }
+        this.showSpinner = true;
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.height, null, null, filter)
+            .then((measurements: Array<any>) => {
+                this.data = measurements;
+                this.showSpinner = false;
+                this.updateGraph(measurements);
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
+
+    updateGraph(measurements: Array<any>): void {
+        // clean weightGraph
+        this.options.xAxis.data = new Array<any>();
+        this.options.series.data = new Array<any>();
+
+        measurements.forEach((element: Weight) => {
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            this.options.series.data.push(element.value);
+        });
+        this.echartsInstance.setOption(this.options);
     }
 
     ngOnChanges(changes: SimpleChanges) {

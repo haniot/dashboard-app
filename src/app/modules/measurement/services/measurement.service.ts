@@ -60,8 +60,11 @@ export class MeasurementService {
             .toPromise();
     }
 
-    getAllByUserAndType(userId: string, typeMeasurement: string, page?: number, limit?: number, search?: string)
-        : Promise<Array<IMeasurement | BloodPressure | HeartRate> | Array<any>> {
+    getAllByUserAndType(userId: string, typeMeasurement: string, page?: number, limit?: number, search?: {
+        start_at: string,
+        end_at: string,
+        period?: string
+    }): Promise<Array<IMeasurement | BloodPressure | HeartRate> | Array<any>> {
 
         let myParams = new HttpParams();
 
@@ -74,7 +77,20 @@ export class MeasurementService {
         }
 
         if (typeMeasurement) {
-            myParams = myParams.append("?type", typeMeasurement);
+            myParams = myParams.append("type", typeMeasurement);
+        }
+
+        if (search) {
+            if (search.start_at) {
+                myParams = myParams.append("start_at", search.start_at);
+            }
+            if (search.end_at) {
+                myParams = myParams.append("end_at", search.end_at);
+            }
+            if (search.period) {
+                myParams = myParams.append("period", search.period);
+            }
+
         }
 
         myParams = myParams.append("sort", "+timestamp");
