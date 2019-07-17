@@ -11,7 +11,7 @@ import {ModalService} from 'app/shared/shared-components/haniot-modal/service/mo
 import {GraphService} from 'app/shared/shared-services/graph.service';
 import {PatientService} from 'app/modules/patient/services/patient.service';
 import {Patient} from 'app/modules/patient/models/patient';
-import {Weight} from 'app/modules/measurement/models/wieght';
+import {Weight} from 'app/modules/measurement/models/weight';
 import {IMeasurement, Measurement, MeasurementType} from 'app/modules/measurement/models/measurement';
 import {BloodPressure} from 'app/modules/measurement/models/blood-pressure';
 import {HeartRate} from 'app/modules/measurement/models/heart-rate';

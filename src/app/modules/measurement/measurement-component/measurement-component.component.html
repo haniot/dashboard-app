@@ -130,7 +130,7 @@
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              *ngIf="configVisibility.heartRate && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
-            <heart-rate [data]="listHeartRate" [filter_visibility]="true"></heart-rate>
+            <heart-rate [data]="listHeartRate" [filter_visibility]="true" [patientId]="patientId"></heart-rate>
         </div>
 
     </div>

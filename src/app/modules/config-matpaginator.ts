@@ -1,7 +1,5 @@
-import { Injectable } from '@angular/core';
-
-import { MatPaginatorIntl } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
+import {MatPaginatorIntl} from '@angular/material';
+import {TranslateService} from '@ngx-translate/core';
 
 export class PaginatorIntlService extends MatPaginatorIntl {
   translate: TranslateService;

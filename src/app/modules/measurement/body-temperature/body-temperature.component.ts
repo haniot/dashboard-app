@@ -4,7 +4,7 @@ import {DatePipe} from '@angular/common';
 import {IMeasurement, Measurement, MeasurementType} from '../models/measurement';
 import {DecimalFormatterPipe} from "../pipes/decimal-formatter.pipe";
 import {TranslateService} from "@ngx-translate/core";
-import {Weight} from "../models/wieght";
+import {Weight} from "../models/weight";
 import {MeasurementService} from "../services/measurement.service";
 
 @Component({
@@ -107,15 +107,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
     }
 
-    applyFilter(event: any) {
-        let filter: { start_at: string, end_at: string, period: string };
-        if (event === 'today' || event === '1w' || event === '1m' || event === '1y') {
-            filter = {start_at: null, end_at: new Date().toISOString().split('T')[0], period: event};
-        } else {
-            const start_at = event.begin.toISOString().split('T')[0];
-            const end_at = event.end.toISOString().split('T')[0];
-            filter = {start_at, end_at, period: null};
-        }
+    applyFilter(filter: { start_at: string, end_at: string, period: string }) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_temperature, null, null, filter)
             .then((measurements: Array<any>) => {

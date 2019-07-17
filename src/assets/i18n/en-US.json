@@ -258,6 +258,13 @@
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND"
     },
+    "MEASUREMENT-CARD": {
+      "FILTER-OPTIONS": "Filter options",
+      "TODAY": "Today",
+      "WEEK": "Week",
+      "MONTH": "Month",
+      "YEAR": "Year"
+    },
     "LAST-REGISTER": "Last register",
     "LAST-REGISTER-DATE": "Date of last record",
     "PATTERN-DATE": "month/day/year hour",

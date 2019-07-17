@@ -2,6 +2,8 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {DatePipe} from '@angular/common';
 import {HeartRate} from '../models/heart-rate';
 import {TranslateService} from "@ngx-translate/core";
+import {Measurement, MeasurementType} from "../models/measurement";
+import {MeasurementService} from "../services/measurement.service";
 
 @Component({
     selector: 'heart-rate',
@@ -12,6 +14,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
     @Input() data: Array<HeartRate>;
     @Input() filter_visibility: boolean;
+    @Input() patientId: string;
 
     lastData: HeartRate;
 
@@ -19,9 +22,14 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
     optionsLastData: any;
 
+    echartsInstance: any;
+
+    showSpinner: boolean;
+
 
     constructor(
         private datePipe: DatePipe,
+        private measurementService: MeasurementService,
         private translateService: TranslateService
     ) {
         this.data = new Array<HeartRate>();
@@ -30,6 +38,10 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
+    }
+
+    onChartInit(event) {
+        this.echartsInstance = event;
     }
 
     loadGraph() {
@@ -138,6 +150,38 @@ export class HeartRateComponent implements OnInit, OnChanges {
             series: seriesOptionsLastDate
         };
 
+    }
+
+    applyFilter(filter: { start_at: string, end_at: string, period: string }) {
+        this.showSpinner = true;
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.heart_rate, null, null, filter)
+            .then((measurements: Array<any>) => {
+                this.data = measurements;
+                this.showSpinner = false;
+                this.updateGraph(measurements);
+            })
+            .catch(errorResponse => {
+                // this.toastService.error('Não foi possível buscar medições!');
+                // console.log('Não foi possível buscar medições!', errorResponse);
+            });
+    }
+
+    updateGraph(measurements: Array<HeartRate>): void {
+
+        this.options.xAxis.data = new Array();
+        this.options.series.data = new Array();
+
+        measurements.forEach((heartRate: HeartRate) => {
+            if (heartRate.dataset) {
+                heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
+                    this.options.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+                    this.options.series.data.push(date.value);
+                });
+            }
+
+        });
+
+        this.echartsInstance.setOption(this.options);
     }
 
     ngOnChanges(changes: SimpleChanges) {

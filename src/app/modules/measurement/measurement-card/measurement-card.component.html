@@ -4,35 +4,93 @@
         <p class="card-category"> {{subtitle}}</p>
     </div>
     <div class="card-body">
-        <div class="row justify-content-center" *ngIf="filter_visibility">
-            <div class="col-sm-12 col-md-10 col-lg-7 col-xl-6">
-                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_today" (click)="filterChange('today')">
-                    Hoje
+        <div class="d-flex justify-content-around" *ngIf="filter_visibility">
+            <div class="p-2">
+                <label>
+                    <small>{{'MEASUREMENTS.MEASUREMENT-CARD.FILTER-OPTIONS'|translate}}:</small>
+                </label>
+            </div>
+            <div class="p-2">
+                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_today"
+                        (click)="filterChange(filterOptions.today)">
+                    {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}
                 </button>
-                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_week" (click)="filterChange('1w')">
-                    Semana
+
+
+                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_week"
+                        (click)="filterChange(filterOptions.week)">
+                    {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}
                 </button>
-                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_month" (click)="filterChange('1m')">
-                    Mês
+
+                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_month"
+                        (click)="filterChange(filterOptions.month)">
+                    {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}
                 </button>
-                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_year" (click)="filterChange('1y')">
-                    Ano
+
+                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_year"
+                        (click)="filterChange(filterOptions.year)">
+                    {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}
                 </button>
             </div>
-            <div class="col-sm-12 col-md-2 col-lg-5 col-xl-6 d-flex flex-row-reverse">
-                <div class="p-2">
-                    <mat-form-field>
-                        <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
-                               [satDatepicker]="picker"
-                               [(ngModel)]="search"
-                               (ngModelChange)="filterChange('period')">
-                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
-                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-                    </mat-form-field>
-                </div>
-
+            <div class="p-2">
+                <mat-form-field>
+                    <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
+                           [satDatepicker]="picker"
+                           [(ngModel)]="search"
+                           (ngModelChange)="filterChange('period')"
+                           [min]="minDate"
+                           [max]="currentDate">
+                    <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                    <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                </mat-form-field>
             </div>
         </div>
+        <!--        <div class="row justify-content-center" *ngIf="filter_visibility">-->
+        <!--            <div class="col-sm-4 col-md-2 col-lg-2 col-xl-2">-->
+        <!--                <label>-->
+        <!--                    <small>Opções de filtragens:</small>-->
+        <!--                </label>-->
+        <!--            </div>-->
+        <!--            <div class="col-sm-8 col-md-10 col-lg-10 col-xl-10 row">-->
+        <!--                <div class="col-sm-8 com-md-10 col-lg-8 col-xl-8 d-flex ">-->
+
+        <!--                        <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_today"-->
+        <!--                                (click)="filterChange('today')">-->
+        <!--                            Hoje-->
+        <!--                        </button>-->
+
+
+        <!--                        <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_week"-->
+        <!--                                (click)="filterChange('1w')">-->
+        <!--                            Semana-->
+        <!--                        </button>-->
+
+        <!--                        <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_month"-->
+        <!--                                (click)="filterChange('1m')">-->
+        <!--                            Mês-->
+        <!--                        </button>-->
+
+        <!--                        <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_year"-->
+        <!--                                (click)="filterChange('1y')">-->
+        <!--                            Ano-->
+        <!--                        </button>-->
+
+        <!--                </div>-->
+        <!--                <div class="col-sm-4 com-md-2 col-lg-4 col-xl-4">-->
+        <!--                    <mat-form-field>-->
+        <!--                        <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"-->
+        <!--                               [satDatepicker]="picker"-->
+        <!--                               [(ngModel)]="search"-->
+        <!--                               (ngModelChange)="filterChange('period')"-->
+        <!--                               [min]="minDate"-->
+        <!--                               [max]="currentDate">-->
+        <!--                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>-->
+        <!--                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
+        <!--                    </mat-form-field>-->
+        <!--                </div>-->
+
+        <!--            </div>-->
+        <!--        </div>-->
         <ng-content></ng-content>
     </div>
 </div>

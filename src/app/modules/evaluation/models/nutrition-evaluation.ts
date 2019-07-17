@@ -5,7 +5,7 @@ import {BloodPressure} from 'app/modules/measurement/models/blood-pressure';
 import {PhysicalActivityHabitsRecord} from 'app/modules/habits/models/physicalActivity';
 import {FeedingHabitsRecord} from 'app/modules/habits/models/feeding';
 import {MedicalRecord} from 'app/modules/habits/models/medical-record';
-import {Weight} from 'app/modules/measurement/models/wieght';
+import {Weight} from 'app/modules/measurement/models/weight';
 import {Patient} from "../../patient/models/patient";
 import {SleepHabitsRecord} from "../../habits/models/sleep";
 
