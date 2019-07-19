@@ -1,17 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder} from '@angular/forms';
+import {Router, ActivatedRoute} from '@angular/router';
 
 import {ToastrService} from 'ngx-toastr';
 import {ISubscription} from 'rxjs/Subscription';
+import {TranslateService} from "@ngx-translate/core";
 
 import {PatientService} from '../services/patient.service';
 import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {Router, ActivatedRoute} from '@angular/router';
+
 import {Patient, Gender} from '../models/patient';
 import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
 import {FeedingRecordService} from '../../habits/services/feeding-record.service';
 import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
     selector: 'app-view-habits',

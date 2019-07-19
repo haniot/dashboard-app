@@ -1,0 +1,283 @@
+<haniot-card [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.TITLE'|translate"
+             [subtitle]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.SUBTITLE'|translate">
+
+    <div class="container-fluid">
+
+        <div class="row justify-content-center">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center form-group row justify-content-center ">
+
+                <label for="measurementType"
+                       class="col-sm-2 col-form-label col-form-label-sm">{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MEASUREMENT-TYPE'|translate}}
+                    :</label>
+
+                <div class="col-sm-4">
+                    <select class="form-control form-control-sm" id="measurementType"
+                            [(ngModel)]="measurementTypeSelected"
+                            (change)="changeMeasurementType()">
+                        <option *ngFor="let type of measurementsTypes"
+                                [value]="type">{{type | measurementType | translate}}</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                <div class="col-sm-4">
+                    <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllMeasurements()">
+                        {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
+                    </mat-checkbox>
+                </div>
+                <div class="col d-flex flex-row-reverse">
+                    <div class="p-2">
+                        <button type="button" class="btn btn-haniot-primary btn-sm" (click)="removeSelected()"
+                                [disabled]="!stateButtonRemoveSeleted">
+                            {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.REMOVE-SELECTED'|translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                <div *ngIf="loadingMeasurements">
+                    <spinner></spinner>
+                </div>
+                <div class="table-responsive">
+                    <!-- Generic table-->
+                    <table class="table table-hover table-sm"
+                           *ngIf="(measurementTypeSelected !== 'weight') &&
+                                  (measurementTypeSelected !== 'blood_glucose') &&
+                                  (measurementTypeSelected !== 'blood_pressure') &&
+                                  (measurementTypeSelected !== 'heart_rate')">
+                        <thead>
+                        <th></th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.VALUE'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let measurement of listOfMeasurements; let i= index; trackBy: trackById">
+                            <td>
+                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                              [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
+                            </td>
+                            <td>
+                                {{measurement.value}}
+                                {{measurement.unit}}
+                            </td>
+                            <td>{{measurement.timestamp | date : "fullDate"}}</td>
+                            <td>
+                                <a class="nav-link"
+                                   [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
+                                   (click)="openModalConfirmation(measurement.id)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <!-- Table for type weight-->
+                    <table class="table table-hover table-sm" *ngIf="measurementTypeSelected === 'weight'">
+                        <thead>
+                        <th></th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.WEIGHT'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.BODY-FAT'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
+                            <td>
+                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                              [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
+                            </td>
+                            <td>
+                                {{measurement.value}}
+                                {{measurement.unit}}
+                            </td>
+                            <td>
+                                <span *ngIf="measurement.fat">{{measurement.fat.value}}
+                                    {{measurement.fat.unit}}</span>
+                                <span *ngIf="!measurement.fat">{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.NOT-COLLECTED'|translate}}
+                                    !</span>
+                            </td>
+                            <td>{{measurement.timestamp | date : "fullDate"}}</td>
+                            <td>
+                                <a class="nav-link"
+                                   [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
+                                   (click)="openModalConfirmation(measurement.id)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <!-- Table for type blood_glucose-->
+                    <table class="table table-hover table-sm" *ngIf="measurementTypeSelected === 'blood_glucose'">
+                        <thead>
+                        <th></th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.VALUE'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GLUCOSE-TABLE.MEAL'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
+                            <td>
+                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                              [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
+                            </td>
+                            <td>
+                                {{measurement.value}}
+                                {{measurement.unit}}
+                            </td>
+                            <td>
+                                {{measurement.meal | meal | translate}}
+                            </td>
+                            <td>{{measurement.timestamp | date : "fullDate"}}</td>
+                            <td>
+                                <a class="nav-link"
+                                   [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
+                                   (click)="openModalConfirmation(measurement.id)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <!-- Table for type blood_pressure-->
+                    <table class="table table-hover table-sm" *ngIf="measurementTypeSelected === 'blood_pressure'">
+                        <thead>
+                        <th></th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.SYSTOLIC'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.DYASTOLIC'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.PULSE'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.UNIT'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
+                            <td>
+                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                              [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
+                            </td>
+                            <td>
+                                {{measurement.systolic}}
+                            </td>
+                            <td>
+                                {{measurement.diastolic}}
+                            </td>
+                            <td>
+                                {{measurement.pulse}}
+                            </td>
+                            <td>
+                                {{measurement.unit}}
+                            </td>
+                            <td>{{measurement.timestamp | date : "fullDate"}}</td>
+                            <td>
+                                <a class="nav-link"
+                                   [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
+                                   (click)="openModalConfirmation(measurement.id)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <!-- Table for type heart_rate-->
+                    <table class="table table-hover table-sm" *ngIf="measurementTypeSelected === 'heart_rate'">
+                        <thead>
+                        <th></th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.HEART-RATE-TABLE.DATASET'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
+                            <td>
+                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                              [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
+                            </td>
+                            <td>
+                                <span class="badge badge-haniot"
+                                      *ngFor="let heartRate of measurement.dataset">{{heartRate.value}}
+                                    {{measurement.unit}}
+                                    </span>
+                            </td>
+                            <td>
+                                <span *ngIf="measurement.dataset && measurement.dataset.length">
+                                    {{measurement.dataset[0].timestamp | date :"fullDate"}}
+                                </span>
+                            </td>
+                            <td>
+                                <a class="nav-link"
+                                   [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
+                                   (click)="openModalConfirmation(measurement.id)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+                               (page)="clickPagination($event)">
+                </mat-paginator>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" id="removeModalConfirmation"
+                 *ngIf="modalConfirmRemoveMeasurement">
+
+                <div class="" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header" *ngIf="!loadingMeasurements">
+                                <label>{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.TITLE'|translate}}</label>
+                                <button type="button" class="close" aria-label="Close"
+                                        (click)="closeModalComfimation()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p *ngIf="cacheIdMeasurementRemove !== '' && !loadingMeasurements">
+                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate}}
+                                </p>
+                                <p *ngIf="cacheIdMeasurementRemove === '' && !loadingMeasurements">
+                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate}}
+                                    {{cacheListIdMeasurementRemove.length}}
+                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate}}
+                                </p>
+                                <spinner [message]="'Removendo medição(es)...'" *ngIf="loadingMeasurements"></spinner>
+
+                            </div>
+                            <div class="modal-footer" *ngIf="!loadingMeasurements">
+                                <button type="button" class="btn btn-haniot-secondary btn-sm"
+                                        (click)="closeModalComfimation()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.NO'|translate}}</button>
+                                <button type="button" class="btn btn-haniot-primary btn-sm"
+                                        (click)="removeMeasurement()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.YES'|translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</haniot-card>
+
+
+

@@ -255,6 +255,16 @@
         "CASUAL": "Casual",
         "BEDTIME": "Before bedtime"
       },
+      "MEASUREMENT-TYPE": {
+        "WEIGHT": "Weight",
+        "HEIGHT": "Height",
+        "FAT": "Body Fat",
+        "WAIST-CIRCUMFERENCE": "Waist Circumference",
+        "BODY-TEMPERATURE": "Body Temperature",
+        "BLOOD-GLUCOSE": "Glucose",
+        "BLOOD-PRESSURE": "Blood Pressure",
+        "HEART-RATE": "Heart Rate"
+      },
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND"
     },
@@ -264,6 +274,41 @@
       "WEEK": "Week",
       "MONTH": "Month",
       "YEAR": "Year"
+    },
+    "LOG-MEASUREMENTS-CARD": {
+      "TITLE": "Measurement log history",
+      "SUBTITLE": "",
+      "DELETE-MEASUREMENT": "Delete measurement",
+      "VIEW-MEASUREMENT": "View details",
+      "MEASUREMENT-TYPE": "Measurement Type",
+      "REMOVE-SELECTED": "Remove selected",
+      "GENERIC-TABLE": {
+        "VALUE": "Value",
+        "COLLECTION-DATE": "Collection Date",
+        "ACTIONS": "Actions"
+      },
+      "WEIGHT-TABLE": {
+        "WEIGHT": "Weight",
+        "BODY-FAT": "Body Fat",
+        "NOT-COLLECTED": "Not collected"
+      },
+      "GLUCOSE-TABLE": {
+        "MEAL": "Meal Type"
+      },
+      "PRESSURE-TABLE": {
+        "SYSTOLIC": "Systolic",
+        "DYASTOLIC": "Diastolic",
+        "PULSE": "Pulse",
+        "UNIT": "Unit"
+      },
+      "HEART-RATE-TABLE": {
+        "DATASET": "Frequencies"
+      },
+      "MODAL-REMOVE": {
+        "CONFIRM-UNIQUE-REMOVE": "Are you sure you want to remove the measurement?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Are you sure you want to remove ",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "measurement(s)?"
+      }
     },
     "LAST-REGISTER": "Last register",
     "LAST-REGISTER-DATE": "Date of last record",
@@ -520,7 +565,8 @@
         "SUBTITLE": ""
       },
       "HABITS": "HABITS",
-      "MEASUREMENTS": "MEASUREMENTS"
+      "MEASUREMENTS": "GRAPH OF MEASUREMENTS",
+      "LOG-MEASUREMENTS": "LOG OF MEASUREMENTS"
     }
   },
   "PILOT-STUDY": {
@@ -648,9 +694,9 @@
     },
     "COMPONENTS": {
       "MODAL-CONFIRMATION": {
-        "TITLE": "Confirmação",
-        "NO": "Não",
-        "YES": "Sim"
+        "TITLE": "Confirmation",
+        "NO": "No",
+        "YES": "Yes"
       },
       "SELECT-PILOT-STUDY": {
         "WELCOME": "Welcome",

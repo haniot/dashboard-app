@@ -1,9 +1,13 @@
 import {NgModule} from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from "@angular/material-moment-adapter";
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
+import {NgxEchartsModule} from "ngx-echarts";
+import {TranslateModule} from "@ngx-translate/core";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule} from "saturn-datepicker";
 
 import {MeasurementComponentComponent} from './measurement-component/measurement-component.component';
 import {SharedModule} from 'app/shared/shared.module';
@@ -21,12 +25,10 @@ import {DeviceTypePipe} from './pipes/device-type.pipe';
 import {DeviceComponent} from './device/device.component';
 import {DeviceService} from './services/device.service';
 import {DecimalFormatterPipe} from './pipes/decimal-formatter.pipe';
-import {TranslateModule} from "@ngx-translate/core";
 import {MeasurementCardComponent} from './measurement-card/measurement-card.component';
-import {MatDatepickerModule, MatFormFieldModule, MatInputModule} from "@angular/material";
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule} from "saturn-datepicker";
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from "@angular/material-moment-adapter";
-import {NgxEchartsModule} from "ngx-echarts";
+import {MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatPaginatorModule} from "@angular/material";
+import {MeasurementLogsComponent} from './measurement-logs/measurement-logs.component';
+import { MeasurementTypePipe } from './pipes/measurement-type.pipe';
 
 @NgModule({
     declarations: [
@@ -43,7 +45,9 @@ import {NgxEchartsModule} from "ngx-echarts";
         FatComponent,
         DeviceComponent,
         DecimalFormatterPipe,
-        MeasurementCardComponent
+        MeasurementCardComponent,
+        MeasurementLogsComponent,
+        MeasurementTypePipe
     ],
     imports: [
         CommonModule,
@@ -57,10 +61,13 @@ import {NgxEchartsModule} from "ngx-echarts";
         MatDatepickerModule,
         SatDatepickerModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatCheckboxModule,
+        MatPaginatorModule
     ],
     exports: [
         MeasurementComponentComponent,
+        MeasurementLogsComponent,
         DeviceComponent,
         MealPipe,
         WeightComponent,

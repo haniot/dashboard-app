@@ -255,6 +255,16 @@
         "CASUAL": "Casual",
         "BEDTIME": "Antes de dormir"
       },
+      "MEASUREMENT-TYPE": {
+        "WEIGHT": "Peso",
+        "HEIGHT": "Altura",
+        "FAT": "Gordura Corporal",
+        "WAIST-CIRCUMFERENCE": "Circunferência da Cintura",
+        "BODY-TEMPERATURE": "Temperatura Corporal",
+        "BLOOD-GLUCOSE": "Glicose",
+        "BLOOD-PRESSURE": "Pressão Arterial",
+        "HEART-RATE": "Frequência Cardíaca"
+      },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"
     },
@@ -264,6 +274,41 @@
       "WEEK": "Semana",
       "MONTH": "Mês",
       "YEAR": "Ano"
+    },
+    "LOG-MEASUREMENTS-CARD": {
+      "TITLE": "Histórico dos registro de medições",
+      "SUBTITLE": "",
+      "DELETE-MEASUREMENT": "Excluir medição",
+      "VIEW-MEASUREMENT": "Visualizar detalhes",
+      "MEASUREMENT-TYPE": "Tipo de Medição",
+      "REMOVE-SELECTED": "Remover selecionadas",
+      "GENERIC-TABLE": {
+        "VALUE": "Valor",
+        "COLLECTION-DATE": "Data da Coleta",
+        "ACTIONS": "Ações"
+      },
+      "WEIGHT-TABLE": {
+        "WEIGHT": "Peso",
+        "BODY-FAT": "Gordura Corporal",
+        "NOT-COLLECTED": "Não coletada"
+      },
+      "GLUCOSE-TABLE": {
+        "MEAL": "Tipo de Refeição"
+      },
+      "PRESSURE-TABLE": {
+        "SYSTOLIC": "Sistólica",
+        "DYASTOLIC": "Diastólica",
+        "PULSE": "Pulso",
+        "UNIT": "Unidade"
+      },
+      "HEART-RATE-TABLE": {
+        "DATASET": "Frequências"
+      },
+      "MODAL-REMOVE": {
+        "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover a medição?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover ",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "medição(es)?"
+      }
     },
     "LAST-REGISTER": "Último registro",
     "LAST-REGISTER-DATE": "Data do último registro",
@@ -520,7 +565,8 @@
         "SUBTITLE": ""
       },
       "HABITS": "HÁBITOS",
-      "MEASUREMENTS": "MEDIÇÕES"
+      "MEASUREMENTS": "GRÁFICOS DAS MEDIÇÕES",
+      "LOG-MEASUREMENTS": "LOG DAS MEDIÇÕES"
     }
   },
   "PILOT-STUDY": {
