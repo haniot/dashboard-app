@@ -1,13 +1,13 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-import {SleepHabitsRecord} from '../models/sleep';
-import {SleepRecordService} from '../services/sleep-record.service';
+import { SleepHabitsRecord } from '../models/sleep';
+import { SleepRecordService } from '../services/sleep-record.service';
 
 @Component({
     selector: 'sleep-habits',
     templateUrl: './sleep-habits.component.html',
-    styleUrls: ['./sleep-habits.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss', './sleep-habits.component.scss']
 })
 export class SleepHabitsComponent implements OnInit, OnChanges {
 
@@ -34,18 +34,18 @@ export class SleepHabitsComponent implements OnInit, OnChanges {
     createSleepFormInit() {
         this.sleepForm = this.fb.group({
             id: [''],
-            created_at: [{value: '', disabled: true}],
-            week_day_sleep: [{value: 0, disabled: true}],
-            week_day_wake_up: [{value: 0, disabled: true}]
+            created_at: [{ value: '', disabled: true }],
+            week_day_sleep: [{ value: 0, disabled: true }],
+            week_day_wake_up: [{ value: 0, disabled: true }]
         });
     }
 
     createSleepForm(sleepRecord: SleepHabitsRecord) {
         this.sleepForm = this.fb.group({
-            id: [{value: sleepRecord.id}],
-            created_at: [{value: sleepRecord.created_at, disabled: true}],
-            week_day_sleep: [{value: sleepRecord.week_day_sleep, disabled: true}],
-            week_day_wake_up: [{value: sleepRecord.week_day_wake_up, disabled: true}]
+            id: [{ value: sleepRecord.id }],
+            created_at: [{ value: sleepRecord.created_at, disabled: true }],
+            week_day_sleep: [{ value: sleepRecord.week_day_sleep, disabled: true }],
+            week_day_wake_up: [{ value: sleepRecord.week_day_wake_up, disabled: true }]
         });
     }
 

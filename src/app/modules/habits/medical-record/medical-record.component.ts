@@ -1,13 +1,13 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {MedicalRecord} from '../models/medical-record';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {MedicalRecordService} from '../services/medical-record.service';
-import {DomSanitizer} from "@angular/platform-browser";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MedicalRecord } from '../models/medical-record';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MedicalRecordService } from '../services/medical-record.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'medical-record',
     templateUrl: './medical-record.component.html',
-    styleUrls: ['./medical-record.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss', './medical-record.component.scss']
 })
 export class MedicalRecordComponent implements OnInit, OnChanges {
 
@@ -35,16 +35,16 @@ export class MedicalRecordComponent implements OnInit, OnChanges {
     createMedicalFormInit() {
         this.medicalForm = this.fb.group({
             id: [''],
-            created_at: [{value: '', disabled: true}],
+            created_at: [{ value: '', disabled: true }],
             chronic_diseases: this.fb.array([])
         });
     }
 
     createMedicalForm(medicalRecord: MedicalRecord) {
         this.medicalForm = this.fb.group({
-            id: [{value: medicalRecord.id}],
-            created_at: [{value: medicalRecord.created_at, disabled: true}],
-            chronic_diseases: [{value: medicalRecord.chronic_diseases, disabled: true}]
+            id: [{ value: medicalRecord.id }],
+            created_at: [{ value: medicalRecord.created_at, disabled: true }],
+            chronic_diseases: [{ value: medicalRecord.chronic_diseases, disabled: true }]
         });
     }
 

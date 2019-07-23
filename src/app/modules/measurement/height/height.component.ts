@@ -1,15 +1,15 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe} from '@angular/common';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
-import {IMeasurement, Measurement, MeasurementType} from '../models/measurement';
-import {TranslateService} from "@ngx-translate/core";
-import {Weight} from "../models/weight";
-import {MeasurementService} from "../services/measurement.service";
+import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
+import { TranslateService } from '@ngx-translate/core';
+import { Weight } from '../models/weight';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'height',
     templateUrl: './height.component.html',
-    styleUrls: ['./height.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class HeightComponent implements OnInit, OnChanges {
 
@@ -32,7 +32,7 @@ export class HeightComponent implements OnInit, OnChanges {
     ) {
         this.data = new Array<Measurement>();
         this.filter_visibility = false;
-        this.patientId = "";
+        this.patientId = '';
         this.showSpinner = false;
     }
 
@@ -48,6 +48,8 @@ export class HeightComponent implements OnInit, OnChanges {
 
         const height = this.translateService.instant('MEASUREMENTS.HEIGHT.HEIGHT');
         const date = this.translateService.instant('SHARED.DATE');
+        const max = this.translateService.instant('MEASUREMENTS.MAX');
+        const min = this.translateService.instant('MEASUREMENTS.MIN');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -64,19 +66,39 @@ export class HeightComponent implements OnInit, OnChanges {
             name: height,
             type: 'line',
             step: 'start',
-            data: []
+            data: [],
+            color: '#3F51B5',
+            markPoint: {
+                label: {
+                    fontSize: 10,
+                    formatter: function (params) {
+                        if (params.data.type === 'max') {
+                            return max;
+                        }
+                        if (params.data.type === 'min') {
+                            return min;
+                        }
+                    }
+                },
+                data: [
+                    { type: 'max' },
+                    { type: 'min' }
+                ]
+            }
         };
 
         this.data.forEach((element: Measurement) => {
-            xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             series.data.push(element.value);
         });
 
 
         this.options = {
             tooltip: {
-                trigger: 'axis',
-                formatter: height + `: {c} cm <br> ${date}: {b}`
+                trigger: 'item',
+                formatter: function (params) {
+                    return `${height}: ${params.value} cm <br> ${date}: ${params.name}`;
+                }
             },
             xAxis: xAxis,
             yAxis: {
@@ -116,7 +138,7 @@ export class HeightComponent implements OnInit, OnChanges {
         this.options.series.data = new Array<any>();
 
         measurements.forEach((element: Weight) => {
-            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             this.options.series.data.push(element.value);
         });
         this.echartsInstance.setOption(this.options);

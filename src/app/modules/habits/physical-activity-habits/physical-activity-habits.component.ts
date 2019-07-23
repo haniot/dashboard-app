@@ -1,15 +1,15 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {PhysicalActivityHabitsRecord} from '../models/physicalActivity';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {PhysicalActivityRecordService} from '../services/physical-activity-record.service';
-import {PhysicalActivityPipe} from '../pipes/physical-activity-frequency.pipe';
-import {TranslateService} from '@ngx-translate/core';
-import {DomSanitizer} from "@angular/platform-browser";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { PhysicalActivityHabitsRecord } from '../models/physicalActivity';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { PhysicalActivityRecordService } from '../services/physical-activity-record.service';
+import { PhysicalActivityPipe } from '../pipes/physical-activity-frequency.pipe';
+import { TranslateService } from '@ngx-translate/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'physical-activity-habits',
     templateUrl: './physical-activity-habits.component.html',
-    styleUrls: ['./physical-activity-habits.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss', './physical-activity-habits.component.scss']
 })
 export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
 
@@ -38,18 +38,18 @@ export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
     createPhysicalActivityFormInit() {
         this.physicalActivityForm = this.fb.group({
             id: [''],
-            created_at: [{value: '', disabled: true}],
-            school_activity_freq: [{value: '', disabled: true}],
+            created_at: [{ value: '', disabled: true }],
+            school_activity_freq: [{ value: '', disabled: true }],
             weekly_activities: this.fb.array([])
         });
     }
 
     createPhysicalActivityForm(physicalActivity: PhysicalActivityHabitsRecord) {
         this.physicalActivityForm = this.fb.group({
-            id: [{value: physicalActivity.id}],
-            created_at: [{value: physicalActivity.created_at, disabled: true}],
-            school_activity_freq: [{value: physicalActivity.school_activity_freq, disabled: true}],
-            weekly_activities: [{value: physicalActivity.weekly_activities, disabled: true}]
+            id: [{ value: physicalActivity.id }],
+            created_at: [{ value: physicalActivity.created_at, disabled: true }],
+            school_activity_freq: [{ value: physicalActivity.school_activity_freq, disabled: true }],
+            weekly_activities: [{ value: physicalActivity.weekly_activities, disabled: true }]
         });
         this.physicalActivityForm.get('school_activity_freq')
             .patchValue(this.translateService.instant(this.physicalActivityPipe.transform(physicalActivity.school_activity_freq)));

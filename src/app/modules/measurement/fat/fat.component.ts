@@ -1,13 +1,13 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe} from '@angular/common';
-import {IMeasurement, Measurement, MeasurementType} from '../models/measurement';
-import {TranslateService} from "@ngx-translate/core";
-import {MeasurementService} from "../services/measurement.service";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
+import { TranslateService } from '@ngx-translate/core';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'fat',
     templateUrl: './fat.component.html',
-    styleUrls: ['./fat.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class FatComponent implements OnInit, OnChanges {
 
@@ -62,7 +62,7 @@ export class FatComponent implements OnInit, OnChanges {
         const series = {
             type: 'bar',
             data: [],
-            color: '#00a594',
+            color: 'orange',
             label: {
                 normal: {
                     show: true,

@@ -63,20 +63,20 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="container-fluid row">
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <haniot-card [title]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.TITLE'|translate"
                              [subtitle]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SUBTITLE'|translate">
 
-                    <div class="row">
+                    <div class="container-fluid  row">
 
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <mat-tab-group mat-align-tabs="center">
 
                                 <mat-tab
                                         [label]="'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.EVALUATION'|translate">
-                                    <div class="container"
+                                    <div class="container-fluid"
                                          *ngIf="nutritionalEvaluation && nutritionalEvaluation.nutritional_status &&
                                          nutritionalEvaluation.overweight_indicator && nutritionalEvaluation.blood_glucose &&
                                          nutritionalEvaluation.blood_pressure && nutritionalEvaluation.heart_rate">
@@ -292,7 +292,7 @@
                                             </div>
 
                                             <!-- Pressão sanguinia -->
-                                            <div class="container row">
+                                            <div class="container-fluid row">
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
                                                     <div class="card card-stats">
                                                         <div class="card-header card-header-timer card-header-icon">
@@ -356,69 +356,69 @@
                                             </div>
 
                                             <!-- Frequência cardiaca -->
-                                            <div class="container">
+<!--                                            <div class="container">-->
 
-                                                <div class="row">
+<!--                                                <div class="row">-->
 
-                                                    <div class="card card-stats">
-                                                        <div class="card-header card-header-timer card-header-icon">
-                                                            <div class="card-icon">
-                                                                <img src="../../../../assets/img/haniot/heart-rate.png"
-                                                                     alt="">
-                                                            </div>
-                                                            <span class="badge badge-haniot category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE'|translate}}</span>
-                                                        </div>
-                                                        <div class="card-footer">
-                                                            <div class="container">
+<!--                                                    <div class="card card-stats">-->
+<!--                                                        <div class="card-header card-header-timer card-header-icon">-->
+<!--                                                            <div class="card-icon">-->
+<!--                                                                <img src="../../../../assets/img/haniot/heart-rate.png"-->
+<!--                                                                     alt="">-->
+<!--                                                            </div>-->
+<!--                                                            <span class="badge badge-haniot category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE'|translate}}</span>-->
+<!--                                                        </div>-->
+<!--                                                        <div class="card-footer">-->
+<!--                                                            <div class="container">-->
 
-                                                                <div class="row justify-content-center">
+<!--                                                                <div class="row justify-content-center">-->
 
-                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
-                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-MIN'|translate}}</span>
-                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}
-                                                                            : </p>
-                                                                        <h3 class="card-title">
-                                                                            {{nutritionalEvaluation.heart_rate.min}}
-                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>
-                                                                        </h3>
-                                                                    </div>
+<!--                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">-->
+<!--                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-MIN'|translate}}</span>-->
+<!--                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}-->
+<!--                                                                            : </p>-->
+<!--                                                                        <h3 class="card-title">-->
+<!--                                                                            {{nutritionalEvaluation.heart_rate.min}}-->
+<!--                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>-->
+<!--                                                                        </h3>-->
+<!--                                                                    </div>-->
 
-                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
-                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-AVERAGE'|translate}}</span>
-                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}
-                                                                            : </p>
-                                                                        <h3 class="card-title">
-                                                                            {{nutritionalEvaluation.heart_rate.average}}
-                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>
-                                                                        </h3>
-                                                                    </div>
+<!--                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">-->
+<!--                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-AVERAGE'|translate}}</span>-->
+<!--                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}-->
+<!--                                                                            : </p>-->
+<!--                                                                        <h3 class="card-title">-->
+<!--                                                                            {{nutritionalEvaluation.heart_rate.average}}-->
+<!--                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>-->
+<!--                                                                        </h3>-->
+<!--                                                                    </div>-->
 
-                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
-                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-MAX'|translate}}</span>
-                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}
-                                                                            : </p>
-                                                                        <h3 class="card-title">
-                                                                            {{nutritionalEvaluation.heart_rate.max}}
-                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>
-                                                                        </h3>
-                                                                    </div>
+<!--                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">-->
+<!--                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-MAX'|translate}}</span>-->
+<!--                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}-->
+<!--                                                                            : </p>-->
+<!--                                                                        <h3 class="card-title">-->
+<!--                                                                            {{nutritionalEvaluation.heart_rate.max}}-->
+<!--                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>-->
+<!--                                                                        </h3>-->
+<!--                                                                    </div>-->
 
-                                                                </div>
+<!--                                                                </div>-->
 
-                                                                <div class="row">
-                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                                                        <hr>
-                                                                    </div>
-                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center echarts-div-graph"
-                                                                         echarts [options]="optionsHeartRate"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+<!--                                                                <div class="row">-->
+<!--                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">-->
+<!--                                                                        <hr>-->
+<!--                                                                    </div>-->
+<!--                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center echarts-div-graph"-->
+<!--                                                                         echarts [options]="optionsHeartRate"></div>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
 
-                                                    </div>
+<!--                                                    </div>-->
 
-                                                </div>
-                                            </div>
+<!--                                                </div>-->
+<!--                                            </div>-->
 
                                         </div>
 
@@ -428,7 +428,7 @@
 
                                 <mat-tab [label]="'PATIENTS.VIEW-HABITS.HABITS'|translate">
 
-                                    <div class="container">
+                                    <div class="container-fluid ">
                                         <div class="row">
 
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -459,7 +459,7 @@
                                 </mat-tab>
 
                                 <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">
-                                    <div class="container">
+                                    <div class="container-fluid ">
                                         <div class="row">
 
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
@@ -497,10 +497,10 @@
                                                 <blood-pressure [data]="listBloodPressure"></blood-pressure>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                                 *ngIf="listHeartRate.length">
-                                                <heart-rate [data]="listHeartRate"></heart-rate>
-                                            </div>
+<!--                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
+<!--                                                 *ngIf="listHeartRate.length">-->
+<!--                                                <heart-rate [data]="listHeartRate"></heart-rate>-->
+<!--                                            </div>-->
 
                                         </div>
                                     </div>
@@ -511,7 +511,7 @@
 
                         <!-- Sugestões de aconselhamentos -->
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <div class="container">
+                            <div class="container-fluid ">
                                 <div class="row">
                                     <!-- Sugestões de aconselhamentos -->
                                     <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
@@ -599,7 +599,7 @@
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <div class="container">
+                            <div class="container-fluid ">
                                 <div class="row">
                                     <!-- Aconselhamentos definitivos -->
                                     <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
@@ -664,7 +664,7 @@
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <div class="container">
+                            <div class="container-fluid ">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
                                         <div class="form-group has-feedback col">

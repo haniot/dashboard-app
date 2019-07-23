@@ -1,14 +1,14 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe} from '@angular/common';
-import {HeartRate} from '../models/heart-rate';
-import {TranslateService} from "@ngx-translate/core";
-import {Measurement, MeasurementType} from "../models/measurement";
-import {MeasurementService} from "../services/measurement.service";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { HeartRate } from '../models/heart-rate';
+import { TranslateService } from '@ngx-translate/core';
+import { MeasurementType } from '../models/measurement';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'heart-rate',
     templateUrl: './heart-rate.component.html',
-    styleUrls: ['./heart-rate.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class HeartRateComponent implements OnInit, OnChanges {
 

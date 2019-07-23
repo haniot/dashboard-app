@@ -1,96 +1,102 @@
 <div class="card">
-    <div class="card-header card-header-danger">
-        <h4 class="card-title">{{title}}</h4>
-        <p class="card-category"> {{subtitle}}</p>
-    </div>
-    <div class="card-body">
-        <div class="d-flex justify-content-around" *ngIf="filter_visibility">
-            <div class="p-2">
-                <label>
-                    <small>{{'MEASUREMENTS.MEASUREMENT-CARD.FILTER-OPTIONS'|translate}}:</small>
-                </label>
-            </div>
-            <div class="p-2">
-                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_today"
-                        (click)="filterChange(filterOptions.today)">
-                    {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}
-                </button>
+    <div class="card-header card-header-tabs card-header-danger">
+        <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+                <span class="nav-tabs-title">
+                    <h4 class="card-title">{{title}}</h4>
+                    <p class="card-category"> {{subtitle}}</p>
+                </span>
 
+                <ul class="nav nav-tabs right" data-tabs="tabs" *ngIf="!isMobile()">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab"
+                           (click)="filterChange(filterOptions.today)">
+                            {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}
+                            <div class="ripple-container"></div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" (click)="filterChange(filterOptions.week)">
+                            {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}
+                            <div class="ripple-container"></div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" (click)="filterChange(filterOptions.month)">
+                            {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}
+                            <div class="ripple-container"></div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" (click)="filterChange(filterOptions.year)">
+                            {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}
+                            <div class="ripple-container"></div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <mat-form-field>
+                            <input matInput
+                                   [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
+                                   [satDatepicker]="picker"
+                                   [(ngModel)]="search"
+                                   (ngModelChange)="filterChange('period')"
+                                   [min]="minDate"
+                                   [max]="currentDate">
 
-                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_week"
-                        (click)="filterChange(filterOptions.week)">
-                    {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}
-                </button>
+                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                        </mat-form-field>
+                    </li>
+                </ul>
+                <ul class="nav nav-tabs right" data-tabs="tabs" *ngIf="isMobile()">
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle nav-link active" id="dropdownMenuButton"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{filterSelected|translate}}
+                                <div class="ripple-container"></div>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item"
+                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.TODAY'?'active':''"
+                                   (click)="filterChange(filterOptions.today)">{{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}</a>
+                                <a class="dropdown-item"
+                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.WEEK'?'active':''"
+                                   (click)="filterChange(filterOptions.week)">{{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}</a>
+                                <a class="dropdown-item"
+                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.MONTH'?'active':''"
+                                   (click)="filterChange(filterOptions.month)">{{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}</a>
+                                <a class="dropdown-item "
+                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.YEAR'?'active':''"
+                                   (click)="filterChange(filterOptions.year)">{{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <mat-form-field [ngClass]="isMobile()?'hidden':''">
+                            <input matInput
+                                   [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
+                                   [satDatepicker]="picker"
+                                   [(ngModel)]="search"
+                                   (ngModelChange)="filterChange('period')"
+                                   [min]="minDate"
+                                   [max]="currentDate">
 
-                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_month"
-                        (click)="filterChange(filterOptions.month)">
-                    {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}
-                </button>
+                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                        </mat-form-field>
+                        <a class="nav-link nav-link-mobile" *ngIf="isMobile()" (click)="picker.open()"
+                           [title]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate">
+                            <i class="material-icons">date_range</i>
+                        </a>
 
-                <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_year"
-                        (click)="filterChange(filterOptions.year)">
-                    {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}
-                </button>
-            </div>
-            <div class="p-2">
-                <mat-form-field>
-                    <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
-                           [satDatepicker]="picker"
-                           [(ngModel)]="search"
-                           (ngModelChange)="filterChange('period')"
-                           [min]="minDate"
-                           [max]="currentDate">
-                    <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
-                    <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-                </mat-form-field>
+                    </li>
+                </ul>
+
             </div>
         </div>
-        <!--        <div class="row justify-content-center" *ngIf="filter_visibility">-->
-        <!--            <div class="col-sm-4 col-md-2 col-lg-2 col-xl-2">-->
-        <!--                <label>-->
-        <!--                    <small>Opções de filtragens:</small>-->
-        <!--                </label>-->
-        <!--            </div>-->
-        <!--            <div class="col-sm-8 col-md-10 col-lg-10 col-xl-10 row">-->
-        <!--                <div class="col-sm-8 com-md-10 col-lg-8 col-xl-8 d-flex ">-->
-
-        <!--                        <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_today"-->
-        <!--                                (click)="filterChange('today')">-->
-        <!--                            Hoje-->
-        <!--                        </button>-->
-
-
-        <!--                        <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_week"-->
-        <!--                                (click)="filterChange('1w')">-->
-        <!--                            Semana-->
-        <!--                        </button>-->
-
-        <!--                        <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_month"-->
-        <!--                                (click)="filterChange('1m')">-->
-        <!--                            Mês-->
-        <!--                        </button>-->
-
-        <!--                        <button class="btn btn-haniot-primary btn-sm" [ngClass]="state_year"-->
-        <!--                                (click)="filterChange('1y')">-->
-        <!--                            Ano-->
-        <!--                        </button>-->
-
-        <!--                </div>-->
-        <!--                <div class="col-sm-4 com-md-2 col-lg-4 col-xl-4">-->
-        <!--                    <mat-form-field>-->
-        <!--                        <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"-->
-        <!--                               [satDatepicker]="picker"-->
-        <!--                               [(ngModel)]="search"-->
-        <!--                               (ngModelChange)="filterChange('period')"-->
-        <!--                               [min]="minDate"-->
-        <!--                               [max]="currentDate">-->
-        <!--                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>-->
-        <!--                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
-        <!--                    </mat-form-field>-->
-        <!--                </div>-->
-
-        <!--            </div>-->
-        <!--        </div>-->
+    </div>
+    <div class="card-body">
         <ng-content></ng-content>
     </div>
 </div>

@@ -71,28 +71,6 @@
     box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
 }
 
-/*
-.btn.btn-haniot-secondary:focus, .btn.btn-haniot-secondary.focus {
-    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
-}
-
-.btn.btn-haniot-secondary.disabled, .btn.btn-haniot-secondary:disabled {
-    color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-.btn.btn-haniot-secondary:not(:disabled):not(.disabled):active, .btn.btn-haniot-secondary:not(:disabled):not(.disabled).active, .show>.btn.btn-haniot-secondary.dropdown-toggle {
-    color: #fff;
-    background-color: #545b62;
-    border-color: #4e555b;
-}
-
-.btn.btn-haniot-secondary:not(:disabled):not(.disabled):active:focus, .btn.btn-haniot-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn.btn-haniot-secondary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
-}
-*/
-
 .ngx-pagination .current {
     background: #00a594 !important;
 }
@@ -182,6 +160,7 @@ label {
 }
 
 .echarts-div-graph {
+    width: 100%;
     height: 300px;
 }
 
@@ -190,16 +169,35 @@ label {
     margin-top: 100px;
 }
 
-
-/**
- * Classe auxiliar para truncar e adicionar reticências a uma
- * string comprida demais para caber em apenas uma linha.
- * 1. Previne o conteúdo de transbordar para outras linhas,
- *    forçando-o a uma linha apenas.
- * 2. Adiciona reticências no final da linha.
- */
 .ellipsis {
     white-space: nowrap; /* 1 */
     text-overflow: ellipsis; /* 2 */
     overflow: hidden;
 }
+
+@media (min-width: 899px) {
+
+    .main-panel .main-content {
+        padding: 5px 5px;
+        overflow-x: hidden;
+    }
+
+    .container-fluid {
+        padding: 5px 5px;
+        overflow-x: hidden;
+    }
+
+}
+
+@media (max-width: 900px) {
+    .main-panel .main-content {
+        padding: 0px 0px;
+        overflow-x: hidden;
+    }
+
+    .container-fluid {
+        padding: 0px 0px;
+        overflow-x: hidden;
+    }
+}
+

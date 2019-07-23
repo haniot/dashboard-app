@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import {UserService} from 'app/modules/admin/services/users.service';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {VerifyScopeService} from 'app/security/services/verify-scope.service';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import { UserService } from 'app/modules/admin/services/users.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { VerifyScopeService } from 'app/security/services/verify-scope.service';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
 
 declare const $: any;
 
 export const configSideBar = [
-    {title: 'Dashboard', scopes: []},
+    { title: 'Dashboard', scopes: [] },
     {
         title: 'Usuários',
         scopes: ['admins:create', 'admins:delete', 'admins:readAll', 'admins:update',
@@ -59,7 +59,7 @@ export class SidebarComponent implements OnInit {
 
     configSideBar: { title: string, scopes: any[] }[];
 
-    userName: String = "";
+    userName: String = '';
 
     iconUserMenu = 'keyboard_arrow_right';
 
@@ -71,7 +71,7 @@ export class SidebarComponent implements OnInit {
         private userService: UserService,
         private loadingService: LoadingService,
         private locaStorageService: LocalStorageService,
-        private router:Router
+        private router: Router
     ) {
     }
 
@@ -144,11 +144,11 @@ export class SidebarComponent implements OnInit {
         return this.authService.decodeToken().sub_type !== 'admin';
     }
 
-    config(): void{
+    config(): void {
         if (this.isNotAdmin()) {
             this.router.navigate(['/healthprofessional/configurations']);
         } else {
             this.router.navigate(['/admin/configurations']);
-        }        
+        }
     }
 }

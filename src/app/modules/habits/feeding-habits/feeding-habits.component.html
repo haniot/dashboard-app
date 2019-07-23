@@ -14,44 +14,50 @@
                 <label for="six_month_breast_feeding">
                     {{'HABITS.FEEDING.BREAST-FEEDING'|translate}}:
                 </label>
-                <input class="form-control" type="text" formControlName="six_month_breast_feeding" id="six_month_breast_feeding">
+                <input class="form-control" type="text" formControlName="six_month_breast_feeding"
+                       id="six_month_breast_feeding">
             </div>
 
             <div class="form-group col-md">
                 <label for="breakfast_daily_frequency">
                     {{'HABITS.FEEDING.BREAKFAST'|translate}}:
                 </label>
-                <input class="form-control" type="text" formControlName="breakfast_daily_frequency" id="breakfast_daily_frequency">
+                <input class="form-control" type="text" formControlName="breakfast_daily_frequency"
+                       id="breakfast_daily_frequency">
             </div>
 
         </div>
 
-        <div class="container row">
+        <div class="container-fluid row">
             <label for="weekly_feeding_habits">
                 {{'HABITS.FEEDING.LIST-OF-WEEKLY-FOOD'|translate}}:
                 <small>( {{'HABITS.FEEDING.LAST-7-DAYS'|translate}})</small>
             </label>
-            <div class="container row justify-content-center">
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                    <ul class="list-inline">
-                        <li class="list-inline-item weeklyFeeding" *ngFor="let weeklyFood of feedingForm.get('weekly_feeding_habits').value;" id="weekly_feeding_habits">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center align-content-center">
+
+                <ul class="list-inline">
+                    <li class="list-inline-item weeklyFeeding"
+                        *ngFor="let weeklyFood of feedingForm.get('weekly_feeding_habits').value;"
+                        id="weekly_feeding_habits">
                             <span class="food">
                                 {{weeklyFood.food | weeklyFood | translate}}
                                 <span class="frequency">{{weeklyFood.seven_days_freq | weeklyFrequency | translate}}</span>
                             </span>
-                        </li>
-                    </ul>
-                </div>
+                    </li>
+                </ul>
+
             </div>
         </div>
 
-        <div class="row container">
+        <div class="container-fluid row">
             <label for="food_allergy_intolerance">
                 {{'HABITS.FEEDING.LIST-ALLERGIC-FOODS'|translate}}:
             </label>
-            <div class="row container justify-content-center">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center align-content-center">
 
-                <div class="col text-center foodAllergy" *ngFor="let food of feedingForm.get('food_allergy_intolerance').value;" id="food_allergy_intolerance">
+                <div class="col text-center foodAllergy"
+                     *ngFor="let food of feedingForm.get('food_allergy_intolerance').value;"
+                     id="food_allergy_intolerance">
                     <span>{{food | foodAllergy | translate}}</span>
                 </div>
 
@@ -62,8 +68,10 @@
 
     <div class="d-flex flex-row-reverse">
         <div class="p-2">
-            <small class="pull-right" *ngIf="feedingForm.get('created_at').value">{{'HABITS.REGISTER-DATE'|translate}}: {{feedingForm.get('created_at').value | myDate }}</small>
-            <small class="pull-right" *ngIf="!feedingForm.get('created_at').value">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+            <small class="pull-right" *ngIf="feedingForm.get('created_at').value">{{'HABITS.REGISTER-DATE'|translate}}
+                : {{feedingForm.get('created_at').value | myDate }}</small>
+            <small class="pull-right"
+                   *ngIf="!feedingForm.get('created_at').value">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
                 : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
         </div>
     </div>
@@ -73,14 +81,16 @@
         <div class="container" *ngIf="listFeeding.length>1">
             <div class="row">
                 <div class="col align-self-start">
-                    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" [title]="'HABITS.PREVIOUS'|translate" (click)="prev()" [disabled]="!index">
+                    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
+                            [title]="'HABITS.PREVIOUS'|translate" (click)="prev()" [disabled]="!index">
                         <i class="material-icons">arrow_back</i>
                     </button>
                 </div>
 
                 <div class="col align-self-end">
-                    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right" (click)="next()" [title]="'HABITS.NEXT'|translate"
-                        [disabled]="index == listFeeding.length-1">
+                    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
+                            (click)="next()" [title]="'HABITS.NEXT'|translate"
+                            [disabled]="index == listFeeding.length-1">
                         <i class="material-icons">arrow_forward</i>
                     </button>
                 </div>

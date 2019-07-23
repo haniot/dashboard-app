@@ -1,25 +1,24 @@
-label {
-  color: black;
-  font-size: 14px;
-  font-weight: bold;
+.card .card-header {
+  z-index: 2 !important;
 }
 
 .card-header-timer div {
   background-color: #00a594;
 }
 
-#alarm_on {
+.badge-12 {
+  font-size: 16px;
+  font-weight: bold;
+}
 
+#alarm_on {
   width: 40px;
   height: 50px;
-
 }
 
 #alarm {
-
   width: 40px;
   height: 50px;
-
 }
 
 .badge-haniot {
@@ -27,10 +26,14 @@ label {
   font-size: 12px;
   font-weight: bold;
   background-color: #00a594;
-
 }
 
-.badge-12 {
-  font-size: 16px;
-  font-weight: bold;
+.badge-danger {
+  background-color: #FF9800;
+}
+
+canvas {
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
 }

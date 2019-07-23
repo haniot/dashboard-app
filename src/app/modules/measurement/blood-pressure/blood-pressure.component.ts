@@ -1,15 +1,14 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe} from '@angular/common';
-import {BloodPressure} from '../models/blood-pressure';
-import {TranslateService} from "@ngx-translate/core";
-import {MeasurementType} from "../models/measurement";
-import {BloodGlucose, MealType} from "../models/blood-glucose";
-import {MeasurementService} from "../services/measurement.service";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { BloodPressure } from '../models/blood-pressure';
+import { TranslateService } from '@ngx-translate/core';
+import { MeasurementType } from '../models/measurement';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'blood-pressure',
     templateUrl: './blood-pressure.component.html',
-    styleUrls: ['./blood-pressure.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss', './blood-pressure.component.scss']
 })
 export class BloodPressureComponent implements OnInit, OnChanges {
 
@@ -32,7 +31,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     ) {
         this.data = new Array<BloodPressure>();
         this.filter_visibility = false;
-        this.patientId = "";
+        this.patientId = '';
         this.showSpinner = false;
     }
 
@@ -51,6 +50,10 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         const pulse = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PULSE');
         const pressure = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PRESSURE');
         const date = this.translateService.instant('SHARED.DATE');
+
+        const color_systolic = '#3F51B5';
+        const color_diastolic = '#009688';
+        const color_pulse = '#827717';
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -72,7 +75,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 symbolSize: 20,
                 lineStyle: {
                     normal: {
-                        color: 'blue',
+                        color: color_systolic,
                         width: 4,
                         type: ''
                     }
@@ -81,7 +84,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                     normal: {
                         borderWidth: 3,
                         borderColor: 'white',
-                        color: 'blue'
+                        color: color_systolic
                     }
                 }
             },
@@ -93,7 +96,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 symbolSize: 20,
                 lineStyle: {
                     normal: {
-                        color: 'red',
+                        color: color_diastolic,
                         width: 4,
                         type: 'solid'
                     }
@@ -102,7 +105,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                     normal: {
                         borderWidth: 3,
                         borderColor: 'white',
-                        color: 'red'
+                        color: color_diastolic
                     }
                 }
             },
@@ -110,11 +113,11 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 name: pulse,
                 data: [],
                 type: 'line',
-                symbol: 'line',
+                symbol: 'diamond',
                 symbolSize: 20,
                 lineStyle: {
                     normal: {
-                        color: 'black',
+                        color: color_pulse,
                         width: 4,
                         type: 'solid'
                     }
@@ -123,7 +126,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                     normal: {
                         borderWidth: 3,
                         borderColor: 'white',
-                        color: 'black'
+                        color: color_pulse
                     }
                 }
             }
@@ -131,11 +134,11 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
         this.data.forEach((element: BloodPressure) => {
             const find = xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, "shortDate");
+                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
             });
 
             if (!find) {
-                xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             }
             // Adicionando Sistólica
             series[0].data.push(element.systolic);
@@ -150,7 +153,26 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.options = {
             tooltip: {
                 trigger: 'item',
-                formatter: pressure + `: {c} mmHg<br> ${date}: {b}`
+                formatter: function (params) {
+                    let legend = '', unid = '';
+                    switch (params.seriesName) {
+                        case systolic:
+                            legend = systolic;
+                            unid = 'mmHg';
+                            break;
+                        case diastolic:
+                            legend = diastolic;
+                            unid = 'mmHg';
+                            break;
+                        case pulse:
+                            legend = pulse;
+                            unid = 'bpm';
+                            break;
+                    }
+                    const tooltip = `${legend}: ${params.data}${unid}<br>` +
+                        `${date}: ${params.name}`;
+                    return tooltip;
+                }
             },
             legend: {
                 data: [systolic, diastolic, pulse]
@@ -159,7 +181,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value} mmHg'
+                    formatter: '{value}'
                 }
             },
             dataZoom: [
@@ -194,11 +216,11 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
         measurements.forEach((element: BloodPressure) => {
             const find = this.options.xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, "shortDate");
+                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
             });
 
             if (!find) {
-                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             }
             // Adicionando Sistólica
             this.options.series[0].data.push(element.systolic);

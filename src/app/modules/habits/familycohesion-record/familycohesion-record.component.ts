@@ -7,7 +7,7 @@ import { FrequencyFamilyCohesionPipe } from '../pipes/frequency-familycohesion.p
 @Component({
   selector: 'familycohesion-record',
   templateUrl: './familycohesion-record.component.html',
-  styleUrls: ['./familycohesion-record.component.scss']
+  styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class FamilycohesionRecordComponent implements OnInit, OnChanges{
 

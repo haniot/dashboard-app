@@ -1,16 +1,16 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe} from '@angular/common';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
-import {IMeasurement, Measurement, MeasurementType} from '../models/measurement';
-import {DecimalFormatterPipe} from "../pipes/decimal-formatter.pipe";
-import {TranslateService} from "@ngx-translate/core";
-import {Weight} from "../models/weight";
-import {MeasurementService} from "../services/measurement.service";
+import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
+import { DecimalFormatterPipe } from '../pipes/decimal-formatter.pipe';
+import { TranslateService } from '@ngx-translate/core';
+import { Weight } from '../models/weight';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'body-temperature',
     templateUrl: './body-temperature.component.html',
-    styleUrls: ['./body-temperature.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class BodyTemperatureComponent implements OnInit, OnChanges {
 
@@ -35,7 +35,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.data = new Array<Measurement>();
         this.lastData = new Measurement();
         this.filter_visibility = false;
-        this.patientId = "";
+        this.patientId = '';
         this.showSpinner = false;
     }
 
@@ -71,24 +71,36 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
             name: historic_temperature,
             type: 'line',
             data: [],
+            color: '#3F51B5',
             markPoint: {
+                label: {
+                    fontSize: 10,
+                    formatter: function (params) {
+                        if (params.data.type === 'max') {
+                            return max;
+                        }
+                        if (params.data.type === 'min') {
+                            return min;
+                        }
+                    }
+                },
                 data: [
-                    {type: 'max', name: max},
-                    {type: 'min', name: min}
+                    { type: 'max' },
+                    { type: 'min' }
                 ]
             }
         };
 
         this.data.forEach((element: Measurement) => {
-            xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             series.data.push(this.decimalPipe.transform(element.value));
         });
 
 
         this.options = {
             tooltip: {
-                formatter: temperature + `: {c} °C <br> ${date}: {b}`,
-                trigger: 'axis'
+                formatter: temperature + `: {c}°C <br> ${date}: {b}`,
+                trigger: 'item'
             },
             xAxis: xAxis,
             yAxis: {
@@ -127,7 +139,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.options.series.data = new Array<any>();
 
         measurements.forEach((element: Weight) => {
-            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             this.options.series.data.push(element.value);
         });
         this.echartsInstance.setOption(this.options);

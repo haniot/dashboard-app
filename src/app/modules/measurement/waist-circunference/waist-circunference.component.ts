@@ -1,15 +1,15 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe} from '@angular/common';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
-import {IMeasurement, Measurement, MeasurementType} from '../models/measurement';
-import {TranslateService} from "@ngx-translate/core";
-import {Weight} from "../models/weight";
-import {MeasurementService} from "../services/measurement.service";
+import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
+import { TranslateService } from '@ngx-translate/core';
+import { Weight } from '../models/weight';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'waist-circunference',
     templateUrl: './waist-circunference.component.html',
-    styleUrls: ['./waist-circunference.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class WaistCircunferenceComponent implements OnInit, OnChanges {
 

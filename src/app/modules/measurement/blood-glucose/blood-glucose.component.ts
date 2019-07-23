@@ -1,14 +1,14 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe} from '@angular/common';
-import {BloodGlucose, MealType} from '../models/blood-glucose';
-import {TranslateService} from "@ngx-translate/core";
-import {MeasurementType} from "../models/measurement";
-import {MeasurementService} from "../services/measurement.service";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { BloodGlucose, MealType } from '../models/blood-glucose';
+import { TranslateService } from '@ngx-translate/core';
+import { MeasurementType } from '../models/measurement';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'blood-glucose',
     templateUrl: './blood-glucose.component.html',
-    styleUrls: ['./blood-glucose.component.scss']
+    styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class BloodGlucoseComponent implements OnInit, OnChanges {
 
@@ -32,7 +32,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.data = new Array<BloodGlucose>();
         this.lastData = new BloodGlucose();
         this.filter_visibility = false;
-        this.patientId = "";
+        this.patientId = '';
         this.showSpinner = false;
     }
 
@@ -67,71 +67,64 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             data: []
         };
 
+        const markPoint = {
+            label: {
+                fontSize: 10,
+                formatter: function (params) {
+                    if (params.data.type === 'max') {
+                        return max;
+                    }
+                    if (params.data.type === 'min') {
+                        return min;
+                    }
+                }
+            },
+            data: [
+                { type: 'max' },
+                { type: 'min' }
+            ]
+        }
+
         const series = [
             {
                 name: preprandial,
                 type: 'bar',
                 data: [],
-                markPoint: {
-                    data: [
-                        {type: 'max', name: max},
-                        {type: 'min', name: min}
-                    ]
-                }
+                markPoint: markPoint
             },
             {
                 name: postprandial,
                 type: 'bar',
                 data: [],
-                markPoint: {
-                    data: [
-                        {type: 'max', name: max},
-                        {type: 'min', name: min}
-                    ]
-                }
+                markPoint: markPoint
             },
             {
                 name: fasting,
                 type: 'bar',
                 data: [],
-                markPoint: {
-                    data: [
-                        {type: 'max', name: max},
-                        {type: 'min', name: min}
-                    ]
-                }
+                markPoint: markPoint
             },
             {
                 name: casual,
                 type: 'bar',
                 data: [],
-                markPoint: {
-                    data: [
-                        {type: 'max', name: max},
-                        {type: 'min', name: min}
-                    ]
-                }
+                markPoint: markPoint
             },
             {
                 name: bedtime,
                 type: 'bar',
                 data: [],
-                markPoint: {
-                    data: [
-                        {type: 'max', name: max},
-                        {type: 'min', name: min}
-                    ]
-                }
+                markPoint: markPoint
             }
         ];
 
         this.data.forEach((element: BloodGlucose) => {
             const find = xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, "shortDate");
+                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
             });
 
             if (!find) {
-                xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             }
             switch (element.meal) {
                 case MealType.preprandial:
@@ -181,7 +174,16 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     }
 
-    applyFilter(filter: { start_at: string, end_at: string, period: string }) {
+    applyFilter(filter
+                    :
+                    {
+                        start_at: string, end_at
+                            :
+                            string, period
+                            :
+                            string
+                    }
+    ) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_glucose, null, null, filter)
             .then((measurements: Array<any>) => {
@@ -195,18 +197,22 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             });
     }
 
-    updateGraph(measurements: Array<any>): void {
+    updateGraph(measurements
+                    :
+                    Array<any>
+    ):
+        void {
         // clean
         this.options.xAxis.data = new Array<any>();
         this.options.series.data = new Array<any>();
 
         measurements.forEach((element: BloodGlucose) => {
             const find = this.options.xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, "shortDate");
+                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
             });
 
             if (!find) {
-                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             }
             switch (element.meal) {
                 case MealType.preprandial:
@@ -229,7 +235,10 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.echartsInstance.setOption(this.options);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes
+                    :
+                    SimpleChanges
+    ) {
         if ((changes.data.currentValue && changes.data.previousValue
             && changes.data.currentValue.length !== changes.data.previousValue.length) ||
             (changes.data.currentValue.length && !changes.data.previousValue)) {
