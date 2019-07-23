@@ -49,6 +49,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "mustache": "^3.0.1",
+    "ng-recaptcha": "^4.3.0",
     "ngx-echarts": "^4.1.1",
     "ngx-toastr": "^10.0.4",
     "node-sass": "^4.12.0",

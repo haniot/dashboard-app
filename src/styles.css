@@ -175,19 +175,6 @@ label {
     overflow: hidden;
 }
 
-@media (min-width: 899px) {
-
-    .main-panel .main-content {
-        padding: 5px 5px;
-        overflow-x: hidden;
-    }
-
-    .container-fluid {
-        padding: 5px 5px;
-        overflow-x: hidden;
-    }
-
-}
 
 @media (max-width: 900px) {
     .main-panel .main-content {

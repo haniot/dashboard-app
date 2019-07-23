@@ -110,3 +110,27 @@ label {
   border-radius: 20px;
   background: rgb(212, 207, 207);
 }
+
+#reCaptcha {
+  display: flex;
+  justify-content: center;
+}
+
+.badge-12 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.badge-danger {
+  background-color: #ff0404;
+}
+
+.toast-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 350px;
+}
+.toast-container .ngx-toastr{
+  width: 100%;
+}

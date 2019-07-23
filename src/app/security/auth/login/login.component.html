@@ -49,7 +49,15 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-haniot-primary btn-block " [disabled]="f.invalid"
+                        <div id="reCaptcha" *ngIf="showCaptcha && !blocked">
+                            <re-captcha (resolved)="solveCaptcha($event)"
+                                        [siteKey]="site_key"
+
+                            ></re-captcha>
+                        </div>
+
+                        <button type="submit" class="btn btn-haniot-primary btn-block "
+                                [disabled]="f.invalid || (showCaptcha && !captchaResolved) || blocked"
                                 (click)="onSubmit()"
                                 id="buttonEntrar">
                             {{'SECURITY.LOGIN.LOGIN'|translate}}
@@ -58,8 +66,17 @@
                     <div>{{'SECURITY.LOGIN.FORGOT-PASSWORD'|translate}}<a
                             href="javascript:void(0);"> {{'SECURITY.LOGIN.RESET-HERE'|translate}}.</a>
                     </div>
-                </div>
+                    <div *ngIf="blocked" class="toast-container">
+                        <div class="toast-error ngx-toastr ng-trigger ng-trigger-flyInOut" style="width: 100%"
+                             style="display: inherit; opacity: 1;">
+                            <div class="toast-title ng-star-inserted">
+                                <h6>Usuário temporariamente bloqueado!</h6>
+                                <p>Tente novamante após 1 hora.</p>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>
