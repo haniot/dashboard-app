@@ -795,6 +795,8 @@
     "PASSWORD-NOT-UPDATED": "Não foi possível mudar sua senha!",
     "PASSWORD-OLD-INCORRECT": "Senha antiga informada incorreta!",
     "INVALID-DATA": "Dados inválidos",
-    "NOT-LOGIN": "Não foi possível entrar"
+    "NOT-LOGIN": "Não foi possível entrar",
+    "BLOCKED-USER": "Usuário bloqueado!",
+    "TRY-AGAIN": "Tente novamente após 1 hora."
   }
 }

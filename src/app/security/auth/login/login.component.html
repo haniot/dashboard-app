@@ -33,7 +33,9 @@
                             <div>
                                 <input [type]="typeInputPassword" formControlName="password" class="form-control"
                                        id="InputPassword"
-                                       [placeholder]="'SECURITY.LOGIN.PLACEHOLDER-PASSWORD'|translate">
+                                       [placeholder]="'SECURITY.LOGIN.PLACEHOLDER-PASSWORD'|translate"
+                                       (focus)="focusPassword()"
+                                >
                                 <a class="icon_password" href="javascript:void(0);" (click)="clickVisibilityPassword()"><i
                                         class="material-icons">{{icon_password}}</i></a>
                             </div>
@@ -49,15 +51,16 @@
                             </div>
                         </div>
 
-                        <div id="reCaptcha" *ngIf="showCaptcha && !blocked">
-                            <re-captcha (resolved)="solveCaptcha($event)"
+                        <div id="reCaptcha" *ngIf="showCaptcha">
+                            <re-captcha #reCaptchaRef="reCaptcha"
+                                        (resolved)="solveCaptcha($event,reCaptchaRef)"
                                         [siteKey]="site_key"
-
+                                        type="image"
                             ></re-captcha>
                         </div>
 
                         <button type="submit" class="btn btn-haniot-primary btn-block "
-                                [disabled]="f.invalid || (showCaptcha && !captchaResolved) || blocked"
+                                [disabled]="f.invalid || (showCaptcha && !captchaResolved)"
                                 (click)="onSubmit()"
                                 id="buttonEntrar">
                             {{'SECURITY.LOGIN.LOGIN'|translate}}
@@ -66,16 +69,6 @@
                     <div>{{'SECURITY.LOGIN.FORGOT-PASSWORD'|translate}}<a
                             href="javascript:void(0);"> {{'SECURITY.LOGIN.RESET-HERE'|translate}}.</a>
                     </div>
-                    <div *ngIf="blocked" class="toast-container">
-                        <div class="toast-error ngx-toastr ng-trigger ng-trigger-flyInOut" style="width: 100%"
-                             style="display: inherit; opacity: 1;">
-                            <div class="toast-title ng-star-inserted">
-                                <h6>Usuário temporariamente bloqueado!</h6>
-                                <p>Tente novamante após 1 hora.</p>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>

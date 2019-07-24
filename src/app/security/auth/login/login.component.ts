@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -8,13 +8,24 @@ import * as $ from 'jquery';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { RecaptchaComponent } from 'ng-recaptcha'
 
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 import { LocalStorageService } from '../../../shared/shared-services/localstorage.service'
+import { environment } from '../../../../environments/environment'
 
 const ATTEMPTSSHOWCAPTCHA = 2;
-const ATTEMPTSBLOCKED = 5;
-const BASE10 = 10;
+
+class Attempt {
+    user: string;
+    attemptNumber: number;
+
+    constructor() {
+        this.user = '';
+        this.attemptNumber = 0;
+    }
+
+}
 
 @Component({
     selector: 'app-login',
@@ -23,11 +34,13 @@ const BASE10 = 10;
 })
 export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     /* reCaptcha config*/
-    site_key = '6Ld1La8UAAAAAPG8l5pHQ4hEdT49pRH4Au0toPa_';
-    attempt: number;
+    reCaptcha: RecaptchaComponent;
+    site_key = environment.reCaptcha_siteKey;
     captchaResolved: boolean;
     showCaptcha: boolean;
-    blocked: boolean;
+
+    attemptUser: Attempt;
+
 
     f: FormGroup;
     loading: boolean;
@@ -50,9 +63,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.loading = false;
         this.showCaptcha = false;
         this.subscriptions = new Array<ISubscription>();
-        this.attempt = 0;
+        this.attemptUser = new Attempt();
         this.captchaResolved = false;
-        this.blocked = false;
     }
 
     ngOnInit() {
@@ -66,41 +78,87 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     configReCaptcha(): void {
-        const attemptStoregae = this.localStorageService.getItem('attempt');
-        if (attemptStoregae && !isNaN(Number(attemptStoregae))) {
-            this.attempt = parseInt(attemptStoregae, BASE10);
+        const local = this.localStorageService.getItem('listAttempts');
+        let attemptsStorage: Array<Attempt> = new Array<Attempt>();
+        if (local) {
+            attemptsStorage = JSON.parse(local);
+        }
+        this.attemptUser = new Attempt();
+        const find = attemptsStorage.find(item => {
+            return item.user === this.f.get('email').value
+        })
+        if (find) {
+            this.attemptUser = find;
         }
         this.verifyReCaptcha();
     }
 
     verifyReCaptcha(): void {
-        this.showCaptcha = this.attempt >= ATTEMPTSSHOWCAPTCHA;
-        this.blocked = this.attempt >= ATTEMPTSBLOCKED;
-        if (this.blocked) {
-            this.toastr.clear();
-        }
+        this.showCaptcha = this.attemptUser.attemptNumber >= ATTEMPTSSHOWCAPTCHA;
     }
 
     resetCaptcha(): void {
-
+        if (this.reCaptcha) {
+            this.reCaptcha.reset();
+            this.captchaResolved = false;
+        }
     }
+
+    incrementAttempt(): void {
+        this.attemptUser.user = this.f.get('email').value;
+        this.attemptUser.attemptNumber++;
+
+        const local = this.localStorageService.getItem('listAttempts');
+        let attemptsStorage: Array<Attempt> = new Array<Attempt>();
+        if (local) {
+            attemptsStorage = JSON.parse(local);
+        }
+        attemptsStorage = attemptsStorage.filter(item => {
+            return item.user !== this.attemptUser.user
+        })
+
+        attemptsStorage.push(this.attemptUser);
+
+        this.localStorageService.setItem('listAttempts', JSON.stringify(attemptsStorage));
+    }
+
+    cleanAttempt(): void {
+        const local = this.localStorageService.getItem('listAttempts');
+        let attemptsStorage: Array<Attempt> = new Array<Attempt>();
+        if (local) {
+            attemptsStorage = JSON.parse(local);
+        }
+        attemptsStorage = attemptsStorage.filter(item => {
+            return item.user !== this.attemptUser.user
+        })
+        this.localStorageService.setItem('listAttempts', JSON.stringify(attemptsStorage));
+    }
+
 
     onSubmit() {
         this.loading = true;
         this.subscriptions.push(this.authService.login(this.f.value).subscribe(
             (resp) => {
+                this.cleanAttempt()
                 this.router.navigate(['']);
                 this.loading = false;
             },
             (error: HttpErrorResponse) => {
-                if (error.status === 401) {
-                    this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
-                        this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
-                    this.attempt++;
-                    this.localStorageService.setItem('attempt', this.attempt.toString());
+                switch (error.status) {
+                    case 401:
+                        this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
+                            this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
+                        this.incrementAttempt();
+                        break;
+                    case 429:
+                        this.toastr.error(this.translateService.instant('TOAST-MESSAGES.TRY-AGAIN'),
+                            this.translateService.instant('TOAST-MESSAGES.BLOCKED-USER'));
+                        this.cleanAttempt();
+                        break;
                 }
                 this.loading = false;
                 this.verifyReCaptcha();
+                this.resetCaptcha();
             }
         ));
     };
@@ -127,12 +185,16 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
                 this.translateService.use('en-US');
                 break;
         }
-
     }
 
-    solveCaptcha(captchaResponse: string) {
-        console.log(`Resolved captcha with response: ${captchaResponse}`);
-        this.captchaResolved = true;
+    focusPassword(): void {
+        this.configReCaptcha();
+    }
+
+
+    solveCaptcha(captchaResponse: string, reCaptcha: RecaptchaComponent) {
+        this.reCaptcha = reCaptcha;
+        this.captchaResolved = !!captchaResponse;
     }
 
     ngAfterViewChecked() {
