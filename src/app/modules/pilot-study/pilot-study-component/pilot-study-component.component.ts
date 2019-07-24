@@ -1,28 +1,26 @@
-import {AfterViewChecked, Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
+import { AfterViewChecked, Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 
 @Component({
-  selector: 'app-pilot-study-component',
-  templateUrl: './pilot-study-component.component.html',
-  styleUrls: ['./pilot-study-component.component.scss']
+    selector: 'app-pilot-study-component',
+    templateUrl: './pilot-study-component.component.html',
+    styleUrls: ['./pilot-study-component.component.scss']
 })
-export class PilotStudyComponentComponent implements OnInit, AfterViewChecked {
+export class PilotStudyComponentComponent implements AfterViewChecked {
+    constructor(
+        private router: Router,
+        private loadingService: LoadingService
+    ) {
+    }
 
-  constructor(
-    private router: Router,
-    private loadingService: LoadingService
-  ) { }
+    newPilotStudy() {
+        this.router.navigate(['pilotstudies', 'new']);
+    }
 
-  ngOnInit() { }
-
-
-  newPilotStudy() {
-    this.router.navigate(['pilotstudies', 'new']);
-  }
-
-  ngAfterViewChecked() {
-    this.loadingService.close();
-  }
+    ngAfterViewChecked() {
+        this.loadingService.close();
+    }
 }
 

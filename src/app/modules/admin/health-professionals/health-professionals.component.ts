@@ -1,13 +1,16 @@
-import {AfterViewChecked, Component} from '@angular/core';
+import { AfterViewChecked, Component } from '@angular/core';
 
-import {ToastrService} from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
-import {HealthProfessionalService} from '../services/health-professional.service';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {HealthProfessional} from '../models/users';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
-import {TranslateService} from "@ngx-translate/core";
-import {IUser} from "../../../shared/shared-models/user";
+import { HealthProfessionalService } from '../services/health-professional.service';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { HealthProfessional } from '../models/users';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import { IUser } from '../../../shared/shared-models/user';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'health-professionals',
@@ -17,12 +20,9 @@ import {IUser} from "../../../shared/shared-models/user";
 export class HealthProfessionalComponent implements AfterViewChecked {
     userEdit: IUser = new HealthProfessional();
     healthProfessionals: Array<IUser> = [];
-
-    /* Controles de paginação */
-    page = 1;
-    limit = 5;
+    page: number;
+    limit: number;
     length: number;
-
     search: string;
 
     constructor(
@@ -31,8 +31,9 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         private modalService: ModalService,
         private loadinService: LoadingService,
         private translateService: TranslateService) {
+        this.page = PaginatorConfig.page;
+        this.limit = PaginatorConfig.limit;
         this.getAllHealthProfessionals();
-        /* Buscando todos profissionais de saúde cadastrados para saber a quantidade total, o length é utilizado na paginação */
         this.getLengthHealthProfessionals();
     }
 
@@ -43,9 +44,8 @@ export class HealthProfessionalComponent implements AfterViewChecked {
                 this.getLengthHealthProfessionals();
                 this.loadinService.close();
             })
-            .catch(errorResponse => {
+            .catch(() => {
                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-LIST-HEALTHPROFESSIONALS'));
-                // console.log('Erro ao buscar profissionais de saúde: ',errorResponse);
             });
     }
 
@@ -71,7 +71,6 @@ export class HealthProfessionalComponent implements AfterViewChecked {
                     this.toastr.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-NOT-CREATED'));
                 }
                 this.modalService.actionNotExecuted('modalUser', event, errorResponse.error);
-                // console.log('Não foi possível criar profissional de saúde!',errorResponse);
             });
     }
 
@@ -97,7 +96,6 @@ export class HealthProfessionalComponent implements AfterViewChecked {
                     this.toastr.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-NOT-UPDATED'));
                 }
                 this.modalService.actionNotExecuted('modalUserEdit', healthProfessional);
-                // console.log('Não foi possível atualizar profissional de saúde!', errorResponse);
             });
     }
 
@@ -119,14 +117,11 @@ export class HealthProfessionalComponent implements AfterViewChecked {
     }
 
     getLengthHealthProfessionals() {
-        /** Verificando quantidade de profissionais cadastrados */
         this.healthService.getAll()
             .then(caregivers => {
                 this.length = caregivers.length;
             })
-            .catch(errorResponse => {
-                // console.log('Não foi possível buscar todos os profissionais!', errorResponse);
-            });
+            .catch();
     }
 
     ngAfterViewChecked() {

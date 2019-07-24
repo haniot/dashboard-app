@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { HeartRate } from '../models/heart-rate';
+
 import { TranslateService } from '@ngx-translate/core';
+
+import { HeartRate } from '../models/heart-rate';
 import { MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 
@@ -11,21 +13,14 @@ import { MeasurementService } from '../services/measurement.service';
     styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class HeartRateComponent implements OnInit, OnChanges {
-
     @Input() data: Array<HeartRate>;
     @Input() filter_visibility: boolean;
     @Input() patientId: string;
-
     lastData: HeartRate;
-
     options: any;
-
     optionsLastData: any;
-
     echartsInstance: any;
-
     showSpinner: boolean;
-
 
     constructor(
         private datePipe: DatePipe,
@@ -61,14 +56,14 @@ export class HeartRateComponent implements OnInit, OnChanges {
             this.lastData = this.data[0];
         }
 
-        const xAxisOptions = {data: []};
+        const xAxisOptions = { data: [] };
 
         const seriesOptions = {
             type: 'line',
             data: []
         };
 
-        const xAxisOptionsLastDate = {data: []};
+        const xAxisOptionsLastDate = { data: [] };
 
         const seriesOptionsLastDate = {
             type: 'line',
@@ -77,8 +72,8 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
         this.data.forEach((heartRate) => {
             if (heartRate.dataset) {
-                heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
-                    xAxisOptions.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+                heartRate.dataset.forEach((elementHeartRate: { value: number, timestamp: string }) => {
+                    xAxisOptions.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
                     seriesOptions.data.push(date.value);
                 });
             }
@@ -88,9 +83,9 @@ export class HeartRateComponent implements OnInit, OnChanges {
         if (this.lastData) {
             // Inserindo dados no gráfico da ultima medião
             if (this.lastData.dataset) {
-                this.lastData.dataset.forEach((date: { value: number, timestamp: string }) => {
+                this.lastData.dataset.forEach((elementHeartRate: { value: number, timestamp: string }) => {
 
-                    xAxisOptionsLastDate.data.push(this.datePipe.transform(date.timestamp, "mediumTime"));
+                    xAxisOptionsLastDate.data.push(this.datePipe.transform(date.timestamp, 'mediumTime'));
 
                     seriesOptionsLastDate.data.push(date.value);
 
@@ -160,21 +155,18 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 this.showSpinner = false;
                 this.updateGraph(measurements);
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     updateGraph(measurements: Array<HeartRate>): void {
 
-        this.options.xAxis.data = new Array();
-        this.options.series.data = new Array();
+        this.options.xAxis.data = [];
+        this.options.series.data = [];
 
         measurements.forEach((heartRate: HeartRate) => {
             if (heartRate.dataset) {
                 heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
-                    this.options.xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+                    this.options.xAxis.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
                     this.options.series.data.push(date.value);
                 });
             }

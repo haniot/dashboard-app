@@ -14,19 +14,13 @@ import { MeasurementService } from '../services/measurement.service';
     styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class WeightComponent implements OnInit, OnChanges {
-
     @Input() data: Array<Weight>;
     @Input() filter_visibility: boolean;
     @Input() patientId: string;
-
     lastData: Weight;
-
     lastIndex: number;
-
     weightGraph: any;
-
     showSpinner: boolean;
-
     echartsInstance: any;
 
     constructor(
@@ -37,7 +31,7 @@ export class WeightComponent implements OnInit, OnChanges {
     ) {
         this.data = new Array<Weight>();
         this.filter_visibility = false;
-        this.patientId = "";
+        this.patientId = '';
         this.showSpinner = false;
     }
 
@@ -63,7 +57,6 @@ export class WeightComponent implements OnInit, OnChanges {
             this.lastData = this.data[0];
         }
 
-        /* Configurações do gráfico de peso*/
         const xAxisWeight = {
             type: 'category',
             data: []
@@ -91,8 +84,7 @@ export class WeightComponent implements OnInit, OnChanges {
             }
         };
 
-        /* Configurações do gráfico de gordura*/
-        const xAxisFat = {type: 'category', data: []};
+        const xAxisFat = { type: 'category', data: [] };
 
         const seriesFat = {
             name: body_fat,
@@ -117,12 +109,10 @@ export class WeightComponent implements OnInit, OnChanges {
         };
 
         this.data.forEach((element: Weight) => {
-            xAxisWeight.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            xAxisWeight.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             seriesWeight.data.push(this.decimalPipe.transform(element.value));
-            // TODO: Remover
-            seriesFat.data.push(25);
             if (element.fat && element.fat.value) {
-                xAxisFat.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
                 seriesFat.data.push(element.fat.value);
             }
         });
@@ -168,10 +158,7 @@ export class WeightComponent implements OnInit, OnChanges {
                 this.showSpinner = false;
                 this.updateGraph(measurements);
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     updateGraph(measurements: Array<any>): void {
@@ -181,11 +168,11 @@ export class WeightComponent implements OnInit, OnChanges {
         this.weightGraph.series[1].data = new Array<any>();
 
         measurements.forEach((element: Weight) => {
-            this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             this.weightGraph.series[0].data.push(this.decimalPipe.transform(element.value));
             this.weightGraph.series[1].data.push(25);
             if (element.fat && element.fat.value) {
-                this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
                 this.weightGraph.series[1].data.push(element.fat.value);
             }
         });

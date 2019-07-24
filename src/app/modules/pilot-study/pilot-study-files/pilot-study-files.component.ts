@@ -1,15 +1,19 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {PageEvent} from "@angular/material";
-import {OdontologicEvaluation} from "../../evaluation/models/odontologic-evaluation";
-import {PilotStudy} from "../models/pilot.study";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { PageEvent } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 
-import {ToastrService} from "ngx-toastr";
-import {ModalService} from "../../../shared/shared-components/haniot-modal/service/modal.service";
-import {PilotStudyService} from "../services/pilot-study.service";
-import {DateRange} from "../models/range-date";
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
-import {DomSanitizer} from "@angular/platform-browser";
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+
+import { OdontologicEvaluation } from '../../evaluation/models/odontologic-evaluation';
+import { PilotStudy } from '../models/pilot.study';
+import { ModalService } from '../../../shared/shared-components/haniot-modal/service/modal.service';
+import { PilotStudyService } from '../services/pilot-study.service';
+import { DateRange } from '../models/range-date';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'pilot-study-files',
@@ -17,32 +21,20 @@ import {DomSanitizer} from "@angular/platform-browser";
     styleUrls: ['./pilot-study-files.component.scss']
 })
 export class PilotStudyFilesComponent implements OnInit, OnChanges {
-
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    @Input() pilotStudy: PilotStudy;
+    /* Paging Settings */
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page: number;
+    limit: number;
     length: number;
-
     listOfFiles: Array<OdontologicEvaluation>;
     search: DateRange;
     searchTime;
-
-    @Input() pilotStudy: PilotStudy;
-
     cacheIdFileRemove: string;
-
     lastFiles: OdontologicEvaluation;
-
-    generatingFile: boolean = false;
-
+    generatingFile: boolean;
     listOfFilesIsEmpty: boolean;
-
     removingFile: boolean;
 
     constructor(
@@ -53,6 +45,10 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         private translateService: TranslateService,
         private sanitizer: DomSanitizer
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.generatingFile = false;
         this.pilotStudy = new PilotStudy();
         this.listOfFiles = new Array<OdontologicEvaluation>();
         this.listOfFilesIsEmpty = false;
@@ -79,16 +75,14 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                             this.listOfFilesIsEmpty = true;
                         }
                     })
-                    .catch(errorResponse => {
-                        // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
-                    });
+                    .catch();
             }, 200);
         }
     }
 
     getAllFiles() {
         if (this.pilotStudy && this.pilotStudy.id) {
-            this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit)// FIXME: Adicionar this.search
+            this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit)// TODO: Adicionar this.search
                 .then(files => {
                     this.listOfFiles = files;
 
@@ -100,9 +94,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                         this.listOfFilesIsEmpty = true;
                     }
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.listOfFilesIsEmpty = true;
-                    // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                 });
         }
     }
@@ -135,11 +128,10 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                     this.removingFile = false;
                     this.cacheIdFileRemove = '';
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.removingFile = false;
                     this.openModalConfirmation(this.cacheIdFileRemove);
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.FILE-NOT-REMOVED'));
-                    // console.log('Não foi possível remover paciente!', errorResponse);
                 });
         }
     }
@@ -163,9 +155,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                 .then(files => {
                     this.length = files.length;
                 })
-                .catch(errorResponse => {
-                    // console.log('Não foi possível buscar todos as avaliações do pacientes',errorResponse);
-                });
+                .catch();
         }
     }
 
@@ -200,7 +190,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                     } else {
                         this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-GENERATED'));
                     }
-                    // console.log('Não foi possível gerar avaliação!', error)
                 }
             )
     }

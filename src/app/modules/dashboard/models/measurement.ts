@@ -1,16 +1,16 @@
-export interface Measurement{
+export interface Measurement {
     deviceId: string,
     registrationDate: number,
     typeId: number,
-    unit : string,
+    unit: string,
     userId: string,
     value: number,
-    measurements : Array<Measurement>,
-    context : Array<Context>
+    measurements: Array<Measurement>,
+    context: Array<Context>
 }
 
 
-export interface Context{
-    valueId : number,
+export interface Context {
+    valueId: number,
     typeId: number
 }

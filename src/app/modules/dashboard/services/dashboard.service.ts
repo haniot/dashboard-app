@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import {environment} from 'environments/environment';
-import {Patient} from 'app/modules/patient/models/patient';
-import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {Unit} from "../models/unit";
+import { environment } from 'environments/environment';
+import { Patient } from 'app/modules/patient/models/patient';
+import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { Unit } from '../models/unit';
 
 @Injectable()
 export class DashboardService {
-
     cacheListpilots: Array<PilotStudy>;
     cacheListpatients: Array<Patient>;
     listNumberPatientsForEachStudy: Array<Unit>;
@@ -43,19 +42,13 @@ export class DashboardService {
         };
     }
 
-    getListStudy(): Array<PilotStudy> {
-        return this.cacheListpilots;
-    }
-
-
     getNumberOfStudies(userId: string): Promise<number> {
         return this.getAllStudiesByUserId(userId)
             .then(pilotstudies => {
                 this.cacheListpilots = pilotstudies;
                 return Promise.resolve(pilotstudies.length);
             })
-            .catch(errorResponse => {
-                // console.log('Não foi possível carregar a quantidade de estudos! ', errorResponse.error);
+            .catch(() => {
                 return Promise.resolve(0);
             });
     }
@@ -68,7 +61,7 @@ export class DashboardService {
                 const pilot = this.cacheListpilots[index];
                 try {
                     const listOfPatients: Array<Patient> = await this.getAllPatients(pilot.id);
-                    this.listNumberPatientsForEachStudy.push({namePatient: pilot.name, value: listOfPatients.length});
+                    this.listNumberPatientsForEachStudy.push({ namePatient: pilot.name, value: listOfPatients.length });
                     this.cacheListpatients = this.cacheListpatients.concat(listOfPatients);
                     totalOfPatients += listOfPatients.length;
                 } catch (e) {
@@ -86,11 +79,11 @@ export class DashboardService {
         let myParams = new HttpParams();
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
         let url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
@@ -99,7 +92,7 @@ export class DashboardService {
             url = `${environment.api_url}/pilotstudies`;
         }
 
-        return this.http.get<any>(url, {params: myParams})
+        return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
@@ -110,16 +103,16 @@ export class DashboardService {
         let myParams = new HttpParams();
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
         const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
 
-        return this.http.get<any>(url, {params: myParams})
+        return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 }

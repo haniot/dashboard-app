@@ -1,9 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {PageEvent} from "@angular/material";
+import { Component, Input, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material';
 
-import {MeasurementType} from "../models/measurement";
-import {MeasurementService} from "../services/measurement.service";
-import {ModalService} from "../../../shared/shared-components/haniot-modal/service/modal.service";
+import { MeasurementType } from '../models/measurement';
+import { MeasurementService } from '../services/measurement.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'measurement-logs',
@@ -11,38 +13,29 @@ import {ModalService} from "../../../shared/shared-components/haniot-modal/servi
     styleUrls: ['./measurement-logs.component.scss']
 })
 export class MeasurementLogsComponent implements OnInit {
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
-    pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page = 1;
-    limit = 10;
-    length: number;
-
     @Input() patientId: string;
-
+    /* Paging Settings */
+    pageSizeOptions: number[];
+    pageEvent: PageEvent;
+    page: number;
+    limit: number;
+    length: number;
     measurementsTypes: Array<any>;
     measurementTypeSelected: MeasurementType;
-
     listOfMeasurements: Array<any>;
-
     loadingMeasurements: boolean;
-
     modalConfirmRemoveMeasurement: boolean;
     cacheIdMeasurementRemove: string;
     cacheListIdMeasurementRemove: Array<string>;
-
     selectAll: boolean;
     listCheckMeasurements: Array<boolean>;
-
-    stateButtonRemoveSeleted: boolean;
+    stateButtonRemoveSelected: boolean;
 
     constructor(
-        private measurementService: MeasurementService,
-        private modalService: ModalService) {
+        private measurementService: MeasurementService) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
         this.measurementTypeSelected = MeasurementType.weight;
         this.measurementsTypes = Object.keys(MeasurementType);
         this.listOfMeasurements = new Array<any>();
@@ -52,7 +45,7 @@ export class MeasurementLogsComponent implements OnInit {
         this.listCheckMeasurements = new Array<boolean>();
         this.cacheListIdMeasurementRemove = new Array<string>();
         this.cacheIdMeasurementRemove = '';
-        this.stateButtonRemoveSeleted = false;
+        this.stateButtonRemoveSelected = false;
     }
 
     ngOnInit() {
@@ -120,7 +113,7 @@ export class MeasurementLogsComponent implements OnInit {
             .catch()
     }
 
-    changeOnMeasurement(measurementIndex: number): void {
+    changeOnMeasurement(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
         this.selectAll = this.listOfMeasurements.length === measurementsSelected.length;
         this.updateStateButtonRemoveSelected();
@@ -140,7 +133,7 @@ export class MeasurementLogsComponent implements OnInit {
 
     updateStateButtonRemoveSelected(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
-        this.stateButtonRemoveSeleted = !!measurementsSelected.length;
+        this.stateButtonRemoveSelected = !!measurementsSelected.length;
     }
 
     calcLengthMeasurements() {

@@ -1,38 +1,33 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {PageEvent} from '@angular/material';
-import {Patient} from 'app/modules/patient/models/patient';
-import {PatientService} from 'app/modules/patient/services/patient.service';
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { PageEvent } from '@angular/material';
+
+import { Patient } from 'app/modules/patient/models/patient';
+import { PatientService } from 'app/modules/patient/services/patient.service';
+import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'patients',
     templateUrl: './patients.component.html',
     styleUrls: ['./patients.component.scss']
 })
-export class PatientsComponent implements OnInit, OnChanges {
-
-    listClass: Array<string>;
+export class PatientsComponent implements OnChanges {
+    @Input() pilotStudyId;
     @Output() selected = new EventEmitter();
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    /*  */
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page: number;
+    limit: number;
     length: number;
-
-    listOfPatientsIsEmpty: boolean = false;
-
+    listOfPatientsIsEmpty: boolean;
     listOfPatients = new Array<Patient>();
     search: string;
     searchTime;
-
-    @Input() pilotStudyId;
-
+    listClass: Array<string>;
     cacheIdPatientRemove: string;
 
     constructor(
@@ -40,12 +35,12 @@ export class PatientsComponent implements OnInit, OnChanges {
         private pilotstudyService: PilotStudyService,
         private modalService: ModalService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.listOfPatientsIsEmpty = false;
         this.listOfPatients = new Array<Patient>();
         this.listClass = new Array<string>();
-    }
-
-    ngOnInit() {
-
     }
 
     searchOnSubmit() {
@@ -61,9 +56,8 @@ export class PatientsComponent implements OnInit, OnChanges {
                     }
                     this.calcLengthPatients();
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.listOfPatientsIsEmpty = true;
-                    // console.log('Erro ao buscar pacientes: ', errorResponse);
                 });
         }, 200);
     }
@@ -79,9 +73,7 @@ export class PatientsComponent implements OnInit, OnChanges {
                     this.listOfPatientsIsEmpty = false;
                 }
             })
-            .catch(errorResponse => {
-                // console.log('Erro ao buscar pacientes: ', errorResponse);
-            });
+            .catch();
     }
 
     clickPagination(event) {
@@ -120,9 +112,7 @@ export class PatientsComponent implements OnInit, OnChanges {
             .then(patients => {
                 this.length = patients.length;
             })
-            .catch(errorResponse => {
-                // console.log('Não foi possível buscar todos os pacientes',errorResponse);
-            });
+            .catch();
     }
 
     selectPatient(patient_id: string) {

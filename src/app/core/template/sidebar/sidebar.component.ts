@@ -52,18 +52,10 @@ export const configSideBar = [
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-    /* Configurações de cada menu e submenu do sidebar*/
-    // private menuItems: any[];
-
     userId: string;
-
     configSideBar: { title: string, scopes: any[] }[];
-
     userName: String = '';
-
     iconUserMenu = 'keyboard_arrow_right';
-
-    iconEvaluatioinMenu = 'keyboard_arrow_right';
 
     constructor(
         private authService: AuthService,
@@ -76,7 +68,6 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.menuItems = ROUTES.filter(menuItem => menuItem);
         this.configSideBar = configSideBar;
         this.getUserName();
     }
@@ -114,9 +105,7 @@ export class SidebarComponent implements OnInit {
                         this.locaStorageService.setItem('username', this.userName.toString());
                     }
                 })
-                .catch(error => {
-                    // console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
-                });
+                .catch();
         }
     }
 
@@ -128,12 +117,8 @@ export class SidebarComponent implements OnInit {
         this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
     }
 
-    onClickMenuEvaluation(): void {
-        this.iconEvaluatioinMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
-    }
-
     showMyStudies(): boolean {
-        return this.authService.decodeToken().sub_type == 'health_professional';
+        return this.authService.decodeToken().sub_type === 'health_professional';
     }
 
     openLoading() {

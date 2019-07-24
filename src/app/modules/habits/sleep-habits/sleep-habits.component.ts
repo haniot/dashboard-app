@@ -10,11 +10,10 @@ import { SleepRecordService } from '../services/sleep-record.service';
     styleUrls: ['../shared-style/shared-styles.scss', './sleep-habits.component.scss']
 })
 export class SleepHabitsComponent implements OnInit, OnChanges {
-
-    listSleep: Array<SleepHabitsRecord>;
-    sleepForm: FormGroup;
     @Input() patientId: string;
     @Input() sleepHabit: SleepHabitsRecord;
+    listSleep: Array<SleepHabitsRecord>;
+    sleepForm: FormGroup;
     index: number;
 
     constructor(
@@ -30,7 +29,6 @@ export class SleepHabitsComponent implements OnInit, OnChanges {
         this.createSleepFormInit();
     }
 
-    /**Create form feeding */
     createSleepFormInit() {
         this.sleepForm = this.fb.group({
             id: [''],
@@ -50,17 +48,14 @@ export class SleepHabitsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue != changes.patientId.previousValue) {
+        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
             this.sleepService.getAll(this.patientId)
                 .then(sleepRecords => {
                     this.listSleep = sleepRecords;
-                    this.createSleepForm(sleepRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro
+                    this.createSleepForm(sleepRecords[0]);
                 })
-                .catch(errorResponse => {
-                    // this.toastService.error('Não foi possível buscar hábitos de sono!');
-                    // console.log('Não foi possível buscar hábitos de sono!', errorResponse);
-                });
-        } else if (this.sleepHabit && changes.sleepHabit.currentValue != changes.sleepHabit.previousValue) {
+                .catch();
+        } else if (this.sleepHabit && changes.sleepHabit.currentValue !== changes.sleepHabit.previousValue) {
             this.listSleep = new Array<SleepHabitsRecord>();
             this.listSleep.push(this.sleepHabit);
             this.createSleepForm(this.sleepHabit);

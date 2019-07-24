@@ -1,18 +1,18 @@
-import {Component, OnInit, AfterViewChecked, OnDestroy} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import { Component, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
-import {ToastrService} from 'ngx-toastr';
-import {ISubscription} from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
+import { ISubscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
 
-import {Gender, Patient} from '../models/patient';
-import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {PatientService} from '../services/patient.service';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
+import { Gender, Patient } from '../models/patient';
+import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
+import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { PatientService } from '../services/patient.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
 
 @Component({
     selector: 'patient-form',
@@ -23,26 +23,15 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     patientForm: FormGroup;
     optionsGender: Array<string> = Object.keys(Gender);
     listPilots: Array<PilotStudy>;
-
     patientId: string;
     pilotStudyId: string;
-
     matchPasswordStatus;
-
     matchPasswordTime;
-
-    /* para o campo senha */
     icon_password = 'visibility_off';
-
     typeInputPassword = 'password';
-
-    /* para o campo confirmação de senha */
     icon_password_confirm = 'visibility_off';
-
     typeInputPassword_confirm = 'password';
-
     min_birth_date: Date;
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -115,16 +104,13 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
                     patient.password_confirm = '';
                     this.verifyMatchPassword();
                     this.setPatientInForm(patient);
-                    // this.patientForm.setValue(patient);
-                }).catch(errorResponse => {
-                // console.error('Não foi possível buscar paciente!', errorResponse);
-            })
+                })
+                .catch();
         }
     }
 
     onSubimt() {
         const form = this.patientForm.getRawValue();
-        // console.log(form)
         form.birth_date = new Date(form.birth_date).toISOString().split('T')[0];
         if (!this.patientId) {
             this.patientService.create(form)
@@ -154,29 +140,25 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     }
 
     getAllPilotStudies() {
-        if (this.authService.decodeToken().sub_type == 'admin') {
+        if (this.authService.decodeToken().sub_type === 'admin') {
 
             this.pilotStudiesService.getAll()
                 .then(pilots => {
                     this.listPilots = pilots;
                 })
-                .catch(errorResponse => {
-                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
-                });
+                .catch();
         } else {
             const userId = this.localStorageService.getItem('user');
             this.pilotStudiesService.getAllByUserId(userId)
                 .then(pilots => {
                     this.listPilots = pilots;
                 })
-                .catch(errorResponse => {
-                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
-                });
+                .catch();
         }
     }
 
     passwordMatch(): boolean {
-        return this.patientForm.get('password').value == this.patientForm.get('password_confirm').value;
+        return this.patientForm.get('password').value === this.patientForm.get('password_confirm').value;
     }
 
     verifyMatchPassword() {
@@ -209,9 +191,9 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         let number: string;
         number = this.patientForm.get('phone_number').value;
 
-        number = number.replace(/\D/g, "");
-        number = number.replace(/^(\d{2})(\d)/g, "($1) $2");
-        number = number.replace(/(\d)(\d{4})$/, "$1-$2");
+        number = number.replace(/\D/g, '');
+        number = number.replace(/^(\d{2})(\d)/g, '($1) $2');
+        number = number.replace(/(\d)(\d{4})$/, '$1-$2');
 
         this.patientForm.get('phone_number').patchValue(number);
     }

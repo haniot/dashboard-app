@@ -15,7 +15,7 @@ import {
 import {MypilotstudiesComponent} from "./mypilotstudies/mypilotstudies.component";
 import {EditMypilotComponent} from "./edit-mypilot/edit-mypilot.component";
 import {MyevaluationsComponent} from "./myevaluations/myevaluations.component";
-import {HealthprofessionalConfigComponent} from "./configurations/configurations.component";
+import {HealthProfessionalConfigComponent} from "./configurations/configurations.component";
 import {HealthProfessionalRoutingModule} from "./health-professional-routing/health-professional-routing.module";
 import {SharedModule} from "../../shared/shared.module";
 import {EvaluationModule} from "../evaluation/evaluation.module";
@@ -23,7 +23,7 @@ import { SettingsModule } from '../settings/settings.module';
 
 @NgModule({
     declarations: [
-        HealthprofessionalConfigComponent,
+        HealthProfessionalConfigComponent,
         MypilotstudiesComponent,
         EditMypilotComponent,
         MyevaluationsComponent

@@ -3,10 +3,10 @@
     "TITLE": "HANIoT",
     "DEVELOP-ORGANIZATION": "NUTES"
   },
-  "ACESS-DENIED": {
+  "ACCESS-DENIED": {
     "TITLE": "Acesso negado",
-    "MESSSAGE": "Desculpe, seu acesso foi recusado devido a razões de segurança do nosso servidor e também aos nossos dados confidenciais",
-    "MESSSAGE-GO-BACK": "Por favor, volte para a página principal clicando no botão abaixo"
+    "MESSAGE": "Desculpe, seu acesso foi recusado devido a razões de segurança do nosso servidor e também aos nossos dados confidenciais",
+    "MESSAGE-GO-BACK": "Por favor, volte para a página principal clicando no botão abaixo"
   },
   "ADMINISTRADORS": {
     "TITLE": "Lista de usuário administradores",

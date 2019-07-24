@@ -1,8 +1,9 @@
-import {AfterViewChecked, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
-import {PilotStudy} from "../../pilot-study/models/pilot.study";
-import {PilotStudyService} from "../../pilot-study/services/pilot-study.service";
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { LoadingService } from '../../../shared/shared-components/loading-component/service/loading.service';
+import { PilotStudy } from '../../pilot-study/models/pilot.study';
+import { PilotStudyService } from '../../pilot-study/services/pilot-study.service';
 
 @Component({
     selector: 'app-dental-evaluation-list',
@@ -10,11 +11,8 @@ import {PilotStudyService} from "../../pilot-study/services/pilot-study.service"
     styleUrls: ['./dental-evaluation-list.component.scss']
 })
 export class DentalEvaluationListComponent implements OnInit, AfterViewChecked {
-
     pilotForm: FormGroup;
-
     pilotstudy_id: string;
-
     pilotStudy: PilotStudy;
 
     constructor(
@@ -46,9 +44,7 @@ export class DentalEvaluationListComponent implements OnInit, AfterViewChecked {
             .then(pilotstudy => {
                 this.pilotStudy = pilotstudy
             })
-            .catch(error => {
-                // console.log('Não foi possível buscar estudo!', error);
-            })
+            .catch()
 
     }
 

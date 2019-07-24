@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import {environment} from 'environments/environment';
-import {AdminService} from './admin.service';
-import {HealthProfessionalService} from './health-professional.service';
-import {AuthService} from 'app/security/auth/services/auth.service';
+import { environment } from 'environments/environment';
+import { AdminService } from './admin.service';
+import { HealthProfessionalService } from './health-professional.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
 
 @Injectable()
 export class UserService {
@@ -39,7 +39,7 @@ export class UserService {
     }
 
     changeLanguage(userId: string, language: string): Promise<boolean> {
-        /* TODO: Realizar request na rota de alterar profile do usuário
+        /* TODO: Realizar request na rota de alterar profile do usuário e salvar o novo idioma favorito
         *return this.http.patch<any>(`${environment.api_url}/users/${userId}/password`, credentials)
             .toPromise();
         */

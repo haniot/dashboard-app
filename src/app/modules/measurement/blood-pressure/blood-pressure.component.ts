@@ -1,9 +1,11 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { BloodPressure } from '../models/blood-pressure';
+
 import { TranslateService } from '@ngx-translate/core';
+
 import { MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
+import { BloodPressure } from '../models/blood-pressure';
 
 @Component({
     selector: 'blood-pressure',
@@ -11,17 +13,12 @@ import { MeasurementService } from '../services/measurement.service';
     styleUrls: ['../shared-style/shared-styles.scss', './blood-pressure.component.scss']
 })
 export class BloodPressureComponent implements OnInit, OnChanges {
-
     @Input() data: Array<BloodPressure>;
     @Input() filter_visibility: boolean;
     @Input() patientId: string;
-
     lastData: BloodPressure;
-
     options: any;
-
     showSpinner: boolean;
-
     echartsInstance: any;
 
     constructor(
@@ -48,7 +45,6 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         const systolic = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.SYSTOLIC');
         const diastolic = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.DIASTOLIC');
         const pulse = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PULSE');
-        const pressure = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PRESSURE');
         const date = this.translateService.instant('SHARED.DATE');
 
         const color_systolic = '#3F51B5';
@@ -140,13 +136,11 @@ export class BloodPressureComponent implements OnInit, OnChanges {
             if (!find) {
                 xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             }
-            // Adicionando Sistólica
+
             series[0].data.push(element.systolic);
 
-            // Adicionando Diastólica
             series[1].data.push(element.diastolic);
 
-            // Adicionando Pulso
             series[2].data.push(element.pulse);
         });
 
@@ -203,10 +197,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 this.showSpinner = false;
                 this.updateGraph(measurements);
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     updateGraph(measurements: Array<any>): void {
@@ -222,13 +213,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
             if (!find) {
                 this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             }
-            // Adicionando Sistólica
             this.options.series[0].data.push(element.systolic);
-
-            // Adicionando Diastólica
             this.options.series[1].data.push(element.diastolic);
-
-            // Adicionando Pulso
             this.options.series[2].data.push(element.pulse);
         });
         this.echartsInstance.setOption(this.options);

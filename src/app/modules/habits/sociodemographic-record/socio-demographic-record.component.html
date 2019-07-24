@@ -54,7 +54,7 @@
     </div>
     <div class="row">
         <!-- Botões Anterior e Próximo -->
-        <div class="container" *ngIf="listSociodemographic.length>1">
+        <div class="container" *ngIf="listSocioDemographic.length>1">
             <div class="row">
                 <div class="col align-self-start">
                     <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
@@ -67,7 +67,7 @@
                 <div class="col align-self-end">
                     <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
                             (click)="next()" [title]="'HABITS.NEXT'|translate"
-                            [disabled]="index == listSociodemographic.length-1">
+                            [disabled]="index == listSocioDemographic.length-1">
                         <i class="material-icons">arrow_forward</i>
                     </button>
                 </div>
@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <div *ngIf="listSociodemographic.length==0">
+    <div *ngIf="listSocioDemographic.length==0">
         <span class="badge badge-danger badge-12">{{'HABITS.SLEEP.UNAVAILABLE-DATA'|translate}}</span>
     </div>
 </haniot-card>

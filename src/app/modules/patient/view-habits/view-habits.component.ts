@@ -1,19 +1,17 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import {ToastrService} from 'ngx-toastr';
-import {ISubscription} from 'rxjs/Subscription';
-import {TranslateService} from "@ngx-translate/core";
+import { ToastrService } from 'ngx-toastr';
+import { ISubscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
 
-import {PatientService} from '../services/patient.service';
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-
-import {Patient, Gender} from '../models/patient';
-import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
-import {FeedingRecordService} from '../../habits/services/feeding-record.service';
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-
+import { PatientService } from '../services/patient.service';
+import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { Patient, Gender } from '../models/patient';
+import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
+import { FeedingRecordService } from '../../habits/services/feeding-record.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
 
 @Component({
     selector: 'app-view-habits',
@@ -21,20 +19,13 @@ import {LocalStorageService} from "../../../shared/shared-services/localstorage.
     styleUrls: ['./view-habits.component.scss']
 })
 export class ViewHabitsComponent implements OnInit, OnDestroy {
-
     patientForm: FormGroup;
-
     optionsGender: Array<string> = Object.keys(Gender);
-
     listPilots: Array<PilotStudy>;
-
     patientId: string;
     pilotStudyId: string;
-
     userHealthArea: string;
-
     showMeasurements: boolean;
-
     configVisibility = {
         weight: false,
         height: false,
@@ -78,7 +69,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                 })
                 .catch(errorResponse => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
-                    // console.log('Não foi possível buscar paciente!',errorResponse);
                 });
         }));
     }
@@ -91,12 +81,12 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     createPatientFormInit() {
         this.patientForm = this.fb.group({
             id: [''],
-            pilotstudy_id: [{value: '', disabled: true}],
-            name: [{value: '', disabled: true}],
-            email: [{value: '', disabled: true}],
-            phone_number: [{value: '', disabled: true}],
-            gender: [{value: '', disabled: true}],
-            birth_date: [{value: '', disabled: true}]
+            pilotstudy_id: [{ value: '', disabled: true }],
+            name: [{ value: '', disabled: true }],
+            email: [{ value: '', disabled: true }],
+            phone_number: [{ value: '', disabled: true }],
+            gender: [{ value: '', disabled: true }],
+            birth_date: [{ value: '', disabled: true }]
         });
     }
 
@@ -104,11 +94,11 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.patientForm = this.fb.group({
             id: [patient.id],
             pilotstudy_id: [this.pilotStudyId],
-            name: [{value: patient.name, disabled: true}],
-            email: [{value: patient.email, disabled: true}],
-            phone_number: [{value: patient.phone_number, disabled: true}],
-            gender: [{value: patient.gender, disabled: true}],
-            birth_date: [{value: patient.birth_date, disabled: true}]
+            name: [{ value: patient.name, disabled: true }],
+            email: [{ value: patient.email, disabled: true }],
+            phone_number: [{ value: patient.phone_number, disabled: true }],
+            gender: [{ value: patient.gender, disabled: true }],
+            birth_date: [{ value: patient.birth_date, disabled: true }]
         });
     }
 
@@ -121,17 +111,13 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                 .then(pilots => {
                     this.listPilots = pilots;
                 })
-                .catch(errorResponse => {
-                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
-                });
+                .catch();
         } else {
             this.pilotStudiesService.getAllByUserId(userId)
                 .then(pilots => {
                     this.listPilots = pilots;
                 })
-                .catch(errorResponse => {
-                    // console.log('Não foi possivel buscar estudos pilotos!', errorResponse);
-                });
+                .catch();
         }
 
     }

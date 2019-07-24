@@ -24,7 +24,7 @@ import { MedicalRecordService } from './services/medical-record.service';
 import { ChronicDiseasePipe } from './pipes/chronic-disease.pipe';
 import { DiseaseHistoryPipe } from './pipes/disease-history.pipe';
 import { WeeklyFoodPipe } from './pipes/weekly-food.pipe';
-import { SociodemographicRecordComponent } from './sociodemographic-record/sociodemographic-record.component';
+import { SocioDemographicRecordComponent } from './sociodemographic-record/socio-demographic-record.component';
 import { FamilycohesionRecordComponent } from './familycohesion-record/familycohesion-record.component';
 import { OralhealthRecordComponent } from './oralhealth-record/oralhealth-record.component';
 import { FrequencyFamilyCohesionPipe } from './pipes/frequency-familycohesion.pipe';
@@ -55,7 +55,7 @@ import { LesionTypePipe } from './pipes/lesion-type.pipe';
     DiseaseHistoryPipe,
     WeeklyFoodPipe,
     PhysicalActivityPipe,
-    SociodemographicRecordComponent,
+    SocioDemographicRecordComponent,
     FamilycohesionRecordComponent,
     OralhealthRecordComponent,
     FrequencyFamilyCohesionPipe,
@@ -78,7 +78,7 @@ import { LesionTypePipe } from './pipes/lesion-type.pipe';
     SleepHabitsComponent,
     PhysicalActivityHabitsComponent,
     MedicalRecordComponent,
-    SociodemographicRecordComponent,
+    SocioDemographicRecordComponent,
     FamilycohesionRecordComponent,
     OralhealthRecordComponent
   ],

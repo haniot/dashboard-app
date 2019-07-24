@@ -1,9 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {ISubscription} from 'rxjs/Subscription';
-
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-patient-component',
@@ -11,15 +9,12 @@ import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.se
     styleUrls: ['./patient-component.component.scss']
 })
 export class PatientComponentComponent implements OnInit, OnDestroy {
-
     pilotStudyId: string;
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
         private router: Router,
-        private activeRouter: ActivatedRoute,
-        private pilotStudyService: PilotStudyService) {
+        private activeRouter: ActivatedRoute) {
         this.subscriptions = new Array<ISubscription>();
     }
 

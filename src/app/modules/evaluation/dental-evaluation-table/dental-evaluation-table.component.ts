@@ -1,16 +1,19 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
-import {PageEvent} from '@angular/material';
-import {ToastrService} from 'ngx-toastr';
+import { PageEvent } from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
-import {EvaluationService} from '../services/evaluation.service';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {OdontologicEvaluation} from '../models/odontologic-evaluation';
-import {DentalEvaluationService} from '../services/dental-evaluation.service';
-import {PilotStudy} from "../../pilot-study/models/pilot.study";
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
-import {DomSanitizer} from "@angular/platform-browser";
+import { EvaluationService } from '../services/evaluation.service';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { OdontologicEvaluation } from '../models/odontologic-evaluation';
+import { DentalEvaluationService } from '../services/dental-evaluation.service';
+import { PilotStudy } from '../../pilot-study/models/pilot.study';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'dental-evaluation-table',
@@ -18,30 +21,19 @@ import {DomSanitizer} from "@angular/platform-browser";
     styleUrls: ['./dental-evaluation-table.component.scss']
 })
 export class DentalEvaluationTableComponent implements OnInit, OnChanges {
-
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    @Input() pilotStudy: PilotStudy;
+    /* Paging Settings */
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page: number;
+    limit: number;
     length: number;
-
     listOfEvaluations: Array<OdontologicEvaluation>;
     search: string;
     searchTime;
-
-    @Input() pilotStudy: PilotStudy;
-
     cacheIdEvaluationRemove: string;
-
     lastEvaluation: OdontologicEvaluation;
-
-    generatingEvaluantion: boolean = false;
-
+    generatingEvaluantion: boolean;
     listOfEvaluationsIsEmpty: boolean;
 
     constructor(
@@ -54,6 +46,10 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
         private translateService: TranslateService,
         private sanitizer: DomSanitizer
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.generatingEvaluantion = false;
         this.pilotStudy = new PilotStudy();
         this.listOfEvaluations = new Array<OdontologicEvaluation>();
         this.listOfEvaluationsIsEmpty = false;
@@ -73,9 +69,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                         this.listOfEvaluations = dentalsEvaluations;
                         this.calcLenghtNutritionEvaluations();
                     })
-                    .catch(errorResponse => {
-                        // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
-                    });
+                    .catch();
             }, 200);
         }
     }
@@ -93,9 +87,8 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                         this.listOfEvaluationsIsEmpty = true;
                     }
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.listOfEvaluationsIsEmpty = true;
-                    // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                 });
         }
     }
@@ -126,9 +119,8 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-REMOVED'));
                     this.closeModalComfimation();
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-REMOVED'));
-                    // console.log('Não foi possível remover paciente!', errorResponse);
                 });
         }
     }
@@ -152,9 +144,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                 .then(nutritionEvaluations => {
                     this.length = nutritionEvaluations.length;
                 })
-                .catch(errorResponse => {
-                    // console.log('Não foi possível buscar todos as avaliações do pacientes',errorResponse);
-                });
+                .catch();
         }
     }
 
@@ -187,7 +177,6 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                     } else {
                         this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-GENERATED'));
                     }
-                    // console.log('Não foi possível gerar avaliação!', error)
                 }
             )
     }

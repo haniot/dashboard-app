@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import {environment} from 'environments/environment';
-import {NutritionalCouncil, NutritionEvaluation} from "../models/nutrition-evaluation";
+import { environment } from 'environments/environment';
+import { NutritionalCouncil, NutritionEvaluation } from '../models/nutrition-evaluation';
 
 @Injectable()
 export class NutritionEvaluationService {
@@ -14,20 +14,20 @@ export class NutritionEvaluationService {
         let myParams = new HttpParams();
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
         if (search) {
-            myParams = myParams.append("?patient.name", "*" + search + "*");
+            myParams = myParams.append('?patient.name', '*' + search + '*');
         }
 
         const url = `${environment.api_url}/nutritional/evaluations`;
 
-        return this.http.get<any>(url, {params: myParams})
+        return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
@@ -35,41 +35,20 @@ export class NutritionEvaluationService {
         let myParams = new HttpParams();
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
         if (search) {
-            myParams = myParams.append("?patient.name", "*" + search + "*");
+            myParams = myParams.append('?patient.name', '*' + search + '*');
         }
 
         const url = `${environment.api_url}/patients/${patient_id}/nutritional/evaluations`;
 
-        return this.http.get<any>(url, {params: myParams})
-            .toPromise();
-    }
-
-    getAllByPilotstudy(pilostudy_id: string, page?: number, limit?: number, search?: string): Promise<NutritionEvaluation[]> {
-        let myParams = new HttpParams();
-
-        if (page) {
-            myParams = myParams.append("page", String(page));
-        }
-
-        if (limit) {
-            myParams = myParams.append("limit", String(limit));
-        }
-
-        if (search) {
-            myParams = myParams.append("?patient.name", "*" + search + "*");
-        }
-
-        const url = `${environment.api_url}/pilotstudies/${pilostudy_id}/nutritional/evaluations`;
-
-        return this.http.get<any>(url, {params: myParams})
+        return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
@@ -78,20 +57,20 @@ export class NutritionEvaluationService {
         let myParams = new HttpParams();
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
         if (search) {
-            myParams = myParams.append("?patient.name", "*" + search + "*");
+            myParams = myParams.append('?patient.name', '*' + search + '*');
         }
 
         const url = `${environment.api_url}/healthprofessionals/${healthprofessional_id}/nutritional/evaluations`;
 
-        return this.http.get<any>(url, {params: myParams})
+        return this.http.get<any>(url, { params: myParams })
             .toPromise();
 
     }

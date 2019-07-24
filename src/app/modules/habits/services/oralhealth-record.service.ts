@@ -1,16 +1,17 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import {environment} from 'environments/environment';
-import {OralHealthRecord} from '../models/oralhealth-record';
+import { environment } from 'environments/environment';
+import { OralHealthRecord } from '../models/oralhealth-record';
 
 @Injectable()
 export class OralHealthRecordService {
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
 
-    getById(patientId: string, oralhealthRecordId: string, ): Promise<OralHealthRecord> {
+    getById(patientId: string, oralhealthRecordId: string): Promise<OralHealthRecord> {
         return this.http.get<any>(`${environment.api_url}/patients/${patientId}/oralhealthrecords/${oralhealthRecordId}`)
             .toPromise();
     }
@@ -19,11 +20,11 @@ export class OralHealthRecordService {
         let myParams = new HttpParams();
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
         const url = `${environment.api_url}/patients/${patientId}/oralhealthrecords`;

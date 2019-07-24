@@ -16,19 +16,14 @@ export const FilterOptions = {
     styleUrls: ['./measurement-card.component.scss']
 })
 export class MeasurementCardComponent implements OnInit {
-
     @Input() title: string;
     @Input() subtitle: string;
     @Input() filter_visibility: boolean;
     @Output() filter_change: EventEmitter<any>;
-
     search: DateRange;
-
     currentDate: Date;
     minDate: Date;
-
     filterOptions = FilterOptions;
-
     /*mobile view*/
     filterSelected: string;
 

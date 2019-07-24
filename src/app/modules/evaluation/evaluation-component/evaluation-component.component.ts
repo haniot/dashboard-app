@@ -1,11 +1,11 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
-import {ISubscription} from 'rxjs/Subscription';
+import { ISubscription } from 'rxjs/Subscription';
 
-import {Patient, Gender} from 'app/modules/patient/models/patient';
-import {PatientService} from 'app/modules/patient/services/patient.service';
+import { Patient } from 'app/modules/patient/models/patient';
+import { PatientService } from 'app/modules/patient/services/patient.service';
 
 @Component({
     selector: 'evaluation-component',
@@ -13,13 +13,9 @@ import {PatientService} from 'app/modules/patient/services/patient.service';
     styleUrls: ['./evaluation-component.component.scss']
 })
 export class EvaluationComponentComponent implements OnInit, OnChanges, OnDestroy {
-
     @Input() patientId: string;
     @Input() pilotStudyId: string;
     patient: Patient;
-
-    optionsGender: Array<string> = Object.keys(Gender);
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -27,6 +23,7 @@ export class EvaluationComponentComponent implements OnInit, OnChanges, OnDestro
         private location: Location,
         private patientService: PatientService
     ) {
+        this.patient = new Patient();
         this.subscriptions = new Array<ISubscription>();
     }
 
@@ -43,9 +40,7 @@ export class EvaluationComponentComponent implements OnInit, OnChanges, OnDestro
         if (this.pilotStudyId && this.patientId) {
             this.patientService.getById(this.patientId)
                 .then(patient => this.patient = patient)
-                .catch(errorResponse => {
-                    // console.log('Não foi possível buscar paciente!', errorResponse);
-                });
+                .catch();
         }
     }
 

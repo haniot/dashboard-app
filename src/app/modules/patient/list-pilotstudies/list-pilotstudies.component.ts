@@ -1,14 +1,17 @@
-import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
-import {ActivatedRoute, Router} from '@angular/router';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {ISubscription} from 'rxjs/Subscription';
+import { ISubscription } from 'rxjs/Subscription';
 
-import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
-import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
+import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import { SelectPilotStudyService } from '../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'list-pilotstudies',
@@ -17,21 +20,15 @@ import {LocalStorageService} from "../../../shared/shared-services/localstorage.
 })
 export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDestroy {
     userId: string;
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    /* Paging Setting */
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page: number;
+    limit: number;
     length: number;
-
     list: Array<PilotStudy>;
     search: string;
     searchTime;
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -42,6 +39,9 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         private router: Router,
         private localStorageService: LocalStorageService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
         this.subscriptions = new Array<ISubscription>();
     }
 
@@ -61,9 +61,9 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         if (!this.userId) {
             this.loadUser();
         }
-        const pilotselected = this.localStorageService.getItem(this.userId);
-        if (pilotselected) {
-            this.gotoPatients(pilotselected);
+        const pilotSelected = this.localStorageService.getItem(this.userId);
+        if (pilotSelected) {
+            this.gotoPatients(pilotSelected);
         } else {
             this.getAllPilotStudies();
         }
@@ -77,9 +77,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
                 this.loadinService.close();
                 this.getLengthPilotStudies();
             })
-            .catch(errorResponse => {
-                // console.log('Erro ao buscar pilot-studies: ', errorResponse);
-            });
+            .catch();
     }
 
     searchOnSubmit() {
@@ -90,9 +88,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
                     this.list = studies;
                     this.getLengthPilotStudies();
                 })
-                .catch(errorResponse => {
-                    // console.log('Erro ao buscar pilot-studies: ', errorResponse);
-                });
+                .catch();
         }, 200);
     }
 
@@ -122,17 +118,13 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
                 .then(studies => {
                     this.length = studies.length;
                 })
-                .catch(errorResponse => {
-                    // console.log('Erro ao buscar pilot-studies: ', errorResponse);
-                });
+                .catch();
         } else {
             this.pilotStudyService.getAll()
                 .then(studies => {
                     this.length = studies.length;
                 })
-                .catch(errorResponse => {
-                    // console.log('Erro ao buscar pilot-studies: ', errorResponse);
-                });
+                .catch();
         }
     }
 

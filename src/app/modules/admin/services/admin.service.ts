@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import {environment} from 'environments/environment';
-import {Admin} from '../models/users';
-import {IUser} from "../../../shared/shared-models/user";
+import { environment } from 'environments/environment';
+import { Admin } from '../models/users';
+import { IUser } from '../../../shared/shared-models/user';
 
 @Injectable()
 export class AdminService {
@@ -21,20 +21,20 @@ export class AdminService {
         let myParams = new HttpParams();
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
         if (search) {
-            myParams = myParams.append("?email", '*' + search + '*');
+            myParams = myParams.append('?email', '*' + search + '*');
         }
 
         const url = `${environment.api_url}/users/admins`;
 
-        return this.http.get<any>(url, {params: myParams})
+        return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
@@ -47,16 +47,5 @@ export class AdminService {
 
         return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
             .toPromise();
-
-        // return this.getById(administrator.id)
-        //   .then(adminOld => {
-        //     Object.keys(adminOld).forEach(key => {
-        //       if (adminOld[key] == administrator[key] && key != 'id') {
-        //         delete administrator[key];
-        //       }
-        //     });
-        //     return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
-        //       .toPromise();
-        //   });
     }
 }

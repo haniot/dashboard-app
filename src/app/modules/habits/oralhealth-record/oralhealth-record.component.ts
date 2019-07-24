@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { OralHealthRecord } from '../models/oralhealth-record';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+
+import { OralHealthRecord } from '../models/oralhealth-record';
 import { OralHealthRecordService } from '../services/oralhealth-record.service';
 
 @Component({
@@ -8,28 +9,26 @@ import { OralHealthRecordService } from '../services/oralhealth-record.service';
     templateUrl: './oralhealth-record.component.html',
     styleUrls: ['../shared-style/shared-styles.scss', './oralhealth-record.component.scss']
 })
-export class OralhealthRecordComponent implements OnInit {
-
-    listOralhealthRecords: Array<OralHealthRecord>;
-    oralhealthForm: FormGroup;
+export class OralhealthRecordComponent implements OnInit, OnChanges {
     @Input() patientId: string;
+    listOralHealthRecords: Array<OralHealthRecord>;
+    oralHealthForm: FormGroup;
     index: number;
 
     constructor(
         private fb: FormBuilder,
-        private oralhealthService: OralHealthRecordService
+        private oralHealthService: OralHealthRecordService
     ) {
         this.index = 0;
-        this.listOralhealthRecords = new Array<OralHealthRecord>();
+        this.listOralHealthRecords = new Array<OralHealthRecord>();
     }
 
     ngOnInit() {
         this.createOralHealthFormInit();
     }
 
-    /**Create form oral health */
     createOralHealthFormInit() {
-        this.oralhealthForm = this.fb.group({
+        this.oralHealthForm = this.fb.group({
             id: [''],
             created_at: [{ value: '', disabled: true }],
             teeth_brushing_freq: [{ value: '', disabled: true }],
@@ -39,7 +38,7 @@ export class OralhealthRecordComponent implements OnInit {
     }
 
     createOralHealthForm(oralhealthRecord: OralHealthRecord) {
-        this.oralhealthForm = this.fb.group({
+        this.oralHealthForm = this.fb.group({
             id: [{ value: oralhealthRecord.id, disabled: true }],
             created_at: [{ value: oralhealthRecord.created_at, disabled: true }],
             teeth_brushing_freq: [{ value: oralhealthRecord.teeth_brushing_freq, disabled: true }],
@@ -48,16 +47,13 @@ export class OralhealthRecordComponent implements OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue != changes.patientId.previousValue) {
-            this.oralhealthService.getAll(this.patientId)
+        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
+            this.oralHealthService.getAll(this.patientId)
                 .then(oralhealthrecords => {
-                    this.listOralhealthRecords = oralhealthrecords;
-                    this.createOralHealthForm(oralhealthrecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro
+                    this.listOralHealthRecords = oralhealthrecords;
+                    this.createOralHealthForm(oralhealthrecords[0]);
                 })
-                .catch(errorResponse => {
-                    //this.toastService.error('Não foi possível buscar coesão familiar!');
-                    //console.log('Não foi possível buscar coesão familiar!', errorResponse);
-                });
+                .catch();
         }
     }
 
@@ -65,12 +61,12 @@ export class OralhealthRecordComponent implements OnInit {
         if (this.index) {
             this.index--;
         }
-        this.createOralHealthForm(this.listOralhealthRecords[this.index]);
+        this.createOralHealthForm(this.listOralHealthRecords[this.index]);
     }
 
     next() {
         this.index++;
-        this.createOralHealthForm(this.listOralhealthRecords[this.index]);
+        this.createOralHealthForm(this.listOralHealthRecords[this.index]);
     }
 
 }

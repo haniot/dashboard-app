@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
 import { TranslateService } from '@ngx-translate/core';
+
+import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
 import { Weight } from '../models/weight';
 import { MeasurementService } from '../services/measurement.service';
 
@@ -12,17 +13,12 @@ import { MeasurementService } from '../services/measurement.service';
     styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class HeightComponent implements OnInit, OnChanges {
-
     @Input() data: Array<IMeasurement>;
     @Input() filter_visibility: boolean;
     @Input() patientId: string;
-
     lastData: IMeasurement;
-
     options: any;
-
     showSpinner: boolean;
-
     echartsInstance: any;
 
     constructor(
@@ -126,10 +122,7 @@ export class HeightComponent implements OnInit, OnChanges {
                 this.showSpinner = false;
                 this.updateGraph(measurements);
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     updateGraph(measurements: Array<any>): void {

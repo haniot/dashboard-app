@@ -1,10 +1,12 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { PhysicalActivityHabitsRecord } from '../models/physicalActivity';
+import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { TranslateService } from '@ngx-translate/core';
+
 import { PhysicalActivityRecordService } from '../services/physical-activity-record.service';
 import { PhysicalActivityPipe } from '../pipes/physical-activity-frequency.pipe';
-import { TranslateService } from '@ngx-translate/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { PhysicalActivityHabitsRecord } from '../models/physicalActivity';
 
 @Component({
     selector: 'physical-activity-habits',
@@ -12,11 +14,10 @@ import { DomSanitizer } from '@angular/platform-browser';
     styleUrls: ['../shared-style/shared-styles.scss', './physical-activity-habits.component.scss']
 })
 export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
-
-    listPhysicalActivits: Array<PhysicalActivityHabitsRecord>;
-    physicalActivityForm: FormGroup;
     @Input() patientId: string;
     @Input() physicalRecord: PhysicalActivityHabitsRecord;
+    listPhysicalActivities: Array<PhysicalActivityHabitsRecord>;
+    physicalActivityForm: FormGroup;
     index: number;
 
     constructor(
@@ -27,14 +28,13 @@ export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
         private sanitizer: DomSanitizer
     ) {
         this.index = 0;
-        this.listPhysicalActivits = new Array<PhysicalActivityHabitsRecord>();
+        this.listPhysicalActivities = new Array<PhysicalActivityHabitsRecord>();
     }
 
     ngOnInit() {
         this.createPhysicalActivityFormInit();
     }
 
-    /**Create form feeding */
     createPhysicalActivityFormInit() {
         this.physicalActivityForm = this.fb.group({
             id: [''],
@@ -57,19 +57,16 @@ export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue != changes.patientId.previousValue) {
+        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
             this.physicalActivityService.getAll(this.patientId)
                 .then(physicalRecords => {
-                    this.listPhysicalActivits = physicalRecords;
-                    this.createPhysicalActivityForm(physicalRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro
+                    this.listPhysicalActivities = physicalRecords;
+                    this.createPhysicalActivityForm(physicalRecords[0]);
                 })
-                .catch(errorResponse => {
-                    // this.toastService.error('Não foi possível buscar hábitos de sono!');
-                    // console.log('Não foi possível buscar hábitos de sono!', errorResponse);
-                });
-        } else if (this.physicalRecord && changes.physicalRecord.currentValue != changes.physicalRecord.previousValue) {
-            this.listPhysicalActivits = new Array<PhysicalActivityHabitsRecord>();
-            this.listPhysicalActivits.push(this.physicalRecord);
+                .catch();
+        } else if (this.physicalRecord && changes.physicalRecord.currentValue !== changes.physicalRecord.previousValue) {
+            this.listPhysicalActivities = new Array<PhysicalActivityHabitsRecord>();
+            this.listPhysicalActivities.push(this.physicalRecord);
             this.createPhysicalActivityForm(this.physicalRecord);
         }
     }
@@ -78,12 +75,12 @@ export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
         if (this.index) {
             this.index--;
         }
-        this.createPhysicalActivityForm(this.listPhysicalActivits[this.index]);
+        this.createPhysicalActivityForm(this.listPhysicalActivities[this.index]);
     }
 
     next() {
         this.index++;
-        this.createPhysicalActivityForm(this.listPhysicalActivits[this.index]);
+        this.createPhysicalActivityForm(this.listPhysicalActivities[this.index]);
     }
 
     getTrustedUrl(url: string) {

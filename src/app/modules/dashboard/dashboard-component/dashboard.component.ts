@@ -1,20 +1,22 @@
-import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 
 import * as $ from 'jquery';
-import {ISubscription} from 'rxjs/Subscription';
+import { ISubscription } from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
-import {DashboardService} from '../services/dashboard.service';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
-import {ToastrService} from "ngx-toastr";
-import {Unit} from "../models/unit";
-import {PilotStudy} from "../../pilot-study/models/pilot.study";
-import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
-import {Patient} from "../../patient/models/patient";
-import {PageEvent} from '@angular/material/paginator';
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
+import { DashboardService } from '../services/dashboard.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import { Unit } from '../models/unit';
+import { PilotStudy } from '../../pilot-study/models/pilot.study';
+import { SelectPilotStudyService } from '../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service';
+import { Patient } from '../../patient/models/patient';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { ConfigurationBasic } from '../../config-matpaginator';
 
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'app-dashboard',
@@ -22,49 +24,29 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
-    /* Configurações de paginação dos pacientes */
-    // MatPaginator Inputs
-    pageSizeOptionsPatients: number[] = [10, 25, 100];
-
-    // MatPaginator Output
-    pageEventPatients: PageEvent;
-
-    /* Controles de paginação */
-    pagePatients: number = 1;
-    limitPatients: number = 10;
+    /* Patient Paging Settings */
+    pageSizeOptionsPatients: number[];
+    pagePatients: number;
+    limitPatients: number;
     lengthPatients: number;
-
-    /* Configurações de paginação dos estudos */
-    // MatPaginator Inputs
-    pageSizeOptionsStudies: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    pageEventPatients: PageEvent;
+    /* Study Paging Settings */
+    pageSizeOptionsStudies: number[];
     pageEventStudies: PageEvent;
-
-    /* Controles de paginação */
-    pageStudies: number = 1;
-    limitStudies: number = 10;
+    pageStudies: number;
+    limitStudies: number;
     lengthStudies: number;
-
     userId: string;
-
     patientsTotal: number;
     studiesTotal: number;
     measurementsTotal: number;
     evaluationsTotal: number;
-
     listPacientsAndWeigth: Array<Unit>;
-
     listPacients: Array<Patient>;
-
     listPilots: Array<PilotStudy>;
-
     pilotStudyId: string;
-
     listOfStudiesIsEmpty: boolean;
-
     listOfPatientsIsEmpty: boolean;
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -86,20 +68,22 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.listOfStudiesIsEmpty = false;
         this.listOfPatientsIsEmpty = false;
         this.subscriptions = new Array<ISubscription>();
+        this.pagePatients = PaginatorConfig.page;
+        this.limitPatients = PaginatorConfig.limit;
+        this.pageSizeOptionsPatients = PaginatorConfig.pageSizeOptions;
+        this.pageStudies = PaginatorConfig.page;
+        this.limitStudies = PaginatorConfig.limit;
+        this.pageSizeOptionsStudies = PaginatorConfig.pageSizeOptions;
     }
 
 
     ngOnInit() {
-
         $('body').css('background-color', '#ececec');
-
         this.loadPilotSelected();
-
         this.subscriptions.push(this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
             this.getPatients();
         }));
-
         this.load();
     }
 
@@ -149,7 +133,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.pageEventStudies = event;
         this.pageStudies = event.pageIndex + 1;
         this.limitStudies = event.pageSize;
-        // this.getStudies();
     }
 
     getPatients() {
@@ -173,9 +156,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
             .then(patients => {
                 this.lengthPatients = patients.length;
             })
-            .catch(errorResponse => {
-                // console.log('Não foi possível buscar todos os pacientes',errorResponse);
-            });
+            .catch();
     }
 
     getStudies() {
@@ -195,7 +176,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     calcLengthStudies() {
-
         if (this.isNotUserAdmin()) {
             this.dashboardService.getNumberOfStudies(this.userId)
                 .then(numberOfStudies => {
@@ -203,9 +183,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
                     this.studiesTotal = numberOfStudies;
 
                 })
-                .catch(errorResponse => {
-                    // console.log('Não foi possível buscar todos os pacientes',errorResponse);
-                });
+                .catch();
         } else {
             this.dashboardService.getInfoByUser(this.userId)
                 .then((response: { studiesTotal: number, patientsTotal: number }) => {
@@ -219,7 +197,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'))
                 });
         }
-
 
     }
 

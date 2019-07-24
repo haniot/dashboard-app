@@ -8,21 +8,16 @@ import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'waist-circunference',
-    templateUrl: './waist-circunference.component.html',
+    templateUrl: './waist-circumference.component.html',
     styleUrls: ['../shared-style/shared-styles.scss']
 })
-export class WaistCircunferenceComponent implements OnInit, OnChanges {
-
+export class WaistCircumferenceComponent implements OnInit, OnChanges {
     @Input() data: Array<IMeasurement>;
     @Input() filter_visibility: boolean;
     @Input() patientId: string;
-
     lastData: IMeasurement;
-
     options: any;
-
     showSpinner: boolean;
-
     echartsInstance: any;
 
     constructor(
@@ -32,7 +27,7 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
     ) {
         this.data = new Array<Measurement>();
         this.filter_visibility = false;
-        this.patientId = "";
+        this.patientId = '';
         this.showSpinner = false;
     }
 
@@ -73,20 +68,20 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
             markLine: {
                 tooltip: {
                     trigger: 'item',
-                    formatter: average_value + " : {c} cm"
+                    formatter: average_value + ' : {c} cm'
                 },
                 lineStyle: {
-                    color: 'black',
+                    color: 'black'
                 },
                 data: [
-                    {type: 'average', name: average}
+                    { type: 'average', name: average }
                 ]
             }
         };
 
 
         this.data.forEach((element: Measurement) => {
-            xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             series.data.push(element.value);
         });
 
@@ -127,10 +122,7 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
                 this.showSpinner = false;
                 this.updateGraph(measurements);
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     updateGraph(measurements: Array<any>): void {
@@ -139,7 +131,7 @@ export class WaistCircunferenceComponent implements OnInit, OnChanges {
         this.options.series.data = new Array<any>();
 
         measurements.forEach((element: Weight) => {
-            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             this.options.series.data.push(element.value);
         });
         this.echartsInstance.setOption(this.options);

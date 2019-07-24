@@ -1,11 +1,14 @@
-import {Component, OnInit, Output, EventEmitter, AfterViewInit} from '@angular/core';
-import {PageEvent} from '@angular/material';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { PageEvent } from '@angular/material';
 
-import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
+import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'studies',
@@ -13,29 +16,19 @@ import {LocalStorageService} from "../../../shared/shared-services/localstorage.
     styleUrls: ['./studies.component.scss']
 })
 export class StudiesComponent implements OnInit, AfterViewInit {
-
-    listClass: Array<string>;
     @Output() selected = new EventEmitter();
-
     userId: string;
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    /* Paging Settings */
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page: number;
+    limit: number;
     length: number;
-
     list: Array<PilotStudy>;
     search: string;
     searchTime;
-
-    listOfpilotsIsEmpty: boolean = false;
-
-    cacheStudyIdRemove: string;
+    listClass: Array<string>;
+    listOfPilotsIsEmpty: boolean;
 
     constructor(
         private pilotStudyService: PilotStudyService,
@@ -43,6 +36,10 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         private loadinService: LoadingService,
         private localStorageService: LocalStorageService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.listOfPilotsIsEmpty = false;
         this.list = new Array<PilotStudy>();
         this.listClass = new Array<string>();
     }
@@ -63,14 +60,13 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                 .then(studies => {
                     this.list = studies;
                     if (studies && studies.length) {
-                        this.listOfpilotsIsEmpty = false;
+                        this.listOfPilotsIsEmpty = false;
                     } else {
-                        this.listOfpilotsIsEmpty = true;
+                        this.listOfPilotsIsEmpty = true;
                     }
                 })
-                .catch(error => {
-                    this.listOfpilotsIsEmpty = true;
-                    // console.log('Erro ao buscar pilot-studies: ', error);
+                .catch(() => {
+                    this.listOfPilotsIsEmpty = true;
                 });
         } else {
             this.userId = this.localStorageService.getItem('user');
@@ -78,14 +74,13 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                 .then(studies => {
                     this.list = studies;
                     if (studies && studies.length) {
-                        this.listOfpilotsIsEmpty = false;
+                        this.listOfPilotsIsEmpty = false;
                     } else {
-                        this.listOfpilotsIsEmpty = true;
+                        this.listOfPilotsIsEmpty = true;
                     }
                 })
-                .catch(error => {
-                    this.listOfpilotsIsEmpty = true;
-                    // console.log('Erro ao buscar pilot-studies: ', error);
+                .catch(() => {
+                    this.listOfPilotsIsEmpty = true;
                 });
         }
     }
@@ -99,18 +94,14 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                         this.list = studies;
                         this.getLengthPilotStudies();
                     })
-                    .catch(error => {
-                        // console.log('Erro ao buscar pilot-studies: ', error);
-                    });
+                    .catch();
             } else {
                 this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                     .then(studies => {
                         this.list = studies;
                         this.getLengthPilotStudies();
                     })
-                    .catch(error => {
-                        // console.log('Erro ao buscar pilot-studies: ', error);
-                    });
+                    .catch();
             }
         }, 200);
     }
@@ -142,17 +133,13 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                 .then(studies => {
                     this.length = studies.length;
                 })
-                .catch(error => {
-                    // console.log('Erro ao buscar pilot-studies: ', error);
-                });
+                .catch();
         } else {
             this.pilotStudyService.getAll()
                 .then(studies => {
                     this.length = studies.length;
                 })
-                .catch(error => {
-                    // console.log('Erro ao buscar pilot-studies: ', error);
-                });
+                .catch();
         }
     }
 
@@ -161,7 +148,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         let local_index = 0;
         this.selected.emit(study_id);
         this.list.forEach((study, index) => {
-            if (study.id == study_id) {
+            if (study.id === study_id) {
                 local_index = index;
                 return;
             }

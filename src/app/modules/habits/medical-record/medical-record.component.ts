@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { MedicalRecord } from '../models/medical-record';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MedicalRecordService } from '../services/medical-record.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { MedicalRecord } from '../models/medical-record';
+import { MedicalRecordService } from '../services/medical-record.service';
 
 @Component({
     selector: 'medical-record',
@@ -10,12 +11,10 @@ import { DomSanitizer } from '@angular/platform-browser';
     styleUrls: ['../shared-style/shared-styles.scss', './medical-record.component.scss']
 })
 export class MedicalRecordComponent implements OnInit, OnChanges {
-
-    listMedical: Array<MedicalRecord>;
-    medicalForm: FormGroup;
     @Input() patientId: string;
     @Input() medicalRecord: MedicalRecord;
-
+    listMedical: Array<MedicalRecord>;
+    medicalForm: FormGroup;
     index: number;
 
     constructor(
@@ -31,7 +30,6 @@ export class MedicalRecordComponent implements OnInit, OnChanges {
         this.createMedicalFormInit();
     }
 
-    /**Create form MedicalRecord */
     createMedicalFormInit() {
         this.medicalForm = this.fb.group({
             id: [''],
@@ -49,17 +47,14 @@ export class MedicalRecordComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue != changes.patientId.previousValue) {
+        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
             this.medcalService.getAll(this.patientId)
                 .then(medicalRecords => {
                     this.listMedical = medicalRecords;
-                    this.createMedicalForm(medicalRecords[0]);// FIXME: Aqui estou pegando apenas o primeiro registro
+                    this.createMedicalForm(medicalRecords[0]);
                 })
-                .catch(errorResponse => {
-                    // this.toastService.error('Não foi possível buscar histórico de doenças!');
-                    // console.log('Não foi possível buscar histórico de doenças!', errorResponse);
-                });
-        } else if (this.medicalRecord && changes.medicalRecord.currentValue != changes.medicalRecord.previousValue) {
+                .catch();
+        } else if (this.medicalRecord && changes.medicalRecord.currentValue !== changes.medicalRecord.previousValue) {
             this.listMedical = new Array<MedicalRecord>();
             this.listMedical.push(this.medicalRecord);
             this.createMedicalForm(this.medicalRecord);

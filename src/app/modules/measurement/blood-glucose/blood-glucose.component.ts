@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { BloodGlucose, MealType } from '../models/blood-glucose';
+
 import { TranslateService } from '@ngx-translate/core';
+
+import { BloodGlucose, MealType } from '../models/blood-glucose';
 import { MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 
@@ -15,13 +17,9 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     @Input() data: Array<BloodGlucose>;
     @Input() filter_visibility: boolean;
     @Input() patientId: string;
-
     lastData: BloodGlucose;
-
     options: any;
-
     showSpinner: boolean;
-
     echartsInstance: any;
 
     constructor(
@@ -191,17 +189,10 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 this.showSpinner = false;
                 this.updateGraph(measurements);
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
-    updateGraph(measurements
-                    :
-                    Array<any>
-    ):
-        void {
+    updateGraph(measurements: Array<any>): void {
         // clean
         this.options.xAxis.data = new Array<any>();
         this.options.series.data = new Array<any>();
@@ -235,10 +226,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.echartsInstance.setOption(this.options);
     }
 
-    ngOnChanges(changes
-                    :
-                    SimpleChanges
-    ) {
+    ngOnChanges(changes: SimpleChanges) {
         if ((changes.data.currentValue && changes.data.previousValue
             && changes.data.currentValue.length !== changes.data.previousValue.length) ||
             (changes.data.currentValue.length && !changes.data.previousValue)) {

@@ -1,12 +1,13 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { WaterGlassPipe } from '../pipes/water-glass.pipe';
 import { BreakFastPipe } from '../pipes/break-fast.pipe';
 import { BreastFeedingPipe } from '../pipes/breast-feeding.pipe';
 import { FeedingHabitsRecord } from '../models/feeding';
 import { FeedingRecordService } from '../services/feeding-record.service';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'feeding-habits',
@@ -14,12 +15,10 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['../shared-style/shared-styles.scss', './feeding-habits.component.scss']
 })
 export class FeedingHabitsComponent implements OnInit, OnChanges {
-
-    listFeeding: Array<FeedingHabitsRecord>;
-    feedingForm: FormGroup;
     @Input() patientId: string;
     @Input() feedingHabitsRecord: FeedingHabitsRecord;
-
+    listFeeding: Array<FeedingHabitsRecord>;
+    feedingForm: FormGroup;
     index: number;
 
     constructor(
@@ -38,7 +37,6 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
         this.createFeedingFormInit();
     }
 
-    /**Create form feeding */
     createFeedingFormInit() {
         this.feedingForm = this.fb.group({
             id: [''],
@@ -80,12 +78,8 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
                 .then(feedingRecords => {
                     this.listFeeding = feedingRecords;
                     this.createFeedingForm(feedingRecords[0]);
-                    // FIXME: Aqui estou pegando apenas o primeiro registro
                 })
-                .catch(errorResponse => {
-                    // this.toastService.error('Não foi possível buscar hábitos alimentares!');
-                    // console.log('Não foi possível buscar hábitos alimentares!', errorResponse);
-                });
+                .catch();
         } else if (this.feedingHabitsRecord && changes.feedingHabitsRecord.currentValue !== changes.feedingHabitsRecord.previousValue) {
             this.listFeeding = new Array<FeedingHabitsRecord>();
             this.listFeeding.push(this.feedingHabitsRecord);

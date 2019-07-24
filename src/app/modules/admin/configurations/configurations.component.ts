@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {HttpErrorResponse} from '@angular/common/http';
-import {ToastrService} from 'ngx-toastr';
-import {AdminService} from '../services/admin.service';
-import {HealthProfessionalService} from '../services/health-professional.service';
-import {Admin, HealtArea} from '../models/users';
-import {UserService} from '../services/users.service';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
-import {IUser} from "../../../shared/shared-models/user";
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+
+import { AdminService } from '../services/admin.service';
+import { HealthProfessionalService } from '../services/health-professional.service';
+import { Admin } from '../models/users';
+import { UserService } from '../services/users.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { IUser } from '../../../shared/shared-models/user';
 
 @Component({
     selector: 'admin-configurations',
@@ -18,13 +18,9 @@ import {IUser} from "../../../shared/shared-models/user";
 })
 export class AdminConfigurationsComponent implements OnInit {
     userId: string;
-
     visibilityButtonSave: boolean;
     disabledButtonEdit: boolean;
     user: IUser;
-
-    healthAreaOptions = Object.keys(HealtArea);
-
     email: string;
     password: string;
 
@@ -48,9 +44,7 @@ export class AdminConfigurationsComponent implements OnInit {
         this.userId = this.localStorageService.getItem('user');
         this.adminService.getById(this.userId)
             .then(admin => this.user = admin)
-            .catch(HttpError => {
-                // console.log('Não foi possível carregar usuário logado!', HttpError);
-            });
+            .catch();
 
     }
 
@@ -69,7 +63,7 @@ export class AdminConfigurationsComponent implements OnInit {
                 this.visibilityButtonSave = false;
                 this.disabledButtonEdit = false;
             })
-            .catch((errorResponse: HttpErrorResponse) => {
+            .catch(() => {
                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-UPDATED-INFO'));
             });
     }

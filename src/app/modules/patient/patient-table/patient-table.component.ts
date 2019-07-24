@@ -1,15 +1,19 @@
-import {AfterViewChecked, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
+import { AfterViewChecked, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 
-import {ToastrService} from 'ngx-toastr';
-import {ISubscription} from 'rxjs/Subscription';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
-import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
-import {Patient} from '../models/patient';
-import {PatientService} from '../services/patient.service';
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
+import { ToastrService } from 'ngx-toastr';
+import { ISubscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
+
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { LoadingService } from '../../../shared/shared-components/loading-component/service/loading.service';
+import { SelectPilotStudyService } from '../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service';
+import { Patient } from '../models/patient';
+import { PatientService } from '../services/patient.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'patient-table',
@@ -17,27 +21,18 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./patient-table.component.scss']
 })
 export class PatientTableComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    @Input() pilotStudyId;
+    /* Paging Setting*/
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page = 1;
-    limit = 10;
+    page: number;
+    limit: number;
     length: number;
-
-    listOfPatientsIsEmpty = false;
-
+    listOfPatientsIsEmpty: boolean;
     listOfPatients = new Array<Patient>();
     search: string;
     searchTime;
-
-    @Input() pilotStudyId;
-
     cacheIdPatientRemove: string;
-
     userId: string;
 
     private subscriptions: Array<ISubscription>;
@@ -51,6 +46,10 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         private localStorageService: LocalStorageService,
         private translateService: TranslateService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.listOfPatientsIsEmpty = false;
         this.subscriptions = new Array<ISubscription>();
     }
 
@@ -88,9 +87,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                         this.listOfPatientsIsEmpty = false;
                     }
                 })
-                .catch(errorResponse => {
-                    // console.log('Erro ao buscar pacientes: ', errorResponse);
-                });
+                .catch();
         }, 200);
     }
 
@@ -105,9 +102,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                     this.listOfPatientsIsEmpty = false;
                 }
             })
-            .catch(errorResponse => {
-                // console.log('Erro ao buscar pacientes: ', errorResponse);
-            });
+            .catch();
     }
 
     clickPagination(event) {
@@ -136,9 +131,8 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
                 this.closeModalComfimation();
             })
-            .catch(errorResponse => {
+            .catch(() => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-REMOVED'));
-                // console.log('Não foi possível remover paciente!', errorResponse);
             });
     }
 
@@ -160,9 +154,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
             .then(patients => {
                 this.length = patients.length;
             })
-            .catch(errorResponse => {
-                // console.log('Não foi possível buscar todos os pacientes',errorResponse);
-            });
+            .catch();
     }
 
     trackById(index, item) {

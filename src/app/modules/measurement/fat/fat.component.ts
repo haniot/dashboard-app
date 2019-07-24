@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
+
 import { TranslateService } from '@ngx-translate/core';
+
+import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 
 @Component({
@@ -10,17 +12,12 @@ import { MeasurementService } from '../services/measurement.service';
     styleUrls: ['../shared-style/shared-styles.scss']
 })
 export class FatComponent implements OnInit, OnChanges {
-
     @Input() data: Array<IMeasurement>;
     @Input() filter_visibility: boolean;
     @Input() patientId: string;
-
     lastData: IMeasurement;
-
     options: any;
-
     echartsInstance: any;
-
     showSpinner: boolean;
 
     constructor(
@@ -82,15 +79,15 @@ export class FatComponent implements OnInit, OnChanges {
                     tooltip: {
                         trigger: 'item',
                         formatter:
-                            average_value + " : {c} %"
+                            average_value + ' : {c} %'
                     }
                     ,
                     lineStyle: {
-                        color: 'black',
+                        color: 'black'
                     }
                     ,
                     data: [
-                        {type: 'average', name: average}
+                        { type: 'average', name: average }
                     ]
                 }
         };
@@ -99,11 +96,11 @@ export class FatComponent implements OnInit, OnChanges {
             series.data.push(element.value);
 
             const find = xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, "shortDate");
+                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
             });
 
             if (!find) {
-                xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             }
 
         });
@@ -143,10 +140,7 @@ export class FatComponent implements OnInit, OnChanges {
                 this.showSpinner = false;
                 this.updateGraph(measurements);
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     updateGraph(measurements: Array<Measurement>): void {
@@ -158,11 +152,11 @@ export class FatComponent implements OnInit, OnChanges {
             this.options.series.data.push(element.value);
 
             const find = this.options.xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, "shortDate");
+                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
             });
 
             if (!find) {
-                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
+                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             }
 
         });

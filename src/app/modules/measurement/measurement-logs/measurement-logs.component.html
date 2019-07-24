@@ -31,7 +31,7 @@
                 <div class="col d-flex flex-row-reverse">
                     <div class="p-2">
                         <button type="button" class="btn btn-haniot-primary btn-sm" (click)="removeSelected()"
-                                [disabled]="!stateButtonRemoveSeleted">
+                                [disabled]="!stateButtonRemoveSelected">
                             {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.REMOVE-SELECTED'|translate}}
                         </button>
                     </div>
@@ -59,7 +59,7 @@
                         <tbody>
                         <tr *ngFor="let measurement of listOfMeasurements; let i= index; trackBy: trackById">
                             <td>
-                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                <mat-checkbox (change)="changeOnMeasurement()"
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
@@ -91,7 +91,7 @@
                         <tbody>
                         <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
                             <td>
-                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                <mat-checkbox (change)="changeOnMeasurement()"
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
@@ -129,7 +129,7 @@
                         <tbody>
                         <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
                             <td>
-                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                <mat-checkbox (change)="changeOnMeasurement()"
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
@@ -166,7 +166,7 @@
                         <tbody>
                         <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
                             <td>
-                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                <mat-checkbox (change)="changeOnMeasurement()"
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
@@ -205,7 +205,7 @@
                         <tbody>
                         <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
                             <td>
-                                <mat-checkbox (change)="changeOnMeasurement(i)"
+                                <mat-checkbox (change)="changeOnMeasurement()"
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>

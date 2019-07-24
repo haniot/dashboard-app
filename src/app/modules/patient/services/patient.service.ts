@@ -7,68 +7,69 @@ import { Patient } from '../models/patient';
 @Injectable()
 export class PatientService {
 
-  constructor(private http: HttpClient) { }
-
-  getById(patientId: string): Promise<Patient> {
-    return this.http.get<any>(`${environment.api_url}/users/patients/${patientId}`)
-      .toPromise();
-  }
-
-
-  getAllByPilotStudy(pilotstudyId: string, page?: number, limit?: number, search?: string): Promise<Patient[]> {
-    let myParams = new HttpParams();
-
-    if (page) {
-      myParams = myParams.append("page", String(page));
+    constructor(private http: HttpClient) {
     }
 
-    if (limit) {
-      myParams = myParams.append("limit", String(limit));
+    getById(patientId: string): Promise<Patient> {
+        return this.http.get<any>(`${environment.api_url}/users/patients/${patientId}`)
+            .toPromise();
     }
 
-    if (search) {
-      myParams = myParams.append("?name", '*' + search + '*');
+
+    getAllByPilotStudy(pilotstudyId: string, page?: number, limit?: number, search?: string): Promise<Patient[]> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
+
+        if (search) {
+            myParams = myParams.append('?name', '*' + search + '*');
+        }
+
+        const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
+
+        return this.http.get<any>(url, { params: myParams })
+            .toPromise();
     }
 
-    const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
+    getAll(page?: number, limit?: number, search?: string): Promise<Patient[]> {
+        let myParams = new HttpParams();
 
-    return this.http.get<any>(url, { params: myParams })
-      .toPromise();
-  }
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
 
-  getAll(page?: number, limit?: number, search?: string): Promise<Patient[]> {
-    let myParams = new HttpParams();
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
 
-    if (page) {
-      myParams = myParams.append("page", String(page));
+        if (search) {
+            myParams = myParams.append('?name', '*' + search + '*');
+        }
+
+        const url = `${environment.api_url}/users/patients`;
+
+        return this.http.get<any>(url, { params: myParams })
+            .toPromise();
     }
 
-    if (limit) {
-      myParams = myParams.append("limit", String(limit));
+    create(patient: Patient): Promise<boolean> {
+        return this.http.post<any>(`${environment.api_url}/users/patients`, patient)
+            .toPromise();
     }
 
-    if (search) {
-      myParams = myParams.append("?name", '*' + search + '*');
+    update(patient: Patient): Promise<boolean> {
+        return this.http.patch<any>(`${environment.api_url}/users/patients/${patient.id}`, patient)
+            .toPromise();
     }
 
-    const url = `${environment.api_url}/users/patients`;
-
-    return this.http.get<any>(url, { params: myParams })
-      .toPromise();
-  }
-
-  create(patient: Patient): Promise<boolean> {
-    return this.http.post<any>(`${environment.api_url}/users/patients`, patient)
-      .toPromise();
-  }
-
-  update(patient: Patient): Promise<boolean> {
-    return this.http.patch<any>(`${environment.api_url}/users/patients/${patient.id}`, patient)
-      .toPromise();
-  }
-
-  remove(patientId: string): Promise<boolean> {
-    return this.http.delete<any>(`${environment.api_url}/users/${patientId}`)
-      .toPromise();
-  }
+    remove(patientId: string): Promise<boolean> {
+        return this.http.delete<any>(`${environment.api_url}/users/${patientId}`)
+            .toPromise();
+    }
 }

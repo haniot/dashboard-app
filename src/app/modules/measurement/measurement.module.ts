@@ -14,7 +14,7 @@ import {SharedModule} from 'app/shared/shared.module';
 import {MeasurementService} from './services/measurement.service';
 import {WeightComponent} from './weight/weight.component';
 import {HeightComponent} from './height/height.component';
-import {WaistCircunferenceComponent} from './waist-circunference/waist-circunference.component';
+import {WaistCircumferenceComponent} from './waist-circunference/waist-circumference.component';
 import {BodyTemperatureComponent} from './body-temperature/body-temperature.component';
 import {BloodGlucoseComponent} from './blood-glucose/blood-glucose.component';
 import {BloodPressureComponent} from './blood-pressure/blood-pressure.component';
@@ -35,7 +35,7 @@ import { MeasurementTypePipe } from './pipes/measurement-type.pipe';
         MeasurementComponentComponent,
         WeightComponent,
         HeightComponent,
-        WaistCircunferenceComponent,
+        WaistCircumferenceComponent,
         BodyTemperatureComponent,
         BloodGlucoseComponent,
         BloodPressureComponent,
@@ -72,7 +72,7 @@ import { MeasurementTypePipe } from './pipes/measurement-type.pipe';
         MealPipe,
         WeightComponent,
         HeightComponent,
-        WaistCircunferenceComponent,
+        WaistCircumferenceComponent,
         BodyTemperatureComponent,
         BloodGlucoseComponent,
         BloodPressureComponent,

@@ -1,4 +1,4 @@
-export interface GraphData{
-    dataXaxis : Array<string>,
-    seriesChart : Array<number>
+export interface GraphData {
+    dataXaxis: Array<string>,
+    seriesChart: Array<number>
 }

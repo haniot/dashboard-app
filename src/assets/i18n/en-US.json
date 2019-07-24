@@ -3,10 +3,10 @@
     "TITLE": "HANIoT",
     "DEVELOP-ORGANIZATION": "NUTES"
   },
-  "ACESS-DENIED": {
+  "ACCESS-DENIED": {
     "TITLE": "Access denied",
-    "MESSSAGE": "Sorry, your access has been declined due to security reasons of our server and also to our confidential data",
-    "MESSSAGE-GO-BACK": "Please return to the main page by clicking on the button below"
+    "MESSAGE": "Sorry, your access has been declined due to security reasons of our server and also to our confidential data",
+    "MESSAGE-GO-BACK": "Please return to the main page by clicking on the button below"
   },
   "ADMINISTRADORS": {
     "TITLE": "User list administrators",

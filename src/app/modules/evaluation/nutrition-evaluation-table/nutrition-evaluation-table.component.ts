@@ -1,12 +1,16 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {PageEvent} from '@angular/material';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { PageEvent } from '@angular/material';
 
-import {NutritionEvaluation} from '../models/nutrition-evaluation';
-import {NutritionEvaluationService} from '../services/nutrition-evaluation.service';
-import {ToastrService} from 'ngx-toastr';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {EvaluationService} from '../services/evaluation.service';
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { EvaluationService } from '../services/evaluation.service';
+import { NutritionEvaluation } from '../models/nutrition-evaluation';
+import { NutritionEvaluationService } from '../services/nutrition-evaluation.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'nutrition-evaluation-table',
@@ -14,27 +18,18 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./nutrition-evaluation-table.component.scss']
 })
 export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
-
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    @Input() patientId: string;
+    /* Paging Settings */
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page: number;
+    limit: number;
     length: number;
-
     listOfEvaluations: Array<NutritionEvaluation>;
     search: string;
     searchTime;
-
-    @Input() patientId: string;
-
     cacheIdEvaluationRemove: string;
-
-    listOfEvaluationsIsEmpty: boolean = false;
+    listOfEvaluationsIsEmpty: boolean;
 
     constructor(
         private evaluationService: EvaluationService,
@@ -43,6 +38,10 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
         private modalService: ModalService,
         private translateService: TranslateService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.listOfEvaluationsIsEmpty = false;
         this.listOfEvaluations = new Array<NutritionEvaluation>();
     }
 
@@ -65,9 +64,8 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                         }
                         this.calcLenghtNutritionEvaluations();
                     })
-                    .catch(errorResponse => {
+                    .catch(() => {
                         this.listOfEvaluationsIsEmpty = true;
-                        // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                     });
             }, 200);
         }
@@ -85,9 +83,8 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                         this.listOfEvaluationsIsEmpty = true;
                     }
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.listOfEvaluationsIsEmpty = true;
-                    // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                 });
         }
     }
@@ -122,7 +119,6 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                 })
                 .catch(errorResponse => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-REMOVED'));
-                    // console.log('Não foi possível remover paciente!', errorResponse);
                 });
         }
     }
@@ -146,9 +142,7 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                 .then(nutritionEvaluations => {
                     this.length = nutritionEvaluations.length;
                 })
-                .catch(errorResponse => {
-                    // console.log('Não foi possível buscar todos as avaliações do pacientes',errorResponse);
-                });
+                .catch();
         }
     }
 

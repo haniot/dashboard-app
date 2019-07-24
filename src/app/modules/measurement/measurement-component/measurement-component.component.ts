@@ -1,11 +1,11 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
-import {IMeasurement, MeasurementType} from '../models/measurement';
-import {MeasurementService} from '../services/measurement.service';
-import {BloodPressure} from '../models/blood-pressure';
-import {HeartRate} from '../models/heart-rate';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
+import { IMeasurement, MeasurementType } from '../models/measurement';
+import { MeasurementService } from '../services/measurement.service';
+import { BloodPressure } from '../models/blood-pressure';
+import { HeartRate } from '../models/heart-rate';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
 
 class ConfigVisibility {
     weight: boolean;
@@ -35,29 +35,17 @@ class ConfigVisibility {
     styleUrls: ['./measurement-component.component.scss']
 })
 export class MeasurementComponentComponent implements OnInit, OnChanges {
-
     @Input() configVisibility: ConfigVisibility;
-
     @Input() patientId;
-
     listWeight: Array<IMeasurement>;
-
     listHeight: Array<IMeasurement>;
-
     listFat: Array<IMeasurement>;
-
-    listWaistCircunference: Array<IMeasurement>;
-
+    listWaistCircumference: Array<IMeasurement>;
     listBodyTemperature: Array<IMeasurement>;
-
     listBloodGlucose: Array<IMeasurement>;
-
     listBloodPressure: Array<IMeasurement>;
-
     listHeartRate: Array<IMeasurement>;
-
     userHealthArea: string;
-
     filter: { start_at: string, end_at: string, period: string };
 
     constructor(
@@ -68,13 +56,13 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
         this.listWeight = new Array<IMeasurement>();
         this.listHeight = new Array<IMeasurement>();
         this.listFat = new Array<IMeasurement>();
-        this.listWaistCircunference = new Array<IMeasurement>();
+        this.listWaistCircumference = new Array<IMeasurement>();
         this.listBodyTemperature = new Array<IMeasurement>();
         this.listBloodGlucose = new Array<IMeasurement>();
         this.listBloodPressure = new Array<BloodPressure>();
         this.listHeartRate = new Array<HeartRate>();
         this.configVisibility = new ConfigVisibility();
-        this.filter = {start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today'};
+        this.filter = { start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today' };
     }
 
     ngOnInit() {
@@ -102,10 +90,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
             .then((measurements: Array<any>) => {
                 this.listWeight = measurements;
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     loadHeight() {
@@ -113,10 +98,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
             .then((measurements: Array<any>) => {
                 this.listHeight = measurements;
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     loadFat() {
@@ -124,21 +106,15 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
             .then((measurements: Array<any>) => {
                 this.listFat = measurements;
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     loadWaistCircumference() {
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.waist_circumference, null, null, this.filter)
             .then((measurements: Array<any>) => {
-                this.listWaistCircunference = measurements;
+                this.listWaistCircumference = measurements;
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     loadBodyTemperature() {
@@ -146,10 +122,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
             .then((measurements: Array<any>) => {
                 this.listBodyTemperature = measurements;
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     loadBloodGlucose() {
@@ -157,10 +130,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
             .then((measurements: Array<any>) => {
                 this.listBloodGlucose = measurements;
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     loadBloodPressure() {
@@ -168,10 +138,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
             .then((measurements: Array<any>) => {
                 this.listBloodPressure = measurements;
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     loadHeartRate() {
@@ -179,10 +146,7 @@ export class MeasurementComponentComponent implements OnInit, OnChanges {
             .then((measurements: Array<any>) => {
                 this.listHeartRate = measurements;
             })
-            .catch(errorResponse => {
-                // this.toastService.error('Não foi possível buscar medições!');
-                // console.log('Não foi possível buscar medições!', errorResponse);
-            });
+            .catch();
     }
 
     ngOnChanges(changes: SimpleChanges) {

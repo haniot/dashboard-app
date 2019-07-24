@@ -1,26 +1,25 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {DatePipe, Location} from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DatePipe, Location } from '@angular/common';
 
-import {ToastrService} from 'ngx-toastr';
-import {ISubscription} from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
+import { ISubscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
 
-import {NutritionEvaluationService} from '../services/nutrition-evaluation.service';
-import {NutritionalCouncil, NutritionEvaluation} from '../models/nutrition-evaluation';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {GraphService} from 'app/shared/shared-services/graph.service';
-import {PatientService} from 'app/modules/patient/services/patient.service';
-import {Patient} from 'app/modules/patient/models/patient';
-import {Weight} from 'app/modules/measurement/models/weight';
-import {IMeasurement, Measurement, MeasurementType} from 'app/modules/measurement/models/measurement';
-import {BloodPressure} from 'app/modules/measurement/models/blood-pressure';
-import {HeartRate} from 'app/modules/measurement/models/heart-rate';
-import {NotificationService} from "../../../shared/shared-services/notification.service";
-import {MealType} from "../../measurement/models/blood-glucose";
-import {TranslateService} from "@ngx-translate/core";
-import {GeneratePdfService} from "../services/generate-pdf.service";
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {SendEmailService} from "../services/send-email.service";
+import { NutritionEvaluationService } from '../services/nutrition-evaluation.service';
+import { NutritionalCouncil, NutritionEvaluation } from '../models/nutrition-evaluation';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { GraphService } from 'app/shared/shared-services/graph.service';
+import { PatientService } from 'app/modules/patient/services/patient.service';
+import { Patient } from 'app/modules/patient/models/patient';
+import { Weight } from 'app/modules/measurement/models/weight';
+import { IMeasurement, Measurement, MeasurementType } from 'app/modules/measurement/models/measurement';
+import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
+import { HeartRate } from 'app/modules/measurement/models/heart-rate';
+import { MealType } from '../../measurement/models/blood-glucose';
+import { GeneratePdfService } from '../services/generate-pdf.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { SendEmailService } from '../services/send-email.service';
 
 @Component({
     selector: 'app-nutrition-evaluation',
@@ -28,29 +27,19 @@ import {SendEmailService} from "../services/send-email.service";
     styleUrls: ['./nutrition-evaluation.component.scss']
 })
 export class NutritionEvaluationComponent implements OnInit, OnDestroy {
-
     typeCousenling: Array<string>;
-
     nutritionalEvaluation: NutritionEvaluation;
-
     nutritionEvaluationId: string;
-
     optionsHeartRate: any;
-
     patientId: string;
     patient: Patient;
-
     ncSuggested: NutritionalCouncil;
     ncDefinitive: NutritionalCouncil;
-
-    finalCounseling = "";
-
+    finalCounseling: string;
     allCounselings = false;
-
     listChecksBmiWhr: Array<boolean>;
     listChecksGlycemia: Array<boolean>;
     listChecksBloodPressure: Array<boolean>;
-
     listWeight: Array<IMeasurement>;
     listHeight: Array<IMeasurement>;
     listFat: Array<IMeasurement>;
@@ -59,21 +48,15 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     listBloodGlucose: Array<IMeasurement>;
     listBloodPressure: Array<BloodPressure>;
     listHeartRate: Array<HeartRate>;
-
-    newCounseling = "";
-    newCounselingType = "bmi_whr";
-
+    newCounseling = '';
+    newCounselingType = 'bmi_whr';
     finalingEvaluantion = false;
-
-    /* flag utilizada para controlar a visibilidade das zonas de classsificação*/
+    /* flag used to control the visibility of classification zones */
     showZonesClassification: boolean;
-
-    /* flag utilizada para controlar a visibilidade das zonas de classsificação*/
+    /* flag used to control the visibility of the PDF generation modal */
     generatingPDF: boolean;
-
-    /* flag utilizada para controlar a visibilidade das zonas de classsificação*/
+    /* flag used to control the visibility of the evaluation submission modal */
     sendingEvaluation: boolean;
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -92,18 +75,13 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         private localStorageService: LocalStorageService
     ) {
         this.subscriptions = new Array<ISubscription>();
-
         this.ncSuggested = new NutritionalCouncil();
         this.ncDefinitive = new NutritionalCouncil();
-
-
         this.patient = new Patient();
-
         this.nutritionalEvaluation = new NutritionEvaluation();
         this.listChecksBmiWhr = new Array<boolean>();
         this.listChecksGlycemia = new Array<boolean>();
         this.listChecksBloodPressure = new Array<boolean>();
-
         this.listWeight = new Array<Weight>();
         this.listHeight = new Array<IMeasurement>();
         this.listFat = new Array<IMeasurement>();
@@ -112,16 +90,15 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         this.listBloodGlucose = new Array<IMeasurement>();
         this.listBloodPressure = new Array<BloodPressure>();
         this.listHeartRate = new Array<HeartRate>();
-
         this.showZonesClassification = false;
         this.typeCousenling = [
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.STATE-NUTRITION'),
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.DIABETES'),
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HYPERTENSION')
         ];
-
         this.generatingPDF = false;
         this.sendingEvaluation = false;
+        this.finalCounseling = '';
     }
 
     ngOnInit() {
@@ -150,18 +127,16 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 this.separateMeasurements();
                 this.getPatient();
             })
-            .catch(erroResponse => {
+            .catch(() => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.NOT-LOAD-NUTRITION-EVALUATION'));
-                // console.log('Não foi possível carregar avaliação!', erroResponse);
             });
 
         this.patientService.getById(this.patientId)
             .then(patient => {
                 this.patient = patient;
             })
-            .catch(errorResponse => {
+            .catch(() => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-IDENTIFIED'))
-                // console.log('Não foi possível buscar paciente!', errorResponse);
             });
     }
 
@@ -173,16 +148,14 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         } else {
             this.showZonesClassification = false;
         }
-
     }
 
     formatCounseling() {
-
         this.listChecksBmiWhr = new Array<boolean>();
         this.listChecksGlycemia = new Array<boolean>();
         this.listChecksBloodPressure = new Array<boolean>();
 
-        this.finalCounseling = "";
+        this.finalCounseling = '';
 
         this.ncSuggested = this.nutritionalEvaluation.counseling.suggested;
         this.ncDefinitive = this.nutritionalEvaluation.counseling.definitive;
@@ -190,27 +163,27 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
         this.ncSuggested.bmi_whr.forEach((counseling, index) => {
             if (index === this.ncSuggested.bmi_whr.length - 1) {
-                this.finalCounseling += '\t' + (index + 1) + ". " + counseling;
+                this.finalCounseling += '\t' + (index + 1) + '. ' + counseling;
             } else {
-                this.finalCounseling += '\t' + (index + 1) + ". " + counseling + '\n\n';
+                this.finalCounseling += '\t' + (index + 1) + '. ' + counseling + '\n\n';
             }
             this.listChecksBmiWhr.push(false);
         });
 
         this.ncSuggested.glycemia.forEach((counseling, index) => {
             if (index === this.ncSuggested.glycemia.length - 1) {
-                this.finalCounseling += '\t' + (index + 1) + ". " + counseling;
+                this.finalCounseling += '\t' + (index + 1) + '. ' + counseling;
             } else {
-                this.finalCounseling += '\t' + (index + 1) + ". " + counseling + '\n\n';
+                this.finalCounseling += '\t' + (index + 1) + '. ' + counseling + '\n\n';
             }
             this.listChecksGlycemia.push(false);
         });
 
         this.ncSuggested.blood_pressure.forEach((counseling, index) => {
             if (index === this.ncSuggested.blood_pressure.length - 1) {
-                this.finalCounseling += '\t' + (index + 1) + ". " + counseling;
+                this.finalCounseling += '\t' + (index + 1) + '. ' + counseling;
             } else {
-                this.finalCounseling += '\t' + (index + 1) + ". " + counseling + '\n\n';
+                this.finalCounseling += '\t' + (index + 1) + '. ' + counseling + '\n\n';
             }
             this.listChecksBloodPressure.push(false);
         });
@@ -237,7 +210,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
             dataset.forEach((date: { value: number, timestamp: string }) => {
 
-                xAxis.data.push(this.datePipe.transform(date.timestamp, "shortDate"));
+                xAxis.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
 
                 series.data.push(date.value);
 
@@ -245,11 +218,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         }
 
         this.optionsHeartRate = {
-            // title: {
-            //     text: colleted_measurements,
-            // },
+
             tooltip: {
-                formatter: frequency + ": {c} bpm <br> Data: {b}",
+                formatter: frequency + ': {c} bpm <br> Data: {b}',
                 trigger: 'axis'
             },
             xAxis: xAxis,
@@ -326,7 +297,6 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                     this.modalService.close('finalingEvaluantion');
                 }, 2000)
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-COMPLETED'));
-                // console.log("Não foi possível atualizar avaliação!", errorResponse);
             });
     }
 
@@ -407,22 +377,22 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     hiddenNewCounseling(): void {
         this.modalService.close('newCounseling');
-        this.newCounseling = "";
+        this.newCounseling = '';
         this.newCounselingType = 'bmi_whr';
     }
 
     addNewCounseling(): void {
 
         switch (this.newCounselingType) {
-            case "bmi_whr":
+            case 'bmi_whr':
                 this.ncSuggested.bmi_whr.push(this.newCounseling);
                 this.listChecksBmiWhr[this.ncSuggested.bmi_whr.length - 1] = true;
                 break;
-            case "glycemia":
+            case 'glycemia':
                 this.ncSuggested.glycemia.push(this.newCounseling);
                 this.listChecksGlycemia[this.ncSuggested.glycemia.length - 1] = true;
                 break;
-            case "blood_pressure":
+            case 'blood_pressure':
                 this.ncSuggested.blood_pressure.push(this.newCounseling);
                 this.listChecksBloodPressure[this.ncSuggested.blood_pressure.length - 1] = true;
                 break;
@@ -474,7 +444,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 return zones[0][MealType.bedtime].good;
 
             default:
-                return {min: 0, max: 0}
+                return { min: 0, max: 0 }
         }
     }
 
@@ -492,7 +462,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 return zones[0][MealType.bedtime].great;
 
             default:
-                return {min: 0, max: 0}
+                return { min: 0, max: 0 }
         }
     }
 

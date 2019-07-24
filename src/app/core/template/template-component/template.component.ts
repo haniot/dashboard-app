@@ -1,10 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Location, PopStateEvent} from '@angular/common';
-import {Router, NavigationEnd, NavigationStart} from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Location, PopStateEvent } from '@angular/common';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 import 'rxjs/add/operator/filter';
-import {ISubscription} from 'rxjs/Subscription';
-import PerfectScrollbar from 'perfect-scrollbar';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-template',
@@ -12,11 +11,9 @@ import PerfectScrollbar from 'perfect-scrollbar';
     styleUrls: ['./template.component.scss']
 })
 export class TemplateComponent implements OnInit, OnDestroy {
-
     private _router: ISubscription;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
-
     private subscriptions: Array<ISubscription>;
 
     constructor(public location: Location, private router: Router) {

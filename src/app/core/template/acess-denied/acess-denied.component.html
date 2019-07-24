@@ -1,39 +1,38 @@
 <div class="row" id="div-body">
-  <div id="top" class="col-md-12">
-    <div class="d-flex justify-content-center">
-      <span id="haniotTitle">{{'APP.TITLE' | translate}</span>
-    </div>
-  </div>
-
-  <div class="text-white py-5 col-md-12">
-    <div class="container py-5">
-      <div class="row">
-        <div class="col-md-2" id="silhueta-bg">
-          <img src="../../../../assets/img/haniot/silhueta-403.png" alt="" id="silhueta-bg">
-          <!-- <p><i class="fa fa-exclamation-triangle fa-5x"></i><br />Status Code: 403</p> -->
+    <div id="top" class="col-md-12">
+        <div class="d-flex justify-content-center">
+            <span id="haniotTitle">{{'APP.TITLE' | translate}}</span>
         </div>
-        <div class="col-md-2">
-
-        </div>
-        <div class="col-md-8 tabcontent" id="div-message">
-          <h2>{{'ACESS-DENIED.TITLE' | translate}}!</h2>
-          <p>
-            {{'ACESS-DENIED.MESSAGE1' | translate}}.
-          </p>
-          <p>{{'ACESS-DENIED.MESSSAGE-GO-BACK' | translate}}!</p>
-          <div class="d-flex justify-content-center">
-            <button class="btn btn-haniot-primary" (click)="onBack()">
-                {{'SHARED.HOME-PAGE' | translate}}
-            </button>
-          </div>
-
-        </div>
-      </div>
     </div>
 
-  </div>
+    <div class="text-white py-5 col-md-12">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-md-2" id="silhueta-bg">
+                    <img src="../../../../assets/img/haniot/silhueta-403.png" alt="" id="silhueta-bg">
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-8 tabcontent" id="div-message">
+                    <h2>{{'ACCESS-DENIED.TITLE' | translate}}!</h2>
+                    <p>
+                        {{'ACCESS-DENIED.MESSAGE' | translate}}.
+                    </p>
+                    <p>{{'ACCESS-DENIED.MESSAGE-GO-BACK' | translate}}!</p>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-haniot-primary" (click)="onBack()">
+                            {{'SHARED.HOME-PAGE' | translate}}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <div class="row" id="div-footer">
-  <app-footer></app-footer>
+    <app-footer></app-footer>
 </div>

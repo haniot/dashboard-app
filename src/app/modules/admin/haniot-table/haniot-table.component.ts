@@ -1,16 +1,18 @@
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
-import {ToastrService} from 'ngx-toastr';
-import {PageEvent} from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
+import { PageEvent } from '@angular/material/paginator';
 
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {AdminService} from 'app/modules/admin/services/admin.service';
-import {HealthProfessionalService} from 'app/modules/admin/services/health-professional.service';
-import {UserService} from 'app/modules/admin/services/users.service';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {TranslateService} from "@ngx-translate/core";
-import {IUser} from "../../../shared/shared-models/user";
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { AdminService } from 'app/modules/admin/services/admin.service';
+import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
+import { UserService } from 'app/modules/admin/services/users.service';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { TranslateService } from '@ngx-translate/core';
+import { IUser } from '../../../shared/shared-models/user';
+import { ConfigurationBasic } from '../../config-matpaginator'
 
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'haniot-table',
@@ -18,25 +20,20 @@ import {IUser} from "../../../shared/shared-models/user";
     styleUrls: ['./haniot-table.component.scss']
 })
 export class HaniotTableComponent implements OnInit {
-
     // MatPaginator Inputs
     @Input() length: number;
     @Input() pageSize: number;
-    pageSizeOptions: number[] = [10, 25, 100];
-
+    pageSizeOptions: number[];
     // MatPaginator Output
     pageEvent: PageEvent;
-
     @Input() list: Array<IUser>;
     @Output() onremove = new EventEmitter();
     // Admin or HealthProfessional
     @Input() userType: string;
     @Output() onedit = new EventEmitter();
     @Output() pagination = new EventEmitter();
-
     search: string;
     searchTime;
-
     cacheIdRemove: string;
     listOfUserIsEmpty: boolean;
 
@@ -50,6 +47,7 @@ export class HaniotTableComponent implements OnInit {
         private translateService: TranslateService) {
         this.list = new Array<IUser>();
         this.listOfUserIsEmpty = false;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
     }
 
     ngOnInit() {
@@ -93,7 +91,7 @@ export class HaniotTableComponent implements OnInit {
                     .then((user) => {
                         this.onedit.emit(user);
                     })
-                    .catch(error => {
+                    .catch(() => {
                         this.toastr.error(not_find_user);
                     });
                 break;
@@ -103,7 +101,7 @@ export class HaniotTableComponent implements OnInit {
                     .then((user) => {
                         this.onedit.emit(user);
                     })
-                    .catch(error => {
+                    .catch(() => {
                         this.toastr.error(not_find_user);
                     });
                 break;
@@ -117,36 +115,30 @@ export class HaniotTableComponent implements OnInit {
             const limit = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : 5;
             switch (this.userType) {
                 case 'Admin':
-                    if (this.search && this.search != '') {
+                    if (this.search && this.search !== '') {
                         this.adminService.getAll(page + 1, limit, this.search)
                             .then(users => {
                                 this.list = users;
                                 this.updatePagination();
                             })
-                            .catch(errorResponse => {
-                                // console.log('Não foi possível buscar administradores!', errorResponse.error);
-                            });
+                            .catch();
                     } else {
                         this.adminService.getAll(page + 1, limit)
                             .then(users => {
                                 this.list = users;
                                 this.updatePagination();
                             })
-                            .catch(errorResponse => {
-                                // console.log('Não foi possível buscar administradores!', errorResponse.error);
-                            });
+                            .catch();
                     }
                     break;
                 case 'HealthProfessional':
-                    if (this.search && this.search != '') {
+                    if (this.search && this.search !== '') {
                         this.healthService.getAll(page + 1, limit, this.search)
                             .then(users => {
                                 this.list = users;
                                 this.updatePagination();
                             })
-                            .catch(errorResponse => {
-                                // console.log('Não foi possível buscar administradores!', errorResponse.error);
-                            });
+                            .catch();
                     } else {
                         this.healthService.getAll(page + 1, limit)
                             .then(users => {
@@ -154,9 +146,7 @@ export class HaniotTableComponent implements OnInit {
                                 this.updateStateOfList();
                                 this.updatePagination();
                             })
-                            .catch(errorResponse => {
-                                // console.log('Não foi possível buscar administradores!', errorResponse.error);
-                            });
+                            .catch();
                     }
 
                     break;
@@ -166,11 +156,12 @@ export class HaniotTableComponent implements OnInit {
     }
 
     clickPagination(event) {
-
         this.pageEvent = event;
-
-        const eventPagination = {page: this.pageEvent.pageIndex + 1, limit: this.pageEvent.pageSize, search: this.search};
-
+        const eventPagination = {
+            page: this.pageEvent.pageIndex + 1,
+            limit: this.pageEvent.pageSize,
+            search: this.search
+        };
         this.pagination.emit(eventPagination);
     }
 
@@ -190,24 +181,18 @@ export class HaniotTableComponent implements OnInit {
     updatePagination() {
         switch (this.userType) {
             case 'Admin':
-                /** Verificando quantidade de administradores cadastrados */
                 this.adminService.getAll(undefined, undefined, this.search)
                     .then(admins => {
                         this.length = admins.length;
                     })
-                    .catch(errorResponse => {
-                        // console.log('Error ao buscar administradores!', errorResponse);
-                    });
+                    .catch();
                 break;
             case 'HealthProfessional':
-                /** Verificando quantidade de administradores cadastrados */
                 this.healthService.getAll(undefined, undefined, this.search)
                     .then(healthProfessionals => {
                         this.length = healthProfessionals.length;
                     })
-                    .catch(errorResponse => {
-                        // console.log('Error ao buscar administradores!', errorResponse);
-                    });
+                    .catch();
                 break;
         }
     }

@@ -1,13 +1,18 @@
-import {AfterViewChecked, Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
-import {NutritionEvaluation} from "../../evaluation/models/nutrition-evaluation";
-import {PageEvent} from "@angular/material";
-import {EvaluationService} from "../../evaluation/services/evaluation.service";
-import {NutritionEvaluationService} from "../../evaluation/services/nutrition-evaluation.service";
-import {ToastrService} from "ngx-toastr";
-import {ModalService} from "../../../shared/shared-components/haniot-modal/service/modal.service";
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
+import { AfterViewChecked, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+
+import { PageEvent } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+
+import { LoadingService } from '../../../shared/shared-components/loading-component/service/loading.service';
+import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation';
+import { EvaluationService } from '../../evaluation/services/evaluation.service';
+import { NutritionEvaluationService } from '../../evaluation/services/nutrition-evaluation.service';
+import { ModalService } from '../../../shared/shared-components/haniot-modal/service/modal.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'app-myevaluations',
@@ -15,30 +20,18 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./myevaluations.component.scss']
 })
 export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewChecked {
-
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    /* paging Settings */
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page = 1;
-    limit = 10;
+    page: number;
+    limit: number;
     length: number;
-
     listOfEvaluations: Array<NutritionEvaluation>;
     search: string;
     searchTime;
-
     cacheIdEvaluationRemove: string;
-
-    listOfEvaluationsIsEmpty = false;
-
-    /* id utilizado para deletar uma avaliação*/
+    listOfEvaluationsIsEmpty: boolean;
     patientId: string;
-
-    // id do profissional logado
     userId: string;
 
     constructor(
@@ -50,6 +43,11 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         private localStorageService: LocalStorageService,
         private translateService: TranslateService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.listOfEvaluationsIsEmpty = false;
+        this.cacheIdEvaluationRemove = '';
         this.listOfEvaluations = new Array<NutritionEvaluation>();
     }
 
@@ -77,9 +75,8 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
                     }
                     this.calcLenghtNutritionEvaluations();
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.listOfEvaluationsIsEmpty = true;
-                    // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
                 });
         }, 200);
 
@@ -99,9 +96,8 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
                     this.listOfEvaluationsIsEmpty = true;
                 }
             })
-            .catch(errorResponse => {
+            .catch(() => {
                 this.listOfEvaluationsIsEmpty = true;
-                // console.log('Erro ao buscar avaliações do pacientes: ', errorResponse);
             });
 
     }
@@ -134,12 +130,10 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-REMOVED'));
                     this.closeModalComfimation();
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-REMOVED'));
-                    // console.log('Não foi possível remover avaliação!', errorResponse);
                 });
         }
-
     }
 
     getIndex(index: number): number {
@@ -163,9 +157,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
             .then(nutritionEvaluations => {
                 this.length = nutritionEvaluations.length;
             })
-            .catch(errorResponse => {
-                // console.log('Não foi possível buscar todos as avaliações do pacientes',errorResponse);
-            });
+            .catch();
 
     }
 

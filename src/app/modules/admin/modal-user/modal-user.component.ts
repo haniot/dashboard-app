@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
-import {ISubscription} from "rxjs-compat/Subscription";
+import { ISubscription } from 'rxjs-compat/Subscription';
 
-import {AdminService} from '../services/admin.service';
-import {HealthProfessionalService} from '../services/health-professional.service';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {HealtArea} from "../models/users";
+import { AdminService } from '../services/admin.service';
+import { HealthProfessionalService } from '../services/health-professional.service';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { HealtArea } from '../models/users';
 
 @Component({
     selector: 'app-modal-user',
@@ -17,33 +17,22 @@ import {HealtArea} from "../models/users";
 export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     @Input() title: string;
     @Input() subtitle: string;
-    @Output() onsubmit = new EventEmitter();
+    @Output() onsubmit: EventEmitter<any>;
     // Admin or HealthProfessional
     @Input() typeUser: string;
-
-
     userForm: FormGroup;
-
     @Input() userId: string;
-
-    name = '';
-    email = '';
-    password = '';
+    name: string;
+    email: string;
+    password: string;
     health_area: HealtArea;
     healthAreaOptions = Object.keys(HealtArea);
-
     passwordNotMatch: boolean;
-
     icon_password = 'visibility_off';
-
     typeInputPassword = 'password';
-
     icon_password_confirm = 'visibility_off';
-
     typeInputPassword_confirm = 'password';
-
     timerVerifyPassword;
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -53,6 +42,10 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         private healthService: HealthProfessionalService,
         private modalService: ModalService
     ) {
+        this.name = '';
+        this.email = '';
+        this.password = ''
+        this.onsubmit = new EventEmitter();
         this.subscriptions = new Array<ISubscription>();
     }
 
@@ -89,12 +82,12 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             health_area: ['', Validators.required]
         });
         if (this.typeUser === 'Admin') {
-            this.userForm.removeControl("health_area");
-            this.userForm.removeControl("name");
+            this.userForm.removeControl('health_area');
+            this.userForm.removeControl('name');
         }
         if (this.userId) {
-            this.userForm.removeControl("password");
-            this.userForm.removeControl("password_confirm");
+            this.userForm.removeControl('password');
+            this.userForm.removeControl('password_confirm');
         }
     }
 
@@ -112,18 +105,14 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                         .then(admin => {
                             this.userForm.setValue(admin);
                         })
-                        .catch(error => {
-                            // console.log('Não foi possível buscar usuário!', error);
-                        });
+                        .catch();
                     break;
                 case 'HealthProfessional':
                     this.healthService.getById(this.userId)
                         .then(healthprofessional => {
                             this.userForm.setValue(healthprofessional);
                         })
-                        .catch(error => {
-                            // console.log('Não foi possível buscar usuário!', error);
-                        });
+                        .catch();
                     break;
             }
         }
@@ -133,10 +122,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         if (!this.userId) {
             this.userForm.reset();
         }
-        this.passwordNotMatch = false;
-    }
-
-    cleanNotMatch() {
         this.passwordNotMatch = false;
     }
 

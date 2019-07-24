@@ -1,15 +1,18 @@
-import {AfterViewChecked, Component, OnInit} from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
-import {Router} from '@angular/router';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
-import {ToastrService} from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
-import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
+import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'mypilotstudies',
@@ -17,36 +20,31 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./mypilotstudies.component.scss']
 })
 export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
-
     userId: string;
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    /* Paging Settings */
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page: number;
+    limit: number;
     length: number;
-
     list: Array<PilotStudy>;
     search: string;
     searchTime;
-
     cacheStudyIdRemove: string;
-
     listOfStudiesIsEmpty: boolean;
 
     constructor(
         private pilotStudyService: PilotStudyService,
-        private loadinService: LoadingService,
+        private loadingService: LoadingService,
         private router: Router,
         private modalService: ModalService,
         private toastService: ToastrService,
         private localStorageService: LocalStorageService,
         private translateService: TranslateService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
         this.list = new Array<PilotStudy>();
         this.listOfStudiesIsEmpty = false;
     }
@@ -72,9 +70,8 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
                     this.listOfStudiesIsEmpty = true;
                 }
             })
-            .catch(error => {
+            .catch(() => {
                 this.listOfStudiesIsEmpty = true;
-                // console.log('Erro ao buscar pilot-studies: ', error);
             });
     }
 
@@ -91,9 +88,8 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
                         this.listOfStudiesIsEmpty = true;
                     }
                 })
-                .catch(error => {
+                .catch(() => {
                     this.listOfStudiesIsEmpty = true;
-                    // console.log('Erro ao buscar pilot-studies: ', error);
                 });
         }, 200);
     }
@@ -124,23 +120,15 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
                 .then(studies => {
                     this.length = studies.length;
                 })
-                .catch(error => {
-                    // console.log('Erro ao buscar pilot-studies: ', error);
-                });
+                .catch();
         } else {
             this.pilotStudyService.getAll()
                 .then(studies => {
                     this.length = studies.length;
                 })
-                .catch(error => {
-                    // console.log('Erro ao buscar pilot-studies: ', error);
-                });
+                .catch();
         }
     }
-
-    // newPilotStudy() {
-    //     this.router.navigate(['/pilotstudies/new']);
-    // }
 
     removeStudy() {
         if (this.cacheStudyIdRemove) {
@@ -174,7 +162,7 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        this.loadinService.close();
+        this.loadingService.close();
     }
 
 }

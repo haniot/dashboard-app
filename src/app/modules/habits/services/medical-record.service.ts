@@ -8,28 +8,29 @@ import { MedicalRecord } from '../models/medical-record';
 @Injectable()
 export class MedicalRecordService {
 
-  constructor(private http: HttpClient) { }
-
-
-  getById(patientId: string, medicalRecordId: string, ): Promise<MedicalRecord> {
-    return this.http.get<any>(`${environment.api_url}/patients/${patientId}/medicalrecords/${medicalRecordId}`)
-      .toPromise();
-  }
-
-  getAll(patientId: string, page?: number, limit?: number): Promise<MedicalRecord[]> {
-    let myParams = new HttpParams();
-
-    if (page) {
-      myParams = myParams.append("page", String(page));
+    constructor(private http: HttpClient) {
     }
 
-    if (limit) {
-      myParams = myParams.append("limit", String(limit));
+
+    getById(patientId: string, medicalRecordId: string): Promise<MedicalRecord> {
+        return this.http.get<any>(`${environment.api_url}/patients/${patientId}/medicalrecords/${medicalRecordId}`)
+            .toPromise();
     }
 
-    const url = `${environment.api_url}/patients/${patientId}/medicalrecords`;
+    getAll(patientId: string, page?: number, limit?: number): Promise<MedicalRecord[]> {
+        let myParams = new HttpParams();
 
-    return this.http.get<any>(url, { params: myParams })
-      .toPromise();
-  }
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
+
+        const url = `${environment.api_url}/patients/${patientId}/medicalrecords`;
+
+        return this.http.get<any>(url, { params: myParams })
+            .toPromise();
+    }
 }

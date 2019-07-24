@@ -1,13 +1,18 @@
-import {Component, OnInit, AfterViewInit, AfterViewChecked} from '@angular/core';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {PageEvent} from '@angular/material';
-import {Patient} from '../models/patient';
-import {PatientService} from '../services/patient.service';
-import {ToastrService} from 'ngx-toastr';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
-import {Router} from '@angular/router';
-import {TranslateService} from "@ngx-translate/core";
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material';
+import { Router } from '@angular/router';
+
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+
+import { Patient } from '../models/patient';
+import { PatientService } from '../services/patient.service';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import { ConfigurationBasic } from '../../config-matpaginator'
+import { AuthService } from 'app/security/auth/services/auth.service';
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'app-patient-manager',
@@ -15,23 +20,16 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./patient-manager.component.scss']
 })
 export class PatientManagerComponent implements OnInit, AfterViewChecked {
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [5, 10, 25, 100];
-
-    // MatPaginator Output
+    /* Paging Settings*/
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 5;
+    page: number;
+    limit: number;
     length: number;
-
-    listOfPatientsIsEmpty: boolean = false;
-
+    listOfPatientsIsEmpty: boolean;
     listOfPatients = new Array<Patient>();
     search: string;
     searchTime;
-
     cacheIdPatientRemove: string;
 
     constructor(
@@ -39,10 +37,14 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         private authService: AuthService,
         private toastService: ToastrService,
         private modalService: ModalService,
-        private loadinService: LoadingService,
+        private loadingService: LoadingService,
         private router: Router,
         private translateService: TranslateService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.listOfPatientsIsEmpty = false;
     }
 
     ngOnInit() {
@@ -58,9 +60,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
                         this.listOfPatients = patients;
                         this.calcLengthPatients();
                     })
-                    .catch(errorResponse => {
-                        // console.log('Erro ao buscar pacientes: ', errorResponse);
-                    });
+                    .catch();
             }, 200);
         }
     }
@@ -71,15 +71,13 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
                 .then(patients => {
                     this.listOfPatients = patients;
                     this.calcLengthPatients();
-                    if (patients.length == 0) {
+                    if (patients.length === 0) {
                         this.listOfPatientsIsEmpty = true;
                     } else {
                         this.listOfPatientsIsEmpty = false;
                     }
                 })
-                .catch(errorResponse => {
-                    // console.log('Erro ao buscar pacientes: ', errorResponse);
-                });
+                .catch();
         }
     }
 
@@ -109,7 +107,6 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
             })
             .catch(errorResponse => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-REMOVED'));
-                // console.log('Não foi possível remover paciente!', errorResponse);
             });
     }
 
@@ -132,9 +129,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
                 .then(patients => {
                     this.length = patients.length;
                 })
-                .catch(errorResponse => {
-                    // console.log('Não foi possível buscar todos os pacientes',errorResponse);
-                });
+                .catch();
         }
     }
 
@@ -151,6 +146,6 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        this.loadinService.close();
+        this.loadingService.close();
     }
 }
