@@ -9,24 +9,24 @@ import { Unit } from '../models/unit';
 
 @Injectable()
 export class DashboardService {
-    cacheListpilots: Array<PilotStudy>;
-    cacheListpatients: Array<Patient>;
+    cacheListPilots: Array<PilotStudy>;
+    cacheListPatients: Array<Patient>;
     listNumberPatientsForEachStudy: Array<Unit>;
 
     constructor(
         private http: HttpClient,
         private authService: AuthService
     ) {
-        this.cacheListpilots = new Array<PilotStudy>();
-        this.cacheListpatients = new Array<Patient>();
+        this.cacheListPilots = new Array<PilotStudy>();
+        this.cacheListPatients = new Array<Patient>();
         this.listNumberPatientsForEachStudy = new Array<Unit>();
     }
 
     async getInfoByUser(userId: string)
         : Promise<{ studiesTotal: number, patientsTotal: number }> {
 
-        this.cacheListpilots = new Array<PilotStudy>();
-        this.cacheListpatients = new Array<Patient>();
+        this.cacheListPilots = new Array<PilotStudy>();
+        this.cacheListPatients = new Array<Patient>();
         this.listNumberPatientsForEachStudy = new Array<Unit>();
 
         let patientsTotal;
@@ -45,7 +45,7 @@ export class DashboardService {
     getNumberOfStudies(userId: string): Promise<number> {
         return this.getAllStudiesByUserId(userId)
             .then(pilotstudies => {
-                this.cacheListpilots = pilotstudies;
+                this.cacheListPilots = pilotstudies;
                 return Promise.resolve(pilotstudies.length);
             })
             .catch(() => {
@@ -56,13 +56,13 @@ export class DashboardService {
     async getNumberOfPatients(): Promise<number> {
 
         let totalOfPatients = 0;
-        for (const index in this.cacheListpilots) {
-            if (this.cacheListpilots.hasOwnProperty(index)) {
-                const pilot = this.cacheListpilots[index];
+        for (const index in this.cacheListPilots) {
+            if (this.cacheListPilots.hasOwnProperty(index)) {
+                const pilot = this.cacheListPilots[index];
                 try {
                     const listOfPatients: Array<Patient> = await this.getAllPatients(pilot.id);
                     this.listNumberPatientsForEachStudy.push({ namePatient: pilot.name, value: listOfPatients.length });
-                    this.cacheListpatients = this.cacheListpatients.concat(listOfPatients);
+                    this.cacheListPatients = this.cacheListPatients.concat(listOfPatients);
                     totalOfPatients += listOfPatients.length;
                 } catch (e) {
 

@@ -53,7 +53,6 @@ export class EvaluationComponentComponent implements OnInit, OnChanges, OnDestro
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

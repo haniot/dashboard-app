@@ -62,7 +62,7 @@ export class SidebarComponent implements OnInit {
         private verifyScopesService: VerifyScopeService,
         private userService: UserService,
         private loadingService: LoadingService,
-        private locaStorageService: LocalStorageService,
+        private localStorageService: LocalStorageService,
         private router: Router
     ) {
     }
@@ -93,8 +93,8 @@ export class SidebarComponent implements OnInit {
     }
 
     getUserName() {
-        this.userId = this.locaStorageService.getItem('user');
-        const username = this.locaStorageService.getItem('username');
+        this.userId = this.localStorageService.getItem('user');
+        const username = this.localStorageService.getItem('username');
         if (username) {
             this.userName = username;
         } else {
@@ -102,7 +102,7 @@ export class SidebarComponent implements OnInit {
                 .then(user => {
                     if (user && user.name) {
                         this.userName = user.name;
-                        this.locaStorageService.setItem('username', this.userName.toString());
+                        this.localStorageService.setItem('username', this.userName.toString());
                     }
                 })
                 .catch();

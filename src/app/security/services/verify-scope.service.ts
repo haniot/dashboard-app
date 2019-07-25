@@ -3,38 +3,26 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class VerifyScopeService {
 
-  constructor() { }
-
-  verifyScopes(expectedScopes: Array<String>, scopes: Array<String>): boolean {
-    if (expectedScopes.length === 0) {
-      return true;
+    constructor() {
     }
 
-    let result = true;
+    verifyScopes(expectedScopes: Array<String>, scopes: Array<String>): boolean {
+        if (expectedScopes.length === 0) {
+            return true;
+        }
 
-    expectedScopes.forEach(scope => {
-      if (!scopes.find(user => {
-        return user == scope;
-      })) {
-        result = false;
-      }
-    });
+        let result = true;
 
-    return result;
-  }
+        expectedScopes.forEach(scope => {
+            if (!scopes.find(user => {
+                return user === scope;
+            })) {
+                result = false;
+            }
+        });
 
-  // verifyScopes(expectedScopes: Array<String>, scopes: Array<String>): boolean {
-  //   if (expectedScopes.length === 0) {
-  //     return true;
-  //   }
+        return result;
+    }
 
-  //   var allowed = expectedScopes.some(function (scope) {
-  //     return scopes.indexOf(scope) !== -1;
-  //   });
-
-  //   return allowed ?
-  //     true :
-  //     false;
-  // }
 
 }

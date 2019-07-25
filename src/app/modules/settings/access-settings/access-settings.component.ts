@@ -1,8 +1,9 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
-import {TranslateService} from '@ngx-translate/core';
-import {UserService} from '../../admin/services/users.service';
-import {ToastrService} from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+
+import { UserService } from '../../admin/services/users.service';
 
 @Component({
     selector: 'access-settings',
@@ -10,27 +11,19 @@ import {ToastrService} from 'ngx-toastr';
     styleUrls: ['./access-settings.component.scss']
 })
 export class AccessSettingsComponent implements OnInit {
-
     @Input() userId: string;
-
     old_password: string;
-
     new_password: string;
-
     icon_password = 'visibility_off';
-
     typeInputPassword = 'password';
-
     icon_password_confirm = 'visibility_off';
-
     typeInputPassword_confirm = 'password';
-
     passwordIsValid: boolean;
 
     constructor(
         private userService: UserService,
         protected translate: TranslateService,
-        private toastr: ToastrService,
+        private toastr: ToastrService
     ) {
         this.passwordIsValid = true;
     }
@@ -45,10 +38,9 @@ export class AccessSettingsComponent implements OnInit {
                 form.reset();
             })
             .catch(HttpError => {
-                // console.log('Não foi possível mudar a senha!', HttpError);
                 this.toastr.error(this.translate.instant('TOAST-MESSAGES.PASSWORD-NOT-UPDATED'));
-                if (HttpError.error.code === 400 && HttpError.error.message == "Password does not match") {
-                    form.controls['old_password'].setErrors({'incorrect': true});
+                if (HttpError.error.code === 400 && HttpError.error.message === 'Password does not match') {
+                    form.controls['old_password'].setErrors({ 'incorrect': true });
                 }
             });
     }
@@ -71,21 +63,13 @@ export class AccessSettingsComponent implements OnInit {
         }
     }
 
-    validetorPassword(): void {
+    validatePassword(): void {
         const pass = '' + this.new_password;
-
         const len = pass.length;
-
         const letter = pass.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').length;
         const num = pass.replace(/[^\d]+/g, '').length;
         const sym = pass.replace(/[A-Za-z0-9_]/gi, '').length;
-
-
-        if (len >= 6 && letter > 0 && num > 0 && sym > 0) {
-            this.passwordIsValid = true;
-        } else {
-            this.passwordIsValid = false;
-        }
+        this.passwordIsValid = (len >= 6 && letter > 0 && num > 0 && sym > 0);
 
     }
 

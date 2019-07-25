@@ -38,17 +38,11 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     site_key = environment.reCaptcha_siteKey;
     captchaResolved: boolean;
     showCaptcha: boolean;
-
     attemptUser: Attempt;
-
-
     f: FormGroup;
     loading: boolean;
-
     icon_password = 'visibility_off';
-
     typeInputPassword = 'password';
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -202,7 +196,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
+        /* cancel all subscriptions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

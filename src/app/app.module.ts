@@ -19,8 +19,11 @@ import { CoreModule } from './core/core.module';
 import { ModulesModule } from './modules/modules.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './core/app-routing/app-routing.module';
-import { SelectPilotStudyService } from "./shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
-import { environment } from "../environments/environment";
+import { SelectPilotStudyService } from './shared/shared-components/select-pilotstudy/service/select-pilot-study.service';
+import { environment } from '../environments/environment';
+import { LanguagesConfiguration } from '../assets/i18n/config.js';
+
+const languagesConfig = LanguagesConfiguration;
 
 registerLocaleData(localePt, 'pt-BR', localePtExtra);
 
@@ -78,13 +81,25 @@ export function HttpLoaderFactory(http: HttpClient) {
     bootstrap: [AppComponent]
 })
 export class AppModule {
+
     constructor(public translate: TranslateService) {
-        translate.addLangs(['en-US', 'pt-BR']);
-        translate.setDefaultLang('en-US');
+        this.configLanguage();
+    }
 
-        const browserLang = translate.getBrowserLang();
+    configLanguage(): void {
+        const languages = Object.keys(languagesConfig)
 
-        translate.use(browserLang.match(/en-US|pt-BR/) ? browserLang : 'en-US');
+        this.translate.addLangs(languages);
+        this.translate.setDefaultLang('en-US');
+
+        const browserLang = this.translate.getBrowserLang();
+
+        languages.forEach(language => {
+            if (language.match(browserLang)) {
+                return this.translate.use(language);
+            }
+        })
+
     }
 }
 

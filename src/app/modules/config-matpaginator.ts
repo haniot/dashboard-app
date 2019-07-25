@@ -43,4 +43,12 @@ export class PaginatorIntlService extends MatPaginatorIntl {
         this.previousPageLabel = this.translate.instant('PAGINATOR.PREVIOUS_PAGE');
     }
 
+    getIndex(pageEvent: PageEvent, pageSize: number, index: number): number {
+
+        const size = pageEvent && pageEvent.pageSize ? pageEvent.pageSize : pageSize;
+
+        /* +1 because index starts at 0 */
+        return (pageEvent && pageEvent.pageIndex) ? index + 1 + size * pageEvent.pageIndex : index + 1;
+    }
+
 }

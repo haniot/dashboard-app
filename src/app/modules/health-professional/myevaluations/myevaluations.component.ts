@@ -10,7 +10,7 @@ import { EvaluationService } from '../../evaluation/services/evaluation.service'
 import { NutritionEvaluationService } from '../../evaluation/services/nutrition-evaluation.service';
 import { ModalService } from '../../../shared/shared-components/haniot-modal/service/modal.service';
 import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -20,7 +20,6 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./myevaluations.component.scss']
 })
 export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewChecked {
-    /* paging Settings */
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -37,6 +36,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
     constructor(
         private evaluationService: EvaluationService,
         private nutritionService: NutritionEvaluationService,
+        private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
         private loadingService: LoadingService,
@@ -68,11 +68,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
             this.nutritionService.getAllByHealthprofessional(this.userId, this.page, this.limit, this.search)
                 .then(nutritionsEvaluations => {
                     this.listOfEvaluations = nutritionsEvaluations;
-                    if (nutritionsEvaluations.length) {
-                        this.listOfEvaluationsIsEmpty = false;
-                    } else {
-                        this.listOfEvaluationsIsEmpty = true;
-                    }
+                    this.listOfEvaluationsIsEmpty = !nutritionsEvaluations.length;
                     this.calcLenghtNutritionEvaluations();
                 })
                 .catch(() => {
@@ -90,11 +86,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
             .then(nutritionsEvaluations => {
                 this.listOfEvaluations = nutritionsEvaluations;
                 this.calcLenghtNutritionEvaluations();
-                if (nutritionsEvaluations && nutritionsEvaluations.length) {
-                    this.listOfEvaluationsIsEmpty = false;
-                } else {
-                    this.listOfEvaluationsIsEmpty = true;
-                }
+                this.listOfEvaluationsIsEmpty = !(nutritionsEvaluations && nutritionsEvaluations.length);
             })
             .catch(() => {
                 this.listOfEvaluationsIsEmpty = true;
@@ -140,13 +132,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     calcLenghtNutritionEvaluations() {

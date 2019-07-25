@@ -7,8 +7,8 @@ import { Observable, of as observableOf } from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
 import * as JWT_decode from 'jwt-decode';
-
 import { tap } from 'rxjs/operators';
+
 import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
 
 @Injectable()
@@ -46,7 +46,8 @@ export class AuthService {
                         try {
                             decodedToken = JWT_decode(data.access_token);
                         } catch (Error) {
-                            this.localStorageService.logout();// clean local storage
+                            // clean local storage
+                            this.localStorageService.logout();
                             return false;
                         }
                         this.localStorageService.setItem('user', decodedToken.sub);

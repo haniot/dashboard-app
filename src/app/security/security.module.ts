@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ScopeGuard } from './guards/scope.guard';

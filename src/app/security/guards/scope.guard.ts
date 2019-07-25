@@ -1,10 +1,17 @@
-import {Injectable} from '@angular/core';
-import {CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, Router, ActivatedRoute} from '@angular/router';
+import { Injectable } from '@angular/core';
+import {
+    ActivatedRoute,
+    ActivatedRouteSnapshot,
+    CanActivate,
+    CanActivateChild,
+    Router,
+    RouterStateSnapshot
+} from '@angular/router';
 
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
-import {AuthService} from '../auth/services/auth.service';
-import {VerifyScopeService} from '../services/verify-scope.service';
+import { AuthService } from '../auth/services/auth.service';
+import { VerifyScopeService } from '../services/verify-scope.service';
 
 @Injectable()
 export class ScopeGuard implements CanActivate, CanActivateChild {
@@ -12,7 +19,7 @@ export class ScopeGuard implements CanActivate, CanActivateChild {
     constructor(
         private auth: AuthService,
         private router: Router,
-        private activeroute: ActivatedRoute,
+        private activeRoute: ActivatedRoute,
         private verifyScopesService: VerifyScopeService) {
     }
 
@@ -23,7 +30,7 @@ export class ScopeGuard implements CanActivate, CanActivateChild {
             const expectedScopes = route.data.scope.split(' ');
             const permission = this.verifyScopes(expectedScopes, userScopes);
             if (!permission) {
-                this.router.navigate(['acess-denied']);
+                this.router.navigate(['access-denied']);
             }
             return permission;
         } else {

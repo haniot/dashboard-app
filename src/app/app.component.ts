@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
 
-  ngOnInit() {
-    console.log("%cHANIoT%cby NUTES/UEPB", '\nfont-size: 40px;\nfont-weight: bold;\nfont-style: italic;\ncolor: #00a594;\nfont-style: italic;\n', '\n    font-size: 12px;\n    font-weight: bold;\n    font-style: italic;\n    padding-left: 5px;\n    color: #555;\n')
-  }
+    ngOnInit() {
+        const style1 = 'font-size: 40px;font-weight: bold;font-style: italic;color: #00a594;font-style: italic;'
+        const style2 = 'font-size: 12px;font-weight: bold;font-style: italic;padding-left: 5px;color: #555;';
+        console.log('%cHANIoT%cby NUTES/UEPB', style1, style2);
+    }
 }

@@ -1,5 +1,4 @@
-import {Component, OnInit, Input, EventEmitter, Output, AfterViewChecked, AfterViewInit} from '@angular/core';
-import {Message} from '@angular/compiler/src/i18n/i18n_ast';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'modal-confirmation',
@@ -7,19 +6,15 @@ import {Message} from '@angular/compiler/src/i18n/i18n_ast';
     styleUrls: ['./modal-confirmation.component.scss']
 })
 export class ModalConfirmationComponent {
-
     @Input() message;
     @Output() confirmation = new EventEmitter();
     @Output() noconfirmation = new EventEmitter();
 
-
     constructor() {
-
     }
 
     yes() {
         this.confirmation.emit();
-
     }
 
     no() {

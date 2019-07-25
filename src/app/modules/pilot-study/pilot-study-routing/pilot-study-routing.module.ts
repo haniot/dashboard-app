@@ -6,39 +6,40 @@ import { PilotStudyFormComponent } from '../pilot-study-form/pilot-study-form.co
 import { PilotStudyViewComponent } from '../pilot-study-view/pilot-study-view.component';
 
 const routes = [
-  {
-    path: '',
-    component: PilotStudyComponentComponent,
-    data: {
-      scope: "pilots:readAll pilots:delete"
-    }
-  },
+    {
+        path: '',
+        component: PilotStudyComponentComponent,
+        data: {
+            scope: 'pilots:readAll pilots:delete'
+        }
+    },
 
-  {
-    path: 'new',
-    component: PilotStudyFormComponent,
-    data: { scope: "pilots:create" }
-  },
-  {
-    path: ':pilotStudyId',
-    component: PilotStudyFormComponent,
-    data: { scope: "pilots:update" }
-  },
-  {
-    path: ':pilotStudyId/details',
-    component: PilotStudyViewComponent,
-    data: { scope: "pilots:update" }
-  },
-  {
-    path: ':pilotStudyId/:userRequest',
-    component: PilotStudyFormComponent,
-    data: { scope: "pilots:update" }
-  },
-  { path: '**', redirectTo: '/page-not-found' }
+    {
+        path: 'new',
+        component: PilotStudyFormComponent,
+        data: { scope: 'pilots:create' }
+    },
+    {
+        path: ':pilotStudyId',
+        component: PilotStudyFormComponent,
+        data: { scope: 'pilots:update' }
+    },
+    {
+        path: ':pilotStudyId/details',
+        component: PilotStudyViewComponent,
+        data: { scope: 'pilots:update' }
+    },
+    {
+        path: ':pilotStudyId/:userRequest',
+        component: PilotStudyFormComponent,
+        data: { scope: 'pilots:update' }
+    },
+    { path: '**', redirectTo: '/page-not-found' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class PilotStudyRoutingModule { }
+export class PilotStudyRoutingModule {
+}

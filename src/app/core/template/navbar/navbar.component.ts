@@ -52,7 +52,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     userId: string;
     pilotStudyId: string;
     pilotStudyName: string;
-    /* Used to make visible and hide pilot study selector*/
     flag = true;
     private subscriptions: Array<ISubscription>;
 
@@ -74,14 +73,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        /* subscriptions */
         this.subscriptions.push(this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
             this.getNamePilotStudy();
         }));
         this.subscriptions.push(this.router.events.subscribe((event) => {
             this.sidebarClose();
-            var $layer: any = document.getElementsByClassName('close-layer')[0];
+            const $layer: any = document.getElementsByClassName('close-layer')[0];
             if ($layer) {
                 $layer.remove();
                 this.mobile_menu_visible = 0;
@@ -298,7 +296,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

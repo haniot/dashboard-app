@@ -1,15 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'haniot-modal',
-  templateUrl: './haniot-modal.component.html',
-  styleUrls: ['./haniot-modal.component.scss']
+    selector: 'haniot-modal',
+    templateUrl: './haniot-modal.component.html',
+    styleUrls: ['./haniot-modal.component.scss']
 })
 export class HaniotModalComponent implements OnInit {
-  @Input() modalId: string;
+    @Input() modalId: string;
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() { }
+    ngOnInit() {
+    }
 
 }

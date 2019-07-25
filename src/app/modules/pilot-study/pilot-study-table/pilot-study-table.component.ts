@@ -1,10 +1,15 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {PilotStudyService} from '../services/pilot-study.service';
-import {PilotStudy} from '../models/pilot.study';
-import {PageEvent} from '@angular/material/paginator';
-import {ToastrService} from 'ngx-toastr';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {TranslateService} from "@ngx-translate/core";
+import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { PilotStudyService } from '../services/pilot-study.service';
+import { PilotStudy } from '../models/pilot.study';
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'pilot-study-table',
@@ -12,33 +17,29 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./pilot-study-table.component.scss']
 })
 export class PilotStudyTableComponent implements OnInit {
-    pilotStudy_id: string;
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page: number;
+    limit: number;
     length: number;
-
     list: Array<PilotStudy>;
     search: string;
     searchTime;
-
-    cacheStudyIdRemove;
-    string;
-
-    listOfpilotsIsEmpty: boolean = false;
+    cacheStudyIdRemove: string;
+    listOfPilotsIsEmpty: boolean;
+    pilotStudy_id: string;
 
     constructor(
         private pilotStudyService: PilotStudyService,
+        private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
         private translateService: TranslateService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.listOfPilotsIsEmpty = false;
         this.list = new Array<PilotStudy>();
     }
 
@@ -51,15 +52,9 @@ export class PilotStudyTableComponent implements OnInit {
         this.pilotStudyService.getAll(this.page, this.limit)
             .then(studies => {
                 this.list = studies;
-                if (this.list.length == 0) {
-                    this.listOfpilotsIsEmpty = true;
-                } else {
-                    this.listOfpilotsIsEmpty = false;
-                }
+                this.listOfPilotsIsEmpty = this.list.length === 0;
             })
-            .catch(error => {
-                // console.log('Erro ao buscar pilot-studies: ', error);
-            });
+            .catch();
     }
 
     searchOnSubmit() {
@@ -70,9 +65,7 @@ export class PilotStudyTableComponent implements OnInit {
                     this.list = studies;
                     this.calcLengthEstudies();
                 })
-                .catch(error => {
-                    // console.log('Erro ao buscar pilot-studies: ', error);
-                });
+                .catch();
         }, 200);
     }
 
@@ -87,13 +80,7 @@ export class PilotStudyTableComponent implements OnInit {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     removeStudy() {
@@ -114,7 +101,7 @@ export class PilotStudyTableComponent implements OnInit {
     }
 
     calcLengthEstudies() {
-        if (this.search && this.search != '') {
+        if (this.search && this.search !== '') {
             this.pilotStudyService.getAll(undefined, undefined, this.search)
                 .then(pilots => {
                     this.length = pilots.length;

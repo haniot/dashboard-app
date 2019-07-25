@@ -24,7 +24,7 @@
       <label for="new_password">{{'SHARED.PASSWORD-NEW' | translate}}:</label>
       <div>
         <input [type]="typeInputPassword_confirm" class="form-control" id="new_password" required minlength="6" name="new_password"
-          #passwordNewModel="ngModel" [(ngModel)]="new_password" (keyup)="validetorPassword()">
+          #passwordNewModel="ngModel" [(ngModel)]="new_password" (keyup)="validatePassword()">
         <a class="icon_password" href="javascript:void(0);" (click)="clickVisibilityPasswordConfirm()">
           <i class="material-icons">{{icon_password_confirm}}</i>
         </a>

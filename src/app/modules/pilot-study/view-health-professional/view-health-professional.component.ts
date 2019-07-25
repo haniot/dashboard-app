@@ -1,8 +1,8 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {PilotStudyService} from '../services/pilot-study.service';
-import {HealthProfessional} from 'app/modules/admin/models/users';
+import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { PilotStudyService } from '../services/pilot-study.service';
+import { HealthProfessional } from 'app/modules/admin/models/users';
 
 @Component({
     selector: 'view-health-professional',
@@ -10,8 +10,7 @@ import {HealthProfessional} from 'app/modules/admin/models/users';
     styleUrls: ['./view-health-professional.component.scss']
 })
 export class ViewHealthProfessionalComponent implements OnChanges {
-
-    @Input() pilotstudyid: string;
+    @Input() pilotStudyId: string;
     healthProfessionals: Array<HealthProfessional>;
 
     constructor(
@@ -24,14 +23,12 @@ export class ViewHealthProfessionalComponent implements OnChanges {
     }
 
     ngOnChanges() {
-        if (this.pilotstudyid) {
-            this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotstudyid)
-                .then(healthprofessionals => {
-                    this.healthProfessionals = healthprofessionals;
+        if (this.pilotStudyId) {
+            this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudyId)
+                .then(healthProfessionals => {
+                    this.healthProfessionals = healthProfessionals;
                 })
-                .catch(error => {
-                    // console.log('Não foi possivel buscar profissionais de saúde');
-                });
+                .catch();
         }
     }
 

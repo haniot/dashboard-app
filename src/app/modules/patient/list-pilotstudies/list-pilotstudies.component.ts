@@ -9,7 +9,7 @@ import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 import { SelectPilotStudyService } from '../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service';
 import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -20,7 +20,6 @@ const PaginatorConfig = ConfigurationBasic;
 })
 export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDestroy {
     userId: string;
-    /* Paging Setting */
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -33,6 +32,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
 
     constructor(
         private pilotStudyService: PilotStudyService,
+        private paginatorService: PaginatorIntlService,
         private activeRouter: ActivatedRoute,
         private loadinService: LoadingService,
         private selectPilotService: SelectPilotStudyService,
@@ -96,13 +96,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     clickPagination(event) {
@@ -141,7 +135,6 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

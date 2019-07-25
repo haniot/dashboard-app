@@ -145,8 +145,8 @@ export class FatComponent implements OnInit, OnChanges {
 
     updateGraph(measurements: Array<Measurement>): void {
 
-        this.options.xAxis.data = new Array();
-        this.options.series.data = new Array();
+        this.options.xAxis.data = [];
+        this.options.series.data = [];
 
         measurements.forEach((element: Measurement) => {
             this.options.series.data.push(element.value);

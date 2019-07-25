@@ -143,11 +143,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
             .then(patients => {
                 this.listPacients = patients;
                 this.calcLengthPatients();
-                if (patients.length) {
-                    this.listOfPatientsIsEmpty = false;
-                } else {
-                    this.listOfPatientsIsEmpty = true;
-                }
+                this.listOfPatientsIsEmpty = !patients.length;
             })
     }
 
@@ -167,11 +163,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
             .then(studies => {
                 this.listPilots = studies;
                 this.calcLengthStudies();
-                if (studies.length) {
-                    this.listOfStudiesIsEmpty = false;
-                } else {
-                    this.listOfStudiesIsEmpty = true;
-                }
+                this.listOfStudiesIsEmpty = !studies.length;
             })
     }
 
@@ -213,7 +205,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

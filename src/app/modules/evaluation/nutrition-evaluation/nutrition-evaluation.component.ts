@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { NutritionEvaluationService } from '../services/nutrition-evaluation.service';
 import { NutritionalCouncil, NutritionEvaluation } from '../models/nutrition-evaluation';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { GraphService } from 'app/shared/shared-services/graph.service';
 import { PatientService } from 'app/modules/patient/services/patient.service';
 import { Patient } from 'app/modules/patient/models/patient';
 import { Weight } from 'app/modules/measurement/models/weight';
@@ -66,7 +65,6 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         private datePipe: DatePipe,
         private modalService: ModalService,
         private location: Location,
-        private graphService: GraphService,
         private patientService: PatientService,
         private toastService: ToastrService,
         private nutritionEvaluationService: NutritionEvaluationService,
@@ -192,8 +190,6 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     loadGraph(dataset: Array<any>) {
 
-        const colleted_measurements = this.translateService
-            .instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.COLLECTED-MEASUREMENTS');
         const frequency = this.translateService
             .instant('MEASUREMENTS.HEART-RATE.FREQUENCY');
 
@@ -474,7 +470,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
+        /* cancel all subscriptions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

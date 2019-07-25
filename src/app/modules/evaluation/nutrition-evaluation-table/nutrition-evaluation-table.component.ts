@@ -8,7 +8,7 @@ import { ModalService } from 'app/shared/shared-components/haniot-modal/service/
 import { EvaluationService } from '../services/evaluation.service';
 import { NutritionEvaluation } from '../models/nutrition-evaluation';
 import { NutritionEvaluationService } from '../services/nutrition-evaluation.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -34,6 +34,7 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
     constructor(
         private evaluationService: EvaluationService,
         private nutritionService: NutritionEvaluationService,
+        private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
         private translateService: TranslateService
@@ -57,11 +58,7 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                 this.nutritionService.getAllByPatient(this.patientId, this.page, this.limit, this.search)
                     .then(nutritionsEvaluations => {
                         this.listOfEvaluations = nutritionsEvaluations;
-                        if (nutritionsEvaluations && nutritionsEvaluations.length) {
-                            this.listOfEvaluationsIsEmpty = false;
-                        } else {
-                            this.listOfEvaluationsIsEmpty = true;
-                        }
+                        this.listOfEvaluationsIsEmpty = !(nutritionsEvaluations && nutritionsEvaluations.length);
                         this.calcLenghtNutritionEvaluations();
                     })
                     .catch(() => {
@@ -127,13 +124,7 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     calcLenghtNutritionEvaluations() {

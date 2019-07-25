@@ -797,6 +797,7 @@
     "INVALID-DATA": "Invalid data",
     "NOT-LOGIN": "Could not login",
     "BLOCKED-USER": "Blocked user!",
-    "TRY-AGAIN": "Try again after 1 hour."
+    "TRY-AGAIN": "Try again after 1 hour.",
+    "NOT-CHANGE-LANGUAGE": "Could not change language!"
   }
 }

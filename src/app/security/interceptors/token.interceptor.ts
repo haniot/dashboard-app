@@ -1,21 +1,20 @@
-import {Observable} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
-import {environment} from 'environments/environment';
-import {LocalStorageService} from "../../shared/shared-services/localstorage.service";
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
+
+import { LocalStorageService } from '../../shared/shared-services/localstorage.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    constructor(private localStorageService: LocalStorageService) {
-
+    constructor(
+        private localStorageService: LocalStorageService) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const requestUrl: Array<any> = request.url.split('/');
-        const apiUrl: Array<any> = environment.api_url.split('/');
         const token = this.localStorageService.getItem('token');
 
-        if (token) {//&& (requestUrl[2] === apiUrl[2])
+        if (token) {
             const newRequest = request.clone({
                 setHeaders: {
                     'Authorization': `Bearer ${token}`,

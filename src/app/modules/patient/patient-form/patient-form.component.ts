@@ -207,7 +207,6 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

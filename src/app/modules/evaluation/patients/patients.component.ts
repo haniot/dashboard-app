@@ -5,7 +5,7 @@ import { Patient } from 'app/modules/patient/models/patient';
 import { PatientService } from 'app/modules/patient/services/patient.service';
 import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -33,6 +33,7 @@ export class PatientsComponent implements OnChanges {
     constructor(
         private patientService: PatientService,
         private pilotstudyService: PilotStudyService,
+        private paginatorService: PaginatorIntlService,
         private modalService: ModalService
     ) {
         this.page = PaginatorConfig.page;
@@ -49,11 +50,7 @@ export class PatientsComponent implements OnChanges {
             this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
                 .then(patients => {
                     this.listOfPatients = patients;
-                    if (patients && patients.length) {
-                        this.listOfPatientsIsEmpty = false;
-                    } else {
-                        this.listOfPatientsIsEmpty = true;
-                    }
+                    this.listOfPatientsIsEmpty = !(patients && patients.length);
                     this.calcLengthPatients();
                 })
                 .catch(() => {
@@ -67,11 +64,7 @@ export class PatientsComponent implements OnChanges {
             .then(patients => {
                 this.listOfPatients = patients;
                 this.calcLengthPatients();
-                if (patients.length === 0) {
-                    this.listOfPatientsIsEmpty = true;
-                } else {
-                    this.listOfPatientsIsEmpty = false;
-                }
+                this.listOfPatientsIsEmpty = (patients.length === 0);
             })
             .catch();
     }
@@ -98,13 +91,7 @@ export class PatientsComponent implements OnChanges {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     calcLengthPatients() {

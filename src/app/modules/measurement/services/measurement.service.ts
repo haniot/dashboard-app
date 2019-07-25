@@ -87,13 +87,6 @@ export class MeasurementService {
     }
 
     remove(userId: string, measurementId: string): Promise<any> {
-        // const promiseA = new Promise((resolve, reject) => {
-        //     const wait = setTimeout(() => {
-        //         clearTimeout(wait);
-        //         resolve('Promise A win!');
-        //     }, 3000)
-        // })
-        // return promiseA
         return this.http.delete<any>(`${environment.api_url}/users/${userId}/measurements/${measurementId}`)
             .toPromise();
     }

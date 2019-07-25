@@ -10,7 +10,7 @@ import { UserService } from 'app/modules/admin/services/users.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import { TranslateService } from '@ngx-translate/core';
 import { IUser } from '../../../shared/shared-models/user';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -20,18 +20,15 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./haniot-table.component.scss']
 })
 export class HaniotTableComponent implements OnInit {
-    // MatPaginator Inputs
     @Input() length: number;
     @Input() pageSize: number;
-    pageSizeOptions: number[];
-    // MatPaginator Output
-    pageEvent: PageEvent;
     @Input() list: Array<IUser>;
     @Output() onremove = new EventEmitter();
-    // Admin or HealthProfessional
     @Input() userType: string;
     @Output() onedit = new EventEmitter();
     @Output() pagination = new EventEmitter();
+    pageSizeOptions: number[];
+    pageEvent: PageEvent;
     search: string;
     searchTime;
     cacheIdRemove: string;
@@ -42,6 +39,7 @@ export class HaniotTableComponent implements OnInit {
         private adminService: AdminService,
         private healthService: HealthProfessionalService,
         private userService: UserService,
+        private paginatorService: PaginatorIntlService,
         private toastr: ToastrService,
         private modalService: ModalService,
         private translateService: TranslateService) {
@@ -169,13 +167,7 @@ export class HaniotTableComponent implements OnInit {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.pageSize;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.pageSize, index);
     }
 
     updatePagination() {
@@ -198,11 +190,7 @@ export class HaniotTableComponent implements OnInit {
     }
 
     updateStateOfList(): void {
-        if (this.list.length === 0) {
-            this.listOfUserIsEmpty = true
-        } else {
-            this.listOfUserIsEmpty = false;
-        }
+        this.listOfUserIsEmpty = this.list.length === 0;
     }
 
     trackById(index, item) {

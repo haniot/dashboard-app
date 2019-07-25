@@ -194,8 +194,8 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     updateGraph(measurements: Array<any>): void {
         // clean
-        this.options.xAxis.data = new Array<any>();
-        this.options.series.data = new Array<any>();
+        this.options.xAxis.data = [];
+        this.options.series.data = [];
 
         measurements.forEach((element: BloodGlucose) => {
             const find = this.options.xAxis.data.find((ele) => {

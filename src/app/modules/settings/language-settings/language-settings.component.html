@@ -3,7 +3,7 @@
     <div class="form-group">
         <label for="language">{{ 'CONFIG.CONFIG-LANGUAGE-LABEL' | translate}}:</label>
         <select class="form-control" #langSelect (change)="changeLanguage(langSelect.value)" id="language">
-            <option *ngFor="let lang of listOflanguages" [value]="lang"
+            <option *ngFor="let lang of listOfLanguages" [value]="lang"
                     [selected]="lang === translate.currentLang">{{ languages[lang] }}</option>
         </select>
     </div>

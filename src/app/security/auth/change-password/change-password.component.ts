@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Validators, FormBuilder, FormGroup} from '@angular/forms';
-import {HttpErrorResponse} from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import {ToastrService} from 'ngx-toastr';
-import {ISubscription} from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
+import { ISubscription } from 'rxjs/Subscription';
 import * as $ from 'jquery';
 
-import {AuthService} from '../services/auth.service';
-import {TranslateService} from "@ngx-translate/core";
+import { AuthService } from '../services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-change-password',
@@ -16,22 +16,14 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
-
-
     f: FormGroup;
     errorCredentials = false;
     redirect_link;
-
-    loading: boolean = false;
-
+    loading: boolean;
     icon_password = 'visibility_off';
-
     typeInputPassword = 'password';
-
     icon_password_confirm = 'visibility_off';
-
     typeInputPassword_confirm = 'password';
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -42,6 +34,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private translateService: TranslateService
     ) {
+        this.loading = false;
         this.subscriptions = new Array<ISubscription>();
     }
 
@@ -65,12 +58,11 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.errorCredentials = false;
         this.subscriptions.push(this.authService.changePassowrd(this.f.value, this.redirect_link).subscribe(
-            (resp) => {
+            () => {
                 this.loading = false;
                 this.toastr.info(this.translateService.instant('TOAST-MESSAGES.PASSWORD-UPDATED'));
             },
             (errorResponse: HttpErrorResponse) => {
-                // console.log(errorResponse)
                 if (errorResponse.status === 400 && errorResponse.error.code === 400
                     && errorResponse.error.message
                     === 'Password does not match!') {
@@ -101,24 +93,20 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         }
     }
 
-    validetorPassword(): void {
+    validatePassword(): void {
         const pass = '' + this.f.get('new_password').value;
-
         const len = pass.length;
-
         const letter = pass.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').length;
         const num = pass.replace(/[^\d]+/g, '').length;
         const sym = pass.replace(/[A-Za-z0-9_]/gi, '').length;
 
-
         if (len < 6 || letter <= 0 || num <= 0 || sym <= 0) {
-            this.f.get('new_password').setErrors({'incorrect': true});
+            this.f.get('new_password').setErrors({ 'incorrect': true });
         }
 
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

@@ -18,7 +18,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     @Input() title: string;
     @Input() subtitle: string;
     @Output() onsubmit: EventEmitter<any>;
-    // Admin or HealthProfessional
     @Input() typeUser: string;
     userForm: FormGroup;
     @Input() userId: string;
@@ -72,7 +71,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    createForm(user?) {
+    createForm() {
         this.userForm = this.fb.group({
             id: [''],
             name: ['', Validators.required],
@@ -94,10 +93,10 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     createFormForUser(user: any) {
         this.userId = user.id;
         this.typeUser = user.health_area ? 'HealthProfessional' : 'Admin';
-        this.createForm(user);
+        this.createForm();
     }
 
-    loadUserInForm(user?: any) {
+    loadUserInForm() {
         if (this.userId) {
             switch (this.typeUser) {
                 case 'Admin':
@@ -143,20 +142,12 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
 
     clickVisibilityPassword(): void {
         this.icon_password = this.icon_password === 'visibility_off' ? 'visibility' : 'visibility_off';
-        if (this.icon_password === 'visibility_off') {
-            this.typeInputPassword = 'password';
-        } else {
-            this.typeInputPassword = 'text';
-        }
+        this.typeInputPassword = this.icon_password === 'visibility_off' ? 'password' : 'text';
     }
 
     clickVisibilityPasswordConfirm(): void {
         this.icon_password_confirm = this.icon_password_confirm === 'visibility_off' ? 'visibility' : 'visibility_off';
-        if (this.icon_password_confirm === 'visibility_off') {
-            this.typeInputPassword_confirm = 'password';
-        } else {
-            this.typeInputPassword_confirm = 'text';
-        }
+        this.typeInputPassword_confirm = this.icon_password_confirm === 'visibility_off' ? 'password' : 'text';
     }
 
     trackById(index, item) {
@@ -169,7 +160,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

@@ -21,10 +21,10 @@
     </thead>
     <tbody>
       <tr *ngIf="list.length==0">
-        <td colspan="8" *ngIf="!listOfpilotsIsEmpty">
+        <td colspan="8" *ngIf="!listOfPilotsIsEmpty">
           <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
         </td>
-        <td colspan="8" *ngIf="listOfpilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
+        <td colspan="8" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
       </tr>
       <tr *ngFor="let study of list; index as i;trackBy: trackById">
         <td [routerLink]="['/pilotstudies',study.id,'details']">{{getIndex(i)}}</td>
@@ -58,7 +58,7 @@
 <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
   (page)="clickPagination($event)">
 </mat-paginator>
-<view-health-professional [pilotstudyid]="pilotStudy_id"></view-health-professional>
+<view-health-professional [pilotStudyId]="pilotStudy_id"></view-health-professional>
 
 <modal-confirmation [message]="'PILOT-STUDY.DELETE-CONFIRMATION'|translate" (confirmation)="removeStudy()"
   (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

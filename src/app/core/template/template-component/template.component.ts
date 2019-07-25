@@ -21,11 +21,9 @@ export class TemplateComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
+        const isWindows = navigator.platform.indexOf('Win') > -1;
 
         if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
-            // if we are on windows OS we activate the perfectScrollbar function
-
             document.getElementsByTagName('body')[0].classList.add('perfect-scrollbar-on');
         } else {
             document.getElementsByTagName('body')[0].classList.remove('perfect-scrollbar-off');
@@ -38,11 +36,11 @@ export class TemplateComponent implements OnInit, OnDestroy {
         }));
         this.subscriptions.push(this.router.events.subscribe((event: any) => {
             if (event instanceof NavigationStart) {
-                if (event.url != this.lastPoppedUrl) {
+                if (event.url !== this.lastPoppedUrl) {
                     this.yScrollStack.push(window.scrollY);
                 }
             } else if (event instanceof NavigationEnd) {
-                if (event.url == this.lastPoppedUrl) {
+                if (event.url === this.lastPoppedUrl) {
                     this.lastPoppedUrl = undefined;
                     window.scrollTo(0, this.yScrollStack.pop());
                 } else {
@@ -58,7 +56,6 @@ export class TemplateComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

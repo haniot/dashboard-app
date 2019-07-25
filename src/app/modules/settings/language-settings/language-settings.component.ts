@@ -1,9 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {UserService} from "../../admin/services/users.service";
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {connectableObservableDescriptor} from "rxjs/internal/observable/ConnectableObservable";
-import {ToastrService} from "ngx-toastr";
+import { Component, OnInit } from '@angular/core';
+
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+
+import { UserService } from '../../admin/services/users.service';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { LanguagesConfiguration } from '../../../../assets/i18n/config.js';
+
+const languagesConfig = LanguagesConfiguration;
 
 @Component({
     selector: 'language-settings',
@@ -11,14 +15,8 @@ import {ToastrService} from "ngx-toastr";
     styleUrls: ['./language-settings.component.scss']
 })
 export class LanguageSettingsComponent implements OnInit {
-
-    languages = {
-        'pt-BR': 'Português Brasileiro',
-        'en-US': 'Inglês'
-    };
-
-    listOflanguages: Array<String>;
-
+    languages = languagesConfig;
+    listOfLanguages: Array<String>;
     userId: string;
 
     constructor(
@@ -26,11 +24,11 @@ export class LanguageSettingsComponent implements OnInit {
         private localStorageService: LocalStorageService,
         private toastService: ToastrService,
         private translate: TranslateService) {
-        this.listOflanguages = new Array<String>();
+        this.listOfLanguages = new Array<String>();
     }
 
     ngOnInit() {
-        this.listOflanguages = this.translate.getLangs();
+        this.listOfLanguages = this.translate.getLangs();
     }
 
     loadUser(): void {
@@ -47,9 +45,8 @@ export class LanguageSettingsComponent implements OnInit {
             .then(() => {
                 this.translate.use(language);
             })
-            .catch(errorResponse => {
-                this.toastService.error('\'Não foi possível alterar idioma!\'');
-                console.log('Não foi possível alterar idioma!', errorResponse);
+            .catch(() => {
+                this.toastService.error(this.translate.instant('TOAST-MESSAGES.NOT-CHANGE-LANGUAGE'));
             })
     }
 

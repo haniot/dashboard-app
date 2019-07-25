@@ -10,7 +10,7 @@ import { ModalService } from 'app/shared/shared-components/haniot-modal/service/
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
 import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -21,7 +21,6 @@ const PaginatorConfig = ConfigurationBasic;
 })
 export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
     userId: string;
-    /* Paging Settings */
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -38,6 +37,7 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
         private loadingService: LoadingService,
         private router: Router,
         private modalService: ModalService,
+        private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private localStorageService: LocalStorageService,
         private translateService: TranslateService
@@ -64,11 +64,7 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
             .then(studies => {
                 this.list = studies;
                 this.getLengthPilotStudies();
-                if (studies.length) {
-                    this.listOfStudiesIsEmpty = false;
-                } else {
-                    this.listOfStudiesIsEmpty = true;
-                }
+                this.listOfStudiesIsEmpty = !(studies.length);
             })
             .catch(() => {
                 this.listOfStudiesIsEmpty = true;
@@ -82,11 +78,7 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
                 .then(studies => {
                     this.list = studies;
                     this.getLengthPilotStudies();
-                    if (studies.length) {
-                        this.listOfStudiesIsEmpty = false;
-                    } else {
-                        this.listOfStudiesIsEmpty = true;
-                    }
+                    this.listOfStudiesIsEmpty = !studies.length;
                 })
                 .catch(() => {
                     this.listOfStudiesIsEmpty = true;
@@ -98,13 +90,7 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     clickPagination(event) {

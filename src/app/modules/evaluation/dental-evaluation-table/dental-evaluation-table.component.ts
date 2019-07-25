@@ -11,7 +11,7 @@ import { OdontologicEvaluation } from '../models/odontologic-evaluation';
 import { DentalEvaluationService } from '../services/dental-evaluation.service';
 import { PilotStudy } from '../../pilot-study/models/pilot.study';
 import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -40,6 +40,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
         private evaluationService: EvaluationService,
         private dentalEvaluation: DentalEvaluationService,
         private dentalService: DentalEvaluationService,
+        private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
         private localStorageService: LocalStorageService,
@@ -81,11 +82,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                     this.listOfEvaluations = dentalsEvaluations;
                     this.calcLenghtNutritionEvaluations();
                     this.lastEvaluation = dentalsEvaluations[0];
-                    if (dentalsEvaluations.length) {
-                        this.listOfEvaluationsIsEmpty = false;
-                    } else {
-                        this.listOfEvaluationsIsEmpty = true;
-                    }
+                    this.listOfEvaluationsIsEmpty = !dentalsEvaluations.length;
                 })
                 .catch(() => {
                     this.listOfEvaluationsIsEmpty = true;
@@ -129,13 +126,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     calcLenghtNutritionEvaluations() {

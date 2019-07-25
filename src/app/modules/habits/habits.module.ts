@@ -100,7 +100,7 @@ import { LesionTypePipe } from './pipes/lesion-type.pipe';
     TeethbushingPipe,
     ToothTypePipe,
     LesionTypePipe,
-    /**services */
+    /** Services */
     FeedingRecordService,
     SleepRecordService,
     PhysicalActivityRecordService,

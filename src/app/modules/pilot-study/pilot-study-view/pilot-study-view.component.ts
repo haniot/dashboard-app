@@ -1,16 +1,16 @@
-import {Component, OnInit, Input, OnChanges, OnDestroy} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
-import {ToastrService} from 'ngx-toastr';
-import {ISubscription} from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
+import { ISubscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
 
-import {HealthProfessional} from 'app/modules/admin/models/users';
-import {PilotStudyService} from '../services/pilot-study.service';
-import {PilotStudy} from "../models/pilot.study";
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {TranslateService} from "@ngx-translate/core";
+import { HealthProfessional } from 'app/modules/admin/models/users';
+import { PilotStudyService } from '../services/pilot-study.service';
+import { PilotStudy } from '../models/pilot.study';
+import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
 
 @Component({
     selector: 'app-pilot-study-view',
@@ -18,22 +18,15 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./pilot-study-view.component.scss']
 })
 export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
-
+    @Input() pilotStudyId: string;
     pilotStudyForm: FormGroup;
     professionalsForm: FormGroup;
-
     listProf: Array<HealthProfessional> = [];
-
     color = 'accent';
     checked = false;
     disabled = false;
-
-    @Input() pilotStudyId: string;
-
     pilotStudy: PilotStudy;
-
     userHealthArea: string;
-
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -51,7 +44,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.loaduserHealthArea();
+        this.loadUserHealthArea();
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.pilotStudyId = params.get('pilotStudyId');
             if (this.pilotStudyId) {
@@ -64,7 +57,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         this.getPilotStudy();
     }
 
-    loaduserHealthArea(): void {
+    loadUserHealthArea(): void {
         this.userHealthArea = this.localStorageService.getItem('health_area');
     }
 
@@ -74,15 +67,14 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
                 .then(res => {
                     this.pilotStudyForm.setValue(res);
                     this.pilotStudy = res;
-                }).catch(error => {
+                }).catch(() => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FIND'));
-                // console.error('Não foi possível buscar estudo piloto!', error);
             })
         }
     }
 
     createForm() {
-        if (this.pilotStudyId) {// Caso seja a tela de edição
+        if (this.pilotStudyId) {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
                 name: ['', Validators.required],
@@ -90,21 +82,21 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
                 start: ['', Validators.required],
                 end: ['', Validators.required],
                 health_professionals_id: ['', Validators.required],
-                is_active: [true, Validators.required],
+                is_active: [true, Validators.required]
             });
-        } else {// Caso seja a tela de inserção
+        } else {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
                 name: ['', Validators.required],
                 location: [''],
                 start: ['', Validators.required],
-                end: [{value: '', disabled: true}, Validators.required],
+                end: [{ value: '', disabled: true }, Validators.required],
                 health_professionals_id: ['', Validators.required],
-                is_active: [true, Validators.required],
+                is_active: [true, Validators.required]
             });
         }
         this.professionalsForm = this.fb.group({
-            health_professionals_id_add: ['', Validators.required],
+            health_professionals_id_add: ['', Validators.required]
         });
 
         this.subscriptions.push(this.pilotStudyForm.get('start').valueChanges.subscribe(val => {
@@ -128,9 +120,8 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
                 .then(() => {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-UPDATED'));
                 })
-                .catch(error => {
+                .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-UPDATED'));
-                    // console.log('Não foi possível atualizar estudo!', error);
                 });
         }
     }
@@ -149,7 +140,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
+        /* cancel all subscriptions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

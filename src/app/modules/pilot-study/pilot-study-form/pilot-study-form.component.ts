@@ -1,16 +1,16 @@
-import {Component, OnInit, Input, OnChanges, OnDestroy} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import {ToastrService} from 'ngx-toastr';
-import {ISubscription} from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
+import { ISubscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
 
-import {PilotStudyService} from '../services/pilot-study.service';
-import {HealthProfessionalService} from 'app/modules/admin/services/health-professional.service';
-import {HealthProfessional} from 'app/modules/admin/models/users';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {TranslateService} from "@ngx-translate/core";
+import { PilotStudyService } from '../services/pilot-study.service';
+import { HealthProfessionalService } from 'app/modules/admin/services/health-professional.service';
+import { HealthProfessional } from 'app/modules/admin/models/users';
+import { AuthService } from 'app/security/auth/services/auth.service';
 
 @Component({
     selector: 'pilot-study-form',
@@ -18,26 +18,16 @@ import {TranslateService} from "@ngx-translate/core";
     styleUrls: ['./pilot-study-form.component.scss']
 })
 export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
-
+    @Input() pilotStudyId: string;
     pilotStudyForm: FormGroup;
     professionalsForm: FormGroup;
-
     listProf: Array<HealthProfessional> = [];
-    professinalsNotAssociated: Array<HealthProfessional> = [];
-    professinalsAssociated: Array<HealthProfessional> = [];
-
-    multiSelectProfissionais: Array<any> = new Array<any>();
-    multiSelectProfissionaisSelected: Array<any> = new Array<any>();
-
+    professionalsNotAssociated: Array<HealthProfessional> = [];
+    professionalsAssociated: Array<HealthProfessional> = [];
     color = 'accent';
     checked = false;
     disabled = false;
-
-    @Input() pilotStudyId: string;
-    healthprofessionalId: string;
-
-    typeUserLogado: string;
-
+    typeUserLogged: string;
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -51,11 +41,13 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         private authService: AuthService,
         private translateService: TranslateService
     ) {
+        this.professionalsAssociated = new Array<HealthProfessional>();
+        this.professionalsNotAssociated = new Array<HealthProfessional>();
         this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
-        this.typeUserLogado = this.authService.decodeToken().sub_type;
+        this.typeUserLogged = this.authService.decodeToken().sub_type;
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
 
             this.pilotStudyId = params.get('pilotStudyId');
@@ -65,9 +57,9 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 this.getPilotStudy();
             }
 
-            if (this.typeUserLogado && this.typeUserLogado == 'admin') {
-                this.loadProfessinalsAssociated();
-                this.getListProfissonals();
+            if (this.typeUserLogged && this.typeUserLogged === 'admin') {
+                this.loadProfessionalsAssociated();
+                this.getListProfessionals();
             }
         }));
 
@@ -75,8 +67,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         this.getPilotStudy();
 
 
-        if (this.typeUserLogado && this.typeUserLogado == 'admin') {
-            this.getListProfissonals();
+        if (this.typeUserLogged && this.typeUserLogged === 'admin') {
+            this.getListProfessionals();
         }
     }
 
@@ -84,15 +76,14 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         if (this.pilotStudyId) {
             this.pilotStudyService.getById(this.pilotStudyId)
                 .then(res => this.pilotStudyForm.setValue(res))
-                .catch(error => {
+                .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FIND'));
-                    // console.error('Não foi possível buscar estudo piloto!', error);
                 })
         }
     }
 
     createForm() {
-        if (this.pilotStudyId) {// Caso seja a tela de edição
+        if (this.pilotStudyId) {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
                 name: ['', Validators.required],
@@ -100,21 +91,21 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 start: ['', Validators.required],
                 end: ['', Validators.required],
                 health_professionals_id: ['', Validators.required],
-                is_active: [true, Validators.required],
+                is_active: [true, Validators.required]
             });
-        } else {// Caso seja a tela de inserção
+        } else {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
                 name: ['', Validators.required],
                 location: [''],
                 start: ['', Validators.required],
-                end: [{value: '', disabled: true}, Validators.required],
+                end: [{ value: '', disabled: true }, Validators.required],
                 health_professionals_id: ['', Validators.required],
-                is_active: [true, Validators.required],
+                is_active: [true, Validators.required]
             });
         }
         this.professionalsForm = this.fb.group({
-            health_professionals_id_add: ['', Validators.required],
+            health_professionals_id_add: ['', Validators.required]
         });
 
         this.subscriptions.push(this.pilotStudyForm.get('start').valueChanges.subscribe(val => {
@@ -122,7 +113,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         }));
     }
 
-    onSubimt() {
+    onSubmit() {
         const form = this.pilotStudyForm.getRawValue();
         if (!this.pilotStudyId) {
             this.pilotStudyService.create(form)
@@ -130,7 +121,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                     this.pilotStudyForm.reset();
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-CREATED'));
                 })
-                .catch(error => {
+                .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-CREATED'));
                 });
         } else {
@@ -138,14 +129,13 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 .then(() => {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-UPDATED'));
                 })
-                .catch(error => {
+                .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-UPDATED'));
-                    // console.log('Não foi possível atualizar estudo!', error);
                 });
         }
     }
 
-    ngOnChanges() {// Caso o componente receba o id ele carrega o form com o estudo piloto correspondente.
+    ngOnChanges() {
         this.createForm();
         this.getPilotStudy();
     }
@@ -154,70 +144,60 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         this._location.back();
     }
 
-    getListProfissonals(): Promise<any> {
+    getListProfessionals(): Promise<any> {
         return this.healthService.getAll()
             .then(healthProfessionals => {
                 this.listProf = healthProfessionals;
             })
-            .catch(error => {
-                // console.log('Erro ao carregar lista de profisionais!', error);
-            });
+            .catch();
     }
 
     dissociateHealthProfessional(health_professionals_id: string) {
         this.pilotStudyService.dissociateHealthProfessionalsFromPilotStudy(this.pilotStudyId, health_professionals_id)
             .then(() => {
-                this.loadProfessinalsAssociated();
+                this.loadProfessionalsAssociated();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-REMOVED'));
             })
-            .catch(HttpError => {
+            .catch(() => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-NOT-REMOVED'));
-                // console.log('Não foi possível remover profissional!', HttpError);
             });
     }
 
     addProfessionalInStudy() {
         const healthProfessional_id_add = this.professionalsForm.get('health_professionals_id_add').value;
         this.pilotStudyService.addHealthProfessionalsToPilotStudy(this.pilotStudyId, healthProfessional_id_add)
-            .then((healthProfessional) => {
+            .then(() => {
                 this.professionalsForm.reset();
-                this.loadProfessinalsAssociated();
+                this.loadProfessionalsAssociated();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-ADD'));
             })
-            .catch(HttpError => {
+            .catch(() => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-NOT-ADD'));
-                // console.log('Não foi possível adicionar professional!', HttpError);
             });
     }
 
-    loadProfessinalsAssociated() {
+    loadProfessionalsAssociated() {
         if (this.pilotStudyId) {
             this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudyId)
                 .then(professionals => {
-                    this.professinalsAssociated = professionals
-                    this.loadProfessinalsNotAssociated();
+                    this.professionalsAssociated = professionals
+                    this.loadProfessionalsNotAssociated();
                 })
-                .catch(HttpError => {
-                    // console.log('Não foi possível carregar profissionais associados ao estudo!', HttpError)
-                });
+                .catch();
         }
     }
 
-    loadProfessinalsNotAssociated() {
-        this.getListProfissonals()
-            .then(() => {
-                this.professinalsNotAssociated = [];
-                this.professinalsNotAssociated = this.listProf
-                    .filter(professional => !this.searchProfessional(this.professinalsAssociated, professional));
-            });
-
+    loadProfessionalsNotAssociated() {
+        this.professionalsNotAssociated = [];
+        this.professionalsNotAssociated = this.listProf
+            .filter(professional => !this.searchProfessional(this.professionalsAssociated, professional));
 
     }
 
     private searchProfessional(listProf: Array<HealthProfessional>, professional: HealthProfessional): boolean {
-        return listProf.find(prof => {
-            return prof.id == professional.id;
-        }) ? true : false;
+        return !!listProf.find(prof => {
+            return prof.id === professional.id;
+        });
     }
 
     trackById(index, item) {
@@ -225,7 +205,6 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

@@ -118,7 +118,7 @@
                 </button>
               </div>
               <div class="p-2">
-                <button type="button" class="btn btn-haniot-primary" (click)="onSubimt()" [disabled]="!pilotStudyForm.valid">
+                <button type="button" class="btn btn-haniot-primary" (click)="onSubmit()" [disabled]="!pilotStudyForm.valid">
                     {{'SHARED.SAVE'|translate}}
                 </button>
               </div>
@@ -127,7 +127,7 @@
           </form>
         </haniot-card>
       </div>
-      <div class="col-md-12" *ngIf="pilotStudyId && typeUserLogado=='admin'">
+      <div class="col-md-12" *ngIf="pilotStudyId && typeUserLogged=='admin'">
         <haniot-card [title]="'PILOT-STUDY.MANAGE-PROFESSIONALS.TITLE'|translate" [subtitle]="'PILOT-STUDY.MANAGE-PROFESSIONALS.SUBTITLE'|translate">
           <form [formGroup]="professionalsForm">
             <div class="row container">
@@ -135,7 +135,7 @@
                 <mat-form-field>
                   <mat-label>{{'PILOT-STUDY.MANAGE-PROFESSIONALS.ADDPROFESSIONAL'|translate}}:</mat-label>
                   <mat-select formControlName="health_professionals_id_add" name="health_professionals_id_add" id="health_professionals_id_add">
-                    <mat-option *ngFor="let prof of professinalsNotAssociated;trackBy: trackById" [value]="prof.id">{{prof.name}}, {{prof.health_area | healthArea | translate}}</mat-option>
+                    <mat-option *ngFor="let prof of professionalsNotAssociated;trackBy: trackById" [value]="prof.id">{{prof.name}}, {{prof.health_area | healthArea | translate}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -161,7 +161,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let professional of professinalsAssociated; index as i;trackBy: trackById">
+                <tr *ngFor="let professional of professionalsAssociated; index as i;trackBy: trackById">
                   <td>{{professional.name}}</td>
                   <td>{{professional.health_area | healthArea | translate}}</td>
                   <td>

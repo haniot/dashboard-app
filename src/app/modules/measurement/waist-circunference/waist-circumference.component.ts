@@ -127,8 +127,8 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
     updateGraph(measurements: Array<any>): void {
         // clean
-        this.options.xAxis.data = new Array<any>();
-        this.options.series.data = new Array<any>();
+        this.options.xAxis.data = [];
+        this.options.series.data = [];
 
         measurements.forEach((element: Weight) => {
             this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));

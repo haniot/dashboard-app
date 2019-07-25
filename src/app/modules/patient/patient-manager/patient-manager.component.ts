@@ -9,7 +9,7 @@ import { Patient } from '../models/patient';
 import { PatientService } from '../services/patient.service';
 import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 import { AuthService } from 'app/security/auth/services/auth.service';
 
 const PaginatorConfig = ConfigurationBasic;
@@ -20,7 +20,6 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./patient-manager.component.scss']
 })
 export class PatientManagerComponent implements OnInit, AfterViewChecked {
-    /* Paging Settings*/
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -35,6 +34,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
     constructor(
         private patientService: PatientService,
         private authService: AuthService,
+        private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
         private loadingService: LoadingService,
@@ -48,7 +48,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        this.getAllPacients();
+        this.getAllPatients();
     }
 
     searchOnSubmit() {
@@ -65,17 +65,13 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         }
     }
 
-    getAllPacients() {
+    getAllPatients() {
         if (this.IsAdmin()) {
             this.patientService.getAll(this.page, this.limit, this.search)
                 .then(patients => {
                     this.listOfPatients = patients;
                     this.calcLengthPatients();
-                    if (patients.length === 0) {
-                        this.listOfPatientsIsEmpty = true;
-                    } else {
-                        this.listOfPatientsIsEmpty = false;
-                    }
+                    this.listOfPatientsIsEmpty = (patients.length === 0);
                 })
                 .catch();
         }
@@ -85,7 +81,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         this.pageEvent = event;
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this.getAllPacients();
+        this.getAllPatients();
     }
 
     openModalConfirmation(patientId: string) {
@@ -101,7 +97,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
     removePatient() {
         this.patientService.remove(this.cacheIdPatientRemove)
             .then(() => {
-                this.getAllPacients();
+                this.getAllPatients();
                 this.calcLengthPatients();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
             })
@@ -114,13 +110,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     calcLengthPatients() {

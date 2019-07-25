@@ -143,7 +143,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

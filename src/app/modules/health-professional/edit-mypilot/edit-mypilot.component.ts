@@ -100,7 +100,7 @@ export class EditMypilotComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
+        /* cancel all subscriptions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

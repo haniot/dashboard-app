@@ -164,8 +164,8 @@ export class WeightComponent implements OnInit, OnChanges {
     updateGraph(measurements: Array<any>): void {
         // clean weightGraph
         this.weightGraph.xAxis.data = new Array<any>();
-        this.weightGraph.series[0].data = new Array<any>();
-        this.weightGraph.series[1].data = new Array<any>();
+        this.weightGraph.series[0].data = [];
+        this.weightGraph.series[1].data = [];
 
         measurements.forEach((element: Weight) => {
             this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));

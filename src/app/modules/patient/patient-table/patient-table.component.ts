@@ -11,7 +11,7 @@ import { SelectPilotStudyService } from '../../../shared/shared-components/selec
 import { Patient } from '../models/patient';
 import { PatientService } from '../services/patient.service';
 import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -22,7 +22,6 @@ const PaginatorConfig = ConfigurationBasic;
 })
 export class PatientTableComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
     @Input() pilotStudyId;
-    /* Paging Setting*/
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -39,6 +38,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
 
     constructor(
         private patientService: PatientService,
+        private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
         private loadinService: LoadingService,
@@ -81,11 +81,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                 .then(patients => {
                     this.listOfPatients = patients;
                     this.calcLengthPatients();
-                    if (this.listOfPatients.length === 0) {
-                        this.listOfPatientsIsEmpty = true;
-                    } else {
-                        this.listOfPatientsIsEmpty = false;
-                    }
+                    this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
                 })
                 .catch();
         }, 200);
@@ -96,11 +92,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
             .then(patients => {
                 this.listOfPatients = patients;
                 this.calcLengthPatients();
-                if (this.listOfPatients.length === 0) {
-                    this.listOfPatientsIsEmpty = true;
-                } else {
-                    this.listOfPatientsIsEmpty = false;
-                }
+                this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
             })
             .catch();
     }
@@ -140,13 +132,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     calcLengthPatients() {
@@ -172,7 +158,6 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

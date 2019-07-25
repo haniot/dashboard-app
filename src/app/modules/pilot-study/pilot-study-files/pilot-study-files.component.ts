@@ -11,7 +11,7 @@ import { ModalService } from '../../../shared/shared-components/haniot-modal/ser
 import { PilotStudyService } from '../services/pilot-study.service';
 import { DateRange } from '../models/range-date';
 import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -39,6 +39,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     constructor(
         private pilotService: PilotStudyService,
+        private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
         private localStorageService: LocalStorageService,
@@ -69,11 +70,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                     .then(files => {
                         this.listOfFiles = files;
                         this.calcLenghtFiles();
-                        if (files.length) {
-                            this.listOfFilesIsEmpty = false;
-                        } else {
-                            this.listOfFilesIsEmpty = true;
-                        }
+                        this.listOfFilesIsEmpty = !files.length;
                     })
                     .catch();
             }, 200);
@@ -85,14 +82,9 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit)// TODO: Adicionar this.search
                 .then(files => {
                     this.listOfFiles = files;
-
                     this.calcLenghtFiles();
                     this.lastFiles = files[0];
-                    if (files.length) {
-                        this.listOfFilesIsEmpty = false;
-                    } else {
-                        this.listOfFilesIsEmpty = true;
-                    }
+                    this.listOfFilesIsEmpty = !files.length;
                 })
                 .catch(() => {
                     this.listOfFilesIsEmpty = true;
@@ -140,13 +132,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     calcLenghtFiles() {

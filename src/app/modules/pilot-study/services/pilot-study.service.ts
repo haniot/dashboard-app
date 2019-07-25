@@ -1,21 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {PilotStudy} from '../models/pilot.study';
-import {environment} from 'environments/environment';
-import {OdontologicEvaluation} from "../../evaluation/models/odontologic-evaluation";
-import {DateRange} from "../models/range-date";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-const dental = new OdontologicEvaluation();
-dental.total_patients = 20;
-dental.created_at = "2018-11-19T14:40:00Z";
-dental.file_csv = "javascript:alert('Attack')";
-dental.file_xls = "javascript:alert('Attack')";
-
-const dental2 = new OdontologicEvaluation();
-dental2.total_patients = 20;
-dental2.created_at = "2018-11-19T14:40:00Z";
-dental2.file_csv = "javascript:alert('Attack')";
-dental2.file_xls = "javascript:alert('Attack')";
+import { PilotStudy } from '../models/pilot.study';
+import { environment } from 'environments/environment';
+import { OdontologicEvaluation } from '../../evaluation/models/odontologic-evaluation';
+import { DateRange } from '../models/range-date';
 
 @Injectable()
 export class PilotStudyService {
@@ -33,15 +22,15 @@ export class PilotStudyService {
         let myParams = new HttpParams();
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
         if (search) {
-            myParams = myParams.append("?name", '*' + search + '*');
+            myParams = myParams.append('?name', '*' + search + '*');
         }
 
 
@@ -50,11 +39,11 @@ export class PilotStudyService {
 
         /*
         * TODO: Verficar o tipo de usuário e modificar a url. Por exemplo, se for um:
-        * healthprofessional: `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`
+        * healthProfessional: `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`
         * patient: `${environment.api_url}/users/patients/${userId}/pilotstudies`
         */
 
-        return this.http.get<any>(url, {params: myParams})
+        return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
@@ -62,22 +51,22 @@ export class PilotStudyService {
         let myParams = new HttpParams();
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
         if (search) {
-            myParams = myParams.append("?name", '*' + search + '*');
+            myParams = myParams.append('?name', '*' + search + '*');
         }
 
-        myParams = myParams.append("sort", "+created_at");
+        myParams = myParams.append('sort', '+created_at');
 
         const url = `${environment.api_url}/pilotstudies`;
 
-        return this.http.get<any>(url, {params: myParams})
+        return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
@@ -86,42 +75,40 @@ export class PilotStudyService {
 
 
         if (page) {
-            myParams = myParams.append("page", String(page));
+            myParams = myParams.append('page', String(page));
         }
 
         if (limit) {
-            myParams = myParams.append("limit", String(limit));
+            myParams = myParams.append('limit', String(limit));
         }
 
 
         if (search) {
 
-            myParams = myParams.append("created_at", 'gte:' + search.begin.toISOString());
+            myParams = myParams.append('created_at', 'gte:' + search.begin.toISOString());
 
-            myParams = myParams.append("created_at", 'lte:' + search.end.toISOString());
+            myParams = myParams.append('created_at', 'lte:' + search.end.toISOString());
 
 
         }
-        // timestamp=gte:${date_start}&timestamp=lte:${date_end}`
 
-        myParams = myParams.append("sort", "+created_at");
+        myParams = myParams.append('sort', '+created_at');
 
         const url = `${environment.api_url}/pilotstudies/${pilotstudy_id}/odontological/evaluations`;
-        return Promise.resolve([dental, dental2]);
-        return this.http.get<any>(url, {params: myParams})
+
+        return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
-    removeFile(pilotstudyId: string, file_id): Promise<boolean> {
-        return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/odontological/evaluations/${file_id}`)
+    removeFile(pilotStudyId: string, file_id): Promise<boolean> {
+        return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/odontological/evaluations/${file_id}`)
             .toPromise();
     }
 
     generateNewFile(pilotStudy: PilotStudy, health_professional_id: string): Promise<OdontologicEvaluation> {
 
-        const body = {pilotstudy: pilotStudy, health_professional_id: health_professional_id}
+        const body = { pilotstudy: pilotStudy, health_professional_id: health_professional_id }
 
-        // return Promise.resolve(dental);
         return this.http.post<any>(`${environment.api_url}/pilotstudies/${pilotStudy.id}/odontological/evaluations`, body)
             .toPromise();
     }
@@ -141,8 +128,6 @@ export class PilotStudyService {
         return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}`)
             .toPromise();
     }
-
-    /** Estudos piloto associados */
 
     getHealthProfessionalsByPilotStudyId(pilotStudyId: string) {
         return this.http.get<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/healthprofessionals`)

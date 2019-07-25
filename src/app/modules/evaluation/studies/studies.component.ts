@@ -6,7 +6,7 @@ import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
 import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -18,7 +18,6 @@ const PaginatorConfig = ConfigurationBasic;
 export class StudiesComponent implements OnInit, AfterViewInit {
     @Output() selected = new EventEmitter();
     userId: string;
-    /* Paging Settings */
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -33,6 +32,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     constructor(
         private pilotStudyService: PilotStudyService,
         private authService: AuthService,
+        private paginatorService: PaginatorIntlService,
         private loadinService: LoadingService,
         private localStorageService: LocalStorageService
     ) {
@@ -55,15 +55,11 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     }
 
     getAllPilotStudies() {
-        if (this.authService.decodeToken().sub_type == 'admin') {
+        if (this.authService.decodeToken().sub_type === 'admin') {
             this.pilotStudyService.getAll(this.page, this.limit, this.search)
                 .then(studies => {
                     this.list = studies;
-                    if (studies && studies.length) {
-                        this.listOfPilotsIsEmpty = false;
-                    } else {
-                        this.listOfPilotsIsEmpty = true;
-                    }
+                    this.listOfPilotsIsEmpty = !(studies && studies.length);
                 })
                 .catch(() => {
                     this.listOfPilotsIsEmpty = true;
@@ -73,11 +69,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                 .then(studies => {
                     this.list = studies;
-                    if (studies && studies.length) {
-                        this.listOfPilotsIsEmpty = false;
-                    } else {
-                        this.listOfPilotsIsEmpty = true;
-                    }
+                    this.listOfPilotsIsEmpty = !(studies && studies.length);
                 })
                 .catch(() => {
                     this.listOfPilotsIsEmpty = true;
@@ -110,13 +102,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     clickPagination(event) {

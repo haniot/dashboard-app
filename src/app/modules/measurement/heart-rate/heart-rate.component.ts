@@ -73,8 +73,8 @@ export class HeartRateComponent implements OnInit, OnChanges {
         this.data.forEach((heartRate) => {
             if (heartRate.dataset) {
                 heartRate.dataset.forEach((elementHeartRate: { value: number, timestamp: string }) => {
-                    xAxisOptions.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
-                    seriesOptions.data.push(date.value);
+                    xAxisOptions.data.push(this.datePipe.transform(elementHeartRate.timestamp, 'shortDate'));
+                    seriesOptions.data.push(elementHeartRate.value);
                 });
             }
         });
@@ -85,9 +85,9 @@ export class HeartRateComponent implements OnInit, OnChanges {
             if (this.lastData.dataset) {
                 this.lastData.dataset.forEach((elementHeartRate: { value: number, timestamp: string }) => {
 
-                    xAxisOptionsLastDate.data.push(this.datePipe.transform(date.timestamp, 'mediumTime'));
+                    xAxisOptionsLastDate.data.push(this.datePipe.transform(elementHeartRate.timestamp, 'mediumTime'));
 
-                    seriesOptionsLastDate.data.push(date.value);
+                    seriesOptionsLastDate.data.push(elementHeartRate.value);
 
                 });
             }

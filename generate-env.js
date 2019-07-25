@@ -4,7 +4,6 @@ dotenv.config()
 
 const envsPath = './src/environments'
 
-/*Create the env dir if it doesn't exist */
 if (!fs.existsSync(envsPath)) {
     fs.mkdirSync(envsPath)
 }

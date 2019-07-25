@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     selector: 'haniot-card',
@@ -7,8 +7,8 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 export class HaniotCardComponent implements OnInit {
 
-    @Input() title = ""
-    @Input() subtitle = ""
+    @Input() title = ''
+    @Input() subtitle = ''
 
     constructor() {
     }

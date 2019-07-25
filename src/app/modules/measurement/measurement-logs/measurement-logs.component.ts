@@ -14,7 +14,6 @@ const PaginatorConfig = ConfigurationBasic;
 })
 export class MeasurementLogsComponent implements OnInit {
     @Input() patientId: string;
-    /* Paging Settings */
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
