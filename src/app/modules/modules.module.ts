@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatPaginatorIntl } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
-import { PaginatorIntlService } from './config-matpaginator';
+import { PaginatorIntlService } from './config.matpaginator';
 
 @NgModule({
     declarations: [],

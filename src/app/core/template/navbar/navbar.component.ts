@@ -7,11 +7,11 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { UserService } from 'app/modules/admin/services/users.service';
-import { PilotStudy } from '../../../modules/pilot-study/models/pilot.study';
-import { SelectPilotStudyService } from '../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service';
-import { PilotStudyService } from '../../../modules/pilot-study/services/pilot-study.service';
-import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { LoadingService } from '../../../shared/shared-components/loading-component/service/loading.service';
+import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study';
+import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
+import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service';
+import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 
 
 export declare interface RouteInfo {
@@ -209,7 +209,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                         this.userName = user.name ? user.name : user.email;
                         const health_area = user.health_area ? user.health_area : 'admin';
                         this.localStorageService.setItem('username', this.userName);
-                        this.localStorageService.setItem('email', user.email);
+                        this.localStorageService.setItem('email-template.html', user.email);
                         this.localStorageService.setItem('health_area', health_area);
                         this.localStorageService.setItem('language', user.language);
                         this.configLanguage(user.language);

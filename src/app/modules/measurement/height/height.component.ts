@@ -10,7 +10,7 @@ import { MeasurementService } from '../services/measurement.service';
 @Component({
     selector: 'height',
     templateUrl: './height.component.html',
-    styleUrls: ['../shared-style/shared-styles.scss']
+    styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class HeightComponent implements OnInit, OnChanges {
     @Input() data: Array<IMeasurement>;

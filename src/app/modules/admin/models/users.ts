@@ -1,4 +1,4 @@
-import {User} from "../../../shared/shared-models/user";
+import {User} from "../../../shared/shared.models/user";
 
 export class Admin extends User {
     total_pilot_studies: number;

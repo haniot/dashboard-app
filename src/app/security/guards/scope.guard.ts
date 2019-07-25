@@ -11,7 +11,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../auth/services/auth.service';
-import { VerifyScopeService } from '../services/verify-scope.service';
+import { VerifyScopeService } from '../services/verify.scope.service';
 
 @Injectable()
 export class ScopeGuard implements CanActivate, CanActivateChild {

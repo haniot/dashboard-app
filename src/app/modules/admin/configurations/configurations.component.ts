@@ -4,12 +4,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from '../services/admin.service';
-import { HealthProfessionalService } from '../services/health-professional.service';
+import { HealthProfessionalService } from '../services/health.professional.service';
 import { Admin } from '../models/users';
 import { UserService } from '../services/users.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
-import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { IUser } from '../../../shared/shared-models/user';
+import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { IUser } from '../../../shared/shared.models/user';
 
 @Component({
     selector: 'admin-configurations',

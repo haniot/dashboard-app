@@ -4,14 +4,14 @@ import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Weight } from '../models/weight';
-import { DecimalFormatterPipe } from '../pipes/decimal-formatter.pipe';
+import { DecimalFormatterPipe } from '../pipes/decimal.formatter.pipe';
 import { MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'weight',
     templateUrl: './weight.component.html',
-    styleUrls: ['../shared-style/shared-styles.scss']
+    styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class WeightComponent implements OnInit, OnChanges {
     @Input() data: Array<Weight>;

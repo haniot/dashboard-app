@@ -4,12 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from '../services/admin.service';
-import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
+import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { Admin } from '../models/users';
-import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
+import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { TranslateService } from '@ngx-translate/core';
-import { IUser } from '../../../shared/shared-models/user';
-import { ConfigurationBasic } from '../../config-matpaginator'
+import { IUser } from '../../../shared/shared.models/user';
+import { ConfigurationBasic } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 

@@ -9,8 +9,8 @@ import { RecaptchaModule } from 'ng-recaptcha'
 import { ToastContainerModule } from 'ngx-toastr'
 
 import { LoginComponent } from './login/login.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
-import { AuthRoutingModule } from './auth-routing/auth-routing.module';
+import { ChangePasswordComponent } from './change.password/change.password.component';
+import { AuthRoutingModule } from './auth.routing/auth.routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({

@@ -9,7 +9,7 @@ import { MeasurementService } from '../services/measurement.service';
 @Component({
     selector: 'fat',
     templateUrl: './fat.component.html',
-    styleUrls: ['../shared-style/shared-styles.scss']
+    styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class FatComponent implements OnInit, OnChanges {
     @Input() data: Array<IMeasurement>;

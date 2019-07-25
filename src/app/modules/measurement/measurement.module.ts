@@ -9,30 +9,30 @@ import {NgxEchartsModule} from "ngx-echarts";
 import {TranslateModule} from "@ngx-translate/core";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule} from "saturn-datepicker";
 
-import {MeasurementComponentComponent} from './measurement-component/measurement-component.component';
+import {MeasurementComponent} from './measurement.component/measurement.component';
 import {SharedModule} from 'app/shared/shared.module';
 import {MeasurementService} from './services/measurement.service';
 import {WeightComponent} from './weight/weight.component';
 import {HeightComponent} from './height/height.component';
-import {WaistCircumferenceComponent} from './waist-circunference/waist-circumference.component';
-import {BodyTemperatureComponent} from './body-temperature/body-temperature.component';
-import {BloodGlucoseComponent} from './blood-glucose/blood-glucose.component';
-import {BloodPressureComponent} from './blood-pressure/blood-pressure.component';
-import {HeartRateComponent} from './heart-rate/heart-rate.component';
+import {WaistCircumferenceComponent} from './waist.circunference/waist.circumference.component';
+import {BodyTemperatureComponent} from './body.temperature/body.temperature.component';
+import {BloodGlucoseComponent} from './blood.glucose/blood.glucose.component';
+import {BloodPressureComponent} from './blood.pressure/blood.pressure.component';
+import {HeartRateComponent} from './heart.rate/heart.rate.component';
 import {MealPipe} from './pipes/meal.pipe';
 import {FatComponent} from './fat/fat.component';
-import {DeviceTypePipe} from './pipes/device-type.pipe';
+import {DeviceTypePipe} from './pipes/device.type.pipe';
 import {DeviceComponent} from './device/device.component';
 import {DeviceService} from './services/device.service';
-import {DecimalFormatterPipe} from './pipes/decimal-formatter.pipe';
-import {MeasurementCardComponent} from './measurement-card/measurement-card.component';
+import {DecimalFormatterPipe} from './pipes/decimal.formatter.pipe';
+import {MeasurementCardComponent} from './measurement.card/measurement.card.component';
 import {MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatPaginatorModule} from "@angular/material";
-import {MeasurementLogsComponent} from './measurement-logs/measurement-logs.component';
-import { MeasurementTypePipe } from './pipes/measurement-type.pipe';
+import {MeasurementLogsComponent} from './measurement.logs/measurement.logs.component';
+import { MeasurementTypePipe } from './pipes/measurement.type.pipe';
 
 @NgModule({
     declarations: [
-        MeasurementComponentComponent,
+        MeasurementComponent,
         WeightComponent,
         HeightComponent,
         WaistCircumferenceComponent,
@@ -66,7 +66,7 @@ import { MeasurementTypePipe } from './pipes/measurement-type.pipe';
         MatPaginatorModule
     ],
     exports: [
-        MeasurementComponentComponent,
+        MeasurementComponent,
         MeasurementLogsComponent,
         DeviceComponent,
         MealPipe,

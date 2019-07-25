@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { AccessSettingsComponent } from './access-settings/access-settings.component';
-import { LanguageSettingsComponent } from './language-settings/language-settings.component';
+import { AccessSettingsComponent } from './access.settings/access.settings.component';
+import { LanguageSettingsComponent } from './language.settings/language.settings.component';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({

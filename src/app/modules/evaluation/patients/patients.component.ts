@@ -3,9 +3,9 @@ import { PageEvent } from '@angular/material';
 
 import { Patient } from 'app/modules/patient/models/patient';
 import { PatientService } from 'app/modules/patient/services/patient.service';
-import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
-import { ModalService } from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
+import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
+import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
+import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 

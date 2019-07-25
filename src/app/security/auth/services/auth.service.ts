@@ -9,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
 import * as JWT_decode from 'jwt-decode';
 import { tap } from 'rxjs/operators';
 
-import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
 
 @Injectable()
 export class AuthService {

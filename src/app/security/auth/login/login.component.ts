@@ -10,8 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { RecaptchaComponent } from 'ng-recaptcha'
 
-import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
-import { LocalStorageService } from '../../../shared/shared-services/localstorage.service'
+import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
+import { LocalStorageService } from '../../../shared/shared.services/localstorage.service'
 import { environment } from '../../../../environments/environment'
 
 const ATTEMPTSSHOWCAPTCHA = 2;
@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
         this.attemptUser = new Attempt();
         const find = attemptsStorage.find(item => {
-            return item.user === this.f.get('email').value
+            return item.user === this.f.get('email-template.html').value
         })
         if (find) {
             this.attemptUser = find;
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     incrementAttempt(): void {
-        this.attemptUser.user = this.f.get('email').value;
+        this.attemptUser.user = this.f.get('email-template.html').value;
         this.attemptUser.attemptNumber++;
 
         const local = this.localStorageService.getItem('listAttempts');

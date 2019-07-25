@@ -10,19 +10,19 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import {TemplateModule} from 'app/core/template/template.module';
-import {AdminRoutingModule} from './admin-routing/admin-routing.module';
 import {AdministratorsComponent} from './administrators/administrators.component';
-import {HealthProfessionalComponent} from './health-professionals/health-professionals.component';
-import {ModalUserComponent} from './modal-user/modal-user.component';
+import {HealthProfessionalComponent} from './health.professionals/health.professionals.component';
+import {ModalUserComponent} from './modal.user/modal.user.component';
 import {AdminConfigurationsComponent} from './configurations/configurations.component';
 import {AdminService} from './services/admin.service';
-import {HealthProfessionalService} from './services/health-professional.service';
+import {HealthProfessionalService} from './services/health.professional.service';
 import {UserService} from './services/users.service';
 import {SharedModule} from 'app/shared/shared.module';
 import {MatNativeDateModule, MatTableModule} from '@angular/material';
-import {HaniotTableComponent} from './haniot-table/haniot-table.component';
 import {EvaluationModule} from "../evaluation/evaluation.module";
 import { SettingsModule } from '../settings/settings.module';
+import { AdminRoutingModule } from './admin.routing/admin.routing.module'
+import { HaniotTableComponent } from './haniot.table/haniot.table.component'
 
 @NgModule({
     imports: [

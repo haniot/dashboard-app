@@ -1,18 +1,19 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
-import {MatSelectModule} from "@angular/material";
-import {FormsModule} from "@angular/forms";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MatSelectModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import {FooterComponent} from './footer/footer.component';
-import {NavbarComponent} from './navbar/navbar.component';
-import {SidebarComponent} from './sidebar/sidebar.component';
-import {NotfoundComponent} from './page-not-found/page-not-found.component';
-import {AcessDeniedComponent} from './acess-denied/acess-denied.component';
-import {TemplateComponent} from './template-component/template.component';
-import {SharedModule} from "../../shared/shared.module";
+import { FooterComponent } from './footer/footer.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { TemplateComponent } from './template.component/template.component';
+import { SharedModule } from '../../shared/shared.module';
+import { AccessDeniedComponent } from './access.denied/access.denied.component';
+import { NotfoundComponent } from './page.not.found/page.not.found.component';
+
 
 @NgModule({
     imports: [
@@ -28,7 +29,7 @@ import {SharedModule} from "../../shared/shared.module";
         NavbarComponent,
         SidebarComponent,
         NotfoundComponent,
-        AcessDeniedComponent,
+        AccessDeniedComponent,
         TemplateComponent
     ],
     exports: [
@@ -36,7 +37,7 @@ import {SharedModule} from "../../shared/shared.module";
         NavbarComponent,
         SidebarComponent,
         TemplateComponent,
-        AcessDeniedComponent,
+        AccessDeniedComponent,
         NotfoundComponent
     ]
 })

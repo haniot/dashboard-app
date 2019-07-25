@@ -5,7 +5,7 @@ interface NodeModule {
     id: string;
 }
 
-declare module '*html' {
+declare module '*.html' {
     const value: string;
     export default value
 }

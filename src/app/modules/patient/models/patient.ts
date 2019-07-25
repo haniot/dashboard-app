@@ -1,4 +1,4 @@
-import {IUser, User} from "../../../shared/shared-models/user";
+import {IUser, User} from "../../../shared/shared.models/user";
 
 export interface IPatient extends IUser {
     name: string;

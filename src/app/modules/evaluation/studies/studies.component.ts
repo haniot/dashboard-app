@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
-import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
-import { PilotStudyService } from 'app/modules/pilot-study/services/pilot-study.service';
+import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
+import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
-import { LoadingService } from 'app/shared/shared-components/loading-component/service/loading.service';
-import { LocalStorageService } from '../../../shared/shared-services/localstorage.service';
-import { ConfigurationBasic, PaginatorIntlService } from '../../config-matpaginator'
+import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
+import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 

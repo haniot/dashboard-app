@@ -3,7 +3,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 
 import { Observable } from 'rxjs';
 
-import { LocalStorageService } from '../../shared/shared-services/localstorage.service';
+import { LocalStorageService } from '../../shared/shared.services/localstorage.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

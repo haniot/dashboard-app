@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
 import { Patient } from 'app/modules/patient/models/patient';
-import { PilotStudy } from 'app/modules/pilot-study/models/pilot.study';
+import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { Unit } from '../models/unit';
 

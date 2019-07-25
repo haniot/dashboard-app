@@ -1,5 +1,5 @@
 import { enableProdMode, NgModule, LOCALE_ID } from '@angular/core';
-import { HttpModule } from '@angular/http';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { CommonModule, registerLocaleData } from '@angular/common';
@@ -18,8 +18,8 @@ import { SecurityModule } from './security/security.module';
 import { CoreModule } from './core/core.module';
 import { ModulesModule } from './modules/modules.module';
 import { SharedModule } from './shared/shared.module';
-import { AppRoutingModule } from './core/app-routing/app-routing.module';
-import { SelectPilotStudyService } from './shared/shared-components/select-pilotstudy/service/select-pilot-study.service';
+import { AppRoutingModule } from './core/app.routing/app.routing.module';
+import { SelectPilotStudyService } from './shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { environment } from '../environments/environment';
 import { LanguagesConfiguration } from '../assets/i18n/config.js';
 
@@ -51,7 +51,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         CommonModule,
         BrowserModule,
         BrowserAnimationsModule,
-        HttpModule,
         HttpClientModule,
         RouterModule,
 
