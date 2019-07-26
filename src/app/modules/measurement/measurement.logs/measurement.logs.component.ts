@@ -22,6 +22,7 @@ export class MeasurementLogsComponent implements OnInit {
     measurementsTypes: Array<any>;
     measurementTypeSelected: MeasurementType;
     listOfMeasurements: Array<any>;
+    listOfMeasurementsIsEmpty: boolean;
     loadingMeasurements: boolean;
     modalConfirmRemoveMeasurement: boolean;
     cacheIdMeasurementRemove: string;
@@ -45,6 +46,7 @@ export class MeasurementLogsComponent implements OnInit {
         this.cacheListIdMeasurementRemove = new Array<string>();
         this.cacheIdMeasurementRemove = '';
         this.stateButtonRemoveSelected = false;
+        this.listOfMeasurementsIsEmpty = false;
     }
 
     ngOnInit() {

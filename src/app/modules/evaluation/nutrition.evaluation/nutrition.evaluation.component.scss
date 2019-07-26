@@ -172,3 +172,47 @@ label {
 .echarts-div-graph {
   margin-top: -50px;
 }
+
+/* styles for classifications */
+/* nutrition status */
+.accentuated_thinness, .severe_obesity {
+  color: #d50000;
+}
+
+.thinness, .obesity {
+  color: #FF5722;
+}
+
+.eutrophy {
+  color: #00a594;
+}
+
+.overweight {
+  color: #FF9800;
+}
+
+/* taylor of cut*/
+.out_of_normality {
+  color: #FF5722;
+}
+
+/* overweight*/
+.overweight_obesity_risk {
+  color: #FF5722;
+}
+
+/* glucose*/
+.good {
+  color: #19bf79;
+}
+
+/* pressure*/
+.borderline {
+  color: #FF9800;
+}
+.hypertension_stage_1 {
+  color: #FF5722;
+}
+.hypertension_stage_2 {
+  color: #d50000;
+}

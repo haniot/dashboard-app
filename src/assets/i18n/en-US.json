@@ -282,6 +282,9 @@
       "VIEW-MEASUREMENT": "View details",
       "MEASUREMENT-TYPE": "Measurement Type",
       "REMOVE-SELECTED": "Remove selected",
+      "LIST-EMPTY": "No measurements found!",
+      "LIST-EMPTY-MESSAGE": "The selected measurement type has no registered records.",
+      "LOADING-MEASUREMENTS": "Loading measurements...",
       "GENERIC-TABLE": {
         "VALUE": "Value",
         "COLLECTION-DATE": "Collection Date",
@@ -296,10 +299,8 @@
         "MEAL": "Meal Type"
       },
       "PRESSURE-TABLE": {
-        "SYSTOLIC": "Systolic",
-        "DYASTOLIC": "Diastolic",
-        "PULSE": "Pulse",
-        "UNIT": "Unit"
+        "PRESSURE": "Pressure",
+        "PULSE": "Pulse"
       },
       "HEART-RATE-TABLE": {
         "DATASET": "Frequencies"

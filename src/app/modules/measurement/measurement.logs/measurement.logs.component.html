@@ -57,6 +57,18 @@
                         <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
                         </thead>
                         <tbody>
+                        <tr *ngIf="listOfMeasurements.length==0">
+                            <td colspan="4" *ngIf="!listOfMeasurementsIsEmpty">
+                                <spinner
+                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                            </td>
+                            <td colspan="4" *ngIf="listOfMeasurementsIsEmpty">
+                                <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                    <br>
+                                    <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                </h4>
+                            </td>
+                        </tr>
                         <tr *ngFor="let measurement of listOfMeasurements; let i= index; trackBy: trackById">
                             <td>
                                 <mat-checkbox (change)="changeOnMeasurement()"
@@ -89,6 +101,18 @@
                         <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
                         </thead>
                         <tbody>
+                        <tr *ngIf="listOfMeasurements.length==0">
+                            <td colspan="5" *ngIf="!listOfMeasurementsIsEmpty">
+                                <spinner
+                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                            </td>
+                            <td colspan="5" *ngIf="listOfMeasurementsIsEmpty">
+                                <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                    <br>
+                                    <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                </h4>
+                            </td>
+                        </tr>
                         <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
                             <td>
                                 <mat-checkbox (change)="changeOnMeasurement()"
@@ -127,6 +151,18 @@
                         <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
                         </thead>
                         <tbody>
+                        <tr *ngIf="listOfMeasurements.length==0">
+                            <td colspan="5" *ngIf="!listOfMeasurementsIsEmpty">
+                                <spinner
+                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                            </td>
+                            <td colspan="5" *ngIf="listOfMeasurementsIsEmpty">
+                                <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                    <br>
+                                    <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                </h4>
+                            </td>
+                        </tr>
                         <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
                             <td>
                                 <mat-checkbox (change)="changeOnMeasurement()"
@@ -156,30 +192,34 @@
                     <table class="table table-hover table-sm" *ngIf="measurementTypeSelected === 'blood_pressure'">
                         <thead>
                         <th></th>
-                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.SYSTOLIC'|translate}}</th>
-                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.DYASTOLIC'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.PRESSURE'|translate}}</th>
                         <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.PULSE'|translate}}</th>
-                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.UNIT'|translate}}</th>
                         <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate}}</th>
                         <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
                         </thead>
                         <tbody>
+                        <tr *ngIf="listOfMeasurements.length==0">
+                            <td colspan="7" *ngIf="!listOfMeasurementsIsEmpty">
+                                <spinner
+                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                            </td>
+                            <td colspan="7" *ngIf="listOfMeasurementsIsEmpty">
+                                <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                    <br>
+                                    <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                </h4>
+                            </td>
+                        </tr>
                         <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
                             <td>
                                 <mat-checkbox (change)="changeOnMeasurement()"
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
-                                {{measurement.systolic}}
+                                {{measurement.systolic}}/{{measurement.diastolic}} {{measurement.unit}}
                             </td>
                             <td>
-                                {{measurement.diastolic}}
-                            </td>
-                            <td>
-                                {{measurement.pulse}}
-                            </td>
-                            <td>
-                                {{measurement.unit}}
+                                {{measurement.pulse}} bpm
                             </td>
                             <td>{{measurement.timestamp | date : "fullDate"}}</td>
                             <td>
@@ -203,6 +243,18 @@
                         <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
                         </thead>
                         <tbody>
+                        <tr *ngIf="listOfMeasurements.length==0">
+                            <td colspan="4" *ngIf="!listOfMeasurementsIsEmpty">
+                                <spinner
+                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                            </td>
+                            <td colspan="4" *ngIf="listOfMeasurementsIsEmpty">
+                                <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                    <br>
+                                    <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                </h4>
+                            </td>
+                        </tr>
                         <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
                             <td>
                                 <mat-checkbox (change)="changeOnMeasurement()"

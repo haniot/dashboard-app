@@ -282,6 +282,9 @@
       "VIEW-MEASUREMENT": "Visualizar detalhes",
       "MEASUREMENT-TYPE": "Tipo de Medição",
       "REMOVE-SELECTED": "Remover selecionadas",
+      "LIST-EMPTY": "Nenhuma medição encontrada!",
+      "LIST-EMPTY-MESSAGE": "O tipo de medição selecionada não possui registros cadastrados.",
+      "LOADING-MEASUREMENTS": "Carregando medições...",
       "GENERIC-TABLE": {
         "VALUE": "Valor",
         "COLLECTION-DATE": "Data da Coleta",
@@ -296,10 +299,8 @@
         "MEAL": "Tipo de Refeição"
       },
       "PRESSURE-TABLE": {
-        "SYSTOLIC": "Sistólica",
-        "DYASTOLIC": "Diastólica",
-        "PULSE": "Pulso",
-        "UNIT": "Unidade"
+        "PRESSURE": "Pressão",
+        "PULSE": "Pulso"
       },
       "HEART-RATE-TABLE": {
         "DATASET": "Frequências"
