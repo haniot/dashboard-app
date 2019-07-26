@@ -107,7 +107,7 @@
             }
 
             & + .form-check-sign .check:after {
-            //background-color: $brand-success; // FIXME: seems like tho wrong color, test and make sure it can be removed
+            //background-color: $brand-success; //
             @include animation(rippleOn $mdb-checkbox-animation-ripple forwards);
             }
         }

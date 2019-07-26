@@ -79,7 +79,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     getAllFiles() {
         if (this.pilotStudy && this.pilotStudy.id) {
-            this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit)// TODO: Adicionar this.search
+            this.listOfFiles = [];
+            this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
                 .then(files => {
                     this.listOfFiles = files;
                     this.calcLenghtFiles();
@@ -137,19 +138,11 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     calcLenghtFiles() {
         if (this.pilotStudy && this.pilotStudy.id) {
-            this.pilotService.getAllFiles(this.pilotStudy.id, undefined, undefined)// FIXME: Adicionar this.search
+            this.pilotService.getAllFiles(this.pilotStudy.id, undefined, undefined, this.search)
                 .then(files => {
                     this.length = files.length;
                 })
                 .catch();
-        }
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-
-        if (changes.pilotStudy.currentValue !== changes.pilotStudy.previousValue) {
-            this.getAllFiles();
-            this.calcLenghtFiles();
         }
     }
 
@@ -199,6 +192,14 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     getTrustedUrl(url: string) {
         return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+
+        if (changes.pilotStudy.currentValue !== changes.pilotStudy.previousValue) {
+            this.getAllFiles();
+            this.calcLenghtFiles();
+        }
     }
 
 }

@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { OralHealthRecord } from '../models/oralhealth-record';
+import { OralHealthRecord } from '../models/oral.health.record';
 import { OralhealthRecordService } from '../services/oralhealth.record.service';
 
 @Component({
     selector: 'oralhealth-record',
-    templateUrl: './oralhealth.record.component.html',
-    styleUrls: ['../shared.style/shared.styles.scss', './oralhealth.record.component.scss']
+    templateUrl: './oral.health.record.component.html',
+    styleUrls: ['../shared.style/shared.styles.scss', './oral.health.record.component.scss']
 })
-export class OralhealthRecordComponent implements OnInit, OnChanges {
+export class OralHealthRecordComponent implements OnInit, OnChanges {
     @Input() patientId: string;
     listOralHealthRecords: Array<OralHealthRecord>;
     oralHealthForm: FormGroup;

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { FamilyCohesionRecordService } from '../services/family.cohesion.record.service';
 import { FrequencyFamilycohesionPipe } from '../pipes/frequency.familycohesion.pipe';
-import { FamilyCohesionRecord } from '../models/familycohesion-record';
+import { FamilyCohesionRecord } from '../models/family.cohesion.record';
 
 @Component({
     selector: 'familycohesion-record',

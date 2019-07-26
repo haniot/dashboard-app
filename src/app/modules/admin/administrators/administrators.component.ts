@@ -8,7 +8,7 @@ import { ModalService } from 'app/shared/shared.components/haniot.modal/service/
 import { Admin } from '../models/users';
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { TranslateService } from '@ngx-translate/core';
-import { IUser } from '../../../shared/shared.models/user';
+import { User } from '../../../shared/shared.models/user';
 import { ConfigurationBasic } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -20,8 +20,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./administrators.component.scss']
 })
 export class AdministratorsComponent implements AfterViewChecked {
-    userEdit: IUser = new Admin();
-    admins: Array<IUser> = [];
+    userEdit: User = new Admin();
+    admins: Array<User> = [];
     errorCredentials = false;
     page: number;
     limit: number;

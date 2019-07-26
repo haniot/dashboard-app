@@ -26,7 +26,7 @@ import { DiseaseHistoryPipe } from './pipes/disease.history.pipe';
 import { WeeklyFoodPipe } from './pipes/weekly.food.pipe';
 import { SocioDemographicRecordComponent } from './socio.demographic.record/socio.demographic.record.component';
 import { FamilyCohesionRecordComponent } from './family.cohesion.record/family.cohesion.record.component';
-import { OralhealthRecordComponent } from './oralhealth.record/oralhealth.record.component';
+import { OralHealthRecordComponent } from './oral.health.record/oral.health.record.component';
 import { FrequencyFamilycohesionPipe } from './pipes/frequency.familycohesion.pipe';
 import { FamilyCohesionRecordService } from './services/family.cohesion.record.service';
 import { OralhealthRecordService } from './services/oralhealth.record.service';
@@ -57,7 +57,7 @@ import { LesionTypePipe } from './pipes/lesion.type.pipe';
         PhysicalActivityPipe,
         SocioDemographicRecordComponent,
         FamilyCohesionRecordComponent,
-        OralhealthRecordComponent,
+        OralHealthRecordComponent,
         FrequencyFamilycohesionPipe,
         MotherSchoolarityPipe,
         CorAndRacePipe,
@@ -80,7 +80,7 @@ import { LesionTypePipe } from './pipes/lesion.type.pipe';
         MedicalRecordComponent,
         SocioDemographicRecordComponent,
         FamilyCohesionRecordComponent,
-        OralhealthRecordComponent
+        OralHealthRecordComponent
     ],
     providers: [
         /**Pipes */

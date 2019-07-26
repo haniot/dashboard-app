@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
 import { HealthProfessional } from '../models/users';
-import { IUser } from '../../../shared/shared.models/user';
+import { User } from '../../../shared/shared.models/user';
 
 @Injectable()
 
@@ -40,7 +40,7 @@ export class HealthProfessionalService {
 
     }
 
-    create(healthprofessionals: HealthProfessional): Promise<IUser> {
+    create(healthprofessionals: HealthProfessional): Promise<User> {
         return this.http.post<any>(`${environment.api_url}/users/healthprofessionals`, healthprofessionals)
             .toPromise();
     }

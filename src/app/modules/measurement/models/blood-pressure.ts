@@ -1,13 +1,18 @@
-import {IMeasurement, MeasurementType} from './measurement';
+import { GenericMeasurement } from './measurement';
 
-export class BloodPressure implements IMeasurement {
-    id: string;
+export class BloodPressure extends GenericMeasurement {
     systolic: number;
     diastolic: number;
     pulse: number
-    unit: string;
-    type: MeasurementType;
     timestamp: string;
-    user_id: string;
-    device_id?: string;
+
+    constructor() {
+        super();
+        this.systolic = 0;
+        this.diastolic = 0;
+        this.pulse = 0;
+        this.timestamp = '';
+    }
+
+
 }

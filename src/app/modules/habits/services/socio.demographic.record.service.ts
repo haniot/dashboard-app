@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
-import { SocioDemographicRecord } from '../models/sociodemographic-record';
+import { SocioDemographicRecord } from '../models/socio.demographic.record';
 
 @Injectable()
 export class SocioDemographicRecordService {

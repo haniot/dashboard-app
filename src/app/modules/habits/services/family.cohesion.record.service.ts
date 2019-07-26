@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
-import { FamilyCohesionRecord } from '../models/familycohesion-record';
+import { FamilyCohesionRecord } from '../models/family.cohesion.record';
 
 @Injectable()
 export class FamilyCohesionRecordService {

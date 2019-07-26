@@ -129,13 +129,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         ]
 
         this.data.forEach((element: BloodPressure) => {
-            const find = xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
-            });
 
-            if (!find) {
-                xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            }
+            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
 
             series[0].data.push(element.systolic);
 
@@ -206,13 +201,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.options.series.data = [];
 
         measurements.forEach((element: BloodPressure) => {
-            const find = this.options.xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
-            });
-
-            if (!find) {
-                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            }
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             this.options.series[0].data.push(element.systolic);
             this.options.series[1].data.push(element.diastolic);
             this.options.series[2].data.push(element.pulse);

@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { PhysicalActivityRecordService } from '../services/physical.activity.record.service';
 import { PhysicalActivityPipe } from '../pipes/physical.activity.frequency.pipe';
-import { PhysicalActivityHabitsRecord } from '../models/physicalActivity';
+import { PhysicalActivityHabitsRecord } from '../models/physical.activity';
 
 @Component({
     selector: 'physical-activity-habits',

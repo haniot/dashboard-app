@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
 import { Admin } from '../models/users';
-import { IUser } from '../../../shared/shared.models/user';
+import { User } from '../../../shared/shared.models/user';
 
 @Injectable()
 export class AdminService {
@@ -17,7 +17,7 @@ export class AdminService {
             .toPromise();
     }
 
-    getAll(page?: number, limit?: number, search?: string): Promise<IUser[]> {
+    getAll(page?: number, limit?: number, search?: string): Promise<User[]> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -38,12 +38,12 @@ export class AdminService {
             .toPromise();
     }
 
-    create(administrator: Admin): Promise<IUser> {
+    create(administrator: Admin): Promise<User> {
         return this.http.post<any>(`${environment.api_url}/users/admins`, administrator)
             .toPromise();
     }
 
-    update(administrator: Admin): Promise<IUser> {
+    update(administrator: Admin): Promise<User> {
 
         return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
             .toPromise();

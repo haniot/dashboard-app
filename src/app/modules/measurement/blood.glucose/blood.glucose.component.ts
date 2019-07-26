@@ -117,13 +117,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         ];
 
         this.data.forEach((element: BloodGlucose) => {
-            const find = xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
-            });
-
-            if (!find) {
-                xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            }
+            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             switch (element.meal) {
                 case MealType.preprandial:
                     series[0].data.push(element.value);
@@ -172,16 +166,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     }
 
-    applyFilter(filter
-                    :
-                    {
-                        start_at: string, end_at
-                            :
-                            string, period
-                            :
-                            string
-                    }
-    ) {
+    applyFilter(filter: { start_at: string, end_at: string, period: string }) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_glucose, null, null, filter)
             .then((measurements: Array<any>) => {
@@ -198,13 +183,8 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.options.series.data = [];
 
         measurements.forEach((element: BloodGlucose) => {
-            const find = this.options.xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
-            });
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
 
-            if (!find) {
-                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            }
             switch (element.meal) {
                 case MealType.preprandial:
                     this.options.series[0].data.push(element.value);

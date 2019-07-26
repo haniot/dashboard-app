@@ -9,7 +9,7 @@ import { Admin } from '../models/users';
 import { UserService } from '../services/users.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
-import { IUser } from '../../../shared/shared.models/user';
+import { User } from '../../../shared/shared.models/user';
 
 @Component({
     selector: 'admin-configurations',
@@ -20,7 +20,7 @@ export class AdminConfigurationsComponent implements OnInit {
     userId: string;
     visibilityButtonSave: boolean;
     disabledButtonEdit: boolean;
-    user: IUser;
+    user: User;
     email: string;
     password: string;
 

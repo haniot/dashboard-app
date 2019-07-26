@@ -7,7 +7,7 @@ import { HealthProfessionalService } from '../services/health.professional.servi
 import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { HealthProfessional } from '../models/users';
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { IUser } from '../../../shared/shared.models/user';
+import { User } from '../../../shared/shared.models/user';
 import { ConfigurationBasic } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -18,8 +18,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./health.professionals.component.scss']
 })
 export class HealthProfessionalComponent implements AfterViewChecked {
-    userEdit: IUser = new HealthProfessional();
-    healthProfessionals: Array<IUser> = [];
+    userEdit: User = new HealthProfessional();
+    healthProfessionals: Array<User> = [];
     page: number;
     limit: number;
     length: number;

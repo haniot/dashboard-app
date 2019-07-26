@@ -5,6 +5,7 @@ import { PilotStudy } from '../models/pilot.study';
 import { environment } from 'environments/environment';
 import { OdontologicEvaluation } from '../../evaluation/models/odontologic-evaluation';
 import { DateRange } from '../models/range-date';
+import { ɵangular_packages_platform_server_platform_server_a } from '@angular/platform-server'
 
 @Injectable()
 export class PilotStudyService {
@@ -83,11 +84,14 @@ export class PilotStudyService {
         }
 
 
-        if (search) {
+        if (search && search.begin && search.end) {
 
-            myParams = myParams.append('created_at', 'gte:' + search.begin.toISOString());
+            const start_at = search.begin.toISOString().split('T')[0];
+            const end_at = search.end.toISOString().split('T')[0];
 
-            myParams = myParams.append('created_at', 'lte:' + search.end.toISOString());
+            myParams = myParams.append('created_at', 'gte:' + start_at);
+
+            myParams = myParams.append('created_at', 'lte:' + end_at);
 
 
         }

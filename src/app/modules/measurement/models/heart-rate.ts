@@ -1,15 +1,20 @@
-import {IMeasurement, MeasurementType} from './measurement';
+import { GenericMeasurement } from './measurement';
 
 export class DataSetUnit {
     value: number;
     timestamp: string;
+
+    constructor() {
+        this.value = 0;
+        this.timestamp = '';
+    }
 }
 
-export class HeartRate implements IMeasurement {
-    id: string;
+export class HeartRate extends GenericMeasurement {
     dataset: Array<DataSetUnit>;
-    unit: string;
-    type: MeasurementType;
-    user_id: string;
-    device_id?: string;
+
+    constructor() {
+        super();
+        this.dataset = new Array<DataSetUnit>();
+    }
 }

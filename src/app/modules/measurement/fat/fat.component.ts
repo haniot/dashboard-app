@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
+import { Measurement, MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 
 @Component({
@@ -12,10 +12,10 @@ import { MeasurementService } from '../services/measurement.service';
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class FatComponent implements OnInit, OnChanges {
-    @Input() data: Array<IMeasurement>;
+    @Input() data: Array<Measurement>;
     @Input() filter_visibility: boolean;
     @Input() patientId: string;
-    lastData: IMeasurement;
+    lastData: Measurement;
     options: any;
     echartsInstance: any;
     showSpinner: boolean;
@@ -94,15 +94,7 @@ export class FatComponent implements OnInit, OnChanges {
 
         this.data.forEach((element: Measurement) => {
             series.data.push(element.value);
-
-            const find = xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
-            });
-
-            if (!find) {
-                xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            }
-
+            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
         });
 
 
@@ -138,6 +130,7 @@ export class FatComponent implements OnInit, OnChanges {
             .then((measurements: Array<any>) => {
                 this.data = measurements;
                 this.showSpinner = false;
+                console.log(this.data)
                 this.updateGraph(measurements);
             })
             .catch();
@@ -150,15 +143,7 @@ export class FatComponent implements OnInit, OnChanges {
 
         measurements.forEach((element: Measurement) => {
             this.options.series.data.push(element.value);
-
-            const find = this.options.xAxis.data.find((ele) => {
-                return ele === this.datePipe.transform(element.timestamp, 'shortDate');
-            });
-
-            if (!find) {
-                this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            }
-
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
         });
 
         this.echartsInstance.setOption(this.options);

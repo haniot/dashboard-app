@@ -5,7 +5,7 @@
             <div class="col-sm-6 col-md-10 col-lg-10 col-xl-10 text-right">
                 <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate" [satDatepicker]="picker"
                        [(ngModel)]="search"
-                       (ngModelChange)="searchOnSubmit()" id="rangeDate">
+                       (ngModelChange)="getAllFiles()" id="rangeDate">
 
                 <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
                 <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>

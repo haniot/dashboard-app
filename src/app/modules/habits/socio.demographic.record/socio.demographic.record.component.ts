@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { SocioDemographicRecord } from '../models/sociodemographic-record';
+import { SocioDemographicRecord } from '../models/socio.demographic.record';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { SocioDemographicRecordService } from '../services/socio.demographic.record.service';

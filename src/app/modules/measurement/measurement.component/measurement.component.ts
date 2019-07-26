@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
-import { IMeasurement, MeasurementType } from '../models/measurement';
+import { GenericMeasurement, Measurement, MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 import { BloodPressure } from '../models/blood-pressure';
 import { HeartRate } from '../models/heart-rate';
@@ -37,14 +37,14 @@ class ConfigVisibility {
 export class MeasurementComponent implements OnInit, OnChanges {
     @Input() configVisibility: ConfigVisibility;
     @Input() patientId;
-    listWeight: Array<IMeasurement>;
-    listHeight: Array<IMeasurement>;
-    listFat: Array<IMeasurement>;
-    listWaistCircumference: Array<IMeasurement>;
-    listBodyTemperature: Array<IMeasurement>;
-    listBloodGlucose: Array<IMeasurement>;
-    listBloodPressure: Array<IMeasurement>;
-    listHeartRate: Array<IMeasurement>;
+    listWeight: Array<Measurement>;
+    listHeight: Array<Measurement>;
+    listFat: Array<Measurement>;
+    listWaistCircumference: Array<Measurement>;
+    listBodyTemperature: Array<Measurement>;
+    listBloodGlucose: Array<Measurement>;
+    listBloodPressure: Array<GenericMeasurement>;
+    listHeartRate: Array<GenericMeasurement>;
     userHealthArea: string;
     filter: { start_at: string, end_at: string, period: string };
 
@@ -53,12 +53,12 @@ export class MeasurementComponent implements OnInit, OnChanges {
         private modalService: ModalService,
         private localStorageService: LocalStorageService
     ) {
-        this.listWeight = new Array<IMeasurement>();
-        this.listHeight = new Array<IMeasurement>();
-        this.listFat = new Array<IMeasurement>();
-        this.listWaistCircumference = new Array<IMeasurement>();
-        this.listBodyTemperature = new Array<IMeasurement>();
-        this.listBloodGlucose = new Array<IMeasurement>();
+        this.listWeight = new Array<Measurement>();
+        this.listHeight = new Array<Measurement>();
+        this.listFat = new Array<Measurement>();
+        this.listWaistCircumference = new Array<Measurement>();
+        this.listBodyTemperature = new Array<Measurement>();
+        this.listBloodGlucose = new Array<Measurement>();
         this.listBloodPressure = new Array<BloodPressure>();
         this.listHeartRate = new Array<HeartRate>();
         this.configVisibility = new ConfigVisibility();

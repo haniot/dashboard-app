@@ -9,7 +9,7 @@ import { HealthProfessionalService } from 'app/modules/admin/services/health.pro
 import { UserService } from 'app/modules/admin/services/users.service';
 import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { TranslateService } from '@ngx-translate/core';
-import { IUser } from '../../../shared/shared.models/user';
+import { User } from '../../../shared/shared.models/user';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -22,7 +22,7 @@ const PaginatorConfig = ConfigurationBasic;
 export class HaniotTableComponent implements OnInit {
     @Input() length: number;
     @Input() pageSize: number;
-    @Input() list: Array<IUser>;
+    @Input() list: Array<User>;
     @Output() onremove = new EventEmitter();
     @Input() userType: string;
     @Output() onedit = new EventEmitter();
@@ -43,7 +43,7 @@ export class HaniotTableComponent implements OnInit {
         private toastr: ToastrService,
         private modalService: ModalService,
         private translateService: TranslateService) {
-        this.list = new Array<IUser>();
+        this.list = new Array<User>();
         this.listOfUserIsEmpty = false;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
     }
@@ -73,7 +73,7 @@ export class HaniotTableComponent implements OnInit {
                 this.toastr.info(this.translateService.instant('TOAST-MESSAGES.USER-DELETED'));
                 this.closeModalConfirmRemove();
             })
-            .catch(error => {
+            .catch(() => {
                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-USER-DELETED'));
             });
 

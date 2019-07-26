@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { MedicalRecord } from '../models/medical-record';
+import { MedicalRecord } from '../models/medical.record';
 import { MedicalRecordService } from '../services/medical.record.service';
 
 @Component({

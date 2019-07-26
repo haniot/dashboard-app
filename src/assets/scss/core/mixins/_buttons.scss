@@ -164,7 +164,7 @@
 }
 
 @mixin bmd-raised-button-variant($color, $background, $border) {
-  // FIXME: SPEC - this should be the 600 color, how can we get that programmatically if at all? Or are we limited to the color palette only?
+  // SPEC - this should be the 600 color, how can we get that programmatically if at all? Or are we limited to the color palette only?
   $focus-background: contrast-color(
     $background,
     darken($background, 3%),

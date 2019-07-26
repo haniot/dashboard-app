@@ -1,5 +1,3 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
 /*Styles buttons HANIOT*/
 
 .mat-button.btn, .mat-button.btn.btn-haniot-primary, .mat-raised-button.btn, .mat-raised-button.btn.btn-haniot-primary, .mat-raised-button.btn:not([class*=mat-elevation-z]), .mat-raised-button.btn:not([class*=mat-elevation-z]).btn-haniot-primary, .btn, .btn.btn-haniot-primary {

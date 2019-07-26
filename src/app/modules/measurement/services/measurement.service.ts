@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
-import { IMeasurement, Measurement } from '../models/measurement';
+import { Measurement } from '../models/measurement';
 import { BloodPressure } from '../models/blood-pressure';
 import { HeartRate } from '../models/heart-rate';
 
@@ -12,7 +12,7 @@ export class MeasurementService {
     constructor(private http: HttpClient) {
     }
 
-    getAll(page?: number, limit?: number, search?: string): Promise<IMeasurement[]> {
+    getAll(page?: number, limit?: number, search?: string): Promise<Measurement[]> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -39,7 +39,7 @@ export class MeasurementService {
         start_at: string,
         end_at: string,
         period?: string
-    }): Promise<Array<IMeasurement | BloodPressure | HeartRate> | Array<any>> {
+    }): Promise<Array<Measurement | BloodPressure | HeartRate> | Array<any>> {
 
         let myParams = new HttpParams();
 
@@ -76,12 +76,12 @@ export class MeasurementService {
             .toPromise();
     }
 
-    create(userId: string, measurement: Measurement): Promise<IMeasurement> {
+    create(userId: string, measurement: Measurement): Promise<Measurement> {
         return this.http.post<any>(`${environment.api_url}/users/${userId}/measurements`, measurement)
             .toPromise();
     }
 
-    getById(userId: string, measurementId: string): Promise<IMeasurement> {
+    getById(userId: string, measurementId: string): Promise<Measurement> {
         return this.http.get<any>(`${environment.api_url}/users/${userId}/measurements/${measurementId}`)
             .toPromise();
     }

@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { IMeasurement, Measurement, MeasurementType } from '../models/measurement';
+import { Measurement, MeasurementType } from '../models/measurement';
 import { DecimalFormatterPipe } from '../pipes/decimal.formatter.pipe';
 import { Weight } from '../models/weight';
 import { MeasurementService } from '../services/measurement.service';
@@ -14,10 +14,10 @@ import { MeasurementService } from '../services/measurement.service';
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class BodyTemperatureComponent implements OnInit, OnChanges {
-    @Input() data: Array<IMeasurement>;
+    @Input() data: Array<Measurement>;
     @Input() filter_visibility: boolean;
     @Input() patientId: string;
-    lastData: IMeasurement;
+    lastData: Measurement;
     options: any;
     showSpinner: boolean;
     echartsInstance: any;
