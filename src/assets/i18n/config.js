@@ -1,4 +1,4 @@
 export const LanguagesConfiguration = {
-    'pt-BR': 'Português Brasileiro',
-    'en-US': 'Inglês'
+    'pt-BR': 'Português (Brasil)',
+    'en-US': 'English (United States)'
 }
