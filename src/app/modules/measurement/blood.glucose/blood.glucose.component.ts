@@ -52,7 +52,8 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
         const glucose = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.GLUCOSE');
-        const date = this.translateService.instant('SHARED.DATE');
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -117,22 +118,38 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         ];
 
         this.data.forEach((element: BloodGlucose) => {
+            const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
             xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             switch (element.meal) {
                 case MealType.preprandial:
-                    series[0].data.push(element.value);
+                    series[0].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
                 case MealType.postprandial:
-                    series[1].data.push(element.value);
+                    series[1].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
                 case MealType.fasting:
-                    series[2].data.push(element.value);
+                    series[2].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
                 case MealType.casual:
-                    series[3].data.push(element.value);
+                    series[3].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
                 case MealType.bedtime:
-                    series[4].data.push(element.value);
+                    series[4].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
             }
         });
@@ -141,7 +158,9 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
             tooltip: {
                 trigger: 'item',
-                formatter: glucose + ` : {c} mg/dl<br> ${date}: {b}`
+                formatter: function (params) {
+                    return `${glucose}: ${params.data.value} mg/dl<br> ${date}: <br>${params.name} ${at} ${params.data.time}`
+                }
             },
             legend: {
                 data: [preprandial, postprandial, fasting, casual, bedtime]
@@ -183,23 +202,39 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.options.series.data = [];
 
         measurements.forEach((element: BloodGlucose) => {
+            const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
             this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
 
             switch (element.meal) {
                 case MealType.preprandial:
-                    this.options.series[0].data.push(element.value);
+                    this.options.series[0].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
                 case MealType.postprandial:
-                    this.options.series[1].data.push(element.value);
+                    this.options.series[1].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
                 case MealType.fasting:
-                    this.options.series[2].data.push(element.value);
+                    this.options.series[2].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
                 case MealType.casual:
-                    this.options.series[3].data.push(element.value);
+                    this.options.series[3].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
                 case MealType.bedtime:
-                    this.options.series[4].data.push(element.value);
+                    this.options.series[4].data.push({
+                        value: element.value,
+                        time: mediumTime
+                    });
                     break;
             }
         });

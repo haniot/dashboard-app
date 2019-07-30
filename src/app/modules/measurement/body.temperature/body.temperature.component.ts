@@ -49,7 +49,8 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
         const temperature = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.TEMPERATURE');
-        const date = this.translateService.instant('SHARED.DATE');
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -89,13 +90,18 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
         this.data.forEach((element: Measurement) => {
             xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            series.data.push(this.decimalPipe.transform(element.value));
+            series.data.push({
+                value: this.decimalPipe.transform(element.value),
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
         });
 
 
         this.options = {
             tooltip: {
-                formatter: temperature + `: {c}°C <br> ${date}: {b}`,
+                formatter: function (params) {
+                    return `${temperature}: ${params.data.value}°C<br>${date}:<br>${params.name} ${at} ${params.data.time}`
+                },
                 trigger: 'item'
             },
             xAxis: xAxis,
@@ -133,7 +139,10 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
         measurements.forEach((element: Weight) => {
             this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            this.options.series.data.push(element.value);
+            this.options.series.data.push({
+                value: element.value,
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
         });
         this.echartsInstance.setOption(this.options);
     }

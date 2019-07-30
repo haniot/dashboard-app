@@ -43,7 +43,8 @@ export class FatComponent implements OnInit, OnChanges {
         const average_value = this.translateService.instant('MEASUREMENTS.AVERAGE-VALUE');
         const average = this.translateService.instant('MEASUREMENTS.AVERAGE');
         const fat = this.translateService.instant('MEASUREMENTS.FAT.FAT');
-        const date = this.translateService.instant('SHARED.DATE');
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -93,7 +94,10 @@ export class FatComponent implements OnInit, OnChanges {
         };
 
         this.data.forEach((element: Measurement) => {
-            series.data.push(element.value);
+            series.data.push({
+                value: element.value,
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
             xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
         });
 
@@ -102,7 +106,9 @@ export class FatComponent implements OnInit, OnChanges {
 
             tooltip: {
                 trigger: 'item',
-                formatter: fat + `: {c} %<br> ${date}: {b}`
+                formatter: function (params) {
+                    return `${fat}: ${params.data.value} %<br> ${date}: <br> ${params.name} ${at} ${params.data.time}`
+                }
             },
             xAxis: xAxis,
             yAxis: [
@@ -130,7 +136,6 @@ export class FatComponent implements OnInit, OnChanges {
             .then((measurements: Array<any>) => {
                 this.data = measurements;
                 this.showSpinner = false;
-                console.log(this.data)
                 this.updateGraph(measurements);
             })
             .catch();
@@ -142,7 +147,10 @@ export class FatComponent implements OnInit, OnChanges {
         this.options.series.data = [];
 
         measurements.forEach((element: Measurement) => {
-            this.options.series.data.push(element.value);
+            this.options.series.data.push({
+                value: element.value,
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
             this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
         });
 

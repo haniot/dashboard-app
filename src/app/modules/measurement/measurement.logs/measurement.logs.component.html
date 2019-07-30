@@ -78,7 +78,11 @@
                                 {{measurement.value}}
                                 {{measurement.unit}}
                             </td>
-                            <td>{{measurement.timestamp | date : "fullDate"}}</td>
+                            <td>
+                                {{measurement.timestamp | date : "mediumDate"}}
+                                {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}
+                                {{measurement.timestamp | date : "shortTime"}}
+                            </td>
                             <td>
                                 <a class="nav-link"
                                    [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
@@ -128,7 +132,11 @@
                                 <span *ngIf="!measurement.fat">{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.NOT-COLLECTED'|translate}}
                                     !</span>
                             </td>
-                            <td>{{measurement.timestamp | date : "fullDate"}}</td>
+                            <td>
+                                {{measurement.timestamp | date : "mediumDate"}}
+                                {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}
+                                {{measurement.timestamp | date : "shortTime"}}
+                            </td>
                             <td>
                                 <a class="nav-link"
                                    [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
@@ -175,7 +183,11 @@
                             <td>
                                 {{measurement.meal | meal | translate}}
                             </td>
-                            <td>{{measurement.timestamp | date : "fullDate"}}</td>
+                            <td>
+                                {{measurement.timestamp | date : "mediumDate"}}
+                                {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}
+                                {{measurement.timestamp | date : "shortTime"}}
+                            </td>
                             <td>
                                 <a class="nav-link"
                                    [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
@@ -221,7 +233,11 @@
                             <td>
                                 {{measurement.pulse}} bpm
                             </td>
-                            <td>{{measurement.timestamp | date : "fullDate"}}</td>
+                            <td>
+                                {{measurement.timestamp | date : "mediumDate"}}
+                                {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}
+                                {{measurement.timestamp | date : "shortTime"}}
+                            </td>
                             <td>
                                 <a class="nav-link"
                                    [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
@@ -268,7 +284,9 @@
                             </td>
                             <td>
                                 <span *ngIf="measurement.dataset && measurement.dataset.length">
-                                    {{measurement.dataset[0].timestamp | date :"fullDate"}}
+                                    {{measurement.dataset[0].timestamp | date :"mediumDate" }}
+                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}
+                                    {{measurement.dataset[0].timestamp | date : "shortTime"}}
                                 </span>
                             </td>
                             <td>

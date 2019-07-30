@@ -1,31 +1,30 @@
 {
   "APP": {
-    "TITLE": "HANIoT",
-    "DEVELOP-ORGANIZATION": "NUTES"
+    "DEVELOP-ORGANIZATION": "NUTES",
+    "TITLE": "HANIoT"
   },
   "ACCESS-DENIED": {
-    "TITLE": "Acesso negado",
     "MESSAGE": "Desculpe, seu acesso foi recusado devido a razões de segurança do nosso servidor e também aos nossos dados confidenciais",
-    "MESSAGE-GO-BACK": "Por favor, volte para a página principal clicando no botão abaixo"
+    "MESSAGE-GO-BACK": "Por favor, volte para a página principal clicando no botão abaixo",
+    "TITLE": "Acesso negado"
   },
   "ADMINISTRADORS": {
-    "TITLE": "Lista de usuário administradores",
     "SUBTITLE": "",
+    "TITLE": "Lista de usuário administradores",
     "TITLE-ADD": "Criar usuário administrador",
     "TITLE-EDIT": "Editar usuário administrador"
   },
   "CONFIG": {
-    "CONFIG-MYDATES-TITLE": "Meus dados",
-    "CONFIG-MYDATES-SUBTITLE": "Clique no botão habilitar edição para alterar suas informações",
-    "CONFIG-MYDATES-ENABLE-EDITING": "Habilitar edição",
-    "CONFIG-ACESS-TITLE": "Configurações de acesso",
-    "CONFIG-ACESS-SUBTITLE": "Para mudar sua senha de acesso preencha as informações abaixo e clique em ALTERAR SENHA",
+    "CONFIG-ACCESS-TITLE": "Configurações de acesso",
+    "CONFIG-ACCESS-SUBTITLE": "Para mudar sua senha de acesso preencha as informações abaixo e clique em ALTERAR SENHA",
     "CONFIG-LANGUAGE-TITLE": "Configurações de idioma",
     "CONFIG-LANGUAGE-SUBTITLE": "Utilize o seletor para selecionar o  idioma desejado",
-    "CONFIG-LANGUAGE-LABEL": "Selecione o idioma desejado"
+    "CONFIG-LANGUAGE-LABEL": "Selecione o idioma desejado",
+    "CONFIG-MYDATES-TITLE": "Meus dados",
+    "CONFIG-MYDATES-SUBTITLE": "Clique no botão habilitar edição para alterar suas informações",
+    "CONFIG-MYDATES-ENABLE-EDITING": "Habilitar edição"
   },
   "DASHBOARD": {
-    "CARD-STUDIES-TOTAL": "Total de Estudos",
     "CARD-PATIENTS-FROM-THE-STUDY": "Total de Pacientes do Estudo Selecionado",
     "CARD-PATIENTS-TOTAL": "Total de Pacientes",
     "CARD-PATIENTS": {
@@ -37,6 +36,7 @@
       "REGISTER-PATIENTS": "Cadastrar pacientes",
       "VIEW": "Visualizar paciente"
     },
+    "CARD-STUDIES-TOTAL": "Total de Estudos",
     "CARD-STUDIES": {
       "TITLE": "Acesse seus estudos",
       "SUBTITLE": "Clique sobre o card para visualizar informações do estudo.",
@@ -148,178 +148,15 @@
     "OPTIONS-DOWNLOAD": "Opções de download...",
     "GENERATING-ODONTOLOGICAL-EVALUATIONS": "Gerando avaliação odontológica"
   },
-  "FOOTER": {
-    "ABOUT-US": "Sobre nós",
-    "PRIVACY": "Privacidade"
-  },
-  "HEALTHPROFESSIONALS": {
-    "TITLE": "Lista de profissionais de saúde",
-    "SUBTITLE": "",
-    "TITLE-ADD": "Criar profissional de saúde",
-    "TITLE-EDIT": "Editar profissional de saúde"
-  },
   "EDIT-MYPILOT": {
     "TITLE": "Editar um estudo piloto",
     "SUBTITLE": "",
     "TITLE-ADD": "Criar profissional de saúde",
     "TITLE-EDIT": "Editar profissional de saúde"
   },
-  "MYEVALUATIONS": {
-    "TITLE": "Lista de avaliações",
-    "SUBTITLE": "Abaixo estão as avaliações relacionadas a seu perfil"
-  },
-  "MYPILOTS": {
-    "TITLE": "Lista de estudos piloto",
-    "SUBTITLE": "Selecione um estudo piloto para visualizar"
-  },
-  "MEASUREMENTS": {
-    "BLOOD-GLUCOSE": {
-      "TITLE": "Glicose no sangue",
-      "SUBTITLE": "",
-      "PERIOD": "Período da medição",
-      "GLUCOSE": "Glicose",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
-    },
-    "BLOOD-PRESSURE": {
-      "TITLE": "Pressão arterial",
-      "SUBTITLE": "",
-      "PRESSURE": "Pressão",
-      "SYSTOLIC": "Sistólica",
-      "PULSE": "Pulso",
-      "DIASTOLIC": "Diastólica",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
-    },
-    "BODY-TEMPERATURE": {
-      "TITLE": "Temperatura corporal",
-      "SUBTITLE": "",
-      "TEMPERATURE-HISTORIC": "Histórico de temperatura",
-      "TEMPERATURE": "Temperatura",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
-    },
-    "FAT": {
-      "TITLE": "Gordura corporal",
-      "SUBTITLE": "",
-      "FAT": "Gordura",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
-    },
-    "HEART-RATE": {
-      "TITLE": "Frequência cardíaca",
-      "SUBTITLE": "",
-      "HISTORIC": {
-        "TEXT": "Histório de medições",
-        "SUBTEXT": "O gráfico abaixo representa todos os valores captados em todas as medições realizadas"
-      },
-      "LAST-DATE": {
-        "TEXT": "Última medição realizada",
-        "SUBTEXT": "O gráfico abaixo representa todos os valores captados na última medição realizada"
-      },
-      "FREQUENCY": "Frequência",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
-    },
-    "HEIGHT": {
-      "TITLE": "Estatura",
-      "SUBTITLE": "",
-      "HEIGHT": "Altura",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
-    },
-    "WAIST-CIRCUMFERENCE": {
-      "TITLE": "Circunferência da cintura",
-      "SUBTITLE": "",
-      "CIRCUMFERENCE": "Circunferência",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
-    },
-    "WEIGHT": {
-      "TITLE": "Peso",
-      "SUBTITLE": "",
-      "BODY-FAT": "Gordura corporal",
-      "FAT": "Gordura",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
-    },
-    "COMPONENT": {
-      "CONFIG-GRAPH": "Configurar gráficos visíveis",
-      "EXPAND-COLLAPSE": "Clique para expandir/retrair...",
-      "WEIGHT": "Peso",
-      "HEIGHT": "Altura",
-      "FAT": "Gordura corporal",
-      "WAIST-CIRCUMFERENCE": "Circunferência da cintura",
-      "TEMPERATURE": "Temperatura corporal",
-      "GLUCOSE": "Glicose no sangue",
-      "PRESSURE": "Pressão sanguínea",
-      "HEART-RATE": "Frequência cardíaca"
-    },
-    "PIPES": {
-      "MEAL": {
-        "PREPRANDIAL": "Pré-prandial",
-        "POSTPRANDIAL": "Pós-prandial",
-        "FASTING": "Jejum",
-        "CASUAL": "Casual",
-        "BEDTIME": "Antes de dormir"
-      },
-      "MEASUREMENT-TYPE": {
-        "WEIGHT": "Peso",
-        "HEIGHT": "Altura",
-        "FAT": "Gordura Corporal",
-        "WAIST-CIRCUMFERENCE": "Circunferência da Cintura",
-        "BODY-TEMPERATURE": "Temperatura Corporal",
-        "BLOOD-GLUCOSE": "Glicose",
-        "BLOOD-PRESSURE": "Pressão Arterial",
-        "HEART-RATE": "Frequência Cardíaca"
-      },
-      "UNDEFINED": "Fora dos parâmetros",
-      "NOTFOUND": "NÃO ENCONTRADO"
-    },
-    "MEASUREMENT-CARD": {
-      "FILTER-OPTIONS": "Opções de filtragens",
-      "TODAY": "Hoje",
-      "WEEK": "Semana",
-      "MONTH": "Mês",
-      "YEAR": "Ano"
-    },
-    "LOG-MEASUREMENTS-CARD": {
-      "TITLE": "Histórico dos registro de medições",
-      "SUBTITLE": "",
-      "DELETE-MEASUREMENT": "Excluir medição",
-      "VIEW-MEASUREMENT": "Visualizar detalhes",
-      "MEASUREMENT-TYPE": "Tipo de Medição",
-      "REMOVE-SELECTED": "Remover selecionadas",
-      "LIST-EMPTY": "Nenhuma medição encontrada!",
-      "LIST-EMPTY-MESSAGE": "O tipo de medição selecionada não possui registros cadastrados.",
-      "LOADING-MEASUREMENTS": "Carregando medições...",
-      "GENERIC-TABLE": {
-        "VALUE": "Valor",
-        "COLLECTION-DATE": "Data da Coleta",
-        "ACTIONS": "Ações"
-      },
-      "WEIGHT-TABLE": {
-        "WEIGHT": "Peso",
-        "BODY-FAT": "Gordura Corporal",
-        "NOT-COLLECTED": "Não coletada"
-      },
-      "GLUCOSE-TABLE": {
-        "MEAL": "Tipo de Refeição"
-      },
-      "PRESSURE-TABLE": {
-        "PRESSURE": "Pressão",
-        "PULSE": "Pulso"
-      },
-      "HEART-RATE-TABLE": {
-        "DATASET": "Frequências"
-      },
-      "MODAL-REMOVE": {
-        "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover a medição?",
-        "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover ",
-        "CONFIRM-MULTIPLE-REMOVE-PART2": "medição(es)?"
-      }
-    },
-    "LAST-REGISTER": "Último registro",
-    "LAST-REGISTER-DATE": "Data do último registro",
-    "PATTERN-DATE": "dia/mês/ano horário",
-    "VALUE": "Valor",
-    "UNIT": "Unidade",
-    "MIN": "MIN",
-    "MAX": "MAX",
-    "AVERAGE": "Média",
-    "AVERAGE-VALUE": "Valor médio"
+  "FOOTER": {
+    "ABOUT-US": "Sobre nós",
+    "PRIVACY": "Privacidade"
   },
   "HABITS": {
     "FAMILY-COHESION": {
@@ -507,6 +344,170 @@
     "PREVIOUS": "Anterior",
     "NEXT": "Próximo"
   },
+  "HEALTHPROFESSIONALS": {
+    "TITLE": "Lista de profissionais de saúde",
+    "SUBTITLE": "",
+    "TITLE-ADD": "Criar profissional de saúde",
+    "TITLE-EDIT": "Editar profissional de saúde"
+  },
+  "MYEVALUATIONS": {
+    "TITLE": "Lista de avaliações",
+    "SUBTITLE": "Abaixo estão as avaliações relacionadas a seu perfil"
+  },
+  "MYPILOTS": {
+    "TITLE": "Lista de estudos piloto",
+    "SUBTITLE": "Selecione um estudo piloto para visualizar"
+  },
+  "MEASUREMENTS": {
+    "BLOOD-GLUCOSE": {
+      "TITLE": "Glicose no sangue",
+      "SUBTITLE": "",
+      "PERIOD": "Período da medição",
+      "GLUCOSE": "Glicose",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
+    "BLOOD-PRESSURE": {
+      "TITLE": "Pressão arterial",
+      "SUBTITLE": "",
+      "PRESSURE": "Pressão",
+      "SYSTOLIC": "Sistólica",
+      "PULSE": "Pulso",
+      "DIASTOLIC": "Diastólica",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
+    "BODY-TEMPERATURE": {
+      "TITLE": "Temperatura corporal",
+      "SUBTITLE": "",
+      "TEMPERATURE-HISTORIC": "Histórico de temperatura",
+      "TEMPERATURE": "Temperatura",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
+    "FAT": {
+      "TITLE": "Gordura corporal",
+      "SUBTITLE": "",
+      "FAT": "Gordura",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
+    "HEART-RATE": {
+      "TITLE": "Frequência cardíaca",
+      "SUBTITLE": "",
+      "HISTORIC": {
+        "TEXT": "Histório de medições",
+        "SUBTEXT": "O gráfico abaixo representa todos os valores captados em todas as medições realizadas"
+      },
+      "LAST-DATE": {
+        "TEXT": "Última medição realizada",
+        "SUBTEXT": "O gráfico abaixo representa todos os valores captados na última medição realizada"
+      },
+      "FREQUENCY": "Frequência",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
+    "HEIGHT": {
+      "TITLE": "Estatura",
+      "SUBTITLE": "",
+      "HEIGHT": "Altura",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
+    "WAIST-CIRCUMFERENCE": {
+      "TITLE": "Circunferência da cintura",
+      "SUBTITLE": "",
+      "CIRCUMFERENCE": "Circunferência",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
+    "WEIGHT": {
+      "TITLE": "Peso",
+      "SUBTITLE": "",
+      "BODY-FAT": "Gordura corporal",
+      "FAT": "Gordura",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
+    "COMPONENT": {
+      "CONFIG-GRAPH": "Configurar gráficos visíveis",
+      "EXPAND-COLLAPSE": "Clique para expandir/retrair...",
+      "WEIGHT": "Peso",
+      "HEIGHT": "Altura",
+      "FAT": "Gordura corporal",
+      "WAIST-CIRCUMFERENCE": "Circunferência da cintura",
+      "TEMPERATURE": "Temperatura corporal",
+      "GLUCOSE": "Glicose no sangue",
+      "PRESSURE": "Pressão sanguínea",
+      "HEART-RATE": "Frequência cardíaca"
+    },
+    "PIPES": {
+      "MEAL": {
+        "PREPRANDIAL": "Pré-prandial",
+        "POSTPRANDIAL": "Pós-prandial",
+        "FASTING": "Jejum",
+        "CASUAL": "Casual",
+        "BEDTIME": "Antes de dormir"
+      },
+      "MEASUREMENT-TYPE": {
+        "WEIGHT": "Peso",
+        "HEIGHT": "Altura",
+        "FAT": "Gordura Corporal",
+        "WAIST-CIRCUMFERENCE": "Circunferência da Cintura",
+        "BODY-TEMPERATURE": "Temperatura Corporal",
+        "BLOOD-GLUCOSE": "Glicose",
+        "BLOOD-PRESSURE": "Pressão Arterial",
+        "HEART-RATE": "Frequência Cardíaca"
+      },
+      "UNDEFINED": "Fora dos parâmetros",
+      "NOTFOUND": "NÃO ENCONTRADO"
+    },
+    "MEASUREMENT-CARD": {
+      "FILTER-OPTIONS": "Opções de filtragens",
+      "TODAY": "Hoje",
+      "WEEK": "Semana",
+      "MONTH": "Mês",
+      "YEAR": "Ano"
+    },
+    "LOG-MEASUREMENTS-CARD": {
+      "TITLE": "Histórico dos registro de medições",
+      "SUBTITLE": "",
+      "DELETE-MEASUREMENT": "Excluir medição",
+      "VIEW-MEASUREMENT": "Visualizar detalhes",
+      "MEASUREMENT-TYPE": "Tipo de Medição",
+      "REMOVE-SELECTED": "Remover selecionadas",
+      "LIST-EMPTY": "Nenhuma medição encontrada!",
+      "LIST-EMPTY-MESSAGE": "O tipo de medição selecionada não possui registros cadastrados.",
+      "LOADING-MEASUREMENTS": "Carregando medições...",
+      "GENERIC-TABLE": {
+        "ACTIONS": "Ações",
+        "AT": "às",
+        "COLLECTION-DATE": "Data e Hora da Coleta",
+        "VALUE": "Valor"
+      },
+      "WEIGHT-TABLE": {
+        "WEIGHT": "Peso",
+        "BODY-FAT": "Gordura Corporal",
+        "NOT-COLLECTED": "Não coletada"
+      },
+      "GLUCOSE-TABLE": {
+        "MEAL": "Tipo de Refeição"
+      },
+      "PRESSURE-TABLE": {
+        "PRESSURE": "Pressão",
+        "PULSE": "Pulso"
+      },
+      "HEART-RATE-TABLE": {
+        "DATASET": "Frequências"
+      },
+      "MODAL-REMOVE": {
+        "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover a medição?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover ",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "medição(es)?"
+      }
+    },
+    "LAST-REGISTER": "Último registro",
+    "LAST-REGISTER-DATE": "Data do último registro",
+    "PATTERN-DATE": "dia/mês/ano horário",
+    "VALUE": "Valor",
+    "UNIT": "Unidade",
+    "MIN": "MIN",
+    "MAX": "MAX",
+    "AVERAGE": "Média",
+    "AVERAGE-VALUE": "Valor médio"
+  },
   "MYDATEPIPE": {
     "AT": "as",
     "HOURS": "horas."
@@ -663,6 +664,8 @@
     "REQUERID-FIELD": "Campo obrigatório",
     "CLOSE": "Fechar",
     "DATE": "Data",
+    "DATE-AND-HOUR": "Data e Hora",
+    "AT": "ás",
     "DATE-START": "Data ínicio",
     "DATE-END": "Data término",
     "STUDY-ACTIVATED": "ATIVADO",

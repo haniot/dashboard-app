@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
         this.attemptUser = new Attempt();
         const find = attemptsStorage.find(item => {
-            return item.user === this.f.get('email-template.html').value
+            return item.user === this.f.get('email').value
         })
         if (find) {
             this.attemptUser = find;
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     incrementAttempt(): void {
-        this.attemptUser.user = this.f.get('email-template.html').value;
+        this.attemptUser.user = this.f.get('email').value;
         this.attemptUser.attemptNumber++;
 
         const local = this.localStorageService.getItem('listAttempts');

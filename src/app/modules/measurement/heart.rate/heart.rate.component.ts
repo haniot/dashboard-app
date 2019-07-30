@@ -48,7 +48,8 @@ export class HeartRateComponent implements OnInit, OnChanges {
         const last_date_text = this.translateService.instant('MEASUREMENTS.HEART-RATE.LAST-DATE.TEXT');
         const last_date_subtext = this.translateService.instant('MEASUREMENTS.HEART-RATE.LAST-DATE.SUBTEXT');
 
-        const date = this.translateService.instant('SHARED.DATE');
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -74,20 +75,26 @@ export class HeartRateComponent implements OnInit, OnChanges {
             if (heartRate.dataset) {
                 heartRate.dataset.forEach((elementHeartRate: { value: number, timestamp: string }) => {
                     xAxisOptions.data.push(this.datePipe.transform(elementHeartRate.timestamp, 'shortDate'));
-                    seriesOptions.data.push(elementHeartRate.value);
+                    seriesOptions.data.push({
+                        value: elementHeartRate.value,
+                        time: this.datePipe.transform(elementHeartRate.timestamp, 'mediumTime')
+                    });
                 });
             }
         });
 
 
         if (this.lastData) {
-            // Inserindo dados no gráfico da ultima medião
+
             if (this.lastData.dataset) {
                 this.lastData.dataset.forEach((elementHeartRate: { value: number, timestamp: string }) => {
 
                     xAxisOptionsLastDate.data.push(this.datePipe.transform(elementHeartRate.timestamp, 'mediumTime'));
 
-                    seriesOptionsLastDate.data.push(elementHeartRate.value);
+                    seriesOptionsLastDate.data.push({
+                        value: elementHeartRate.value,
+                        time: this.datePipe.transform(elementHeartRate.timestamp, 'mediumTime')
+                    });
 
                 });
             }
@@ -99,7 +106,9 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 subtext: historic_subtext
             },
             tooltip: {
-                formatter: frequency + ` : {c} bpm <br> ${date}: {b}`,
+                formatter: function (params) {
+                    return `${frequency} : ${params[0].data.value} bpm <br> ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
+                },
                 trigger: 'axis'
             },
             xAxis: xAxisOptions,
@@ -125,7 +134,9 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 subtext: last_date_subtext
             },
             tooltip: {
-                formatter: frequency + ` : {c} bpm <br> ${date}: {b}`,
+                formatter: function (params) {
+                    return `${frequency} : ${params[0].data.value} bpm <br> ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
+                },
                 trigger: 'axis'
             },
             xAxis: xAxisOptionsLastDate,
@@ -167,7 +178,10 @@ export class HeartRateComponent implements OnInit, OnChanges {
             if (heartRate.dataset) {
                 heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
                     this.options.xAxis.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
-                    this.options.series.data.push(date.value);
+                    this.options.series.data.push({
+                        value: date.value,
+                        time: this.datePipe.transform(date.timestamp, 'mediumTime')
+                    });
                 });
             }
 

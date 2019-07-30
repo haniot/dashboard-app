@@ -45,7 +45,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         const systolic = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.SYSTOLIC');
         const diastolic = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.DIASTOLIC');
         const pulse = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PULSE');
-        const date = this.translateService.instant('SHARED.DATE');
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
 
         const color_systolic = '#3F51B5';
         const color_diastolic = '#009688';
@@ -129,14 +130,24 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         ]
 
         this.data.forEach((element: BloodPressure) => {
+            const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
 
             xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
 
-            series[0].data.push(element.systolic);
+            series[0].data.push({
+                value: element.systolic,
+                time: mediumTime
+            });
 
-            series[1].data.push(element.diastolic);
+            series[1].data.push({
+                value: element.diastolic,
+                time: mediumTime
+            });
 
-            series[2].data.push(element.pulse);
+            series[2].data.push({
+                value: element.pulse,
+                time: mediumTime
+            });
         });
 
         this.options = {
@@ -158,8 +169,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                             unid = 'bpm';
                             break;
                     }
-                    const tooltip = `${legend}: ${params.data}${unid}<br>` +
-                        `${date}: ${params.name}`;
+                    const tooltip = `${legend}: ${params.data.value}${unid}<br>` +
+                        `${date}:<br>${params.name} ${at} ${params.data.time}`;
                     return tooltip;
                 }
             },
@@ -201,10 +212,20 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.options.series.data = [];
 
         measurements.forEach((element: BloodPressure) => {
+            const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
             this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            this.options.series[0].data.push(element.systolic);
-            this.options.series[1].data.push(element.diastolic);
-            this.options.series[2].data.push(element.pulse);
+            this.options.series[0].data.push({
+                value: element.systolic,
+                time: mediumTime
+            });
+            this.options.series[1].data.push({
+                value: element.diastolic,
+                time: mediumTime
+            });
+            this.options.series[2].data.push({
+                value: element.pulse,
+                time: mediumTime
+            });
         });
         this.echartsInstance.setOption(this.options);
     }

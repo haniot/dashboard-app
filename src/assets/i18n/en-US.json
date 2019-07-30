@@ -1,31 +1,30 @@
 {
   "APP": {
-    "TITLE": "HANIoT",
-    "DEVELOP-ORGANIZATION": "NUTES"
+    "DEVELOP-ORGANIZATION": "NUTES",
+    "TITLE": "HANIoT"
   },
   "ACCESS-DENIED": {
-    "TITLE": "Access denied",
     "MESSAGE": "Sorry, your access has been declined due to security reasons of our server and also to our confidential data",
-    "MESSAGE-GO-BACK": "Please return to the main page by clicking on the button below"
+    "MESSAGE-GO-BACK": "Please return to the main page by clicking on the button below",
+    "TITLE": "Access denied"
   },
   "ADMINISTRADORS": {
-    "TITLE": "User list administrators",
     "SUBTITLE": "",
+    "TITLE": "User list administrators",
     "TITLE-ADD": "Create admin user",
     "TITLE-EDIT": "Edit admin user"
   },
   "CONFIG": {
-    "CONFIG-MYDATES-TITLE": "My data",
-    "CONFIG-MYDATES-SUBTITLE": "Click the enable edit button to change your information",
-    "CONFIG-MYDATES-ENABLE-EDITING": "Enable editing",
-    "CONFIG-ACESS-TITLE": "Access settings",
-    "CONFIG-ACESS-SUBTITLE": "To change your password, fill in the information below and click on CHANGE PASSWORD",
+    "CONFIG-ACCESS-TITLE": "Access settings",
+    "CONFIG-ACCESS-SUBTITLE": "To change your password, fill in the information below and click on CHANGE PASSWORD",
     "CONFIG-LANGUAGE-TITLE": "Language Settings",
     "CONFIG-LANGUAGE-SUBTITLE": "Use the selector to select the desired language",
-    "CONFIG-LANGUAGE-LABEL": "Select the desired language"
+    "CONFIG-LANGUAGE-LABEL": "Select the desired language",
+    "CONFIG-MYDATES-TITLE": "My data",
+    "CONFIG-MYDATES-SUBTITLE": "Click the enable edit button to change your information",
+    "CONFIG-MYDATES-ENABLE-EDITING": "Enable editing"
   },
   "DASHBOARD": {
-    "CARD-STUDIES-TOTAL": "Total Number of Studies",
     "CARD-PATIENTS-FROM-THE-STUDY": "Total Patients in Selected Study",
     "CARD-PATIENTS-TOTAL": "Total Patients",
     "CARD-PATIENTS": {
@@ -37,6 +36,7 @@
       "REGISTER-PATIENTS": "Register patients",
       "VIEW": "View Patient"
     },
+    "CARD-STUDIES-TOTAL": "Total Number of Studies",
     "CARD-STUDIES": {
       "TITLE": "Access your studies",
       "SUBTITLE": "Click on the card to view study information.",
@@ -148,18 +148,204 @@
     "OPTIONS-DOWNLOAD": "Download options...",
     "GENERATING-ODONTOLOGICAL-EVALUATIONS": "Generating dental evaluation"
   },
-  "FOOTER": {
-    "ABOUT-US": "About us",
-    "PRIVACY": "Privacy"
-  },
-  "HEALTHPROFESSIONALS": {
-    "TITLE": "List of health professionals",
+  "EDIT-MYPILOT": {
+    "TITLE": "Edit a pilot study",
     "SUBTITLE": "",
     "TITLE-ADD": "Create health professional",
     "TITLE-EDIT": "Edit health professional"
   },
-  "EDIT-MYPILOT": {
-    "TITLE": "Edit a pilot study",
+  "FOOTER": {
+    "ABOUT-US": "About us",
+    "PRIVACY": "Privacy"
+  },
+  "HABITS": {
+    "FAMILY-COHESION": {
+      "TITLE": "Family cohesion",
+      "SUBTITLE": "",
+      "UNAVAILABLE-DATA": "Family cohesion data unavailable!"
+    },
+    "FEEDING": {
+      "TITLE": "Eating habits of the patient",
+      "SUBTITLE": "",
+      "NUMBER-WATER-GLASSES": "Number of water glasses",
+      "BREAST-FEEDING": "Breast-feeding",
+      "BREAKFAST": "Breakfast",
+      "LIST-OF-WEEKLY-FOOD": "List of weekly foods and consumption relationship",
+      "LAST-7-DAYS": "Last 7 days",
+      "UNAVAILABLE-DATA": "No food habits registered!",
+      "LIST-ALLERGIC-FOODS": "List of allergic foods"
+    },
+    "MEDICAL-RECORD": {
+      "TITLE": "Historic of patient illness",
+      "SUBTITLE": "",
+      "LIST-CHRONIC-DISEASES": "List of chronic diseases",
+      "DISEASE": "Disease",
+      "HISTORIC": "Historic",
+      "UNAVAILABLE-DATA": "No history of diseases registered!"
+    },
+    "ORAL-HEALTH": {
+      "TITLE": "Oral Health Information",
+      "SUBTITLE": "",
+      "FREQUENCY-ORAL-HEALTH": "Frequency of oral health",
+      "LIST-OF-LESIONS": "List of lesions",
+      "NONE-LESION": "No lesions registered!",
+      "TYPE-TEETH": "Tooth type",
+      "TYPE-LESION": "Type of lesion",
+      "UNAVAILABLE-DATA": "Oral health data unavailable!"
+    },
+    "PHYSICAL-ACTIVITY": {
+      "TITLE": "Physical activity habits of the patient",
+      "SUBTITLE": "",
+      "SCHOOL-ACTIVITY-FREQUENCY": "Frequency of school physical activities",
+      "LIST-ACTIVITY-PRATICED": "List of activities practiced",
+      "UNAVAILABLE-DATA": "No registered physical activity habit!"
+    },
+    "SLEEP": {
+      "TITLE": "Patient's sleep habits",
+      "SUBTITLE": "",
+      "WAKE-UP-TIME": "Wake up time",
+      "TIME-TO-SLEEP": "Time to sleep",
+      "UNAVAILABLE-DATA": "No registered sleep habits!",
+      "TIME-ABBREVIATION": "hrs"
+    },
+    "SOCIO-DEMOGRAPHIC": {
+      "TITLE": "Sociodemographic information",
+      "SUBTITLE": "",
+      "COLOR-RACE": "Color or race",
+      "MOTHER-EDUCATION": "Mother's education",
+      "NUMBER-PEOPLE-HOME": "Number of people at home",
+      "UNAVAILABLE-DATA": "Sociodemographic data unavailable!"
+    },
+    "PIPES": {
+      "WEEKLY-FOOD": {
+        "FISH-CHICKEN-MEAT": "Fish, chicken or red meat",
+        "SODA": "Soda",
+        "SALAD-VEGETABLE": "Salad, vegetables or vegetables",
+        "FRIED-SALT-FOOD": "Fried salted",
+        "MILK": "Milk",
+        "BEAN": "Bean",
+        "FRUITS": "Fruits",
+        "CANDY-SUGAR-COOKIE": "Sweets",
+        "BURGER-SAUSAGE": "Hamburgers, sausage or other sausages"
+      },
+      "FOOD-ALLERGY": {
+        "GLUTEN": "Gluten",
+        "APLV": "APLV",
+        "LACTOSE": "Lactose",
+        "DYE": "Dye",
+        "EGG": "Eggs",
+        "PEANUT": "Peanut",
+        "OTHER": "Other"
+      },
+      "CHORNIC-DISEASE": {
+        "HYPERTENSION": "Hypertension",
+        "BLOOD-FAT": "Blood fat",
+        "DIABETES": "Diabetes"
+      },
+      "DISEASE-HISTORY": {
+        "NO": "NO",
+        "YES": "YES"
+      },
+      "TEETH-BRUSHING": {
+        "NONE": "None",
+        "ONCE": "Once",
+        "TWICE": "Twice",
+        "THREE-MORE": "Three times or more"
+      },
+      "TOOTH-TYPE": {
+        "DECIDUOUS-TOOTH": "Deciduous tooth",
+        "PERMANENT-TOOTH": "Permanent tooth"
+      },
+      "TYPE-LESION": {
+        "WHITE-SPOT-LESION": "White spot",
+        "CAVITATED-LESION": "Cavitated lesion"
+      },
+      "WEEKLY-ACTIVITIES": {
+        "SOCCER": "Soccer",
+        "FUTSAL": "Futsal",
+        "HANDBALL": "Handball",
+        "BASKETBALL": "Basketball",
+        "SKATES": "Skate or skateboarding",
+        "ATHLETICS": "Athletics",
+        "SWIM": "Swimming",
+        "GYMNASTICS": "Olympic and Rhythmic Gymnastics",
+        "FIGHT": "Judo, Karate, Capoeira or other fights",
+        "DANCE": "Ballet or other types of dances",
+        "RUN": "Run",
+        "RIDE-BIKE": "Ride a bike",
+        "WALKING-PHYSICAL-EXERCISE": "Walking as a physical exercise",
+        "WALKING-MEANS-TRANSPORT": "Hiking as a means of transport",
+        "VOLLEYBALL": "Volleyball",
+        "MUSCULATION": "Bodybuilding",
+        "ABDOMINAL-EXERCISE": "Abdominal exercises",
+        "TENNIS": "Court or table tennis",
+        "WALK-WITH-DOG": "Walk with the dog",
+        "GYMNASTICS-GYM": "Gymnastics gym",
+        "NO-ACTIVITY": "No activity"
+      },
+      "PHYSICAL-ACTIVITY-FREQUENCY": {
+        "NONE": "Not once",
+        "ONE-PER-WEEK": "Once a week",
+        "TWO-PER-WEEK": "Twice a week",
+        "THREE-PER-WEEK": "Three times a week",
+        "FOUR-MORE-PER-WEEK": "Four times or more per week"
+      },
+      "MOTHER-SCHOOLARITY": {
+        "UNLETTERED": "Illiterate\nFundamental 1 Incomplete",
+        "ELEMENTARY-ONE-TWO-INCOMPLETE": "Fundamental 1 Complete /\nFundamental 2 Incomplete",
+        "ELEMENTARY-TWO-HIGH-SCHOOL": "Fundamental 2 Complete /\nIncomplete",
+        "MEDIUM-GRADUATION-INCOMPLETE": "Average Full /\nIncomplete higher",
+        "GRADUATION-COMPLETE": "Graduated"
+      },
+      "BREAST-FEEDING": {
+        "EXCLUSIVE": "Exclusive",
+        "COMPLEMENTARY": "Complementary",
+        "INFANT-FORMULAS": "Children's Formulas",
+        "OTHER": "Other"
+      },
+      "BREAKFAST": {
+        "NEVER": "Never",
+        "SOMETIMES": "Sometimes",
+        "ALMOST-EVERYDAY": "Almost everyday",
+        "EVERYDAY": "Everyday"
+      },
+      "WATER-GLASS": {
+        "NONE": "None",
+        "ONE-TWO": "Between one and two",
+        "THREE-FOUR": "Between three and four",
+        "FIVE-MORE": "Five or more"
+      },
+      "WEEKLY-FREQUENCY": {
+        "NEVER": "Never",
+        "IN-DAY": "In day",
+        "ONE-TWO-DAYS": "Between one and two times",
+        "THREE-FOUR-DAYS": "Between three and four times",
+        "FIVE-SIX-DAYS": "Between five and six times",
+        "ALL-DAYS": "Every day"
+      },
+      "COLOR-RACE": {
+        "WHITE": "White",
+        "BLACK": "Black",
+        "PARDA": "Parda",
+        "YELLOW": "Yellow"
+      },
+      "FAMILY-COHESION-FREQUENCY": {
+        "ALMOST-NEVER": "Almost never",
+        "RARELY": "Rarely",
+        "SOMETIMES": "Sometimes",
+        "OFTEN": "Often",
+        "ALMOST-ALWAYS": "Almost always"
+      },
+      "UNDEFINED": "Out of parameters",
+      "NOTFOUND": "NOT FOUND",
+      "DO-NOT-KNOW": "I do not know/I do not remember"
+    },
+    "REGISTER-DATE": "Date of registration",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next"
+  },
+  "HEALTHPROFESSIONALS": {
+    "TITLE": "List of health professionals",
     "SUBTITLE": "",
     "TITLE-ADD": "Create health professional",
     "TITLE-EDIT": "Edit health professional"
@@ -286,9 +472,10 @@
       "LIST-EMPTY-MESSAGE": "The selected measurement type has no registered records.",
       "LOADING-MEASUREMENTS": "Loading measurements...",
       "GENERIC-TABLE": {
-        "VALUE": "Value",
-        "COLLECTION-DATE": "Collection Date",
-        "ACTIONS": "Actions"
+        "ACTIONS": "Actions",
+        "AT": "at",
+        "COLLECTION-DATE": "Collection Date and Time",
+        "VALUE": "Value"
       },
       "WEIGHT-TABLE": {
         "WEIGHT": "Weight",
@@ -320,192 +507,6 @@
     "MAX": "MAX",
     "AVERAGE": "Average",
     "AVERAGE-VALUE": "Average value"
-  },
-  "HABITS": {
-    "FAMILY-COHESION": {
-      "TITLE": "Family cohesion",
-      "SUBTITLE": "",
-      "UNAVAILABLE-DATA": "Family cohesion data unavailable!"
-    },
-    "FEEDING": {
-      "TITLE": "Eating habits of the patient",
-      "SUBTITLE": "",
-      "NUMBER-WATER-GLASSES": "Number of water glasses",
-      "BREAST-FEEDING": "Breast-feeding",
-      "BREAKFAST": "Breakfast",
-      "LIST-OF-WEEKLY-FOOD": "List of weekly foods and consumption relationship",
-      "LAST-7-DAYS": "Last 7 days",
-      "UNAVAILABLE-DATA": "No food habits registered!",
-      "LIST-ALLERGIC-FOODS": "List of allergic foods"
-    },
-    "MEDICAL-RECORD": {
-      "TITLE": "Historic of patient illness",
-      "SUBTITLE": "",
-      "LIST-CHRONIC-DISEASES": "List of chronic diseases",
-      "DISEASE": "Disease",
-      "HISTORIC": "Historic",
-      "UNAVAILABLE-DATA": "No history of diseases registered!"
-    },
-    "ORAL-HEALTH": {
-      "TITLE": "Oral Health Information",
-      "SUBTITLE": "",
-      "FREQUENCY-ORAL-HEALTH": "Frequency of oral health",
-      "LIST-OF-LESIONS": "List of lesions",
-      "NONE-LESION": "No lesions registered!",
-      "TYPE-TEETH": "Tooth type",
-      "TYPE-LESION": "Type of lesion",
-      "UNAVAILABLE-DATA": "Oral health data unavailable!"
-    },
-    "PHYSICAL-ACTIVITY": {
-      "TITLE": "Physical activity habits of the patient",
-      "SUBTITLE": "",
-      "SCHOOL-ACTIVITY-FREQUENCY": "Frequency of school physical activities",
-      "LIST-ACTIVITY-PRATICED": "List of activities practiced",
-      "UNAVAILABLE-DATA": "No registered physical activity habit!"
-    },
-    "SLEEP": {
-      "TITLE": "Patient's sleep habits",
-      "SUBTITLE": "",
-      "WAKE-UP-TIME": "Wake up time",
-      "TIME-TO-SLEEP": "Time to sleep",
-      "UNAVAILABLE-DATA": "No registered sleep habits!",
-      "TIME-ABBREVIATION": "hrs"
-    },
-    "SOCIO-DEMOGRAPHIC": {
-      "TITLE": "Sociodemographic information",
-      "SUBTITLE": "",
-      "COLOR-RACE": "Color or race",
-      "MOTHER-EDUCATION": "Mother's education",
-      "NUMBER-PEOPLE-HOME": "Number of people at home",
-      "UNAVAILABLE-DATA": "Sociodemographic data unavailable!"
-    },
-    "PIPES": {
-      "WEEKLY-FOOD": {
-        "FISH-CHICKEN-MEAT": "Fish, chicken or red meat",
-        "SODA": "Soda",
-        "SALAD-VEGETABLE": "Salad, vegetables or vegetables",
-        "FRIED-SALT-FOOD": "Fried salted",
-        "MILK": "Milk",
-        "BEAN": "Bean",
-        "FRUITS": "Fruits",
-        "CANDY-SUGAR-COOKIE": "Sweets",
-        "BURGER-SAUSAGE": "Hamburgers, sausage or other sausages"
-      },
-      "FOOD-ALLERGY": {
-        "GLUTEN": "Gluten",
-        "APLV": "APLV",
-        "LACTOSE": "Lactose",
-        "DYE": "Dye",
-        "EGG": "Eggs",
-        "PEANUT": "Peanut",
-        "OTHER": "Other"
-      },
-      "CHORNIC-DISEASE": {
-        "HYPERTENSION": "Hypertension",
-        "BLOOD-FAT": "Blood fat",
-        "DIABETES": "Diabetes"
-      },
-      "DISEASE-HISTORY": {
-        "NO": "NO",
-        "YES": "YES"
-      },
-      "TEETH-BRUSHING": {
-        "NONE": "None",
-        "ONCE": "Once",
-        "TWICE": "Twice",
-        "THREE-MORE": "Three times or more"
-      },
-      "TOOTH-TYPE": {
-        "DECIDUOUS-TOOTH": "Deciduous tooth",
-        "PERMANET-TOOTH": "Permanent tooth"
-      },
-      "TYPE-LESION": {
-        "WHITE-SPOT-LESION": "White spot",
-        "CAVITATED-LESION": "Cavitated lesion"
-      },
-      "WEEKLY-ACTIVITIES": {
-        "SOCCER": "Soccer",
-        "FUTSAL": "Futsal",
-        "HANDBALL": "Handball",
-        "BASKETBALL": "Basketball",
-        "SKATES": "Skate or skateboarding",
-        "ATHLETICS": "Athletics",
-        "SWIM": "Swimming",
-        "GYMNASTICS": "Olympic and Rhythmic Gymnastics",
-        "FIGHT": "Judo, Karate, Capoeira or other fights",
-        "DANCE": "Ballet or other types of dances",
-        "RUN": "Run",
-        "RIDE-BIKE": "Ride a bike",
-        "WALKING-PHYSICAL-EXERCISE": "Walking as a physical exercise",
-        "WALKING-MEANS-TRANSPORT": "Hiking as a means of transport",
-        "VOLLEYBALL": "Volleyball",
-        "MUSCULATION": "Bodybuilding",
-        "ABDOMINAL-EXERCISE": "Abdominal exercises",
-        "TENNIS": "Court or table tennis",
-        "WALK-WITH-DOG": "Walk with the dog",
-        "GYMNASTICS-GYM": "Gymnastics gym",
-        "NO-ACTIVITY": "No activity"
-      },
-      "PHYSICAL-ACTIVITY-FREQUENCY": {
-        "NONE": "Not once",
-        "ONE-PER-WEEK": "Once a week",
-        "TWO-PER-WEEK": "Twice a week",
-        "THREE-PER-WEEK": "Three times a week",
-        "FOUR-MORE-PER-WEEK": "Four times or more per week"
-      },
-      "MOTHER-SCHOOLARITY": {
-        "UNLETTERED": "Illiterate\nFundamental 1 Incomplete",
-        "ELEMENTARY-ONE-TWO-INCOMPLETE": "Fundamental 1 Complete /\nFundamental 2 Incomplete",
-        "ELEMENTARY-TWO-HIGH-SCHOOL": "Fundamental 2 Complete /\nIncomplete",
-        "MEDIUM-GRADUATION-INCOMPLETE": "Average Full /\nIncomplete higher",
-        "GRADUATION-COMPLETE": "Graduated"
-      },
-      "BREAST-FEEDING": {
-        "EXCLUSIVE": "Exclusive",
-        "COMPLEMENTARY": "Complementary",
-        "INFANT-FORMULAS": "Children's Formulas",
-        "OTHER": "Other"
-      },
-      "BREAKFAST": {
-        "NEVER": "Never",
-        "SOMETIMES": "Sometimes",
-        "ALMOST-EVERYDAY": "Almost everyday",
-        "EVERYDAY": "Everyday"
-      },
-      "WATER-GLASS": {
-        "NONE": "None",
-        "ONE-TWO": "Between one and two",
-        "THREE-FOUR": "Between three and four",
-        "FIVE-MORE": "Five or more"
-      },
-      "WEEKLY-FREQUENCY": {
-        "NEVER": "Never",
-        "IN-DAY": "In day",
-        "ONE-TWO-DAYS": "Between one and two times",
-        "THREE-FOUR-DAYS": "Between three and four times",
-        "FIVE-SIX-DAYS": "Between five and six times",
-        "ALL-DAYS": "Every day"
-      },
-      "COLOR-RACE": {
-        "WHITE": "White",
-        "BLACK": "Black",
-        "PARDA": "Parda",
-        "YELLOW": "Yellow"
-      },
-      "FAMILY-COHESION-FREQUENCY": {
-        "ALMOST-NEVER": "Almost never",
-        "RARELY": "Rarely",
-        "SOMETIMES": "Sometimes",
-        "OFTEN": "Often",
-        "ALMOST-ALWAYS": "Almost always"
-      },
-      "UNDEFINED": "Out of parameters",
-      "NOTFOUND": "NOT FOUND",
-      "DO-NOT-KNOW": "I do not know/I do not remember"
-    },
-    "REGISTER-DATE": "Date of registration",
-    "PREVIOUS": "Previous",
-    "NEXT": "Next"
   },
   "MYDATEPIPE": {
     "AT": "at",
@@ -587,8 +588,8 @@
     "DOWNLOAD-CSV": "Download CSV",
     "DOWNLOAD-XLS": "Download XLS",
     "NEW-FILE": "Request New File",
-    "DELETE-CONFIRMATION": "Are you sure you want to remove rating?",
-    "NUTRITIONEVALUATION": "Dental evaluation",
+    "DELETE-CONFIRMATION": "Are you sure you want to remove evaluation?",
+    "ODONTOLOGICAL-EVALUATON": "Dental evaluation",
     "FILECSV": "File CSV",
     "FILEXLS": "File XLS",
     "GENERATINGFILE": "Generating file",
@@ -663,6 +664,8 @@
     "REQUERID-FIELD": "Required field",
     "CLOSE": "Close",
     "DATE": "Date",
+    "DATE-AND-HOUR": "Date and Hour",
+    "AT": "at",
     "DATE-START": "Start date",
     "DATE-END": "End date",
     "STUDY-ACTIVATED": "ACTIVATED",

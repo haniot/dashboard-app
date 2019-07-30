@@ -53,7 +53,7 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
         });
         this.socioDemographicForm.get('color_race')
             .patchValue(this.corAndRacePipe.transform(sociodemographicRecord.color_race));
-        this.socioDemographicForm.get('mother_schoolarity')
+        this.socioDemographicForm.get('mother_scholarity')
             .patchValue(this.motherSchoolarityPipe.transform(sociodemographicRecord.mother_scholarity));
     }
 

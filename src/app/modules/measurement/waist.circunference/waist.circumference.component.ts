@@ -44,7 +44,8 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         const circumference = this.translateService.instant('MEASUREMENTS.WAIST-CIRCUMFERENCE.CIRCUMFERENCE');
         const average = this.translateService.instant('MEASUREMENTS.AVERAGE');
         const average_value = this.translateService.instant('MEASUREMENTS.AVERAGE-VALUE');
-        const date = this.translateService.instant('SHARED.DATE');
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -82,14 +83,19 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
         this.data.forEach((element: Measurement) => {
             xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            series.data.push(element.value);
+            series.data.push({
+                value: element.value,
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
         });
 
 
         this.options = {
             color: ['#3398DB'],
             tooltip: {
-                formatter: circumference + `: {c} cm <br> ${date}: {b}`,
+                formatter: function (params) {
+                    return `${circumference}: ${params[0].data.value} cm <br> ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
+                },
                 trigger: 'axis',
                 axisPointer: {
                     type: 'shadow'
@@ -132,7 +138,10 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
         measurements.forEach((element: Weight) => {
             this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            this.options.series.data.push(element.value);
+            this.options.series.data.push({
+                value: element.value,
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
         });
         this.echartsInstance.setOption(this.options);
     }

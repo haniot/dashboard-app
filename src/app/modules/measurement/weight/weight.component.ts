@@ -47,7 +47,8 @@ export class WeightComponent implements OnInit, OnChanges {
 
         const weigth = this.translateService.instant('MEASUREMENTS.WEIGHT.TITLE');
         const body_fat = this.translateService.instant('MEASUREMENTS.WEIGHT.BODY-FAT');
-        const date = this.translateService.instant('SHARED.DATE');
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
 
         this.lastIndex = 0;
 
@@ -110,10 +111,16 @@ export class WeightComponent implements OnInit, OnChanges {
 
         this.data.forEach((element: Weight) => {
             xAxisWeight.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            seriesWeight.data.push(this.decimalPipe.transform(element.value));
+            seriesWeight.data.push({
+                value: this.decimalPipe.transform(element.value),
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
             if (element.fat && element.fat.value) {
                 xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-                seriesFat.data.push(element.fat.value);
+                seriesFat.data.push({
+                    value: element.fat.value,
+                    time: this.datePipe.transform(element.timestamp, 'mediumTime')
+                });
             }
         });
 
@@ -122,7 +129,7 @@ export class WeightComponent implements OnInit, OnChanges {
                 formatter: function (params) {
                     if (params.seriesName === weigth) {
                         return weigth +
-                            `: ${params.data} Kg <br> ${date}: ${params.name}`;
+                            `: ${params.data.value} Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                     }
                     return body_fat +
                         `: ${params.data} % <br> ${date}: ${params.name}`;
@@ -169,16 +176,20 @@ export class WeightComponent implements OnInit, OnChanges {
 
         measurements.forEach((element: Weight) => {
             this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-            this.weightGraph.series[0].data.push(this.decimalPipe.transform(element.value));
-            this.weightGraph.series[1].data.push(25);
+            this.weightGraph.series[0].data.push({
+                value: this.decimalPipe.transform(element.value),
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
             if (element.fat && element.fat.value) {
                 this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-                this.weightGraph.series[1].data.push(element.fat.value);
+                this.weightGraph.series[1].data.push({
+                    value: element.fat.value,
+                    time: this.datePipe.transform(element.timestamp, 'mediumTime')
+                });
             }
         });
         this.echartsInstance.setOption(this.weightGraph);
     }
-
 
     ngOnChanges(changes: SimpleChanges) {
         if ((changes.data.currentValue && changes.data.previousValue
