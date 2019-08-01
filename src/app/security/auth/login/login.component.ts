@@ -98,9 +98,9 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
     }
 
-    incrementAttempt(): void {
+    updateAttempt(attemptUser: number): void {
         this.attemptUser.user = this.f.get('email').value;
-        this.attemptUser.attemptNumber++;
+        this.attemptUser.attemptNumber = attemptUser;
 
         const local = this.localStorageService.getItem('listAttempts');
         let attemptsStorage: Array<Attempt> = new Array<Attempt>();
@@ -138,15 +138,18 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
                 this.loading = false;
             },
             (error: HttpErrorResponse) => {
+                const rateLimit = parseInt(error.headers.get('x-ratelimit-limit'), 10);
+                const rateLimitRemaining = parseInt(error.headers.get('x-ratelimit-remaining'), 10);
                 switch (error.status) {
                     case 401:
                         this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
                             this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
-                        this.incrementAttempt();
+                        this.updateAttempt(rateLimit - rateLimitRemaining);
                         break;
                     case 429:
                         this.toastr.error(this.translateService.instant('TOAST-MESSAGES.TRY-AGAIN'),
                             this.translateService.instant('TOAST-MESSAGES.BLOCKED-USER'));
+                        this.showCaptcha = false;
                         this.cleanAttempt();
                         break;
                 }
