@@ -729,12 +729,14 @@
     },
     "CHANGE": {
       "CHANGE-PASSWORD": "Alteração de senha",
-      "PASSWORD": "Senha",
+      "PASSWORD": "Nova Senha",
       "PLACEHOLDER-PASSWORD": "Digite aqui sua nova senha...",
       "CONFIRM-PASSWORD": "Confirme à senha",
       "PLACEHOLDER-CONFIRM-PASSWORD": "Digite sua confirmação de senha aqui..."
     },
     "FORGOT": {
+      "INFORMATION": "Informações",
+      "INFORMATION-MESSAGE": "Se o e-mail submetido estiver devidamente cadastrado na plataforma, você receberá um e-mail com as instruções e o link para realizar a alteração da senha. Caso você não receba o e-mail em alguns minutos, verifique a sua caixa de spam ou repita o processo.",
       "PASSWORD-RECOVERY": "Recuperação de senha",
       "SUBMIT": "Enviar",
       "RECOVERY-SUCCESS": "Email de recuperação enviado para",

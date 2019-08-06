@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { RecaptchaModule } from 'ng-recaptcha'
-import { ToastContainerModule } from 'ngx-toastr'
 
 import { LoginComponent } from './login/login.component';
 import { ChangePasswordComponent } from './change.password/change.password.component';
@@ -24,8 +23,7 @@ import { ForgotPasswordComponent } from './forgot.password/forgot.password.compo
         SharedModule,
 
         TranslateModule,
-        RecaptchaModule,
-        ToastContainerModule
+        RecaptchaModule
     ],
     declarations: [
         LoginComponent,

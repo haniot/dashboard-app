@@ -729,12 +729,14 @@
     },
     "CHANGE": {
       "CHANGE-PASSWORD": "Change Password",
-      "PASSWORD": "Password",
+      "PASSWORD": "New Password",
       "PLACEHOLDER-PASSWORD": "Enter your new password here...",
       "CONFIRM-PASSWORD": "Confirm the Password",
       "PLACEHOLDER-CONFIRM-PASSWORD": "Enter your new password here..."
     },
     "FORGOT": {
+      "INFORMATION": "Informations",
+      "INFORMATION-MESSAGE": "If the submitted email is properly registered on the platform, you will receive an email with instructions and a link to change the password. If you don't receive the email within a few minutes, check your spam box or repeat the process.",
       "PASSWORD-RECOVERY": "Recovery Password",
       "SUBMIT": "Submit",
       "RECOVERY-SUCCESS": "Recovery email sent to",

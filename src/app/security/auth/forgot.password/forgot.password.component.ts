@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../services/auth.service'
 import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
+import { Router } from '@angular/router'
 
 @Component({
     selector: 'app-forgot.password',
@@ -14,13 +15,16 @@ import { TranslateService } from '@ngx-translate/core'
 export class ForgotPasswordComponent implements OnInit {
     loading: boolean;
     f: FormGroup;
+    showEmailSent: boolean;
 
     constructor(
         private formBuilder: FormBuilder,
         private authService: AuthService,
         private toastr: ToastrService,
+        private router: Router,
         private translateService: TranslateService) {
         this.loading = false;
+        this.showEmailSent = false;
     }
 
     ngOnInit() {
@@ -35,10 +39,13 @@ export class ForgotPasswordComponent implements OnInit {
         const email = this.f.get('email').value;
         this.authService.forgot(email)
             .then(() => {
-                this.loading = false;
-                const message = `${this.translateService.instant('SECURITY.FORGOT.RECOVERY-SUCCESS')} ${email}.`
-                this.toastr.info(message)
-                this.f.reset();
+                setTimeout(() => {
+                    this.loading = false;
+                    const message = `${this.translateService.instant('SECURITY.FORGOT.RECOVERY-SUCCESS')} ${email}.`
+                    this.toastr.info(message)
+                    this.showEmailSent = true;
+                    this.f.reset();
+                }, 3000)
             })
             .catch(errorResponse => {
                 this.loading = false;
@@ -50,6 +57,10 @@ export class ForgotPasswordComponent implements OnInit {
                 }
                 this.toastr.error(this.translateService.instant('SECURITY.FORGOT.RECOVERY-ERROR'))
             })
+    }
+
+    gotoLogin(){
+        this.router.navigate(['/'])
     }
 
 }

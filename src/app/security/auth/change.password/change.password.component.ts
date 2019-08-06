@@ -116,6 +116,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
             .then(() => {
                 this.loading = false;
                 this.toastr.info(this.translateService.instant('TOAST-MESSAGES.PASSWORD-UPDATED'));
+                this.router.navigate(['/'])
             })
             .catch((errorResponse => {
                 switch (errorResponse.status) {
