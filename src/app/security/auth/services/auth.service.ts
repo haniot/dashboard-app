@@ -87,4 +87,10 @@ export class AuthService {
         }
         return decodedToken;
     }
+
+    validateReCaptcha(responseRecaptcha: string): Promise<any> {
+        return this.http.post<any>(
+            `${environment.reCaptcha_urlVerify}?secret=${environment.reCaptcha_serverKey}&&response=${responseRecaptcha}`, {})
+            .toPromise();
+    }
 }

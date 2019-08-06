@@ -1,11 +1,8 @@
 {
-    "/api/*": {
-      "target": "http://localhost:8080",
+    "/api/siteverify": {
+      "target": "https://www.google.com/recaptcha",
       "secure": false,
       "logLevel": "debug",
-      "changeOrigin": true,
-      "pathRewrite": {
-        "^/api": ""
-      }
+      "changeOrigin": true
     }
   }

@@ -191,7 +191,14 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     solveCaptcha(captchaResponse: string, reCaptcha: RecaptchaComponent) {
         this.reCaptcha = reCaptcha;
-        this.captchaResolved = !!captchaResponse;
+        this.authService.validateReCaptcha(captchaResponse)
+            .then((response) => {
+                this.captchaResolved = !!response.success;
+                if (!response.success) {
+                    this.resetCaptcha();
+                }
+
+            }).catch()
     }
 
     ngAfterViewChecked() {
