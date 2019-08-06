@@ -1,0 +1,68 @@
+.diseases {
+  padding: 0px 10px;
+}
+
+.disease-type {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  border: 1px solid #00a594;
+  color: #fff;
+  text-decoration: none;
+  outline: 0;
+  background-color: #00a594;
+  padding: 5px 5px;
+  border-radius: 0.25rem;
+}
+
+.disease-history {
+  text-align: right;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
+  border: 2px solid #0e0d0d;
+  color: #00a594;
+  text-decoration: none;
+  outline: 0;
+  background-color: #fff;
+  padding: 5px 5px;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 51px 3px rgb(255, 255, 255);
+}
+
+
+.card-icon-disease img {
+  width: 30px;
+  padding: 0px 0px;
+}
+
+.card-icon-disease {
+  align-content: center;
+  border-radius: 5rem;
+  background-color: #ffffff;
+  border: 2px solid #00a594;
+  padding: 10px 10px;
+}
+
+.diseaseHistory span {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 5;
+  padding: 8px 8px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #00a594;
+  color: #ffffff;
+  font-size: 18px;
+  border-radius: 0.2rem;
+  border-bottom-left-radius: 2rem;
+}
+
+.diseaseHistory h4 {
+  position: relative;
+  margin-left: 5px;
+  color: #00a594;
+  font-size: 18px;
+}

@@ -1,6 +1,6 @@
-import {Evaluation} from "./evaluation";
+import { Evaluation } from './evaluation';
 
-export class OdontologicEvaluation  extends  Evaluation{
+export class OdontologicEvaluation extends Evaluation {
 
     total_patients: number;
     file_csv: string;

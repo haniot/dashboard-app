@@ -1,10 +1,14 @@
-import {Component, OnInit, Output, EventEmitter, AfterViewInit} from '@angular/core';
-import {PageEvent} from '@angular/material';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { PageEvent } from '@angular/material';
 
-import {PilotStudy} from 'app/modules/pilot-study/models/pilot.study';
-import {PilotStudyService} from 'app/modules/pilot-study/services/pilot-study.service';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
+import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
+import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
+import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'studies',
@@ -12,35 +16,30 @@ import {LoadingService} from 'app/shared/shared-components/loading-component/ser
     styleUrls: ['./studies.component.scss']
 })
 export class StudiesComponent implements OnInit, AfterViewInit {
-
-    listClass: Array<string>;
     @Output() selected = new EventEmitter();
-
     userId: string;
-    // MatPaginator Inputs
-    pageSizeOptions: number[] = [10, 25, 100];
-
-    // MatPaginator Output
+    pageSizeOptions: number[];
     pageEvent: PageEvent;
-
-    /* Controles de paginação */
-    page: number = 1;
-    limit: number = 10;
+    page: number;
+    limit: number;
     length: number;
-
     list: Array<PilotStudy>;
     search: string;
     searchTime;
-
-    listOfpilotsIsEmpty: boolean = false;
-
-    cacheStudyIdRemove: string;
+    listClass: Array<string>;
+    listOfPilotsIsEmpty: boolean;
 
     constructor(
         private pilotStudyService: PilotStudyService,
         private authService: AuthService,
-        private loadinService: LoadingService
+        private paginatorService: PaginatorIntlService,
+        private loadinService: LoadingService,
+        private localStorageService: LocalStorageService
     ) {
+        this.page = PaginatorConfig.page;
+        this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.limit = PaginatorConfig.limit;
+        this.listOfPilotsIsEmpty = false;
         this.list = new Array<PilotStudy>();
         this.listClass = new Array<string>();
     }
@@ -52,38 +51,28 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     }
 
     loadUserId() {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
     }
 
     getAllPilotStudies() {
-        if (this.authService.decodeToken().sub_type == 'admin') {
+        if (this.authService.decodeToken().sub_type === 'admin') {
             this.pilotStudyService.getAll(this.page, this.limit, this.search)
                 .then(studies => {
                     this.list = studies;
-                    if (studies && studies.length) {
-                        this.listOfpilotsIsEmpty = false;
-                    } else {
-                        this.listOfpilotsIsEmpty = true;
-                    }
+                    this.listOfPilotsIsEmpty = !(studies && studies.length);
                 })
-                .catch(error => {
-                    this.listOfpilotsIsEmpty = true;
-                    // console.log('Erro ao buscar pilot-studies: ', error);
+                .catch(() => {
+                    this.listOfPilotsIsEmpty = true;
                 });
         } else {
-            this.userId = atob(localStorage.getItem('user'));
+            this.userId = this.localStorageService.getItem('user');
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                 .then(studies => {
                     this.list = studies;
-                    if (studies && studies.length) {
-                        this.listOfpilotsIsEmpty = false;
-                    } else {
-                        this.listOfpilotsIsEmpty = true;
-                    }
+                    this.listOfPilotsIsEmpty = !(studies && studies.length);
                 })
-                .catch(error => {
-                    this.listOfpilotsIsEmpty = true;
-                    // console.log('Erro ao buscar pilot-studies: ', error);
+                .catch(() => {
+                    this.listOfPilotsIsEmpty = true;
                 });
         }
     }
@@ -97,18 +86,14 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                         this.list = studies;
                         this.getLengthPilotStudies();
                     })
-                    .catch(error => {
-                        // console.log('Erro ao buscar pilot-studies: ', error);
-                    });
+                    .catch();
             } else {
                 this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                     .then(studies => {
                         this.list = studies;
                         this.getLengthPilotStudies();
                     })
-                    .catch(error => {
-                        // console.log('Erro ao buscar pilot-studies: ', error);
-                    });
+                    .catch();
             }
         }, 200);
     }
@@ -117,13 +102,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         if (this.search) {
             return null;
         }
-        const size = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : this.limit;
-
-        if (this.pageEvent && this.pageEvent.pageIndex) {
-            return index + 1 + size * this.pageEvent.pageIndex;
-        } else {
-            return index + Math.pow(size, 1 - 1);
-        }
+        return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
     clickPagination(event) {
@@ -140,17 +119,13 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                 .then(studies => {
                     this.length = studies.length;
                 })
-                .catch(error => {
-                    // console.log('Erro ao buscar pilot-studies: ', error);
-                });
+                .catch();
         } else {
             this.pilotStudyService.getAll()
                 .then(studies => {
                     this.length = studies.length;
                 })
-                .catch(error => {
-                    // console.log('Erro ao buscar pilot-studies: ', error);
-                });
+                .catch();
         }
     }
 
@@ -159,7 +134,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         let local_index = 0;
         this.selected.emit(study_id);
         this.list.forEach((study, index) => {
-            if (study.id == study_id) {
+            if (study.id === study_id) {
                 local_index = index;
                 return;
             }
@@ -167,14 +142,14 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         this.listClass[local_index] = 'tr-selected';
     }
 
+    trackById(index, item) {
+        return item.id;
+    }
+
     ngAfterViewInit() {
         setTimeout(() => {
             this.loadinService.close();
         }, 500);
-    }
-
-    getClass(index) {
-        this.listClass[index];
     }
 
 }

@@ -1,0 +1,42 @@
+table .material-icons {
+  color: #00a594;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+label {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.externa {
+  position: absolute;
+  z-index: 2000;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.background-green:hover {
+  background-color: #00a594;
+}
+
+#navbarDropdownMenuLink i:hover {
+  cursor: pointer;
+  color: #00a594;
+}
+
+td img {
+  width: 2%;
+}

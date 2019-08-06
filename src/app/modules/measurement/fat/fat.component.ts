@@ -1,132 +1,50 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
-import * as _ from 'lodash';
+import { TranslateService } from '@ngx-translate/core';
 
-import {GraphService} from 'app/shared/shared-services/graph.service';
-import {DatePipe} from '@angular/common';
-import {IMeasurement} from '../models/measurement';
+import { Measurement, MeasurementType } from '../models/measurement';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'fat',
     templateUrl: './fat.component.html',
-    styleUrls: ['./fat.component.scss']
+    styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class FatComponent implements OnInit, OnChanges {
-
-    @Input() data: Array<IMeasurement>;
-
-    lastData: IMeasurement;
-
-    option = {
-
-        tooltip: {
-            trigger: 'item',
-            formatter: "Gordura : {c} %<br> Data: {b}"
-        },
-        xAxis: [
-            {
-                type: 'category',
-                data: []
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value',
-                axisLabel: {
-                    formatter: '{value} %'
-                }
-            }
-        ],
-        // visualMap: {
-        //   // top: 5,
-        //   // right: 10,
-        //   pieces: [{
-        //     gt: 0,
-        //     lte: 25,
-        //     color: '#00a594'
-        //   }, {
-        //     gt: 25,
-        //     lte: 55,
-        //     color: '#0071a5'
-        //   }, {
-        //     gt: 55,
-        //     color: '#fd0808'
-        //   }],
-        //   outOfRange: {
-        //     color: '#999'
-        //   }
-        // },
-        dataZoom: [
-            {
-                type: 'slider'
-            }
-        ],
-        series: [
-            {
-                type: 'bar',
-                data: [],
-                color: '#00a594',
-                label: {
-                    normal: {
-                        show: true,
-                        position: 'outside',
-                        offset: [0, -20],
-                        formatter: function (param) {
-                            return param.value + '%';
-                        },
-                        textStyle: {
-                            fontSize: 18,
-                            fontFamily: 'Arial'
-                        }
-                    }
-                },
-                markLine: {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "Valor médio : {c} %"
-                    },
-                    lineStyle: {
-                        color: 'black',
-                    },
-                    data: [
-                        {type: 'average', name: 'Média'}
-                    ]
-                }
-            }
-        ]
-    };
-
+    @Input() data: Array<Measurement>;
+    @Input() filter_visibility: boolean;
+    @Input() patientId: string;
+    lastData: Measurement;
+    options: any;
+    echartsInstance: any;
+    showSpinner: boolean;
 
     constructor(
         private datePipe: DatePipe,
-        private graphService: GraphService
+        private measurementService: MeasurementService,
+        private translateService: TranslateService
     ) {
-        this.data = new Array<IMeasurement>();
+        this.data = new Array<Measurement>();
+        this.filter_visibility = false;
+        this.showSpinner = false;
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
+        this.loadGraph();
+    }
 
+    onChartInit(event) {
+        this.echartsInstance = event;
     }
 
     loadGraph() {
 
-        //Limpando o grafico
-        this.option.xAxis[0].data = [];
-        this.option.series[0].data = [];
-
-        this.data.forEach((element: IMeasurement) => {
-            this.option.series[0].data.push(element.value);
-
-            const find = this.option.xAxis[0].data.find((ele) => {
-                return ele == this.datePipe.transform(element.timestamp, "shortDate");
-            });
-
-            if (!find) {
-                this.option.xAxis[0].data.push(this.datePipe.transform(element.timestamp, "shortDate"));
-            }
-
-
-        });
+        const average_value = this.translateService.instant('MEASUREMENTS.AVERAGE-VALUE');
+        const average = this.translateService.instant('MEASUREMENTS.AVERAGE');
+        const fat = this.translateService.instant('MEASUREMENTS.FAT.FAT');
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -134,9 +52,109 @@ export class FatComponent implements OnInit, OnChanges {
             this.lastData = this.data[0];
         }
 
-        this.graphService.refreshGraph();
+        const xAxis = {
+            type: 'category',
+            data: []
+        };
+
+        const series = {
+            type: 'bar',
+            data: [],
+            color: 'orange',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'outside',
+                    offset: [0, -20],
+                    formatter: function (params) {
+                        return `${params.value} % `;
+                    },
+                    textStyle: {
+                        fontSize: 18,
+                        fontFamily: 'Arial'
+                    }
+                }
+            },
+            markLine:
+                {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter:
+                            average_value + ' : {c} %'
+                    }
+                    ,
+                    lineStyle: {
+                        color: 'black'
+                    }
+                    ,
+                    data: [
+                        { type: 'average', name: average }
+                    ]
+                }
+        };
+
+        this.data.forEach((element: Measurement) => {
+            series.data.push({
+                value: element.value,
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
+            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+        });
 
 
+        this.options = {
+
+            tooltip: {
+                trigger: 'item',
+                formatter: function (params) {
+                    return `${fat}: ${params.data.value} %<br> ${date}: <br> ${params.name} ${at} ${params.data.time}`
+                }
+            },
+            xAxis: xAxis,
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} %'
+                    }
+                }
+            ],
+            dataZoom: [
+                {
+                    type: 'slider'
+                }
+            ],
+            series: series
+        };
+
+
+    }
+
+    applyFilter(filter: { start_at: string, end_at: string, period: string }) {
+        this.showSpinner = true;
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.fat, null, null, filter)
+            .then((measurements: Array<any>) => {
+                this.data = measurements;
+                this.showSpinner = false;
+                this.updateGraph(measurements);
+            })
+            .catch();
+    }
+
+    updateGraph(measurements: Array<Measurement>): void {
+
+        this.options.xAxis.data = [];
+        this.options.series.data = [];
+
+        measurements.forEach((element: Measurement) => {
+            this.options.series.data.push({
+                value: element.value,
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+        });
+
+        this.echartsInstance.setOption(this.options);
     }
 
     ngOnChanges(changes: SimpleChanges) {

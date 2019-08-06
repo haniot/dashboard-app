@@ -1,32 +1,33 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'meal'
+  name: 'meal',
+  pure: true
 })
 export class MealPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     switch (value) {
       case 'preprandial':
-        return 'Pré-prandial';
+        return 'MEASUREMENTS.PIPES.MEAL.PREPRANDIAL';
 
       case 'postprandial':
-        return 'Pós-prandial';
+        return 'MEASUREMENTS.PIPES.MEAL.POSTPRANDIAL';
 
       case 'fasting':
-        return 'Jejum';
+        return 'MEASUREMENTS.PIPES.MEAL.FASTING';
 
       case 'casual':
-        return 'Casual';
+        return 'MEASUREMENTS.PIPES.MEAL.CASUAL';
 
       case 'bedtime':
-        return 'Antes de dormir';
+        return 'MEASUREMENTS.PIPES.MEAL.BEDTIME';
 
       case undefined:
-        return 'Fora dos parâmetros';
+        return 'MEASUREMENTS.PIPES.UNDEFINED';
 
       default:
-        return 'NÂO ENCONTRADO';
+        return 'MEASUREMENTS.PIPES.NOTFOUND';
     }
 
   }

@@ -1,0 +1,221 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <haniot-card [title]="(patientId && pilotStudyId)?('PATIENTS.PATIENTS-FORM.TITLE-EDIT'|translate):('PATIENTS.PATIENTS-FORM.TITLE-CREATE'|translate)"
+                [subtitle]="'PATIENTS.PATIENTS-FORM.SUBTITLE'|translate">
+                    <form [formGroup]="patientForm">
+                        <div class="row">
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                 [ngClass]="{'has-success': patientForm.controls.name.valid,
+              'has-error': patientForm.controls.name.invalid && (patientForm.controls.name.touched || patientForm.controls.name.dirty)}">
+                                <label for="name">
+                                    {{'SHARED.NAME'|translate}}:
+                                </label>
+                                <input class="form-control" type="text" formControlName="name" id="name">
+                                <span *ngIf="patientForm.controls.name.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.name.invalid && (patientForm.controls.name.touched || patientForm.controls.name.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">{{'SHARED.INVALID-NAME'|translate}}.</span>
+                </span>
+                            </div>
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                 [ngClass]="{'has-success': patientForm.controls.phone_number.valid,
+              'has-error': patientForm.controls.phone_number.invalid && (patientForm.controls.phone_number.touched || patientForm.controls.phone_number.dirty)}">
+                                <label for="phone_number">
+                                    {{'SHARED.PHONE'|translate}}:
+                                    <small>({{'SHARED.ONLY-NUMBERS'|translate}})</small>
+                                </label>
+                                <input class="form-control" type="text" formControlName="phone_number" id="phone_number"
+                                       (keyup)="toApplyMaskPhoneNumber()">
+                                <span *ngIf="patientForm.controls.phone_number.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.phone_number.invalid && (patientForm.controls.phone_number.touched || patientForm.controls.phone_number.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">{{'SHARED.INVALID-PHONE'|translate}}.</span>
+                </span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                 [ngClass]="{'has-success': patientForm.controls.email.valid,
+              'has-error': patientForm.controls.email.invalid && (patientForm.controls.email.touched || patientForm.controls.email.dirty)}">
+                                <label for="email">
+                                    {{'SHARED.EMAIL'|translate}}:
+                                </label>
+                                <input class="form-control" type="text" formControlName="email" id="email">
+                                <span *ngIf="patientForm.controls.email.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.email.invalid && (patientForm.controls.email.touched || patientForm.controls.email.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">{{'SHARED.INVALID-EMAIL'|translate}}.</span>
+                </span>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="form-group has-feedback col-md"
+                                 [ngClass]="{'has-success': patientForm.controls.gender.valid,
+                'has-error': patientForm.controls.gender.invalid && (patientForm.controls.gender.touched || patientForm.controls.gender.dirty)}">
+                                <label for="gender">
+                                    {{'SHARED.GENDER'|translate}}:
+                                </label>
+                                <select class="form-control" formControlName="gender" name="gender" id="gender">
+                                    <option *ngFor="let itemGender of optionsGender"
+                                            [value]="itemGender">{{itemGender | gender |translate}}</option>
+                                </select>
+                                <span *ngIf="patientForm.controls.gender.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.gender.invalid && (patientForm.controls.gender.touched || patientForm.controls.gender.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger"> {{'SHARED.INVALID-GENDER'|translate}}.</span>
+                </span>
+                            </div>
+
+                            <div class="form-group has-feedback col-md"
+                                 [ngClass]="{'has-success': patientForm.controls.birth_date.valid,
+            'has-error': patientForm.controls.birth_date.invalid && (patientForm.controls.birth_date.touched || patientForm.controls.birth_date.dirty)}">
+                                <label>
+                                    {{'SHARED.BIRTH-DATE'|translate}}:
+                                </label>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <input matInput class="form-control" [matDatepicker]="pickerBirthDate"
+                                               formControlName="birth_date"
+                                               name="birth_date" data-date-format="yyyy-MM-dd"
+                                               [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!--                                        <mat-datepicker-toggle matSuffix  [for]="pickerBirthDate"></mat-datepicker-toggle>-->
+                                        <!--                                        <mat-datepicker #pickerBirthDate></mat-datepicker>-->
+                                        <mat-datepicker-toggle matSuffix
+                                                               [for]="pickerBirthDate"></mat-datepicker-toggle>
+                                        <mat-datepicker #pickerBirthDate startView="year"
+                                                        [startAt]="min_birth_date"></mat-datepicker>
+                                    </div>
+                                </div>
+                                <span *ngIf="patientForm.controls.birth_date.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.birth_date.invalid && (patientForm.controls.birth_date.touched || patientForm.controls.birth_date.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">{{'SHARED.INVALID-BIRTH-DATE'|translate}}.</span>
+                </span>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+
+
+                            <div class="form-group has-feedback col-md"
+                                 [ngClass]="{'has-success': patientForm.controls.pilotstudy_id.valid,
+                  'has-error': patientForm.controls.pilotstudy_id.invalid && (patientForm.controls.pilotstudy_id.touched || patientForm.controls.pilotstudy_id.dirty)}">
+                                <label for="pilotstudy_id">
+                                    {{'PATIENTS.PATIENTS-FORM.ASSOCIATE-STUDY'|translate}}:
+                                </label>
+                                <select class="form-control" formControlName="pilotstudy_id" name="pilotstudy_id"
+                                        id="pilotstudy_id">
+                                    <option value="undefined">{{'PATIENTS.PATIENTS-FORM.SELECT-STUDY'|translate}}</option>
+                                    <option *ngFor="let pilot of listPilots;trackBy: trackById" [value]="pilot.id">{{pilot.name}}</option>
+                                </select>
+                                <span *ngIf="patientForm.controls.pilotstudy_id.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.pilotstudy_id.invalid && (patientForm.controls.pilotstudy_id.touched || patientForm.controls.pilotstudy_id.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">{{'PATIENTS.PATIENTS-FORM.INVALID-STUDY'|translate}}.</span>
+                </span>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row" *ngIf="!patientId">
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                 [ngClass]="{'has-success': patientForm.controls.password.valid,
+                'has-error': patientForm.controls.password.invalid && (patientForm.controls.password.touched || patientForm.controls.password.dirty)}">
+                                <label for="password">
+                                    {{'SHARED.PASSWORD'|translate}}:
+                                </label>
+                                <div>
+                                    <input class="form-control" [type]="typeInputPassword" formControlName="password"
+                                           id="password"
+                                           (keyup)="verifyMatchPassword()">
+                                    <a class="icon_password" href="javascript:void(0);"
+                                       (click)="clickVisibilityPassword()"><i
+                                            class="material-icons">{{icon_password}}</i></a>
+                                </div>
+                                <span *ngIf="patientForm.controls.password.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.password.invalid && (patientForm.controls.password.touched || patientForm.controls.password.dirty)">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">{{'SHARED.INVALID-PASSWORD'|translate}}.</span>
+                </span>
+                            </div>
+
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                 [ngClass]="{'has-success': patientForm.controls.password_confirm.valid,
+                'has-error': patientForm.controls.password_confirm.invalid && (patientForm.controls.password_confirm.touched || patientForm.controls.password_confirm.dirty)}">
+                                <label for="password_confirm">
+                                    {{'SHARED.PASSWORD-CONFIRM'|translate}}:
+                                </label>
+                                <div>
+                                    <input class="form-control" [type]="typeInputPassword_confirm"
+                                           formControlName="password_confirm"
+                                           id="password_confirm"
+                                           (keyup)="verifyMatchPassword()">
+                                    <a class="icon_password" href="javascript:void(0);"
+                                       (click)="clickVisibilityPasswordConfirm()"><i
+                                            class="material-icons">{{icon_password_confirm}}</i></a>
+                                </div>
+
+                                <span *ngIf="patientForm.controls.password_confirm.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.password_confirm.invalid && (patientForm.controls.password_confirm.touched || patientForm.controls.password_confirm.dirty) && matchPasswordStatus">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                  <span class="text-danger">{{'SHARED.PASSWORD-NOTMATCH'|translate}}!</span>
+                </span>
+                            </div>
+
+
+                        </div>
+
+                        <div class="d-flex justify-content-around">
+                            <div class="p-2">
+                                <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
+                                    <i class="material-icons">arrow_back</i>
+                                    {{'SHARED.TOBACK'|translate}}
+                                </button>
+                            </div>
+                            <div class="p-2">
+                                <button type="button" class="btn btn-haniot-primary" (click)="onSubimt()"
+                                        [disabled]="!patientForm.valid || !matchPasswordStatus">
+                                        {{'SHARED.SAVE'|translate}}
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </haniot-card>
+            </div>
+        </div>
+    </div>
+</div>

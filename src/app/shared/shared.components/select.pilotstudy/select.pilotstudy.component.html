@@ -1,0 +1,113 @@
+<div class="modal fade" id="selectPilotStudy" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <!--        <haniot-card title=""-->
+        <!--                     subtitle="" id="modalSelectPilotStudy">-->
+        <div id="modalSelectPilotStudy">
+            <mat-horizontal-stepper linear #stepper>
+                <mat-step>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center row justify-content-center">
+                            <h3 id="main-title"
+                                class="col-sm-12 text-center">{{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.WELCOME'|translate}}
+                                , {{userName}}</h3>
+                            <h4 class="second-title col-sm-12 text-center">{{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.HERE-YOU-CAN'|translate}}
+                                :<br></h4>
+                            <div class="col-sm-6 text-center">
+                                <ul class="features-describe text-left">
+                                    <li>{{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.MANAGE-YOUR-STUDIES'|translate}}</li>
+                                    <li>{{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.MANAGE-YOUR-PATIENTES'|translate}}</li>
+                                    <li>{{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.MANAGE-YOUR-EVALUATIONS'|translate}}</li>
+                                    <li>{{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.VIEW-HABITS'|translate}}</li>
+                                    <li>{{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.MANY-MORE'|translate}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center row justify-content-center">
+                            <h4 class="text-center">{{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.SELECT-FOR-CONTINUE'|translate}}
+                                .</h4>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center row justify-content-center">
+                            <button class="btn btn-haniot-primary" matStepperNext>
+                                {{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.PROCEED'|translate}}
+                            </button>
+                        </div>
+                    </div>
+
+                </mat-step>
+
+                <mat-step>
+                    <small>{{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.SEARCH-STUDIES'|translate}}.</small>
+                    <haniot-card [title]="'MYPILOTS.TITLE'|translate"
+                                 [subtitle]="'SHARED.COMPONENTS.SELECT-PILOT-STUDY.CLICK-FOR-SELECT'|translate">
+
+                        <div class="table-responsive">
+                            <div class="input-group no-border">
+                                <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
+                                       [placeholder]="'PILOT-STUDY.PLACEHOLDER-SEARCH'|translate"
+                                       (keyup)="searchOnSubmit()">
+                                <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
+                                        (click)="searchOnSubmit()">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                            </div>
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'PILOT-STUDY.NAME-OF-STUDY'|translate}}</th>
+                                    <th>{{'PILOT-STUDY.START'|translate}}</th>
+                                    <th>{{'PILOT-STUDY.END'|translate}}</th>
+                                    <th>{{'PILOT-STUDY.SITUATION'|translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngIf="list.length==0">
+                                    <td colspan="5" *ngIf="!listOfStudiesIsEmpty">
+                                        <spinner
+                                                [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
+                                    </td>
+                                    <td colspan="5" *ngIf="listOfStudiesIsEmpty"><p class="second-title text-center">
+                                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY'|translate}}.</p>
+                                        <p>
+                                            {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY-MESSAGE'|translate}}.
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let study of list; index as i; trackBy: trackById"
+                                    [title]="'PATIENTS.LIST-PILOTSTUDIES.TOVIEW-PATIENTS'|translate"
+                                    (click)="selectPilotStudy(study.id)">
+                                    <td>{{getIndex(i)}}</td>
+                                    <td>{{study.name}}</td>
+                                    <td>{{study.start | date : "fullDate"}}</td>
+                                    <td>{{study.end | date : "fullDate"}}</td>
+                                    <td>
+                      <span>
+                        {{study.is_active | pilotStudySituation | translate}}
+                      </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <mat-paginator [length]="length" [pageSize]="limit"
+                                       (page)="clickPagination($event)">
+                        </mat-paginator>
+
+                    </haniot-card>
+                    <div colspan="5" *ngIf="listOfStudiesIsEmpty">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center row justify-content-center">
+                            <button class="btn btn-haniot-primary" (click)="closeModal()">
+                                {{'SHARED.COMPONENTS.SELECT-PILOT-STUDY.UNDERSTOOD'|translate}}
+                            </button>
+                        </div>
+                    </div>
+                </mat-step>
+            </mat-horizontal-stepper>
+            <!--        </haniot-card>-->
+        </div>
+    </div>
+</div>

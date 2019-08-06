@@ -1,0 +1,78 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <haniot-card [title]="'MYEVALUATIONS.TITLE'|translate" [subtitle]="'MYEVALUATIONS.SUBTITLE'|translate">
+                    <div class="input-group no-border">
+                        <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
+                               [placeholder]="'EVALUATION.PLACEHOLDER-SEARCH'|translate" (keyup)="searchOnSubmit()">
+                        <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
+                                (click)="searchOnSubmit()">
+                            <i class="material-icons">search</i>
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{'SHARED.PATIENT'|translate}}</th>
+                                <th>{{'SHARED.DATE'|translate}}</th>
+                                <th>{{'EVALUATION.STATE'|translate}}</th>
+                                <th colspan="2">{{'SHARED.ACTIONS'|translate}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngIf="listOfEvaluations.length==0">
+                                <td colspan="5" *ngIf="!listOfEvaluationsIsEmpty">
+                                    <spinner [message]="'EVALUATION.SPINNER-MESSAGE'|translate"></spinner>
+                                </td>
+                                <td colspan="5" *ngIf="listOfEvaluationsIsEmpty">
+                                    <h4>{{'EVALUATION.LIST-EMPTY'|translate}}.<br>
+                                        <small>{{'EVALUATION.LIST-EMPTY-MESSAGE'|translate}}!</small>
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let evaluation of listOfEvaluations; index as i;trackBy: trackById">
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{getIndex(i)}}</td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.patient.name}}</td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.created_at | date}}</td>
+                                <td [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">
+                                    <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus | translate}}</span>
+                                </td>
+                                <td>
+                                    <a class="nav-link"
+                                       [routerLink]="['/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
+                                       [title]="'EVALUATION.ACCESS-EVALUATION'|translate">
+                                        <i class="material-icons">input</i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="nav-link"
+                                       (click)="openModalConfirmation(evaluation.patient.id,evaluation.id)"
+                                       [title]="'EVALUATION.DELETE-EVALUATION'|translate">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+                                       (page)="clickPagination($event)">
+                        </mat-paginator>
+
+                    </div>
+
+                </haniot-card>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<modal-confirmation [message]="'EVALUATION.DELETE-CONFIRMATION'|translate" (confirmation)="removeEvaluation()"
+                    (noconfirmation)="closeModalComfimation()"></modal-confirmation>

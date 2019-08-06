@@ -1,0 +1,47 @@
+<div class="input-group no-border">
+  <input type="text" class="form-control" id="searchUser" name="searchUser" [(ngModel)]="search"
+    [placeholder]="'TABLE-USER.PLACEHOLDER-SEARCH'|translate" (keyup)="searchOnSubmit()">
+  <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
+    <i class="material-icons">search</i>
+    <div class="ripple-container"></div>
+  </button>
+</div>
+<div class="table-responsive">
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th *ngIf="userType == 'HealthProfessional'">{{'SHARED.NAME'| translate}}</th>
+        <th>{{'SHARED.EMAIL'| translate}}</th>
+        <th *ngIf="userType == 'HealthProfessional'">{{'SHARED.AREA'| translate}}</th>
+        <th colspan="2" id="thAction">{{'SHARED.ACTIONS'| translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="list.length==0">
+        <td colspan="5" *ngIf="!listOfUserIsEmpty">
+          <spinner [message]="'TABLE-USER.SPINNER-MESSAGE'|translate"></spinner>
+        </td>
+        <td colspan="5" *ngIf="listOfUserIsEmpty">{{'TABLE-USER.LIST-EMPTY'|translate}}.</td>
+      </tr>
+      <tr *ngFor="let user of list; index as i;trackBy: trackById">
+        <td (click)="editUser(user.id)">{{getIndex(i)}}</td>
+        <td (click)="editUser(user.id)" *ngIf="userType == 'HealthProfessional'">{{user.name}}</td>
+        <td (click)="editUser(user.id)">{{user.email}}</td>
+        <td (click)="editUser(user.id)"*ngIf="userType == 'HealthProfessional'">{{user.health_area | healthArea | translate}}</td>
+        <td><a class="nav-link" (click)="editUser(user.id)" [title]="'TABLE-USER.EDIT'|translate"><i
+              class="material-icons">edit</i></a></td>
+        <td *ngIf="!verifySameUser(user)"><a class="nav-link" (click)="openModalConfirmRemove(user.id)"
+          [title]="'TABLE-USER.DELETE'|translate"><i class="material-icons">delete</i></a></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+  (page)="clickPagination($event)">
+</mat-paginator>
+
+<modal-confirmation [message]="'TABLE-USER.DELETE-CONFIRMATION'|translate" (confirmation)="removeUser()"
+  (noconfirmation)="closeModalConfirmRemove()"></modal-confirmation>

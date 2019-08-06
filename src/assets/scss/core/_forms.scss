@@ -61,7 +61,7 @@ form {
 
 // Help blocks (not in v4)
 //  position: absolute approach - uses no vertical space and there is no form jumping, but text wrapping - not so good.
-//  FIXME: width/wrapping isn't automatic and overflows occur.  What are some solutions?
+//  width/wrapping isn't automatic and overflows occur.  What are some solutions?
 //
 .bmd-help {
   position: absolute;
@@ -168,8 +168,8 @@ form {
 
   // Optional class to make the text field inline collapsible/expandable (collapsed by default)
   //    This uses the BS collapse js to make the width expand.
-  //    `width` class must also be on the element FIXME: do this with JS, it is a marker class and should be implicit because after all, we are an bmd-collapse-inline
-  //    FIXME: js needs to do the focus on shown.bs.collapse event http://v4-alpha.getbootstrap.com/components/collapse/#events
+  //    `width` class must also be on the element do this with JS, it is a marker class and should be implicit because after all, we are an bmd-collapse-inline
+  //     js needs to do the focus on shown.bs.collapse event http://v4-alpha.getbootstrap.com/components/collapse/#events
   &.bmd-collapse-inline {
     display: flex;
     align-items: center;

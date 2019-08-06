@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {UserService} from 'app/modules/admin/services/users.service';
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {VerifyScopeService} from 'app/security/services/verify-scope.service';
-import {ModalService} from 'app/shared/shared-components/haniot-modal/service/modal.service';
-import {LoadingService} from 'app/shared/shared-components/loading-component/service/loading.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { UserService } from 'app/modules/admin/services/users.service';
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { VerifyScopeService } from 'app/security/services/verify.scope.service';
+import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
+import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
 
 declare const $: any;
 
 export const configSideBar = [
-    {title: 'Dashboard', scopes: []},
+    { title: 'Dashboard', scopes: [] },
     {
         title: 'Usuários',
         scopes: ['admins:create', 'admins:delete', 'admins:readAll', 'admins:update',
@@ -50,29 +52,22 @@ export const configSideBar = [
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-    /* Configurações de cada menu e submenu do sidebar*/
-    // private menuItems: any[];
-
     userId: string;
-
     configSideBar: { title: string, scopes: any[] }[];
-
-    userName: String = "";
-
+    userName: String = '';
     iconUserMenu = 'keyboard_arrow_right';
-
-    iconEvaluatioinMenu = 'keyboard_arrow_right';
 
     constructor(
         private authService: AuthService,
         private verifyScopesService: VerifyScopeService,
         private userService: UserService,
-        private loadingService: LoadingService
+        private loadingService: LoadingService,
+        private localStorageService: LocalStorageService,
+        private router: Router
     ) {
     }
 
     ngOnInit() {
-        // this.menuItems = ROUTES.filter(menuItem => menuItem);
         this.configSideBar = configSideBar;
         this.getUserName();
     }
@@ -98,20 +93,19 @@ export class SidebarComponent implements OnInit {
     }
 
     getUserName() {
-        this.userId = atob(localStorage.getItem('user'));
-        const username = atob(localStorage.getItem('username'));
-        if (localStorage.getItem('username')) {
+        this.userId = this.localStorageService.getItem('user');
+        const username = this.localStorageService.getItem('username');
+        if (username) {
             this.userName = username;
         } else {
             this.userService.getUserById(this.userId)
                 .then(user => {
                     if (user && user.name) {
                         this.userName = user.name;
+                        this.localStorageService.setItem('username', this.userName.toString());
                     }
                 })
-                .catch(error => {
-                    // console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
-                });
+                .catch();
         }
     }
 
@@ -123,15 +117,23 @@ export class SidebarComponent implements OnInit {
         this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
     }
 
-    onClickMenuEvaluation(): void {
-        this.iconEvaluatioinMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
-    }
-
     showMyStudies(): boolean {
-        return this.authService.decodeToken().sub_type == 'health_professional';
+        return this.authService.decodeToken().sub_type === 'health_professional';
     }
 
     openLoading() {
         this.loadingService.open();
+    }
+
+    isNotAdmin(): boolean {
+        return this.authService.decodeToken().sub_type !== 'admin';
+    }
+
+    config(): void {
+        if (this.isNotAdmin()) {
+            this.router.navigate(['/healthprofessional/configurations']);
+        } else {
+            this.router.navigate(['/admin/configurations']);
+        }
     }
 }

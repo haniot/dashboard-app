@@ -1,16 +1,17 @@
-import {Component, OnInit, ElementRef, OnDestroy} from '@angular/core';
-import {Location} from '@angular/common';
-import {Router} from '@angular/router';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
-import {ISubscription} from "rxjs-compat/Subscription";
+import { ISubscription } from 'rxjs-compat/Subscription';
+import { TranslateService } from '@ngx-translate/core';
 
-import {AuthService} from 'app/security/auth/services/auth.service';
-import {UserService} from 'app/modules/admin/services/users.service';
-import {PilotStudy} from "../../../modules/pilot-study/models/pilot.study";
-import {SelectPilotStudyService} from "../../../shared/shared-components/select-pilotstudy/service/select-pilot-study.service";
-import {PilotStudyService} from "../../../modules/pilot-study/services/pilot-study.service";
-import {LocalStorageService} from "../../../shared/shared-services/localstorage.service";
-import {LoadingService} from "../../../shared/shared-components/loading-component/service/loading.service";
+import { AuthService } from 'app/security/auth/services/auth.service';
+import { UserService } from 'app/modules/admin/services/users.service';
+import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study';
+import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
+import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service';
+import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 
 
 export declare interface RouteInfo {
@@ -19,18 +20,19 @@ export declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    {path: '^/dashboard$', title: 'Página Inicial'},
-    {path: '^/ui/administrators$', title: 'Usuários - Administradores'},
-    {path: '^/ui/healthprofessionals$', title: 'Usuários - Profissionais de Saúde'},
-    {path: '^/pilotstudies$', title: 'Estudos Pilotos'},
-    {path: '^/patients$', title: 'Pacientes'},
-    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}$', title: 'Pacientes'},
-    {path: '^(\\/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'Pacientes - Detalhes'},
-    {path: '^/ui/mystudies$', title: 'Meus estudos'},
-    {path: '^(\\/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'Estudo - Detalhes'},
-    {path: '^/ui/myprofile$', title: 'Meus dados'},
-    {path: '^/ui/myevaluations$', title: 'Minhas Avaliações'},
-    {path: '^(\\/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'Avaliações - Nutricional'}
+    { path: '^/dashboard$', title: 'SHARED.HOME-PAGE' },
+    { path: '^/admin/new/administrators$', title: 'NAVBAR.ADMINS-USERS' },
+    { path: '^/admin/new/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS' },
+    { path: '^/pilotstudies$', title: 'SHARED.PILOTSTUDIES' },
+    { path: '^/patients$', title: 'SHARED.PATIENTS' },
+    { path: '^(\\/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS' },
+    { path: '^(\\/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-PATIENT' },
+    { path: '^/healthprofessional/mystudies$', title: 'SHARED.MY-STUDIES' },
+    { path: '^(\\/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-STUDY' },
+    { path: '^/admin/configurations$', title: 'SHARED.CONFIG' },
+    { path: '^/healthprofessional/configurations$', title: 'SHARED.CONFIG' },
+    { path: '^/healthprofessional/myevaluations$', title: 'SHARED.MY-EVALUATIONS' },
+    { path: '^(\\/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'NAVBAR.NUTRITION-EVALUATIONS' }
 ];
 
 @Component({
@@ -44,20 +46,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     mobile_menu_visible: any = 0;
     toggleButton: any;
     sidebarVisible: boolean;
-
-    userName = "";
+    userName = '';
     title: string;
-
     listPilots: Array<PilotStudy>;
     userId: string;
-
     pilotStudyId: string;
-
-    /* Utilizado para deixar visivel e esconder o seletor de estudo piloto*/
+    pilotStudyName: string;
     flag = true;
-
     private subscriptions: Array<ISubscription>;
-
 
     constructor(
         location: Location,
@@ -68,20 +64,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private pilotStudyService: PilotStudyService,
         private selectPilotService: SelectPilotStudyService,
         private localStorageService: LocalStorageService,
-        private loadingService: LoadingService) {
+        private loadingService: LoadingService,
+        private translateService: TranslateService) {
         this.location = location;
         this.sidebarVisible = false;
         this.subscriptions = new Array<ISubscription>();
+        this.listPilots = new Array<PilotStudy>();
     }
 
     ngOnInit() {
-        /* subscriptions */
         this.subscriptions.push(this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
+            this.getNamePilotStudy();
         }));
         this.subscriptions.push(this.router.events.subscribe((event) => {
             this.sidebarClose();
-            var $layer: any = document.getElementsByClassName('close-layer')[0];
+            const $layer: any = document.getElementsByClassName('close-layer')[0];
             if ($layer) {
                 $layer.remove();
                 this.mobile_menu_visible = 0;
@@ -89,7 +87,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getTitle();
         }));
 
-        this.pilotStudyId = localStorage.getItem('pilotstudy_id');
+        this.pilotStudyId = this.localStorageService.getItem('pilotstudy_id');
         this.getUserName();
         this.listTitles = ROUTES;
         const navbar: HTMLElement = this.element.nativeElement;
@@ -97,7 +95,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.loadPilotSelected();
         this.getTitle();
         this.getAllPilotStudies();
-
     }
 
     sidebarOpen() {
@@ -106,9 +103,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         setTimeout(function () {
             toggleButton.classList.add('toggled');
         }, 500);
-
         body.classList.add('nav-open');
-
         this.sidebarVisible = true;
     };
 
@@ -120,9 +115,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     };
 
     sidebarToggle() {
-        // const toggleButton = this.toggleButton;
-        // const body = document.getElementsByTagName('body')[0];
-        var $toggle = document.getElementsByClassName('navbar-toggler')[0];
+        const $toggle = document.getElementsByClassName('navbar-toggler')[0];
 
         if (this.sidebarVisible === false) {
             this.sidebarOpen();
@@ -130,9 +123,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.sidebarClose();
         }
         const body = document.getElementsByTagName('body')[0];
-
-        if (this.mobile_menu_visible == 1) {
-            // $('html').removeClass('nav-open');
+        let $layer = document.createElement('div');
+        if (this.mobile_menu_visible === 1) {
             body.classList.remove('nav-open');
             if ($layer) {
                 $layer.remove();
@@ -147,7 +139,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 $toggle.classList.add('toggled');
             }, 430);
 
-            var $layer = document.createElement('div');
+            $layer = document.createElement('div');
             $layer.setAttribute('class', 'close-layer');
 
 
@@ -178,12 +170,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     };
 
     getTitle() {
-
         const path_current = this.location.path();
-
-        // path_current = '/' + path_current.split('/')[1];
         this.listTitles.forEach(element => {
-
             if (RegExp(element.path).test(path_current)) {
                 this.title = element.title;
             }
@@ -193,12 +181,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
     verifyVisibilityOfSeletorOfPilotStudy(): void {
-
         switch (this.title) {
-            case 'Pacientes':
+            case 'SHARED.PATIENTS':
                 this.flag = true;
                 break;
-            case 'Página Inicial':
+            case 'SHARED.HOME-PAGE':
                 this.flag = true;
                 break;
             default:
@@ -208,27 +195,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     getUserName() {
-        const username = atob(localStorage.getItem('username'));
-        if (localStorage.getItem('username')) {
+        const username = this.localStorageService.getItem('username');
+        const language = this.localStorageService.getItem('language');
+
+        if (username && language) {
             this.userName = username;
+            this.configLanguage(language);
         } else {
-            this.userService.getUserById(atob(localStorage.getItem('user')))
+
+            this.userService.getUserById(this.localStorageService.getItem('user'))
                 .then(user => {
                     if (user) {
                         this.userName = user.name ? user.name : user.email;
                         const health_area = user.health_area ? user.health_area : 'admin';
-                        localStorage.setItem('username', btoa(this.userName))
+                        this.localStorageService.setItem('username', this.userName);
+                        this.localStorageService.setItem('email-template.html', user.email);
                         this.localStorageService.setItem('health_area', health_area);
+                        this.localStorageService.setItem('language', user.language);
+                        this.configLanguage(user.language);
                     }
                 })
-                .catch(error => {
-                    // console.log(`| navbar.component.ts | Problemas na identificação do usuário. `, error);
-                });
+                .catch();
         }
     }
 
     loadUser(): void {
-        this.userId = atob(localStorage.getItem('user'));
+        this.userId = this.localStorageService.getItem('user');
     }
 
     getAllPilotStudies() {
@@ -238,21 +230,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.pilotStudyService.getAllByUserId(this.userId)
             .then(studies => {
                 this.listPilots = studies;
+                this.getNamePilotStudy();
             })
-            .catch(error => {
-                // console.log('Erro ao buscar pilot-studies: ', error);
-            });
+            .catch();
     }
 
     isNotAdmin(): boolean {
         return this.authService.decodeToken().sub_type !== 'admin';
     }
 
-    selectPilotStudy(): void {
+    getNamePilotStudy(): void {
+        this.listPilots.forEach(pilot => {
+            if (pilot.id === this.pilotStudyId) {
+                this.pilotStudyName = pilot.name;
+            }
+        })
+    }
+
+    selectPilotStudy(pilot_id: string): void {
+        this.pilotStudyId = pilot_id;
         if (!this.userId) {
             this.loadUser()
         }
-        localStorage.setItem(this.userId, this.pilotStudyId);
+        this.localStorageService.setItem(this.userId, this.pilotStudyId);
         this.selectPilotService.pilotStudyHasUpdated();
     }
 
@@ -260,12 +260,34 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (!this.userId) {
             this.loadUser();
         }
-        const pilotselected = localStorage.getItem(this.userId);
+        const pilotselected = this.localStorageService.getItem(this.userId);
         if (pilotselected) {
             this.pilotStudyId = pilotselected;
         } else if (this.authService.decodeToken().sub_type !== 'admin') {
             this.selectPilotService.open();
         }
+    }
+
+    config(): void {
+        if (this.isNotAdmin()) {
+            this.router.navigate(['/healthprofessional/configurations']);
+        } else {
+            this.router.navigate(['/admin/configurations']);
+        }
+    }
+
+    configLanguage(language: string) {
+        language = 'pt-BR';
+        if (language) {
+            this.translateService.use(language);
+        } else {
+            const browserLang = this.translateService.getBrowserLang();
+            this.translateService.use(browserLang.match(/en-US|pt-BR/) ? browserLang : 'pt-BR');
+        }
+    }
+
+    trackById(index, item) {
+        return item.id;
     }
 
     logout() {
@@ -274,7 +296,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        /* cancel all subscribtions */
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

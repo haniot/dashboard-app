@@ -1,0 +1,91 @@
+<haniot-card [title]="'HABITS.MEDICAL-RECORD.TITLE'|translate" [subtitle]="'HABITS.MEDICAL-RECORD.SUBTITLE'|translate">
+
+    <form [formGroup]="medicalForm">
+
+        <label for="">
+            {{'HABITS.MEDICAL-RECORD.LIST-CHRONIC-DISEASES'|translate}}:
+        </label>
+
+        <div class="container">
+
+            <!-- <div class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
+                <span class="disease-type">
+                  {{disease.type | chronicDisease}}
+                </span>
+                <span class="disease-history">{{disease.disease_history | diseaseHistory}}</span>
+
+              </div> -->
+
+            <div class="col-md-6" class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
+                <div class="card card-stats diseaseHistory">
+                    <div class="row container">
+                        <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">
+                            <div class="card-icon-disease">
+
+                                <img [src]="getTrustedUrl('../../../../assets/img/haniot/'+disease.type+'.png')" alt="">
+
+                            </div>
+                        </div>
+                        <div class="col-md row">
+                            <div class="col-sm">
+                                <label for="">
+                                    {{'HABITS.MEDICAL-RECORD.DISEASE'|translate}}:
+                                </label>
+                                <h4 class="card-category">{{disease.type | chronicDisease | translate}}</h4>
+                            </div>
+                            <div class="col-sm">
+                                <label for="">
+                                    {{'HABITS.MEDICAL-RECORD.HISTORIC'|translate}}:
+                                </label>
+                                <h4 class="card-category">{{disease.disease_history | diseaseHistory | translate}}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="diseaseHistory">
+                      <span>{{disease.disease_history | diseaseHistory}}</span>
+                    </div> -->
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="d-flex flex-row-reverse">
+            <div class="p-2">
+                <small class="pull-right" *ngIf="medicalForm.get('created_at').value">{{'HABITS.REGISTER-DATE'|translate}}:
+                    {{medicalForm.get('created_at').value | myDate}}</small>
+                <small class="pull-right" *ngIf="!medicalForm.get('created_at').value">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                    : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+            </div>
+        </div>
+
+    </form>
+
+    <!-- Botões Anterior e Próximo -->
+    <div class="container" *ngIf="listMedical.length>1">
+        <div class="row">
+            <div class="col align-self-start">
+                <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
+                        [title]="'HABITS.PREVIOUS'|translate"
+                        (click)="prev()" [disabled]="!index">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+            </div>
+
+            <div class="col align-self-end">
+                <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
+                        (click)="next()" [title]="'HABITS.NEXT'|translate" [disabled]="index == listMedical.length-1">
+                    <i class="material-icons">arrow_forward</i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="listMedical.length==0">
+        <span class="badge badge-danger badge-12 ellipsis">{{'HABITS.MEDICAL-RECORD.UNAVAILABLE-DATA'|translate}}</span>
+    </div>
+</haniot-card>

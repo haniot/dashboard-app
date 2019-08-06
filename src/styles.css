@@ -1,5 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /*Styles buttons HANIOT*/
 
 .mat-button.btn, .mat-button.btn.btn-haniot-primary, .mat-raised-button.btn, .mat-raised-button.btn.btn-haniot-primary, .mat-raised-button.btn:not([class*=mat-elevation-z]), .mat-raised-button.btn:not([class*=mat-elevation-z]).btn-haniot-primary, .btn, .btn.btn-haniot-primary {
@@ -70,28 +68,6 @@
     box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
 }
 
-/*
-.btn.btn-haniot-secondary:focus, .btn.btn-haniot-secondary.focus {
-    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
-}
-
-.btn.btn-haniot-secondary.disabled, .btn.btn-haniot-secondary:disabled {
-    color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-.btn.btn-haniot-secondary:not(:disabled):not(.disabled):active, .btn.btn-haniot-secondary:not(:disabled):not(.disabled).active, .show>.btn.btn-haniot-secondary.dropdown-toggle {
-    color: #fff;
-    background-color: #545b62;
-    border-color: #4e555b;
-}
-
-.btn.btn-haniot-secondary:not(:disabled):not(.disabled):active:focus, .btn.btn-haniot-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn.btn-haniot-secondary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
-}
-*/
-
 .ngx-pagination .current {
     background: #00a594 !important;
 }
@@ -123,44 +99,6 @@ table tr td {
 
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
     background: #00a594;
-}
-
-/* .p-2 small {
-    color: black;
-} */
-
-/* style for input type select*/
-/* -------------------- Select Box Styles: stackoverflow.com Method */
-/* -------------------- Source: http://stackoverflow.com/a/5809186 */
-select.soflow, select.soflow-color {
-    -webkit-appearance: button;
-    -webkit-border-radius: 2px;
-    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-    -webkit-padding-end: 20px;
-    -webkit-padding-start: 2px;
-    -webkit-user-select: none;
-    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
-    background-position: 97% center;
-    background-repeat: no-repeat;
-    border: 1px solid #AAA;
-    color: #555;
-    font-size: inherit;
-    margin: 20px;
-    overflow: hidden;
-    padding: 5px 10px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 250px;
-}
-
-select.soflow-color {
-    color: #fff;
-    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126);
-    background-color: #779126;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    padding-left: 15px;
 }
 
 /* CSS range datepicker*/
@@ -208,7 +146,7 @@ select.soflow-color {
     background-color: white;
 }
 
-.mat-datepicker-toggle-active{
+.mat-datepicker-toggle-active {
     color: #00a594;
 }
 
@@ -217,3 +155,33 @@ label {
     font-size: 14px;
     font-weight: bold;
 }
+
+.echarts-div-graph {
+    width: 100%;
+    height: 300px;
+}
+
+.unavailable-data {
+    position: absolute;
+    margin-top: 100px;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+@media (max-width: 900px) {
+    .main-panel .main-content {
+        padding: 0px 0px;
+        overflow-x: hidden;
+    }
+
+    .container-fluid {
+        padding: 0px 0px;
+        overflow-x: hidden;
+    }
+}
+

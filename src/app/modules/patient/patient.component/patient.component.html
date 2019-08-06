@@ -1,0 +1,21 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <haniot-card [title]="'PATIENTS.PATIENTS-COMPONENT.TITLE'|translate" [subtitle]="'PATIENTS.PATIENTS-COMPONENT.SUBTITLE'|translate">
+                    <patient-table [(pilotStudyId)]="pilotStudyId"></patient-table>
+                </haniot-card>
+            </div>
+        </div>
+        <div class="d-flex justify-content-start">
+            <div class="p-2">
+                <button type="submit" class="btn btn-haniot-primary" (click)="newPatient()">
+                    {{'SHARED.ADD'|translate}}
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+</div>

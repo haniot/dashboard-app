@@ -1,5 +1,20 @@
+#dropdownPilotSelected {
+    margin-left: 10px;
+}
+
+#dropdownSelectPilot {
+    max-width: 300px;
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.dropdown-menu a:hover {
+    color: white;
+}
+
 .background-green:hover {
     background-color: #00a594;
+    cursor: pointer;
 }
 
 #navbarDropdownMenuLink i {
@@ -20,6 +35,10 @@
     padding: 5px 5px;
 }
 
+.nav-link {
+    cursor: pointer;
+}
+
 #navbarDropdownMenuLink i:hover {
     cursor: pointer;
     color: #00a594;
@@ -31,51 +50,10 @@ label {
     font-weight: bold;
 }
 
-#div-selectPilotStudy {
-    z-index: 999;
+#dropdownPilotSelected {
+    z-index: 1040;
     cursor: pointer;
-    position: absolute;
-    right: 20%;
+    max-width: 300px;
 }
 
-@media (max-width: 1900px) and (min-width: 1460px) {
-    #div-selectPilotStudy {
-        position: absolute;
-        right: 28%;
-    }
-}
-
-@media (max-width: 1460px) and (min-width: 1230px) {
-    #div-selectPilotStudy {
-        position: absolute;
-        right: 35%;
-    }
-}
-
-@media (max-width: 1230px) and (min-width: 1060px) {
-    #div-selectPilotStudy {
-        position: absolute;
-        right: 40%;
-    }
-}
-
-@media (max-width: 1060px) and (min-width: 1000px) {
-    #div-selectPilotStudy {
-        position: absolute;
-        right: 45%;
-    }
-}
-
-@media (max-width: 1000px) and (min-width: 992px) {
-    #div-selectPilotStudy {
-        position: absolute;
-        right: 43%;
-    }
-}
-@media (max-width: 992px) {
-    #div-selectPilotStudy {
-        position: absolute;
-        right: 20%;
-    }
-}
 

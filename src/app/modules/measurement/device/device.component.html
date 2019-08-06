@@ -2,7 +2,7 @@
 
     <div class="row">
 
-        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center" *ngFor="let device of listDevices">
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center" *ngFor="let device of listDevices;trackBy: trackById">
             <div class="card card-stats">
                 <div class="card-header card-header-timer card-header-icon">
                     <div class="card-icon">

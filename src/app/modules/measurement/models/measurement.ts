@@ -1,32 +1,36 @@
 export enum MeasurementType {
-    weight = "weight",
-    blood_glucose = "blood_glucose",
-    fat = "fat",
-    heart_rate = "heart_rate",
-    blood_pressure = "blood_pressure",
-    height = "height",
-    waist_circumference = "waist_circumference",
-    body_temperature = "body_temperature"
+    weight = 'weight',
+    blood_glucose = 'blood_glucose',
+    fat = 'fat',
+    heart_rate = 'heart_rate',
+    blood_pressure = 'blood_pressure',
+    height = 'height',
+    waist_circumference = 'waist_circumference',
+    body_temperature = 'body_temperature'
 }
 
-export interface IMeasurement {
+export class GenericMeasurement {
     id: string;
-    value: number;
     unit: string;
     type: MeasurementType;
-    timestamp: string;
-    user_id: string;
-    device_id?: string;
-}
-
-export class Measurement implements IMeasurement {
-    id: string;
-    value: number;
-    unit: string;
-    type: MeasurementType;
-    timestamp: string;
     user_id: string;
     device_id?: string;
 
-    constructor() { }
+    constructor() {
+        this.id = ''
+        this.unit = '';
+        this.user_id = '';
+        this.device_id = '';
+    }
+}
+
+export class Measurement extends GenericMeasurement {
+    value: number;
+    timestamp: string;
+
+    constructor() {
+        super()
+        this.value = 0;
+        this.timestamp = '';
+    }
 }

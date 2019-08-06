@@ -1,0 +1,93 @@
+<haniot-card [title]="'HABITS.ORAL-HEALTH.TITLE'|translate" [subtitle]="'HABITS.ORAL-HEALTH.SUBTITLE'|translate">
+    <form [formGroup]="oralHealthForm">
+
+        <div class="row justify-content-md-start">
+
+            <div class="col-sm-12 col-md-8 col-lg-4 col-xl-4">
+                <div class="card card-stats">
+                    <div class="card-header card-header-timer card-header-icon">
+                        <div class="card-icon">
+                            <img src="../../../../assets/img/haniot/oral-health.png" alt="">
+                        </div>
+                        <p class="label">{{'HABITS.ORAL-HEALTH.FREQUENCY-ORAL-HEALTH'|translate}}:</p>
+                        <h3 class="card-title">{{oralHealthForm.get('teeth_brushing_freq').value | teethBushing | translate}}</h3>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Lista de lesões -->
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-timer card-header-icon text-center">
+                        <h3 class="card-title">{{'HABITS.ORAL-HEALTH.LIST-OF-LESIONS'|translate}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row  justify-content-md-center">
+                            <div *ngIf="oralHealthForm.get('teeth_lesions').value.length==0">
+                                <span class="badge badge-danger badge-12">{{'HABITS.ORAL-HEALTH.NONE-LESION'|translate}}</span>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" class="diseases" *ngFor="let disease of oralHealthForm.get('teeth_lesions').value">
+                                <div class="card card-stats diseaseHistory">
+                                    <div class="row container">
+                                        <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">
+                                            <div class="card-icon-disease">
+                                                <img src="../../../../assets/img/haniot/oral-lesion.png" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md row">
+                                            <div class="col-sm">
+                                                <label for="">
+                                                    {{'HABITS.ORAL-HEALTH.TYPE-TEETH'|translate}}:
+                                                </label>
+                                                <h4 class="card-category">{{disease.tooth_type | toothType | translate}}</h4>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label for="">
+                                                    {{'HABITS.ORAL-HEALTH.TYPE-LESION'|translate}}:
+                                                </label>
+                                                <h4 class="card-category">{{disease.lesion_type | lesionType | translate}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <div class="d-flex flex-row-reverse">
+        <div class="p-2">
+            <small class="pull-right" *ngIf="oralHealthForm.get('created_at').value">{{'HABITS.REGISTER-DATE'|translate}}: {{oralHealthForm.get('created_at').value | myDate }}</small>
+            <small class="pull-right" *ngIf="!oralHealthForm.get('created_at').value">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Botões Anterior e Próximo -->
+        <div class="container" *ngIf="listOralHealthRecords.length>1">
+            <div class="row">
+                <div class="col align-self-start">
+                    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" [title]="'HABITS.PREVIOUS'|translate" (click)="prev()" [disabled]="!index">
+                        <i class="material-icons">arrow_back</i>
+                    </button>
+                </div>
+
+                <div class="col align-self-end">
+                    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right" (click)="next()" [title]="'HABITS.NEXT'|translate"
+                        [disabled]="index == listOralHealthRecords.length-1">
+                        <i class="material-icons">arrow_forward</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="listOralHealthRecords.length==0">
+        <span class="badge badge-danger badge-12 ellipsis">{{'HABITS.ORAL-HEALTH.UNAVAILABLE-DATA'|translate}}</span>
+    </div>
+</haniot-card>

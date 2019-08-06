@@ -1,0 +1,31 @@
+<div class="container-fluid"> 
+
+  <haniot-modal [modalId]="'healthProfessionals'">
+    <div class="modal-content">
+      <div class="modal-body">
+        <table class="table table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">{{'PILOT-STUDY.PROFESSIONAL'|translate}}</th>
+              <th scope="col">{{'SHARED.AREA'|translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let prof of healthProfessionals;trackBy: trackById">
+              <td>{{prof.name}}</td>
+              <td>{{prof.health_area | healthArea | translate}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-haniot-secondary" data-dismiss="modal">{{'SHARED.CLOSE'|translate}}</button>
+      </div>
+    </div>
+
+  </haniot-modal>
+
+
+
+
+</div>

@@ -1,0 +1,66 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <haniot-card [title]="'EVALUATION.NUTRITION-EVALUATION.CARD-PATIENT.TITLE'|translate"
+                             [subtitle]="'EVALUATION.NUTRITION-EVALUATION.CARD-PATIENT.SUBTITLE'|translate"
+                             *ngIf="patient">
+
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label>
+                                {{'SHARED.NAME'|translate}}:
+                            </label>
+                            <p>{{patient.name}}</p>
+                        </div>
+
+                        <div class="form-group has-feedback col-md">
+                            <label>
+                                {{'SHARED.GENDER'|translate}}:
+                            </label>
+                            <p>{{patient.gender | gender | translate}}</p>
+                        </div>
+
+
+                        <div class="form-group col-md">
+                            <label>
+                                {{'SHARED.BIRTH-DATE'|translate}}:
+                            </label>
+                            <p>{{patient.birth_date | date}}</p>
+                        </div>
+
+                        <div class="form-group col-md" *ngIf="patient.phone_number && (patient.phone_number !== '')">
+                            <label>
+                                {{'SHARED.PHONE'|translate}}:
+                            </label>
+                            <p>{{patient.phone_number}}</p>
+                        </div>
+
+                        <div class="form-group col-md" *ngIf="patient.email && (patient.email !== '')">
+                            <label>
+                                {{'SHARED.EMAIL'|translate}}:
+                            </label>
+                            <p>{{patient.email}}</p>
+                        </div>
+
+
+                    </div>
+
+                </haniot-card>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <haniot-card [title]="'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate">
+                    <nutrition-evaluation-table [(patientId)]="patientId"></nutrition-evaluation-table>
+                </haniot-card>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around">
+            <div class="p-2">
+                <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
+                    <i class="material-icons">arrow_back</i>
+                    {{'SHARED.TOBACK'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

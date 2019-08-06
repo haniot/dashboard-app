@@ -1,0 +1,73 @@
+<haniot-card [title]="'HABITS.SLEEP.TITLE'|translate" [subtitle]="'HABITS.SLEEP.SUBTITLE'|translate">
+
+    <div class="container">
+
+        <form [formGroup]="sleepForm">
+
+            <div class="row">
+
+                <div class="col-md col-sm">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons" id="alarm_on">alarm_on</i>
+                            </div>
+                            <p class="label">{{'HABITS.SLEEP.WAKE-UP-TIME'|translate}}:</p>
+                            <h3 class="card-title">{{sleepForm.get('week_day_wake_up').value}} {{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md col-sm">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons" id="alarm">alarm</i>
+                            </div>
+                            <p class="label">{{'HABITS.SLEEP.TIME-TO-SLEEP'|translate}}:</p>
+                            <h3 class="card-title">{{sleepForm.get('week_day_sleep').value}} {{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2">
+                    <small class="pull-right" *ngIf="sleepForm.get('created_at').value">{{'HABITS.REGISTER-DATE'|translate}}:
+                        {{sleepForm.get('created_at').value | myDate}}</small>
+                    <small class="pull-right" *ngIf="!sleepForm.get('created_at').value">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                        : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- Botões Anterior e Próximo -->
+    <div class="container" *ngIf="listSleep.length>1">
+        <div class="row">
+            <div class="col align-self-start">
+                <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" [title]="'HABITS.PREVIOUS'|translate"
+                        (click)="prev()" [disabled]="!index">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+            </div>
+
+            <div class="col align-self-end">
+                <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
+                        (click)="next()" [title]="'HABITS.NEXT'|translate" [disabled]="index == listSleep.length-1">
+                    <i class="material-icons">arrow_forward</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="listSleep.length==0">
+        <span class="badge badge-danger badge-12 ellipsis">{{'HABITS.SLEEP.UNAVAILABLE-DATA'|translate}}</span>
+    </div>
+</haniot-card>

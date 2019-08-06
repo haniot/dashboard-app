@@ -1,0 +1,137 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{'MEASUREMENTS.COMPONENT.CONFIG-GRAPH'|translate}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{'MEASUREMENTS.COMPONENT.EXPAND-COLLAPSE'|translate}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div class="row justify-content-center" id="config-graph">
+
+                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+                        <div class="p-2">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="configVisibility.weight">
+                            </mat-slide-toggle>
+                        </div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.WEIGHT'|translate}}: </label></div>
+                    </div>
+
+                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"
+                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                        <div class="p-2">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'"
+                                              [(ngModel)]="configVisibility.fat"></mat-slide-toggle>
+                        </div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.FAT'|translate}}: </label></div>
+                    </div>
+
+                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+                        <div class="p-2">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="configVisibility.height">
+                            </mat-slide-toggle>
+                        </div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.HEIGHT'|translate}}: </label></div>
+                    </div>
+
+                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+                        <div class="p-2">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'"
+                                              [(ngModel)]="configVisibility.circumference"></mat-slide-toggle>
+                        </div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.WAIST-CIRCUMFERENCE'|translate}}: </label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"
+                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                        <div class="p-2">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'"
+                                              [(ngModel)]="configVisibility.temperature"></mat-slide-toggle>
+                        </div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.TEMPERATURE'|translate}}: </label></div>
+                    </div>
+
+                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config">
+                        <div class="p-2">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'"
+                                              [(ngModel)]="configVisibility.glucose">
+                            </mat-slide-toggle>
+                        </div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.GLUCOSE'|translate}}: </label></div>
+                    </div>
+
+                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"
+                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                        <div class="p-2">
+                            <mat-slide-toggle class="paddin55" [color]="'accent'"
+                                              [(ngModel)]="configVisibility.pressure">
+                            </mat-slide-toggle>
+                        </div>
+                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.PRESSURE'|translate}}: </label></div>
+                    </div>
+
+
+<!--                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"-->
+<!--                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">-->
+<!--                        <div class="p-2">-->
+<!--                            <mat-slide-toggle class="paddin55" [color]="'accent'"-->
+<!--                                              [(ngModel)]="configVisibility.heartRate"></mat-slide-toggle>-->
+<!--                        </div>-->
+<!--                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.HEART-RATE'|translate}}: </label></div>-->
+<!--                    </div>-->
+
+                </div>
+            </mat-expansion-panel>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.weight">
+            <weight [data]="listWeight" [filter_visibility]="true" [patientId]="patientId"></weight>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+             *ngIf="configVisibility.fat && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+            <fat [data]="listFat" [filter_visibility]="true" [patientId]="patientId"></fat>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.height">
+            <height [data]="listHeight" [filter_visibility]="true" [patientId]="patientId"></height>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.circumference">
+            <waist-circunference [data]="listWaistCircumference" [filter_visibility]="true"
+                                 [patientId]="patientId"></waist-circunference>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+             *ngIf="configVisibility.temperature && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+            <body-temperature [data]="listBodyTemperature" [filter_visibility]="true"
+                              [patientId]="patientId"></body-temperature>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.glucose">
+            <blood-glucose [data]="listBloodGlucose" [filter_visibility]="true" [patientId]="patientId"></blood-glucose>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+             *ngIf="configVisibility.pressure && userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+            <blood-pressure [data]="listBloodPressure" [filter_visibility]="true"
+                            [patientId]="patientId"></blood-pressure>
+        </div>
+
+<!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
+<!--             *ngIf="configVisibility.heartRate && userHealthArea === 'nutrition' || userHealthArea === 'admin'">-->
+<!--            <heart-rate [data]="listHeartRate" [filter_visibility]="true" [patientId]="patientId"></heart-rate>-->
+<!--        </div>-->
+
+    </div>
+</div>

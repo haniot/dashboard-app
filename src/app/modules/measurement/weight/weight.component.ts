@@ -1,142 +1,56 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe} from '@angular/common';
-import {GraphService} from 'app/shared/shared-services/graph.service';
-import {Weight} from '../models/wieght';
-import {DecimalFormatterPipe} from "../pipes/decimal-formatter.pipe";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
+import { TranslateService } from '@ngx-translate/core';
+
+import { Weight } from '../models/weight';
+import { DecimalFormatterPipe } from '../pipes/decimal.formatter.pipe';
+import { MeasurementType } from '../models/measurement';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
     selector: 'weight',
     templateUrl: './weight.component.html',
-    styleUrls: ['./weight.component.scss']
+    styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class WeightComponent implements OnInit, OnChanges {
-
     @Input() data: Array<Weight>;
-
+    @Input() filter_visibility: boolean;
+    @Input() patientId: string;
     lastData: Weight;
-
     lastIndex: number;
-
-    weightGraph = {
-        tooltip: {
-            formatter: "Peso: {c} Kg <br> Data: {b}"
-        },
-        xAxis: {
-            type: 'category',
-            data: []
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} kg'
-            }
-        },
-        legend: {
-            data: ['Peso']
-        },
-        dataZoom: [
-            {
-                type: 'slider'
-            }
-        ],
-        series: [
-            {
-                name: "Peso",
-                data: [],
-                type: 'line',
-                symbol: 'circle',
-                symbolSize: 20,
-                lineStyle: {
-                    normal: {
-                        color: 'green',
-                        width: 4,
-                        type: 'dashed'
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        borderWidth: 3,
-                        borderColor: 'yellow',
-                        color: 'blue'
-                    }
-                }
-            }
-        ]
-    };
-
-    fatGraph = {
-        tooltip: {
-            formatter: "Gordura: {c} % <br> Data: {b}"
-        },
-        xAxis: {
-            type: 'category',
-            data: []
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} %'
-            }
-        },
-        legend: {
-            data: ['Gordura corporal']
-        },
-        dataZoom: [
-            {
-                type: 'slider'
-            }
-        ],
-        series: [
-            {
-                name: "Gordura corporal",
-                data: [],
-                type: 'bar',
-                symbol: 'circle',
-                symbolSize: 20,
-                lineStyle: {
-                    normal: {
-                        color: 'green',
-                        width: 4,
-                        type: 'dashed'
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        borderWidth: 3,
-                        borderColor: 'yellow',
-                        color: 'orange'
-                    }
-                }
-            }
-        ]
-    };
-
+    weightGraph: any;
+    showSpinner: boolean;
+    echartsInstance: any;
 
     constructor(
         private datePipe: DatePipe,
         private decimalPipe: DecimalFormatterPipe,
-        private graphService: GraphService
+        private measurementService: MeasurementService,
+        private translateService: TranslateService
     ) {
         this.data = new Array<Weight>();
+        this.filter_visibility = false;
+        this.patientId = '';
+        this.showSpinner = false;
     }
 
-    ngOnInit() {
-
+    ngOnInit(): void {
+        this.loadGraph();
     }
 
-    loadGraph() {
+    onChartInit(event) {
+        this.echartsInstance = event;
+    }
 
-        // Limpando o grafico de peso
-        this.weightGraph.xAxis.data = [];
-        this.weightGraph.series[0].data = [];
+    loadGraph(): any {
+
+        const weigth = this.translateService.instant('MEASUREMENTS.WEIGHT.TITLE');
+        const body_fat = this.translateService.instant('MEASUREMENTS.WEIGHT.BODY-FAT');
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
 
         this.lastIndex = 0;
-
-        this.data.forEach((element: Weight) => {
-            this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
-            this.weightGraph.series[0].data.push(this.decimalPipe.transform(element.value));
-        });
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -144,20 +58,137 @@ export class WeightComponent implements OnInit, OnChanges {
             this.lastData = this.data[0];
         }
 
-        // Limpando o grafico de gordura
-        this.fatGraph.xAxis.data = [];
-        this.fatGraph.series[0].data = [];
+        const xAxisWeight = {
+            type: 'category',
+            data: []
+        }
+
+        const seriesWeight = {
+            name: weigth,
+            data: [],
+            type: 'line',
+            symbol: 'circle',
+            symbolSize: 20,
+            lineStyle: {
+                normal: {
+                    color: 'green',
+                    width: 4,
+                    type: 'dashed'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    borderWidth: 3,
+                    borderColor: 'yellow',
+                    color: 'blue'
+                }
+            }
+        };
+
+        const xAxisFat = { type: 'category', data: [] };
+
+        const seriesFat = {
+            name: body_fat,
+            data: [],
+            type: 'line',
+            symbol: 'square',
+            symbolSize: 20,
+            lineStyle: {
+                normal: {
+                    color: 'orange',
+                    width: 4,
+                    type: 'dashed'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    borderWidth: 3,
+                    borderColor: 'yellow',
+                    color: 'orange'
+                }
+            }
+        };
 
         this.data.forEach((element: Weight) => {
+            xAxisWeight.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            seriesWeight.data.push({
+                value: this.decimalPipe.transform(element.value),
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
             if (element.fat && element.fat.value) {
-                this.fatGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, "shortDate"));
-                this.fatGraph.series[0].data.push(element.fat.value);
+                xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+                seriesFat.data.push({
+                    value: element.fat.value,
+                    time: this.datePipe.transform(element.timestamp, 'mediumTime')
+                });
             }
         });
 
-        this.graphService.refreshGraph();
+        this.weightGraph = {
+            tooltip: {
+                formatter: function (params) {
+                    if (params.seriesName === weigth) {
+                        return weigth +
+                            `: ${params.data.value} Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                    }
+                    return body_fat +
+                        `: ${params.data} % <br> ${date}: ${params.name}`;
+                }
+            },
+            xAxis: xAxisWeight,
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            },
+            legend: {
+                data: [weigth, body_fat]
+            },
+            dataZoom: [
+                {
+                    type: 'slider'
+                }
+            ],
+            series: [
+                seriesWeight,
+                seriesFat
+            ]
+        };
+    }
 
+    applyFilter(filter: any) {
+        this.showSpinner = true;
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.weight, null, null, filter)
+            .then((measurements: Array<any>) => {
+                this.data = measurements;
+                this.showSpinner = false;
+                this.updateGraph(measurements);
+            })
+            .catch();
+    }
 
+    updateGraph(measurements: Array<any>): void {
+        // clean weightGraph
+        this.weightGraph.xAxis.data = new Array<any>();
+        this.weightGraph.series[0].data = [];
+        this.weightGraph.series[1].data = [];
+
+        measurements.forEach((element: Weight) => {
+            this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            this.weightGraph.series[0].data.push({
+                value: this.decimalPipe.transform(element.value),
+                time: this.datePipe.transform(element.timestamp, 'mediumTime')
+            });
+            if (element.fat && element.fat.value) {
+                this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+                this.weightGraph.series[1].data.push({
+                    value: element.fat.value,
+                    time: this.datePipe.transform(element.timestamp, 'mediumTime')
+                });
+            }
+        });
+        this.echartsInstance.setOption(this.weightGraph);
     }
 
     ngOnChanges(changes: SimpleChanges) {

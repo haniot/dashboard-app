@@ -1,20 +1,23 @@
-import {Router} from '@angular/router';
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {environment} from 'environments/environment';
+import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
-import {Observable, of as observableOf} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
-import * as JWT_decode from "jwt-decode";
+import * as JWT_decode from 'jwt-decode';
+import { tap } from 'rxjs/operators';
 
-import {tap} from 'rxjs/operators';
-import {User} from '../interfaces/users.interfaces';
+import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
 
 @Injectable()
 export class AuthService {
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(
+        private http: HttpClient,
+        private localStorageService: LocalStorageService,
+        private router: Router) {
     }
 
     check(): boolean {
@@ -22,7 +25,7 @@ export class AuthService {
         if (!token) {
             return false;
         }
-        const user = atob(localStorage.getItem('user'));
+        const user = this.localStorageService.getItem('user');
 
         return user === token.sub;
     }
@@ -31,37 +34,33 @@ export class AuthService {
     login(credentials: { email: string, password: string }): Observable<boolean> {
         const myParams = new HttpParams();
         myParams.append('rejectUnauthorized', 'false');
-        return this.http.post<any>(`${environment.api_url}/auth`, credentials, {params: myParams})
+        return this.http.post<any>(`${environment.api_url}/auth`, credentials, { params: myParams })
             .pipe(
                 tap(data => {
                     if (data.redirect_link) {
-                        localStorage.setItem("emailTemp", credentials.email)
-                        this.router.navigate(['auth/change'], {queryParams: {redirect_link: data.redirect_link}});
+                        localStorage.setItem('emailTemp', credentials.email)
+                        this.router.navigate(['auth/change'], { queryParams: { redirect_link: data.redirect_link } });
                     } else {
-                        localStorage.setItem('token', data.access_token);
+                        this.localStorageService.setItem('token', data.access_token)
                         let decodedToken: { sub: string, iss: string, iat: number, exp: number, scope: string };
                         try {
                             decodedToken = JWT_decode(data.access_token);
                         } catch (Error) {
-                            localStorage.clear();
+                            // clean local storage
+                            this.localStorageService.logout();
                             return false;
                         }
-                        localStorage.setItem('user', btoa(decodedToken.sub));
+                        this.localStorageService.setItem('user', decodedToken.sub);
                     }
                 })
             );
     }
 
     logout(): void {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('user');
+        this.localStorageService.logout();
         this.router.navigate(['auth/login']);
     }
 
-    getUser(): User {
-        return localStorage.getItem('user') ? JSON.parse(atob(localStorage.getItem('user')))[0] : null;
-    }
 
     changePassowrd(credentials: { name: string, email: string, password: string }, redirect_link): Observable<boolean> {
         return this.http.patch<any>(`${environment.api_url}${redirect_link}`, credentials)
@@ -79,14 +78,19 @@ export class AuthService {
     }
 
     decodeToken(): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string } {
-        const token = localStorage.getItem('token');
+        const token = this.localStorageService.getItem('token');
         let decodedToken: { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string };
         try {
             decodedToken = JWT_decode(token);
         } catch (Error) {
-            decodedToken = {sub: "", sub_type: "", iss: "", iat: 0, exp: 0, scope: ""};
+            decodedToken = { sub: '', sub_type: '', iss: '', iat: 0, exp: 0, scope: '' };
         }
         return decodedToken;
     }
 
+    validateReCaptcha(responseRecaptcha: string): Promise<any> {
+        return this.http.post<any>(
+            `${environment.reCaptcha_urlVerify}?secret=${environment.reCaptcha_serverKey}&&response=${responseRecaptcha}`, {})
+            .toPromise();
+    }
 }

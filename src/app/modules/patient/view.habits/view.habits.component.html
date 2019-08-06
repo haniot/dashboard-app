@@ -1,0 +1,157 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="d-flex flex-row-reverse shared" style="height: 50px;"
+             *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+
+            <div class="p-2">
+                <i class="material-icons" [title]="'PATIENTS.VIEW-HABITS.TOVIEW-EVALUATIONS'|translate"
+                   [routerLink]="['/evaluations',pilotStudyId,patientId]">assignment</i>
+            </div>
+            <div class="p-2">
+                {{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <haniot-card [title]="'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.TITLE'|translate"
+                             [subtitle]="'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.SUBTITLE'|translate">
+                    <form [formGroup]="patientForm">
+
+                        <div class="row">
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <label for="name">
+                                    {{'SHARED.NAME'|translate}}:
+                                </label>
+                                <input class="form-control" type="text" formControlName="name" id="name">
+                            </div>
+
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <label for="phone_number">
+                                    {{'SHARED.PHONE'|translate}}:
+                                </label>
+                                <input class="form-control" type="text" formControlName="phone_number"
+                                       id="phone_number">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <label for="email">
+                                    {{'SHARED.EMAIL'|translate}}:
+                                </label>
+                                <input class="form-control" type="text" formControlName="email" id="email">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group has-feedback col-md">
+                                <label for="gender">
+                                    {{'SHARED.GENDER'|translate}}:
+                                </label>
+                                <select class="form-control" formControlName="gender" name="gender" id="gender">
+                                    <option *ngFor="let itemGender of optionsGender"
+                                            [value]="itemGender">{{itemGender | gender | translate}}</option>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group has-feedback col-md">
+                                <label for="birth_date">
+                                    {{'SHARED.BIRTH-DATE'|translate}}:
+                                </label>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <input matInput class="form-control" [matDatepicker]="pickerBirthDate"
+                                               formControlName="birth_date" name="birth_date"
+                                               data-date-format="yyyy-MM-dd"
+                                               [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate"
+                                               id="birth_date">
+                                        <mat-datepicker #pickerBirthDate></mat-datepicker>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group has-feedback col-md">
+                                <label for="pilotstudy_id">
+                                    {{'PATIENTS.PATIENTS-FORM.ASSOCIATE-STUDY'|translate}}:
+                                </label>
+                                <select class="form-control" formControlName="pilotstudy_id" name="pilotstudy_id"
+                                        id="pilotstudy_id">
+                                    <option value="undefined">{{'PATIENTS.PATIENTS-FORM.SELECT-STUDY'|translate}}</option>
+                                    <option *ngFor="let pilot of listPilots;trackBy: trackById"
+                                            [value]="pilot.id">{{pilot.name}}</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+
+
+                    </form>
+                </haniot-card>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3"
+                 *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
+                <familycohesion-record [(patientId)]="patientId"></familycohesion-record>
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9"
+                 *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
+                <sociodemographic-record [(patientId)]="patientId"></sociodemographic-record>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">
+                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.HABITS'|translate">
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
+                                    <feeding-habits [(patientId)]="patientId"></feeding-habits>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
+                                    <sleep-habits [(patientId)]="patientId"></sleep-habits>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                     *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                                    <physical-activity-habits [(patientId)]="patientId"></physical-activity-habits>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                     *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                                    <medical-record [(patientId)]="patientId"></medical-record>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
+                                    <oralhealth-record [(patientId)]="patientId"></oralhealth-record>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </mat-tab>
+
+                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">
+                        <measurement-component [(patientId)]="patientId" [configVisibility]="configVisibility"
+                                               *ngIf="showMeasurements"></measurement-component>
+                    </mat-tab>
+
+                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.LOG-MEASUREMENTS'|translate">
+                        <measurement-logs [(patientId)]="patientId"></measurement-logs>
+
+                    </mat-tab>
+                    <!--                    <mat-tab label="SAÚDE BUCAL">-->
+                    <!--                      <oralhealth-record [(patientId)]="patientId"></oralhealth-record>-->
+                    <!--                    </mat-tab>-->
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

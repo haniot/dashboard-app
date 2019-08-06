@@ -1,46 +1,46 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { DeviceService } from '../services/device.service';
-import { IDevice } from '../models/device';
+import { Device } from '../models/device';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'device',
-  templateUrl: './device.component.html',
-  styleUrls: ['./device.component.scss']
+    selector: 'device',
+    templateUrl: './device.component.html',
+    styleUrls: ['./device.component.scss']
 })
-export class DeviceComponent implements OnInit, OnChanges {
+export class DeviceComponent implements OnChanges {
+    @Input() patientId
+    listDevices: Array<Device> = [];
 
-  @Input() patientId
-
-  listDevices: Array<IDevice> = [];
-
-  constructor(
-    private deviceService: DeviceService,
-    private toastService: ToastrService
-  ) { }
-
-  ngOnInit() {
-
-  }
-
-  loadDevices() {
-    if (this.patientId) {
-      this.deviceService.getAllByUser(this.patientId)
-        .then(devices => {
-          this.listDevices = devices;
-        })
-        .catch(errorResponse => {
-          this.toastService.error('Não foi possível buscar dispositivos!');
-          //console.log('Não foi possível bsucar dispositivos!');
-        });
+    constructor(
+        private deviceService: DeviceService,
+        private toastService: ToastrService,
+        private translateService: TranslateService
+    ) {
     }
-  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.patientId && changes.patientId.currentValue != changes.patientId.previousValue) {
-      this.loadDevices();
+    loadDevices() {
+        if (this.patientId) {
+            this.deviceService.getAllByUser(this.patientId)
+                .then(devices => {
+                    this.listDevices = devices;
+                })
+                .catch(() => {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-DEVICES'));
+                });
+        }
     }
-  }
+
+    trackById(index, item) {
+        return item.id;
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
+            this.loadDevices();
+        }
+    }
 
 }

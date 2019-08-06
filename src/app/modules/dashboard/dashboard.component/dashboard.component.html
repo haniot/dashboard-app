@@ -1,0 +1,155 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center">
+                    <card-top [category]="'DASHBOARD.CARD-STUDIES-TOTAL'|translate" [title]="lengthStudies" [icon]="'library_books'"></card-top>
+                </div>
+
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center" *ngIf="isNotUserAdmin()">
+                    <card-top [category]="'DASHBOARD.CARD-PATIENTS-FROM-THE-STUDY'|translate" [title]="listPacients.length" [icon]="'face'"></card-top>
+                </div>
+
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center" *ngIf="!isNotUserAdmin()">
+                    <card-top [category]="'DASHBOARD.CARD-PATIENTS-TOTAL'|translate" [title]="patientsTotal" [icon]="'face'"></card-top>
+                </div>
+
+            </div>
+
+        </div>
+
+        <haniot-card [title]="'DASHBOARD.CARD-PATIENTS.TITLE'|translate" [subtitle]="'DASHBOARD.CARD-PATIENTS.SUBTITLE'|translate"
+            *ngIf="isNotUserAdmin()">
+            <div class="row justify-content-center" *ngIf="!listPacients.length && !listOfPatientsIsEmpty">
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patients">
+                    <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfPatientsIsEmpty">
+                    <p class="second-title text-center">
+                        {{'DASHBOARD.CARD-PATIENTS-FROM-THE-STUDY'|translate}}.
+                    </p>
+                    <p>
+                        {{'DASHBOARD.CARD-PATIENTS.STUDY-EMPTY'|translate}}:
+                        <button class="btn btn-haniot-primary" [routerLink]="['/patients',pilotStudyId,'new']">
+                            {{'DASHBOARD.CARD-PATIENTS.STUDY-EMPTY-MESSAGE'|translate}}
+                        </button>
+                    </p>
+                </div>
+                <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngFor="let patient of listPacients;trackBy: trackById"
+                    [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']" [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                                <img src="../../../../assets/img/haniot/x_boy.png" *ngIf="patient.gender === 'male'">
+                                <img src="../../../../assets/img/haniot/x_girl.png" *ngIf="patient.gender === 'female'">
+                            </div>
+
+                            <h4 class="card-title ellipsis">
+                                {{patient.name}}
+                            </h4>
+
+                            <span class="badge badge-haniot">{{patient.birth_date | convertInAge}}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <mat-paginator [length]="lengthPatients" [pageSize]="limitPatients" [pageSizeOptions]="pageSizeOptionsPatients" (page)="clickPaginationPatients($event)">
+            </mat-paginator>
+        </haniot-card>
+
+        <haniot-card [title]="'DASHBOARD.CARD-STUDIES.TITLE'|translate" [subtitle]="'DASHBOARD.CARD-STUDIES.SUBTITLE'|translate">
+            <div class="row justify-content-center" *ngIf="!listPilots.length">
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-studies">
+                    <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+
+                <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngFor="let study of listPilots;trackBy: trackById"
+                    [routerLink]="['/pilotstudies',study.id,'details']" [title]="'DASHBOARD.CARD-STUDIES.VIEW'|translate">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-timer card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">library_books</i>
+                            </div>
+                            <span class="badge" [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active | pilotStudySituation | translate}}</span>
+
+                            <h3 class="card-title ellipsis">
+                                {{study.name}}
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <!--                                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 text-center">-->
+                                    <!--                                        <p class="card-category">Nome: </p>-->
+                                    <!--                                        <h4 class="card-title">-->
+                                    <!--                                            {{study.name}}-->
+                                    <!--                                        </h4>-->
+                                    <!--                                    </div>-->
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+                                        <p class="card-category">{{'SHARED.DATE-START'|translate}}: </p>
+                                        <h4 class="card-title">
+                                            {{study.start | date}}
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+                                        <p class="card-category">{{'SHARED.DATE-END'|translate}}: </p>
+                                        <h4 class="card-title">
+                                            {{study.end | date}}
+                                        </h4>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfStudiesIsEmpty">
+                    <p class="second-title text-center">
+                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY'}}</p>
+                    <p>
+                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY-MESSAGE'}}
+                    </p>
+                </div>
+            </div>
+            <mat-paginator [length]="lengthStudies" [pageSize]="limitStudies" [pageSizeOptions]="pageSizeOptionsStudies" (page)="clickPaginationStudies($event)">
+            </mat-paginator>
+        </haniot-card>
+        <!--    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">-->
+        <!--      <div class="row">-->
+        <!--        <div class="col-lg-6 col-md-6 col-sm-6">-->
+        <!--          <scatter-graph></scatter-graph>-->
+        <!--        </div>-->
+
+        <!--        <div class="col-lg-6 col-md-6 col-sm-6">-->
+        <!--          <area-graph></area-graph>-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--    </haniot-card>-->
+
+        <!--    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">-->
+        <!--      <div class="row">-->
+        <!--        <div class="col-lg-6 col-md-6 col-sm-6">-->
+        <!--          <bar-graph></bar-graph>-->
+        <!--        </div>-->
+
+        <!--        <div class="col-lg-6 col-md-6 col-sm-6">-->
+        <!--          <bar-graph></bar-graph>-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--    </haniot-card>-->
+
+        <!--    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">-->
+        <!--      <div class="row">-->
+        <!--        <div class="col-lg-12 col-md-12 col-sm-12">-->
+        <!--          <bar-graph></bar-graph>-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--    </haniot-card>-->
+
+    </div>
+</div>

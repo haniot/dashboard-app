@@ -1,0 +1,70 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <haniot-card [title]="'CONFIG.CONFIG-MYDATES-TITLE' | translate" [subtitle]="'CONFIG.CONFIG-MYDATES-SUBTITLE' | translate">
+                    <form #formMyProfile="ngForm" (ngSubmit)="onSubmit(formMyProfile)">
+
+                        <div class="form-group has-feedback" [ngClass]="{'has-success': nomeModelEdit.valid,
+                                  'has-error': nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)}">
+                            <label for="nomeEdit">{{'SHARED.NAME' | translate}}:</label>
+                            <input type="text" class="form-control" id="nomeEdit" required minlength="4" type="text" name="name" #nomeModelEdit="ngModel"
+                                [(ngModel)]="user.name" [placeholder]="'SHARED.NAME' | translate" [disabled]="visibilityButtonSave?null:'disabled'">
+                            <span *ngIf="nomeModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                            <span *ngIf="nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty) && visibilityButtonSave">
+                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                <span class="text-danger">{{'SHARED.INVALID-NAME' | translate}}.</span>
+                            </span>
+                        </div>
+
+                        <div class="form-group has-feedback" [ngClass]="{'has-success': emailModelEdit.valid,
+                    'has-error': emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty)}">
+                            <label for="emailEdit">{{'SHARED.EMAIL' | translate}}:</label>
+                            <input type="email" class="form-control" id="emailEdit" required minlength="4" type="text" name="email" #emailModelEdit="ngModel"
+                                [(ngModel)]="user==undefined?email:user.email" [placeholder]="'SHARED.EMAIL' | translate" [disabled]="visibilityButtonSave?null:'disabled'">
+                            <span *ngIf="emailModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                            <span *ngIf="emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty) && visibilityButtonSave">
+                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                <span class="text-danger">{{'SHARED.INVALID_EMAIL' | translate}}.</span>
+                            </span>
+                        </div>
+
+                        <div class="form-group has-feedback" [ngClass]="{'has-success': healthAreaModel.valid,
+            'has-error': healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)}">
+                            <label for="healthAreaEdit">{{'SHARED.AREA' | translate}}: </label>
+                            <select name="health_area" id="healthAreaEdit" class="form-control" required #healthAreaModel="ngModel" [(ngModel)]="user.health_area"
+                                [disabled]="visibilityButtonSave?null:'disabled'">
+                                <option *ngFor="let area of healthAreaOptions; index as i" [value]="area">{{area | healthArea | translate}}</option>
+                            </select>
+                            <span *ngIf="healthAreaModel.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                            <span *ngIf="healthAreaModel.invalid && (healthAreaModel.touched || healthAreaModel.dirty)">
+                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                <span class="text-danger">{{'SHARED.INVALID-AREA' | translate}}.</span>
+                            </span>
+                        </div>
+
+                        <div class="row container-fluid">
+                            <div class="col-md">
+                                <button type="button" class="btn btn-haniot-primary" (click)="enabledEdit()" [disabled]="disabledButtonEdit">
+                                    {{'CONFIG.CONFIG-MYDATES-ENABLE-EDITING' | translate}}
+                                </button>
+                            </div>
+                            <div class="col-md" *ngIf="visibilityButtonSave">
+                                <button type="submit" class="btn btn-haniot-primary" [disabled]="!formMyProfile.valid">
+                                    {{'SHARED.SAVE' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </haniot-card>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <access-settings [userId]="userId"></access-settings>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <language-settings></language-settings>
+            </div>
+        </div>
+    </div>
+</div>

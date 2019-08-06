@@ -1,0 +1,807 @@
+{
+  "APP": {
+    "DEVELOP-ORGANIZATION": "NUTES",
+    "TITLE": "HANIoT"
+  },
+  "ACCESS-DENIED": {
+    "MESSAGE": "Sorry, your access has been declined due to security reasons of our server and also to our confidential data",
+    "MESSAGE-GO-BACK": "Please return to the main page by clicking on the button below",
+    "TITLE": "Access denied"
+  },
+  "ADMINISTRADORS": {
+    "SUBTITLE": "",
+    "TITLE": "User list administrators",
+    "TITLE-ADD": "Create admin user",
+    "TITLE-EDIT": "Edit admin user"
+  },
+  "CONFIG": {
+    "CONFIG-ACCESS-TITLE": "Access settings",
+    "CONFIG-ACCESS-SUBTITLE": "To change your password, fill in the information below and click on CHANGE PASSWORD",
+    "CONFIG-LANGUAGE-TITLE": "Language Settings",
+    "CONFIG-LANGUAGE-SUBTITLE": "Use the selector to select the desired language",
+    "CONFIG-LANGUAGE-LABEL": "Select the desired language",
+    "CONFIG-MYDATES-TITLE": "My data",
+    "CONFIG-MYDATES-SUBTITLE": "Click the enable edit button to change your information",
+    "CONFIG-MYDATES-ENABLE-EDITING": "Enable editing"
+  },
+  "DASHBOARD": {
+    "CARD-PATIENTS-FROM-THE-STUDY": "Total Patients in Selected Study",
+    "CARD-PATIENTS-TOTAL": "Total Patients",
+    "CARD-PATIENTS": {
+      "TITLE": "Access your patients",
+      "SUBTITLE": "Click on the card to view patient information.",
+      "SPINNER-MESSAGE": "Loading Patients",
+      "STUDY-EMPTY": "The selected study does not have registered patients",
+      "STUDY-EMPTY-MESSAGE": "Go to the patient record page",
+      "REGISTER-PATIENTS": "Register patients",
+      "VIEW": "View Patient"
+    },
+    "CARD-STUDIES-TOTAL": "Total Number of Studies",
+    "CARD-STUDIES": {
+      "TITLE": "Access your studies",
+      "SUBTITLE": "Click on the card to view study information.",
+      "SPINNER-MESSAGE": "Loading studies",
+      "VIEW": "View study",
+      "STUDIES-EMPTY": "You have no associated studies.",
+      "STUDIES-EMPTY-MESSAGE": "Please contact your administrator."
+    }
+  },
+  "EVALUATION": {
+    "NUTRITION-EVALUATION": {
+      "CARD-PATIENT": {
+        "TITLE": "Selected patient",
+        "SUBTITLE": ""
+      },
+      "SHARED-EMAIL": "Share via email",
+      "DOWNLOAD-PDF": "Download PDF",
+      "CARD-NUTRITION": {
+        "TITLE": "Nutrition evaluation",
+        "SUBTITLE": "",
+        "EVALUATION": "EVALUATION",
+        "NUTRITION-STATE": "Nutritional Status",
+        "BMI": "BMI",
+        "CENTIMETER": "cm",
+        "KILOGRAM": "Kg",
+        "PERCENTIL": "Percentil",
+        "CUT-TAYLOR": "Taylor Cutting Point",
+        "INDICATORS-OVERWEIGHT": "Indicators of overweight",
+        "STATE-NUTRITION": "Nutritional status",
+        "DIABETES": "Insulin Resistance/Diabetes",
+        "HYPERTENSION": "Hypertension",
+        "RELATION-WAIST-HEIGHT": "Relation waist / height",
+        "GLYCEMIA": "Glycemia",
+        "CLASSIFICATION-ZONES": "Classification Zones",
+        "GOOD": "Ideal",
+        "GREAT": "Great",
+        "BETWEEN": "Between",
+        "AND": "and",
+        "TYPE-OF-MEAL": "Type of meal",
+        "GLYCEMIA-UNIT": "mg/dl",
+        "BLOOD-PRESSURE": "Blood pressure",
+        "SYSTOLIC": "SYSTOLIC",
+        "DIASTOLIC": "DIASTOLIC",
+        "BLOOD-PRESSURE-UNIT": "mmHg",
+        "HEART-RATE": "Heart rate",
+        "HEART-RATE-MIN": "MINIMUM",
+        "HEART-RATE-AVERAGE": "AVERAGE",
+        "HEART-RATE-MAX": "MAXIMUM",
+        "HEART-RATE-UNIT": "bpm",
+        "COLLECTED-MEASUREMENTS": "Collected measurements",
+        "SUGGESTED-COUNSELING": "Suggestions for counselings",
+        "SELECT-ALL": "Select all",
+        "COUNSELINGS": "Counselings",
+        "COUNSELING": "Counseling",
+        "EVALUATION-STATUS": "Evaluation status",
+        "EVALUATION-DATE": "Evaluation date",
+        "FINISH-EVALUATION": "Finish evaluation",
+        "FINALIZING-EVALUATION": "Finalizing evaluation",
+        "ADD-EVALUATION": "Add counseling",
+        "GENERATING-PDF": "Generating PDF...",
+        "SENDING": "Sending..."
+      },
+      "PIPES": {
+        "CLASSIFICATION": {
+          "ACCENTUATED-THINNESS": "Sharp emaciation",
+          "THINNESS": "Thinness",
+          "EUTROPHY": "Eutrophy",
+          "OVERWEIGHT": "Overweight",
+          "OBESITY": "Obesity",
+          "SEVERE-OBESITY": "Severe obesity"
+        },
+        "TAYLOR-CUT": {
+          "NORMAL": "Normal",
+          "OUT-OF-NORMALITY": "Out of normality"
+        },
+        "BLOOD-GLUCOSE": {
+          "GOOD": "Ideal",
+          "GREAT": "Great"
+        },
+        "BLOOD-PRESSURE": {
+          "NORMAL": "Normal",
+          "BORDERLINE": "Bordering",
+          "HYPERTENSION-STAGE-1": "Hypertension stage 1",
+          "HYPERTENSION-STAGE-2": "Hypertension stage 2"
+        },
+        "OVERWEIGHT": {
+          "NORMAL": "Normal",
+          "OVERWEIGHT-OBESITY-RISK": "Overweith obesity risk"
+        }
+      }
+    },
+    "NUTRITION-EVALUATION-LIST": {
+      "SELECT-STUDY-PILOT": "SELECT A PILOT STUDY",
+      "SELECT-PATIENT": "SELECT A PATIENT",
+      "NEXT": "Next",
+      "PREVIOUS": "Previuos",
+      "EVALUATIONS": "EVALUATIONS"
+    },
+    "PLACEHOLDER-SEARCH": "Search for evaluation...",
+    "SPINNER-MESSAGE": "Loading evaluations",
+    "LIST-EMPTY": "No evaluation found",
+    "LIST-EMPTY-MESSAGE": "* Use the app to generate new evaluations",
+    "STATUS-COMPLETE": "COMPLETE",
+    "STATUS-INCOMPLETE": "INCOMPLETE",
+    "ACCESS-EVALUATION": "Access evaluation...",
+    "DELETE-EVALUATION": "Delete evaluation...",
+    "DELETE-CONFIRMATION": "Are you sure you want to remove evaluation?",
+    "STATE": "State",
+    "OPTIONS-DOWNLOAD": "Download options...",
+    "GENERATING-ODONTOLOGICAL-EVALUATIONS": "Generating dental evaluation"
+  },
+  "EDIT-MYPILOT": {
+    "TITLE": "Edit a pilot study",
+    "SUBTITLE": "",
+    "TITLE-ADD": "Create health professional",
+    "TITLE-EDIT": "Edit health professional"
+  },
+  "FOOTER": {
+    "ABOUT-US": "About us",
+    "PRIVACY": "Privacy"
+  },
+  "HABITS": {
+    "FAMILY-COHESION": {
+      "TITLE": "Family cohesion",
+      "SUBTITLE": "",
+      "UNAVAILABLE-DATA": "Family cohesion data unavailable!"
+    },
+    "FEEDING": {
+      "TITLE": "Eating habits of the patient",
+      "SUBTITLE": "",
+      "NUMBER-WATER-GLASSES": "Number of water glasses",
+      "BREAST-FEEDING": "Breast-feeding",
+      "BREAKFAST": "Breakfast",
+      "LIST-OF-WEEKLY-FOOD": "List of weekly foods and consumption relationship",
+      "LAST-7-DAYS": "Last 7 days",
+      "UNAVAILABLE-DATA": "No food habits registered!",
+      "LIST-ALLERGIC-FOODS": "List of allergic foods"
+    },
+    "MEDICAL-RECORD": {
+      "TITLE": "Historic of patient illness",
+      "SUBTITLE": "",
+      "LIST-CHRONIC-DISEASES": "List of chronic diseases",
+      "DISEASE": "Disease",
+      "HISTORIC": "Historic",
+      "UNAVAILABLE-DATA": "No history of diseases registered!"
+    },
+    "ORAL-HEALTH": {
+      "TITLE": "Oral Health Information",
+      "SUBTITLE": "",
+      "FREQUENCY-ORAL-HEALTH": "Frequency of oral health",
+      "LIST-OF-LESIONS": "List of lesions",
+      "NONE-LESION": "No lesions registered!",
+      "TYPE-TEETH": "Tooth type",
+      "TYPE-LESION": "Type of lesion",
+      "UNAVAILABLE-DATA": "Oral health data unavailable!"
+    },
+    "PHYSICAL-ACTIVITY": {
+      "TITLE": "Physical activity habits of the patient",
+      "SUBTITLE": "",
+      "SCHOOL-ACTIVITY-FREQUENCY": "Frequency of school physical activities",
+      "LIST-ACTIVITY-PRATICED": "List of activities practiced",
+      "UNAVAILABLE-DATA": "No registered physical activity habit!"
+    },
+    "SLEEP": {
+      "TITLE": "Patient's sleep habits",
+      "SUBTITLE": "",
+      "WAKE-UP-TIME": "Wake up time",
+      "TIME-TO-SLEEP": "Time to sleep",
+      "UNAVAILABLE-DATA": "No registered sleep habits!",
+      "TIME-ABBREVIATION": "hrs"
+    },
+    "SOCIO-DEMOGRAPHIC": {
+      "TITLE": "Sociodemographic information",
+      "SUBTITLE": "",
+      "COLOR-RACE": "Color or race",
+      "MOTHER-EDUCATION": "Mother's education",
+      "NUMBER-PEOPLE-HOME": "Number of people at home",
+      "UNAVAILABLE-DATA": "Sociodemographic data unavailable!"
+    },
+    "PIPES": {
+      "WEEKLY-FOOD": {
+        "FISH-CHICKEN-MEAT": "Fish, chicken or red meat",
+        "SODA": "Soda",
+        "SALAD-VEGETABLE": "Salad, vegetables or vegetables",
+        "FRIED-SALT-FOOD": "Fried salted",
+        "MILK": "Milk",
+        "BEAN": "Bean",
+        "FRUITS": "Fruits",
+        "CANDY-SUGAR-COOKIE": "Sweets",
+        "BURGER-SAUSAGE": "Hamburgers, sausage or other sausages"
+      },
+      "FOOD-ALLERGY": {
+        "GLUTEN": "Gluten",
+        "APLV": "APLV",
+        "LACTOSE": "Lactose",
+        "DYE": "Dye",
+        "EGG": "Eggs",
+        "PEANUT": "Peanut",
+        "OTHER": "Other"
+      },
+      "CHORNIC-DISEASE": {
+        "HYPERTENSION": "Hypertension",
+        "BLOOD-FAT": "Blood fat",
+        "DIABETES": "Diabetes"
+      },
+      "DISEASE-HISTORY": {
+        "NO": "NO",
+        "YES": "YES"
+      },
+      "TEETH-BRUSHING": {
+        "NONE": "None",
+        "ONCE": "Once",
+        "TWICE": "Twice",
+        "THREE-MORE": "Three times or more"
+      },
+      "TOOTH-TYPE": {
+        "DECIDUOUS-TOOTH": "Deciduous tooth",
+        "PERMANENT-TOOTH": "Permanent tooth"
+      },
+      "TYPE-LESION": {
+        "WHITE-SPOT-LESION": "White spot",
+        "CAVITATED-LESION": "Cavitated lesion"
+      },
+      "WEEKLY-ACTIVITIES": {
+        "SOCCER": "Soccer",
+        "FUTSAL": "Futsal",
+        "HANDBALL": "Handball",
+        "BASKETBALL": "Basketball",
+        "SKATES": "Skate or skateboarding",
+        "ATHLETICS": "Athletics",
+        "SWIM": "Swimming",
+        "GYMNASTICS": "Olympic and Rhythmic Gymnastics",
+        "FIGHT": "Judo, Karate, Capoeira or other fights",
+        "DANCE": "Ballet or other types of dances",
+        "RUN": "Run",
+        "RIDE-BIKE": "Ride a bike",
+        "WALKING-PHYSICAL-EXERCISE": "Walking as a physical exercise",
+        "WALKING-MEANS-TRANSPORT": "Hiking as a means of transport",
+        "VOLLEYBALL": "Volleyball",
+        "MUSCULATION": "Bodybuilding",
+        "ABDOMINAL-EXERCISE": "Abdominal exercises",
+        "TENNIS": "Court or table tennis",
+        "WALK-WITH-DOG": "Walk with the dog",
+        "GYMNASTICS-GYM": "Gymnastics gym",
+        "NO-ACTIVITY": "No activity"
+      },
+      "PHYSICAL-ACTIVITY-FREQUENCY": {
+        "NONE": "Not once",
+        "ONE-PER-WEEK": "Once a week",
+        "TWO-PER-WEEK": "Twice a week",
+        "THREE-PER-WEEK": "Three times a week",
+        "FOUR-MORE-PER-WEEK": "Four times or more per week"
+      },
+      "MOTHER-SCHOOLARITY": {
+        "UNLETTERED": "Illiterate\nFundamental 1 Incomplete",
+        "ELEMENTARY-ONE-TWO-INCOMPLETE": "Fundamental 1 Complete /\nFundamental 2 Incomplete",
+        "ELEMENTARY-TWO-HIGH-SCHOOL": "Fundamental 2 Complete /\nIncomplete",
+        "MEDIUM-GRADUATION-INCOMPLETE": "Average Full /\nIncomplete higher",
+        "GRADUATION-COMPLETE": "Graduated"
+      },
+      "BREAST-FEEDING": {
+        "EXCLUSIVE": "Exclusive",
+        "COMPLEMENTARY": "Complementary",
+        "INFANT-FORMULAS": "Children's Formulas",
+        "OTHER": "Other"
+      },
+      "BREAKFAST": {
+        "NEVER": "Never",
+        "SOMETIMES": "Sometimes",
+        "ALMOST-EVERYDAY": "Almost everyday",
+        "EVERYDAY": "Everyday"
+      },
+      "WATER-GLASS": {
+        "NONE": "None",
+        "ONE-TWO": "Between one and two",
+        "THREE-FOUR": "Between three and four",
+        "FIVE-MORE": "Five or more"
+      },
+      "WEEKLY-FREQUENCY": {
+        "NEVER": "Never",
+        "IN-DAY": "In day",
+        "ONE-TWO-DAYS": "Between one and two times",
+        "THREE-FOUR-DAYS": "Between three and four times",
+        "FIVE-SIX-DAYS": "Between five and six times",
+        "ALL-DAYS": "Every day"
+      },
+      "COLOR-RACE": {
+        "WHITE": "White",
+        "BLACK": "Black",
+        "PARDA": "Parda",
+        "YELLOW": "Yellow"
+      },
+      "FAMILY-COHESION-FREQUENCY": {
+        "ALMOST-NEVER": "Almost never",
+        "RARELY": "Rarely",
+        "SOMETIMES": "Sometimes",
+        "OFTEN": "Often",
+        "ALMOST-ALWAYS": "Almost always"
+      },
+      "UNDEFINED": "Out of parameters",
+      "NOTFOUND": "NOT FOUND",
+      "DO-NOT-KNOW": "I do not know/I do not remember"
+    },
+    "REGISTER-DATE": "Date of registration",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next"
+  },
+  "HEALTHPROFESSIONALS": {
+    "TITLE": "List of health professionals",
+    "SUBTITLE": "",
+    "TITLE-ADD": "Create health professional",
+    "TITLE-EDIT": "Edit health professional"
+  },
+  "MYEVALUATIONS": {
+    "TITLE": "List of reviews",
+    "SUBTITLE": "Below are the evaluations related to your profile"
+  },
+  "MYPILOTS": {
+    "TITLE": "List of pilot studies",
+    "SUBTITLE": "Select a pilot study to view"
+  },
+  "MEASUREMENTS": {
+    "BLOOD-GLUCOSE": {
+      "TITLE": "Blood glucose",
+      "SUBTITLE": "",
+      "GLUCOSE": "Glucose",
+      "PERIOD": "Measurement period",
+      "UNAVAILABLE-DATA": "No record of glucose enrolled!"
+    },
+    "BLOOD-PRESSURE": {
+      "TITLE": "Blood pressure",
+      "SUBTITLE": "",
+      "PRESSURE": "Pressure",
+      "SYSTOLIC": "Systolic",
+      "PULSE": "Pulse",
+      "DIASTOLIC": "Diastolic",
+      "UNAVAILABLE-DATA": "No record of blood pressure recorded!"
+    },
+    "BODY-TEMPERATURE": {
+      "TITLE": "Body temperature",
+      "SUBTITLE": "",
+      "TEMPERATURE-HISTORIC": "Temperature historic",
+      "TEMPERATURE": "Temperature",
+      "UNAVAILABLE-DATA": "No record of body temperature recorded!"
+    },
+    "FAT": {
+      "TITLE": "Body fat",
+      "SUBTITLE": "",
+      "FAT": "Fat",
+      "UNAVAILABLE-DATA": "No record of body fat recorded!"
+    },
+    "HEART-RATE": {
+      "TITLE": "Heart rate",
+      "SUBTITLE": "",
+      "HISTORIC": {
+        "TEXT": "Measurement historic",
+        "SUBTEXT": "The graph below represents all the values captured in all the measurements made"
+      },
+      "LAST-DATE": {
+        "TEXT": "Last measurement performed",
+        "SUBTEXT": "The graph below represents all the values captured in the last measurement performed"
+      },
+      "FREQUENCY": "Frequency",
+      "UNAVAILABLE-DATA": "No registered heart rate record!"
+    },
+    "HEIGHT": {
+      "TITLE": "Stature",
+      "SUBTITLE": "",
+      "HEIGHT": "Height",
+      "UNAVAILABLE-DATA": "No record of height registered!"
+    },
+    "WAIST-CIRCUMFERENCE": {
+      "TITLE": "Waist circumference",
+      "SUBTITLE": "",
+      "CIRCUMFERENCE": "Circumference",
+      "UNAVAILABLE-DATA": "No record of waist circumference recorded!"
+    },
+    "WEIGHT": {
+      "TITLE": "Weight",
+      "SUBTITLE": "",
+      "BODY-FAT": "Body fat",
+      "FAT": "Fat",
+      "UNAVAILABLE-DATA": "No record of height registered!"
+    },
+    "COMPONENT": {
+      "CONFIG-GRAPH": "Set up visible graphics",
+      "EXPAND-COLLAPSE": "Click to expand/collapse...",
+      "WEIGHT": "Weight",
+      "HEIGHT": "Height",
+      "FAT": "Body fat",
+      "WAIST-CIRCUMFERENCE": "Waist circumference",
+      "TEMPERATURE": "Body temperature",
+      "GLUCOSE": "Blood Glucose",
+      "PRESSURE": "Blood pressure",
+      "HEART-RATE": "Heart rate"
+    },
+    "PIPES": {
+      "MEAL": {
+        "PREPRANDIAL": "Pre-prandial",
+        "POSTPRANDIAL": "Pos-prandial",
+        "FASTING": "Fasting",
+        "CASUAL": "Casual",
+        "BEDTIME": "Before bedtime"
+      },
+      "MEASUREMENT-TYPE": {
+        "WEIGHT": "Weight",
+        "HEIGHT": "Height",
+        "FAT": "Body Fat",
+        "WAIST-CIRCUMFERENCE": "Waist Circumference",
+        "BODY-TEMPERATURE": "Body Temperature",
+        "BLOOD-GLUCOSE": "Glucose",
+        "BLOOD-PRESSURE": "Blood Pressure",
+        "HEART-RATE": "Heart Rate"
+      },
+      "UNDEFINED": "Out of parameters",
+      "NOTFOUND": "NOT FOUND"
+    },
+    "MEASUREMENT-CARD": {
+      "FILTER-OPTIONS": "Filter options",
+      "TODAY": "Today",
+      "WEEK": "Week",
+      "MONTH": "Month",
+      "YEAR": "Year"
+    },
+    "LOG-MEASUREMENTS-CARD": {
+      "TITLE": "Measurement log history",
+      "SUBTITLE": "",
+      "DELETE-MEASUREMENT": "Delete measurement",
+      "VIEW-MEASUREMENT": "View details",
+      "MEASUREMENT-TYPE": "Measurement Type",
+      "REMOVE-SELECTED": "Remove selected",
+      "LIST-EMPTY": "No measurements found!",
+      "LIST-EMPTY-MESSAGE": "The selected measurement type has no registered records.",
+      "LOADING-MEASUREMENTS": "Loading measurements...",
+      "GENERIC-TABLE": {
+        "ACTIONS": "Actions",
+        "AT": "at",
+        "COLLECTION-DATE": "Collection Date and Time",
+        "VALUE": "Value"
+      },
+      "WEIGHT-TABLE": {
+        "WEIGHT": "Weight",
+        "BODY-FAT": "Body Fat",
+        "NOT-COLLECTED": "Not collected"
+      },
+      "GLUCOSE-TABLE": {
+        "MEAL": "Meal Type"
+      },
+      "PRESSURE-TABLE": {
+        "PRESSURE": "Pressure",
+        "PULSE": "Pulse"
+      },
+      "HEART-RATE-TABLE": {
+        "DATASET": "Frequencies"
+      },
+      "MODAL-REMOVE": {
+        "CONFIRM-UNIQUE-REMOVE": "Are you sure you want to remove the measurement?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Are you sure you want to remove ",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "measurement(s)?"
+      }
+    },
+    "LAST-REGISTER": "Last register",
+    "LAST-REGISTER-DATE": "Date of last record",
+    "PATTERN-DATE": "month/day/year hour",
+    "VALUE": "Value",
+    "UNIT": "Unit",
+    "MIN": "MIN",
+    "MAX": "MAX",
+    "AVERAGE": "Average",
+    "AVERAGE-VALUE": "Average value"
+  },
+  "MYDATEPIPE": {
+    "AT": "at",
+    "HOURS": "hours."
+  },
+  "NAVBAR": {
+    "ADMINS-USERS": "Users - Admins",
+    "HEALTH-PRO-USERS": "Users - Health Professionals",
+    "DETAILS-PATIENT": "Patient - Details",
+    "DETAILS-STUDY": "Study - Details",
+    "NUTRITION-EVALUATIONS": "Evaluations - Nutritional",
+    "WELCOME": "Welcome",
+    "SELECT-STUDY": "Selected study"
+  },
+  "PAGE-NOT-FOUND": {
+    "TITLE": "Page not found",
+    "MESSAGE": "You tried to access a page not found by our server",
+    "REDIRECT-PART1": "Redirecting to homepage at",
+    "REDIRECT-PART2": "seconds"
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Items per page",
+    "NEXT_PAGE": "Next page",
+    "PREVIOUS_PAGE": "Previous page",
+    "OF": "of"
+  },
+  "PATIENTS": {
+    "LIST-PILOTSTUDIES": {
+      "TOVIEW-PATIENTS": "Click to view patients ..."
+    },
+    "PATIENTS-COMPONENT": {
+      "TITLE": "List of patients",
+      "SUBTITLE": ""
+    },
+    "PATIENTS-FORM": {
+      "TITLE-CREATE": "Create a patient",
+      "TITLE-EDIT": "Edit patient",
+      "SUBTITLE": "",
+      "SELECT-BIRTH-DATE": "Select the date of birth",
+      "ASSOCIATE-STUDY": "Associated study",
+      "SELECT-STUDY": "- - - - select a study - - - -",
+      "INVALID-STUDY": "Invalid study"
+    },
+    "PATIENTS-TABLE": {
+      "PLACEHOLDER-SEARCH": "Search patient ...",
+      "LIST-EMPTY": "No patient registered",
+      "LIST-EMPTY-MESSAGE": "Use the 'Add' button to add patients to the study",
+      "TOVIEW-PATIENT": "View details ...",
+      "EDIT-PATIENT": "Edit patient ...",
+      "DELETE-PATIENT": "Delete patient ...",
+      "DELETE-CONFIRMATION": "Are you sure you want to remove patient?"
+    },
+    "VIEW-HABITS": {
+      "TOVIEW-EVALUATIONS": "View evaluations...",
+      "NUTRITION-EVALUATIONS": "Nutritional evaluations",
+      "CARD-PERSONAL-INFO": {
+        "TITLE": "Patient personal information",
+        "SUBTITLE": ""
+      },
+      "HABITS": "HABITS",
+      "MEASUREMENTS": "GRAPH OF MEASUREMENTS",
+      "LOG-MEASUREMENTS": "LOG OF MEASUREMENTS"
+    }
+  },
+  "PILOT-STUDY": {
+    "CARD-PILOTSTUDIES": {
+      "TITLE": "List of pilot studies",
+      "TITLE-CREATE": "Create a pilot study",
+      "TITLE-EDIT": "Edit a pilot study",
+      "SUBTITLE": ""
+    },
+    "PLACEHOLDER-PERIOD": "Select a period",
+    "TOTAL-PATIENTS": "Total patients",
+    "SPINNER-MESSAGE": "Loading available files",
+    "FILESEMPTY": "No files found.",
+    "FILESEMPTY-MESSAGE": "* Use the button below to request a new file!",
+    "DELETE": "Delete evaluation ...",
+    "OPTIONS-DOWNLOAD": "Download options ...",
+    "DOWNLOAD-CSV": "Download CSV",
+    "DOWNLOAD-XLS": "Download XLS",
+    "NEW-FILE": "Request New File",
+    "DELETE-CONFIRMATION": "Are you sure you want to remove evaluation?",
+    "ODONTOLOGICAL-EVALUATON": "Dental evaluation",
+    "FILECSV": "File CSV",
+    "FILEXLS": "File XLS",
+    "GENERATINGFILE": "Generating file",
+    "REMOVINGFILE": "Removing file",
+    "START": "Start",
+    "END": "End",
+    "INVALID-DATE-START": "Invalid start date",
+    "INVALID-DATE-END": "Invalid end date",
+    "PLACEHOLDER-DATE-START": "Select start date",
+    "PLACEHOLDER-DATE-END": "Select the end date",
+    "SITUATION": "Situation",
+    "PROFESSIONALS": "Professionals",
+    "SELECT-PROFESSIONALS": "Select professionals",
+    "MANAGE-PROFESSIONALS": {
+      "TITLE": "Manage professionals",
+      "SUBTITLE": "",
+      "ADDPROFESSIONAL": "Add new professional",
+      "ASSOCIATE-PROFESSIONALS": "Associate professionals",
+      "DISASSOCIATE-PROFESSIONAL": "Disassociate professional...",
+      "REMOVE": "To remove"
+    },
+    "PLACEHOLDER-SEARCH": "Search for study...",
+    "NAME-OF-STUDY": "Name of study",
+    "TOVIEW-STUDY": "To view study...",
+    "EDIT-STUDY": "Edit study...",
+    "DELETE-STUDY": "Delete study...",
+    "PROFESSIONAL": "Professional",
+    "CARD-PILOT-STUDY": {
+      "TITLE": "Pilot study",
+      "SUBTITLE": ""
+    },
+    "CARD-FILES": {
+      "TITLE": "Files available for download",
+      "SUBTITLE": ""
+    }
+  },
+  "SIDEBAR": {
+    "USERS": "Users",
+    "ADMINS": "Admins",
+    "HEALTHPROFESSIONALS": "Health professionals"
+  },
+  "SHARED": {
+    "NAME": "Name",
+    "INVALID-NAME": "Invalid name",
+    "EMAIL": "Email",
+    "INVALID-EMAIL": "Invalid email",
+    "AREA": "Area",
+    "INVALID-AREA": "Invalid area",
+    "HEALTH-AREA-NUTRITION": "Nutrition",
+    "HEALTH-AREA-DENTISTRY": "Dentist",
+    "HEALTH-AREA-UNDEFINED": "Out of parameters",
+    "NOT-FOUND": "Not found",
+    "SAVE": "Save",
+    "PASSWORD-OLD": "Current password",
+    "PASSWORD-NEW": "New password",
+    "INCORRECT-PASSWORD": "Incorret password",
+    "PASSWORD-RULES-MESSAGE": "Your password must be at least 6 characters long including letters, numbers, and symbols",
+    "CHANGE-PASSWORD": "Change password",
+    "CONFIG": "Settings",
+    "LOGOUT": "Logout",
+    "HOME-PAGE": "Home page",
+    "MY-STUDIES": "My studies",
+    "MY-EVALUATIONS": "My evaluations",
+    "PILOTSTUDIES": "Pilot studies",
+    "PATIENTS": "Patients",
+    "ADD": "Add",
+    "ACTIONS": "Actions",
+    "PASSWORD": "Password",
+    "PASSWORD-CONFIRM": "Confirm the password",
+    "INVALID-PASSWORD": "Invalid password",
+    "PASSWORD-NOTMATCH": "Enter the same password",
+    "REQUERID-FIELD": "Required field",
+    "CLOSE": "Close",
+    "DATE": "Date",
+    "DATE-AND-HOUR": "Date and Hour",
+    "AT": "at",
+    "DATE-START": "Start date",
+    "DATE-END": "End date",
+    "STUDY-ACTIVATED": "ACTIVATED",
+    "STUDY-DISABLED": "DISABLED",
+    "TOCLEAN": "To clean",
+    "LOCAL": "Local",
+    "INVALID-LOCAL": "Invalid local",
+    "TOBACK": "To back",
+    "LIST-EMPTY": "No records found",
+    "TOVIEW": "To view",
+    "PATIENT": "Patient",
+    "PHONE": "Phone",
+    "INVALID-PHONE": "Invalid phone",
+    "ONLY-NUMBERS": "Enter numbers only",
+    "GENDER": "Gender",
+    "INVALID-GENDER": "Invalid gender",
+    "BIRTH-DATE": "Birth date",
+    "INVALID-BIRTH-DATE": "Invalid birth date",
+    "NAME-OF-PATIENT": "Name of patient",
+    "AGE": "Age",
+    "YEARS": "YEARS",
+    "CANCEL": "Cancel",
+    "PIPES": {
+      "GENDER": {
+        "MALE": "MALE",
+        "FEMALE": "FEMALE"
+      },
+      "UNDEFINED": "Out of parameters",
+      "NOTFOUND": "NOT FOUND"
+    },
+    "COMPONENTS": {
+      "MODAL-CONFIRMATION": {
+        "TITLE": "Confirmation",
+        "NO": "No",
+        "YES": "Yes"
+      },
+      "SELECT-PILOT-STUDY": {
+        "WELCOME": "Welcome",
+        "HERE-YOU-CAN": "Here you can",
+        "MANAGE-YOUR-STUDIES": "Manage your studies",
+        "MANAGE-YOUR-PATIENTES": "Manage your patientes",
+        "MANAGE-YOUR-EVALUATIONS": "Manage your evaluations",
+        "VIEW-HABITS": "View habits and measurements of your patients",
+        "MANY-MORE": "and many more...",
+        "SELECT-FOR-CONTINUE": "To continue we need to select a pilot study",
+        "PROCEED": "Proceed",
+        "SEARCH-STUDIES": "* You can use the search bar using the name of the study you want",
+        "CLICK-FOR-SELECT": "Click on the study to select it.",
+        "UNDERSTOOD": "Understood"
+      }
+    }
+  },
+  "SECURITY": {
+    "LOGIN": {
+      "PLACEHOLDER-EMAIL": "Enter your email here...",
+      "PLACEHOLDER-PASSWORD": "Enter your password here...",
+      "LOGIN": "Login",
+      "FORGOT-PASSWORD": "Forgot your password?",
+      "RESET-HERE": "reset here"
+    },
+    "CHANGE": {
+      "FIRST-ACCESS": "First access",
+      "PASSWORD-OLD": "Old password",
+      "PLACEHOLDER-PASSWORD-OLD": "Enter your old password here...",
+      "PASSWORD-NEW": "New password",
+      "PLACEHOLDER-PASSWORD-NEW": "Enter your new password here..."
+    }
+  },
+  "TABLE-USER": {
+    "PLACEHOLDER-SEARCH": "Search for user ...",
+    "SPINNER-MESSAGE": "Loading users",
+    "LIST-EMPTY": "No records found",
+    "EDIT": "Edit user ...",
+    "DELETE": "Delete user ...",
+    "DELETE-CONFIRMATION": "Are you sure you want to remove user?"
+  },
+  "TOAST-MESSAGES": {
+    "NOT-LIST-ADMIN": "Could not list admin!",
+    "ADMIN-CREATED": "Administrator created!",
+    "EMAIL-REGISTRED": "E-mail already registered",
+    "NOT-CREATE-ADMIN": "Could not create admin!",
+    "ADMIN-UPDATED": "Administrator updated!",
+    "NOT-UPDATED-ADMIN": "Could not update administrator!",
+    "INFO-UPDATED": "Updated informations!",
+    "NOT-UPDATED-INFO": "Could not update information!",
+    "USER-DELETED": "User deleted successfully!",
+    "NOT-USER-DELETED": "Could not delete user!",
+    "NOT-FIND-USER": "Could not fetch user!",
+    "NOT-LIST-HEALTHPROFESSIONALS": "Unable to list health professional!",
+    "HEALTHPROFESSIONAL-CREATED": "Health professional created!",
+    "HEALTHPROFESSIONAL-NOT-CREATED": "Could not create health professional!",
+    "HEALTHPROFESSIONAL-UPDATED": "Health professional updated!",
+    "HEALTHPROFESSIONAL-NOT-UPDATED": "Unable to update health professional!",
+    "INFO-NOT-LOAD": "Could not load information!",
+    "EVALUATION-REMOVED": "Evaluation removed successfully!",
+    "EVALUATION-NOT-REMOVED": "Unable to remove evaluation!",
+    "STUDY-NOT-FOUND": "Study not found",
+    "HEALTHPROFESSIONALS-NOTFOUND": "Professional not found",
+    "STUDY-EMPTY": "The selected study has no patients!",
+    "PATIENT-ERROR": "Some patient does not have the necessary information!",
+    "EVALUATION-NOT-GENERATED": "Could not generate evaluation",
+    "NOT-LOAD-NUTRITION-EVALUATION": "Could not load nutritional assessment!",
+    "PATIENT-NOT-IDENTIFIED": "The patient could not be identified!",
+    "EVALUATION-COMPLETED": "Evaluation completed successfully!",
+    "EVALUATION-NOT-COMPLETED": "Unable to finalize evaluation!",
+    "COUNSELING-NOT-ADD": "Could not add counselig",
+    "EVALUATION-SEND": "Evaluation submitted successfully!",
+    "EVALUATION-NOT-SEND": "Could not submit evaluation successfully!",
+    "STUDY-UPDATED": "Pilot study updated!",
+    "STUDY-NOT-UPDATED": "Could not update pilot study!",
+    "STUDY-REMOVED": "Study successfully removed!",
+    "STUDY-NOT-REMOVED": "Could not remove study!",
+    "NOT-FIND-DEVICES": "Could not fetch devices!",
+    "PATIENT-CREATED": "Patient created!",
+    "PATIENT-NOT-CREATED": "Could not create patient!",
+    "PATIENT-UPDATED": "Patient updated!",
+    "PATIENT-NOT-UPDATED": "Could not update patient!",
+    "PATIENT-REMOVED": "Patient removed successfully!",
+    "PATIENT-NOT-REMOVED": "Could not remove patient!",
+    "PATIENT-NOT-FIND": "Could not find patient!",
+    "FILE-REMOVED": "File removed successfully!",
+    "FILE-NOT-REMOVED": "Could not remove file!",
+    "STUDY-NOT-FIND": "Could not find pilot study!",
+    "STUDY-CREATED": "Pilot study created!",
+    "STUDY-NOT-CREATED": "Could not create pilot study!",
+    "HEALTHPROFESSIONAL-REMOVED": "Professional successfully removed!",
+    "HEALTHPROFESSIONAL-NOT-REMOVED": "Could not remove professional!",
+    "HEALTHPROFESSIONAL-ADD": "Professional added successfully!",
+    "HEALTHPROFESSIONAL-NOT-ADD": "Could not add professional!",
+    "PASSWORD-UPDATED": "Password modified successfully!",
+    "PASSWORD-NOT-UPDATED": "Could not change your password!",
+    "PASSWORD-OLD-INCORRECT": "Old password entered incorrect!",
+    "INVALID-DATA": "Invalid data",
+    "NOT-LOGIN": "Could not login",
+    "BLOCKED-USER": "Blocked user!",
+    "TRY-AGAIN": "Try again after 1 hour.",
+    "NOT-CHANGE-LANGUAGE": "Could not change language!"
+  }
+}

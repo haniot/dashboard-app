@@ -1,9 +1,9 @@
-class UserEmail {
+export class UserEmail {
     name: string;
     email: string;
 }
 
-class Attachments {
+export class Attachments {
     filename: string;
     path: string;
     content_type: string;
@@ -18,4 +18,12 @@ export class NotificationEmail {
     text: string;
     html: string;
     attachments: Array<Attachments>;
+
+    constructor() {
+        this.reply = new UserEmail();
+        this.to = new Array<UserEmail>();
+        this.cc = new Array<UserEmail>();
+        this.bcc = new Array<UserEmail>();
+        this.attachments = new Array<Attachments>();
+    }
 }
