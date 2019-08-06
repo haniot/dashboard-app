@@ -647,6 +647,7 @@
     "PASSWORD-NEW": "New password",
     "INCORRECT-PASSWORD": "Incorret password",
     "PASSWORD-RULES-MESSAGE": "Your password must be at least 6 characters long including letters, numbers, and symbols",
+    "PASSWORD-CONFIRM-MESSAGE":"Passwords do not match!",
     "CHANGE-PASSWORD": "Change password",
     "CONFIG": "Settings",
     "LOGOUT": "Logout",
@@ -727,11 +728,19 @@
       "RESET-HERE": "reset here"
     },
     "CHANGE": {
-      "FIRST-ACCESS": "First access",
-      "PASSWORD-OLD": "Old password",
-      "PLACEHOLDER-PASSWORD-OLD": "Enter your old password here...",
-      "PASSWORD-NEW": "New password",
-      "PLACEHOLDER-PASSWORD-NEW": "Enter your new password here..."
+      "CHANGE-PASSWORD": "Change Password",
+      "PASSWORD": "Password",
+      "PLACEHOLDER-PASSWORD": "Enter your new password here...",
+      "CONFIRM-PASSWORD": "Confirm the Password",
+      "PLACEHOLDER-CONFIRM-PASSWORD": "Enter your new password here..."
+    },
+    "FORGOT": {
+      "PASSWORD-RECOVERY": "Recovery Password",
+      "SUBMIT": "Submit",
+      "RECOVERY-SUCCESS": "Recovery email sent to",
+      "RECOVERY-ERROR": "Unable to recover password!",
+      "TRY_AGAIN": "Try again after 24 hours",
+      "TOO-MANY-ATTEMPTS": "Too many attempts!"
     }
   },
   "TABLE-USER": {
@@ -797,7 +806,8 @@
     "HEALTHPROFESSIONAL-NOT-ADD": "Could not add professional!",
     "PASSWORD-UPDATED": "Password modified successfully!",
     "PASSWORD-NOT-UPDATED": "Could not change your password!",
-    "PASSWORD-OLD-INCORRECT": "Old password entered incorrect!",
+    "INVALID-TOKEN":"Token inválido ou expirado!",
+    "TOO-MANY-REQUESTS": "Limite de solicitações excedido!",
     "INVALID-DATA": "Invalid data",
     "NOT-LOGIN": "Could not login",
     "BLOCKED-USER": "Blocked user!",

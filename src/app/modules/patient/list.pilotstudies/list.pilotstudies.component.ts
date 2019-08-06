@@ -8,7 +8,7 @@ import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;

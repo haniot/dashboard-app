@@ -10,7 +10,7 @@ import { UserService } from 'app/modules/admin/services/users.service';
 import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 
 

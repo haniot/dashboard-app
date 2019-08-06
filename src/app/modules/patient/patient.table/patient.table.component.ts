@@ -10,7 +10,7 @@ import { LoadingService } from '../../../shared/shared.components/loading.compon
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { Patient } from '../models/patient';
 import { PatientService } from '../services/patient.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;

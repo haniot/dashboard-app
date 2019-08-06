@@ -5,7 +5,7 @@ import { UserService } from 'app/modules/admin/services/users.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { VerifyScopeService } from 'app/security/services/verify.scope.service';
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 
 declare const $: any;
 

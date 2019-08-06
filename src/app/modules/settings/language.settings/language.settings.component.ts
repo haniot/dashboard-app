@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from '../../admin/services/users.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { LanguagesConfiguration } from '../../../../assets/i18n/config.js';
 
 const languagesConfig = LanguagesConfiguration;

@@ -17,7 +17,7 @@ import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
 import { HeartRate } from 'app/modules/measurement/models/heart-rate';
 import { MealType } from '../../measurement/models/blood-glucose';
 import { GeneratePdfService } from '../services/generate.pdf.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SendEmailService } from '../services/send.email.service';
 
 @Component({

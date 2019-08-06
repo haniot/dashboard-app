@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AuthService } from 'app/security/auth/services/auth.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { HealtArea, HealthProfessional } from '../../admin/models/users';
 import { HealthProfessionalService } from '../../admin/services/health.professional.service';
 import { UserService } from '../../admin/services/users.service';

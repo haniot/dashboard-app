@@ -9,7 +9,7 @@ import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.
 import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;

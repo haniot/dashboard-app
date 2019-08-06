@@ -8,7 +8,7 @@ import { HealthProfessionalService } from '../services/health.professional.servi
 import { Admin } from '../models/users';
 import { UserService } from '../services/users.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { User } from '../../../shared/shared.models/user';
 
 @Component({

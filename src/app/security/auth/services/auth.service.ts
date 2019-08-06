@@ -9,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
 import * as JWT_decode from 'jwt-decode';
 import { tap } from 'rxjs/operators';
 
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 
 @Injectable()
 export class AuthService {
@@ -62,15 +62,16 @@ export class AuthService {
     }
 
 
-    changePassowrd(credentials: { name: string, email: string, password: string }, redirect_link): Observable<boolean> {
-        return this.http.patch<any>(`${environment.api_url}${redirect_link}`, credentials)
-            .pipe(
-                tap(data => {
-                    this.router.navigate(['auth/login']);
-                    return observableOf(true);
-                })
-            );
+    changePassword(credentials: { email: string, new_password: string }): Promise<boolean> {
+        return this.http.patch<any>(`${environment.api_url}/auth/password`, credentials)
+            .toPromise();
 
+    }
+
+    forgot(email: string): Promise<any> {
+        return Promise.resolve(true)
+        return this.http.post<any>(`${environment.api_url}/v1/auth/forgot`, { email })
+            .toPromise();
     }
 
     getScopeUser(): String {

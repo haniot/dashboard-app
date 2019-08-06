@@ -7,7 +7,7 @@ import { AdminService } from 'app/modules/admin/services/admin.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health.professional.service';
 import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
 import { PatientService } from 'app/modules/patient/services/patient.service';
-import { LocalStorageService } from './localstorage.service';
+import { LocalStorageService } from './local.storage.service';
 import { NotificationService } from './notification.service';
 
 @NgModule({

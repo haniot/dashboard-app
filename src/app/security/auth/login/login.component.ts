@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { RecaptchaComponent } from 'ng-recaptcha'
 
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service'
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 import { environment } from '../../../../environments/environment'
 
 const ATTEMPTSSHOWCAPTCHA = 2;

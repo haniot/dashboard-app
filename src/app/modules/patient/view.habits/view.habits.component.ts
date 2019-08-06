@@ -11,7 +11,7 @@ import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.
 import { Patient, Gender } from '../models/patient';
 import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
 import { FeedingRecordService } from '../../habits/services/feeding.record.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 
 @Component({
     selector: 'app-view-habits',

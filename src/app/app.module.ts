@@ -94,7 +94,7 @@ export class AppModule {
         const browserLang = this.translate.getBrowserLang();
 
         languages.forEach(language => {
-            if (language.match(browserLang)) {
+            if (language.match(browserLang) && language.match(browserLang).length) {
                 return this.translate.use(language);
             }
         })

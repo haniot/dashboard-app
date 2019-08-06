@@ -5,7 +5,7 @@ import { MeasurementService } from '../services/measurement.service';
 import { BloodPressure } from '../models/blood-pressure';
 import { HeartRate } from '../models/heart-rate';
 import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 
 class ConfigVisibility {
     weight: boolean;

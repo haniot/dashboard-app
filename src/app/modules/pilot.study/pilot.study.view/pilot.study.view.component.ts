@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HealthProfessional } from 'app/modules/admin/models/users';
 import { PilotStudyService } from '../services/pilot.study.service';
 import { PilotStudy } from '../models/pilot.study';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 
 @Component({
     selector: 'app-pilot-study-view',

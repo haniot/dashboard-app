@@ -7,7 +7,7 @@ import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study';
 import { LoadingService } from '../loading.component/service/loading.service';
 import { SelectPilotStudyService } from './service/select.pilot.study.service';
 import { AuthService } from '../../../security/auth/services/auth.service';
-import { LocalStorageService } from '../../shared.services/localstorage.service';
+import { LocalStorageService } from '../../shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../../modules/config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;

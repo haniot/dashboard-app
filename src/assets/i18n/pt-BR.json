@@ -647,6 +647,7 @@
     "PASSWORD-NEW": "Senha nova",
     "INCORRECT-PASSWORD": "Senha incorreta",
     "PASSWORD-RULES-MESSAGE": "Sua senha deve ter no mínimo 6 caracteres incluindo letras, números e símbolos",
+    "PASSWORD-CONFIRM-MESSAGE": "As senhas não coincidem!",
     "CHANGE-PASSWORD": "Alterar senha",
     "CONFIG": "Configurações",
     "LOGOUT": "Sair",
@@ -727,11 +728,19 @@
       "RESET-HERE": "redefina aqui"
     },
     "CHANGE": {
-      "FIRST-ACCESS": "Primeiro acesso",
-      "PASSWORD-OLD": "Senha antiga",
-      "PLACEHOLDER-PASSWORD-OLD": "Digite aqui sua senha antiga...",
-      "PASSWORD-NEW": "Senha nova",
-      "PLACEHOLDER-PASSWORD-NEW": "Digite aqui sua senha nova..."
+      "CHANGE-PASSWORD": "Alteração de senha",
+      "PASSWORD": "Senha",
+      "PLACEHOLDER-PASSWORD": "Digite aqui sua nova senha...",
+      "CONFIRM-PASSWORD": "Confirme à senha",
+      "PLACEHOLDER-CONFIRM-PASSWORD": "Digite sua confirmação de senha aqui..."
+    },
+    "FORGOT": {
+      "PASSWORD-RECOVERY": "Recuperação de senha",
+      "SUBMIT": "Enviar",
+      "RECOVERY-SUCCESS": "Email de recuperação enviado para",
+      "RECOVERY-ERROR": "Não foi possível recuperar senha!",
+      "TRY_AGAIN": "Tente novamente após 24 horas",
+      "TOO-MANY-ATTEMPTS": "Excesso de tentativas!"
     }
   },
   "TABLE-USER": {
@@ -796,8 +805,9 @@
     "HEALTHPROFESSIONAL-ADD": "Profissional adicionado com sucesso!",
     "HEALTHPROFESSIONAL-NOT-ADD": "Não foi possível adicionar professional!",
     "PASSWORD-UPDATED": "Senha modificada com sucesso!",
+    "INVALID-TOKEN": "Token inválido ou expirado!",
+    "TOO-MANY-REQUESTS": "Limite de solicitações excedido!",
     "PASSWORD-NOT-UPDATED": "Não foi possível mudar sua senha!",
-    "PASSWORD-OLD-INCORRECT": "Senha antiga informada incorreta!",
     "INVALID-DATA": "Dados inválidos",
     "NOT-LOGIN": "Não foi possível entrar",
     "BLOCKED-USER": "Usuário bloqueado!",

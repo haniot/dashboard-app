@@ -12,7 +12,7 @@ import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
 import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
 import { PatientService } from '../services/patient.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 
 @Component({
     selector: 'patient-form',

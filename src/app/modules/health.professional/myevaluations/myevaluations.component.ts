@@ -9,7 +9,7 @@ import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluatio
 import { EvaluationService } from '../../evaluation/services/evaluation.service';
 import { NutritionEvaluationService } from '../../evaluation/services/nutrition.evaluation.service';
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;

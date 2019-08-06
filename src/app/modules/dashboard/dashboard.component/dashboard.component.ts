@@ -13,7 +13,7 @@ import { Unit } from '../models/unit';
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { Patient } from '../../patient/models/patient';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic } from '../../config.matpaginator';
 
 const PaginatorConfig = ConfigurationBasic;
