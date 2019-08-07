@@ -11,8 +11,8 @@ import { FamilyCohesionRecord } from '../models/family.cohesion.record';
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class FamilyCohesionRecordComponent implements OnInit, OnChanges {
+    @Input() familyCohesionRecord: FamilyCohesionRecord;
     @Input() patientId: string;
-    listFamilyCohesion: Array<FamilyCohesionRecord>;
     familyForm: FormGroup;
     index: number;
 
@@ -22,7 +22,7 @@ export class FamilyCohesionRecordComponent implements OnInit, OnChanges {
         private frequencyPipe: FrequencyFamilycohesionPipe
     ) {
         this.index = 0;
-        this.listFamilyCohesion = new Array<FamilyCohesionRecord>();
+        this.familyCohesionRecord = new FamilyCohesionRecord();
     }
 
     ngOnInit() {
@@ -31,8 +31,6 @@ export class FamilyCohesionRecordComponent implements OnInit, OnChanges {
 
     createFamilyFormInit() {
         this.familyForm = this.fb.group({
-            id: [''],
-            created_at: [{ value: '', disabled: true }],
             family_mutual_aid_freq: [{ value: '', disabled: true }],
             friendship_approval_freq: [{ value: '', disabled: true }],
             family_only_task_freq: [{ value: '', disabled: true }],
@@ -50,8 +48,6 @@ export class FamilyCohesionRecordComponent implements OnInit, OnChanges {
 
     createFamilyForm(familyRecord: FamilyCohesionRecord) {
         this.familyForm = this.fb.group({
-            id: [{ value: familyRecord.id, disabled: true }],
-            created_at: [{ value: familyRecord.created_at, disabled: true }],
             family_mutual_aid_freq: [{ value: familyRecord.family_mutual_aid_freq, disabled: true }],
             friendship_approval_freq: [{ value: familyRecord.friendship_approval_freq, disabled: true }],
             family_only_task_freq: [{ value: familyRecord.family_only_task_freq, disabled: true }],
@@ -88,23 +84,13 @@ export class FamilyCohesionRecordComponent implements OnInit, OnChanges {
         if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
             this.familyService.getAll(this.patientId)
                 .then(familyRecords => {
-                    this.listFamilyCohesion = familyRecords;
                     this.createFamilyForm(familyRecords[0]);
                 })
                 .catch();
         }
-    }
-
-    prev() {
-        if (this.index) {
-            this.index--;
+        if (this.familyCohesionRecord && changes.familyCohesionRecord.currentValue !== changes.familyCohesionRecord.previousValue) {
+            this.createFamilyForm(this.familyCohesionRecord);
         }
-        this.createFamilyForm(this.listFamilyCohesion[this.index]);
-    }
-
-    next() {
-        this.index++;
-        this.createFamilyForm(this.listFamilyCohesion[this.index]);
     }
 
 }

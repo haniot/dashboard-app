@@ -5,10 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from '../services/admin.service';
 import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { Admin } from '../models/users';
+import { Admin } from '../models/admin';
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { TranslateService } from '@ngx-translate/core';
-import { User } from '../../../shared/shared.models/user';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -20,8 +20,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./administrators.component.scss']
 })
 export class AdministratorsComponent implements AfterViewChecked {
-    userEdit: User = new Admin();
-    admins: Array<User> = [];
+    userEdit: GenericUser = new Admin();
+    admins: Array<GenericUser> = [];
     errorCredentials = false;
     page: number;
     limit: number;

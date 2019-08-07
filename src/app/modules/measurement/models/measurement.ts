@@ -13,13 +13,13 @@ export class GenericMeasurement {
     id: string;
     unit: string;
     type: MeasurementType;
-    user_id: string;
+    patient_id: string;
     device_id?: string;
 
     constructor() {
         this.id = ''
         this.unit = '';
-        this.user_id = '';
+        this.patient_id = '';
         this.device_id = '';
     }
 }

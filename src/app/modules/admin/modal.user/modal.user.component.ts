@@ -7,7 +7,7 @@ import { ISubscription } from 'rxjs-compat/Subscription';
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health.professional.service';
 import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { HealtArea } from '../models/users';
+import { HealtArea } from '../models/health.professional';
 
 @Component({
     selector: 'app-modal-user',

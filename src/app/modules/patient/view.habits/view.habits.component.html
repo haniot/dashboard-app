@@ -95,11 +95,41 @@
             </div>
             <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3"
                  *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                <familycohesion-record [(patientId)]="patientId"></familycohesion-record>
+                <familycohesion-record [familyCohesionRecord]="familyCohesion"></familycohesion-record>
             </div>
             <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9"
                  *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                <sociodemographic-record [(patientId)]="patientId"></sociodemographic-record>
+                <sociodemographic-record [socioDemographicRecord]="socioDemographic"></sociodemographic-record>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="d-flex justify-content-around">
+                    <div class="p-2">
+                        <button mat-raised-button type="button"
+                                class="btn btn-white btn-round btn-just-icon"
+                                [title]="'HABITS.PREVIOUS'|translate"
+                                (click)="prev()"
+                                [disabled]="page===1">
+                            <i class="material-icons">arrow_back</i>
+                        </button>
+                    </div>
+                    <div class="p-2">
+                        <small class="pull-right"
+                               *ngIf="nutritionalQuestionnaire.created_at">
+                            {{'HABITS.REGISTER-DATE'|translate}}:
+                            {{nutritionalQuestionnaire.created_at | myDate }}</small>
+                        <small class="pull-right"
+                               *ngIf="!nutritionalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                    </div>
+                    <div class="p-2">
+                        <button mat-raised-button type="button"
+                                class="btn btn-white btn-round btn-just-icon pull-right"
+                                [title]="'HABITS.NEXT'|translate"
+                                (click)="next()">
+                            <i class="material-icons">arrow_forward</i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -110,26 +140,58 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
-                                    <feeding-habits [(patientId)]="patientId"></feeding-habits>
+                                    <feeding-habits [feedingHabitsRecord]="feedingHabit"></feeding-habits>
                                 </div>
 
                                 <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
-                                    <sleep-habits [(patientId)]="patientId"></sleep-habits>
+                                    <sleep-habits [sleepHabit]="sleepHabit"></sleep-habits>
                                 </div>
 
                                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
                                      *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
-                                    <physical-activity-habits [(patientId)]="patientId"></physical-activity-habits>
+                                    <physical-activity-habits
+                                            [physicalRecord]="physicalHabit"></physical-activity-habits>
                                 </div>
 
                                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
                                      *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
-                                    <medical-record [(patientId)]="patientId"></medical-record>
+                                    <medical-record [medicalRecord]="medicalHabit"></medical-record>
                                 </div>
 
                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                      *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                                    <oralhealth-record [(patientId)]="patientId"></oralhealth-record>
+                                    <oralhealth-record [oralHealthRecord]="oralHealthHabit"></oralhealth-record>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="d-flex justify-content-around">
+                                        <div class="p-2">
+                                            <button mat-raised-button type="button"
+                                                    class="btn btn-white btn-round btn-just-icon"
+                                                    [title]="'HABITS.PREVIOUS'|translate"
+                                                    (click)="prev()"
+                                                    [disabled]="page===1">
+                                                <i class="material-icons">arrow_back</i>
+                                            </button>
+                                        </div>
+                                        <div class="p-2">
+                                            <small class="pull-right"
+                                                   *ngIf="nutritionalQuestionnaire.created_at">
+                                                {{'HABITS.REGISTER-DATE'|translate}}:
+                                                {{nutritionalQuestionnaire.created_at | myDate }}</small>
+                                            <small class="pull-right"
+                                                   *ngIf="!nutritionalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                                                : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                                        </div>
+                                        <div class="p-2">
+                                            <button mat-raised-button type="button"
+                                                    class="btn btn-white btn-round btn-just-icon pull-right"
+                                                    [title]="'HABITS.NEXT'|translate"
+                                                    (click)="next()">
+                                                <i class="material-icons">arrow_forward</i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>

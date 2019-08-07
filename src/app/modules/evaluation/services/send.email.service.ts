@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 import Mustache from 'mustache';
 
 import { NutritionEvaluation } from '../models/nutrition-evaluation';
-import { Attachments, NotificationEmail } from '../models/notification-email';
+import { Attachments, Email } from '../models/email';
 import { NotificationService } from '../../../shared/shared.services/notification.service';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class SendEmailService {
     async sendNutritionalEvaluationViaEmail(healthProfessinal: { name: string, email: string },
                                             nutritonalEvaluation: NutritionEvaluation, filePDF: any) {
 
-        const notification = new NotificationEmail();
+        const notification = new Email();
 
         notification.reply = { name: healthProfessinal.name, email: healthProfessinal.email };
 

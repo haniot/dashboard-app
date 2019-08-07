@@ -9,7 +9,9 @@ export class Attachments {
     content_type: string;
 }
 
-export class NotificationEmail {
+export class Email {
+    id: string;
+    created_at: string;
     reply: UserEmail;
     to: Array<UserEmail>;
     cc: Array<UserEmail>;
@@ -20,10 +22,15 @@ export class NotificationEmail {
     attachments: Array<Attachments>;
 
     constructor() {
+        this.id = '';
+        this.created_at = '';
         this.reply = new UserEmail();
         this.to = new Array<UserEmail>();
         this.cc = new Array<UserEmail>();
         this.bcc = new Array<UserEmail>();
         this.attachments = new Array<Attachments>();
+        this.text = '';
+        this.subject = '';
+        this.html = '';
     }
 }

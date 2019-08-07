@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
-import { HealthProfessional } from 'app/modules/admin/models/users';
+import { HealthProfessional } from 'app/modules/admin/models/health.professional';
 import { PilotStudyService } from '../services/pilot.study.service';
 import { PilotStudy } from '../models/pilot.study';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';

@@ -1,4 +1,4 @@
-export class User {
+export class GenericUser {
     id: string;
     email: string;
     birth_date: string;
@@ -18,5 +18,4 @@ export class User {
         this.selected_pilot_study = '';
         this.language = '';
     }
-
 }

@@ -1,10 +1,10 @@
-import {User} from "../../../shared/shared.models/user";
+import { GenericUser } from '../../../shared/shared.models/generic.user';
 
-export class Admin extends User {
-    total_pilot_studies: number;
-    total_admins: number;
-    total_health_professionals: number;
-    total_patients: number;
+export class Admin extends GenericUser {
+    private total_pilot_studies: number;
+    private total_admins: number;
+    private total_health_professionals: number;
+    private total_patients: number;
 
     constructor() {
         super();
@@ -13,6 +13,7 @@ export class Admin extends User {
         this.total_health_professionals = 0;
         this.total_patients = 0;
     }
+
 }
 
 export enum HealtArea {
@@ -20,7 +21,7 @@ export enum HealtArea {
     dentistry = 'dentistry'
 }
 
-export class HealthProfessional extends User {
+export class HealthProfessional extends GenericUser {
     name: string;
     health_area: HealtArea;
     total_pilot_studies: number;
@@ -28,8 +29,9 @@ export class HealthProfessional extends User {
 
     constructor() {
         super();
-        this.name = "";
+        this.name = '';
         this.total_pilot_studies = 0;
         this.total_patients = 0;
     }
+
 }

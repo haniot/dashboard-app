@@ -9,7 +9,7 @@ import { HealthProfessionalService } from 'app/modules/admin/services/health.pro
 import { UserService } from 'app/modules/admin/services/users.service';
 import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { TranslateService } from '@ngx-translate/core';
-import { User } from '../../../shared/shared.models/user';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -22,7 +22,7 @@ const PaginatorConfig = ConfigurationBasic;
 export class HaniotTableComponent implements OnInit {
     @Input() length: number;
     @Input() pageSize: number;
-    @Input() list: Array<User>;
+    @Input() list: Array<GenericUser>;
     @Output() onremove = new EventEmitter();
     @Input() userType: string;
     @Output() onedit = new EventEmitter();
@@ -43,7 +43,7 @@ export class HaniotTableComponent implements OnInit {
         private toastr: ToastrService,
         private modalService: ModalService,
         private translateService: TranslateService) {
-        this.list = new Array<User>();
+        this.list = new Array<GenericUser>();
         this.listOfUserIsEmpty = false;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
     }

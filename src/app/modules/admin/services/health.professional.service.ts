@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
-import { HealthProfessional } from '../models/users';
-import { User } from '../../../shared/shared.models/user';
+import { HealthProfessional } from '../models/health.professional';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
 
 @Injectable()
 
@@ -40,7 +40,7 @@ export class HealthProfessionalService {
 
     }
 
-    create(healthprofessionals: HealthProfessional): Promise<User> {
+    create(healthprofessionals: HealthProfessional): Promise<GenericUser> {
         return this.http.post<any>(`${environment.api_url}/users/healthprofessionals`, healthprofessionals)
             .toPromise();
     }

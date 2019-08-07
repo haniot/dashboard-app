@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
-import { Admin } from '../models/users';
-import { User } from '../../../shared/shared.models/user';
+import { Admin } from '../models/admin';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
 
 @Injectable()
 export class AdminService {
@@ -17,7 +17,7 @@ export class AdminService {
             .toPromise();
     }
 
-    getAll(page?: number, limit?: number, search?: string): Promise<User[]> {
+    getAll(page?: number, limit?: number, search?: string): Promise<GenericUser[]> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -38,12 +38,12 @@ export class AdminService {
             .toPromise();
     }
 
-    create(administrator: Admin): Promise<User> {
+    create(administrator: Admin): Promise<GenericUser> {
         return this.http.post<any>(`${environment.api_url}/users/admins`, administrator)
             .toPromise();
     }
 
-    update(administrator: Admin): Promise<User> {
+    update(administrator: Admin): Promise<GenericUser> {
 
         return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
             .toPromise();

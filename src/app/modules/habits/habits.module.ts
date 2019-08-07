@@ -36,6 +36,7 @@ import { CorAndRacePipe } from './pipes/cor.race.pipe';
 import { TeethbushingPipe } from './pipes/teeth.brushing.frequency.pipe';
 import { ToothTypePipe } from './pipes/tooth.type.pipe';
 import { LesionTypePipe } from './pipes/lesion.type.pipe';
+import { NutritionalQuestionnairesService } from './services/nutritional.questionnaires.service'
 
 @NgModule({
     declarations: [
@@ -107,7 +108,8 @@ import { LesionTypePipe } from './pipes/lesion.type.pipe';
         MedicalRecordService,
         FamilyCohesionRecordService,
         OralhealthRecordService,
-        SocioDemographicRecordService
+        SocioDemographicRecordService,
+        NutritionalQuestionnairesService
     ]
 })
 export class HabitsModule {

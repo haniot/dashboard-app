@@ -35,39 +35,11 @@
                 </div>
 
             </div>
-
-            <div class="d-flex flex-row-reverse">
-                <div class="p-2">
-                    <small class="pull-right" *ngIf="sleepForm.get('created_at').value">{{'HABITS.REGISTER-DATE'|translate}}:
-                        {{sleepForm.get('created_at').value | myDate}}</small>
-                    <small class="pull-right" *ngIf="!sleepForm.get('created_at').value">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
-                        : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
-                </div>
-            </div>
-
         </form>
 
     </div>
 
-    <!-- Botões Anterior e Próximo -->
-    <div class="container" *ngIf="listSleep.length>1">
-        <div class="row">
-            <div class="col align-self-start">
-                <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" [title]="'HABITS.PREVIOUS'|translate"
-                        (click)="prev()" [disabled]="!index">
-                    <i class="material-icons">arrow_back</i>
-                </button>
-            </div>
-
-            <div class="col align-self-end">
-                <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon pull-right"
-                        (click)="next()" [title]="'HABITS.NEXT'|translate" [disabled]="index == listSleep.length-1">
-                    <i class="material-icons">arrow_forward</i>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div *ngIf="listSleep.length==0">
-        <span class="badge badge-danger badge-12 ellipsis">{{'HABITS.SLEEP.UNAVAILABLE-DATA'|translate}}</span>
+    <div *ngIf="!sleepHabit">
+        <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.SLEEP.UNAVAILABLE-DATA'|translate}}</span>
     </div>
 </haniot-card>

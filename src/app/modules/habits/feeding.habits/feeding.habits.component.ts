@@ -17,7 +17,6 @@ import { FeedingRecordService } from '../services/feeding.record.service';
 export class FeedingHabitsComponent implements OnInit, OnChanges {
     @Input() patientId: string;
     @Input() feedingHabitsRecord: FeedingHabitsRecord;
-    listFeeding: Array<FeedingHabitsRecord>;
     feedingForm: FormGroup;
     index: number;
 
@@ -30,7 +29,6 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
         private breastPipe: BreastFeedingPipe
     ) {
         this.index = 0;
-        this.listFeeding = new Array<FeedingHabitsRecord>();
     }
 
     ngOnInit() {
@@ -39,8 +37,6 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
 
     createFeedingFormInit() {
         this.feedingForm = this.fb.group({
-            id: [''],
-            created_at: [{ value: '', disabled: true }],
             weekly_feeding_habits: this.fb.array([this.fb.group({
                 food: [{ value: '', disabled: true }],
                 seven_days_freq: [{ value: '', disabled: true }]
@@ -55,8 +51,6 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
 
     createFeedingForm(feedingRecord: FeedingHabitsRecord) {
         this.feedingForm = this.fb.group({
-            id: [{ value: feedingRecord.id, disabled: true }],
-            created_at: [{ value: feedingRecord.created_at, disabled: true }],
             weekly_feeding_habits: [{ value: feedingRecord.weekly_feeding_habits, disabled: true }],
             daily_water_glasses: [{ value: feedingRecord.daily_water_glasses, disabled: true }],
             six_month_breast_feeding: [{ value: feedingRecord.six_month_breast_feeding, disabled: true }],
@@ -76,27 +70,13 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
         if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
             this.feedingService.getAll(this.patientId)
                 .then(feedingRecords => {
-                    this.listFeeding = feedingRecords;
                     this.createFeedingForm(feedingRecords[0]);
                 })
                 .catch();
-        } else if (this.feedingHabitsRecord && changes.feedingHabitsRecord.currentValue !== changes.feedingHabitsRecord.previousValue) {
-            this.listFeeding = new Array<FeedingHabitsRecord>();
-            this.listFeeding.push(this.feedingHabitsRecord);
+        }
+        if (this.feedingHabitsRecord && changes.feedingHabitsRecord.currentValue !== changes.feedingHabitsRecord.previousValue) {
             this.createFeedingForm(this.feedingHabitsRecord);
         }
-    }
-
-    prev() {
-        if (this.index) {
-            this.index--;
-        }
-        this.createFeedingForm(this.listFeeding[this.index]);
-    }
-
-    next() {
-        this.index++;
-        this.createFeedingForm(this.listFeeding[this.index]);
     }
 
 }

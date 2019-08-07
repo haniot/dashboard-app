@@ -115,10 +115,10 @@ export class WeightComponent implements OnInit, OnChanges {
                 value: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
-            if (element.fat && element.fat.value) {
+            if (element.body_fat) {
                 xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
                 seriesFat.data.push({
-                    value: element.fat.value,
+                    value: element.body_fat,
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
                 });
             }
@@ -180,10 +180,10 @@ export class WeightComponent implements OnInit, OnChanges {
                 value: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
-            if (element.fat && element.fat.value) {
+            if (element.body_fat) {
                 this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
                 this.weightGraph.series[1].data.push({
-                    value: element.fat.value,
+                    value: element.body_fat,
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
                 });
             }

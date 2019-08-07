@@ -122,7 +122,6 @@ export class PilotStudyService {
     }
 
     update(pilotstudy: PilotStudy): Promise<boolean> {
-        delete pilotstudy.health_professionals_id;
         return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudy.id}`, pilotstudy)
             .toPromise();
     }

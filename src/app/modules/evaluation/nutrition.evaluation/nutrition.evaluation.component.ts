@@ -10,7 +10,7 @@ import { NutritionEvaluationService } from '../services/nutrition.evaluation.ser
 import { NutritionalCouncil, NutritionEvaluation } from '../models/nutrition-evaluation';
 import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { PatientService } from 'app/modules/patient/services/patient.service';
-import { Patient } from 'app/modules/patient/models/patient';
+import { Patient, PatientBasic } from 'app/modules/patient/models/patient';
 import { Weight } from 'app/modules/measurement/models/weight';
 import { Measurement, MeasurementType } from 'app/modules/measurement/models/measurement';
 import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
@@ -19,6 +19,22 @@ import { MealType } from '../../measurement/models/blood-glucose';
 import { GeneratePdfService } from '../services/generate.pdf.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SendEmailService } from '../services/send.email.service';
+
+// TODO: Pedir a Lucas os reais valores para os zones!!
+const zones = [{
+    preprandial: {
+        great: { min: 0, max: 0 },
+        good: { min: 0, max: 0 }
+    },
+    postprandial: {
+        great: { min: 0, max: 0 },
+        good: { min: 0, max: 0 }
+    },
+    bedtime: {
+        great: { min: 0, max: 0 },
+        good: { min: 0, max: 0 }
+    }
+}]
 
 @Component({
     selector: 'app-nutrition-evaluation',
@@ -31,7 +47,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     nutritionEvaluationId: string;
     optionsHeartRate: any;
     patientId: string;
-    patient: Patient;
+    patient: PatientBasic;
     ncSuggested: NutritionalCouncil;
     ncDefinitive: NutritionalCouncil;
     finalCounseling: string;
@@ -427,8 +443,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     }
 
     getZoneGood(): { min: number, max: number } {
+
         const meal = this.nutritionalEvaluation.blood_glucose.meal;
-        const zones = this.nutritionalEvaluation.blood_glucose.zones;
+
         switch (meal) {
             case MealType.preprandial:
                 return zones[0][MealType.preprandial].good;
@@ -446,7 +463,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     getZoneGreat(): { min: number, max: number } {
         const meal = this.nutritionalEvaluation.blood_glucose.meal;
-        const zones = this.nutritionalEvaluation.blood_glucose.zones;
+
         switch (meal) {
             case MealType.preprandial:
                 return zones[0][MealType.preprandial].great;

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { OralHealthRecord } from '../models/oral.health.record';
 import { OralhealthRecordService } from '../services/oralhealth.record.service';
+import { MedicalRecord } from '../models/medical.record'
 
 @Component({
     selector: 'oralhealth-record',
@@ -10,8 +11,8 @@ import { OralhealthRecordService } from '../services/oralhealth.record.service';
     styleUrls: ['../shared.style/shared.styles.scss', './oral.health.record.component.scss']
 })
 export class OralHealthRecordComponent implements OnInit, OnChanges {
+    @Input() oralHealthRecord: OralHealthRecord;
     @Input() patientId: string;
-    listOralHealthRecords: Array<OralHealthRecord>;
     oralHealthForm: FormGroup;
     index: number;
 
@@ -20,7 +21,7 @@ export class OralHealthRecordComponent implements OnInit, OnChanges {
         private oralHealthService: OralhealthRecordService
     ) {
         this.index = 0;
-        this.listOralHealthRecords = new Array<OralHealthRecord>();
+        this.oralHealthRecord = new OralHealthRecord();
     }
 
     ngOnInit() {
@@ -29,8 +30,6 @@ export class OralHealthRecordComponent implements OnInit, OnChanges {
 
     createOralHealthFormInit() {
         this.oralHealthForm = this.fb.group({
-            id: [''],
-            created_at: [{ value: '', disabled: true }],
             teeth_brushing_freq: [{ value: '', disabled: true }],
             teeth_lesions: this.fb.array([])
         });
@@ -39,8 +38,6 @@ export class OralHealthRecordComponent implements OnInit, OnChanges {
 
     createOralHealthForm(oralhealthRecord: OralHealthRecord) {
         this.oralHealthForm = this.fb.group({
-            id: [{ value: oralhealthRecord.id, disabled: true }],
-            created_at: [{ value: oralhealthRecord.created_at, disabled: true }],
             teeth_brushing_freq: [{ value: oralhealthRecord.teeth_brushing_freq, disabled: true }],
             teeth_lesions: [{ value: oralhealthRecord.teeth_lesions, disabled: true }]
         });
@@ -50,23 +47,13 @@ export class OralHealthRecordComponent implements OnInit, OnChanges {
         if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
             this.oralHealthService.getAll(this.patientId)
                 .then(oralhealthrecords => {
-                    this.listOralHealthRecords = oralhealthrecords;
                     this.createOralHealthForm(oralhealthrecords[0]);
                 })
                 .catch();
         }
-    }
-
-    prev() {
-        if (this.index) {
-            this.index--;
+        if (this.oralHealthRecord && changes.oralHealthRecord.currentValue !== changes.oralHealthRecord.previousValue) {
+            this.createOralHealthForm(this.oralHealthRecord);
         }
-        this.createOralHealthForm(this.listOralHealthRecords[this.index]);
-    }
-
-    next() {
-        this.index++;
-        this.createOralHealthForm(this.listOralHealthRecords[this.index]);
     }
 
 }

@@ -4,23 +4,27 @@
             <div class="row justify-content-center">
 
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center">
-                    <card-top [category]="'DASHBOARD.CARD-STUDIES-TOTAL'|translate" [title]="lengthStudies" [icon]="'library_books'"></card-top>
+                    <card-top [category]="'DASHBOARD.CARD-STUDIES-TOTAL'|translate" [title]="lengthStudies"
+                              [icon]="'library_books'"></card-top>
                 </div>
 
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center" *ngIf="isNotUserAdmin()">
-                    <card-top [category]="'DASHBOARD.CARD-PATIENTS-FROM-THE-STUDY'|translate" [title]="listPacients.length" [icon]="'face'"></card-top>
+                    <card-top [category]="'DASHBOARD.CARD-PATIENTS-FROM-THE-STUDY'|translate"
+                              [title]="listPacients.length" [icon]="'face'"></card-top>
                 </div>
 
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center" *ngIf="!isNotUserAdmin()">
-                    <card-top [category]="'DASHBOARD.CARD-PATIENTS-TOTAL'|translate" [title]="patientsTotal" [icon]="'face'"></card-top>
+                    <card-top [category]="'DASHBOARD.CARD-PATIENTS-TOTAL'|translate" [title]="patientsTotal"
+                              [icon]="'face'"></card-top>
                 </div>
 
             </div>
 
         </div>
 
-        <haniot-card [title]="'DASHBOARD.CARD-PATIENTS.TITLE'|translate" [subtitle]="'DASHBOARD.CARD-PATIENTS.SUBTITLE'|translate"
-            *ngIf="isNotUserAdmin()">
+        <haniot-card [title]="'DASHBOARD.CARD-PATIENTS.TITLE'|translate"
+                     [subtitle]="'DASHBOARD.CARD-PATIENTS.SUBTITLE'|translate"
+                     *ngIf="isNotUserAdmin()">
             <div class="row justify-content-center" *ngIf="!listPacients.length && !listOfPatientsIsEmpty">
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patients">
                     <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
@@ -38,8 +42,10 @@
                         </button>
                     </p>
                 </div>
-                <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngFor="let patient of listPacients;trackBy: trackById"
-                    [routerLink]="['/app/patients',patient.id, patient.pilotstudy_id ,'details']" [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate">
+                <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
+                   *ngFor="let patient of listPacients;trackBy: trackById"
+                   [routerLink]="['/app/patients',patient.id, 'details']"
+                   [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate">
                     <div class="card card-stats">
                         <div class="card-header card-header-timer card-header-icon">
                             <div class="card-icon">
@@ -56,11 +62,13 @@
                     </div>
                 </a>
             </div>
-            <mat-paginator [length]="lengthPatients" [pageSize]="limitPatients" [pageSizeOptions]="pageSizeOptionsPatients" (page)="clickPaginationPatients($event)">
+            <mat-paginator [length]="lengthPatients" [pageSize]="limitPatients"
+                           [pageSizeOptions]="pageSizeOptionsPatients" (page)="clickPaginationPatients($event)">
             </mat-paginator>
         </haniot-card>
 
-        <haniot-card [title]="'DASHBOARD.CARD-STUDIES.TITLE'|translate" [subtitle]="'DASHBOARD.CARD-STUDIES.SUBTITLE'|translate">
+        <haniot-card [title]="'DASHBOARD.CARD-STUDIES.TITLE'|translate"
+                     [subtitle]="'DASHBOARD.CARD-STUDIES.SUBTITLE'|translate">
             <div class="row justify-content-center" *ngIf="!listPilots.length">
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-studies">
                     <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
@@ -68,14 +76,17 @@
             </div>
             <div class="row justify-content-center">
 
-                <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngFor="let study of listPilots;trackBy: trackById"
-                    [routerLink]="['/app/pilotstudies',study.id,'details']" [title]="'DASHBOARD.CARD-STUDIES.VIEW'|translate">
+                <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
+                   *ngFor="let study of listPilots;trackBy: trackById"
+                   [routerLink]="['/app/pilotstudies',study.id,'details']"
+                   [title]="'DASHBOARD.CARD-STUDIES.VIEW'|translate">
                     <div class="card card-stats">
                         <div class="card-header card-header-timer card-header-icon">
                             <div class="card-icon">
                                 <i class="material-icons">library_books</i>
                             </div>
-                            <span class="badge" [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active | pilotStudySituation | translate}}</span>
+                            <span class="badge"
+                                  [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active | pilotStudySituation | translate}}</span>
 
                             <h3 class="card-title ellipsis">
                                 {{study.name}}
@@ -116,7 +127,8 @@
                     </p>
                 </div>
             </div>
-            <mat-paginator [length]="lengthStudies" [pageSize]="limitStudies" [pageSizeOptions]="pageSizeOptionsStudies" (page)="clickPaginationStudies($event)">
+            <mat-paginator [length]="lengthStudies" [pageSize]="limitStudies" [pageSizeOptions]="pageSizeOptionsStudies"
+                           (page)="clickPaginationStudies($event)">
             </mat-paginator>
         </haniot-card>
         <!--    <haniot-card title="Gráficos indicativos de medidas" subtitle="HANIoT">-->

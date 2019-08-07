@@ -28,9 +28,14 @@
   background-color: #00a594;
 }
 
-.badge-danger {
+.badge-warning {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  max-width: 100%;
   background-color: #FF9800;
 }
+
 
 canvas {
   width: 100%;

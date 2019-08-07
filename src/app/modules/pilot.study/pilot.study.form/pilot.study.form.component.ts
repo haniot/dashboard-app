@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { PilotStudyService } from '../services/pilot.study.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health.professional.service';
-import { HealthProfessional } from 'app/modules/admin/models/users';
+import { HealthProfessional } from 'app/modules/admin/models/health.professional';
 import { AuthService } from 'app/security/auth/services/auth.service';
 
 @Component({

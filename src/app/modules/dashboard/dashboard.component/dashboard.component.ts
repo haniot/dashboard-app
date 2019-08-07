@@ -6,7 +6,6 @@ import { ISubscription } from 'rxjs/Subscription';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
-import { DashboardService } from '../services/dashboard.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { Unit } from '../models/unit';
@@ -15,6 +14,7 @@ import { SelectPilotStudyService } from '../../../shared/shared.components/selec
 import { Patient } from '../../patient/models/patient';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic } from '../../config.matpaginator';
+import { DashboardService } from '../services/dashboard.service'
 
 const PaginatorConfig = ConfigurationBasic;
 

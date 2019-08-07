@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
@@ -8,10 +8,25 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { PatientService } from '../services/patient.service';
 import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
-import { Patient, Gender } from '../models/patient';
+import { Gender, Patient } from '../models/patient';
 import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
 import { FeedingRecordService } from '../../habits/services/feeding.record.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
+import { SleepHabitsRecord } from '../../habits/models/sleep'
+import { PhysicalActivityHabitsRecord } from '../../habits/models/physical.activity'
+import { MedicalRecord } from '../../habits/models/medical.record'
+import { OralHealthRecord } from '../../habits/models/oral.health.record'
+import { FeedingHabitsRecord } from '../../habits/models/feeding'
+import { FamilyCohesionRecordService } from '../../habits/services/family.cohesion.record.service'
+import { SocioDemographicRecord } from '../../habits/models/socio.demographic.record'
+import { FamilyCohesionRecord } from '../../habits/models/family.cohesion.record'
+import { PhysicalActivityRecordService } from '../../habits/services/physical.activity.record.service'
+import { MedicalRecordService } from '../../habits/services/medical.record.service'
+import { OralhealthRecordService } from '../../habits/services/oralhealth.record.service'
+import { SleepRecordService } from '../../habits/services/sleep.record.service'
+import { SocioDemographicRecordService } from '../../habits/services/socio.demographic.record.service'
+import { NutritionalQuestionnaire } from '../../habits/models/nutritional.questionnaire'
+import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
 
 @Component({
     selector: 'app-view-habits',
@@ -35,8 +50,18 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         pressure: false,
         heartRate: false
     };
-
+    sleepHabit: SleepHabitsRecord;
+    feedingHabit: FeedingHabitsRecord;
+    physicalHabit: PhysicalActivityHabitsRecord;
+    medicalHabit: MedicalRecord;
+    oralHealthHabit: OralHealthRecord;
+    socioDemographic: SocioDemographicRecord;
+    familyCohesion: FamilyCohesionRecord;
+    nutritionalQuestionnaire: NutritionalQuestionnaire;
     private subscriptions: Array<ISubscription>;
+
+    page: number;
+    limit: number;
 
     constructor(
         private fb: FormBuilder,
@@ -47,10 +72,20 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         private router: Router,
         private activeRouter: ActivatedRoute,
         private localStorageService: LocalStorageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private familyService: FamilyCohesionRecordService,
+        private physicalActivityService: PhysicalActivityRecordService,
+        private medicalService: MedicalRecordService,
+        private oralHealthService: OralhealthRecordService,
+        private sleepService: SleepRecordService,
+        private socioDemographicService: SocioDemographicRecordService,
+        private questionnaireService: NutritionalQuestionnairesService
     ) {
         this.subscriptions = new Array<ISubscription>();
         this.showMeasurements = false;
+        this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
+        this.page = 1;
+        this.limit = 1;
     }
 
 
@@ -69,6 +104,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                 });
         }));
+        this.getQuestionnaires();
     }
 
     loaduserHealthArea(): void {
@@ -120,6 +156,26 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
     }
 
+    prev(): void {
+        this.page--;
+        this.getAllNutritionalQuestionnaires();
+    }
+
+    next(): void {
+        this.page++;
+        this.getAllNutritionalQuestionnaires();
+    }
+
+    getAllNutritionalQuestionnaires(): void {
+        this.questionnaireService.getAll(this.patientId, this.page, this.limit)
+            .then(nutritionalQuestionnaire => {
+                if (nutritionalQuestionnaire.length) {
+                    this.nutritionalQuestionnaire = nutritionalQuestionnaire[0];
+                }
+            })
+            .catch()
+    }
+
     clickOnMatTab(event) {
         this.showMeasurements = true;
         if (event.index === 1) {
@@ -146,5 +202,86 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         });
     }
 
+    getQuestionnaires(): void {
+        // this.getFamilyCohesion();
+        // this.getFeeding();
+        // this.getPhysicalActivity();
+        // this.getMedical();
+        // this.getOralHealth();
+        // this.getSleepHabit();
+        // this.getSocioDemographic();
+    }
 
+    /* TODO: Remover os metodos abaixo*/
+
+    getFamilyCohesion(): void {
+        // this.familyService.getAll(this.patientId)
+        //     .then(familyRecords => {
+        //         if (familyRecords.length) {
+        //             this.familyCohesion = familyRecords[0];
+        //         }
+        //     })
+        //     .catch();
+    }
+
+    getFeeding(): void {
+        this.feedingService.getAll(this.patientId)
+            .then(feedingRecords => {
+                if (feedingRecords.length) {
+                    this.feedingHabit = feedingRecords[0];
+                }
+
+            })
+            .catch();
+    }
+
+    getPhysicalActivity(): void {
+        this.physicalActivityService.getAll(this.patientId)
+            .then(physicalRecords => {
+                if (physicalRecords.length) {
+                    this.physicalHabit = physicalRecords[0];
+                }
+            })
+            .catch();
+    }
+
+    getMedical(): void {
+        this.medicalService.getAll(this.patientId)
+            .then(medicalRecords => {
+                if (medicalRecords.length) {
+                    this.medicalHabit = medicalRecords[0];
+                }
+            })
+            .catch();
+    }
+
+    getOralHealth(): void {
+        this.oralHealthService.getAll(this.patientId)
+            .then(oralhealthrecords => {
+                if (oralhealthrecords.length) {
+                    this.oralHealthHabit = oralhealthrecords[0];
+                }
+            })
+            .catch();
+    }
+
+    getSleepHabit(): void {
+        this.sleepService.getAll(this.patientId)
+            .then(sleepRecords => {
+                if (sleepRecords.length) {
+                    this.sleepHabit = sleepRecords[0];
+                }
+            })
+            .catch();
+    }
+
+    getSocioDemographic(): void {
+        this.socioDemographicService.getAll(this.patientId)
+            .then(sociodemographics => {
+                if (sociodemographics.length) {
+                    this.socioDemographic = sociodemographics[0];
+                }
+            })
+            .catch();
+    }
 }

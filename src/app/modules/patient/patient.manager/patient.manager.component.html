@@ -36,19 +36,20 @@
                                 <td colspan="5" *ngIf="listOfPatientsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
                             </tr>
                             <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">
-                                <td [routerLink]="['/app/patients',patient.id, patient.pilotstudy_id ,'details']">{{getIndex(i)}}</td>
-                                <td [routerLink]="['/app/patients',patient.id, patient.pilotstudy_id ,'details']">{{patient.name}}</td>
-                                <td [routerLink]="['/app/patients',patient.id, patient.pilotstudy_id ,'details']">{{patient.gender | gender |translate}}</td>
-                                <td [routerLink]="['/app/patients',patient.id, patient.pilotstudy_id ,'details']">{{patient.birth_date | date}}</td>
+                                <td [routerLink]="['/app/patients',patient.id, 'details']">{{getIndex(i)}}</td>
+                                <td [routerLink]="['/app/patients',patient.id, 'details']">{{patient.name}}</td>
+                                <td [routerLink]="['/app/patients',patient.id, 'details']">{{patient.gender | gender |translate}}</td>
+                                <td [routerLink]="['/app/patients',patient.id, 'details']">{{patient.birth_date | date}}</td>
                                 <td>
                                     <a class="nav-link"
-                                       [routerLink]="['/app/patients',patient.id, patient.pilotstudy_id ,'details']"
+                                       [routerLink]="['/app/patients',patient.id, 'details']"
                                        [title]="'PATIENTS.PATIENTS-TABLE.TOVIEW-PATIENT'|translate">
                                         <i class="material-icons">visibility</i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="nav-link" [routerLink]="['/app/patients',patient.id, patient.pilotstudy_id ]"
+                                    <a class="nav-link"
+                                       [routerLink]="['/app/patients',patient.id ]"
                                        [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">
                                         <i class="material-icons">edit</i>
                                     </a>

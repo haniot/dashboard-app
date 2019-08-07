@@ -5,9 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { HealthProfessionalService } from '../services/health.professional.service';
 import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { HealthProfessional } from '../models/users';
+import { HealthProfessional } from '../models/health.professional';
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { User } from '../../../shared/shared.models/user';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -18,8 +18,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./health.professionals.component.scss']
 })
 export class HealthProfessionalComponent implements AfterViewChecked {
-    userEdit: User = new HealthProfessional();
-    healthProfessionals: Array<User> = [];
+    userEdit: GenericUser = new HealthProfessional();
+    healthProfessionals: Array<GenericUser> = [];
     page: number;
     limit: number;
     length: number;

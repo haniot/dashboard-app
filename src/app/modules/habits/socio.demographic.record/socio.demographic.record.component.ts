@@ -12,8 +12,8 @@ import { CorAndRacePipe } from '../pipes/cor.race.pipe';
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class SocioDemographicRecordComponent implements OnInit, OnChanges {
+    @Input() socioDemographicRecord: SocioDemographicRecord;
     @Input() patientId: string;
-    listSocioDemographic: Array<SocioDemographicRecord>;
     socioDemographicForm: FormGroup;
     index: number;
 
@@ -24,7 +24,7 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
         private corAndRacePipe: CorAndRacePipe
     ) {
         this.index = 0;
-        this.listSocioDemographic = new Array<SocioDemographicRecord>();
+        this.socioDemographicRecord = new SocioDemographicRecord();
     }
 
     ngOnInit() {
@@ -34,8 +34,6 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
 
     createSocioDemographicFormInit() {
         this.socioDemographicForm = this.fb.group({
-            id: [''],
-            created_at: [{ value: '', disabled: true }],
             color_race: [{ value: '', disabled: true }],
             mother_scholarity: [{ value: '', disabled: true }],
             people_in_home: [{ value: 0, disabled: true }]
@@ -45,8 +43,6 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
 
     createSocioDemographicForm(sociodemographicRecord: SocioDemographicRecord) {
         this.socioDemographicForm = this.fb.group({
-            id: [{ value: sociodemographicRecord.id, disabled: true }],
-            created_at: [{ value: sociodemographicRecord.created_at, disabled: true }],
             color_race: [{ value: sociodemographicRecord.color_race, disabled: true }],
             mother_scholarity: [{ value: sociodemographicRecord.mother_scholarity, disabled: true }],
             people_in_home: [{ value: sociodemographicRecord.people_in_home, disabled: true }]
@@ -61,23 +57,12 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
         if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
             this.socioDemographicService.getAll(this.patientId)
                 .then(sociodemographics => {
-                    this.listSocioDemographic = sociodemographics;
                     this.createSocioDemographicForm(sociodemographics[0]);
                 })
                 .catch();
         }
-    }
-
-    prev() {
-        if (this.index) {
-            this.index--;
+        if (this.socioDemographicRecord && changes.socioDemographicRecord.currentValue !== changes.socioDemographicRecord.previousValue) {
+            this.createSocioDemographicForm(this.socioDemographicRecord);
         }
-        this.createSocioDemographicForm(this.listSocioDemographic[this.index]);
     }
-
-    next() {
-        this.index++;
-        this.createSocioDemographicForm(this.listSocioDemographic[this.index]);
-    }
-
 }
