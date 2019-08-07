@@ -1,15 +1,16 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
 
-import { Observable, of as observableOf } from 'rxjs';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
 import * as JWT_decode from 'jwt-decode';
 import { tap } from 'rxjs/operators';
 
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
+import { SessionStorageService } from '../../../shared/shared.services/session.storage.service'
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,7 @@ export class AuthService {
     constructor(
         private http: HttpClient,
         private localStorageService: LocalStorageService,
+        private sessionService: SessionStorageService,
         private router: Router) {
     }
 
@@ -37,10 +39,7 @@ export class AuthService {
         return this.http.post<any>(`${environment.api_url}/auth`, credentials, { params: myParams })
             .pipe(
                 tap(data => {
-                    if (data.redirect_link) {
-                        localStorage.setItem('emailTemp', credentials.email)
-                        this.router.navigate(['/change'], { queryParams: { redirect_link: data.redirect_link } });
-                    } else {
+                    if (data && data.access_token) {
                         this.localStorageService.setItem('token', data.access_token)
                         let decodedToken: { sub: string, iss: string, iat: number, exp: number, scope: string };
                         try {
@@ -62,14 +61,22 @@ export class AuthService {
     }
 
 
-    changePassword(credentials: { email: string, new_password: string }): Promise<boolean> {
-        return this.http.patch<any>(`${environment.api_url}/auth/password`, credentials)
+    changePassword(credentials: { email: string, new_password: string }): Promise<any> {
+        const temporaryToken = this.sessionService.getItem('temporaryToken');
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/json')
+            .append('Authorization', `Bearer ${temporaryToken}`);
+        return this.http.patch<any>(`${environment.api_url}/auth/password`, credentials, { headers: headers })
+            .pipe(
+                tap(() => {
+                    this.sessionService.clean();
+                })
+            )
             .toPromise();
 
     }
 
     forgot(email: string): Promise<any> {
-        return Promise.resolve(true)
         return this.http.post<any>(`${environment.api_url}/auth/forgot`, { email })
             .toPromise();
     }

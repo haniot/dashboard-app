@@ -62,6 +62,11 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     ngOnInit() {
+        const token = this.localStorageService.getItem('token')
+        if (token) {
+            this.router.navigate(['/app'])
+        }
+
         $('body').css('background-color', '#00a594');
         this.f = this.formBuilder.group({
             email: [null, [Validators.required, Validators.email]],

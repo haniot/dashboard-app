@@ -732,7 +732,9 @@
       "PASSWORD": "Nova Senha",
       "PLACEHOLDER-PASSWORD": "Digite aqui sua nova senha...",
       "CONFIRM-PASSWORD": "Confirme à senha",
-      "PLACEHOLDER-CONFIRM-PASSWORD": "Digite sua confirmação de senha aqui..."
+      "PLACEHOLDER-CONFIRM-PASSWORD": "Digite sua confirmação de senha aqui...",
+      "RESET-PROCESS": "Reinicie o processo de recuperação",
+      "INVALID-TOKEN": "Token inválido!"
     },
     "FORGOT": {
       "INFORMATION": "E-mail enviado com sucesso!",
@@ -741,7 +743,7 @@
       "SUBMIT": "Enviar",
       "RECOVERY-SUCCESS": "Email de recuperação enviado para",
       "RECOVERY-ERROR": "Não foi possível recuperar senha!",
-      "TRY_AGAIN": "Tente novamente após 24 horas",
+      "TRY-AGAIN": "Tente novamente após 24 horas",
       "TOO-MANY-ATTEMPTS": "Excesso de tentativas!",
       "UNDERSTOOD": "ENTENDIDO"
     }

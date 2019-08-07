@@ -30,6 +30,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     private subscriptions: Array<ISubscription>;
     validateTimer: any;
     matchTimer: any;
+    invalidToken: boolean;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -42,6 +43,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     ) {
         this.loading = false;
         this.subscriptions = new Array<ISubscription>();
+        this.invalidToken = false;
     }
 
     ngOnInit() {
@@ -57,9 +59,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
             this.route.paramMap
                 .subscribe(params => {
                     const language = params.get('language');
-                    console.log('Params ', params)
                     if (language) {
-
                         this.translateService.use(language);
                     }
                 })
@@ -71,7 +71,8 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
                 .subscribe(params => {
                     if (params.token) {
                         this.sessionService.setItem('temporaryToken', params.token);
-                        this.router.navigate(['/change']);
+                        const url = this.router.url.replace(new RegExp('\\?token=' + params.token), '');
+                        this.router.navigate([url]);
                     }
                 })
         );
@@ -80,6 +81,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     }
 
     decodeToken(): void {
+
         let decodedToken: {
             sub: string,
             sub_type: string,
@@ -103,11 +105,19 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
                 scope: '',
                 reset_password: false
             };
+            this.invalidToken = true;
         }
-        if (Date.now() >= decodedToken.exp * 1000) {
-            this.toastr.error('Reinicie o processo de recuperação', 'Token inválido!');
-        }
+
         this.f.get('email').patchValue(decodedToken.email);
+
+        if (Date.now() >= decodedToken.exp * 1000) {
+            // this.toastr.error(
+            //     this.translateService.instant('SECURITY.CHANGE.RESET-PROCESS'),
+            //     this.translateService.instant('SECURITY.CHANGE.INVALID-TOKEN'));
+            this.f.reset();
+            this.sessionService.clean();
+            this.invalidToken = true;
+        }
 
     }
 
@@ -181,6 +191,10 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
                 this.f.get('confirm_password').setErrors({ 'incorrect': true });
             }
         }, 200);
+    }
+
+    gotoLogin(): void {
+        this.router.navigate(['/login']);
     }
 
     ngOnDestroy(): void {

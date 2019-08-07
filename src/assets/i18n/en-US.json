@@ -732,7 +732,9 @@
       "PASSWORD": "New Password",
       "PLACEHOLDER-PASSWORD": "Enter your new password here...",
       "CONFIRM-PASSWORD": "Confirm the Password",
-      "PLACEHOLDER-CONFIRM-PASSWORD": "Enter your new password here..."
+      "PLACEHOLDER-CONFIRM-PASSWORD": "Enter your new password here...",
+      "RESET-PROCESS": "Restart the recovery process",
+      "INVALID-TOKEN": "Invalid token!"
     },
     "FORGOT": {
       "INFORMATION": "Email successfully sent!",

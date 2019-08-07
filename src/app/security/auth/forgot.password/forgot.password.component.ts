@@ -49,13 +49,22 @@ export class ForgotPasswordComponent implements OnInit {
             })
             .catch(errorResponse => {
                 this.loading = false;
-                console.log(errorResponse)
-                if (errorResponse.status === 429) {
-                    this.toastr.error(
-                        this.translateService.instant('SECURITY.FORGOT.TRY-AGAIN'),
-                        this.translateService.instant('SECURITY.FORGOT.TOO-MANY-ATTEMPTS'));
+                switch (errorResponse.status) {
+                    case 429:
+                        this.toastr.error(
+                            this.translateService.instant('SECURITY.FORGOT.TRY-AGAIN'),
+                            this.translateService.instant('SECURITY.FORGOT.TOO-MANY-ATTEMPTS'));
+                        break;
+
+                    case 400:
+                        this.toastr.error(this.translateService.instant('SECURITY.FORGOT.RECOVERY-ERROR'))
+                        break;
+
+                    default:
+                        this.toastr.error(this.translateService.instant('SECURITY.FORGOT.RECOVERY-ERROR'))
+                        break;
                 }
-                this.toastr.error(this.translateService.instant('SECURITY.FORGOT.RECOVERY-ERROR'))
+
             })
     }
 

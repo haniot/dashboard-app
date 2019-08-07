@@ -5,7 +5,6 @@ import { PilotStudy } from '../models/pilot.study';
 import { environment } from 'environments/environment';
 import { OdontologicEvaluation } from '../../evaluation/models/odontologic-evaluation';
 import { DateRange } from '../models/range-date';
-import { ɵangular_packages_platform_server_platform_server_a } from '@angular/platform-server'
 
 @Injectable()
 export class PilotStudyService {

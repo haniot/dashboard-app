@@ -24,8 +24,7 @@ export class SendEmailService {
 
         notification.reply = { name: healthProfessinal.name, email: healthProfessinal.email };
 
-        // notification.to.push({ name: nutritonalEvaluation.patient.name, email: nutritonalEvaluation.patient.email });
-        notification.to.push({ name: nutritonalEvaluation.patient.name, email: 'adaljunior.inf@gmail.com' });
+        notification.to.push({ name: nutritonalEvaluation.patient.name, email: nutritonalEvaluation.patient.email });
 
         notification.subject = 'Resultado da Avaliação Nutricional';
 
