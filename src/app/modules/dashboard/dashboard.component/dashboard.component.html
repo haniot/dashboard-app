@@ -33,13 +33,13 @@
                     </p>
                     <p>
                         {{'DASHBOARD.CARD-PATIENTS.STUDY-EMPTY'|translate}}:
-                        <button class="btn btn-haniot-primary" [routerLink]="['/patients',pilotStudyId,'new']">
+                        <button class="btn btn-haniot-primary" [routerLink]="['/app/patients',pilotStudyId,'new']">
                             {{'DASHBOARD.CARD-PATIENTS.STUDY-EMPTY-MESSAGE'|translate}}
                         </button>
                     </p>
                 </div>
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngFor="let patient of listPacients;trackBy: trackById"
-                    [routerLink]="['/patients',patient.id, patient.pilotstudy_id ,'details']" [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate">
+                    [routerLink]="['/app/patients',patient.id, patient.pilotstudy_id ,'details']" [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate">
                     <div class="card card-stats">
                         <div class="card-header card-header-timer card-header-icon">
                             <div class="card-icon">
@@ -69,7 +69,7 @@
             <div class="row justify-content-center">
 
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngFor="let study of listPilots;trackBy: trackById"
-                    [routerLink]="['/pilotstudies',study.id,'details']" [title]="'DASHBOARD.CARD-STUDIES.VIEW'|translate">
+                    [routerLink]="['/app/pilotstudies',study.id,'details']" [title]="'DASHBOARD.CARD-STUDIES.VIEW'|translate">
                     <div class="card card-stats">
                         <div class="card-header card-header-timer card-header-icon">
                             <div class="card-icon">

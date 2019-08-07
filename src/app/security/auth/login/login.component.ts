@@ -67,7 +67,6 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
             email: [null, [Validators.required, Validators.email]],
             password: [null, [Validators.required]]
         });
-        this.configLanguage();
         this.configReCaptcha();
     }
 
@@ -134,7 +133,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.subscriptions.push(this.authService.login(this.f.value).subscribe(
             (resp) => {
                 this.cleanAttempt()
-                this.router.navigate(['']);
+                this.router.navigate(['/app']);
                 this.loading = false;
             },
             (error: HttpErrorResponse) => {
@@ -166,21 +165,6 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.typeInputPassword = 'password';
         } else {
             this.typeInputPassword = 'text';
-        }
-    }
-
-    configLanguage() {
-        const browserLang = this.translateService.getBrowserLang();
-        switch (browserLang) {
-            case 'en':
-                this.translateService.use('en-US');
-                break;
-            case 'pt':
-                this.translateService.use('pt-BR');
-                break;
-            default:
-                this.translateService.use('en-US');
-                break;
         }
     }
 

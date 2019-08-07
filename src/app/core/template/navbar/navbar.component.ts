@@ -20,19 +20,19 @@ export declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: '^/dashboard$', title: 'SHARED.HOME-PAGE' },
-    { path: '^/admin/new/administrators$', title: 'NAVBAR.ADMINS-USERS' },
-    { path: '^/admin/new/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS' },
-    { path: '^/pilotstudies$', title: 'SHARED.PILOTSTUDIES' },
-    { path: '^/patients$', title: 'SHARED.PATIENTS' },
-    { path: '^(\\/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS' },
-    { path: '^(\\/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-PATIENT' },
-    { path: '^/healthprofessional/mystudies$', title: 'SHARED.MY-STUDIES' },
-    { path: '^(\\/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-STUDY' },
-    { path: '^/admin/configurations$', title: 'SHARED.CONFIG' },
-    { path: '^/healthprofessional/configurations$', title: 'SHARED.CONFIG' },
-    { path: '^/healthprofessional/myevaluations$', title: 'SHARED.MY-EVALUATIONS' },
-    { path: '^(\\/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'NAVBAR.NUTRITION-EVALUATIONS' }
+    { path: '^/app/dashboard$', title: 'SHARED.HOME-PAGE' },
+    { path: '^/app/admin/administrators$', title: 'NAVBAR.ADMINS-USERS' },
+    { path: '^/app/admin/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS' },
+    { path: '^/app/pilotstudies$', title: 'SHARED.PILOTSTUDIES' },
+    { path: '^/app/patients$', title: 'SHARED.PATIENTS' },
+    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS' },
+    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-PATIENT' },
+    { path: '^/app/healthprofessional/mystudies$', title: 'SHARED.MY-STUDIES' },
+    { path: '^(\\/app/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-STUDY' },
+    { path: '^/app/admin/configurations$', title: 'SHARED.CONFIG' },
+    { path: '^/app/healthprofessional/configurations$', title: 'SHARED.CONFIG' },
+    { path: '^/app/healthprofessional/myevaluations$', title: 'SHARED.MY-EVALUATIONS' },
+    { path: '^(\\/app/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'NAVBAR.NUTRITION-EVALUATIONS' }
 ];
 
 @Component({
@@ -270,9 +270,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     config(): void {
         if (this.isNotAdmin()) {
-            this.router.navigate(['/healthprofessional/configurations']);
+            this.router.navigate(['/app/healthprofessional/configurations']);
         } else {
-            this.router.navigate(['/admin/configurations']);
+            this.router.navigate(['/app/admin/configurations']);
         }
     }
 

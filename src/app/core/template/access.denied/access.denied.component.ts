@@ -12,7 +12,7 @@ export class AccessDeniedComponent {
 
 
   onBack() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/app']);
   }
 
 }

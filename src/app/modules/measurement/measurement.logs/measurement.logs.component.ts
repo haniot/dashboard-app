@@ -61,6 +61,7 @@ export class MeasurementLogsComponent implements OnInit {
                 this.initializeListCheckMeasurements();
                 this.calcLengthMeasurements();
                 this.loadingMeasurements = false;
+                this.listOfMeasurementsIsEmpty = !measurements.length;
             })
             .catch()
     }

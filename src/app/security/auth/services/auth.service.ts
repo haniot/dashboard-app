@@ -39,7 +39,7 @@ export class AuthService {
                 tap(data => {
                     if (data.redirect_link) {
                         localStorage.setItem('emailTemp', credentials.email)
-                        this.router.navigate(['auth/change'], { queryParams: { redirect_link: data.redirect_link } });
+                        this.router.navigate(['/change'], { queryParams: { redirect_link: data.redirect_link } });
                     } else {
                         this.localStorageService.setItem('token', data.access_token)
                         let decodedToken: { sub: string, iss: string, iat: number, exp: number, scope: string };
@@ -58,7 +58,7 @@ export class AuthService {
 
     logout(): void {
         this.localStorageService.logout();
-        this.router.navigate(['auth/login']);
+        this.router.navigate(['/login']);
     }
 
 
@@ -70,7 +70,7 @@ export class AuthService {
 
     forgot(email: string): Promise<any> {
         return Promise.resolve(true)
-        return this.http.post<any>(`${environment.api_url}/v1/auth/forgot`, { email })
+        return this.http.post<any>(`${environment.api_url}/auth/forgot`, { email })
             .toPromise();
     }
 

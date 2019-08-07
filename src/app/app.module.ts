@@ -54,7 +54,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         HttpClientModule,
         RouterModule,
 
-        ToastrModule.forRoot(),
+        ToastrModule.forRoot({
+            timeOut: 10000,
+            positionClass: 'toast-top-full-width',
+            preventDuplicates: true,
+            closeButton: true
+        }),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -93,11 +98,13 @@ export class AppModule {
 
         const browserLang = this.translate.getBrowserLang();
 
-        languages.forEach(language => {
-            if (language.match(browserLang) && language.match(browserLang).length) {
-                return this.translate.use(language);
-            }
-        })
+        this.translate.use('en-US')
+
+        // languages.forEach(language => {
+        //     if (language.match(browserLang) && language.match(browserLang).length) {
+        //         return this.translate.use(language);
+        //     }
+        // })
 
     }
 }

@@ -123,7 +123,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
     }
 
     gotoPatients(pilotstudy_id: string) {
-        this.router.navigate(['/patients', pilotstudy_id]);
+        this.router.navigate(['/app/patients', pilotstudy_id]);
     }
 
     trackById(index, item) {

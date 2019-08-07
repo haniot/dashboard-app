@@ -42,7 +42,7 @@ export class ForgotPasswordComponent implements OnInit {
                 setTimeout(() => {
                     this.loading = false;
                     const message = `${this.translateService.instant('SECURITY.FORGOT.RECOVERY-SUCCESS')} ${email}.`
-                    this.toastr.info(message)
+                    // this.toastr.info(message)
                     this.showEmailSent = true;
                     this.f.reset();
                 }, 3000)
@@ -59,7 +59,7 @@ export class ForgotPasswordComponent implements OnInit {
             })
     }
 
-    gotoLogin(){
+    gotoLogin() {
         this.router.navigate(['/'])
     }
 

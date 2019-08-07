@@ -16,7 +16,7 @@ export class PilotStudyComponent implements AfterViewChecked {
     }
 
     newPilotStudy() {
-        this.router.navigate(['pilotstudies', 'new']);
+        this.router.navigate(['/app/pilotstudies', 'new']);
     }
 
     ngAfterViewChecked() {

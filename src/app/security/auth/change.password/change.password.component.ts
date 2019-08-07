@@ -57,7 +57,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
             this.route.paramMap
                 .subscribe(params => {
                     const language = params.get('language');
+                    console.log('Params ', params)
                     if (language) {
+
                         this.translateService.use(language);
                     }
                 })
@@ -69,7 +71,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
                 .subscribe(params => {
                     if (params.token) {
                         this.sessionService.setItem('temporaryToken', params.token);
-                        this.router.navigate(['/auth/change']);
+                        this.router.navigate(['/change']);
                     }
                 })
         );
@@ -116,7 +118,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
             .then(() => {
                 this.loading = false;
                 this.toastr.info(this.translateService.instant('TOAST-MESSAGES.PASSWORD-UPDATED'));
-                this.router.navigate(['/'])
+                this.router.navigate(['/app'])
             })
             .catch((errorResponse => {
                 switch (errorResponse.status) {

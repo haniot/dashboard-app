@@ -131,9 +131,9 @@ export class SidebarComponent implements OnInit {
 
     config(): void {
         if (this.isNotAdmin()) {
-            this.router.navigate(['/healthprofessional/configurations']);
+            this.router.navigate(['/app/healthprofessional/configurations']);
         } else {
-            this.router.navigate(['/admin/configurations']);
+            this.router.navigate(['/app/admin/configurations']);
         }
     }
 }

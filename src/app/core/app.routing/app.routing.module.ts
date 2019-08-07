@@ -8,9 +8,9 @@ import { NotfoundComponent } from '../template/page.not.found/page.not.found.com
 import { TemplateComponent } from '../template/template.component/template.component'
 
 const routes = [
-    { path: 'auth', loadChildren: 'app/security/auth/auth.module#AuthModule' },
+    { path: '', loadChildren: 'app/security/auth/auth.module#AuthModule' },
     {
-        path: '',
+        path: 'app',
         component: TemplateComponent, canActivate: [AuthGuard, ScopeGuard], canActivateChild: [AuthGuard, ScopeGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -27,7 +27,6 @@ const routes = [
     },
     { path: 'access-denied', component: AccessDeniedComponent },
     { path: 'page-not-found', component: NotfoundComponent },
-    { path: ':language/password-reset', redirectTo: 'auth/change', pathMatch: 'full' },
     { path: '**', redirectTo: 'page-not-found' }
 ];
 

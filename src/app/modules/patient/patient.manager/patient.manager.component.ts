@@ -128,7 +128,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
     }
 
     newPatient() {
-        this.router.navigate(['patients', 'new']);
+        this.router.navigate(['/app/patients', 'new']);
     }
 
     trackById(index, item) {

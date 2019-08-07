@@ -735,14 +735,15 @@
       "PLACEHOLDER-CONFIRM-PASSWORD": "Digite sua confirmação de senha aqui..."
     },
     "FORGOT": {
-      "INFORMATION": "Informações",
+      "INFORMATION": "E-mail enviado com sucesso!",
       "INFORMATION-MESSAGE": "Se o e-mail submetido estiver devidamente cadastrado na plataforma, você receberá um e-mail com as instruções e o link para realizar a alteração da senha. Caso você não receba o e-mail em alguns minutos, verifique a sua caixa de spam ou repita o processo.",
       "PASSWORD-RECOVERY": "Recuperação de senha",
       "SUBMIT": "Enviar",
       "RECOVERY-SUCCESS": "Email de recuperação enviado para",
       "RECOVERY-ERROR": "Não foi possível recuperar senha!",
       "TRY_AGAIN": "Tente novamente após 24 horas",
-      "TOO-MANY-ATTEMPTS": "Excesso de tentativas!"
+      "TOO-MANY-ATTEMPTS": "Excesso de tentativas!",
+      "UNDERSTOOD": "ENTENDIDO"
     }
   },
   "TABLE-USER": {

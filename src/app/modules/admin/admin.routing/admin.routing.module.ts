@@ -13,12 +13,12 @@ const routes = [
         data: {scope: ""}
     },
     {
-        path: 'new/administrators',
+        path: 'administrators',
         component: AdministratorsComponent,
         data: {scope: "admins:create admins:delete admins:readAll admins:update"}
     },
     {
-        path: 'new/healthprofessionals',
+        path: 'healthprofessionals',
         component: HealthProfessionalComponent,
         data: {
             scope: "healthprofessionals:create healthprofessionals:readAll"

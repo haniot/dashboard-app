@@ -735,14 +735,15 @@
       "PLACEHOLDER-CONFIRM-PASSWORD": "Enter your new password here..."
     },
     "FORGOT": {
-      "INFORMATION": "Informations",
+      "INFORMATION": "Email successfully sent!",
       "INFORMATION-MESSAGE": "If the submitted email is properly registered on the platform, you will receive an email with instructions and a link to change the password. If you don't receive the email within a few minutes, check your spam box or repeat the process.",
       "PASSWORD-RECOVERY": "Recovery Password",
       "SUBMIT": "Submit",
       "RECOVERY-SUCCESS": "Recovery email sent to",
       "RECOVERY-ERROR": "Unable to recover password!",
       "TRY_AGAIN": "Try again after 24 hours",
-      "TOO-MANY-ATTEMPTS": "Too many attempts!"
+      "TOO-MANY-ATTEMPTS": "Too many attempts!",
+      "UNDERSTOOD": "UNDERSTOOD"
     }
   },
   "TABLE-USER": {

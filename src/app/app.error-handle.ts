@@ -30,7 +30,7 @@ export class AplicationErrorHandle extends ErrorHandler {
 
     goToLogin(): void {
         const router = this.injector.get(Router);
-        router.navigate(['auth/login']);
+        router.navigate(['/login']);
     }
 
 }

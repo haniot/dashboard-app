@@ -23,7 +23,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     optionsGender: Array<string> = Object.keys(Gender);
     listPilots: Array<PilotStudy>;
     patientId: string;
-    pilotStudyId: string;
     userHealthArea: string;
     showMeasurements: boolean;
     configVisibility = {
@@ -62,7 +61,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
-            this.pilotStudyId = params.get('pilotstudy_id');
             this.patientService.getById(this.patientId)
                 .then(patient => {
                     this.createPatientForm(patient);
@@ -93,7 +91,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     createPatientForm(patient: Patient) {
         this.patientForm = this.fb.group({
             id: [patient.id],
-            pilotstudy_id: [this.pilotStudyId],
+            pilotstudy_id: [patient.selected_pilot_study],
             name: [{ value: patient.name, disabled: true }],
             email: [{ value: patient.email, disabled: true }],
             phone_number: [{ value: patient.phone_number, disabled: true }],

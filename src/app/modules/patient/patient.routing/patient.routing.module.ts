@@ -29,15 +29,16 @@ const routes = [
         data: { scope: 'patients:create' }
     },
     {
+        path: ':patientId/details',
+        component: ViewHabitsComponent,
+        data: { scope: 'patients:read' }// TODO: Aqui acredito que devo adicionar os escopos forms:read
+    },
+    {
         path: ':patientId/:pilotstudy_id',
         component: PatientFormComponent,
         data: { scope: 'patients:update' }
     },
-    {
-        path: ':patientId/:pilotstudy_id/details',
-        component: ViewHabitsComponent,
-        data: { scope: 'patients:read' }// TODO: Aqui acredito que devo adicionar os escopos forms:read
-    },
+
     { path: '**', redirectTo: '/page-not-found' }
 ];
 

@@ -21,16 +21,16 @@ export class PatientComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.pilotStudyId = params.get('pilotstudy_id');
-            this.router.navigate(['patients', this.pilotStudyId]);
+            this.router.navigate(['/app/patients', this.pilotStudyId]);
         }));
     }
 
     newPatient() {
-        this.router.navigate(['patients', this.pilotStudyId, 'new']);
+        this.router.navigate(['/app/patients', this.pilotStudyId, 'new']);
     }
 
     onBack() {
-        this.router.navigate(['patients']);
+        this.router.navigate(['/app/patients']);
     }
 
     ngOnDestroy(): void {

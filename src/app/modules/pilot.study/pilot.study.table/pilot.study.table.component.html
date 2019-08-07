@@ -27,11 +27,11 @@
         <td colspan="8" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
       </tr>
       <tr *ngFor="let study of list; index as i;trackBy: trackById">
-        <td [routerLink]="['/pilotstudies',study.id,'details']">{{getIndex(i)}}</td>
-        <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.name}}</td>
-        <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.start | date }}</td>
-        <td [routerLink]="['/pilotstudies',study.id,'details']">{{study.end | date}}</td>
-        <td [routerLink]="['/pilotstudies',study.id,'details']">
+        <td [routerLink]="['/app/pilotstudies',study.id,'details']">{{getIndex(i)}}</td>
+        <td [routerLink]="['/app/pilotstudies',study.id,'details']">{{study.name}}</td>
+        <td [routerLink]="['/app/pilotstudies',study.id,'details']">{{study.start | date }}</td>
+        <td [routerLink]="['/app/pilotstudies',study.id,'details']">{{study.end | date}}</td>
+        <td [routerLink]="['/app/pilotstudies',study.id,'details']">
           <span>
             {{study.is_active | pilotStudySituation | translate}}
           </span>
@@ -43,9 +43,9 @@
             <i class="material-icons">drag_indicator</i>
           </button>
         </td>
-        <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id,'details']" [title]="'PILOT-STUDY.TOVIEW-STUDY'|translate"><i
+        <td><a class="nav-link" [routerLink]="['/app/pilotstudies',study.id,'details']" [title]="'PILOT-STUDY.TOVIEW-STUDY'|translate"><i
               class="material-icons">input</i></a>
-        <td><a class="nav-link" [routerLink]="['/pilotstudies',study.id]" [title]="'PILOT-STUDY.EDIT-STUDY'|translate"><i
+        <td><a class="nav-link" [routerLink]="['/app/pilotstudies',study.id]" [title]="'PILOT-STUDY.EDIT-STUDY'|translate"><i
               class="material-icons">edit</i></a></td>
         <td><a class="nav-link" (click)="openModalConfirmation(study.id)" [title]="'PILOT-STUDY.DELETE-STUDY'|translate"><i
               class="material-icons">delete</i></a></td>
