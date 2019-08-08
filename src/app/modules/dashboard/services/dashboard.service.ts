@@ -22,19 +22,15 @@ export class DashboardService {
         this.listNumberPatientsForEachStudy = new Array<Unit>();
     }
 
-    async getInfoByUser(userId: string)
-        : Promise<{ studiesTotal: number, patientsTotal: number }> {
+    async getInfoByUser(userId: string): Promise<{ studiesTotal: number, patientsTotal: number }> {
 
         this.cacheListPilots = new Array<PilotStudy>();
         this.cacheListPatients = new Array<Patient>();
         this.listNumberPatientsForEachStudy = new Array<Unit>();
 
-        let patientsTotal;
-        let studiesTotal;
+        const studiesTotal = await this.getNumberOfStudies(userId);
 
-        studiesTotal = await this.getNumberOfStudies(userId);
-
-        patientsTotal = await this.getNumberOfPatients();
+        const patientsTotal = await this.getNumberOfPatients();
 
         return {
             studiesTotal: studiesTotal,
@@ -43,6 +39,7 @@ export class DashboardService {
     }
 
     getNumberOfStudies(userId: string): Promise<number> {
+
         return this.getAllStudiesByUserId(userId)
             .then(pilotstudies => {
                 this.cacheListPilots = pilotstudies;
@@ -86,7 +83,7 @@ export class DashboardService {
             myParams = myParams.append('limit', String(limit));
         }
 
-        let url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
+        let url = `${environment.api_url}/healthprofessionals/${userId}/pilotstudies`;
 
         if (this.authService.decodeToken().sub_type === 'admin') {
             url = `${environment.api_url}/pilotstudies`;

@@ -13,11 +13,11 @@ export class NutritionalQuestionnaire {
 
     constructor() {
         this.id = '';
-        this.created_at = new Date().toDateString();
-        this.sleep_habit = new SleepHabitsRecord();
-        this.physical_activity_habits = new PhysicalActivityHabitsRecord();
-        this.feeding_habits_record = new FeedingHabitsRecord();
-        this.medical_record = new MedicalRecord();
+        this.created_at = '';
+        this.sleep_habit = undefined;
+        this.physical_activity_habits = undefined;
+        this.feeding_habits_record = undefined;
+        this.medical_record = undefined;
     }
 
 }

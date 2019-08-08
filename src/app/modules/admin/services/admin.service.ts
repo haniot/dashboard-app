@@ -13,7 +13,7 @@ export class AdminService {
 
 
     getById(id: string): Promise<any> {
-        return this.http.get<any>(`${environment.api_url}/users/admins/${id}`)
+        return this.http.get<any>(`${environment.api_url}/admins/${id}`)
             .toPromise();
     }
 
@@ -32,20 +32,20 @@ export class AdminService {
             myParams = myParams.append('?email', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/users/admins`;
+        const url = `${environment.api_url}/admins`;
 
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
     create(administrator: Admin): Promise<GenericUser> {
-        return this.http.post<any>(`${environment.api_url}/users/admins`, administrator)
+        return this.http.post<any>(`${environment.api_url}/admins`, administrator)
             .toPromise();
     }
 
     update(administrator: Admin): Promise<GenericUser> {
 
-        return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
+        return this.http.patch<any>(`${environment.api_url}/admins/${administrator.id}`, administrator)
             .toPromise();
     }
 }

@@ -6,7 +6,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 @Component({
     selector: 'app-evaluation-list',
     templateUrl: './nutritional.evaluation.list.component.html',
-    styleUrls: ['./nutritinal.evaluation.list.component.scss'],
+    styleUrls: ['./nutritional.evaluation.list.component.scss'],
     providers: [{
         provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
     }]

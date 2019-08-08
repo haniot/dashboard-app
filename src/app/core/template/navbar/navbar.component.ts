@@ -46,7 +46,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     mobile_menu_visible: any = 0;
     toggleButton: any;
     sidebarVisible: boolean;
-    userName = '';
+    userLogged: any;
     title: string;
     listPilots: Array<PilotStudy>;
     userId: string;
@@ -54,6 +54,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     pilotStudyName: string;
     flag = true;
     private subscriptions: Array<ISubscription>;
+    userName: string;
 
     constructor(
         location: Location,
@@ -70,6 +71,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.sidebarVisible = false;
         this.subscriptions = new Array<ISubscription>();
         this.listPilots = new Array<PilotStudy>();
+        this.userName = '';
     }
 
     ngOnInit() {
@@ -195,21 +197,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     getUserName() {
-        const username = this.localStorageService.getItem('username');
+        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
         const language = this.localStorageService.getItem('language');
-
-        if (username && language) {
-            this.userName = username;
+        try {
+            this.userLogged = localUserLogged;
+            this.userName = this.userLogged.name ? this.userLogged.name : this.userLogged.email;
             this.configLanguage(language);
-        } else {
-
+        } catch (e) {
             this.userService.getUserById(this.localStorageService.getItem('user'))
                 .then(user => {
                     if (user) {
-                        this.userName = user.name ? user.name : user.email;
+                        this.userLogged = user;
+                        this.userName = this.userLogged.name ? this.userLogged.name : this.userLogged.email;
                         const health_area = user.health_area ? user.health_area : 'admin';
-                        this.localStorageService.setItem('username', this.userName);
-                        this.localStorageService.setItem('email-template.html', user.email);
+                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
+                        this.localStorageService.setItem('email', user.email);
                         this.localStorageService.setItem('health_area', health_area);
                         this.localStorageService.setItem('language', user.language);
                         this.configLanguage(user.language);
@@ -217,6 +219,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 })
                 .catch();
         }
+
     }
 
     loadUser(): void {

@@ -9,6 +9,7 @@ import { SelectPilotStudyService } from './service/select.pilot.study.service';
 import { AuthService } from '../../../security/auth/services/auth.service';
 import { LocalStorageService } from '../../shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../../modules/config.matpaginator'
+import { UserService } from '../../../modules/admin/services/users.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -39,6 +40,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         private selecPilotService: SelectPilotStudyService,
         private selectPilot: SelectPilotStudyService,
         private authService: AuthService,
+        private userService: UserService,
         private localStorageService: LocalStorageService
     ) {
         this.page = PaginatorConfig.page;
@@ -49,7 +51,6 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-
         if (this.authService.decodeToken().sub_type === 'admin') {
             this.selecPilotService.close();
         }
@@ -135,10 +136,26 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
 
 
     getUserName() {
-        const username = this.localStorageService.getItem('username');
-        if (username) {
+        this.userId = this.localStorageService.getItem('user');
+        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+        try {
+            const username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
             this.userName = username;
+        } catch (e) {
+            this.userService.getUserById(this.localStorageService.getItem('user'))
+                .then(user => {
+                    if (user) {
+                        this.userName = user.name ? user.name : user.email;
+                        const health_area = user.health_area ? user.health_area : 'admin';
+                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
+                        this.localStorageService.setItem('email', user.email);
+                        this.localStorageService.setItem('health_area', health_area);
+                        this.localStorageService.setItem('language', user.language);
+                    }
+                })
+                .catch();
         }
+
     }
 
     closeModal() {

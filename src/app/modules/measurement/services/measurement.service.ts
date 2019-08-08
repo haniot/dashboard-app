@@ -5,11 +5,17 @@ import { environment } from 'environments/environment';
 import { Measurement } from '../models/measurement';
 import { BloodPressure } from '../models/blood-pressure';
 import { HeartRate } from '../models/heart-rate';
+import { MeasurementType } from '../models/measurement.types'
 
 @Injectable()
 export class MeasurementService {
 
     constructor(private http: HttpClient) {
+    }
+
+    getAllTypes(): Promise<MeasurementType[]> {
+        return this.http.get<any>(`${environment.api_url}/measurements/types`)
+            .toPromise();
     }
 
     getAll(page?: number, limit?: number, search?: string): Promise<Measurement[]> {
@@ -70,24 +76,24 @@ export class MeasurementService {
 
         myParams = myParams.append('sort', '+timestamp');
 
-        const url = `${environment.api_url}/users/${userId}/measurements`;
+        const url = `${environment.api_url}/patients/${userId}/measurements`;
 
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
     create(userId: string, measurement: Measurement): Promise<Measurement> {
-        return this.http.post<any>(`${environment.api_url}/users/${userId}/measurements`, measurement)
+        return this.http.post<any>(`${environment.api_url}/patients/${userId}/measurements`, measurement)
             .toPromise();
     }
 
     getById(userId: string, measurementId: string): Promise<Measurement> {
-        return this.http.get<any>(`${environment.api_url}/users/${userId}/measurements/${measurementId}`)
+        return this.http.get<any>(`${environment.api_url}/patients/${userId}/measurements/${measurementId}`)
             .toPromise();
     }
 
     remove(userId: string, measurementId: string): Promise<any> {
-        return this.http.delete<any>(`${environment.api_url}/users/${userId}/measurements/${measurementId}`)
+        return this.http.delete<any>(`${environment.api_url}/patients/${userId}/measurements/${measurementId}`)
             .toPromise();
     }
 

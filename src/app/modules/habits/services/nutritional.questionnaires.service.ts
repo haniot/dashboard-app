@@ -27,16 +27,19 @@ export class NutritionalQuestionnairesService {
             myParams = myParams.append('limit', String(limit));
         }
 
+        myParams = myParams.append('sort', '+created_at');
+
         const url = `${environment.api_url}/patients/${patientId}/nutritional/questionnaires`;
 
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
-    getLast(patientId: string): Promise<NutritionalQuestionnaire[]> {
-        return this.http.get<any>(`${environment.api_url}/patients/${patientId}/nutritional/questionnaires/last`)
+    remove(patientId: string, nutritionalQuestionnaireId: string): Promise<NutritionalQuestionnaire> {
+        return Promise.resolve(new NutritionalQuestionnaire());
+        const url = `${environment.api_url}/patients/${patientId}/nutritional/questionnaires/${nutritionalQuestionnaireId}`;
+        return this.http.delete<any>(url)
             .toPromise();
     }
-
 
 }

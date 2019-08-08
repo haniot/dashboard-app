@@ -94,15 +94,17 @@ export class SidebarComponent implements OnInit {
 
     getUserName() {
         this.userId = this.localStorageService.getItem('user');
-        const username = this.localStorageService.getItem('username');
-        if (username) {
+        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+        let username = '';
+        try {
+            username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
             this.userName = username;
-        } else {
+        } catch (e) {
             this.userService.getUserById(this.userId)
                 .then(user => {
-                    if (user && user.name) {
-                        this.userName = user.name;
-                        this.localStorageService.setItem('username', this.userName.toString());
+                    if (user) {
+                        this.userName = user.name ? user.name : user.email;
+                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
                     }
                 })
                 .catch();

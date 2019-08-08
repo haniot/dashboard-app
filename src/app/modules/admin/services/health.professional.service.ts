@@ -14,7 +14,7 @@ export class HealthProfessionalService {
 
 
     getById(id: string): Promise<any> {
-        return this.http.get<any>(`${environment.api_url}/users/healthprofessionals/${id}`)
+        return this.http.get<any>(`${environment.api_url}/healthprofessionals/${id}`)
             .toPromise();
     }
 
@@ -33,7 +33,7 @@ export class HealthProfessionalService {
             myParams = myParams.append('?name', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/users/healthprofessionals`;
+        const url = `${environment.api_url}/healthprofessionals`;
 
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
@@ -41,12 +41,12 @@ export class HealthProfessionalService {
     }
 
     create(healthprofessionals: HealthProfessional): Promise<GenericUser> {
-        return this.http.post<any>(`${environment.api_url}/users/healthprofessionals`, healthprofessionals)
+        return this.http.post<any>(`${environment.api_url}/healthprofessionals`, healthprofessionals)
             .toPromise();
     }
 
     update(healthprofessionals: HealthProfessional): Promise<HealthProfessional> {
-        return this.http.patch<any>(`${environment.api_url}/users/healthprofessionals/${healthprofessionals.id}`, healthprofessionals)
+        return this.http.patch<any>(`${environment.api_url}/healthprofessionals/${healthprofessionals.id}`, healthprofessionals)
             .toPromise();
     }
 }

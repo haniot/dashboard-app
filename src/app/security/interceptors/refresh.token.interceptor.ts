@@ -16,11 +16,13 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
         return <any>next.handle(request)
             .pipe(
                 catchError((errorResponse: HttpErrorResponse) => {
+                    try {
+                        const error = (typeof errorResponse.error !== 'object') ? JSON.parse(errorResponse.error) : errorResponse.error;
+                        if (errorResponse.status === 401 && error.code === 401 && error.message === 'UNAUTHORIZED') {
+                            this.router.navigate(['/login']);
+                        }
+                    } catch (e) {
 
-                    const error = (typeof errorResponse.error !== 'object') ? JSON.parse(errorResponse.error) : errorResponse.error;
-
-                    if (errorResponse.status === 401 && error.code === 401 && error.message === 'UNAUTHORIZED') {
-                        this.router.navigate(['/login']);
                     }
                     return Observable.throw(errorResponse);
                 })

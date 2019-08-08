@@ -342,7 +342,9 @@
     },
     "REGISTER-DATE": "Data do registro",
     "PREVIOUS": "Anterior",
-    "NEXT": "Próximo"
+    "NEXT": "Próximo",
+    "DELETE-ODONTOLOGICAL-QUESTIONNAIRE": "Reomver questionário odontologico",
+    "DELETE-NUTRITIONAL-QUESTIONNAIRE": "Remover questionário nutricional"
   },
   "HEALTHPROFESSIONALS": {
     "TITLE": "Lista de profissionais de saúde",
@@ -427,6 +429,7 @@
       "WEIGHT": "Peso",
       "HEIGHT": "Altura",
       "FAT": "Gordura corporal",
+      "FAT-UNIT": "%",
       "WAIST-CIRCUMFERENCE": "Circunferência da cintura",
       "TEMPERATURE": "Temperatura corporal",
       "GLUCOSE": "Glicose no sangue",
@@ -568,7 +571,9 @@
       },
       "HABITS": "HÁBITOS",
       "MEASUREMENTS": "GRÁFICOS DAS MEDIÇÕES",
-      "LOG-MEASUREMENTS": "LOG DAS MEDIÇÕES"
+      "LOG-MEASUREMENTS": "LOG DAS MEDIÇÕES",
+      "LOADING-QUESTIONNAIRES": "Carregando questionário...",
+      "REMOVE-QUESTIONNAIRE": "Remover questionário"
     }
   },
   "PILOT-STUDY": {
@@ -817,6 +822,8 @@
     "NOT-LOGIN": "Não foi possível entrar",
     "BLOCKED-USER": "Usuário bloqueado!",
     "TRY-AGAIN": "Tente novamente após 1 hora.",
-    "NOT-CHANGE-LANGUAGE": "Não foi possível alterar o idioma!"
+    "NOT-CHANGE-LANGUAGE": "Não foi possível alterar o idioma!",
+    "QUESTIONNAIRE-DELETED": "Questionário removido com sucesso!",
+    "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!"
   }
 }

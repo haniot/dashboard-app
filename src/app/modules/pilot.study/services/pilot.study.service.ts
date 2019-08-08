@@ -34,7 +34,7 @@ export class PilotStudyService {
         }
 
 
-        const url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
+        const url = `${environment.api_url}/healthprofessionals/${userId}/pilotstudies`;
 
 
         /*

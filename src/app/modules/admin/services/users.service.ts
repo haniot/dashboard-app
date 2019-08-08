@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { AdminService } from './admin.service';
 import { HealthProfessionalService } from './health.professional.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
+import { PatientService } from '../../patient/services/patient.service'
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,7 @@ export class UserService {
         private http: HttpClient,
         private adminService: AdminService,
         private healthService: HealthProfessionalService,
+        private patientService: PatientService,
         private authService: AuthService
     ) {
     }
@@ -29,12 +31,15 @@ export class UserService {
 
             case 'health_professional':
                 return this.healthService.getById(id);
+
+            case 'patient':
+                return this.healthService.getById(id);
         }
 
     }
 
-    changePassword(userId: string, credentials: { old_password: string, new_password: string }): Promise<boolean> {
-        return this.http.patch<any>(`${environment.api_url}/users/${userId}/password`, credentials)
+    changePassword(body: { email: string, old_password: string, new_password: string }): Promise<boolean> {
+        return this.http.patch<any>(`${environment.api_url}/auth/password`, body)
             .toPromise();
     }
 

@@ -10,23 +10,17 @@ import { PatientService } from '../services/patient.service';
 import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
 import { Gender, Patient } from '../models/patient';
 import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
-import { FeedingRecordService } from '../../habits/services/feeding.record.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { SleepHabitsRecord } from '../../habits/models/sleep'
-import { PhysicalActivityHabitsRecord } from '../../habits/models/physical.activity'
-import { MedicalRecord } from '../../habits/models/medical.record'
-import { OralHealthRecord } from '../../habits/models/oral.health.record'
-import { FeedingHabitsRecord } from '../../habits/models/feeding'
-import { FamilyCohesionRecordService } from '../../habits/services/family.cohesion.record.service'
-import { SocioDemographicRecord } from '../../habits/models/socio.demographic.record'
-import { FamilyCohesionRecord } from '../../habits/models/family.cohesion.record'
-import { PhysicalActivityRecordService } from '../../habits/services/physical.activity.record.service'
-import { MedicalRecordService } from '../../habits/services/medical.record.service'
-import { OralhealthRecordService } from '../../habits/services/oralhealth.record.service'
-import { SleepRecordService } from '../../habits/services/sleep.record.service'
 import { SocioDemographicRecordService } from '../../habits/services/socio.demographic.record.service'
 import { NutritionalQuestionnaire } from '../../habits/models/nutritional.questionnaire'
 import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
+import { OdontologicalQuestionnaire } from '../../habits/models/odontological.questionnaire'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { OdontologicalQuestionnairesService } from '../../habits/services/odontological.questionnaires.service'
+import { PageEvent } from '@angular/material'
+import { ConfigurationBasic } from '../../config.matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'app-view-habits',
@@ -50,50 +44,64 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         pressure: false,
         heartRate: false
     };
-    sleepHabit: SleepHabitsRecord;
-    feedingHabit: FeedingHabitsRecord;
-    physicalHabit: PhysicalActivityHabitsRecord;
-    medicalHabit: MedicalRecord;
-    oralHealthHabit: OralHealthRecord;
-    socioDemographic: SocioDemographicRecord;
-    familyCohesion: FamilyCohesionRecord;
-    nutritionalQuestionnaire: NutritionalQuestionnaire;
+
     private subscriptions: Array<ISubscription>;
 
-    page: number;
-    limit: number;
+    nutritionalQuestionnaire: NutritionalQuestionnaire;
+
+    odontologicalQuestionnaire: OdontologicalQuestionnaire;
+
+    nutritionalQuestionnaireOptions: {
+        page: number, limit: number, pageSizeOptions: number[], length: number, pageEvent: PageEvent
+    }
+    odontologicalQuestionnaireOptions: {
+        page: number, limit: number, pageSizeOptions: number[], length: number, pageEvent: PageEvent
+    }
+    removingQuestionnaire: boolean;
+    loadingQuestionnaire: boolean;
+
 
     constructor(
         private fb: FormBuilder,
         private patientService: PatientService,
         private pilotStudiesService: PilotStudyService,
-        private feedingService: FeedingRecordService,
         private toastService: ToastrService,
         private router: Router,
         private activeRouter: ActivatedRoute,
         private localStorageService: LocalStorageService,
         private translateService: TranslateService,
-        private familyService: FamilyCohesionRecordService,
-        private physicalActivityService: PhysicalActivityRecordService,
-        private medicalService: MedicalRecordService,
-        private oralHealthService: OralhealthRecordService,
-        private sleepService: SleepRecordService,
+        private modalService: ModalService,
         private socioDemographicService: SocioDemographicRecordService,
-        private questionnaireService: NutritionalQuestionnairesService
+        private nutritionalQuestionnaireService: NutritionalQuestionnairesService,
+        private odontologicalQuestionnaireService: OdontologicalQuestionnairesService
     ) {
         this.subscriptions = new Array<ISubscription>();
         this.showMeasurements = false;
         this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
-        this.page = 1;
-        this.limit = 1;
+        this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
+        this.nutritionalQuestionnaireOptions = {
+            page: PaginatorConfig.page,
+            pageSizeOptions: PaginatorConfig.pageSizeOptions,
+            limit: 1,
+            length: 10,
+            pageEvent: undefined
+        };
+        this.odontologicalQuestionnaireOptions = {
+            page: PaginatorConfig.page,
+            pageSizeOptions: PaginatorConfig.pageSizeOptions,
+            limit: 1,
+            length: 10,
+            pageEvent: undefined
+        };
+        this.removingQuestionnaire = false;
+        this.loadingQuestionnaire = false;
     }
 
 
     ngOnInit() {
-        this.loaduserHealthArea();
+        this.loadUserHealthArea();
         this.createPatientFormInit();
         this.getAllPilotStudies();
-
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
             this.patientService.getById(this.patientId)
@@ -107,7 +115,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.getQuestionnaires();
     }
 
-    loaduserHealthArea(): void {
+
+    loadUserHealthArea(): void {
         this.userHealthArea = this.localStorageService.getItem('health_area');
     }
 
@@ -156,24 +165,83 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
     }
 
-    prev(): void {
-        this.page--;
-        this.getAllNutritionalQuestionnaires();
+    openModalConfirmationRemoveQuestionnaire(): void {
+        this.modalService.open('modalConfirmation');
     }
 
-    next(): void {
-        this.page++;
+    closeModalConfirmationQuestionnaire(): void {
+        this.modalService.close('modalConfirmation');
+    }
+
+    nutritionalQuestionnairePageEvent(pageEvent: PageEvent): void {
+        this.loadingQuestionnaire = true;
+        this.nutritionalQuestionnaireOptions.page = pageEvent.pageIndex;
+        this.nutritionalQuestionnaireOptions.limit = pageEvent.pageSize;
         this.getAllNutritionalQuestionnaires();
     }
 
     getAllNutritionalQuestionnaires(): void {
-        this.questionnaireService.getAll(this.patientId, this.page, this.limit)
-            .then(nutritionalQuestionnaire => {
-                if (nutritionalQuestionnaire.length) {
-                    this.nutritionalQuestionnaire = nutritionalQuestionnaire[0];
+        this.nutritionalQuestionnaireService
+            .getAll(this.patientId, this.nutritionalQuestionnaireOptions.page, this.nutritionalQuestionnaireOptions.limit)
+            .then(nutritionalQuestionnaires => {
+                if (nutritionalQuestionnaires.length) {
+                    this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
+                    if (nutritionalQuestionnaires.length) {
+                        this.nutritionalQuestionnaire = nutritionalQuestionnaires[0];
+                    }
+                }
+                this.loadingQuestionnaire = false;
+            })
+            .catch(() => {
+                this.loadingQuestionnaire = false;
+            })
+    }
+
+    removeNutritionalQuestionnaires(): void {
+        this.removingQuestionnaire = true;
+        this.closeModalConfirmationQuestionnaire();
+        this.nutritionalQuestionnaireService
+            .remove(this.patientId, this.nutritionalQuestionnaire.id)
+            .then(() => {
+                setTimeout(() => {
+                    this.removingQuestionnaire = false;
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
+                }, 3000)
+            })
+            .catch((errorResponse => {
+                this.removingQuestionnaire = false;
+
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-NOT-DELETED'));
+            }))
+    }
+
+    odontologicalQuestionnairePageEvent(pageEvent: PageEvent): void {
+        this.odontologicalQuestionnaireOptions.page = pageEvent.pageIndex;
+        this.odontologicalQuestionnaireOptions.limit = pageEvent.pageSize;
+        this.getAllOdontologicalQuestionnaires();
+    }
+
+    getAllOdontologicalQuestionnaires(): void {
+        this.odontologicalQuestionnaireService
+            .getAll(this.patientId, this.odontologicalQuestionnaireOptions.page, this.odontologicalQuestionnaireOptions.limit)
+            .then(odontologicalQuestionnaires => {
+                this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
+                if (odontologicalQuestionnaires.length) {
+                    this.odontologicalQuestionnaire = odontologicalQuestionnaires[0];
                 }
             })
             .catch()
+    }
+
+    removeOdontologicalQuestionnaires(): void {
+        this.odontologicalQuestionnaireService
+            .remove(this.patientId, this.odontologicalQuestionnaire.id)
+            .then(() => {
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
+            })
+            .catch((errorResponse => {
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-NOT-DELETED'));
+            }))
     }
 
     clickOnMatTab(event) {
@@ -203,85 +271,10 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     }
 
     getQuestionnaires(): void {
-        // this.getFamilyCohesion();
-        // this.getFeeding();
-        // this.getPhysicalActivity();
-        // this.getMedical();
-        // this.getOralHealth();
-        // this.getSleepHabit();
-        // this.getSocioDemographic();
+        this.getAllNutritionalQuestionnaires();
+        if (this.userHealthArea === 'dentistry' || this.userHealthArea === 'admin') {
+            this.getAllOdontologicalQuestionnaires();
+        }
     }
 
-    /* TODO: Remover os metodos abaixo*/
-
-    getFamilyCohesion(): void {
-        // this.familyService.getAll(this.patientId)
-        //     .then(familyRecords => {
-        //         if (familyRecords.length) {
-        //             this.familyCohesion = familyRecords[0];
-        //         }
-        //     })
-        //     .catch();
-    }
-
-    getFeeding(): void {
-        this.feedingService.getAll(this.patientId)
-            .then(feedingRecords => {
-                if (feedingRecords.length) {
-                    this.feedingHabit = feedingRecords[0];
-                }
-
-            })
-            .catch();
-    }
-
-    getPhysicalActivity(): void {
-        this.physicalActivityService.getAll(this.patientId)
-            .then(physicalRecords => {
-                if (physicalRecords.length) {
-                    this.physicalHabit = physicalRecords[0];
-                }
-            })
-            .catch();
-    }
-
-    getMedical(): void {
-        this.medicalService.getAll(this.patientId)
-            .then(medicalRecords => {
-                if (medicalRecords.length) {
-                    this.medicalHabit = medicalRecords[0];
-                }
-            })
-            .catch();
-    }
-
-    getOralHealth(): void {
-        this.oralHealthService.getAll(this.patientId)
-            .then(oralhealthrecords => {
-                if (oralhealthrecords.length) {
-                    this.oralHealthHabit = oralhealthrecords[0];
-                }
-            })
-            .catch();
-    }
-
-    getSleepHabit(): void {
-        this.sleepService.getAll(this.patientId)
-            .then(sleepRecords => {
-                if (sleepRecords.length) {
-                    this.sleepHabit = sleepRecords[0];
-                }
-            })
-            .catch();
-    }
-
-    getSocioDemographic(): void {
-        this.socioDemographicService.getAll(this.patientId)
-            .then(sociodemographics => {
-                if (sociodemographics.length) {
-                    this.socioDemographic = sociodemographics[0];
-                }
-            })
-            .catch();
-    }
 }

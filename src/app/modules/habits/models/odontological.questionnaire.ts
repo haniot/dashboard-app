@@ -12,9 +12,9 @@ export class OdontologicalQuestionnaire {
     constructor() {
         this.id = '';
         this.created_at = '';
-        this.sociodemographic_recod = new SocioDemographicRecord();
-        this.family_cohesion_record = new FamilyCohesionRecord();
-        this.oral_health_record = new OralHealthRecord();
+        this.sociodemographic_recod = undefined;
+        this.family_cohesion_record = undefined;
+        this.oral_health_record = undefined;
     }
 
 }

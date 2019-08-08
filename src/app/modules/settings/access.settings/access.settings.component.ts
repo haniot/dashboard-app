@@ -32,7 +32,8 @@ export class AccessSettingsComponent implements OnInit {
     }
 
     onChangePassword(form) {
-        this.userService.changePassword(this.userId, form.value)
+        const body = Object.assign({ email: 'teste@gmail.com' }, form.value)
+        this.userService.changePassword(body)
             .then(() => {
                 this.toastr.info(this.translate.instant('TOAST-MESSAGES.PASSWORD-UPDATED'));
                 form.reset();

@@ -15,6 +15,8 @@ import { Patient } from '../../patient/models/patient';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic } from '../../config.matpaginator';
 import { DashboardService } from '../services/dashboard.service'
+import { GenericUser } from '../../../shared/shared.models/generic.user'
+import { HealthProfessional } from '../../admin/models/health.professional'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -168,6 +170,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     calcLengthStudies() {
+        
         if (this.isNotUserAdmin()) {
             this.dashboardService.getNumberOfStudies(this.userId)
                 .then(numberOfStudies => {

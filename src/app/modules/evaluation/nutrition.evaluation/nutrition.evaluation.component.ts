@@ -420,9 +420,11 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
         this.sendingEvaluation = true;
 
-        const health_professional_name = this.localStorageService.getItem('username');
+        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
 
-        const health_professional_email = this.localStorageService.getItem('email-template.html');
+        const health_professional_name = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
+
+        const health_professional_email = this.localStorageService.getItem('email');
 
         const health_professinal = {
             name: health_professional_name,
@@ -481,8 +483,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     async exportPDF() {
         this.generatingPDF = true;
-        const health_professional = this.localStorageService.getItem('username');
-        await this.generatePDF.exportPDF(this.nutritionalEvaluation, health_professional);
+        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+        const health_professional_name = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
+        await this.generatePDF.exportPDF(this.nutritionalEvaluation, health_professional_name);
         this.generatingPDF = false;
     }
 

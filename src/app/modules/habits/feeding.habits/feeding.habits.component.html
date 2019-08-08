@@ -54,12 +54,13 @@
                 {{'HABITS.FEEDING.LIST-ALLERGIC-FOODS'|translate}}:
             </label>
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center align-content-center">
-
-                <div class="col text-center foodAllergy"
-                     *ngFor="let food of feedingForm.get('food_allergy_intolerance').value;"
-                     id="food_allergy_intolerance">
-                    <span>{{food | foodAllergy | translate}}</span>
-                </div>
+                <ul class="list-inline">
+                    <li class="list-inline-item foodAllergy"
+                        *ngFor="let food of feedingForm.get('food_allergy_intolerance').value;"
+                        id="food_allergy_intolerance">
+                        <span>{{food | foodAllergy | translate}}</span>
+                    </li>
+                </ul>
 
             </div>
         </div>

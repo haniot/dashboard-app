@@ -11,7 +11,7 @@ export class PatientService {
     }
 
     getById(patientId: string): Promise<Patient> {
-        return this.http.get<any>(`${environment.api_url}/users/patients/${patientId}`)
+        return this.http.get<any>(`${environment.api_url}/patients/${patientId}`)
             .toPromise();
     }
 
@@ -52,19 +52,19 @@ export class PatientService {
             myParams = myParams.append('?name', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/users/patients`;
+        const url = `${environment.api_url}/patients`;
 
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
 
     create(patient: Patient): Promise<boolean> {
-        return this.http.post<any>(`${environment.api_url}/users/patients`, patient)
+        return this.http.post<any>(`${environment.api_url}/patients`, patient)
             .toPromise();
     }
 
     update(patient: Patient): Promise<boolean> {
-        return this.http.patch<any>(`${environment.api_url}/users/patients/${patient.id}`, patient)
+        return this.http.patch<any>(`${environment.api_url}/patients/${patient.id}`, patient)
             .toPromise();
     }
 

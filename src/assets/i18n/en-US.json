@@ -342,7 +342,9 @@
     },
     "REGISTER-DATE": "Date of registration",
     "PREVIOUS": "Previous",
-    "NEXT": "Next"
+    "NEXT": "Next",
+    "DELETE-ODONTOLOGICAL-QUESTIONNAIRE": "Remove odontological questionnaire",
+    "DELETE-NUTRITIONAL-QUESTIONNAIRE": "Remove nutritional questionnaire"
   },
   "HEALTHPROFESSIONALS": {
     "TITLE": "List of health professionals",
@@ -427,6 +429,7 @@
       "WEIGHT": "Weight",
       "HEIGHT": "Height",
       "FAT": "Body fat",
+      "FAT-UNIT": "%",
       "WAIST-CIRCUMFERENCE": "Waist circumference",
       "TEMPERATURE": "Body temperature",
       "GLUCOSE": "Blood Glucose",
@@ -568,7 +571,9 @@
       },
       "HABITS": "HABITS",
       "MEASUREMENTS": "GRAPH OF MEASUREMENTS",
-      "LOG-MEASUREMENTS": "LOG OF MEASUREMENTS"
+      "LOG-MEASUREMENTS": "LOG OF MEASUREMENTS",
+      "LOADING-QUESTIONNAIRES": "Loading questionnaire...",
+      "REMOVE-QUESTIONNAIRE": "Remove questionnaire"
     }
   },
   "PILOT-STUDY": {
@@ -817,6 +822,8 @@
     "NOT-LOGIN": "Could not login",
     "BLOCKED-USER": "Blocked user!",
     "TRY-AGAIN": "Try again after 1 hour.",
-    "NOT-CHANGE-LANGUAGE": "Could not change language!"
+    "NOT-CHANGE-LANGUAGE": "Could not change language!",
+    "QUESTIONNAIRE-DELETED": "Questionnaire successfully removed!",
+    "QUESTIONNAIRE-NOT-DELETED": "Unable to remove questionnaire!"
   }
 }
