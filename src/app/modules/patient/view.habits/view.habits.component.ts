@@ -58,7 +58,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         page: number, limit: number, pageSizeOptions: number[], length: number, pageEvent: PageEvent
     }
     removingQuestionnaire: boolean;
-    loadingQuestionnaire: boolean;
+    loadingNutritionalQuestionnaire: boolean;
+    loadingOdontologicalQuestionnaire: boolean;
 
 
     constructor(
@@ -83,18 +84,19 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             page: PaginatorConfig.page,
             pageSizeOptions: PaginatorConfig.pageSizeOptions,
             limit: 1,
-            length: 10,
+            length: 0,
             pageEvent: undefined
         };
         this.odontologicalQuestionnaireOptions = {
             page: PaginatorConfig.page,
             pageSizeOptions: PaginatorConfig.pageSizeOptions,
             limit: 1,
-            length: 10,
+            length: 0,
             pageEvent: undefined
         };
         this.removingQuestionnaire = false;
-        this.loadingQuestionnaire = false;
+        this.loadingNutritionalQuestionnaire = false;
+        this.loadingOdontologicalQuestionnaire = false;
     }
 
 
@@ -165,16 +167,16 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
     }
 
-    openModalConfirmationRemoveQuestionnaire(): void {
-        this.modalService.open('modalConfirmation');
+    openModalConfirmationRemoveNutritionalQuestionnaire(): void {
+        this.modalService.open('confirmationRemoveNutritionalQuestionnaire');
     }
 
-    closeModalConfirmationQuestionnaire(): void {
-        this.modalService.close('modalConfirmation');
+    closeModalConfirmationNutritionalQuestionnaire(): void {
+        this.modalService.close('confirmationRemoveNutritionalQuestionnaire');
     }
 
     nutritionalQuestionnairePageEvent(pageEvent: PageEvent): void {
-        this.loadingQuestionnaire = true;
+        this.loadingNutritionalQuestionnaire = true;
         this.nutritionalQuestionnaireOptions.page = pageEvent.pageIndex;
         this.nutritionalQuestionnaireOptions.limit = pageEvent.pageSize;
         this.getAllNutritionalQuestionnaires();
@@ -183,23 +185,25 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     getAllNutritionalQuestionnaires(): void {
         this.nutritionalQuestionnaireService
             .getAll(this.patientId, this.nutritionalQuestionnaireOptions.page, this.nutritionalQuestionnaireOptions.limit)
-            .then(nutritionalQuestionnaires => {
+            .then(httpResponse => {
+                this.nutritionalQuestionnaireOptions.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                const nutritionalQuestionnaires = httpResponse.body;
                 if (nutritionalQuestionnaires.length) {
                     this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
                     if (nutritionalQuestionnaires.length) {
                         this.nutritionalQuestionnaire = nutritionalQuestionnaires[0];
                     }
                 }
-                this.loadingQuestionnaire = false;
+                this.loadingNutritionalQuestionnaire = false;
             })
             .catch(() => {
-                this.loadingQuestionnaire = false;
+                this.loadingNutritionalQuestionnaire = false;
             })
     }
 
     removeNutritionalQuestionnaires(): void {
         this.removingQuestionnaire = true;
-        this.closeModalConfirmationQuestionnaire();
+        this.closeModalConfirmationNutritionalQuestionnaire();
         this.nutritionalQuestionnaireService
             .remove(this.patientId, this.nutritionalQuestionnaire.id)
             .then(() => {
@@ -215,7 +219,16 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             }))
     }
 
+    openModalConfirmationRemoveOdontologicalQuestionnaire(): void {
+        this.modalService.open('confirmationRemoveOdontologicalQuestionnaire');
+    }
+
+    closeModalConfirmationOdontologicalQuestionnaire(): void {
+        this.modalService.close('confirmationRemoveOdontologicalQuestionnaire');
+    }
+
     odontologicalQuestionnairePageEvent(pageEvent: PageEvent): void {
+        this.loadingOdontologicalQuestionnaire = true;
         this.odontologicalQuestionnaireOptions.page = pageEvent.pageIndex;
         this.odontologicalQuestionnaireOptions.limit = pageEvent.pageSize;
         this.getAllOdontologicalQuestionnaires();
@@ -224,22 +237,31 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     getAllOdontologicalQuestionnaires(): void {
         this.odontologicalQuestionnaireService
             .getAll(this.patientId, this.odontologicalQuestionnaireOptions.page, this.odontologicalQuestionnaireOptions.limit)
-            .then(odontologicalQuestionnaires => {
+            .then(httpResponse => {
+                this.odontologicalQuestionnaireOptions.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                const odontologicalQuestionnaires = httpResponse.body;
                 this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
                 if (odontologicalQuestionnaires.length) {
                     this.odontologicalQuestionnaire = odontologicalQuestionnaires[0];
                 }
+                this.loadingOdontologicalQuestionnaire = false;
             })
-            .catch()
+            .catch(() => {
+                this.loadingOdontologicalQuestionnaire = false;
+            })
     }
 
     removeOdontologicalQuestionnaires(): void {
+        this.removingQuestionnaire = true;
+        this.closeModalConfirmationOdontologicalQuestionnaire();
         this.odontologicalQuestionnaireService
             .remove(this.patientId, this.odontologicalQuestionnaire.id)
             .then(() => {
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
+                this.removingQuestionnaire = false;
             })
             .catch((errorResponse => {
+                this.removingQuestionnaire = false;
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-NOT-DELETED'));
             }))
     }

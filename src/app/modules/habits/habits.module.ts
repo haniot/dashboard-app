@@ -38,6 +38,7 @@ import { ToothTypePipe } from './pipes/tooth.type.pipe';
 import { LesionTypePipe } from './pipes/lesion.type.pipe';
 import { NutritionalQuestionnairesService } from './services/nutritional.questionnaires.service'
 import { OdontologicalQuestionnairesService } from './services/odontological.questionnaires.service'
+import { QuestionnaireTypePipe } from './pipes/questionnaire.type'
 
 @NgModule({
     declarations: [
@@ -65,7 +66,8 @@ import { OdontologicalQuestionnairesService } from './services/odontological.que
         CorAndRacePipe,
         TeethbushingPipe,
         ToothTypePipe,
-        LesionTypePipe
+        LesionTypePipe,
+        QuestionnaireTypePipe
     ],
     imports: [
         CommonModule,
@@ -82,7 +84,8 @@ import { OdontologicalQuestionnairesService } from './services/odontological.que
         MedicalRecordComponent,
         SocioDemographicRecordComponent,
         FamilyCohesionRecordComponent,
-        OralHealthRecordComponent
+        OralHealthRecordComponent,
+        QuestionnaireTypePipe
     ],
     providers: [
         /**Pipes */
@@ -102,6 +105,7 @@ import { OdontologicalQuestionnairesService } from './services/odontological.que
         TeethbushingPipe,
         ToothTypePipe,
         LesionTypePipe,
+        QuestionnaireTypePipe,
         /** Services */
         FeedingRecordService,
         SleepRecordService,

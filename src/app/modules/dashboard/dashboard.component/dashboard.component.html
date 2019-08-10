@@ -4,7 +4,8 @@
             <div class="row justify-content-center">
 
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center">
-                    <card-top [category]="'DASHBOARD.CARD-STUDIES-TOTAL'|translate" [title]="lengthStudies"
+                    <card-top [category]="'DASHBOARD.CARD-STUDIES-TOTAL'|translate"
+                              [title]="lengthStudies"
                               [icon]="'library_books'"></card-top>
                 </div>
 
@@ -69,7 +70,7 @@
 
         <haniot-card [title]="'DASHBOARD.CARD-STUDIES.TITLE'|translate"
                      [subtitle]="'DASHBOARD.CARD-STUDIES.SUBTITLE'|translate">
-            <div class="row justify-content-center" *ngIf="!listPilots.length">
+            <div class="row justify-content-center" *ngIf="!listPilots.length && !listOfStudiesIsEmpty">
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-studies">
                     <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
                 </div>
@@ -121,9 +122,9 @@
                 </a>
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfStudiesIsEmpty">
                     <p class="second-title text-center">
-                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY'}}</p>
+                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY'|translate}}</p>
                     <p>
-                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY-MESSAGE'}}
+                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY-MESSAGE'|translate}}
                     </p>
                 </div>
             </div>

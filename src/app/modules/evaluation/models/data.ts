@@ -1,3 +1,8 @@
+export class DataResponse {
+    status: string;
+    completion_estimate: string;
+}
+
 export class DataRequest {
     data_types: Array<string>;
     patients: Array<string>;

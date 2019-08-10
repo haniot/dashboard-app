@@ -16,7 +16,7 @@ import { LocalStorageService } from '../../../shared/shared.services/local.stora
 import { ConfigurationBasic } from '../../config.matpaginator';
 import { DashboardService } from '../services/dashboard.service'
 import { GenericUser } from '../../../shared/shared.models/generic.user'
-import { HealthProfessional } from '../../admin/models/health.professional'
+import { UserService } from '../../admin/services/users.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     limitStudies: number;
     lengthStudies: number;
     userId: string;
+    userLogged: GenericUser;
     patientsTotal: number;
     studiesTotal: number;
     measurementsTotal: number;
@@ -58,7 +59,8 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         private localStorageService: LocalStorageService,
         private toastService: ToastrService,
         private selectPilotService: SelectPilotStudyService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private userService: UserService
     ) {
         this.patientsTotal = 0;
         this.measurementsTotal = 0;
@@ -105,6 +107,22 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     loadUser(): void {
         this.userId = this.localStorageService.getItem('user');
+        const localUserLogged = this.localStorageService.getItem('userLogged');
+        try {
+            this.userLogged = JSON.parse(localUserLogged);
+            if (!localUserLogged) {
+                throw new Error();
+            }
+        } catch (e) {
+            this.userService.getUserById(this.localStorageService.getItem('user'))
+                .then(user => {
+                    if (user) {
+                        this.userLogged = user;
+                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
+                    }
+                })
+                .catch();
+        }
     }
 
     load() {
@@ -164,13 +182,13 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.dashboardService.getAllStudiesByUserId(this.userId, this.pageStudies, this.limitStudies)
             .then(studies => {
                 this.listPilots = studies;
+                // TODO: Substituir peloo headers
                 this.calcLengthStudies();
                 this.listOfStudiesIsEmpty = !studies.length;
             })
     }
 
     calcLengthStudies() {
-        
         if (this.isNotUserAdmin()) {
             this.dashboardService.getNumberOfStudies(this.userId)
                 .then(numberOfStudies => {

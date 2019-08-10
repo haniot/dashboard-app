@@ -1,7 +1,7 @@
 export enum MeasurementType {
     weight = 'weight',
     blood_glucose = 'blood_glucose',
-    fat = 'fat',
+    body_fat = 'body_fat',
     heart_rate = 'heart_rate',
     blood_pressure = 'blood_pressure',
     height = 'height',

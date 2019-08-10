@@ -6,6 +6,7 @@ export class GenericUser {
     last_login: number;
     last_sync: number;
     selected_pilot_study: string;
+    total_pilot_studies: number;
     language: string;
 
     constructor() {
@@ -16,6 +17,7 @@ export class GenericUser {
         this.last_login = 0;
         this.last_sync = 0;
         this.selected_pilot_study = '';
+        this.total_pilot_studies = 0;
         this.language = '';
     }
 }

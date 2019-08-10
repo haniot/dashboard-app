@@ -84,9 +84,19 @@ export class DashboardService {
         }
 
         let url = `${environment.api_url}/healthprofessionals/${userId}/pilotstudies`;
+        const type_user = this.authService.decodeToken().sub_type;
+        switch (type_user) {
+            case 'admin':
+                url = `${environment.api_url}/pilotstudies`;
+                break;
 
-        if (this.authService.decodeToken().sub_type === 'admin') {
-            url = `${environment.api_url}/pilotstudies`;
+            case 'health_professional':
+                url = `${environment.api_url}/healthprofessionals/${userId}/pilotstudies`;
+                break;
+
+            case 'patient':
+                url = `${environment.api_url}/patients/${userId}/pilotstudies`;
+                break;
         }
 
         return this.http.get<any>(url, { params: myParams })

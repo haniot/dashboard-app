@@ -359,7 +359,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         });
 
         this.listFat = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.fat
+            return element.type === MeasurementType.body_fat
         });
 
         this.listWaistCircunference = measurements.filter((element: Measurement) => {

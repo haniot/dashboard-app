@@ -46,7 +46,7 @@ label {
   display: none;
 }
 
-#loadingQuestionnaire {
+.loadingQuestionnaire {
   z-index: 2000;
   margin: 0;
   position: absolute;
@@ -55,7 +55,7 @@ label {
   transform: translateY(-40%);
 }
 
-#backdropLoadingQuestionnaire {
+.backdropLoadingQuestionnaire {
   position: absolute;
   height: 100%;
 }

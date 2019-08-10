@@ -4,14 +4,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-
-import { OdontologicEvaluation } from '../../evaluation/models/odontologic-evaluation';
 import { PilotStudy } from '../models/pilot.study';
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service';
 import { PilotStudyService } from '../services/pilot.study.service';
 import { DateRange } from '../models/range-date';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { Data, DataResponse } from '../../evaluation/models/data'
+import { MeasurementService } from '../../measurement/services/measurement.service'
+import { MeasurementType } from '../../measurement/models/measurement.types'
+import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
+import { QuestionnaireType } from '../../habits/models/questionnaire.type'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -28,14 +31,22 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     page: number;
     limit: number;
     length: number;
-    listOfFiles: Array<OdontologicEvaluation>;
+    listOfFiles: Array<Data>;
     search: DateRange;
     searchTime;
     cacheIdFileRemove: string;
-    lastFiles: OdontologicEvaluation;
+    lastFile: Data;
     generatingFile: boolean;
     listOfFilesIsEmpty: boolean;
     removingFile: boolean;
+    dataResponse: DataResponse;
+    measurementsTypeOptions: Array<MeasurementType>
+    questionnaireTypeOptions: QuestionnaireType;
+    checkSelectMeasurementTypeAll: boolean;
+    listCheckMeasurementTypes: Array<boolean>;
+    checkSelectQuestionnaireTypeAll: boolean;
+    listCheckQuestionnaireNutritionalTypes: Array<boolean>;
+    listCheckQuestionnaireOdontologicalTypes: Array<boolean>;
 
     constructor(
         private pilotService: PilotStudyService,
@@ -44,22 +55,29 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         private modalService: ModalService,
         private localStorageService: LocalStorageService,
         private translateService: TranslateService,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private measurementService: MeasurementService,
+        private questionnaireService: NutritionalQuestionnairesService
     ) {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
         this.generatingFile = false;
         this.pilotStudy = new PilotStudy();
-        this.listOfFiles = new Array<OdontologicEvaluation>();
+        this.listOfFiles = new Array<Data>();
         this.listOfFilesIsEmpty = false;
         this.search = new DateRange();
         this.removingFile = false;
+        this.dataResponse = new DataResponse();
+        this.checkSelectMeasurementTypeAll = false;
+        this.listCheckMeasurementTypes = new Array<boolean>();
+        this.questionnaireTypeOptions = new QuestionnaireType();
+        this.listCheckQuestionnaireNutritionalTypes = new Array<boolean>();
+        this.listCheckQuestionnaireOdontologicalTypes = new Array<boolean>();
     }
 
     ngOnInit() {
         this.getAllFiles();
-        this.calcLenghtFiles();
     }
 
     searchOnSubmit() {
@@ -83,8 +101,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
                 .then(files => {
                     this.listOfFiles = files;
-                    this.calcLenghtFiles();
-                    this.lastFiles = files[0];
+                    // this.calcLenghtFiles();
+                    this.lastFile = files[0];
                     this.listOfFilesIsEmpty = !files.length;
                 })
                 .catch(() => {
@@ -147,14 +165,17 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     generateFile() {
+        this.loadMeasurementsTypes();
         const user_id = this.localStorageService.getItem('user');
         this.generatingFile = true;
         this.pilotService.generateNewFile(this.pilotStudy, user_id)
-            .then(newFile => {
-                this.lastFiles = newFile;
-                this.fileGenerated();
-                this.generatingFile = false;
-                this.getAllFiles();
+            .then(response => {
+                this.dataResponse = response;
+                setTimeout(() => {
+                    this.openModalFileInProcessing();
+                    this.generatingFile = false;
+                    this.getAllFiles();
+                }, 3000)
             })
             .catch(error => {
                     this.generatingFile = false;
@@ -173,6 +194,28 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             )
     }
 
+    openModalFileConfig() {
+        this.loadMeasurementsTypes()
+            .then(() => {
+                this.modalService.open('modalFileConfig');
+            })
+            .catch();
+        this.loadQuestionnaireTypes();
+
+    }
+
+    closeModalFileConfig() {
+        this.modalService.close('modalFileConfig');
+    }
+
+    openModalFileInProcessing() {
+        this.modalService.open('modalFileInProcessing');
+    }
+
+    closeModalFileInProcessing() {
+        this.modalService.close('modalFileInProcessing');
+    }
+
     fileGenerated() {
         this.modalService.open('modalFile');
     }
@@ -184,6 +227,64 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     cleanDateRange() {
         this.search = new DateRange();
         this.getAllFiles();
+    }
+
+    loadMeasurementsTypes(): Promise<any> {
+        return this.measurementService.getAllTypes()
+            .then(types => {
+                this.measurementsTypeOptions = types;
+                this.measurementsTypeOptions.forEach(() => {
+                    this.listCheckMeasurementTypes.push(false);
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    loadQuestionnaireTypes(): void {
+        this.questionnaireService.getAllTypes()
+            .then(types => {
+                this.questionnaireTypeOptions = types;
+                this.questionnaireTypeOptions.odontological.forEach(() => {
+                    this.listCheckQuestionnaireOdontologicalTypes.push(false);
+                })
+                this.questionnaireTypeOptions.nutritional.forEach(() => {
+                    this.listCheckQuestionnaireNutritionalTypes.push(false);
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    clickCheckMeasurementTypeAll() {
+        this.listCheckMeasurementTypes.forEach((item, index) => {
+            this.listCheckMeasurementTypes[index] = !this.checkSelectMeasurementTypeAll;
+        });
+    }
+
+    clickCheckQuestionnaireTypeAll() {
+        this.listCheckQuestionnaireNutritionalTypes.forEach((item, index) => {
+            this.listCheckQuestionnaireNutritionalTypes[index] = !this.checkSelectQuestionnaireTypeAll;
+        });
+        this.listCheckQuestionnaireOdontologicalTypes.forEach((item, index) => {
+            this.listCheckQuestionnaireOdontologicalTypes[index] = !this.checkSelectQuestionnaireTypeAll;
+        });
+    }
+
+    changeMeasurementTypeCheck(): void {
+        const typesSelected = this.listCheckMeasurementTypes.filter(item => item === true);
+        this.checkSelectMeasurementTypeAll = this.listCheckMeasurementTypes.length === typesSelected.length;
+    }
+
+    changeQuestionnaireTypeCheck(): void {
+        const typesNutritionalSelected = this.listCheckQuestionnaireNutritionalTypes.filter(item => item === true);
+        const typesOdontologicalSelected = this.listCheckQuestionnaireOdontologicalTypes.filter(item => item === true);
+
+        this.checkSelectQuestionnaireTypeAll =
+            (this.listCheckQuestionnaireNutritionalTypes.length + this.listCheckQuestionnaireOdontologicalTypes.length)
+            === (typesNutritionalSelected.length + typesOdontologicalSelected.length)
     }
 
     trackById(index, item) {

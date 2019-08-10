@@ -102,7 +102,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     }
 
     loadFat() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.fat, null, null, this.filter)
+        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_fat, null, null, this.filter)
             .then((measurements: Array<any>) => {
                 this.listFat = measurements;
             })

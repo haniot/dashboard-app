@@ -336,6 +336,15 @@
         "OFTEN": "Frequentemente",
         "ALMOST-ALWAYS": "Quase sempre"
       },
+      "QUESTIONNAIRE-TYPE": {
+        "SOCIO-DEMOGRAPHIC": "Socio Demografica",
+        "FAMILY-COHESION": "Coesão Familiar",
+        "ORAL-HEALTH": "Saúde Bucal",
+        "SLEEP": "Habitos de Sono",
+        "PHYSICAL-ACTIVITY": "Atividade Fisica",
+        "FEEDING": "Habitos Alimentares",
+        "MEDICAL": "Historico Medico"
+      },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO",
       "DO-NOT-KNOW": "Não sei/Não lembro"
@@ -616,6 +625,14 @@
       "DISASSOCIATE-PROFESSIONAL": "Disassociar profissional...",
       "REMOVE": "Remover"
     },
+    "MANAGE-PATIENTS": {
+      "TITLE": "Gerenciar pacientes",
+      "SUBTITLE": "",
+      "ADDPATIENT": "Adicionar novo paciente",
+      "ASSOCIATE-PATIENTS": "Pacientes associados",
+      "DISASSOCIATE-PATIENT": "Dissociar paciente...",
+      "REMOVE": "Remover"
+    },
     "PLACEHOLDER-SEARCH": "Pesquisar estudo...",
     "NAME-OF-STUDY": "Nome do estudo",
     "TOVIEW-STUDY": "Visualizar estudo...",
@@ -624,11 +641,18 @@
     "PROFESSIONAL": "Profissional",
     "CARD-PILOT-STUDY": {
       "TITLE": "Estudo piloto",
-      "SUBTITLE": ""
+      "SUBTITLE": "Informações disponiveis apenas para visualização",
+      "EDIT-INFO": "Editar informações",
+      "TOTAL-PROFESSIONALS": "Quantidade de Profissionais",
+      "TOTAL-PATIENTS": "Quantidade de Pacientes"
     },
     "CARD-FILES": {
       "TITLE": "Arquivos disponíveis para download",
-      "SUBTITLE": ""
+      "SUBTITLE": "",
+      "DATA-SUCCESSFULLY-REQUEST": "Dados solicitados com sucesso!",
+      "DATA-SUCCESSFULLY-REQUEST-MESSAGE": "Os dados solicitados estarão disponiveis dentro de alguns minutos.",
+      "COMPLETION-ESTIMATE": "Estimativa de conclusão",
+      "UNDERSTOOD": "Entendido"
     }
   },
   "SIDEBAR": {
@@ -669,7 +693,9 @@
     "PASSWORD-NOTMATCH": "Informe a mesma senha",
     "REQUERID-FIELD": "Campo obrigatório",
     "CLOSE": "Fechar",
+    "TO-EDIT": "Editar",
     "DATE": "Data",
+    "HOUR": "Hora",
     "DATE-AND-HOUR": "Data e Hora",
     "AT": "ás",
     "DATE-START": "Data ínicio",
@@ -694,6 +720,9 @@
     "YEARS": "ANOS",
     "AGE": "Idade",
     "CANCEL": "Cancelar",
+    "PHONE-NUMBER": "Telefone",
+    "INVALID-PHONE-NUMBER": "Telefone inválido",
+    "LANGUAGE": "Idioma",
     "PIPES": {
       "GENDER": {
         "MALE": "MASCULINO",

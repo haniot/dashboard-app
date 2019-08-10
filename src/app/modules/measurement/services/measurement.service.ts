@@ -14,6 +14,37 @@ export class MeasurementService {
     }
 
     getAllTypes(): Promise<MeasurementType[]> {
+        const mock = [
+            {
+                "id": "blood_glucose",
+                "display_name": "Blood Glucose"
+            },
+            {
+                "id": "blood_pressure",
+                "display_name": "Blood Pressure"
+            },
+            {
+                "id": "body_temperature",
+                "display_name": "Body Temperature"
+            },
+            {
+                "id": "body_fat",
+                "display_name": "Body Fat"
+            },
+            {
+                "id": "height",
+                "display_name": "Height"
+            },
+            {
+                "id": "waist_circumference",
+                "display_name": "Waist Circumference"
+            },
+            {
+                "id": "weight",
+                "display_name": "Weight"
+            }
+        ];
+        return Promise.resolve(JSON.parse(JSON.stringify(mock)))
         return this.http.get<any>(`${environment.api_url}/measurements/types`)
             .toPromise();
     }

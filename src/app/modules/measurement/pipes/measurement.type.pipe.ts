@@ -14,7 +14,7 @@ export class MeasurementTypePipe implements PipeTransform {
             case MeasurementType.height:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.HEIGHT';
 
-            case MeasurementType.fat:
+            case MeasurementType.body_fat:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.FAT';
 
             case MeasurementType.waist_circumference:

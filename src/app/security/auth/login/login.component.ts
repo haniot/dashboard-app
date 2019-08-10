@@ -135,33 +135,35 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     onSubmit() {
         this.loading = true;
-        this.subscriptions.push(this.authService.login(this.f.value).subscribe(
-            (resp) => {
-                this.cleanAttempt()
-                this.router.navigate(['/app']);
-                this.loading = false;
-            },
-            (error: HttpErrorResponse) => {
-                const rateLimit = parseInt(error.headers.get('x-ratelimit-limit'), 10);
-                const rateLimitRemaining = parseInt(error.headers.get('x-ratelimit-remaining'), 10);
-                switch (error.status) {
-                    case 401:
-                        this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
-                            this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
-                        this.updateAttempt(rateLimit - rateLimitRemaining);
-                        break;
-                    case 429:
-                        this.toastr.error(this.translateService.instant('TOAST-MESSAGES.TRY-AGAIN'),
-                            this.translateService.instant('TOAST-MESSAGES.BLOCKED-USER'));
-                        this.showCaptcha = false;
-                        this.cleanAttempt();
-                        break;
-                }
-                this.loading = false;
-                this.verifyReCaptcha();
-                this.resetCaptcha();
-            }
-        ));
+        this.subscriptions.push(
+            this.authService.login(this.f.value)
+                .subscribe(
+                    (resp) => {
+                        this.cleanAttempt()
+                        this.router.navigate(['/app']);
+                        this.loading = false;
+                    },
+                    (error: HttpErrorResponse) => {
+                        const rateLimit = parseInt(error.headers.get('x-ratelimit-limit'), 10);
+                        const rateLimitRemaining = parseInt(error.headers.get('x-ratelimit-remaining'), 10);
+                        switch (error.status) {
+                            case 401:
+                                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
+                                    this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
+                                this.updateAttempt(rateLimit - rateLimitRemaining);
+                                break;
+                            case 429:
+                                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.TRY-AGAIN'),
+                                    this.translateService.instant('TOAST-MESSAGES.BLOCKED-USER'));
+                                this.showCaptcha = false;
+                                this.cleanAttempt();
+                                break;
+                        }
+                        this.loading = false;
+                        this.verifyReCaptcha();
+                        this.resetCaptcha();
+                    }
+                ));
     };
 
     clickVisibilityPassword(): void {

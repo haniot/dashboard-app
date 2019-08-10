@@ -51,11 +51,11 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
+        this.getUser();
         if (this.authService.decodeToken().sub_type === 'admin') {
             this.selecPilotService.close();
         }
         this.getAllPilotStudies();
-        this.getUserName();
     }
 
     loadUser(): void {
@@ -135,7 +135,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
 
-    getUserName() {
+    getUser() {
         this.userId = this.localStorageService.getItem('user');
         const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
         try {

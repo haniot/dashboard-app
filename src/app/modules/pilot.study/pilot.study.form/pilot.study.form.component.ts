@@ -11,6 +11,7 @@ import { PilotStudyService } from '../services/pilot.study.service';
 import { HealthProfessionalService } from 'app/modules/admin/services/health.professional.service';
 import { HealthProfessional } from 'app/modules/admin/models/health.professional';
 import { AuthService } from 'app/security/auth/services/auth.service';
+import { Patient } from '../../patient/models/patient'
 
 @Component({
     selector: 'pilot-study-form',
@@ -28,6 +29,10 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     checked = false;
     disabled = false;
     typeUserLogged: string;
+    patientForm: FormGroup;
+    listPatients: Array<Patient> = [];
+    patientsNotAssociated: Array<Patient> = [];
+    patientsAssociated: Array<Patient> = [];
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -43,6 +48,10 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     ) {
         this.professionalsAssociated = new Array<HealthProfessional>();
         this.professionalsNotAssociated = new Array<HealthProfessional>();
+        this.patientsAssociated = new Array<Patient>();
+        this.patientsNotAssociated = new Array<Patient>();
+        this.listProf = new Array<HealthProfessional>();
+        this.listPatients = new Array<Patient>();
         this.subscriptions = new Array<ISubscription>();
     }
 
@@ -90,7 +99,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 location: ['', Validators.required],
                 start: ['', Validators.required],
                 end: ['', Validators.required],
-                health_professionals_id: ['', Validators.required],
+                total_health_professionals: ['', Validators.required],
+                total_patients: ['', Validators.required],
                 is_active: [true, Validators.required]
             });
         } else {
@@ -100,12 +110,17 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 location: [''],
                 start: ['', Validators.required],
                 end: [{ value: '', disabled: true }, Validators.required],
-                health_professionals_id: ['', Validators.required],
+                total_health_professionals: ['', Validators.required],
+                total_patients: ['', Validators.required],
                 is_active: [true, Validators.required]
             });
         }
         this.professionalsForm = this.fb.group({
             health_professionals_id_add: ['', Validators.required]
+        });
+
+        this.patientForm = this.fb.group({
+            patients_id_add: ['', Validators.required]
         });
 
         this.subscriptions.push(this.pilotStudyForm.get('start').valueChanges.subscribe(val => {

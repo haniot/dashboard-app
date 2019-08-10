@@ -336,6 +336,15 @@
         "OFTEN": "Often",
         "ALMOST-ALWAYS": "Almost always"
       },
+      "QUESTIONNAIRE-TYPE": {
+        "SOCIO-DEMOGRAPHIC": "Sociodemographic Record",
+        "FAMILY-COHESION": "Family Cohesion Record",
+        "ORAL-HEALTH": "Oral Health Record",
+        "SLEEP": "Sleep Habit",
+        "PHYSICAL-ACTIVITY": "Physical Activity Habits",
+        "FEEDING": "Feeding Habits Record",
+        "MEDICAL": "Medical Record"
+      },
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND",
       "DO-NOT-KNOW": "I do not know/I do not remember"
@@ -616,6 +625,14 @@
       "DISASSOCIATE-PROFESSIONAL": "Disassociate professional...",
       "REMOVE": "To remove"
     },
+    "MANAGE-PATIENTS": {
+      "TITLE": "Manage patients",
+      "SUBTITLE": "",
+      "ADDPATIENT": "Add new patient",
+      "ASSOCIATE-PATIENTS": "Associated Patients",
+      "DISASSOCIATE-PATIENT": "Dissociate patient...",
+      "REMOVE": "To remove"
+    },
     "PLACEHOLDER-SEARCH": "Search for study...",
     "NAME-OF-STUDY": "Name of study",
     "TOVIEW-STUDY": "To view study...",
@@ -624,11 +641,18 @@
     "PROFESSIONAL": "Professional",
     "CARD-PILOT-STUDY": {
       "TITLE": "Pilot study",
-      "SUBTITLE": ""
+      "SUBTITLE": "",
+      "EDIT-INFO": "Edit Info",
+      "TOTAL-PROFESSIONALS": "Number of Professionalss",
+      "TOTAL-PATIENTS": "Number of Patients"
     },
     "CARD-FILES": {
       "TITLE": "Files available for download",
-      "SUBTITLE": ""
+      "SUBTITLE": "",
+      "DATA-SUCCESSFULLY-REQUEST": "Data successfully requested!",
+      "DATA-SUCCESSFULLY-REQUEST-MESSAGE": "The requested data will be available within a few minutes..",
+      "COMPLETION-ESTIMATE": "Estimated Completion",
+      "UNDERSTOOD": "Understood"
     }
   },
   "SIDEBAR": {
@@ -652,7 +676,7 @@
     "PASSWORD-NEW": "New password",
     "INCORRECT-PASSWORD": "Incorret password",
     "PASSWORD-RULES-MESSAGE": "Your password must be at least 6 characters long including letters, numbers, and symbols",
-    "PASSWORD-CONFIRM-MESSAGE":"Passwords do not match!",
+    "PASSWORD-CONFIRM-MESSAGE": "Passwords do not match!",
     "CHANGE-PASSWORD": "Change password",
     "CONFIG": "Settings",
     "LOGOUT": "Logout",
@@ -669,7 +693,9 @@
     "PASSWORD-NOTMATCH": "Enter the same password",
     "REQUERID-FIELD": "Required field",
     "CLOSE": "Close",
+    "TO-EDIT": "Edit",
     "DATE": "Date",
+    "HOUR": "Hour",
     "DATE-AND-HOUR": "Date and Hour",
     "AT": "at",
     "DATE-START": "Start date",
@@ -694,6 +720,9 @@
     "AGE": "Age",
     "YEARS": "YEARS",
     "CANCEL": "Cancel",
+    "PHONE-NUMBER": "Telephone",
+    "INVALID-PHONE-NUMBER": "Invalid phone",
+    "LANGUAGE": "Language",
     "PIPES": {
       "GENDER": {
         "MALE": "MALE",
@@ -816,7 +845,7 @@
     "HEALTHPROFESSIONAL-NOT-ADD": "Could not add professional!",
     "PASSWORD-UPDATED": "Password modified successfully!",
     "PASSWORD-NOT-UPDATED": "Could not change your password!",
-    "INVALID-TOKEN":"Token inválido ou expirado!",
+    "INVALID-TOKEN": "Token inválido ou expirado!",
     "TOO-MANY-REQUESTS": "Limite de solicitações excedido!",
     "INVALID-DATA": "Invalid data",
     "NOT-LOGIN": "Could not login",

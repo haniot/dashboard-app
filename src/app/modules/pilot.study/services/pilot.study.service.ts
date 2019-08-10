@@ -3,8 +3,21 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { PilotStudy } from '../models/pilot.study';
 import { environment } from 'environments/environment';
-import { OdontologicEvaluation } from '../../evaluation/models/odontologic-evaluation';
 import { DateRange } from '../models/range-date';
+import { Data, DataResponse } from '../../evaluation/models/data'
+
+const mock = [
+    {
+        'id': '5c86d00c2239a48ea20a0134',
+        'name': 'Pilot Odonto 01',
+        'is_active': true,
+        'start': '2018-11-19T14:40:00',
+        'end': '2019-01-23T18:00:00',
+        'total_health_professionals': 1,
+        'total_patients': 1,
+        'location': 'Av. Juvencio Arruda, SN - UEPB'
+    }
+];
 
 @Injectable()
 export class PilotStudyService {
@@ -14,6 +27,7 @@ export class PilotStudyService {
 
 
     getById(id: string): Promise<PilotStudy> {
+        return Promise.resolve(JSON.parse(JSON.stringify(mock[0])));
         return this.http.get<any>(`${environment.api_url}/pilotstudies/${id}`)
             .toPromise();
     }
@@ -42,7 +56,7 @@ export class PilotStudyService {
         * healthProfessional: `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`
         * patient: `${environment.api_url}/users/patients/${userId}/pilotstudies`
         */
-
+        return Promise.resolve(JSON.parse(JSON.stringify(mock)));
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
@@ -70,7 +84,7 @@ export class PilotStudyService {
             .toPromise();
     }
 
-    getAllFiles(pilotstudy_id: string, page?: number, limit?: number, search?: DateRange): Promise<OdontologicEvaluation[]> {
+    getAllFiles(pilotstudy_id: string, page?: number, limit?: number, search?: DateRange): Promise<Data[]> {
         let myParams = new HttpParams();
 
 
@@ -98,7 +112,7 @@ export class PilotStudyService {
         myParams = myParams.append('sort', '+created_at');
 
         const url = `${environment.api_url}/pilotstudies/${pilotstudy_id}/odontological/evaluations`;
-
+        return Promise.resolve(new Array<Data>())
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
     }
@@ -108,8 +122,12 @@ export class PilotStudyService {
             .toPromise();
     }
 
-    generateNewFile(pilotStudy: PilotStudy, health_professional_id: string): Promise<OdontologicEvaluation> {
-
+    generateNewFile(pilotStudy: PilotStudy, health_professional_id: string): Promise<DataResponse> {
+        const response = {
+            'status': 'pending',
+            'completion_estimate': '2019-07-23T13:35:31.531Z'
+        }
+        return Promise.resolve(JSON.parse(JSON.stringify(response)));
         const body = { pilotstudy: pilotStudy, health_professional_id: health_professional_id }
 
         return this.http.post<any>(`${environment.api_url}/pilotstudies/${pilotStudy.id}/odontological/evaluations`, body)

@@ -33,7 +33,7 @@ export class UserService {
                 return this.healthService.getById(id);
 
             case 'patient':
-                return this.healthService.getById(id);
+                return this.patientService.getById(id);
         }
 
     }

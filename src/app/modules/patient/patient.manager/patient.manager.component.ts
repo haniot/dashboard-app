@@ -11,6 +11,7 @@ import { ModalService } from 'app/shared/shared.components/haniot.modal/service/
 import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 import { AuthService } from 'app/security/auth/services/auth.service';
+import { HttpResponse } from '@angular/common/http'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -56,9 +57,9 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
             clearInterval(this.searchTime);
             this.searchTime = setTimeout(() => {
                 this.patientService.getAll(this.page, this.limit, this.search)
-                    .then(patients => {
-                        this.listOfPatients = patients;
-                        this.calcLengthPatients();
+                    .then(httpResponse => {
+                        this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                        this.listOfPatients = httpResponse.body;
                     })
                     .catch();
             }, 200);
@@ -68,10 +69,10 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
     getAllPatients() {
         if (this.IsAdmin()) {
             this.patientService.getAll(this.page, this.limit, this.search)
-                .then(patients => {
-                    this.listOfPatients = patients;
-                    this.calcLengthPatients();
-                    this.listOfPatientsIsEmpty = (patients.length === 0);
+                .then((httpResponse: HttpResponse<any>) => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.listOfPatients = httpResponse.body;
+                    this.listOfPatientsIsEmpty = (this.listOfPatients.length === 0);
                 })
                 .catch();
         }
@@ -98,7 +99,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         this.patientService.remove(this.cacheIdPatientRemove)
             .then(() => {
                 this.getAllPatients();
-                this.calcLengthPatients();
+                // this.calcLengthPatients();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
             })
             .catch(errorResponse => {
@@ -111,16 +112,6 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
             return null;
         }
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
-    }
-
-    calcLengthPatients() {
-        if (this.IsAdmin()) {
-            this.patientService.getAll(undefined, undefined, this.search)
-                .then(patients => {
-                    this.length = patients.length;
-                })
-                .catch();
-        }
     }
 
     IsAdmin(): boolean {

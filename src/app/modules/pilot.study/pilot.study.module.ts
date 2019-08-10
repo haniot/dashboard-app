@@ -9,8 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule } from 'saturn-datepicker';
-import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { SatDatepickerModule } from 'saturn-datepicker';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { PilotStudyFormComponent } from './pilot.study.form/pilot.study.form.component';
@@ -23,6 +22,9 @@ import { ViewHealthProfessionalComponent } from './view.health.professional/view
 import { PilotStudyViewComponent } from './pilot.study.view/pilot.study.view.component';
 import { EvaluationModule } from '../evaluation/evaluation.module';
 import { PilotStudyFilesComponent } from './pilot.study.files/pilot.study.files.component';
+import { MeasurementModule } from '../measurement/measurement.module'
+import { MatCheckboxModule, MatExpansionModule, MatStepperModule } from '@angular/material'
+import { HabitsModule } from '../habits/habits.module'
 
 
 @NgModule({
@@ -51,13 +53,15 @@ import { PilotStudyFilesComponent } from './pilot.study.files/pilot.study.files.
 
         SharedModule,
         PilotStudyRoutingModule,
-        EvaluationModule
+        EvaluationModule,
+        MeasurementModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        MatStepperModule,
+        HabitsModule
     ],
     providers: [
-        PilotStudyService,
-        MatDatepickerModule,
-        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }
+        PilotStudyService
     ]
 })
 export class PilotStudyModule {
