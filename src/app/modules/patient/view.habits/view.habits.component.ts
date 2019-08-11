@@ -153,14 +153,14 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
         if (this.localStorageService.getItem('health_area') === 'admin') {
             this.pilotStudiesService.getAll()
-                .then(pilots => {
-                    this.listPilots = pilots;
+                .then(httpResponse => {
+                    this.listPilots = httpResponse.body;
                 })
                 .catch();
         } else {
             this.pilotStudiesService.getAllByUserId(userId)
-                .then(pilots => {
-                    this.listPilots = pilots;
+                .then(httpResponse => {
+                    this.listPilots = httpResponse.body;
                 })
                 .catch();
         }

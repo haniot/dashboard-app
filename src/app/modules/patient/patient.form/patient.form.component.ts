@@ -143,15 +143,15 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         if (this.authService.decodeToken().sub_type === 'admin') {
 
             this.pilotStudiesService.getAll()
-                .then(pilots => {
-                    this.listPilots = pilots;
+                .then(httpResponse => {
+                    this.listPilots = httpResponse.body;
                 })
                 .catch();
         } else {
             const userId = this.localStorageService.getItem('user');
             this.pilotStudiesService.getAllByUserId(userId)
-                .then(pilots => {
-                    this.listPilots = pilots;
+                .then(httpResponse => {
+                    this.listPilots = httpResponse.body;
                 })
                 .catch();
         }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
 import { Measurement } from '../models/measurement';
 import { BloodPressure } from '../models/blood-pressure';
 import { HeartRate } from '../models/heart-rate';
 import { MeasurementType } from '../models/measurement.types'
+import { Weight } from '../models/weight';
 
 @Injectable()
 export class MeasurementService {
@@ -49,7 +50,7 @@ export class MeasurementService {
             .toPromise();
     }
 
-    getAll(page?: number, limit?: number, search?: string): Promise<Measurement[]> {
+    getAll(page?: number, limit?: number, search?: string): Promise<HttpResponse<Measurement[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -68,7 +69,7 @@ export class MeasurementService {
 
         const url = `${environment.api_url}/measurements`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
@@ -76,7 +77,7 @@ export class MeasurementService {
         start_at: string,
         end_at: string,
         period?: string
-    }): Promise<Array<Measurement | BloodPressure | HeartRate> | Array<any>> {
+    }): Promise<HttpResponse<Array<Measurement | Weight | BloodPressure | HeartRate> | any>> {
 
         let myParams = new HttpParams();
 
@@ -109,7 +110,7 @@ export class MeasurementService {
 
         const url = `${environment.api_url}/patients/${userId}/measurements`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 

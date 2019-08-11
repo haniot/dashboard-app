@@ -73,15 +73,11 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
 
         if (this.userId) {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
-                .then(studies => {
-                    this.list = studies;
-                    this.getLengthPilotStudies();
+                .then(httpResponse => {
+                    this.list = httpResponse.body;
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                     this.loadinService.close();
-                    if (studies.length) {
-                        this.listOfStudiesIsEmpty = false;
-                    } else {
-                        this.listOfStudiesIsEmpty = true;
-                    }
+                    this.listOfStudiesIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {
                     this.listOfStudiesIsEmpty = true;
@@ -93,9 +89,9 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-                .then(studies => {
-                    this.list = studies;
-                    this.getLengthPilotStudies();
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.list = httpResponse.body;
                 })
                 .catch();
         }, 200);
@@ -113,16 +109,6 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
         this.getAllPilotStudies();
-    }
-
-    getLengthPilotStudies() {
-        if (this.userId && this.userId !== '') {
-            this.pilotStudyService.getAllByUserId(this.userId, undefined, undefined, this.search)
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        }
     }
 
     selectPilotStudy(pilotstudy_id: string): void {

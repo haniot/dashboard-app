@@ -78,9 +78,9 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
-                .then(patients => {
-                    this.listOfPatients = patients;
-                    this.calcLengthPatients();
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.listOfPatients = httpResponse.body;
                     this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
                 })
                 .catch();
@@ -89,9 +89,9 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
 
     getAllPacients() {
         this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
-            .then(patients => {
-                this.listOfPatients = patients;
-                this.calcLengthPatients();
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.listOfPatients = httpResponse.body;
                 this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
             })
             .catch();
@@ -119,7 +119,6 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         this.patientService.remove(this.cacheIdPatientRemove)
             .then(() => {
                 this.getAllPacients();
-                this.calcLengthPatients();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
                 this.closeModalComfimation();
             })
@@ -133,14 +132,6 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
             return null;
         }
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
-    }
-
-    calcLengthPatients() {
-        this.patientService.getAllByPilotStudy(this.pilotStudyId, undefined, undefined, this.search)
-            .then(patients => {
-                this.length = patients.length;
-            })
-            .catch();
     }
 
     trackById(index, item) {

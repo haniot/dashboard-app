@@ -45,13 +45,13 @@ export class PilotStudyTableComponent implements OnInit {
 
     ngOnInit() {
         this.getAllPilotStudies();
-        this.calcLengthEstudies();
     }
 
     getAllPilotStudies() {
         this.pilotStudyService.getAll(this.page, this.limit)
-            .then(studies => {
-                this.list = studies;
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.list = httpResponse.body;
                 this.listOfPilotsIsEmpty = this.list.length === 0;
             })
             .catch();
@@ -61,9 +61,9 @@ export class PilotStudyTableComponent implements OnInit {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.pilotStudyService.getAll(this.page, this.limit, this.search)
-                .then(studies => {
-                    this.list = studies;
-                    this.calcLengthEstudies();
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.list = httpResponse.body;
                 })
                 .catch();
         }, 200);
@@ -89,7 +89,6 @@ export class PilotStudyTableComponent implements OnInit {
                 .then(() => {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-REMOVED'));
                     this.getAllPilotStudies();
-                    this.calcLengthEstudies();
                     this.closeModalConfirmation();
                 })
                 .catch(error => {
@@ -97,22 +96,6 @@ export class PilotStudyTableComponent implements OnInit {
                 });
         } else {
             this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-REMOVED'));
-        }
-    }
-
-    calcLengthEstudies() {
-        if (this.search && this.search !== '') {
-            this.pilotStudyService.getAll(undefined, undefined, this.search)
-                .then(pilots => {
-                    this.length = pilots.length;
-                })
-                .catch();
-        } else {
-            this.pilotStudyService.getAll()
-                .then(pilots => {
-                    this.length = pilots.length;
-                })
-                .catch();
         }
     }
 

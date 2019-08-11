@@ -115,16 +115,16 @@ export class HaniotTableComponent implements OnInit {
                 case 'Admin':
                     if (this.search && this.search !== '') {
                         this.adminService.getAll(page + 1, limit, this.search)
-                            .then(users => {
-                                this.list = users;
-                                this.updatePagination();
+                            .then(httpResponse => {
+                                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                                this.list = httpResponse.body;
                             })
                             .catch();
                     } else {
                         this.adminService.getAll(page + 1, limit)
-                            .then(users => {
-                                this.list = users;
-                                this.updatePagination();
+                            .then(httpResponse => {
+                                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                                this.list = httpResponse.body;
                             })
                             .catch();
                     }
@@ -132,17 +132,17 @@ export class HaniotTableComponent implements OnInit {
                 case 'HealthProfessional':
                     if (this.search && this.search !== '') {
                         this.healthService.getAll(page + 1, limit, this.search)
-                            .then(users => {
-                                this.list = users;
-                                this.updatePagination();
+                            .then(httpResponse => {
+                                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                                this.list = httpResponse.body;
                             })
                             .catch();
                     } else {
                         this.healthService.getAll(page + 1, limit)
-                            .then(users => {
-                                this.list = users;
+                            .then(httpResponse => {
+                                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                                this.list = httpResponse.body;
                                 this.updateStateOfList();
-                                this.updatePagination();
                             })
                             .catch();
                     }
@@ -168,25 +168,6 @@ export class HaniotTableComponent implements OnInit {
             return null;
         }
         return this.paginatorService.getIndex(this.pageEvent, this.pageSize, index);
-    }
-
-    updatePagination() {
-        switch (this.userType) {
-            case 'Admin':
-                this.adminService.getAll(undefined, undefined, this.search)
-                    .then(admins => {
-                        this.length = admins.length;
-                    })
-                    .catch();
-                break;
-            case 'HealthProfessional':
-                this.healthService.getAll(undefined, undefined, this.search)
-                    .then(healthProfessionals => {
-                        this.length = healthProfessionals.length;
-                    })
-                    .catch();
-                break;
-        }
     }
 
     updateStateOfList(): void {

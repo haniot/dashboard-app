@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 import { PilotStudy } from '../models/pilot.study';
 import { environment } from 'environments/environment';
@@ -32,7 +32,7 @@ export class PilotStudyService {
             .toPromise();
     }
 
-    getAllByUserId(userId: string, page?: number, limit?: number, search?: string): Promise<PilotStudy[]> {
+    getAllByUserId(userId: string, page?: number, limit?: number, search?: string): Promise<HttpResponse<PilotStudy[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -57,11 +57,11 @@ export class PilotStudyService {
         * patient: `${environment.api_url}/users/patients/${userId}/pilotstudies`
         */
         return Promise.resolve(JSON.parse(JSON.stringify(mock)));
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
-    getAll(page?: number, limit?: number, search?: string): Promise<PilotStudy[]> {
+    getAll(page?: number, limit?: number, search?: string): Promise<HttpResponse<PilotStudy[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -80,13 +80,12 @@ export class PilotStudyService {
 
         const url = `${environment.api_url}/pilotstudies`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
-    getAllFiles(pilotstudy_id: string, page?: number, limit?: number, search?: DateRange): Promise<Data[]> {
+    getAllFiles(pilotstudy_id: string, page?: number, limit?: number, search?: DateRange): Promise<HttpResponse<Data[]>> {
         let myParams = new HttpParams();
-
 
         if (page) {
             myParams = myParams.append('page', String(page));
@@ -112,8 +111,8 @@ export class PilotStudyService {
         myParams = myParams.append('sort', '+created_at');
 
         const url = `${environment.api_url}/pilotstudies/${pilotstudy_id}/odontological/evaluations`;
-        return Promise.resolve(new Array<Data>())
-        return this.http.get<any>(url, { params: myParams })
+        return Promise.resolve(new HttpResponse())
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 

@@ -85,10 +85,10 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             clearInterval(this.searchTime);
             this.searchTime = setTimeout(() => {
                 this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
-                    .then(files => {
-                        this.listOfFiles = files;
-                        this.calcLenghtFiles();
-                        this.listOfFilesIsEmpty = !files.length;
+                    .then(httpResponse => {
+                        this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                        this.listOfFiles = httpResponse.body;
+                        this.listOfFilesIsEmpty = !this.listOfFiles.length;
                     })
                     .catch();
             }, 200);
@@ -99,11 +99,11 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         if (this.pilotStudy && this.pilotStudy.id) {
             this.listOfFiles = [];
             this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
-                .then(files => {
-                    this.listOfFiles = files;
-                    // this.calcLenghtFiles();
-                    this.lastFile = files[0];
-                    this.listOfFilesIsEmpty = !files.length;
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.listOfFiles = this.listOfFiles;
+                    this.lastFile = this.listOfFiles[0];
+                    this.listOfFilesIsEmpty = !this.listOfFiles.length;
                 })
                 .catch(() => {
                     this.listOfFilesIsEmpty = true;
@@ -134,7 +134,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             this.pilotService.removeFile(this.pilotStudy.id, this.cacheIdFileRemove)
                 .then(() => {
                     this.getAllFiles();
-                    this.calcLenghtFiles();
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.FILE-REMOVED'));
                     this.removingFile = false;
                     this.cacheIdFileRemove = '';
@@ -154,16 +153,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
-    calcLenghtFiles() {
-        if (this.pilotStudy && this.pilotStudy.id) {
-            this.pilotService.getAllFiles(this.pilotStudy.id, undefined, undefined, this.search)
-                .then(files => {
-                    this.length = files.length;
-                })
-                .catch();
-        }
-    }
-
     generateFile() {
         this.loadMeasurementsTypes();
         const user_id = this.localStorageService.getItem('user');
@@ -178,19 +167,19 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                 }, 3000)
             })
             .catch(error => {
-                    this.generatingFile = false;
-                    if (error.code === 404 && error.message === 'PILOTSTUDY NOT FOUND') {
-                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FOUND'));
-                    } else if (error.code === 404 && error.message === 'HEALTHPROFESSIONALID NOT FOUND') {
-                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONALS-NOTFOUND'));
-                    } else if (error.code === 400 && error.message === 'PILOTSTUDY EMPTY') {
-                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-EMPTY'));
-                    } else if (error.code === 400) {
-                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-ERROR'));
-                    } else {
-                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-GENERATED'));
-                    }
+                this.generatingFile = false;
+                if (error.code === 404 && error.message === 'PILOTSTUDY NOT FOUND') {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FOUND'));
+                } else if (error.code === 404 && error.message === 'HEALTHPROFESSIONALID NOT FOUND') {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONALS-NOTFOUND'));
+                } else if (error.code === 400 && error.message === 'PILOTSTUDY EMPTY') {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-EMPTY'));
+                } else if (error.code === 400) {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-ERROR'));
+                } else {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-GENERATED'));
                 }
+            }
             )
     }
 
@@ -299,7 +288,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
         if (changes.pilotStudy.currentValue !== changes.pilotStudy.previousValue) {
             this.getAllFiles();
-            this.calcLenghtFiles();
         }
     }
 

@@ -161,10 +161,10 @@ export class HeartRateComponent implements OnInit, OnChanges {
     applyFilter(filter: { start_at: string, end_at: string, period: string }) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.heart_rate, null, null, filter)
-            .then((measurements: Array<any>) => {
-                this.data = measurements;
+            .then(httpResponse => {
+                this.data = httpResponse.body;
                 this.showSpinner = false;
-                this.updateGraph(measurements);
+                this.updateGraph(this.data);
             })
             .catch();
     }

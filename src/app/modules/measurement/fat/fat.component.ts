@@ -133,10 +133,10 @@ export class FatComponent implements OnInit, OnChanges {
     applyFilter(filter: { start_at: string, end_at: string, period: string }) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_fat, null, null, filter)
-            .then((measurements: Array<any>) => {
-                this.data = measurements;
+            .then(httpResponse => {
+                this.data = httpResponse.body;
                 this.showSpinner = false;
-                this.updateGraph(measurements);
+                this.updateGraph(this.data);
             })
             .catch();
     }

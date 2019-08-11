@@ -57,9 +57,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         private authService: AuthService,
         private loadinService: LoadingService,
         private localStorageService: LocalStorageService,
-        private toastService: ToastrService,
         private selectPilotService: SelectPilotStudyService,
-        private translateService: TranslateService,
         private userService: UserService
     ) {
         this.patientsTotal = 0;
@@ -160,17 +158,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.loadPilotSelected();
         }
         this.dashboardService.getAllPatients(this.pilotStudyId, this.pagePatients, this.limitPatients)
-            .then(patients => {
-                this.listPacients = patients;
-                this.calcLengthPatients();
-                this.listOfPatientsIsEmpty = !patients.length;
-            })
-    }
-
-    calcLengthPatients() {
-        this.dashboardService.getAllPatients(this.pilotStudyId, undefined, undefined)
-            .then(patients => {
-                this.lengthPatients = patients.length;
+            .then(httpResponse => {
+                this.lengthPatients = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.listPacients = httpResponse.body;
+                this.listOfPatientsIsEmpty = !(this.listPacients && this.listPacients.length);
             })
             .catch();
     }
@@ -180,37 +171,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.loadUser();
         }
         this.dashboardService.getAllStudiesByUserId(this.userId, this.pageStudies, this.limitStudies)
-            .then(studies => {
-                this.listPilots = studies;
-                // TODO: Substituir peloo headers
-                this.calcLengthStudies();
-                this.listOfStudiesIsEmpty = !studies.length;
+            .then(httpResponse => {
+                this.lengthStudies = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.listPilots = httpResponse.body;
+                this.listOfStudiesIsEmpty = !(this.listPilots && this.listPilots.length);
             })
-    }
-
-    calcLengthStudies() {
-        if (this.isNotUserAdmin()) {
-            this.dashboardService.getNumberOfStudies(this.userId)
-                .then(numberOfStudies => {
-                    this.lengthStudies = numberOfStudies;
-                    this.studiesTotal = numberOfStudies;
-
-                })
-                .catch();
-        } else {
-            this.dashboardService.getInfoByUser(this.userId)
-                .then((response: { studiesTotal: number, patientsTotal: number }) => {
-                    if (response) {
-                        this.studiesTotal = response.studiesTotal;
-                        this.lengthStudies = response.studiesTotal;
-                        this.patientsTotal = response.patientsTotal;
-                    }
-                })
-                .catch(error => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'))
-                });
-        }
-
+            .catch();
     }
 
     isNotUserAdmin(): boolean {

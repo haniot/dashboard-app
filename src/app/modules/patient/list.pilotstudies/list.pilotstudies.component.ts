@@ -72,10 +72,10 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
     getAllPilotStudies() {
         this.userId = this.localStorageService.getItem('user');
         this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
-            .then(studies => {
-                this.list = studies;
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.list = httpResponse.body;
                 this.loadinService.close();
-                this.getLengthPilotStudies();
             })
             .catch();
     }
@@ -84,9 +84,9 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-                .then(studies => {
-                    this.list = studies;
-                    this.getLengthPilotStudies();
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.list = httpResponse.body;
                 })
                 .catch();
         }, 200);
@@ -104,22 +104,6 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
         this.getAllPilotStudies();
-    }
-
-    getLengthPilotStudies() {
-        if (this.userId) {
-            this.pilotStudyService.getAllByUserId(this.userId, undefined, undefined, this.search)
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        } else {
-            this.pilotStudyService.getAll()
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        }
     }
 
     gotoPatients(pilotstudy_id: string) {

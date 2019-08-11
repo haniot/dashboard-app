@@ -61,10 +61,10 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
     getAllPilotStudies() {
         this.userId = this.localStorageService.getItem('user');
         this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-            .then(studies => {
-                this.list = studies;
-                this.getLengthPilotStudies();
-                this.listOfStudiesIsEmpty = !(studies.length);
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.list = httpResponse.body;
+                this.listOfStudiesIsEmpty = !(this.list && this.list.length);
             })
             .catch(() => {
                 this.listOfStudiesIsEmpty = true;
@@ -75,10 +75,10 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-                .then(studies => {
-                    this.list = studies;
-                    this.getLengthPilotStudies();
-                    this.listOfStudiesIsEmpty = !studies.length;
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.list = httpResponse.body;
+                    this.listOfStudiesIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {
                     this.listOfStudiesIsEmpty = true;
@@ -100,29 +100,12 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
         this.getAllPilotStudies();
     }
 
-    getLengthPilotStudies() {
-        if (this.userId) {
-            this.pilotStudyService.getAllByUserId(this.userId, undefined, undefined, this.search)
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        } else {
-            this.pilotStudyService.getAll()
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        }
-    }
-
     removeStudy() {
         if (this.cacheStudyIdRemove) {
             this.pilotStudyService.remove(this.cacheStudyIdRemove)
                 .then(() => {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-REMOVED'));
                     this.getAllPilotStudies();
-                    this.getLengthPilotStudies();
                     this.closeModalConfirmation();
                 })
                 .catch(error => {

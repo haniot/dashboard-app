@@ -37,14 +37,14 @@ export class AdministratorsComponent implements AfterViewChecked {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
         this.getAllAdministrators();
-        this.calcLengthAdministrators();
     }
 
     getAllAdministrators() {
         this.adminService.getAll(this.page, this.limit, this.search)
-            .then(admins => {
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                const admins = httpResponse.body
                 this.admins = admins;
-                this.calcLengthAdministrators();
                 this.loadinService.close();
             })
             .catch((errorResponse: HttpErrorResponse) => {
@@ -116,14 +116,6 @@ export class AdministratorsComponent implements AfterViewChecked {
         this.limit = event.limit;
         this.search = event.search;
         this.getAllAdministrators();
-    }
-
-    calcLengthAdministrators() {
-        this.adminService.getAll()
-            .then(admins => {
-                this.length = admins.length;
-            })
-            .catch();
     }
 
     ngAfterViewChecked() {

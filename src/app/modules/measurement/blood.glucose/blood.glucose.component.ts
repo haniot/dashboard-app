@@ -188,10 +188,10 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     applyFilter(filter: { start_at: string, end_at: string, period: string }) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_glucose, null, null, filter)
-            .then((measurements: Array<any>) => {
-                this.data = measurements;
+            .then(httpResponse => {
+                this.data = httpResponse.body;
                 this.showSpinner = false;
-                this.updateGraph(measurements);
+                this.updateGraph(this.data);
             })
             .catch();
     }

@@ -161,8 +161,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
 
     getListProfessionals(): Promise<any> {
         return this.healthService.getAll()
-            .then(healthProfessionals => {
-                this.listProf = healthProfessionals;
+            .then(httpResponse => {
+                this.listProf = httpResponse.body;
             })
             .catch();
     }

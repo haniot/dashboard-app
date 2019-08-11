@@ -34,14 +34,13 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
         this.getAllHealthProfessionals();
-        this.getLengthHealthProfessionals();
     }
 
     getAllHealthProfessionals() {
         this.healthService.getAll(this.page, this.limit, this.search)
-            .then(healthProfessionals => {
-                this.healthProfessionals = healthProfessionals;
-                this.getLengthHealthProfessionals();
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.healthProfessionals = httpResponse.body;
                 this.loadinService.close();
             })
             .catch(() => {
@@ -114,14 +113,6 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         this.limit = event.limit;
         this.search = event.search;
         this.getAllHealthProfessionals();
-    }
-
-    getLengthHealthProfessionals() {
-        this.healthService.getAll()
-            .then(caregivers => {
-                this.length = caregivers.length;
-            })
-            .catch();
     }
 
     ngAfterViewChecked() {

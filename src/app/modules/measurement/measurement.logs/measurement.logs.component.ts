@@ -56,14 +56,15 @@ export class MeasurementLogsComponent implements OnInit {
     loadMeasurements(): void {
         this.loadingMeasurements = true;
         this.measurementService.getAllByUserAndType(this.patientId, this.measurementTypeSelected, this.page, this.limit)
-            .then(measurements => {
-                this.listOfMeasurements = measurements;
-                this.initializeListCheckMeasurements();
-                this.calcLengthMeasurements();
+            .then(httpResponse => {
+                this.listOfMeasurements = httpResponse.body;
                 this.loadingMeasurements = false;
-                this.listOfMeasurementsIsEmpty = !measurements.length;
+                this.listOfMeasurementsIsEmpty = !(this.listOfMeasurements && this.listOfMeasurements.length);
+                this.initializeListCheckMeasurements();
             })
-            .catch()
+            .catch(() => {
+                this.listOfMeasurementsIsEmpty = true;
+            })
     }
 
     changeMeasurementType(): void {
@@ -136,12 +137,6 @@ export class MeasurementLogsComponent implements OnInit {
     updateStateButtonRemoveSelected(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
         this.stateButtonRemoveSelected = !!measurementsSelected.length;
-    }
-
-    calcLengthMeasurements() {
-        this.measurementService.getAllByUserAndType(this.patientId, this.measurementTypeSelected)
-            .then(measurements => this.length = measurements.length)
-            .catch()
     }
 
     trackById(index, item) {

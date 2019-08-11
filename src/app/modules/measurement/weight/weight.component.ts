@@ -160,10 +160,10 @@ export class WeightComponent implements OnInit, OnChanges {
     applyFilter(filter: any) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.weight, null, null, filter)
-            .then((measurements: Array<any>) => {
-                this.data = measurements;
+            .then(httpResponse => {
+                this.data = httpResponse.body;
                 this.showSpinner = false;
-                this.updateGraph(measurements);
+                this.updateGraph(this.data);
             })
             .catch();
     }

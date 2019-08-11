@@ -231,8 +231,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.loadUser();
         }
         this.pilotStudyService.getAllByUserId(this.userId)
-            .then(studies => {
-                this.listPilots = studies;
+            .then(httpResponse => {
+                this.listPilots = httpResponse.body;
                 this.getNamePilotStudy();
             })
             .catch();
