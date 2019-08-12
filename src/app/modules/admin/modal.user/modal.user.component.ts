@@ -43,7 +43,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private fb: FormBuilder,
-        private activeRouter: ActivatedRoute,
         private adminService: AdminService,
         private healthService: HealthProfessionalService,
         private modalService: ModalService,
@@ -179,6 +178,17 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                 this.userForm.get('password_confirm').setErrors({ 'incorrect': true });
             }
         }, 200);
+    }
+
+    applyMaskPhoneNumber() {
+        let number: string;
+        number = this.userForm.get('phone_number').value;
+
+        number = number.replace(/\D/g, '');
+        number = number.replace(/^(\d{2})(\d)/g, '($1) $2');
+        number = number.replace(/(\d)(\d{4})$/, '$1-$2');
+
+        this.userForm.get('phone_number').patchValue(number);
     }
 
     trackById(index, item) {

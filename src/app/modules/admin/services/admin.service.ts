@@ -44,7 +44,6 @@ export class AdminService {
     }
 
     update(administrator: Admin): Promise<GenericUser> {
-
         return this.http.patch<any>(`${environment.api_url}/admins/${administrator.id}`, administrator)
             .toPromise();
     }

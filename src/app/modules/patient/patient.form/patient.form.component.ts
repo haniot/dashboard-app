@@ -13,6 +13,9 @@ import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.
 import { PatientService } from '../services/patient.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
+import { LanguagesConfiguration } from '../../../../assets/i18n/config';
+
+const languagesConfig = LanguagesConfiguration;
 
 @Component({
     selector: 'patient-form',
@@ -32,6 +35,8 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     icon_password_confirm = 'visibility_off';
     typeInputPassword_confirm = 'password';
     min_birth_date: Date;
+    languages = languagesConfig;
+    listOfLanguages: Array<String>;
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -39,7 +44,6 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         private patientService: PatientService,
         private pilotStudiesService: PilotStudyService,
         private toastService: ToastrService,
-        private router: Router,
         private activeRouter: ActivatedRoute,
         private location: Location,
         private authService: AuthService,
@@ -48,6 +52,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     ) {
         this.min_birth_date = new Date();
         this.subscriptions = new Array<ISubscription>();
+        this.listOfLanguages = this.translateService.getLangs();
     }
 
     ngOnInit() {
@@ -71,28 +76,34 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     createForm() {
         this.patientForm = this.fb.group({
             id: [''],
-            pilotstudy_id: [this.pilotStudyId, Validators.required],
             name: ['', Validators.required],
-            phone_number: [''],
+            birth_date: ['', Validators.required],
+            gender: ['', Validators.required],
             email: ['', Validators.compose([Validators.email])],
+            phone_number: [''],
+            last_login: [''],
+            last_sync: [''],
+            selected_pilot_study: [''],
+            language: [''],
             password: [''],
             password_confirm: [''],
-            gender: ['', Validators.required],
-            birth_date: ['', Validators.required]
         });
     }
 
     setPatientInForm(patient: Patient) {
         this.patientForm = this.fb.group({
             id: [patient.id],
-            pilotstudy_id: [patient.selected_pilot_study],
             name: [patient.name],
-            phone_number: [patient.phone_number],
-            email: [patient.email],
-            password: [''],
-            password_confirm: [''],
+            birth_date: [patient.birth_date],
             gender: [patient.gender],
-            birth_date: [patient.birth_date]
+            email: [patient.email],
+            phone_number: [patient.phone_number],
+            last_login: [patient.last_login],
+            last_sync: [patient.last_sync],
+            selected_pilot_study: [patient.selected_pilot_study],
+            language: [patient.language],
+            password: [''],
+            password_confirm: ['']
         });
     }
 
@@ -114,11 +125,11 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         form.birth_date = new Date(form.birth_date).toISOString().split('T')[0];
         if (!this.patientId) {
             this.patientService.create(form)
-                .then(patient => {
+                .then(() => {
                     this.patientForm.reset();
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-CREATED'));
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-CREATED'));
                 });
         } else {
@@ -126,10 +137,10 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             delete form.password_confirm;
             delete form.pilotstudy_id;
             this.patientService.update(form)
-                .then(patient => {
+                .then(() => {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-UPDATED'));
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-UPDATED'));
                 });
         }
@@ -187,7 +198,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         }
     }
 
-    toApplyMaskPhoneNumber() {
+    applyMaskPhoneNumber() {
         let number: string;
         number = this.patientForm.get('phone_number').value;
 

@@ -10,8 +10,8 @@ const routes = [
 
     {
         path: '',
-        component: PatientManagerComponent
-        // data: { scope: "pilots:read" }
+        component: PatientManagerComponent,
+        data: { scope: "patients:read patients:readAll" }
     },
     {
         path: 'new',
@@ -31,7 +31,7 @@ const routes = [
     {
         path: ':patientId/details',
         component: ViewHabitsComponent,
-        data: { scope: 'patients:read' }// TODO: Aqui acredito que devo adicionar os escopos forms:read
+        data: { scope: 'patients:read forms:read forms:delete measurements:read measurements:delete' }
     },
     {
         path: ':patientId/:pilotstudy_id',

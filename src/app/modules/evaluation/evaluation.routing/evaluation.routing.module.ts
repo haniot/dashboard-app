@@ -7,17 +7,18 @@ import { NutritionalEvaluationListComponent } from '../nutritional.evaluation.li
 const routes = [
     {
         path: 'nutritional',
-        component: NutritionalEvaluationListComponent
+        component: NutritionalEvaluationListComponent,
+        data: { scope: 'evaluations:read' }
     },
     {
         path: ':pilostudy_id/:patient_id',
         component: EvaluationComponentComponent,
-        // data: { scope: 'patient:read patient:readAll' }
+        data: { scope: 'evaluations:read evaluations:update' }
     },
     {
         path: ':patient_id/nutritional/:nutritionevaluation_id',
         component: NutritionEvaluationComponent,
-        // data: { scope: 'patient:read patient:readAll' }
+        data: { scope: 'evaluations:read evaluations:update' }
     },
     { path: '**', redirectTo: '/page-not-found' }
 ];

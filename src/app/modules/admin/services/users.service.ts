@@ -6,6 +6,9 @@ import { AdminService } from './admin.service';
 import { HealthProfessionalService } from './health.professional.service';
 import { AuthService } from 'app/security/auth/services/auth.service';
 import { PatientService } from '../../patient/services/patient.service'
+import { Admin } from '../models/admin';
+import { HealthProfessional } from '../models/health.professional';
+import { Patient } from 'app/modules/patient/models/patient';
 
 @Injectable()
 export class UserService {
@@ -44,11 +47,34 @@ export class UserService {
     }
 
     changeLanguage(userId: string, language: string): Promise<boolean> {
-        /* TODO: Realizar request na rota de alterar profile do usuário e salvar o novo idioma favorito
-        *return this.http.patch<any>(`${environment.api_url}/users/${userId}/password`, credentials)
-            .toPromise();
-        */
-        return Promise.resolve(false);
+        let user;
+        let service;
+        switch (this.getTypeUser()) {
+            case 'admin':
+                user = new Admin();
+                user.id = userId;
+                user.language = language;
+                service = this.adminService;
+                break;
+
+            case 'health_professional':
+                user = new HealthProfessional();
+                user.id = userId;
+                user.language = language;
+                service = this.healthService;
+                break;
+            case 'patient':
+                user = new Patient();
+                user.id = userId;
+                user.language = language;
+                service = this.patientService;
+                break;
+        }
+        return service.update(user)
+            .then(userUpdated => {
+                return !!userUpdated;
+            })
+            .catch(() => false);
     }
 
     getTypeUser(): string {

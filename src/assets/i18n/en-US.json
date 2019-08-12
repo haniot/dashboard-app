@@ -723,6 +723,7 @@
     "PHONE-NUMBER": "Telephone",
     "INVALID-PHONE-NUMBER": "Invalid phone",
     "LANGUAGE": "Language",
+    "INVALID-LANGUAGE": "Invalid language",
     "PIPES": {
       "GENDER": {
         "MALE": "MALE",
