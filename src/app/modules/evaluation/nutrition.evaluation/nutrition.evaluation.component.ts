@@ -8,17 +8,17 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { NutritionEvaluationService } from '../services/nutrition.evaluation.service';
 import { NutritionalCouncil, NutritionEvaluation } from '../models/nutrition-evaluation';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { PatientService } from 'app/modules/patient/services/patient.service';
-import { Patient, PatientBasic } from 'app/modules/patient/models/patient';
-import { Weight } from 'app/modules/measurement/models/weight';
-import { Measurement, MeasurementType } from 'app/modules/measurement/models/measurement';
-import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
-import { HeartRate } from 'app/modules/measurement/models/heart-rate';
 import { MealType } from '../../measurement/models/blood-glucose';
 import { GeneratePdfService } from '../services/generate.pdf.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SendEmailService } from '../services/send.email.service';
+import { Patient, PatientBasic } from '../../patient/models/patient'
+import { Measurement, MeasurementType } from '../../measurement/models/measurement'
+import { BloodPressure } from '../../measurement/models/blood-pressure'
+import { HeartRate } from '../../measurement/models/heart-rate'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { PatientService } from '../../patient/services/patient.service'
+import { Weight } from '../../measurement/models/weight'
 
 // TODO: Pedir a Lucas os reais valores para os zones!!
 const zones = [{
@@ -137,11 +137,10 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 this.nutritionalEvaluation = nutritionEvaluation;
                 this.verifyVisibityZonesClassification();
                 this.formatCounseling()
-                this.loadGraph(nutritionEvaluation.heart_rate.dataset);
                 this.separateMeasurements();
                 this.getPatient();
             })
-            .catch(() => {
+            .catch((error) => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.NOT-LOAD-NUTRITION-EVALUATION'));
             });
 
@@ -201,56 +200,6 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             }
             this.listChecksBloodPressure.push(false);
         });
-
-    }
-
-    loadGraph(dataset: Array<any>) {
-
-        const frequency = this.translateService
-            .instant('MEASUREMENTS.HEART-RATE.FREQUENCY');
-
-        const xAxis = {
-            data: []
-        };
-
-        const series = {
-            type: 'line',
-            data: []
-        };
-
-        if (dataset && dataset.length > 0) {
-
-            dataset.forEach((date: { value: number, timestamp: string }) => {
-
-                xAxis.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
-
-                series.data.push(date.value);
-
-            });
-        }
-
-        this.optionsHeartRate = {
-
-            tooltip: {
-                formatter: frequency + ': {c} bpm <br> Data: {b}',
-                trigger: 'axis'
-            },
-            xAxis: xAxis,
-            yAxis: {
-                splitLine: {
-                    show: false
-                },
-                axisLabel: {
-                    formatter: '{value} bpm'
-                }
-            },
-            dataZoom: [
-                {
-                    type: 'slider'
-                }
-            ],
-            series: series
-        };
 
     }
 
@@ -378,9 +327,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             return element.type === MeasurementType.blood_pressure
         });
 
-        this.listHeartRate = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.heart_rate
-        });
+        // this.listHeartRate = measurements.filter((element: Measurement) => {
+        //     return element.type === MeasurementType.heart_rate
+        // });
     }
 
     showNewCounseling(): void {

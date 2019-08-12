@@ -25,13 +25,14 @@
                 <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
             </td>
             <td colspan="6" *ngIf="listOfPatientsIsEmpty">
-                <img src="../../../../assets/img/haniot/no_patient.png" alt="Nenhum paciente cadastrado"
+                <img src="../../../../assets/img/haniot/no_patient.png"
+                     [alt]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"
                      id="listOfPatientsIsEmpty">
                 <br> {{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.
                 <br>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY-MESSAGE'|translate}}.
             </td>
         </tr>
-        <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">
+        <tr *ngFor="let patient of listOfPatientsAux; index as i;trackBy: trackById">
             <td [routerLink]="['/app/patients',patient.id, 'details']">{{getIndex(i)}}</td>
             <td [routerLink]="['/app/patients',patient.id, 'details']">{{patient.name}}</td>
             <td [routerLink]="['/app/patients',patient.id, 'details']">{{patient.gender | gender | translate}}</td>
@@ -45,7 +46,7 @@
                 </a>
             </td>
             <td>
-                <a class="nav-link" [routerLink]="['/app/patients',patient.id, patient.selected_pilot_study ]"
+                <a class="nav-link" [routerLink]="['/app/patients',patient.id ]"
                    [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">
                     <i class="material-icons">edit</i>
                 </a>
@@ -67,4 +68,4 @@
 </mat-paginator>
 
 <modal-confirmation [message]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION'|translate" (confirmation)="removePatient()"
-                    (noconfirmation)="closeModalComfimation()"></modal-confirmation>
+                    (noconfirmation)="closeModalConfimation()"></modal-confirmation>

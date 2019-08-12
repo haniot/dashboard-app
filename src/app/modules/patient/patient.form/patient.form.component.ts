@@ -8,12 +8,12 @@ import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Gender, Patient } from '../models/patient';
-import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
 import { PatientService } from '../services/patient.service';
-import { AuthService } from 'app/security/auth/services/auth.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { LanguagesConfiguration } from '../../../../assets/i18n/config';
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
+import { AuthService } from '../../../security/auth/services/auth.service'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -27,9 +27,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     optionsGender: Array<string> = Object.keys(Gender);
     listPilots: Array<PilotStudy>;
     patientId: string;
-    pilotStudyId: string;
     matchPasswordStatus;
-    matchPasswordTime;
     icon_password = 'visibility_off';
     typeInputPassword = 'password';
     icon_password_confirm = 'visibility_off';
@@ -37,6 +35,9 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     min_birth_date: Date;
     languages = languagesConfig;
     listOfLanguages: Array<String>;
+    validateTimer: any;
+    matchTimer: any;
+
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -52,13 +53,13 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     ) {
         this.min_birth_date = new Date();
         this.subscriptions = new Array<ISubscription>();
+        this.listPilots = new Array<PilotStudy>();
         this.listOfLanguages = this.translateService.getLangs();
     }
 
     ngOnInit() {
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
-            this.pilotStudyId = params.get('pilotstudy_id');
             this.createForm();
             this.loadPatientInForm();
             this.getAllPilotStudies();
@@ -86,7 +87,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             selected_pilot_study: [''],
             language: [''],
             password: [''],
-            password_confirm: [''],
+            password_confirm: ['']
         });
     }
 
@@ -113,7 +114,6 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
                 .then(patient => {
                     patient.password = '';
                     patient.password_confirm = '';
-                    this.verifyMatchPassword();
                     this.setPatientInForm(patient);
                 })
                 .catch();
@@ -122,20 +122,37 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
 
     onSubimt() {
         const form = this.patientForm.getRawValue();
-        form.birth_date = new Date(form.birth_date).toISOString().split('T')[0];
+        const regexDate = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+        if (!regexDate.test(form.birth_date)) {
+            let dateFormat = form.birth_date.toISOString();
+
+            dateFormat = dateFormat.split('T')[0];
+            form.birth_date = dateFormat;
+        }
+        delete form.last_login;
+        delete form.last_sync;
         if (!this.patientId) {
             this.patientService.create(form)
-                .then(() => {
+                .then(async (user) => {
+                    const pilotId = this.patientForm.get('selected_pilot_study').value;
+                    try {
+                        const associate = await this.pilotStudiesService.addPatientToPilotStudy(pilotId, user.id);
+                    } catch (e) {
+                        this.toastService.error('Error ao associar paciente ao estudo!');
+                    }
                     this.patientForm.reset();
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-CREATED'));
                 })
-                .catch(() => {
+                .catch((httpResponse) => {
+                    if (httpResponse.error && httpResponse.error.code === 409) {
+                        this.patientForm.get('email').setErrors({});
+                    }
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-CREATED'));
                 });
         } else {
             delete form.password;
             delete form.password_confirm;
-            delete form.pilotstudy_id;
+            delete form.selected_pilot_study;
             this.patientService.update(form)
                 .then(() => {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-UPDATED'));
@@ -155,28 +172,49 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
 
             this.pilotStudiesService.getAll()
                 .then(httpResponse => {
-                    this.listPilots = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listPilots = httpResponse.body;
+                    }
+
                 })
                 .catch();
         } else {
             const userId = this.localStorageService.getItem('user');
             this.pilotStudiesService.getAllByUserId(userId)
                 .then(httpResponse => {
-                    this.listPilots = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listPilots = httpResponse.body;
+                    }
+
                 })
                 .catch();
         }
     }
 
-    passwordMatch(): boolean {
-        return this.patientForm.get('password').value === this.patientForm.get('password_confirm').value;
+    validatePassword(): void {
+        clearTimeout(this.validateTimer);
+        this.validateTimer = setTimeout(() => {
+            const pass = '' + this.patientForm.get('password').value;
+            const len = pass.length;
+            const letter = pass.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').length;
+            const num = pass.replace(/[^\d]+/g, '').length;
+            const sym = pass.replace(/[A-Za-z0-9_]/gi, '').length;
+
+            if (len < 6 || letter <= 0 || num <= 0 || sym <= 0) {
+                this.patientForm.get('password').setErrors({ 'incorrect': true });
+            }
+        }, 200);
+        if (this.patientForm.get('password_confirm').value) {
+            this.matchPassword();
+        }
     }
 
-    verifyMatchPassword() {
-        clearTimeout(this.matchPasswordTime);
-
-        this.matchPasswordTime = setTimeout(() => {
-            this.matchPasswordStatus = this.passwordMatch();
+    matchPassword(): void {
+        clearTimeout(this.matchTimer);
+        this.matchTimer = setTimeout(() => {
+            if (this.patientForm.get('password').value !== this.patientForm.get('password_confirm').value) {
+                this.patientForm.get('password_confirm').setErrors({ 'incorrect': true });
+            }
         }, 200);
     }
 

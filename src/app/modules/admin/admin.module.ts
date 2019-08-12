@@ -10,7 +10,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule, MatNativeDateModule, MatTableModule } from '@angular/material';
 
-import { TemplateModule } from 'app/core/template/template.module';
 import { AdministratorsComponent } from './administrators/administrators.component';
 import { HealthProfessionalComponent } from './health.professionals/health.professionals.component';
 import { ModalUserComponent } from './modal.user/modal.user.component';
@@ -18,11 +17,12 @@ import { AdminConfigurationsComponent } from './configurations/configurations.co
 import { AdminService } from './services/admin.service';
 import { HealthProfessionalService } from './services/health.professional.service';
 import { UserService } from './services/users.service';
-import { SharedModule } from 'app/shared/shared.module';
 import { EvaluationModule } from '../evaluation/evaluation.module';
 import { SettingsModule } from '../settings/settings.module';
 import { AdminRoutingModule } from './admin.routing/admin.routing.module'
 import { HaniotTableComponent } from './haniot.table/haniot.table.component'
+import { TemplateModule } from '../../core/template/template.module'
+import { SharedModule } from '../../shared/shared.module'
 
 @NgModule({
     imports: [

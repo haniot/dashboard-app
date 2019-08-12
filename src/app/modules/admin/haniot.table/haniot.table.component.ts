@@ -3,14 +3,14 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PageEvent } from '@angular/material/paginator';
 
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { AdminService } from 'app/modules/admin/services/admin.service';
-import { HealthProfessionalService } from 'app/modules/admin/services/health.professional.service';
-import { UserService } from 'app/modules/admin/services/users.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { TranslateService } from '@ngx-translate/core';
 import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { AdminService } from '../services/admin.service'
+import { HealthProfessionalService } from '../services/health.professional.service'
+import { UserService } from '../services/users.service'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -117,14 +117,18 @@ export class HaniotTableComponent implements OnInit {
                         this.adminService.getAll(page + 1, limit, this.search)
                             .then(httpResponse => {
                                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                                this.list = httpResponse.body;
+                                if (httpResponse.body && httpResponse.body.length) {
+                                    this.list = httpResponse.body;
+                                }
                             })
                             .catch();
                     } else {
                         this.adminService.getAll(page + 1, limit)
                             .then(httpResponse => {
                                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                                this.list = httpResponse.body;
+                                if (httpResponse.body && httpResponse.body.length) {
+                                    this.list = httpResponse.body;
+                                }
                             })
                             .catch();
                     }
@@ -134,14 +138,18 @@ export class HaniotTableComponent implements OnInit {
                         this.healthService.getAll(page + 1, limit, this.search)
                             .then(httpResponse => {
                                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                                this.list = httpResponse.body;
+                                if (httpResponse.body && httpResponse.body.length) {
+                                    this.list = httpResponse.body;
+                                }
                             })
                             .catch();
                     } else {
                         this.healthService.getAll(page + 1, limit)
                             .then(httpResponse => {
                                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                                this.list = httpResponse.body;
+                                if (httpResponse.body && httpResponse.body.length) {
+                                    this.list = httpResponse.body;
+                                }
                                 this.updateStateOfList();
                             })
                             .catch();

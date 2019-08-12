@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { PilotStudyComponent } from 'app/modules/pilot.study/pilot.study.component/pilot.study.component';
 import { PilotStudyFormComponent } from '../pilot.study.form/pilot.study.form.component';
 import { PilotStudyViewComponent } from '../pilot.study.view/pilot.study.view.component';
+import { PilotStudyComponent } from '../pilot.study.component/pilot.study.component'
 
 const routes = [
     {

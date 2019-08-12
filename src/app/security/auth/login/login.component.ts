@@ -8,11 +8,11 @@ import * as $ from 'jquery';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { RecaptchaComponent } from 'ng-recaptcha'
+import { RecaptchaComponent } from 'ng-recaptcha';
 
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 import { environment } from '../../../../environments/environment'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const ATTEMPTSSHOWCAPTCHA = 2;
 

@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ISubscription } from 'rxjs/Subscription';
 
-import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -42,6 +42,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
+        this.list = new Array<PilotStudy>();
         this.subscriptions = new Array<ISubscription>();
     }
 
@@ -49,7 +50,6 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.userId = params.get('userId');
             this.loadPilotSelected();
-
         }));
     }
 
@@ -63,7 +63,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         }
         const pilotSelected = this.localStorageService.getItem(this.userId);
         if (pilotSelected) {
-            this.gotoPatients(pilotSelected);
+            this.gotoPatients();
         } else {
             this.getAllPilotStudies();
         }
@@ -74,7 +74,9 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                this.list = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.list = httpResponse.body;
+                }
                 this.loadinService.close();
             })
             .catch();
@@ -86,7 +88,9 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.list = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
                 })
                 .catch();
         }, 200);
@@ -106,8 +110,8 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         this.getAllPilotStudies();
     }
 
-    gotoPatients(pilotstudy_id: string) {
-        this.router.navigate(['/app/patients', pilotstudy_id]);
+    gotoPatients() {
+        this.router.navigate(['/app/patients']);
     }
 
     trackById(index, item) {

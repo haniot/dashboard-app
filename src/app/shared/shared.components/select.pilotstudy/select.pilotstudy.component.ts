@@ -74,7 +74,9 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         if (this.userId) {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
                 .then(httpResponse => {
-                    this.list = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                     this.loadinService.close();
                     this.listOfStudiesIsEmpty = !(this.list && this.list.length);
@@ -91,7 +93,9 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.list = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
                 })
                 .catch();
         }, 200);

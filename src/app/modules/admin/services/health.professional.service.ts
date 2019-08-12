@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { environment } from 'environments/environment';
 import { HealthProfessional } from '../models/health.professional';
 import { GenericUser } from '../../../shared/shared.models/generic.user';
+import { environment } from '../../../../environments/environment'
 
 @Injectable()
 

@@ -20,4 +20,13 @@ export class Data extends DataRequest {
     total_patients: number;
     file_csv: string;
     file_xls: string;
+
+    constructor() {
+        super();
+        this.id = '';
+        this.created_at = '';
+        this.total_patients = 0;
+        this.file_csv = '';
+        this.file_xls = '';
+    }
 }

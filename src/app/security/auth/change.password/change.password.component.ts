@@ -1,15 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import * as JWT_decode from 'jwt-decode';
 import * as $ from 'jquery';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AuthService } from '../services/auth.service';
-import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from '../../../shared/shared.services/session.storage.service'
 
 @Component({

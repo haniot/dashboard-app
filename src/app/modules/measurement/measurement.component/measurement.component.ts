@@ -87,7 +87,9 @@ export class MeasurementComponent implements OnInit, OnChanges {
     loadWeight() {
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.weight, null, null, this.filter)
             .then((httpResponse) => {
-                this.listWeight = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listWeight = httpResponse.body;
+                }
             })
             .catch();
     }
@@ -95,7 +97,9 @@ export class MeasurementComponent implements OnInit, OnChanges {
     loadHeight() {
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.height, null, null, this.filter)
             .then((httpResponse) => {
-                this.listHeight = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listHeight = httpResponse.body;
+                }
             })
             .catch();
     }
@@ -103,7 +107,9 @@ export class MeasurementComponent implements OnInit, OnChanges {
     loadFat() {
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_fat, null, null, this.filter)
             .then(httpResponse => {
-                this.listFat = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listFat = httpResponse.body;
+                }
             })
             .catch();
     }
@@ -111,7 +117,9 @@ export class MeasurementComponent implements OnInit, OnChanges {
     loadWaistCircumference() {
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.waist_circumference, null, null, this.filter)
             .then(httpResponse => {
-                this.listWaistCircumference = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listWaistCircumference = httpResponse.body;
+                }
             })
             .catch();
     }
@@ -119,7 +127,9 @@ export class MeasurementComponent implements OnInit, OnChanges {
     loadBodyTemperature() {
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_temperature, null, null, this.filter)
             .then(httpResponse => {
-                this.listBodyTemperature = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listBodyTemperature = httpResponse.body;
+                }
             })
             .catch();
     }
@@ -127,7 +137,9 @@ export class MeasurementComponent implements OnInit, OnChanges {
     loadBloodGlucose() {
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_glucose, null, null, this.filter)
             .then(httpResponse => {
-                this.listBloodGlucose = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listBloodGlucose = httpResponse.body;
+                }
             })
             .catch();
     }
@@ -135,7 +147,9 @@ export class MeasurementComponent implements OnInit, OnChanges {
     loadBloodPressure() {
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_pressure, null, null, this.filter)
             .then(httpResponse => {
-                this.listBloodPressure = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listBloodPressure = httpResponse.body;
+                }
             })
             .catch();
     }

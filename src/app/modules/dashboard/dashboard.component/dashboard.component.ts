@@ -3,11 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 
 import * as $ from 'jquery';
 import { ISubscription } from 'rxjs/Subscription';
-import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
 
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { Unit } from '../models/unit';
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
@@ -17,6 +13,8 @@ import { ConfigurationBasic } from '../../config.matpaginator';
 import { DashboardService } from '../services/dashboard.service'
 import { GenericUser } from '../../../shared/shared.models/generic.user'
 import { UserService } from '../../admin/services/users.service'
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -160,7 +158,9 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.dashboardService.getAllPatients(this.pilotStudyId, this.pagePatients, this.limitPatients)
             .then(httpResponse => {
                 this.lengthPatients = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                this.listPacients = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listPacients = httpResponse.body;
+                }
                 this.listOfPatientsIsEmpty = !(this.listPacients && this.listPacients.length);
             })
             .catch();
@@ -173,7 +173,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.dashboardService.getAllStudiesByUserId(this.userId, this.pageStudies, this.limitStudies)
             .then(httpResponse => {
                 this.lengthStudies = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                this.listPilots = httpResponse.body;
+                if (!this.lengthStudies) {
+                    this.lengthStudies = 0;
+                }
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listPilots = httpResponse.body;
+                }
                 this.listOfStudiesIsEmpty = !(this.listPilots && this.listPilots.length);
             })
             .catch();

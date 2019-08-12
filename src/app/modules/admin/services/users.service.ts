@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from 'environments/environment';
 import { AdminService } from './admin.service';
 import { HealthProfessionalService } from './health.professional.service';
-import { AuthService } from 'app/security/auth/services/auth.service';
 import { PatientService } from '../../patient/services/patient.service'
 import { Admin } from '../models/admin';
 import { HealthProfessional } from '../models/health.professional';
-import { Patient } from 'app/modules/patient/models/patient';
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { environment } from '../../../../environments/environment';
+import { Patient } from '../../patient/models/patient'
 
 @Injectable()
 export class UserService {

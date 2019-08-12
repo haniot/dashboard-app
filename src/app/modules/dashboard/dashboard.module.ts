@@ -8,9 +8,9 @@ import { MatPaginatorModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { DashboardComponent } from './dashboard.component/dashboard.component';
-import { SharedModule } from 'app/shared/shared.module';
 import { DashboardRoutingModule } from './dashboard.routing/dashboard.routing.module';
 import { DashboardService } from './services/dashboard.service'
+import { SharedModule } from '../../shared/shared.module'
 
 
 @NgModule({

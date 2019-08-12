@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { ISubscription } from 'rxjs-compat/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { UserService } from 'app/modules/admin/services/users.service';
 import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { UserService } from '../../../modules/admin/services/users.service'
 
 
 export declare interface RouteInfo {
@@ -232,7 +232,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
         this.pilotStudyService.getAllByUserId(this.userId)
             .then(httpResponse => {
-                this.listPilots = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listPilots = httpResponse.body;
+                }
                 this.getNamePilotStudy();
             })
             .catch();

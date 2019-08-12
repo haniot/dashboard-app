@@ -7,9 +7,9 @@ import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health.professional.service';
 import { Admin } from '../models/admin';
 import { UserService } from '../services/users.service';
-import { AuthService } from 'app/security/auth/services/auth.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { GenericUser } from '../../../shared/shared.models/generic.user';
+import { AuthService } from '../../../security/auth/services/auth.service'
 
 @Component({
     selector: 'admin-configurations',

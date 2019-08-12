@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { environment } from 'environments/environment';
 import { OdontologicalQuestionnaire } from '../models/odontological.questionnaire'
 import { NutritionalQuestionnaire } from '../models/nutritional.questionnaire'
+import { environment } from '../../../../environments/environment'
 
 
 @Injectable()

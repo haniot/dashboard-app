@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { environment } from 'environments/environment';
 import { Patient } from '../models/patient';
+import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class PatientService {
@@ -58,7 +58,7 @@ export class PatientService {
             .toPromise();
     }
 
-    create(patient: Patient): Promise<boolean> {
+    create(patient: Patient): Promise<Patient> {
         return this.http.post<any>(`${environment.api_url}/patients`, patient)
             .toPromise();
     }

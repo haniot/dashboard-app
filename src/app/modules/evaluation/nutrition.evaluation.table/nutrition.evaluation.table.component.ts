@@ -4,11 +4,11 @@ import { PageEvent } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { EvaluationService } from '../services/evaluation.service';
 import { NutritionEvaluation } from '../models/nutrition-evaluation';
 import { NutritionEvaluationService } from '../services/nutrition.evaluation.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 

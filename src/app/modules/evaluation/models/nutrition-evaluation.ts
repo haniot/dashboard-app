@@ -1,13 +1,12 @@
-import { HeartRate } from 'app/modules/measurement/models/heart-rate';
-import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
-import { PhysicalActivityHabitsRecord } from 'app/modules/habits/models/physical.activity';
-import { FeedingHabitsRecord } from 'app/modules/habits/models/feeding';
-import { MedicalRecord } from 'app/modules/habits/models/medical.record';
-import { Weight } from 'app/modules/measurement/models/weight';
-import { Patient, PatientBasic } from '../../patient/models/patient';
+import { PatientBasic } from '../../patient/models/patient';
 import { SleepHabitsRecord } from '../../habits/models/sleep';
 import { Measurement } from '../../measurement/models/measurement'
 import { BloodGlucose } from '../../measurement/models/blood-glucose'
+import { BloodPressure } from '../../measurement/models/blood-pressure'
+import { Weight } from '../../measurement/models/weight'
+import { PhysicalActivityHabitsRecord } from '../../habits/models/physical.activity'
+import { FeedingHabitsRecord } from '../../habits/models/feeding'
+import { MedicalRecord } from '../../habits/models/medical.record'
 
 export enum EvaluationStatus {
     complete = 'complete',

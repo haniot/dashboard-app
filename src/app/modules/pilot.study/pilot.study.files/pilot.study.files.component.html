@@ -27,8 +27,9 @@
         <tr>
             <th>#</th>
             <th>{{'PILOT-STUDY.TOTAL-PATIENTS'|translate}}</th>
+            <th>Tipos de questionarios</th>
             <th>{{'SHARED.DATE'|translate}}</th>
-            <th colspan="2">{{'SHARED.ACTIONS'|translate}}</th>
+            <th>{{'SHARED.ACTIONS'|translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -43,15 +44,11 @@
                 </h4>
             </td>
         </tr>
-        <tr *ngFor="let evaluation of listOfFiles; index as i;trackBy: trackById">
+        <tr *ngFor="let file of listOfFiles; index as i;trackBy: trackById">
             <td>{{getIndex(i)}}</td>
-            <td>{{evaluation.total_patients}}</td>
-            <td>{{evaluation.created_at | date}}</td>
-            <td>
-                <a class="nav-link" [title]="'PILOT-STUDY.DELETE'|translate">
-                    <i class="material-icons" (click)="openModalConfirmation(evaluation.id)">delete</i>
-                </a>
-            </td>
+            <td>{{file.total_patients}}</td>
+            <td>{{file.data_types}}</td>
+            <td>{{file.created_at | date}}</td>
             <td>
                 <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"
@@ -60,12 +57,12 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
-                    <a class="dropdown-item background-green" [href]="getTrustedUrl(evaluation.file_csv)" download
+                    <a class="dropdown-item background-green" [href]="getTrustedUrl(file.file_csv)" download
                        target="_blank">
                         {{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}
                     </a>
 
-                    <a class="dropdown-item background-green" [href]="getTrustedUrl(evaluation.file_xls)" download
+                    <a class="dropdown-item background-green" [href]="getTrustedUrl(file.file_xls)" download
                        target="_blank">
                         {{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}
                     </a>
@@ -91,9 +88,6 @@
     </div>
 </div>
 
-
-<modal-confirmation [message]="'PILOT-STUDY.DELETE-CONFIRMATION'|translate" (confirmation)="removeFile()"
-                    (noconfirmation)="closeModalComfimation()"></modal-confirmation>
 
 <haniot-modal [modalId]="'modalFile'">
     <div class="modal-content">
@@ -138,7 +132,7 @@
 <haniot-modal [modalId]="'modalFileConfig'">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Configurar Solicitação de Dados</h5>
+            <h5 class="modal-title">{{'PILOT-STUDY.CARD-FILES.CONFIG-RESQUEST-DATA'|translate}}</h5>
             <button type="button" class="close" aria-label="Close" (click)="closeModalFileConfig()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -169,26 +163,30 @@
                             </div>
                             <div class="d-flex justify-content-end">
                                 <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                                    <button class="btn btn-haniot-primary" matStepperNext>
-                                        Continuar
+                                    <button class="btn btn-haniot-primary"
+                                            matStepperNext
+                                            [disabled]="!anyMeasurementTypeSelected()">
+                                        {{'EVALUATION.NUTRITION-EVALUATION-LIST.NEXT'|translate}}
                                     </button>
                                 </div>
                             </div>
                         </mat-step>
                         <mat-step>
-                            <ng-template matStepLabel>Tipos de Questionário</ng-template>
+                            <ng-template
+                                    matStepLabel>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-QUESTIONNAIRES'|translate}}</ng-template>
 
                             <div class="form-group row justify-content-between">
-                                <h5>Selecione os tipos de questionários que deseja incluir:</h5>
+                                <h5>{{'PILOT-STUDY.CARD-FILES.SELECT-QUESTIONNAIRES'|translate}}:</h5>
                                 <mat-checkbox class="example-margin" [(ngModel)]="checkSelectQuestionnaireTypeAll"
                                               (click)="clickCheckQuestionnaireTypeAll()"
                                               style="margin-left: 10px">
-                                    Selecionar todos
+                                    {{'PILOT-STUDY.CARD-FILES.SELECT-ALL'|translate}}
                                 </mat-checkbox>
 
                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center">
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <label class="label-description">- Questionários Nutricional:</label>
+                                        <label class="label-description">- {{'PILOT-STUDY.CARD-FILES.NUTRITIONAL-QUESTIONNAIRE'|translate}}
+                                            :</label>
                                     </div>
                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6"
                                          *ngFor="let questionnaire of questionnaireTypeOptions.nutritional; index as i;trackBy: trackById">
@@ -202,7 +200,8 @@
 
                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center">
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <label class="label-description">- Questionários Odontologico:</label>
+                                        <label class="label-description">- {{'PILOT-STUDY.CARD-FILES.ODONTOLOGICAL-QUESTIONNAIRE'|translate}}
+                                            :</label>
                                     </div>
                                     <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
                                          *ngFor="let questionnaire of questionnaireTypeOptions.odontological; index as i;trackBy: trackById">
@@ -225,7 +224,9 @@
                                 </div>
 
                                 <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                                    <button class="btn btn-haniot-primary" matStepperNext>
+                                    <button class="btn btn-haniot-primary"
+                                            matStepperNext
+                                            [disabled]="!anyQuestionnaireSelected()">
                                         {{'EVALUATION.NUTRITION-EVALUATION-LIST.NEXT'|translate}}
                                     </button>
                                 </div>
@@ -233,9 +234,71 @@
 
                         </mat-step>
                         <mat-step>
-                            <ng-template matStepLabel>Selecionar pacientes</ng-template>
+                            <ng-template
+                                    matStepLabel>{{'PILOT-STUDY.CARD-FILES.SELECT-PATIENTS'|translate}}</ng-template>
+                            <div class="form-group row justify-content-between">
+                                <h5>{{'PILOT-STUDY.CARD-FILES.SELECT-PATIENTS-TO-INCLUDE'|translate}}:</h5>
+                                <mat-checkbox class="example-margin"
+                                              [(ngModel)]="checkSelectPatientsAll"
+                                              (click)="clickCheckPatientsAll()"
+                                              style="margin-left: 10px">
+                                    {{'PILOT-STUDY.CARD-FILES.SELECT-ALL'|translate}}
+                                </mat-checkbox>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>{{'SHARED.NAME-OF-PATIENT'|translate}}</th>
+                                            <th>{{'SHARED.GENDER'|translate}}</th>
+                                            <th>{{'SHARED.AGE'|translate}}</th>
+                                            <th>{{'SHARED.BIRTH-DATE'|translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngIf="listOfPatients.length==0">
+                                            <td colspan="6" *ngIf="!listOfPatientsIsEmpty">
+                                                <spinner
+                                                        [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
+                                            </td>
+                                            <td colspan="6" *ngIf="listOfPatientsIsEmpty">
+                                                <img src="../../../../assets/img/haniot/no_patient.png"
+                                                     [alt]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"
+                                                     id="listOfPatientsIsEmpty">
+                                                <br> {{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let patient of listOfPatientsAux; index as i;">
+                                            <td>
+                                                <mat-checkbox class="example-margin"
+                                                              (change)="changePatientCheck()"
+                                                              [(ngModel)]="listCheckPatients[i]">
+                                                </mat-checkbox>
+                                            </td>
+                                            <td>{{patient.name}}</td>
+                                            <td>{{patient.gender | gender | translate}}</td>
+                                            <td>{{patient.birth_date | convertInAge }}</td>
+                                            <td>{{patient.birth_date | date}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
 
+                                    <mat-paginator [length]="patientLength" [pageSize]="patientLimit" [pageSizeOptions]="patientPageSizeOptions"
+                                                   (page)="clickPatientPagination($event)">
+                                    </mat-paginator>
 
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                                    <button class="btn btn-haniot-primary"
+                                            matStepperNext
+                                            [disabled]="!anyPatientSelected()"
+                                            (click)="generateFile()">
+                                        Solicitar
+                                    </button>
+                                </div>
+                            </div>
                         </mat-step>
                     </mat-horizontal-stepper>
 
@@ -276,7 +339,7 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner [message]="'PILOT-STUDY.GENERATINGFILE'|translate"></spinner>
+                                <spinner [message]="'PILOT-STUDY.REQUESTING-DATA'|translate"></spinner>
                             </div>
                         </div>
                     </div>

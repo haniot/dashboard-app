@@ -57,7 +57,9 @@ export class MeasurementLogsComponent implements OnInit {
         this.loadingMeasurements = true;
         this.measurementService.getAllByUserAndType(this.patientId, this.measurementTypeSelected, this.page, this.limit)
             .then(httpResponse => {
-                this.listOfMeasurements = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listOfMeasurements = httpResponse.body;
+                }
                 this.loadingMeasurements = false;
                 this.listOfMeasurementsIsEmpty = !(this.listOfMeasurements && this.listOfMeasurements.length);
                 this.initializeListCheckMeasurements();

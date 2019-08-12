@@ -7,9 +7,7 @@ import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
 import { PatientService } from '../services/patient.service';
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
 import { Gender, Patient } from '../models/patient';
-import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SocioDemographicRecordService } from '../../habits/services/socio.demographic.record.service'
 import { NutritionalQuestionnaire } from '../../habits/models/nutritional.questionnaire'
@@ -19,6 +17,8 @@ import { ModalService } from '../../../shared/shared.components/haniot.modal/ser
 import { OdontologicalQuestionnairesService } from '../../habits/services/odontological.questionnaires.service'
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -44,13 +44,9 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         pressure: false,
         heartRate: false
     };
-
     private subscriptions: Array<ISubscription>;
-
     nutritionalQuestionnaire: NutritionalQuestionnaire;
-
     odontologicalQuestionnaire: OdontologicalQuestionnaire;
-
     nutritionalQuestionnaireOptions: {
         page: number, limit: number, pageSizeOptions: number[], length: number, pageEvent: PageEvent
     }
@@ -97,6 +93,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.removingQuestionnaire = false;
         this.loadingNutritionalQuestionnaire = false;
         this.loadingOdontologicalQuestionnaire = false;
+        this.listPilots = new Array<PilotStudy>();
     }
 
 
@@ -154,13 +151,17 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         if (this.localStorageService.getItem('health_area') === 'admin') {
             this.pilotStudiesService.getAll()
                 .then(httpResponse => {
-                    this.listPilots = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listPilots = httpResponse.body;
+                    }
                 })
                 .catch();
         } else {
             this.pilotStudiesService.getAllByUserId(userId)
                 .then(httpResponse => {
-                    this.listPilots = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listPilots = httpResponse.body;
+                    }
                 })
                 .catch();
         }
@@ -187,12 +188,10 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             .getAll(this.patientId, this.nutritionalQuestionnaireOptions.page, this.nutritionalQuestionnaireOptions.limit)
             .then(httpResponse => {
                 this.nutritionalQuestionnaireOptions.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                const nutritionalQuestionnaires = httpResponse.body;
-                if (nutritionalQuestionnaires.length) {
+                if (httpResponse.body && httpResponse.body.length) {
+                    const nutritionalQuestionnaires = httpResponse.body;
                     this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
-                    if (nutritionalQuestionnaires.length) {
-                        this.nutritionalQuestionnaire = nutritionalQuestionnaires[0];
-                    }
+                    this.nutritionalQuestionnaire = nutritionalQuestionnaires[0];
                 }
                 this.loadingNutritionalQuestionnaire = false;
             })
@@ -239,9 +238,9 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             .getAll(this.patientId, this.odontologicalQuestionnaireOptions.page, this.odontologicalQuestionnaireOptions.limit)
             .then(httpResponse => {
                 this.odontologicalQuestionnaireOptions.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                const odontologicalQuestionnaires = httpResponse.body;
-                this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
-                if (odontologicalQuestionnaires.length) {
+                if (httpResponse.body && httpResponse.body.length) {
+                    const odontologicalQuestionnaires = httpResponse.body;
+                    this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
                     this.odontologicalQuestionnaire = odontologicalQuestionnaires[0];
                 }
                 this.loadingOdontologicalQuestionnaire = false;

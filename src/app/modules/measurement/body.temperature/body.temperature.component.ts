@@ -125,9 +125,11 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_temperature, null, null, filter)
             .then(httpResponse => {
-                this.data = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.data = httpResponse.body;
+                    this.updateGraph(this.data);
+                }
                 this.showSpinner = false;
-                this.updateGraph(this.data);
             })
             .catch();
     }

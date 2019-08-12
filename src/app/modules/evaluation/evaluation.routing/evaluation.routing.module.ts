@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 import { NutritionEvaluationComponent } from '../nutrition.evaluation/nutrition.evaluation.component';
 import { EvaluationComponentComponent } from '../evaluation.component/evaluation.component';
 import { NutritionalEvaluationListComponent } from '../nutritional.evaluation.list/nutritional.evaluation.list.component';
@@ -11,9 +12,9 @@ const routes = [
         data: { scope: 'evaluations:read' }
     },
     {
-        path: ':pilostudy_id/:patient_id',
+        path: 'nutritional/:patient_id',
         component: EvaluationComponentComponent,
-        data: { scope: 'evaluations:read evaluations:update' }
+        data: { scope: 'evaluations:read' }
     },
     {
         path: ':patient_id/nutritional/:nutritionevaluation_id',

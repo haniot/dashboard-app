@@ -2,8 +2,7 @@ import { GenericUser } from '../../../shared/shared.models/generic.user';
 
 export enum Gender {
     male = 'male',
-    female = 'female',
-    undefined = 'undefined'
+    female = 'female'
 }
 
 
@@ -18,7 +17,6 @@ export class PatientBasic {
         this.id = '';
         this.name = '';
         this.birth_date = '';
-        this.gender = Gender.undefined
     }
 
 }
@@ -33,7 +31,6 @@ export class Patient extends GenericUser {
     constructor() {
         super();
         this.name = '';
-        this.gender = Gender.undefined;
         this.password = '';
         this.password_confirm = '';
     }

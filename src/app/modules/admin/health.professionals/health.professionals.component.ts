@@ -4,11 +4,11 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
 import { HealthProfessionalService } from '../services/health.professional.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { HealthProfessional } from '../models/health.professional';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -33,6 +33,7 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         private translateService: TranslateService) {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
+        this.healthProfessionals = new Array<GenericUser>();
         this.getAllHealthProfessionals();
     }
 
@@ -40,7 +41,9 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         this.healthService.getAll(this.page, this.limit, this.search)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                this.healthProfessionals = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.healthProfessionals = httpResponse.body;
+                }
                 this.loadinService.close();
             })
             .catch(() => {

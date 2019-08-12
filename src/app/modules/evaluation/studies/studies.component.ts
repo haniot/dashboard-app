@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
-import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -58,7 +58,9 @@ export class StudiesComponent implements OnInit, AfterViewInit {
             this.pilotStudyService.getAll(this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.list = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
                     this.listOfPilotsIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {
@@ -69,7 +71,9 @@ export class StudiesComponent implements OnInit, AfterViewInit {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.list = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
                     this.listOfPilotsIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {
@@ -85,14 +89,19 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                 this.pilotStudyService.getAll(this.page, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                        this.list = httpResponse.body;
+                        if (httpResponse.body && httpResponse.body.length) {
+                            this.list = httpResponse.body;
+                        }
                     })
                     .catch();
             } else {
                 this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                        this.list = httpResponse.body;
+                        if (httpResponse.body && httpResponse.body.length) {
+                            this.list = httpResponse.body;
+                        }
+
                     })
                     .catch();
             }

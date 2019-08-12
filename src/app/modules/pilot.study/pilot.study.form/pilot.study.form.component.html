@@ -230,8 +230,8 @@
                             </div>
 
                             <div class="col-md-2">
-                                <button type="button" class="btn btn-haniot-primary" (click)="addProfessionalInStudy()"
-                                        [disabled]="!professionalsForm.valid">
+                                <button type="button" class="btn btn-haniot-primary" (click)="addPatientInStudy()"
+                                        [disabled]="!patientForm.valid">
                                     {{'SHARED.ADD'|translate}}
                                 </button>
                             </div>
@@ -252,12 +252,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let professional of professionalsAssociated; index as i;trackBy: trackById">
-                                <td>{{professional.name}}</td>
-                                <td>{{professional.name}}</td>
-                                <td>{{professional.health_area | healthArea | translate}}</td>
+                            <tr *ngFor="let patient of patientsAssociated; index as i;trackBy: trackById">
+                                <td>{{patient.name}}</td>
+                                <td>{{patient.gender | gender | translate}}</td>
+                                <td>{{patient.birth_date | date}}</td>
                                 <td>
-                                    <a class="nav-link" (click)="dissociateHealthProfessional(professional.id)"
+                                    <a class="nav-link" (click)="dissociatePatientProfessional(patient.id)"
                                        [title]="'PILOT-STUDY.MANAGE-PATIENTS.DISASSOCIATE-PATIENT'|translate">
                                         <i class="material-icons">close</i>
                                     </a>

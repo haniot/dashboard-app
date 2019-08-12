@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
-import { PatientComponent } from '../patient.component/patient.component';
 import { PatientFormComponent } from '../patient.form/patient.form.component';
 import { ViewHabitsComponent } from '../view.habits/view.habits.component';
 import { PatientManagerComponent } from '../patient.manager/patient.manager.component';
+import { PatientComponent } from '../patient.component/patient.component'
 
 const routes = [
 
     {
         path: '',
         component: PatientManagerComponent,
-        data: { scope: "patients:read patients:readAll" }
+        data: { scope: 'patients:read' }
     },
     {
         path: 'new',
@@ -19,10 +18,11 @@ const routes = [
         data: { scope: 'patients:create' }
     },
     {
-        path: ':pilotstudy_id',
-        component: PatientComponent,
-        data: { scope: 'patients:read patients:delete' }
+        path: ':patientId',
+        component: PatientFormComponent,
+        data: { scope: 'patients:update' }
     },
+
     {
         path: ':pilotstudy_id/new',
         component: PatientFormComponent,
@@ -31,14 +31,13 @@ const routes = [
     {
         path: ':patientId/details',
         component: ViewHabitsComponent,
-        data: { scope: 'patients:read forms:read forms:delete measurements:read measurements:delete' }
+        data: { scope: 'patients:read forms:read measurements:read' }
     },
     {
-        path: ':patientId/:pilotstudy_id',
-        component: PatientFormComponent,
-        data: { scope: 'patients:update' }
+        path: 'pilot',
+        component: PatientComponent,
+        data: { scope: 'patients:read patients:delete' }
     },
-
     { path: '**', redirectTo: '/page-not-found' }
 ];
 

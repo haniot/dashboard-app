@@ -4,10 +4,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { PilotStudyService } from '../services/pilot.study.service';
 import { PilotStudy } from '../models/pilot.study';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -51,7 +51,9 @@ export class PilotStudyTableComponent implements OnInit {
         this.pilotStudyService.getAll(this.page, this.limit)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                this.list = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.list = httpResponse.body;
+                }
                 this.listOfPilotsIsEmpty = this.list.length === 0;
             })
             .catch();
@@ -63,7 +65,9 @@ export class PilotStudyTableComponent implements OnInit {
             this.pilotStudyService.getAll(this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.list = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
                 })
                 .catch();
         }, 200);

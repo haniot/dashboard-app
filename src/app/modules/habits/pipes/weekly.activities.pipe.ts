@@ -28,7 +28,7 @@ export class WeeklyActivityPipe implements PipeTransform {
             case 'athletics':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.ATHLETICS';
 
-            case 'swim':
+            case 'swimming':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.SWIM';
 
             case 'gymnastics':

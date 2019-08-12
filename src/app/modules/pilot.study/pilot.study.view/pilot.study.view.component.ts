@@ -63,8 +63,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
                 .then(res => {
                     this.pilotStudyForm.setValue(res);
                     this.pilotStudy = res;
-                }).catch((err) => {
-                console.log(err)
+                }).catch(() => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FIND'));
             })
         }

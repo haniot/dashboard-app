@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
-import { Patient } from 'app/modules/patient/models/patient';
-import { PatientService } from 'app/modules/patient/services/patient.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { Patient } from '../../patient/models/patient'
+import { PatientService } from '../../patient/services/patient.service'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -48,7 +48,9 @@ export class PatientsComponent implements OnChanges {
             this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10)
-                    this.listOfPatients = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listOfPatients = httpResponse.body;
+                    }
                     this.listOfPatientsIsEmpty = !(this.listOfPatients && this.listOfPatients.length);
                 })
                 .catch(() => {

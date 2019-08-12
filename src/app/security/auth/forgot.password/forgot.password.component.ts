@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import * as $ from 'jquery'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { AuthService } from '../services/auth.service'
-import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
-import { Router } from '@angular/router'
+import { ToastrService } from 'ngx-toastr';
+
+import { AuthService } from '../services/auth.service'
 
 @Component({
     selector: 'app-forgot.password',

@@ -13,7 +13,6 @@ import { SatDatepickerModule } from 'saturn-datepicker';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { PilotStudyFormComponent } from './pilot.study.form/pilot.study.form.component';
-import { SharedModule } from 'app/shared/shared.module';
 import { PilotStudyService } from './services/pilot.study.service';
 import { PilotStudyTableComponent } from './pilot.study.table/pilot.study.table.component';
 import { PilotStudyComponent } from './pilot.study.component/pilot.study.component';
@@ -25,6 +24,7 @@ import { PilotStudyFilesComponent } from './pilot.study.files/pilot.study.files.
 import { MeasurementModule } from '../measurement/measurement.module'
 import { MatCheckboxModule, MatExpansionModule, MatStepperModule } from '@angular/material'
 import { HabitsModule } from '../habits/habits.module'
+import { SharedModule } from '../../shared/shared.module'
 
 
 @NgModule({

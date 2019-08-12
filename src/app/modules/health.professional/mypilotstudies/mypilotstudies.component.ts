@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -63,7 +63,9 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
         this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                this.list = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.list = httpResponse.body;
+                }
                 this.listOfStudiesIsEmpty = !(this.list && this.list.length);
             })
             .catch(() => {
@@ -77,7 +79,9 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.list = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
                     this.listOfStudiesIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {

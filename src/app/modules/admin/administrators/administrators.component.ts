@@ -4,12 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from '../services/admin.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { Admin } from '../models/admin';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -36,6 +36,7 @@ export class AdministratorsComponent implements AfterViewChecked {
         private translateService: TranslateService) {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
+        this.admins = new Array<GenericUser>();
         this.getAllAdministrators();
     }
 
@@ -43,8 +44,9 @@ export class AdministratorsComponent implements AfterViewChecked {
         this.adminService.getAll(this.page, this.limit, this.search)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                const admins = httpResponse.body
-                this.admins = admins;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.admins = httpResponse.body;
+                }
                 this.loadinService.close();
             })
             .catch((errorResponse: HttpErrorResponse) => {

@@ -1,7 +1,6 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { environment } from 'environments/environment';
 
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
@@ -11,6 +10,7 @@ import { tap } from 'rxjs/operators';
 
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SessionStorageService } from '../../../shared/shared.services/session.storage.service'
+import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class AuthService {

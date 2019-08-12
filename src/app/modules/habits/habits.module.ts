@@ -6,7 +6,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FeedingHabitsComponent } from './feeding.habits/feeding.habits.component';
-import { SharedModule } from 'app/shared/shared.module';
 import { WaterGlassPipe } from './pipes/water.glass.pipe';
 import { BreakFastPipe } from './pipes/break.fast.pipe';
 import { BreastFeedingPipe } from './pipes/breast.feeding.pipe';
@@ -39,6 +38,7 @@ import { LesionTypePipe } from './pipes/lesion.type.pipe';
 import { NutritionalQuestionnairesService } from './services/nutritional.questionnaires.service'
 import { OdontologicalQuestionnairesService } from './services/odontological.questionnaires.service'
 import { QuestionnaireTypePipe } from './pipes/questionnaire.type'
+import { SharedModule } from '../../shared/shared.module'
 
 @NgModule({
     declarations: [

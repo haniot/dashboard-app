@@ -10,11 +10,13 @@ import { PilotStudyService } from '../services/pilot.study.service';
 import { DateRange } from '../models/range-date';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
-import { Data, DataResponse } from '../../evaluation/models/data'
+import { Data, DataRequest, DataResponse } from '../../evaluation/models/data'
 import { MeasurementService } from '../../measurement/services/measurement.service'
 import { MeasurementType } from '../../measurement/models/measurement.types'
 import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
 import { QuestionnaireType } from '../../habits/models/questionnaire.type'
+import { Patient } from '../../patient/models/patient'
+import { PatientService } from '../../patient/services/patient.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -47,6 +49,16 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     checkSelectQuestionnaireTypeAll: boolean;
     listCheckQuestionnaireNutritionalTypes: Array<boolean>;
     listCheckQuestionnaireOdontologicalTypes: Array<boolean>;
+    listOfPatients: Array<Patient>;
+    listOfPatientsAux: Array<Patient>;
+    checkSelectPatientsAll: boolean;
+    listCheckPatients: Array<boolean>;
+    listOfPatientsIsEmpty: boolean;
+    patientPageSizeOptions: number[];
+    patientPageEvent: PageEvent;
+    patientPage: number;
+    patientLimit: number;
+    patientLength: number;
 
     constructor(
         private pilotService: PilotStudyService,
@@ -57,7 +69,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         private translateService: TranslateService,
         private sanitizer: DomSanitizer,
         private measurementService: MeasurementService,
-        private questionnaireService: NutritionalQuestionnairesService
+        private questionnaireService: NutritionalQuestionnairesService,
+        private patientService: PatientService
     ) {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
@@ -74,6 +87,13 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.questionnaireTypeOptions = new QuestionnaireType();
         this.listCheckQuestionnaireNutritionalTypes = new Array<boolean>();
         this.listCheckQuestionnaireOdontologicalTypes = new Array<boolean>();
+        this.listOfPatients = new Array<Patient>();
+        this.checkSelectPatientsAll = false;
+        this.listCheckPatients = new Array<boolean>();
+        this.listOfPatientsIsEmpty = false;
+        this.patientPage = PaginatorConfig.page;
+        this.patientPageSizeOptions = PaginatorConfig.pageSizeOptions;
+        this.patientLimit = PaginatorConfig.limit;
     }
 
     ngOnInit() {
@@ -87,7 +107,9 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                 this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                        this.listOfFiles = httpResponse.body;
+                        if (httpResponse.body && httpResponse.body.length) {
+                            this.listOfFiles = httpResponse.body;
+                        }
                         this.listOfFilesIsEmpty = !this.listOfFiles.length;
                     })
                     .catch();
@@ -101,7 +123,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.listOfFiles = this.listOfFiles;
+                    this.listOfFiles = httpResponse.body;
                     this.lastFile = this.listOfFiles[0];
                     this.listOfFilesIsEmpty = !this.listOfFiles.length;
                 })
@@ -118,32 +140,15 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.getAllFiles();
     }
 
-    openModalConfirmation(file_id: string) {
-        this.cacheIdFileRemove = file_id
-        this.modalService.open('modalConfirmation');
+    clickPatientPagination(event) {
+        this.patientPageEvent = event;
+        this.patientPage = event.pageIndex + 1;
+        this.patientLimit = event.pageSize;
+        this.loadListPatientAux();
     }
 
     closeModalComfimation() {
         this.modalService.close('modalConfirmation');
-    }
-
-    removeFile() {
-        this.removingFile = true;
-        this.closeModalComfimation();
-        if (this.pilotStudy && this.pilotStudy.id) {
-            this.pilotService.removeFile(this.pilotStudy.id, this.cacheIdFileRemove)
-                .then(() => {
-                    this.getAllFiles();
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.FILE-REMOVED'));
-                    this.removingFile = false;
-                    this.cacheIdFileRemove = '';
-                })
-                .catch(() => {
-                    this.removingFile = false;
-                    this.openModalConfirmation(this.cacheIdFileRemove);
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.FILE-NOT-REMOVED'));
-                });
-        }
     }
 
     getIndex(index: number): number {
@@ -153,35 +158,61 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
+
     generateFile() {
-        this.loadMeasurementsTypes();
-        const user_id = this.localStorageService.getItem('user');
+        this.closeModalFileConfig();
         this.generatingFile = true;
-        this.pilotService.generateNewFile(this.pilotStudy, user_id)
+        const body = this.buildBody();
+        this.pilotService.generateNewFile(this.pilotStudy, body)
             .then(response => {
                 this.dataResponse = response;
-                setTimeout(() => {
-                    this.openModalFileInProcessing();
-                    this.generatingFile = false;
-                    this.getAllFiles();
-                }, 3000)
+                this.openModalFileInProcessing();
+                this.generatingFile = false;
             })
             .catch(error => {
-                this.generatingFile = false;
-                if (error.code === 404 && error.message === 'PILOTSTUDY NOT FOUND') {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FOUND'));
-                } else if (error.code === 404 && error.message === 'HEALTHPROFESSIONALID NOT FOUND') {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONALS-NOTFOUND'));
-                } else if (error.code === 400 && error.message === 'PILOTSTUDY EMPTY') {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-EMPTY'));
-                } else if (error.code === 400) {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-ERROR'));
-                } else {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-GENERATED'));
+                    this.generatingFile = false;
+                    if (error.code === 404 && error.message === 'PILOTSTUDY NOT FOUND') {
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FOUND'));
+                    } else if (error.code === 404 && error.message === 'HEALTHPROFESSIONALID NOT FOUND') {
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONALS-NOTFOUND'));
+                    } else if (error.code === 400 && error.message === 'PILOTSTUDY EMPTY') {
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-EMPTY'));
+                    } else if (error.code === 400) {
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-ERROR'));
+                    } else {
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.DATA-NOT-SOLICITED'));
+                    }
                 }
-            }
             )
     }
+
+    buildBody(): DataRequest {
+        const dataRequest = new DataRequest();
+        this.listCheckMeasurementTypes.forEach((item, index) => {
+            if (item) {
+                dataRequest.data_types.push(this.measurementsTypeOptions[index].id);
+            }
+        })
+        this.listCheckQuestionnaireOdontologicalTypes.forEach((item, index) => {
+            if (item) {
+                dataRequest.data_types.push(this.questionnaireTypeOptions.odontological[index].id);
+            }
+        })
+        this.listCheckQuestionnaireNutritionalTypes.forEach((item, index) => {
+            if (item) {
+                dataRequest.data_types.push(this.questionnaireTypeOptions.nutritional[index].id);
+            }
+        })
+        if (!this.checkSelectPatientsAll) {
+            this.listCheckPatients.forEach((item, index) => {
+                if (item) {
+                    dataRequest.patients.push(this.listOfPatients[index].id);
+                }
+            })
+        }
+        return dataRequest;
+    }
+
 
     openModalFileConfig() {
         this.loadMeasurementsTypes()
@@ -190,6 +221,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             })
             .catch();
         this.loadQuestionnaireTypes();
+        this.loadPatients();
 
     }
 
@@ -227,7 +259,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                 })
             })
             .catch(error => {
-                console.log(error)
+
             })
     }
 
@@ -242,9 +274,42 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                     this.listCheckQuestionnaireNutritionalTypes.push(false);
                 })
             })
-            .catch(error => {
-                console.log(error)
+            .catch()
+    }
+
+    loadPatients(): void {
+        this.patientService.getAllByPilotStudy(this.pilotStudy.id, this.patientPage, this.patientLimit)
+            .then(httpResponse => {
+                this.patientLength = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (!this.patientLength) {
+                    this.patientLength = 0;
+                }
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listOfPatients = httpResponse.body;
+
+                }
+                this.listOfPatientsIsEmpty = !(this.listOfPatients && this.listOfPatients.length);
+                this.listOfPatients.forEach(() => {
+                    this.listCheckPatients.push(false);
+                })
+                /* Used for paginator*/
+                this.loadListPatientAux();
+
             })
+            .catch(() => {
+                this.listOfPatientsIsEmpty = true;
+            })
+
+    }
+
+    loadListPatientAux(): void {
+        this.listOfPatientsAux = new Array<Patient>();
+        /* -1 because pagination starts at 1 and indexing starts at 0 */
+        for (let i = (this.patientLimit * (this.patientPage - 1)); i < this.patientLimit * this.patientPage; i++) {
+            if (i < this.listOfPatients.length) {
+                this.listOfPatientsAux.push(this.listOfPatients[i]);
+            }
+        }
     }
 
     clickCheckMeasurementTypeAll() {
@@ -262,6 +327,12 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         });
     }
 
+    clickCheckPatientsAll() {
+        this.listCheckPatients.forEach((item, index) => {
+            this.listCheckPatients[index] = !this.checkSelectPatientsAll;
+        });
+    }
+
     changeMeasurementTypeCheck(): void {
         const typesSelected = this.listCheckMeasurementTypes.filter(item => item === true);
         this.checkSelectMeasurementTypeAll = this.listCheckMeasurementTypes.length === typesSelected.length;
@@ -275,6 +346,34 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             (this.listCheckQuestionnaireNutritionalTypes.length + this.listCheckQuestionnaireOdontologicalTypes.length)
             === (typesNutritionalSelected.length + typesOdontologicalSelected.length)
     }
+
+    changePatientCheck(): void {
+        const patientsSelected = this.listCheckPatients.filter(item => item === true);
+
+        this.checkSelectPatientsAll = this.listCheckPatients.length === patientsSelected.length;
+    }
+
+    anyMeasurementTypeSelected(): boolean {
+        const typesSelected = this.listCheckMeasurementTypes.filter(item => item === true);
+        return (typesSelected && typesSelected.length > 0);
+    }
+
+    anyQuestionnaireSelected(): boolean {
+        const typesNutritionalSelected = this.listCheckQuestionnaireNutritionalTypes.filter(item => item === true);
+        const typesOdontologicalSelected = this.listCheckQuestionnaireOdontologicalTypes.filter(item => item === true);
+
+        return (
+            (typesNutritionalSelected && typesNutritionalSelected.length > 0) ||
+            (typesOdontologicalSelected && typesOdontologicalSelected.length > 0)
+        );
+    }
+
+    anyPatientSelected(): boolean {
+        const patientsSelected = this.listCheckPatients.filter(item => item === true);
+
+        return (patientsSelected && patientsSelected.length > 0);
+    }
+
 
     trackById(index, item) {
         return item.id;

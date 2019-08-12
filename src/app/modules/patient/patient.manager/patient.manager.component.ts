@@ -7,11 +7,11 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Patient } from '../models/patient';
 import { PatientService } from '../services/patient.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
-import { AuthService } from 'app/security/auth/services/auth.service';
 import { HttpResponse } from '@angular/common/http'
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -27,7 +27,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
     limit: number;
     length: number;
     listOfPatientsIsEmpty: boolean;
-    listOfPatients = new Array<Patient>();
+    listOfPatients: Array<Patient>;
     search: string;
     searchTime;
     cacheIdPatientRemove: string;
@@ -46,6 +46,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
         this.listOfPatientsIsEmpty = false;
+        this.listOfPatients = new Array<Patient>();
     }
 
     ngOnInit() {
@@ -59,7 +60,9 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
                 this.patientService.getAll(this.page, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                        this.listOfPatients = httpResponse.body;
+                        if (httpResponse.body) {
+                            this.listOfPatients = httpResponse.body;
+                        }
                     })
                     .catch();
             }, 200);
@@ -71,7 +74,9 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
             this.patientService.getAll(this.page, this.limit, this.search)
                 .then((httpResponse: HttpResponse<any>) => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.listOfPatients = httpResponse.body;
+                    if (httpResponse.body) {
+                        this.listOfPatients = httpResponse.body;
+                    }
                     this.listOfPatientsIsEmpty = (this.listOfPatients.length === 0);
                 })
                 .catch();
@@ -99,8 +104,8 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         this.patientService.remove(this.cacheIdPatientRemove)
             .then(() => {
                 this.getAllPatients();
-                // this.calcLengthPatients();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
+                this.closeModalComfimation();
             })
             .catch(errorResponse => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-REMOVED'));

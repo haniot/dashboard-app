@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AuthService } from 'app/security/auth/services/auth.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { HealtArea, HealthProfessional } from '../../admin/models/health.professional';
 import { HealthProfessionalService } from '../../admin/services/health.professional.service';
 import { UserService } from '../../admin/services/users.service';
+import { AuthService } from '../../../security/auth/services/auth.service'
 
 @Component({
     selector: 'health-professional-configurations',

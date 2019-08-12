@@ -5,13 +5,13 @@ import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { Patient } from '../models/patient';
 import { PatientService } from '../services/patient.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -28,7 +28,8 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
     limit: number;
     length: number;
     listOfPatientsIsEmpty: boolean;
-    listOfPatients = new Array<Patient>();
+    listOfPatients: Array<Patient>;
+    listOfPatientsAux: Array<Patient>;
     search: string;
     searchTime;
     cacheIdPatientRemove: string;
@@ -51,6 +52,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         this.limit = PaginatorConfig.limit;
         this.listOfPatientsIsEmpty = false;
         this.subscriptions = new Array<ISubscription>();
+        this.listOfPatients = new Array<Patient>();
     }
 
     ngOnInit() {
@@ -60,12 +62,18 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         }));
     }
 
-    loadUser(): void {
+    loadUser()
+        :
+        void {
         this.userId = this.localStorageService.getItem('user');
     }
 
-    loadPilotSelected(): void {
-        if (!this.userId) {
+    loadPilotSelected()
+        :
+        void {
+        if (!
+            this.userId
+        ) {
             this.loadUser();
         }
         const pilotselected = this.localStorageService.getItem(this.userId);
@@ -80,7 +88,9 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
             this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.listOfPatients = httpResponse.body;
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listOfPatients = httpResponse.body;
+                    }
                     this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
                 })
                 .catch();
@@ -91,26 +101,44 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                this.listOfPatients = httpResponse.body;
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listOfPatients = httpResponse.body;
+                }
                 this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
+                this.loadListPatientAux();
             })
             .catch();
+    }
+
+    loadListPatientAux(): void {
+        this.listOfPatientsAux = new Array<Patient>();
+        /* -1 because pagination starts at 1 and indexing starts at 0 */
+        for (let i = (this.limit * (this.page - 1)); i < this.limit * this.page; i++) {
+            if (i < this.listOfPatients.length) {
+                this.listOfPatientsAux.push(this.listOfPatients[i]);
+            }
+        }
     }
 
     clickPagination(event) {
         this.pageEvent = event;
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this.getAllPacients();
+        this.loadListPatientAux();
     }
 
-    openModalConfirmation(pilotstudy_id: string, patientId: string) {
+    openModalConfirmation(pilotstudy_id
+                              :
+                              string, patientId
+                              :
+                              string
+    ) {
         this.cacheIdPatientRemove = patientId;
         this.pilotStudyId = pilotstudy_id;
         this.modalService.open('modalConfirmation');
     }
 
-    closeModalComfimation() {
+    closeModalConfimation() {
         this.cacheIdPatientRemove = '';
         this.modalService.close('modalConfirmation');
     }
@@ -120,7 +148,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
             .then(() => {
                 this.getAllPacients();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
-                this.closeModalComfimation();
+                this.closeModalConfimation();
             })
             .catch(() => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-REMOVED'));
@@ -138,7 +166,10 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         return item.id;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes
+                    :
+                    SimpleChanges
+    ) {
         if ((this.pilotStudyId && changes.pilotStudyId.currentValue !== changes.pilotStudyId.previousValue)) {
             this.getAllPacients();
         }
@@ -148,7 +179,9 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         this.loadinService.close();
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy()
+        :
+        void {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

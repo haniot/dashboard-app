@@ -12,7 +12,6 @@ import { EvaluationComponentComponent } from './evaluation.component/evaluation.
 import { EvaluationRoutingModule } from './evaluation.routing/evaluation.routing.module';
 import { NutritionEvaluationComponent } from './nutrition.evaluation/nutrition.evaluation.component';
 import { NutritionEvaluationTableComponent } from './nutrition.evaluation.table/nutrition.evaluation.table.component';
-import { SharedModule } from 'app/shared/shared.module';
 import { EvaluationService } from './services/evaluation.service';
 import { NutritionEvaluationService } from './services/nutrition.evaluation.service';
 import { EvaluationStatustPipe } from './pipes/evaluation.status.pipe';
@@ -31,6 +30,7 @@ import { DentalEvaluationListComponent } from './dental.evaluation.list/dental.e
 import { TaylorCutClassificationPipe } from './pipes/taylor.cut.classification.pipe';
 import { GeneratePdfService } from './services/generate.pdf.service';
 import { SendEmailService } from './services/send.email.service';
+import { SharedModule } from '../../shared/shared.module'
 
 
 @NgModule({

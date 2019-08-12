@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
 
 @Component({
     selector: 'app-edit-mypilot',

@@ -606,7 +606,7 @@
     "ODONTOLOGICAL-EVALUATON": "Avaliação odontológica",
     "FILECSV": "Arquivo CSV",
     "FILEXLS": "Arquivo XLS",
-    "GENERATINGFILE": "Gerando arquivo",
+    "REQUESTING-DATA": "Solicitando dados",
     "REMOVINGFILE": "Removendo arquivo",
     "START": "Ínicio",
     "END": "Término",
@@ -652,7 +652,15 @@
       "DATA-SUCCESSFULLY-REQUEST": "Dados solicitados com sucesso!",
       "DATA-SUCCESSFULLY-REQUEST-MESSAGE": "Os dados solicitados estarão disponiveis dentro de alguns minutos.",
       "COMPLETION-ESTIMATE": "Estimativa de conclusão",
-      "UNDERSTOOD": "Entendido"
+      "UNDERSTOOD": "Entendido",
+      "CONFIG-RESQUEST-DATA": "Configurar Solicitação de Dados",
+      "TYPES-OF-QUESTIONNAIRES": "Tipos de Questionário",
+      "SELECT-QUESTIONNAIRES": "Selecione os tipos de questionários que deseja incluir",
+      "SELECT-PATIENTS-TO-INCLUDE": "Selecione os pacientes que deseja incluir",
+      "SELECT-ALL": "Selecionar todos",
+      "NUTRITIONAL-QUESTIONNAIRE": "Questionário Nutricional",
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Questionário Odontologico",
+      "SELECT-PATIENTS": "Selecionar pacientes"
     }
   },
   "SIDEBAR": {
@@ -815,7 +823,7 @@
     "HEALTHPROFESSIONALS-NOTFOUND": "Profissional não encontrado",
     "STUDY-EMPTY": "O estudo selecionado não possui pacientes!",
     "PATIENT-ERROR": "Algum paciente não possui as informações necessárias!",
-    "EVALUATION-NOT-GENERATED": "Não foi possível gerar avaliação",
+    "DATA-NOT-SOLICITED": "Não foi possível realizar a solicitação",
     "NOT-LOAD-NUTRITION-EVALUATION": "Não foi possível carregar avaliação nutricional!",
     "PATIENT-NOT-IDENTIFIED": "Não foi possível identificar o paciente!",
     "EVALUATION-COMPLETED": "Avaliação finalizada com sucesso!",
@@ -844,6 +852,8 @@
     "HEALTHPROFESSIONAL-NOT-REMOVED": "Não foi possível remover professional!",
     "HEALTHPROFESSIONAL-ADD": "Profissional adicionado com sucesso!",
     "HEALTHPROFESSIONAL-NOT-ADD": "Não foi possível adicionar professional!",
+    "PATIENT-ADD": "Paciente adicionado com sucesso!",
+    "PATIENT-NOT-ADD": "Não foi possível adicionar paciente!",
     "PASSWORD-UPDATED": "Senha modificada com sucesso!",
     "INVALID-TOKEN": "Token inválido ou expirado!",
     "TOO-MANY-REQUESTS": "Limite de solicitações excedido!",

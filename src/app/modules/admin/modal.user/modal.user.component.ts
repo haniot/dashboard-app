@@ -1,15 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 
 import { ISubscription } from 'rxjs-compat/Subscription';
 
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health.professional.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { HealtArea } from '../models/health.professional';
 import { LanguagesConfiguration } from '../../../../assets/i18n/config'
 import { TranslateService } from '@ngx-translate/core'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const languagesConfig = LanguagesConfiguration;
 
