@@ -207,7 +207,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.nutritionalQuestionnaireService
             .remove(this.patientId, this.nutritionalQuestionnaire.id)
             .then(() => {
-                this.getQuestionnaires();
+                this.getAllNutritionalQuestionnaires();
                 this.removingQuestionnaire = false;
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
             })
@@ -257,7 +257,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.odontologicalQuestionnaireService
             .remove(this.patientId, this.odontologicalQuestionnaire.id)
             .then(() => {
-                this.getQuestionnaires();
+                this.getAllOdontologicalQuestionnaires();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
                 this.removingQuestionnaire = false;
             })

@@ -24,7 +24,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="row  justify-content-md-center">
-                            <div *ngIf="oralHealthForm.get('teeth_lesions').value.length==0">
+                            <div *ngIf="oralHealthForm.get('teeth_lesions').value && oralHealthForm.get('teeth_lesions').value.length==0">
                                 <span class="badge badge-warning badge-12">{{'HABITS.ORAL-HEALTH.NONE-LESION'|translate}}</span>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" class="diseases"

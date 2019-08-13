@@ -74,8 +74,12 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
                 })
                 .catch();
         }
-        if (this.feedingHabitsRecord && changes.feedingHabitsRecord.currentValue !== changes.feedingHabitsRecord.previousValue) {
-            this.createFeedingForm(this.feedingHabitsRecord);
+        if (changes.feedingHabitsRecord.currentValue !== changes.feedingHabitsRecord.previousValue) {
+            if (this.feedingHabitsRecord) {
+                this.createFeedingForm(this.feedingHabitsRecord);
+            } else {
+                this.feedingForm.reset();
+            }
         }
     }
 

@@ -61,8 +61,12 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
                 })
                 .catch();
         }
-        if (this.socioDemographicRecord && changes.socioDemographicRecord.currentValue !== changes.socioDemographicRecord.previousValue) {
-            this.createSocioDemographicForm(this.socioDemographicRecord);
+        if (changes.socioDemographicRecord.currentValue !== changes.socioDemographicRecord.previousValue) {
+            if (this.socioDemographicRecord) {
+                this.createSocioDemographicForm(this.socioDemographicRecord);
+            } else {
+                this.socioDemographicForm.reset();
+            }
         }
     }
 }

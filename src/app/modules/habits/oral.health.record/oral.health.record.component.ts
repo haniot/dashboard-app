@@ -51,8 +51,13 @@ export class OralHealthRecordComponent implements OnInit, OnChanges {
                 })
                 .catch();
         }
-        if (this.oralHealthRecord && changes.oralHealthRecord.currentValue !== changes.oralHealthRecord.previousValue) {
-            this.createOralHealthForm(this.oralHealthRecord);
+        if (changes.oralHealthRecord.currentValue !== changes.oralHealthRecord.previousValue) {
+            if (this.oralHealthRecord) {
+                this.createOralHealthForm(this.oralHealthRecord);
+            } else {
+                this.oralHealthForm.reset();
+            }
+
         }
     }
 

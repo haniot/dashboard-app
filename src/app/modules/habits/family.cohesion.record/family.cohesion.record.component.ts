@@ -88,8 +88,13 @@ export class FamilyCohesionRecordComponent implements OnInit, OnChanges {
                 })
                 .catch();
         }
-        if (this.familyCohesionRecord && changes.familyCohesionRecord.currentValue !== changes.familyCohesionRecord.previousValue) {
-            this.createFamilyForm(this.familyCohesionRecord);
+        if (changes.familyCohesionRecord.currentValue !== changes.familyCohesionRecord.previousValue) {
+            if (this.familyCohesionRecord) {
+                this.createFamilyForm(this.familyCohesionRecord);
+            } else {
+                this.familyForm.reset();
+            }
+
         }
     }
 

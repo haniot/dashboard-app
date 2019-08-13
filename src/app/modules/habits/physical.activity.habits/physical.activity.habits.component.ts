@@ -63,8 +63,12 @@ export class PhysicalActivityHabitsComponent implements OnInit, OnChanges {
                 })
                 .catch();
         }
-        if (this.physicalRecord && changes.physicalRecord.currentValue !== changes.physicalRecord.previousValue) {
-            this.createPhysicalActivityForm(this.physicalRecord);
+        if (changes.physicalRecord.currentValue !== changes.physicalRecord.previousValue) {
+            if (this.physicalRecord) {
+                this.createPhysicalActivityForm(this.physicalRecord);
+            } else {
+                this.physicalActivityForm.reset();
+            }
         }
     }
 

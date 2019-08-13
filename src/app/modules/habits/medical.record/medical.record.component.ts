@@ -52,8 +52,13 @@ export class MedicalRecordComponent implements OnInit, OnChanges {
                 })
                 .catch();
         }
-        if (this.medicalRecord && changes.medicalRecord.currentValue !== changes.medicalRecord.previousValue) {
-            this.createMedicalForm(this.medicalRecord);
+        if (changes.medicalRecord.currentValue !== changes.medicalRecord.previousValue) {
+            if (this.medicalRecord) {
+                this.createMedicalForm(this.medicalRecord);
+            } else {
+                this.medicalForm.reset();
+            }
+
         }
     }
 

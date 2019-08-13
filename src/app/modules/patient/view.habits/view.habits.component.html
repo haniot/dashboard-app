@@ -136,7 +136,8 @@
                             <button mat-raised-button type="button"
                                     class="btn btn-white btn-round btn-just-icon pull-right"
                                     [title]="'HABITS.DELETE-ODONTOLOGICAL-QUESTIONNAIRE'|translate"
-                                    (click)="openModalConfirmationRemoveOdontologicalQuestionnaire()">
+                                    (click)="openModalConfirmationRemoveOdontologicalQuestionnaire()"
+                                    [disabled]="!odontologicalQuestionnaireOptions.length">
                                 <i class="material-icons">delete</i>
                             </button>
                         </div>
@@ -151,7 +152,13 @@
                     <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9"
                          *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
                         <sociodemographic-record
-                                [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_recod"></sociodemographic-record>
+                                [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                         *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
+                        <oralhealth-record
+                                [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
                     </div>
 
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
@@ -221,7 +228,8 @@
                                     <button mat-raised-button type="button"
                                             class="btn btn-white btn-round btn-just-icon pull-right"
                                             [title]="'HABITS.DELETE-NUTRITIONAL-QUESTIONNAIRE'|translate"
-                                            (click)="openModalConfirmationRemoveNutritionalQuestionnaire()">
+                                            (click)="openModalConfirmationRemoveNutritionalQuestionnaire()"
+                                            [disabled]="!nutritionalQuestionnaireOptions.length">
                                         <i class="material-icons">delete</i>
                                     </button>
                                 </div>
@@ -245,12 +253,6 @@
                                  *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
                                 <medical-record
                                         [medicalRecord]="nutritionalQuestionnaire.medical_record"></medical-record>
-                            </div>
-
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                 *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                                <oralhealth-record
-                                        [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">

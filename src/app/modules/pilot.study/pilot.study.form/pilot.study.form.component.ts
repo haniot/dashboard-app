@@ -67,11 +67,10 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 this.getPilotStudy();
             }
             if (this.typeUserLogged && this.typeUserLogged === 'admin') {
-                this.loadProfessionalsAssociated();
                 this.getListProfessionals();
                 this.getListPatients();
+                this.loadProfessionalsAssociated();
                 this.loadPatientsAssociated();
-                this.loadPatientsNotAssociated();
             }
         }));
         this.createForm();

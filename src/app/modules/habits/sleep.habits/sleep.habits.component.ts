@@ -49,8 +49,13 @@ export class SleepHabitsComponent implements OnInit, OnChanges {
                 })
                 .catch();
         }
-        if (this.sleepHabit && changes.sleepHabit.currentValue !== changes.sleepHabit.previousValue) {
-            this.createSleepForm(this.sleepHabit);
+        if (changes.sleepHabit.currentValue !== changes.sleepHabit.previousValue) {
+            if (this.sleepHabit) {
+                this.createSleepForm(this.sleepHabit);
+            } else {
+                this.sleepForm.reset();
+            }
+
         }
     }
 
