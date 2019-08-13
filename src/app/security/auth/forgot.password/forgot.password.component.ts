@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
@@ -13,7 +13,7 @@ import { AuthService } from '../services/auth.service'
     templateUrl: './forgot.password.component.html',
     styleUrls: ['./forgot.password.component.scss']
 })
-export class ForgotPasswordComponent implements OnInit {
+export class ForgotPasswordComponent implements OnInit, OnDestroy{
     loading: boolean;
     f: FormGroup;
     showEmailSent: boolean;
@@ -71,6 +71,11 @@ export class ForgotPasswordComponent implements OnInit {
 
     gotoLogin() {
         this.router.navigate(['/'])
+    }
+
+    ngOnDestroy(): void {
+        /* reset color*/
+        $('body').css('background-color', '#ececec');
     }
 
 }

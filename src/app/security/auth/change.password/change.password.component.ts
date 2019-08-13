@@ -200,6 +200,8 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });
+        /* reset color*/
+        $('body').css('background-color', '#ececec');
     }
 
 

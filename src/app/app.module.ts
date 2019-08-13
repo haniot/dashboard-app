@@ -94,7 +94,7 @@ export class AppModule {
         const languages = Object.keys(languagesConfig)
 
         this.translate.addLangs(languages);
-        this.translate.setDefaultLang('en-US');
+        this.translate.setDefaultLang('pt-BR');
 
         const browserLang = this.translate.getBrowserLang();
 

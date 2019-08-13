@@ -43,6 +43,7 @@ export class LanguageSettingsComponent implements OnInit {
 
         this.userService.changeLanguage(this.userId, language)
             .then(() => {
+                this.localStorageService.setItem('language', language)
                 this.translate.use(language);
             })
             .catch(() => {

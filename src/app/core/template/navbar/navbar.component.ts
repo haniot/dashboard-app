@@ -12,6 +12,7 @@ import { LocalStorageService } from '../../../shared/shared.services/local.stora
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { UserService } from '../../../modules/admin/services/users.service'
+import { compareNumbers } from '@angular/compiler-cli/src/diagnostics/typescript_version'
 
 
 export declare interface RouteInfo {
@@ -282,12 +283,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     configLanguage(language: string) {
-        language = 'pt-BR';
+        const regexLanguages = this.translateService.getLangs().join('|');
         if (language) {
-            this.translateService.use(language);
+            this.translateService.use(language.match(regexLanguages) ? language : this.translateService.defaultLang);
         } else {
             const browserLang = this.translateService.getBrowserLang();
-            this.translateService.use(browserLang.match(/en-US|pt-BR/) ? browserLang : 'pt-BR');
+            this.translateService.use(browserLang.match(regexLanguages) ? browserLang : this.translateService.defaultLang);
         }
     }
 

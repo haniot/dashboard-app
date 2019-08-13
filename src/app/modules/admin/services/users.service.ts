@@ -70,7 +70,7 @@ export class UserService {
                 service = this.patientService;
                 break;
         }
-        return service.update(user)
+        return service.update({ id: user.id, language: user.language })
             .then(userUpdated => {
                 return !!userUpdated;
             })

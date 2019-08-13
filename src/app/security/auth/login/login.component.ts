@@ -62,9 +62,9 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     ngOnInit() {
-        const token = this.localStorageService.getItem('token')
+        const token = this.localStorageService.getItem('token');
         if (token) {
-            this.router.navigate(['/app'])
+            this.router.navigate(['/app']);
         }
 
         $('body').css('background-color', '#00a594');
@@ -140,8 +140,13 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
                 .subscribe(
                     (resp) => {
                         this.cleanAttempt()
-                        this.router.navigate(['/app']);
+                        const urlTemporary = this.localStorageService.getItem('urlTemporary');
                         this.loading = false;
+                        this.router.navigate(['/app']);
+                        if (urlTemporary) {
+                            this.localStorageService.removeItem('urlTemporary');
+                            this.router.navigate([urlTemporary]);
+                        }
                     },
                     (error: HttpErrorResponse) => {
                         const rateLimit = parseInt(error.headers.get('x-ratelimit-limit'), 10);
@@ -201,6 +206,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });
+        /* reset color*/
+        $('body').css('background-color', '#ececec');
     }
 
 }
