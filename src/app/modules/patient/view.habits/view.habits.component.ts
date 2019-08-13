@@ -178,7 +178,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
     nutritionalQuestionnairePageEvent(pageEvent: PageEvent): void {
         this.loadingNutritionalQuestionnaire = true;
-        this.nutritionalQuestionnaireOptions.page = pageEvent.pageIndex;
+        /* + 1 because pageIndex starts at 0*/
+        this.nutritionalQuestionnaireOptions.page = pageEvent.pageIndex + 1;
         this.nutritionalQuestionnaireOptions.limit = pageEvent.pageSize;
         this.getAllNutritionalQuestionnaires();
     }
@@ -187,10 +188,10 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.nutritionalQuestionnaireService
             .getAll(this.patientId, this.nutritionalQuestionnaireOptions.page, this.nutritionalQuestionnaireOptions.limit)
             .then(httpResponse => {
+                this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
                 this.nutritionalQuestionnaireOptions.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 if (httpResponse.body && httpResponse.body.length) {
                     const nutritionalQuestionnaires = httpResponse.body;
-                    this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
                     this.nutritionalQuestionnaire = nutritionalQuestionnaires[0];
                 }
                 this.loadingNutritionalQuestionnaire = false;
@@ -206,10 +207,9 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.nutritionalQuestionnaireService
             .remove(this.patientId, this.nutritionalQuestionnaire.id)
             .then(() => {
-                setTimeout(() => {
-                    this.removingQuestionnaire = false;
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
-                }, 3000)
+                this.getQuestionnaires();
+                this.removingQuestionnaire = false;
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
             })
             .catch((errorResponse => {
                 this.removingQuestionnaire = false;
@@ -228,7 +228,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
     odontologicalQuestionnairePageEvent(pageEvent: PageEvent): void {
         this.loadingOdontologicalQuestionnaire = true;
-        this.odontologicalQuestionnaireOptions.page = pageEvent.pageIndex;
+        /* + 1 because pageIndex starts at 0*/
+        this.odontologicalQuestionnaireOptions.page = pageEvent.pageIndex + 1;
         this.odontologicalQuestionnaireOptions.limit = pageEvent.pageSize;
         this.getAllOdontologicalQuestionnaires();
     }
@@ -237,10 +238,10 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.odontologicalQuestionnaireService
             .getAll(this.patientId, this.odontologicalQuestionnaireOptions.page, this.odontologicalQuestionnaireOptions.limit)
             .then(httpResponse => {
+                this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
                 this.odontologicalQuestionnaireOptions.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 if (httpResponse.body && httpResponse.body.length) {
                     const odontologicalQuestionnaires = httpResponse.body;
-                    this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
                     this.odontologicalQuestionnaire = odontologicalQuestionnaires[0];
                 }
                 this.loadingOdontologicalQuestionnaire = false;
@@ -256,6 +257,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.odontologicalQuestionnaireService
             .remove(this.patientId, this.odontologicalQuestionnaire.id)
             .then(() => {
+                this.getQuestionnaires();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
                 this.removingQuestionnaire = false;
             })

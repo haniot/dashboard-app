@@ -6,11 +6,16 @@ import { DateRange } from '../models/range-date';
 import { Data, DataResponse } from '../../evaluation/models/data'
 import { Patient } from '../../patient/models/patient'
 import { environment } from '../../../../environments/environment'
+import { Admin } from '../../admin/models/admin'
+import { HealthProfessional } from '../../admin/models/health.professional'
+import { AuthService } from '../../../security/auth/services/auth.service'
 
 @Injectable()
 export class PilotStudyService {
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private authService: AuthService) {
     }
 
 
@@ -34,15 +39,22 @@ export class PilotStudyService {
             myParams = myParams.append('?name', '*' + search + '*');
         }
 
+        let url = '';
 
-        const url = `${environment.api_url}/healthprofessionals/${userId}/pilotstudies`;
+        switch (this.getTypeUser()) {
+            case 'admin':
+                url = `${environment.api_url}/pilotstudies`;
+                break;
+
+            case 'health_professional':
+                url = `${environment.api_url}/healthprofessionals/${userId}/pilotstudies`;
+                break;
+            case 'patient':
+                url = `${environment.api_url}/patients/${userId}/pilotstudies`;
+                break;
+        }
 
 
-        /*
-        * TODO: Verficar o tipo de usuário e modificar a url. Por exemplo, se for um:
-        * healthProfessional: `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`
-        * patient: `${environment.api_url}/users/patients/${userId}/pilotstudies`
-        */
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
@@ -87,9 +99,9 @@ export class PilotStudyService {
             const start_at = search.begin.toISOString().split('T')[0];
             const end_at = search.end.toISOString().split('T')[0];
 
-            myParams = myParams.append('created_at', 'gte:' + start_at);
+            myParams = myParams.append('start_at', start_at);
 
-            myParams = myParams.append('created_at', 'lte:' + end_at);
+            myParams = myParams.append('end_at', end_at);
 
 
         }
@@ -150,5 +162,9 @@ export class PilotStudyService {
     dissociatePatientFromPilotStudy(pilotStudyId: string, patientId: string): Promise<boolean> {
         return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/patients/${patientId}`)
             .toPromise();
+    }
+
+    getTypeUser(): string {
+        return this.authService.decodeToken().sub_type;
     }
 }

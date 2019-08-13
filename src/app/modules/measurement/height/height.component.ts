@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { Measurement, MeasurementType } from '../models/measurement';
+import { EnumMeasurementType, Measurement } from '../models/measurement';
 import { Weight } from '../models/weight';
 import { MeasurementService } from '../services/measurement.service';
 
@@ -120,7 +120,7 @@ export class HeightComponent implements OnInit, OnChanges {
 
     applyFilter(filter: { start_at: string, end_at: string, period: string }) {
         this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.height, null, null, filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.height, null, null, filter)
             .then(httpResponse => {
                 this.data = httpResponse.body;
                 this.showSpinner = false;

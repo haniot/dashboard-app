@@ -41,9 +41,9 @@
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
                 <div *ngIf="loadingMeasurements">
-                    <spinner></spinner>
+                    <spinner [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive" *ngIf="!loadingMeasurements">
                     <!-- Generic table-->
                     <table class="table table-hover table-sm"
                            *ngIf="(measurementTypeSelected !== 'weight') &&
@@ -251,6 +251,7 @@
                     </table>
 
                     <!-- Table for type heart_rate-->
+                    <!--
                     <table class="table table-hover table-sm" *ngIf="measurementTypeSelected === 'heart_rate'">
                         <thead>
                         <th></th>
@@ -300,6 +301,7 @@
 
                         </tbody>
                     </table>
+                    -->
 
                 </div>
                 <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
@@ -327,7 +329,7 @@
                                 <p *ngIf="cacheIdMeasurementRemove === '' && !loadingMeasurements">
                                     {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate}}
                                     {{cacheListIdMeasurementRemove.length}}
-                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate}}
+                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate}}
                                 </p>
                                 <spinner [message]="'Removendo medição(es)...'" *ngIf="loadingMeasurements"></spinner>
 

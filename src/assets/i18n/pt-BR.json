@@ -617,6 +617,7 @@
     "SITUATION": "Situação",
     "PROFESSIONALS": "Profissionais",
     "SELECT-PROFESSIONALS": "Selecione profissionais",
+    "VIEW-DATA": "Visualizar Dados",
     "MANAGE-PROFESSIONALS": {
       "TITLE": "Gerenciar profissionais",
       "SUBTITLE": "",
@@ -654,13 +655,16 @@
       "COMPLETION-ESTIMATE": "Estimativa de conclusão",
       "UNDERSTOOD": "Entendido",
       "CONFIG-RESQUEST-DATA": "Configurar Solicitação de Dados",
-      "TYPES-OF-QUESTIONNAIRES": "Tipos de Questionário",
+      "TYPES-OF-QUESTIONNAIRES": "Tipos de Questionários",
+      "TYPES-OF-MEASUREMENTS": "Tipos de Medições",
       "SELECT-QUESTIONNAIRES": "Selecione os tipos de questionários que deseja incluir",
+      "SELECT-MEASUREMENTS": "Selecione os tipos de medições que deseja incluir",
       "SELECT-PATIENTS-TO-INCLUDE": "Selecione os pacientes que deseja incluir",
       "SELECT-ALL": "Selecionar todos",
       "NUTRITIONAL-QUESTIONNAIRE": "Questionário Nutricional",
       "ODONTOLOGICAL-QUESTIONNAIRE": "Questionário Odontologico",
-      "SELECT-PATIENTS": "Selecionar pacientes"
+      "SELECT-PATIENTS": "Selecionar pacientes",
+      "REQUEST": "Solicitar"
     }
   },
   "SIDEBAR": {

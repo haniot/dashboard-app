@@ -13,7 +13,7 @@ import { GeneratePdfService } from '../services/generate.pdf.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SendEmailService } from '../services/send.email.service';
 import { Patient, PatientBasic } from '../../patient/models/patient'
-import { Measurement, MeasurementType } from '../../measurement/models/measurement'
+import { EnumMeasurementType, Measurement } from '../../measurement/models/measurement'
 import { BloodPressure } from '../../measurement/models/blood-pressure'
 import { HeartRate } from '../../measurement/models/heart-rate'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
@@ -300,31 +300,31 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         const measurements: Array<any> = this.nutritionalEvaluation.measurements;
 
         this.listWeight = measurements.filter((element: Weight) => {
-            return element.type === MeasurementType.weight
+            return element.type === EnumMeasurementType.weight
         });
 
         this.listHeight = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.height
+            return element.type === EnumMeasurementType.height
         });
 
         this.listFat = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.body_fat
+            return element.type === EnumMeasurementType.body_fat
         });
 
         this.listWaistCircunference = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.waist_circumference
+            return element.type === EnumMeasurementType.waist_circumference
         });
 
         this.listBodyTemperature = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.body_temperature
+            return element.type === EnumMeasurementType.body_temperature
         });
 
         this.listBloodGlucose = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.blood_glucose
+            return element.type === EnumMeasurementType.blood_glucose
         });
 
         this.listBloodPressure = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.blood_pressure
+            return element.type === EnumMeasurementType.blood_pressure
         });
 
         // this.listHeartRate = measurements.filter((element: Measurement) => {

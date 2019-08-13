@@ -12,11 +12,12 @@ import { LocalStorageService } from '../../../shared/shared.services/local.stora
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 import { Data, DataRequest, DataResponse } from '../../evaluation/models/data'
 import { MeasurementService } from '../../measurement/services/measurement.service'
-import { MeasurementType } from '../../measurement/models/measurement.types'
+import { EnumMeasurementType } from '../../measurement/models/measurement'
 import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
-import { QuestionnaireType } from '../../habits/models/questionnaire.type'
+import { QuestionnairesCategory, QuestionnaireType } from '../../habits/models/questionnaire.type'
 import { Patient } from '../../patient/models/patient'
 import { PatientService } from '../../patient/services/patient.service'
+import { MeasurementType } from '../../measurement/models/measurement.types'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -26,6 +27,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./pilot.study.files.component.scss']
 })
 export class PilotStudyFilesComponent implements OnInit, OnChanges {
+    LengthDataTypes = 2;
+    dataTypeIndexs: Array<number> = new Array<number>(this.LengthDataTypes);
     @Input() pilotStudy: PilotStudy;
     /* Paging Settings */
     pageSizeOptions: number[];
@@ -34,13 +37,12 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     limit: number;
     length: number;
     listOfFiles: Array<Data>;
+    listOfDataTypes: Array<{ measurement_type: Array<EnumMeasurementType>, questionnaires: Array<string> }>;
     search: DateRange;
     searchTime;
-    cacheIdFileRemove: string;
     lastFile: Data;
     generatingFile: boolean;
     listOfFilesIsEmpty: boolean;
-    removingFile: boolean;
     dataResponse: DataResponse;
     measurementsTypeOptions: Array<MeasurementType>
     questionnaireTypeOptions: QuestionnaireType;
@@ -80,13 +82,13 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.listOfFiles = new Array<Data>();
         this.listOfFilesIsEmpty = false;
         this.search = new DateRange();
-        this.removingFile = false;
         this.dataResponse = new DataResponse();
         this.checkSelectMeasurementTypeAll = false;
         this.listCheckMeasurementTypes = new Array<boolean>();
         this.questionnaireTypeOptions = new QuestionnaireType();
         this.listCheckQuestionnaireNutritionalTypes = new Array<boolean>();
         this.listCheckQuestionnaireOdontologicalTypes = new Array<boolean>();
+        this.checkSelectQuestionnaireTypeAll = false;
         this.listOfPatients = new Array<Patient>();
         this.checkSelectPatientsAll = false;
         this.listCheckPatients = new Array<boolean>();
@@ -94,6 +96,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.patientPage = PaginatorConfig.page;
         this.patientPageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.patientLimit = PaginatorConfig.limit;
+        this.listOfDataTypes = new Array<{ measurement_type: Array<EnumMeasurementType>, questionnaires: Array<string> }>();
     }
 
     ngOnInit() {
@@ -126,6 +129,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                     this.listOfFiles = httpResponse.body;
                     this.lastFile = this.listOfFiles[0];
                     this.listOfFilesIsEmpty = !this.listOfFiles.length;
+                    this.seperateDataTypes();
                 })
                 .catch(() => {
                     this.listOfFilesIsEmpty = true;
@@ -159,7 +163,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
 
-    generateFile() {
+    generateFile(stepper) {
         this.closeModalFileConfig();
         this.generatingFile = true;
         const body = this.buildBody();
@@ -168,6 +172,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                 this.dataResponse = response;
                 this.openModalFileInProcessing();
                 this.generatingFile = false;
+                this.closeAndResetConfigurations(stepper);
             })
             .catch(error => {
                     this.generatingFile = false;
@@ -229,6 +234,21 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.modalService.close('modalFileConfig');
     }
 
+    closeAndResetConfigurations(stepper): void {
+        if (stepper) {
+            stepper.reset();
+        }/* reset all configurations */
+        this.checkSelectMeasurementTypeAll = false;
+        this.listCheckMeasurementTypes = new Array<boolean>();
+        this.questionnaireTypeOptions = new QuestionnaireType();
+        this.listCheckQuestionnaireNutritionalTypes = new Array<boolean>();
+        this.listCheckQuestionnaireOdontologicalTypes = new Array<boolean>();
+        this.checkSelectQuestionnaireTypeAll = false;
+        this.checkSelectPatientsAll = false;
+        this.listCheckPatients = new Array<boolean>();
+        this.closeModalFileConfig();
+    }
+
     openModalFileInProcessing() {
         this.modalService.open('modalFileInProcessing');
     }
@@ -237,7 +257,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.modalService.close('modalFileInProcessing');
     }
 
-    fileGenerated() {
+    fileGenerated(indexLastData) {
+        this.lastFile = this.listOfFiles[indexLastData];
         this.modalService.open('modalFile');
     }
 
@@ -374,6 +395,32 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         return (patientsSelected && patientsSelected.length > 0);
     }
 
+    selectPatient(index: number): void {
+        this.listCheckPatients[index] = !this.listCheckPatients[index];
+        this.changePatientCheck();
+    }
+
+    seperateDataTypes(): void {
+        this.listOfFiles.forEach(file => {
+            const dataReturn = { measurement_type: [], questionnaires: [] };
+            const measurementsAllTypes = Object.keys(EnumMeasurementType);
+            const questionnairesAllTypes = Object.keys(QuestionnairesCategory);
+
+            file.data_types.forEach(type => {
+                if (measurementsAllTypes.find(measurementType => {
+                    return type === measurementType
+                })) {
+                    dataReturn.measurement_type.push(type);
+                }
+                if (questionnairesAllTypes.find(questionnaireType => {
+                    return type === questionnaireType
+                })) {
+                    dataReturn.questionnaires.push(type);
+                }
+            })
+            this.listOfDataTypes.push(dataReturn);
+        });
+    }
 
     trackById(index, item) {
         return item.id;

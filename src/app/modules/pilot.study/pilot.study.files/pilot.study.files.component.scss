@@ -3,6 +3,10 @@ table .material-icons {
   cursor: pointer;
 }
 
+table td{
+  cursor: pointer;
+}
+
 .nav-link i:hover {
   border-radius: 20px;
   background: rgb(212, 207, 207);
@@ -67,3 +71,28 @@ td img {
 ::ng-deep .cdk-overlay-container {
   z-index: 2000;
 }
+
+#tableOfPatients td {
+  cursor: pointer;
+}
+
+.measurement-type {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #00a594;
+  margin: 2px 2px;
+  padding: 2px 1px;
+  border-radius: .25rem !important;
+}
+
+.material-icons {
+  color: #00a594;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+

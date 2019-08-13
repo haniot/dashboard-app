@@ -25,8 +25,8 @@
     <table class="table table-hover table-sm">
         <thead>
         <tr>
-            <th>#</th>
-            <th>{{'PILOT-STUDY.TOTAL-PATIENTS'|translate}}</th>
+            <th style="max-width: 100px">{{'PILOT-STUDY.TOTAL-PATIENTS'|translate}}</th>
+            <th>Tipos de medições</th>
             <th>Tipos de questionarios</th>
             <th>{{'SHARED.DATE'|translate}}</th>
             <th>{{'SHARED.ACTIONS'|translate}}</th>
@@ -45,11 +45,49 @@
             </td>
         </tr>
         <tr *ngFor="let file of listOfFiles; index as i;trackBy: trackById">
-            <td>{{getIndex(i)}}</td>
-            <td>{{file.total_patients}}</td>
-            <td>{{file.data_types}}</td>
-            <td>{{file.created_at | date}}</td>
-            <td>
+            <td style="max-width: 20px" (click)="fileGenerated(i)">{{file.total_patients}}</td>
+            <td (click)="fileGenerated(i)">
+                <div *ngIf="this.listOfDataTypes[i].measurement_type && this.listOfDataTypes[i].measurement_type.length <= LengthDataTypes">
+                    <span class="ellipsis measurement-type"
+                          *ngFor="let type of listOfDataTypes[i].measurement_type">{{type | measurementType | translate}}</span>
+                </div>
+
+                <div class="nav-link"
+                     *ngIf="this.listOfDataTypes[i].measurement_type && this.listOfDataTypes[i].measurement_type.length > LengthDataTypes">
+                    <span *ngFor="let index of dataTypeIndexs; let j = index">
+                        <span class="ellipsis measurement-type"
+                              *ngIf="(listOfDataTypes[i].measurement_type[j]|measurementType)!=='MEASUREMENTS.PIPES.NOTFOUND'">
+                        {{listOfDataTypes[i].measurement_type[j] | measurementType | translate}}
+                    </span>
+                    </span>
+                    ...
+
+                    <i class="material-icons" [title]="'Visualizar mais...'">info</i>
+
+                </div>
+            </td>
+            <td (click)="fileGenerated(i)">
+                <div *ngIf="this.listOfDataTypes[i].questionnaires && this.listOfDataTypes[i].questionnaires.length <= LengthDataTypes">
+                    <span class="ellipsis measurement-type"
+                          *ngFor="let type of listOfDataTypes[i].questionnaires">{{type | questionnaireType | translate}}</span>
+                </div>
+
+                <div class="nav-link"
+                     *ngIf="this.listOfDataTypes[i].questionnaires && this.listOfDataTypes[i].questionnaires.length > LengthDataTypes">
+                    <span *ngFor="let index of dataTypeIndexs; let j = index">
+                        <span class="ellipsis measurement-type"
+                              *ngIf="(listOfDataTypes[i].questionnaires[j]|questionnaireType)!=='HABITS.PIPES.DO-NOT-KNOW'">
+                        {{listOfDataTypes[i].questionnaires[j] | questionnaireType | translate}}
+                    </span>
+                    </span>
+                    ...
+
+                    <i class="material-icons" [title]="'Visualizar mais...'">info</i>
+
+                </div>
+            </td>
+            <td (click)="fileGenerated(i)">{{file.created_at | date}}</td>
+            <td style="color: white">
                 <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"
                    [title]="'PILOT-STUDY.OPTIONS-DOWNLOAD'|translate">
@@ -92,36 +130,51 @@
 <haniot-modal [modalId]="'modalFile'">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">{{'PILOT-STUDY.ODONTOLOGICAL-EVALUATON'|translate}}</h5>
+            <h5 class="modal-title">{{'PILOT-STUDY.VIEW-DATA'|translate}}</h5>
             <button type="button" class="close" aria-label="Close" (click)="closeModalFile()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <div class="container">
-                <div class="row" *ngIf="lastFile">
-                    <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
+            <div class="container" *ngIf="lastFile">
+                <div class="row">
+                    <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
                         <label>{{'PILOT-STUDY.TOTAL-PATIENTS'|translate}}:</label>
                         <p>{{lastFile.total_patients}}</p>
                     </div>
-                    <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
                         <label>{{'SHARED.DATE'|translate}}:</label>
                         <p>{{lastFile.created_at | date}}</p>
                     </div>
-                    <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
                         <label>{{'PILOT-STUDY.FILECSV'|translate}}:</label>
-                        <a class="btn btn-haniot-primary" [href]="getTrustedUrl(lastFile.file_csv)" download
+                        <a class="btn btn-haniot-primary btn-sm" [href]="getTrustedUrl(lastFile.file_csv)" download
                            target="_blank">
                             {{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}
                         </a>
                     </div>
-                    <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
                         <label>{{'PILOT-STUDY.FILEXLS'|translate}}:</label>
-                        <a class="btn btn-haniot-primary" [href]="getTrustedUrl(lastFile.file_xls)" download
+                        <a class="btn btn-haniot-primary btn-sm" [href]="getTrustedUrl(lastFile.file_xls)" download
                            target="_blank">
                             {{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}
                         </a>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
+                        <label>Tipos de Medições:</label>
+                        <span *ngFor="let type of lastFile.data_types">
+                            <p *ngIf="(type|measurementType)!=='MEASUREMENTS.PIPES.NOTFOUND'">{{type|measurementType|translate}}</p>
+                        </span>
+                    </div>
+                    <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
+                        <label>Tipos de Questionários:</label>
+                        <span *ngFor="let type of lastFile.data_types">
+                            <p *ngIf="(type|questionnaireType)!=='HABITS.PIPES.DO-NOT-KNOW'">{{type|questionnaireType|translate}}</p>
+                        </span>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -133,7 +186,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">{{'PILOT-STUDY.CARD-FILES.CONFIG-RESQUEST-DATA'|translate}}</h5>
-            <button type="button" class="close" aria-label="Close" (click)="closeModalFileConfig()">
+            <button type="button" class="close" aria-label="Close" (click)="closeAndResetConfigurations(stepper)">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -142,14 +195,15 @@
                 <div class="row">
                     <mat-horizontal-stepper #stepper>
                         <mat-step>
-                            <ng-template matStepLabel>Tipos de Medição</ng-template>
+                            <ng-template
+                                    matStepLabel>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-MEASUREMENTS'|translate}}</ng-template>
 
                             <div class="form-group row justify-content-between">
-                                <h5>Selecione os tipos de medições que deseja incluir:</h5>
+                                <h5>{{'PILOT-STUDY.CARD-FILES.SELECT-MEASUREMENTS'|translate}}:</h5>
                                 <mat-checkbox class="example-margin" [(ngModel)]="checkSelectMeasurementTypeAll"
                                               (click)="clickCheckMeasurementTypeAll()"
                                               style="margin-left: 10px">
-                                    Selecionar todas
+                                    {{'PILOT-STUDY.CARD-FILES.SELECT-ALL'|translate}}
                                 </mat-checkbox>
 
                                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6"
@@ -245,7 +299,7 @@
                                     {{'PILOT-STUDY.CARD-FILES.SELECT-ALL'|translate}}
                                 </mat-checkbox>
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-hover">
+                                    <table class="table table-sm table-hover" id="tableOfPatients">
                                         <thead>
                                         <tr>
                                             <th>#</th>
@@ -275,15 +329,16 @@
                                                               [(ngModel)]="listCheckPatients[i]">
                                                 </mat-checkbox>
                                             </td>
-                                            <td>{{patient.name}}</td>
-                                            <td>{{patient.gender | gender | translate}}</td>
-                                            <td>{{patient.birth_date | convertInAge }}</td>
-                                            <td>{{patient.birth_date | date}}</td>
+                                            <td (click)="selectPatient(i)">{{patient.name}}</td>
+                                            <td (click)="selectPatient(i)">{{patient.gender | gender | translate}}</td>
+                                            <td (click)="selectPatient(i)">{{patient.birth_date | convertInAge }}</td>
+                                            <td (click)="selectPatient(i)">{{patient.birth_date | date}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
 
-                                    <mat-paginator [length]="patientLength" [pageSize]="patientLimit" [pageSizeOptions]="patientPageSizeOptions"
+                                    <mat-paginator [length]="patientLength" [pageSize]="patientLimit"
+                                                   [pageSizeOptions]="patientPageSizeOptions"
                                                    (page)="clickPatientPagination($event)">
                                     </mat-paginator>
 
@@ -294,8 +349,8 @@
                                     <button class="btn btn-haniot-primary"
                                             matStepperNext
                                             [disabled]="!anyPatientSelected()"
-                                            (click)="generateFile()">
-                                        Solicitar
+                                            (click)="generateFile(stepper)">
+                                        {{'PILOT-STUDY.CARD-FILES.REQUEST'|translate}}
                                     </button>
                                 </div>
                             </div>
@@ -340,28 +395,6 @@
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
                                 <spinner [message]="'PILOT-STUDY.REQUESTING-DATA'|translate"></spinner>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!--Fundo preto do modal-->
-    <div class="modal-backdrop show">
-    </div>
-</div>
-
-<div id="removingFile" *ngIf="removingFile">
-    <div class="externa">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner [message]="'PILOT-STUDY.REMOVINGFILE'|translate"></spinner>
                             </div>
                         </div>
                     </div>

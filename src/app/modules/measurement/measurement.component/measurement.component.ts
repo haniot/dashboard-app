@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
-import { Measurement, MeasurementType } from '../models/measurement';
+import { EnumMeasurementType, Measurement } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 import { BloodPressure } from '../models/blood-pressure';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
@@ -85,7 +85,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     }
 
     loadWeight() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.weight, null, null, this.filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, null, null, this.filter)
             .then((httpResponse) => {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.listWeight = httpResponse.body;
@@ -95,7 +95,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     }
 
     loadHeight() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.height, null, null, this.filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.height, null, null, this.filter)
             .then((httpResponse) => {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.listHeight = httpResponse.body;
@@ -105,7 +105,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     }
 
     loadFat() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_fat, null, null, this.filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, this.filter)
             .then(httpResponse => {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.listFat = httpResponse.body;
@@ -115,7 +115,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     }
 
     loadWaistCircumference() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.waist_circumference, null, null, this.filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, this.filter)
             .then(httpResponse => {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.listWaistCircumference = httpResponse.body;
@@ -125,7 +125,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     }
 
     loadBodyTemperature() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.body_temperature, null, null, this.filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, null, null, this.filter)
             .then(httpResponse => {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.listBodyTemperature = httpResponse.body;
@@ -135,7 +135,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     }
 
     loadBloodGlucose() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_glucose, null, null, this.filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, this.filter)
             .then(httpResponse => {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.listBloodGlucose = httpResponse.body;
@@ -145,7 +145,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     }
 
     loadBloodPressure() {
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_pressure, null, null, this.filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, null, null, this.filter)
             .then(httpResponse => {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.listBloodPressure = httpResponse.body;

@@ -617,6 +617,7 @@
     "SITUATION": "Situation",
     "PROFESSIONALS": "Professionals",
     "SELECT-PROFESSIONALS": "Select professionals",
+    "VIEW-DATA": "View Data",
     "MANAGE-PROFESSIONALS": {
       "TITLE": "Manage professionals",
       "SUBTITLE": "",
@@ -655,12 +656,15 @@
       "UNDERSTOOD": "Understood",
       "CONFIG-RESQUEST-DATA": "Configure Data Request",
       "TYPES-OF-QUESTIONNAIRES": "Questionnarie Types",
+      "TYPES-OF-MEASUREMENTS": "Measurements Types",
       "SELECT-QUESTIONNAIRES": "Select the types of questionnaires you want to include",
+      "SELECT-MEASUREMENTS": "Select the types of measurements you want to include",
       "SELECT-PATIENTS-TO-INCLUDE": "Select the patients you want to include",
       "SELECT-ALL": "Select all",
       "NUTRITIONAL-QUESTIONNAIRE": "Nutrition Questionnaire",
       "ODONTOLOGICAL-QUESTIONNAIRE": "Odontological Questionnaire",
-      "SELECT-PATIENTS": "Select patients"
+      "SELECT-PATIENTS": "Select patients",
+      "REQUEST": "Request"
     }
   },
   "SIDEBAR": {

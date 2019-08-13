@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
-import { MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { EnumMeasurementType } from '../models/measurement'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -20,7 +20,7 @@ export class MeasurementLogsComponent implements OnInit {
     limit: number;
     length: number;
     measurementsTypes: Array<any>;
-    measurementTypeSelected: MeasurementType;
+    measurementTypeSelected: EnumMeasurementType;
     listOfMeasurements: Array<any>;
     listOfMeasurementsIsEmpty: boolean;
     loadingMeasurements: boolean;
@@ -36,8 +36,8 @@ export class MeasurementLogsComponent implements OnInit {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.measurementTypeSelected = MeasurementType.weight;
-        this.measurementsTypes = Object.keys(MeasurementType);
+        this.measurementTypeSelected = EnumMeasurementType.weight;
+        this.measurementsTypes = Object.keys(EnumMeasurementType);
         this.listOfMeasurements = new Array<any>();
         this.loadingMeasurements = false;
         this.modalConfirmRemoveMeasurement = false;

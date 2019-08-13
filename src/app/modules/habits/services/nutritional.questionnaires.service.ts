@@ -43,41 +43,6 @@ export class NutritionalQuestionnairesService {
     }
 
     getAllTypes(): Promise<QuestionnaireType> {
-        const mock = {
-            "odontological": [
-                {
-                    "id": "sociodemographic_recod",
-                    "display_name": "Sociodemographic Record"
-                },
-                {
-                    "id": "family_cohesion_record",
-                    "display_name": "Family Cohesion Record"
-                },
-                {
-                    "id": "oral_health_record",
-                    "display_name": "Oral Health Record"
-                }
-            ],
-            "nutritional": [
-                {
-                    "id": "sleep_habit",
-                    "display_name": "Sleep Habit"
-                },
-                {
-                    "id": "physical_activity_habits",
-                    "display_name": "Physical Activity Habits"
-                },
-                {
-                    "id": "feeding_habits_record",
-                    "display_name": "Feeding Habits Record"
-                },
-                {
-                    "id": "medical_record",
-                    "display_name": "Medical Record"
-                }
-            ]
-        };
-        return Promise.resolve(JSON.parse(JSON.stringify(mock)));
         return this.http.get<any>(`${environment.api_url}/questionnaires/types`)
             .toPromise();
     }

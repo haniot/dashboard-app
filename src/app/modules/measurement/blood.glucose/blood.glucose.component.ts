@@ -4,8 +4,8 @@ import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 
 import { BloodGlucose, MealType } from '../models/blood-glucose';
-import { MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
+import { EnumMeasurementType } from '../models/measurement'
 
 @Component({
     selector: 'blood-glucose',
@@ -187,7 +187,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     applyFilter(filter: { start_at: string, end_at: string, period: string }) {
         this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.blood_glucose, null, null, filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, filter)
             .then(httpResponse => {
                 this.data = httpResponse.body;
                 this.showSpinner = false;
