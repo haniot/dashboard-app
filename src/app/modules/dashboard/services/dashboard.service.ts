@@ -9,11 +9,13 @@ import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluatio
 
 @Injectable()
 export class DashboardService {
+    version: string;
 
     constructor(
         private http: HttpClient,
         private authService: AuthService
     ) {
+        this.version = 'v1';
     }
 
     /**
@@ -30,19 +32,19 @@ export class DashboardService {
             myParams = myParams.append('limit', String(limit));
         }
 
-        let url = `${environment.api_url}/healthprofessionals/${userId}/pilotstudies`;
+        let url = `${environment.api_url}/${this.version}/healthprofessionals/${userId}/pilotstudies`;
         const type_user = this.authService.decodeToken().sub_type;
         switch (type_user) {
             case 'admin':
-                url = `${environment.api_url}/pilotstudies`;
+                url = `${environment.api_url}/${this.version}/pilotstudies`;
                 break;
 
             case 'health_professional':
-                url = `${environment.api_url}/healthprofessionals/${userId}/pilotstudies`;
+                url = `${environment.api_url}/${this.version}/healthprofessionals/${userId}/pilotstudies`;
                 break;
 
             case 'patient':
-                url = `${environment.api_url}/patients/${userId}/pilotstudies`;
+                url = `${environment.api_url}/${this.version}/patients/${userId}/pilotstudies`;
                 break;
         }
 
@@ -64,7 +66,7 @@ export class DashboardService {
             myParams = myParams.append('limit', String(limit));
         }
 
-        const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}/patients`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
@@ -84,7 +86,7 @@ export class DashboardService {
             myParams = myParams.append('limit', String(limit));
         }
 
-        const url = `${environment.api_url}/patients/${userId}/nutritional/evaluations`;
+        const url = `${environment.api_url}/${this.version}/patients/${userId}/nutritional/evaluations`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();

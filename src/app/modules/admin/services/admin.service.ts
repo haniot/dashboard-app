@@ -7,13 +7,15 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class AdminService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
 
     getById(id: string): Promise<any> {
-        return this.http.get<any>(`${environment.api_url}/admins/${id}`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/admins/${id}`)
             .toPromise();
     }
 
@@ -32,19 +34,19 @@ export class AdminService {
             myParams = myParams.append('?email', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/admins`;
+        const url = `${environment.api_url}/${this.version}/admins`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
     create(administrator: Admin): Promise<GenericUser> {
-        return this.http.post<any>(`${environment.api_url}/admins`, administrator)
+        return this.http.post<any>(`${environment.api_url}/${this.version}/admins`, administrator)
             .toPromise();
     }
 
     update(administrator: Admin): Promise<GenericUser> {
-        return this.http.patch<any>(`${environment.api_url}/admins/${administrator.id}`, administrator)
+        return this.http.patch<any>(`${environment.api_url}/${this.version}/admins/${administrator.id}`, administrator)
             .toPromise();
     }
 }

@@ -6,8 +6,10 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class NutritionEvaluationService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
     getAll(page?: number, limit?: number, search?: string): Promise<NutritionEvaluation[]> {
@@ -25,7 +27,7 @@ export class NutritionEvaluationService {
             myParams = myParams.append('?patient.name', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/nutritional/evaluations`;
+        const url = `${environment.api_url}/${this.version}/nutritional/evaluations`;
 
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
@@ -46,7 +48,7 @@ export class NutritionEvaluationService {
             myParams = myParams.append('?patient.name', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/patients/${patient_id}/nutritional/evaluations`;
+        const url = `${environment.api_url}/${this.version}/patients/${patient_id}/nutritional/evaluations`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
@@ -68,7 +70,7 @@ export class NutritionEvaluationService {
             myParams = myParams.append('?patient.name', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/healthprofessionals/${healthprofessional_id}/nutritional/evaluations`;
+        const url = `${environment.api_url}/${this.version}/healthprofessionals/${healthprofessional_id}/nutritional/evaluations`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
@@ -76,21 +78,20 @@ export class NutritionEvaluationService {
     }
 
     getById(patient_id: string, nutritionevaluation_id: string): Promise<NutritionEvaluation> {
-
-        return this.http.get<any>(`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
+        const url = `${environment.api_url}/${this.version}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`;
+        return this.http.get<any>(url)
             .toPromise();
     }
 
     finalize(evaluation_id: string, patient_id: string, counselings: NutritionalCouncil): Promise<NutritionEvaluation> {
-
-        return this.http.post<any>
-        (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`, counselings)
+        const url = `${environment.api_url}/${this.version}/patients/${patient_id}/nutritional/evaluations/${evaluation_id}/counselings`;
+        return this.http.post<any>(url, counselings)
             .toPromise();
     }
 
     remove(patient_id: string, nutritionevaluation_id: string): Promise<NutritionEvaluation> {
         return this.http.delete<any>
-        (`${environment.api_url}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
+        (`${environment.api_url}/${this.version}/patients/${patient_id}/nutritional/evaluations/${nutritionevaluation_id}`)
             .toPromise();
     }
 

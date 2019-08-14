@@ -14,12 +14,14 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class AuthService {
+    version: string;
 
     constructor(
         private http: HttpClient,
         private localStorageService: LocalStorageService,
         private sessionService: SessionStorageService,
         private router: Router) {
+        this.version = 'v1';
     }
 
     check(): boolean {
@@ -36,7 +38,7 @@ export class AuthService {
     login(credentials: { email: string, password: string }): Observable<boolean> {
         const myParams = new HttpParams();
         myParams.append('rejectUnauthorized', 'false');
-        return this.http.post<any>(`${environment.api_url}/auth`, credentials, { params: myParams })
+        return this.http.post<any>(`${environment.api_url}/${this.version}/auth`, credentials, { params: myParams })
             .pipe(
                 tap(data => {
                     if (data && data.access_token) {
@@ -66,7 +68,7 @@ export class AuthService {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/json')
             .append('Authorization', `Bearer ${temporaryToken}`);
-        return this.http.patch<any>(`${environment.api_url}/auth/password`, credentials, { headers: headers })
+        return this.http.patch<any>(`${environment.api_url}/${this.version}/auth/password`, credentials, { headers: headers })
             .pipe(
                 tap(() => {
                     this.sessionService.clean();
@@ -77,7 +79,7 @@ export class AuthService {
     }
 
     forgot(email: string): Promise<any> {
-        return this.http.post<any>(`${environment.api_url}/auth/forgot`, { email })
+        return this.http.post<any>(`${environment.api_url}/${this.version}/auth/forgot`, { email })
             .toPromise();
     }
 

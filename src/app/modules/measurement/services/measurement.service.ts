@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { Measurement } from '../models/measurement';
+import { Measurement, SearchForPeriod } from '../models/measurement';
 import { BloodPressure } from '../models/blood-pressure';
 import { HeartRate } from '../models/heart-rate';
 import { MeasurementType } from '../models/measurement.types'
@@ -10,12 +10,14 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class MeasurementService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
     getAllTypes(): Promise<MeasurementType[]> {
-        return this.http.get<any>(`${environment.api_url}/measurements/types`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/measurements/types`)
             .toPromise();
     }
 
@@ -36,17 +38,14 @@ export class MeasurementService {
 
         myParams = myParams.append('sort', '+timestamp');
 
-        const url = `${environment.api_url}/measurements`;
+        const url = `${environment.api_url}/${this.version}/measurements`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
-    getAllByUserAndType(userId: string, typeMeasurement: string, page?: number, limit?: number, search?: {
-        start_at: string,
-        end_at: string,
-        period?: string
-    }): Promise<HttpResponse<Array<Measurement | Weight | BloodPressure | HeartRate> | any>> {
+    getAllByUserAndType(userId: string, typeMeasurement: string, page?: number, limit?: number, search?: SearchForPeriod):
+        Promise<HttpResponse<Array<Measurement | Weight | BloodPressure | HeartRate> | any>> {
 
         let myParams = new HttpParams();
 

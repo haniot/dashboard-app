@@ -12,6 +12,7 @@ import { Patient } from '../../patient/models/patient'
 
 @Injectable()
 export class UserService {
+    version: string;
 
     constructor(
         private http: HttpClient,
@@ -20,10 +21,11 @@ export class UserService {
         private patientService: PatientService,
         private authService: AuthService
     ) {
+        this.version = 'v1'
     }
 
     removeUser(id: string): Promise<any> {
-        return this.http.delete<any>(`${environment.api_url}/users/${id}`)
+        return this.http.delete<any>(`${environment.api_url}/${this.version}/users/${id}`)
             .toPromise();
     }
 
@@ -42,7 +44,7 @@ export class UserService {
     }
 
     changePassword(body: { email: string, old_password: string, new_password: string }): Promise<boolean> {
-        return this.http.patch<any>(`${environment.api_url}/auth/password`, body)
+        return this.http.patch<any>(`${environment.api_url}/${this.version}/auth/password`, body)
             .toPromise();
     }
 

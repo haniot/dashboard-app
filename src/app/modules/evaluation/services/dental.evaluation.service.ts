@@ -9,8 +9,10 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class DentalEvaluationService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
     getAll(page?: number, limit?: number, search?: string): Promise<OdontologicEvaluation[]> {
@@ -28,7 +30,7 @@ export class DentalEvaluationService {
             myParams = myParams.append('?search', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/odontological/evaluations`;
+        const url = `${environment.api_url}/${this.version}/odontological/evaluations`;
 
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
@@ -49,7 +51,7 @@ export class DentalEvaluationService {
             myParams = myParams.append('?created_at', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/pilotstudies/${pilostudy_id}/odontological/evaluations`;
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilostudy_id}/odontological/evaluations`;
 
         return this.http.get<any>(url, { params: myParams })
             .toPromise();
@@ -57,14 +59,14 @@ export class DentalEvaluationService {
 
 
     getById(pilotstudy: string, dentalevaluation_id: string): Promise<OdontologicEvaluation> {
-
-        return this.http.get<any>(`${environment.api_url}/pilotstudies/${pilotstudy}/odontological/evaluations/${dentalevaluation_id}`)
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotstudy}/odontological/evaluations/${dentalevaluation_id}`;
+        return this.http.get<any>(url)
             .toPromise();
     }
 
     remove(pilotstudy: string, dentalevaluation_id: string): Promise<any> {
-
-        return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotstudy}/odontological/evaluations/${dentalevaluation_id}`)
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotstudy}/odontological/evaluations/${dentalevaluation_id}`;
+        return this.http.delete<any>(url)
             .toPromise();
     }
 
@@ -72,7 +74,7 @@ export class DentalEvaluationService {
 
         const body = { pilotstudy: pilotStudy, health_professional_id: health_professional_id }
 
-        return this.http.post<any>(`${environment.api_url}/pilotstudies/${pilotStudy.id}/odontological/evaluations`, body)
+        return this.http.post<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotStudy.id}/odontological/evaluations`, body)
             .toPromise();
     }
 

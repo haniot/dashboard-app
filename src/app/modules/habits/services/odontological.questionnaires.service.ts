@@ -8,12 +8,14 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class OdontologicalQuestionnairesService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
-    getById(patientId: string, odontologicalQuestionnaireId: string): Promise<OdontologicalQuestionnaire> {
-        const url = `${environment.api_url}/patients/${patientId}/odontological/questionnaires/${odontologicalQuestionnaireId}`;
+    getById(patientId: string, questionnaireId: string): Promise<OdontologicalQuestionnaire> {
+        const url = `${environment.api_url}/${this.version}/patients/${patientId}/odontological/questionnaires/${questionnaireId}`;
         return this.http.get<any>(url)
             .toPromise();
     }
@@ -31,20 +33,20 @@ export class OdontologicalQuestionnairesService {
 
         myParams = myParams.append('sort', '+created_at');
 
-        const url = `${environment.api_url}/patients/${patientId}/odontological/questionnaires`;
+        const url = `${environment.api_url}/${this.version}/patients/${patientId}/odontological/questionnaires`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
-    remove(patientId: string, odontologicalQuestionnaireId: string): Promise<any> {
-        const url = `${environment.api_url}/patients/${patientId}/odontological/questionnaires/${odontologicalQuestionnaireId}`;
+    remove(patientId: string, questionnaireId: string): Promise<any> {
+        const url = `${environment.api_url}/${this.version}/patients/${patientId}/odontological/questionnaires/${questionnaireId}`;
         return this.http.delete<any>(url)
             .toPromise();
     }
 
     getAllTypes(): Promise<NutritionalQuestionnaire> {
-        return this.http.get<any>(`${environment.api_url}/questionnaires/types`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/questionnaires/types`)
             .toPromise();
     }
 

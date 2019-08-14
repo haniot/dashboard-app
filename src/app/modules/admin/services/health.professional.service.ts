@@ -8,13 +8,15 @@ import { environment } from '../../../../environments/environment'
 @Injectable()
 
 export class HealthProfessionalService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
 
     getById(id: string): Promise<any> {
-        return this.http.get<any>(`${environment.api_url}/healthprofessionals/${id}`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/healthprofessionals/${id}`)
             .toPromise();
     }
 
@@ -33,7 +35,7 @@ export class HealthProfessionalService {
             myParams = myParams.append('?name', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/healthprofessionals`;
+        const url = `${environment.api_url}/${this.version}/healthprofessionals`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
@@ -41,12 +43,13 @@ export class HealthProfessionalService {
     }
 
     create(healthprofessionals: HealthProfessional): Promise<GenericUser> {
-        return this.http.post<any>(`${environment.api_url}/healthprofessionals`, healthprofessionals)
+        return this.http.post<any>(`${environment.api_url}/${this.version}/healthprofessionals`, healthprofessionals)
             .toPromise();
     }
 
     update(healthprofessionals: HealthProfessional): Promise<HealthProfessional> {
-        return this.http.patch<any>(`${environment.api_url}/healthprofessionals/${healthprofessionals.id}`, healthprofessionals)
+        const url = `${environment.api_url}/${this.version}/healthprofessionals/${healthprofessionals.id}`;
+        return this.http.patch<any>(url, healthprofessionals)
             .toPromise();
     }
 }

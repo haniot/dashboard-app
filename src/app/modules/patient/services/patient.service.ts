@@ -6,12 +6,14 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class PatientService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
     getById(patientId: string): Promise<Patient> {
-        return this.http.get<any>(`${environment.api_url}/patients/${patientId}`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}`)
             .toPromise();
     }
 
@@ -31,7 +33,7 @@ export class PatientService {
             myParams = myParams.append('?name', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}/patients`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
@@ -52,24 +54,24 @@ export class PatientService {
             myParams = myParams.append('?name', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/patients`;
+        const url = `${environment.api_url}/${this.version}/patients`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
     create(patient: Patient): Promise<Patient> {
-        return this.http.post<any>(`${environment.api_url}/patients`, patient)
+        return this.http.post<any>(`${environment.api_url}/${this.version}/patients`, patient)
             .toPromise();
     }
 
     update(patient: Patient): Promise<Patient> {
-        return this.http.patch<any>(`${environment.api_url}/patients/${patient.id}`, patient)
+        return this.http.patch<any>(`${environment.api_url}/${this.version}/patients/${patient.id}`, patient)
             .toPromise();
     }
 
     remove(patientId: string): Promise<boolean> {
-        return this.http.delete<any>(`${environment.api_url}/users/${patientId}`)
+        return this.http.delete<any>(`${environment.api_url}/${this.version}/users/${patientId}`)
             .toPromise();
     }
 }

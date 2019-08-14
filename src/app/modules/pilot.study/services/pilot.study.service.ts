@@ -6,21 +6,21 @@ import { DateRange } from '../models/range-date';
 import { Data, DataResponse } from '../../evaluation/models/data'
 import { Patient } from '../../patient/models/patient'
 import { environment } from '../../../../environments/environment'
-import { Admin } from '../../admin/models/admin'
-import { HealthProfessional } from '../../admin/models/health.professional'
 import { AuthService } from '../../../security/auth/services/auth.service'
 
 @Injectable()
 export class PilotStudyService {
+    version: string;
 
     constructor(
         private http: HttpClient,
         private authService: AuthService) {
+        this.version = 'v1';
     }
 
 
     getById(id: string): Promise<PilotStudy> {
-        return this.http.get<any>(`${environment.api_url}/pilotstudies/${id}`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/pilotstudies/${id}`)
             .toPromise();
     }
 
@@ -43,14 +43,14 @@ export class PilotStudyService {
 
         switch (this.getTypeUser()) {
             case 'admin':
-                url = `${environment.api_url}/pilotstudies`;
+                url = `${environment.api_url}/${this.version}/pilotstudies`;
                 break;
 
             case 'health_professional':
-                url = `${environment.api_url}/healthprofessionals/${userId}/pilotstudies`;
+                url = `${environment.api_url}/${this.version}/healthprofessionals/${userId}/pilotstudies`;
                 break;
             case 'patient':
-                url = `${environment.api_url}/patients/${userId}/pilotstudies`;
+                url = `${environment.api_url}/${this.version}/patients/${userId}/pilotstudies`;
                 break;
         }
 
@@ -76,7 +76,7 @@ export class PilotStudyService {
 
         myParams = myParams.append('sort', '+created_at');
 
-        const url = `${environment.api_url}/pilotstudies`;
+        const url = `${environment.api_url}/${this.version}/pilotstudies`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
@@ -103,64 +103,65 @@ export class PilotStudyService {
 
             myParams = myParams.append('end_at', end_at);
 
-
         }
 
         myParams = myParams.append('sort', '+created_at');
 
-        const url = `${environment.api_url}/pilotstudies/${pilotstudy_id}/data`;
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotstudy_id}/data`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
     generateNewFile(pilotStudy: PilotStudy, body: any): Promise<DataResponse> {
-        return this.http.post<any>(`${environment.api_url}/pilotstudies/${pilotStudy.id}/data`, body)
+        return this.http.post<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotStudy.id}/data`, body)
             .toPromise();
     }
 
     create(pilotstudy: PilotStudy): Promise<boolean> {
-        return this.http.post<any>(`${environment.api_url}/pilotstudies`, pilotstudy)
+        return this.http.post<any>(`${environment.api_url}/${this.version}/pilotstudies`, pilotstudy)
             .toPromise();
     }
 
     update(pilotstudy: PilotStudy): Promise<boolean> {
-        return this.http.patch<any>(`${environment.api_url}/pilotstudies/${pilotstudy.id}`, pilotstudy)
+        return this.http.patch<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotstudy.id}`, pilotstudy)
             .toPromise();
     }
 
     remove(pilotstudyId: string): Promise<boolean> {
-        return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}`)
+        return this.http.delete<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}`)
             .toPromise();
     }
 
     getHealthProfessionalsByPilotStudyId(pilotStudyId: string) {
-        return this.http.get<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/healthprofessionals`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotStudyId}/healthprofessionals`)
             .toPromise();
     }
 
     addHealthProfessionalsToPilotStudy(pilotStudyId: string, healthprofessinalId: string): Promise<PilotStudy> {
-        return this.http.post<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/healthprofessionals/${healthprofessinalId}`, {})
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotStudyId}/healthprofessionals/${healthprofessinalId}`;
+        return this.http.post<any>(url, {})
             .toPromise();
     }
 
     dissociateHealthProfessionalsFromPilotStudy(pilotStudyId: string, healthprofessinalId: string): Promise<boolean> {
-        return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/healthprofessionals/${healthprofessinalId}`)
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotStudyId}/healthprofessionals/${healthprofessinalId}`;
+        return this.http.delete<any>(url)
             .toPromise();
     }
 
     getPatientsByPilotStudy(pilotstudyId: string): Promise<Patient[]> {
-        return this.http.get<any>(`${environment.api_url}/pilotstudies/${pilotstudyId}/patients`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}/patients`)
             .toPromise();
     }
 
     addPatientToPilotStudy(pilotStudyId: string, patientId: string): Promise<PilotStudy> {
-        return this.http.post<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/patients/${patientId}`, {})
+        return this.http.post<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotStudyId}/patients/${patientId}`, {})
             .toPromise();
     }
 
     dissociatePatientFromPilotStudy(pilotStudyId: string, patientId: string): Promise<boolean> {
-        return this.http.delete<any>(`${environment.api_url}/pilotstudies/${pilotStudyId}/patients/${patientId}`)
+        return this.http.delete<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotStudyId}/patients/${patientId}`)
             .toPromise();
     }
 

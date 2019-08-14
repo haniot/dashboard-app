@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { EnumMeasurementType, Measurement } from '../models/measurement';
+import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
 import { TranslateService } from '@ngx-translate/core';
 import { Weight } from '../models/weight';
 import { MeasurementService } from '../services/measurement.service';
@@ -120,7 +120,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
     }
 
-    applyFilter(filter: { start_at: string, end_at: string, period: string }) {
+    applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, filter)
             .then(httpResponse => {

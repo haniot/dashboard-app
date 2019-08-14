@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Weight } from '../models/weight';
 import { DecimalFormatterPipe } from '../pipes/decimal.formatter.pipe';
 import { MeasurementService } from '../services/measurement.service';
-import { EnumMeasurementType } from '../models/measurement'
+import { EnumMeasurementType, SearchForPeriod } from '../models/measurement'
 
 @Component({
     selector: 'weight',
@@ -157,7 +157,7 @@ export class WeightComponent implements OnInit, OnChanges {
         };
     }
 
-    applyFilter(filter: any) {
+    applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, null, null, filter)
             .then(httpResponse => {

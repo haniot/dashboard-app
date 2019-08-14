@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
-import { EnumMeasurementType, Measurement } from '../models/measurement';
+import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 import { BloodPressure } from '../models/blood-pressure';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
@@ -46,7 +46,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     listBloodPressure: Array<BloodPressure>;
     // listHeartRate: Array<GenericMeasurement>;
     userHealthArea: string;
-    filter: { start_at: string, end_at: string, period: string };
+    filter: SearchForPeriod;
 
     constructor(
         private measurementService: MeasurementService,

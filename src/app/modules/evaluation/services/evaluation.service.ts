@@ -6,8 +6,10 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class EvaluationService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
     getAll(page?: number, limit?: number, search?: string): Promise<Evaluation[]> {
@@ -25,7 +27,7 @@ export class EvaluationService {
             myParams = myParams.append('?search', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/evaluations`;
+        const url = `${environment.api_url}/${this.version}/evaluations`;
 
         return this.http.get<any>(url, { params: myParams })
             .toPromise();

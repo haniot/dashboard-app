@@ -7,13 +7,16 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class NutritionalQuestionnairesService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
 
     getById(patientId: string, nutritionalQuestionnaireId: string): Promise<NutritionalQuestionnaire> {
-        return this.http.get<any>(`${environment.api_url}/patients/${patientId}/nutritional/questionnaires/${nutritionalQuestionnaireId}`)
+        const url = `${environment.api_url}/${this.version}/patients/${patientId}/nutritional/questionnaires/${nutritionalQuestionnaireId}`;
+        return this.http.get<any>(url)
             .toPromise();
     }
 
@@ -30,20 +33,20 @@ export class NutritionalQuestionnairesService {
 
         myParams = myParams.append('sort', '+created_at');
 
-        const url = `${environment.api_url}/patients/${patientId}/nutritional/questionnaires`;
+        const url = `${environment.api_url}/${this.version}/patients/${patientId}/nutritional/questionnaires`;
 
         return this.http.get<NutritionalQuestionnaire[]>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
     remove(patientId: string, nutritionalQuestionnaireId: string): Promise<NutritionalQuestionnaire> {
-        const url = `${environment.api_url}/patients/${patientId}/nutritional/questionnaires/${nutritionalQuestionnaireId}`;
+        const url = `${environment.api_url}/${this.version}/patients/${patientId}/nutritional/questionnaires/${nutritionalQuestionnaireId}`;
         return this.http.delete<any>(url)
             .toPromise();
     }
 
     getAllTypes(): Promise<QuestionnaireType> {
-        return this.http.get<any>(`${environment.api_url}/questionnaires/types`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/questionnaires/types`)
             .toPromise();
     }
 

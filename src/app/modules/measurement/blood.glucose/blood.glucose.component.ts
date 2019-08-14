@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { BloodGlucose, MealType } from '../models/blood-glucose';
 import { MeasurementService } from '../services/measurement.service';
-import { EnumMeasurementType } from '../models/measurement'
+import { EnumMeasurementType, SearchForPeriod } from '../models/measurement'
 
 @Component({
     selector: 'blood-glucose',
@@ -185,7 +185,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     }
 
-    applyFilter(filter: { start_at: string, end_at: string, period: string }) {
+    applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, filter)
             .then(httpResponse => {

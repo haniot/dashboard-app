@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { EnumMeasurementType, Measurement } from '../models/measurement';
+import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 
 @Component({
@@ -130,7 +130,7 @@ export class FatComponent implements OnInit, OnChanges {
 
     }
 
-    applyFilter(filter: { start_at: string, end_at: string, period: string }) {
+    applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, filter)
             .then(httpResponse => {
