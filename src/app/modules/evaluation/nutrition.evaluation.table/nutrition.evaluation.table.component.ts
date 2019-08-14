@@ -48,7 +48,6 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.getAllNutritionEvaluations();
-        this.calcLenghtNutritionEvaluations();
     }
 
     searchOnSubmit() {
@@ -56,10 +55,14 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
             clearInterval(this.searchTime);
             this.searchTime = setTimeout(() => {
                 this.nutritionService.getAllByPatient(this.patientId, this.page, this.limit, this.search)
-                    .then(nutritionsEvaluations => {
-                        this.listOfEvaluations = nutritionsEvaluations;
-                        this.listOfEvaluationsIsEmpty = !(nutritionsEvaluations && nutritionsEvaluations.length);
-                        this.calcLenghtNutritionEvaluations();
+                    .then(httpResponse => {
+                        this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                        this.listOfEvaluations = new Array<NutritionEvaluation>();
+                        if (httpResponse.body && httpResponse.body.length) {
+                            const nutritionsEvaluations = httpResponse.body
+                            this.listOfEvaluations = nutritionsEvaluations;
+                        }
+                        this.listOfEvaluationsIsEmpty = !(this.listOfEvaluations && this.listOfEvaluations.length);
                     })
                     .catch(() => {
                         this.listOfEvaluationsIsEmpty = true;
@@ -71,14 +74,14 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
     getAllNutritionEvaluations() {
         if (this.patientId) {
             this.nutritionService.getAllByPatient(this.patientId, this.page, this.limit, this.search)
-                .then(nutritionsEvaluations => {
-                    this.listOfEvaluations = nutritionsEvaluations;
-                    this.calcLenghtNutritionEvaluations();
-                    if (nutritionsEvaluations && nutritionsEvaluations.length) {
-                        this.listOfEvaluationsIsEmpty = false;
-                    } else {
-                        this.listOfEvaluationsIsEmpty = true;
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.listOfEvaluations = new Array<NutritionEvaluation>();
+                    if (httpResponse.body && httpResponse.body.length) {
+                        const nutritionsEvaluations = httpResponse.body
+                        this.listOfEvaluations = nutritionsEvaluations;
                     }
+                    this.listOfEvaluationsIsEmpty = !(this.listOfEvaluations && this.listOfEvaluations.length);
                 })
                 .catch(() => {
                     this.listOfEvaluationsIsEmpty = true;
@@ -105,12 +108,10 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
     }
 
     removeEvaluation() {
-
         if (this.patientId && this.cacheIdEvaluationRemove) {
             this.nutritionService.remove(this.patientId, this.cacheIdEvaluationRemove)
                 .then(() => {
                     this.getAllNutritionEvaluations();
-                    this.calcLenghtNutritionEvaluations();
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-REMOVED'));
                     this.closeModalComfimation();
                 })
@@ -127,16 +128,6 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
-    calcLenghtNutritionEvaluations() {
-        if (this.patientId) {
-            this.nutritionService.getAllByPatient(this.patientId, undefined, undefined, this.search)
-                .then(nutritionEvaluations => {
-                    this.length = nutritionEvaluations.length;
-                })
-                .catch();
-        }
-    }
-
     trackById(index, item) {
         return item.id;
     }
@@ -144,7 +135,6 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.patientId.currentValue !== undefined && changes.patientId.previousValue === undefined) {
             this.getAllNutritionEvaluations();
-            this.calcLenghtNutritionEvaluations();
         }
     }
 }

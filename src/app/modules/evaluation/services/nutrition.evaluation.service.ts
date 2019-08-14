@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 import { NutritionalCouncil, NutritionEvaluation } from '../models/nutrition-evaluation';
 import { environment } from '../../../../environments/environment'
@@ -31,7 +31,7 @@ export class NutritionEvaluationService {
             .toPromise();
     }
 
-    getAllByPatient(patient_id: string, page?: number, limit?: number, search?: string): Promise<Array<NutritionEvaluation>> {
+    getAllByPatient(patient_id: string, page?: number, limit?: number, search?: string): Promise<HttpResponse<Array<NutritionEvaluation>>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -48,12 +48,12 @@ export class NutritionEvaluationService {
 
         const url = `${environment.api_url}/patients/${patient_id}/nutritional/evaluations`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
     getAllByHealthprofessional(healthprofessional_id: string, page?: number, limit?: number, search?: string)
-        : Promise<NutritionEvaluation[]> {
+        : Promise<HttpResponse<NutritionEvaluation[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -70,7 +70,7 @@ export class NutritionEvaluationService {
 
         const url = `${environment.api_url}/healthprofessionals/${healthprofessional_id}/nutritional/evaluations`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
 
     }

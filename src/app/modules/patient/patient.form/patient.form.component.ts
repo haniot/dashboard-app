@@ -27,7 +27,6 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     optionsGender: Array<string> = Object.keys(Gender);
     listPilots: Array<PilotStudy>;
     patientId: string;
-    matchPasswordStatus;
     icon_password = 'visibility_off';
     typeInputPassword = 'password';
     icon_password_confirm = 'visibility_off';

@@ -44,6 +44,12 @@
       "VIEW": "Visualizar estudo",
       "STUDIES-EMPTY": "Você não possui estudos associados.",
       "STUDIES-EMPTY-MESSAGE": "Entre em contato com o administrador."
+    },
+    "CARD-EVALUATIONS": {
+      "TITLE": "Acesse suas avaliações",
+      "SUBTITLE": "Clique sobre o card para visualizar informações da avaliação.",
+      "NONE-EVALUATIONS": "Você não possui avaliações disponivéis!",
+      "TOTAL": "Total de avaliações"
     }
   },
   "EVALUATION": {
@@ -162,6 +168,16 @@
     "FAMILY-COHESION": {
       "TITLE": "Coesão familiar",
       "SUBTITLE": "",
+      "FAMILY-MUTUAL": "Ajuda Mútua Familiar",
+      "FRIENDSHIP-APPROVAL": "Aprovação de Amizade",
+      "FAMILY-ONLY-TASK": "Tarefas Apenas Familiar",
+      "FAMILY-ONLY-PREFERENCE": "Preferência Apenas Para a Família",
+      "FREE-TIME-TOGETHER": "Tempo Livre Juntos",
+      "FAMILY-PROXIMITY": "Percepção de Proximidade",
+      "ALL-FAMILY-TASKS": "Todas as Tarefas Familiares",
+      "FAMILY-TASKS-OPPORTUNITY": "Oportunidades de Tarefas Familiares",
+      "FAMILY-DECISION-SUPPORT": "Apoio Familiar à Tomada de Decisão",
+      "FAMILY-UNION": "Relevância da União Familiar",
       "UNAVAILABLE-DATA": "Dados de coesão familiar indisponível!"
     },
     "FEEDING": {
@@ -583,6 +599,16 @@
       "LOG-MEASUREMENTS": "LOG DAS MEDIÇÕES",
       "LOADING-QUESTIONNAIRES": "Carregando questionário...",
       "REMOVE-QUESTIONNAIRE": "Remover questionário"
+    },
+    "MY-STUDIES": {
+      "TITLE": "Lista de estudos piloto",
+      "SUBTITLE": "Você possui permissão apenas de visualização",
+      "NONE-STUDIES": "Nenhum estudo encontrado!",
+      "NONE-STUDIES-MESSAGE": " Não existe estudo com o nome pesquisado."
+    },
+    "MY-EVALUATIONS": {
+      "TITLE": "Lista de estudos piloto",
+      "SUBTITLE": "Você possui permissão apenas de visualização"
     }
   },
   "PILOT-STUDY": {

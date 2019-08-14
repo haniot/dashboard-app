@@ -63,7 +63,7 @@ export class PatientService {
             .toPromise();
     }
 
-    update(patient: Patient): Promise<boolean> {
+    update(patient: Patient): Promise<Patient> {
         return this.http.patch<any>(`${environment.api_url}/patients/${patient.id}`, patient)
             .toPromise();
     }

@@ -14,7 +14,6 @@ import { NutritionEvaluationComponent } from './nutrition.evaluation/nutrition.e
 import { NutritionEvaluationTableComponent } from './nutrition.evaluation.table/nutrition.evaluation.table.component';
 import { EvaluationService } from './services/evaluation.service';
 import { NutritionEvaluationService } from './services/nutrition.evaluation.service';
-import { EvaluationStatustPipe } from './pipes/evaluation.status.pipe';
 import { NutritionalEvaluationListComponent } from './nutritional.evaluation.list/nutritional.evaluation.list.component';
 import { StudiesComponent } from './studies/studies.component';
 import { PatientsComponent } from './patients/patients.component';
@@ -43,7 +42,6 @@ import { SharedModule } from '../../shared/shared.module'
         StudiesComponent,
         PatientsComponent,
         /** pipes */
-        EvaluationStatustPipe,
         NutritionClassificationtPipe,
         OverweigthClassificationPipe,
         BloodglucoseClassificationPipe,
@@ -75,12 +73,10 @@ import { SharedModule } from '../../shared/shared.module'
     providers: [
         /** services */
         EvaluationService,
-        NutritionEvaluationService,
         DentalEvaluationService,
         GeneratePdfService,
         SendEmailService,
         /** pipes */
-        EvaluationStatustPipe,
         DatePipe,
         NutritionClassificationtPipe,
         OverweigthClassificationPipe,
@@ -90,7 +86,11 @@ import { SharedModule } from '../../shared/shared.module'
     ],
     exports: [
         DentalEvaluationTableComponent,
-        EvaluationStatustPipe
+        OverweigthClassificationPipe,
+        NutritionClassificationtPipe,
+        TaylorCutClassificationPipe,
+        BloodglucoseClassificationPipe,
+        BloodpressureClassificationPipe
     ]
 })
 export class EvaluationModule {

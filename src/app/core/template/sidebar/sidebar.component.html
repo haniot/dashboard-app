@@ -39,7 +39,7 @@
     </div>
     <ul class="nav">
 
-        <li routerLinkActive="active" class="nav-item">
+        <li routerLinkActive="active" class="nav-item" >
             <a class="nav-link" [routerLink]="['/app/dashboard']" *ngIf="verifyScopes('Dashboard')"
                (click)="openLoading()">
                 <i class="material-icons">dashboard</i>
@@ -47,7 +47,7 @@
             </a>
         </li>
 
-        <li routerLinkActive="active" class="nav-item" *ngIf="verifyScopes('Usuários')">
+        <li routerLinkActive="active" class="nav-item" *ngIf="verifyScopes('Users')">
             <a class="nav-link" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
                (click)="onclickMenuUser()">
                 <p>
@@ -59,7 +59,7 @@
             <ul class="collapse list-unstyled submenu" id="pageSubmenu">
                 <li routerLinkActive="active" class="nav-subitem">
                     <a class="nav-link" [routerLink]="['/app/admin/administrators']"
-                       *ngIf="verifyScopes('Administradores')"
+                       *ngIf="verifyScopes('Administrators')"
                        (click)="openLoading()">
                         <i class="material-icons">supervisor_account</i>
                         <p>{{'SIDEBAR.ADMINS' | translate}}</p>
@@ -67,7 +67,7 @@
                 </li>
                 <li routerLinkActive="active" class="nav-subitem">
                     <a class="nav-link" [routerLink]="['/app/admin/healthprofessionals']"
-                       *ngIf="verifyScopes('P. de Saúde')"
+                       *ngIf="verifyScopes('HealthProfessionals')"
                        (click)="openLoading()">
                         <i class="material-icons">accessibility</i>
                         <p>{{'SIDEBAR.HEALTHPROFESSIONALS' | translate}}</p>
@@ -77,33 +77,35 @@
         </li>
 
         <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" [routerLink]="['/app/pilotstudies']" *ngIf="verifyScopes('Estudos Pilotos')"
+            <a class="nav-link" [routerLink]="['/app/pilotstudies']" *ngIf="verifyScopes('PilotStudies')"
                (click)="openLoading()">
                 <i class="material-icons">find_replace</i>
                 <p>{{'SHARED.PILOTSTUDIES' | translate}}</p>
             </a>
         </li>
 
-        <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()">
-            <a class="nav-link" [routerLink]="['/app/healthprofessional/mystudies']"
-               *ngIf="verifyScopes('Meus estudos')"
-               (click)="openLoading()">
+        <li routerLinkActive="active" class="nav-item" *ngIf="isNotAdmin()" [ngClass]="activeMyPilots">
+            <a class="nav-link"
+               href="javascript:void(0)"
+               *ngIf="verifyScopes('MyStudies')"
+               (click)="myPilotStudies()">
                 <i class="material-icons">library_books</i>
                 <p>{{'SHARED.MY-STUDIES' | translate}}</p>
             </a>
         </li>
 
-        <li routerLinkActive="active" class="nav-item" *ngIf="showMyStudies()">
-            <a class="nav-link" [routerLink]="['/app/healthprofessional/myevaluations']"
-               *ngIf="verifyScopes('Minhas avaliações')"
-               (click)="openLoading()">
+        <li routerLinkActive="active" class="nav-item" *ngIf="isNotAdmin()" [ngClass]="activeMyEvaluations">
+            <a class="nav-link"
+               href="javascript:void(0)"
+               *ngIf="verifyScopes('MyEvaluations')"
+               (click)="myEvaluations()">
                 <i class="material-icons">assignment</i>
                 <p>{{'SHARED.MY-EVALUATIONS' | translate}}</p>
             </a>
         </li>
 
         <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" [routerLink]="['/app/patients']" *ngIf="verifyScopes('Pacientes')"
+            <a class="nav-link" [routerLink]="['/app/patients']" *ngIf="verifyScopes('Patients')"
                (click)="openLoading()">
                 <i class="material-icons">face</i>
                 <p>{{'SHARED.PATIENTS' | translate}}</p>

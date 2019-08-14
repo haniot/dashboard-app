@@ -4,6 +4,7 @@ import { AuthService } from '../../../security/auth/services/auth.service'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
 import { environment } from '../../../../environments/environment'
 import { Patient } from '../../patient/models/patient'
+import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation'
 
 
 @Injectable()
@@ -64,6 +65,26 @@ export class DashboardService {
         }
 
         const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
+
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
+            .toPromise();
+    }
+
+    /**
+     * get all evaluations from a patient
+     */
+    getAllEvaluations(userId: string, page?: number, limit?: number): Promise<HttpResponse<NutritionEvaluation[]>> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
+
+        const url = `${environment.api_url}/patients/${userId}/nutritional/evaluations`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();

@@ -9,6 +9,7 @@ import { PilotStudySituationPipe } from './pipes/pilot.study.state.pipe';
 import { MatDatepickerModule } from '@angular/material'
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from 'saturn-datepicker'
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter'
+import { EvaluationStatustPipe } from './pipes/evaluation.status.pipe'
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
         GenderPipe,
         MyDatePipe,
         ConvertInAgePipe,
-        PilotStudySituationPipe
+        PilotStudySituationPipe,
+        EvaluationStatustPipe
     ],
     imports: [
         CommonModule
@@ -26,7 +28,8 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
         GenderPipe,
         MyDatePipe,
         ConvertInAgePipe,
-        PilotStudySituationPipe
+        PilotStudySituationPipe,
+        EvaluationStatustPipe
     ],
     providers: [
         MatDatepickerModule,

@@ -6,7 +6,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group has-feedback"
                     [ngClass]="{'has-success': userForm.controls.name.valid,
-                          'has-error': userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)}" *ngIf="typeUser == 'HealthProfessional'">
+                          'has-error': userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)}">
                     <label>{{'SHARED.NAME'|translate}}:</label>
                     <input type="text" class="form-control" formControlName="name">
                     <span *ngIf="userForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback"

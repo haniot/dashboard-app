@@ -57,6 +57,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private subscriptions: Array<ISubscription>;
     userName: string;
 
+
     constructor(
         location: Location,
         private element: ElementRef,
@@ -195,6 +196,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 this.flag = false;
                 break;
         }
+        if (this.getTypeUser() === 'patient') {
+            this.flag = false;
+        }
     }
 
     getUserName() {
@@ -275,11 +279,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     config(): void {
-        if (this.isNotAdmin()) {
-            this.router.navigate(['/app/healthprofessional/configurations']);
-        } else {
-            this.router.navigate(['/app/admin/configurations']);
+        switch (this.getTypeUser()) {
+            case 'admin':
+                this.router.navigate(['/app/admin/configurations']);
+                break;
+
+            case 'health_professional':
+                this.router.navigate(['/app/healthprofessional/configurations']);
+                break;
+
+            case 'patient':
+                this.router.navigate(['/app/patients/configurations']);
+                break;
         }
+    }
+
+    getTypeUser(): string {
+        return this.authService.decodeToken().sub_type;
     }
 
     configLanguage(language: string) {

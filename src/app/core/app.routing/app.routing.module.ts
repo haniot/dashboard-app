@@ -9,21 +9,44 @@ import { AuthGuard } from '../../security/guards/auth.guard'
 import { ScopeGuard } from '../../security/guards/scope.guard'
 
 const routes = [
-    { path: '', loadChildren: '../../security/auth/auth.module#AuthModule' },
+    {
+        path: '',
+        loadChildren: () => import('../../security/auth/auth.module')
+            .then(m => m.AuthModule)
+    },
     {
         path: 'app',
         component: TemplateComponent, canActivate: [AuthGuard, ScopeGuard], canActivateChild: [AuthGuard, ScopeGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-            { path: 'dashboard', loadChildren: '../../modules/dashboard/dashboard.module#DashboardModule' },
-            { path: 'admin', loadChildren: '../../modules/admin/admin.module#AdminModule' },
+            {
+                path: 'dashboard',
+                loadChildren: () => import('../../modules/dashboard/dashboard.module')
+                    .then(m => m.DashboardModule)
+            },
+            {
+                path: 'admin',
+                loadChildren: () => import('../../modules/admin/admin.module').then(m => m.AdminModule)
+            },
             {
                 path: 'healthprofessional',
-                loadChildren: '../../modules/health.professional/health.professional.module#HealthProfessionalModule'
+                loadChildren: () => import('../../modules/health.professional/health.professional.module')
+                    .then(m => m.HealthProfessionalModule)
             },
-            { path: 'patients', loadChildren: '../../modules/patient/patient.module#PatientModule' },
-            { path: 'pilotstudies', loadChildren: '../../modules/pilot.study/pilot.study.module#PilotStudyModule' },
-            { path: 'evaluations', loadChildren: '../../modules/evaluation/evaluation.module#EvaluationModule' }
+            {
+                path: 'patients',
+                loadChildren: () => import('../../modules/patient/patient.module').then(m => m.PatientModule)
+            },
+            {
+                path: 'pilotstudies',
+                loadChildren: () => import('../../modules/pilot.study/pilot.study.module')
+                    .then(m => m.PilotStudyModule)
+            },
+            {
+                path: 'evaluations',
+                loadChildren: () => import('../../modules/evaluation/evaluation.module')
+                    .then(m => m.EvaluationModule)
+            }
         ]
     },
     { path: 'access-denied', component: AccessDeniedComponent },

@@ -19,7 +19,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './myevaluations.component.html',
     styleUrls: ['./myevaluations.component.scss']
 })
-export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewChecked {
+export class PatientMyEvaluationsComponent implements OnInit, OnChanges, AfterViewChecked {
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -34,7 +34,6 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
     userId: string;
 
     constructor(
-        private evaluationService: EvaluationService,
         private nutritionService: NutritionEvaluationService,
         private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
@@ -65,7 +64,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         }
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
-            this.nutritionService.getAllByHealthprofessional(this.userId, this.page, this.limit, this.search)
+            this.nutritionService.getAllByPatient(this.userId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                     this.listOfEvaluations = new Array<NutritionEvaluation>();
@@ -86,7 +85,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         if (!this.userId) {
             this.loadUserId();
         }
-        this.nutritionService.getAllByHealthprofessional(this.userId, this.page, this.limit, this.search)
+        this.nutritionService.getAllByPatient(this.userId, this.page, this.limit, this.search)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.listOfEvaluations = new Array<NutritionEvaluation>();

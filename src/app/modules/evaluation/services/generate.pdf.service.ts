@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import * as jsPDF from 'jspdf';
+import * as jsPDF from 'jspdf-yworks';
 import { TranslateService } from '@ngx-translate/core';
 
 import { NutritionEvaluation } from '../models/nutrition-evaluation';

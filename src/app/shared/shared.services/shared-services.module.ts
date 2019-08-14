@@ -10,6 +10,7 @@ import { AdminService } from '../../modules/admin/services/admin.service'
 import { HealthProfessionalService } from '../../modules/admin/services/health.professional.service'
 import { PatientService } from '../../modules/patient/services/patient.service'
 import { LocalStorageService } from './local.storage.service'
+import { NutritionEvaluationService } from '../../modules/evaluation/services/nutrition.evaluation.service'
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { LocalStorageService } from './local.storage.service'
         AdminService,
         HealthProfessionalService,
         PatientService,
+        NutritionEvaluationService,
         LocalStorageService,
         NotificationService
     ]

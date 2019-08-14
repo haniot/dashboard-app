@@ -44,6 +44,12 @@
       "VIEW": "View study",
       "STUDIES-EMPTY": "You have no associated studies.",
       "STUDIES-EMPTY-MESSAGE": "Please contact your administrator."
+    },
+    "CARD-EVALUATIONS": {
+      "TITLE": "Access your evaluations",
+      "SUBTITLE": "Click on the card to view evaluation information.",
+      "NONE-EVALUATIONS": "You do not have any evaluations available!",
+      "TOTAL": "Total Evaluations"
     }
   },
   "EVALUATION": {
@@ -162,6 +168,16 @@
     "FAMILY-COHESION": {
       "TITLE": "Family cohesion",
       "SUBTITLE": "",
+      "FAMILY-MUTUAL": "Mutual Family Help",
+      "FRIENDSHIP-APPROVAL": "Friendship Approval",
+      "FAMILY-ONLY-TASK": "Just Family Tasks",
+      "FAMILY-ONLY-PREFERENCE": "Family Only Preference",
+      "FREE-TIME-TOGETHER": "Free time together",
+      "FAMILY-PROXIMITY": "Proximity Perception",
+      "ALL-FAMILY-TASKS": "All Family Tasks",
+      "FAMILY-TASKS-OPPORTUNITY": "Family Task Opportunities",
+      "FAMILY-DECISION-SUPPORT": "Family Support for Decision Making",
+      "FAMILY-UNION": "Relevance of Family Union",
       "UNAVAILABLE-DATA": "Family cohesion data unavailable!"
     },
     "FEEDING": {
@@ -583,6 +599,16 @@
       "LOG-MEASUREMENTS": "LOG OF MEASUREMENTS",
       "LOADING-QUESTIONNAIRES": "Loading questionnaire...",
       "REMOVE-QUESTIONNAIRE": "Remove questionnaire"
+    },
+    "MY-STUDIES": {
+      "TITLE": "Pilot Study List",
+      "SUBTITLE": "You have view only permission",
+      "NONE-STUDIES": "No studies found!",
+      "NONE-STUDIES-MESSAGE": "There is no study with the name searched."
+    },
+    "MY-EVALUATIONS": {
+      "TITLE": "List Evaluations",
+      "SUBTITLE": "Click"
     }
   },
   "PILOT-STUDY": {

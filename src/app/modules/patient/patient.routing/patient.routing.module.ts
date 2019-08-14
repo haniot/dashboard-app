@@ -4,6 +4,9 @@ import { PatientFormComponent } from '../patient.form/patient.form.component';
 import { ViewHabitsComponent } from '../view.habits/view.habits.component';
 import { PatientManagerComponent } from '../patient.manager/patient.manager.component';
 import { PatientComponent } from '../patient.component/patient.component'
+import { PatientConfigComponent } from '../configurations/configurations.component'
+import { PatientMypilotstudiesComponent } from '../mypilotstudies/mypilotstudies.component'
+import { PatientMyEvaluationsComponent } from '../myevaluations/myevaluations.component'
 
 const routes = [
 
@@ -16,6 +19,26 @@ const routes = [
         path: 'new',
         component: PatientFormComponent,
         data: { scope: 'patients:create' }
+    },
+    {
+        path: 'configurations',
+        component: PatientConfigComponent,
+        data: { scope: 'patients:update' }
+    },
+    {
+        path: 'mystudies',
+        component: PatientMypilotstudiesComponent,
+        data: { scope: 'pilots:read' }
+    },
+    {
+        path: 'myevaluations',
+        component: PatientMyEvaluationsComponent,
+        data: { scope: 'evaluations:read' }
+    },
+    {
+        path: 'pilot',
+        component: PatientComponent,
+        data: { scope: 'patients:read patients:delete' }
     },
     {
         path: ':patientId',
@@ -32,11 +55,6 @@ const routes = [
         path: ':patientId/details',
         component: ViewHabitsComponent,
         data: { scope: 'patients:read forms:read measurements:read' }
-    },
-    {
-        path: 'pilot',
-        component: PatientComponent,
-        data: { scope: 'patients:read patients:delete' }
     },
     { path: '**', redirectTo: '/page-not-found' }
 ];

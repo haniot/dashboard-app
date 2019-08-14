@@ -19,7 +19,7 @@ const routes = [
     {
         path: ':patient_id/nutritional/:nutritionevaluation_id',
         component: NutritionEvaluationComponent,
-        data: { scope: 'evaluations:read evaluations:update' }
+        data: { scope: 'evaluations:read' }
     },
     { path: '**', redirectTo: '/page-not-found' }
 ];

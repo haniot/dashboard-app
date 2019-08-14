@@ -143,13 +143,13 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3"
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                          *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
                         <familycohesion-record
                                 [familyCohesionRecord]="odontologicalQuestionnaire.family_cohesion_record"></familycohesion-record>
                     </div>
 
-                    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9"
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                          *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
                         <sociodemographic-record
                                 [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>

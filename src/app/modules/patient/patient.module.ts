@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -21,40 +21,49 @@ import { HabitsModule } from '../habits/habits.module';
 import { MeasurementModule } from '../measurement/measurement.module';
 import { PatientManagerComponent } from './patient.manager/patient.manager.component';
 import { SharedModule } from '../../shared/shared.module'
+import { PatientConfigComponent } from './configurations/configurations.component'
+import { PatientMypilotstudiesComponent } from './mypilotstudies/mypilotstudies.component'
+import { SettingsModule } from '../settings/settings.module'
+import { PatientMyEvaluationsComponent } from './myevaluations/myevaluations.component'
 
 @NgModule({
-  declarations: [
-    PatientFormComponent,
-    PatientTableComponent,
-    PatientComponent,
-    ListPilotstudiesComponent,
-    ViewHabitsComponent,
-    PatientManagerComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule,
+    declarations: [
+        PatientConfigComponent,
+        PatientMyEvaluationsComponent,
+        PatientMypilotstudiesComponent,
+        PatientFormComponent,
+        PatientTableComponent,
+        PatientComponent,
+        ListPilotstudiesComponent,
+        ViewHabitsComponent,
+        PatientManagerComponent
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule,
 
-    MatPaginatorModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatTabsModule,
-    TranslateModule,
+        MatPaginatorModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatTabsModule,
+        TranslateModule,
 
-    PatientRoutingModule,
-    HabitsModule,
-    MeasurementModule
-  ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
-  ],
-  exports: [
-    PatientTableComponent,
-      ListPilotstudiesComponent
-  ]
+        PatientRoutingModule,
+        HabitsModule,
+        MeasurementModule,
+        SettingsModule
+    ],
+    providers: [
+        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+    ],
+    exports: [
+        PatientTableComponent,
+        ListPilotstudiesComponent
+    ]
 })
-export class PatientModule { }
+export class PatientModule {
+}

@@ -6,13 +6,11 @@ export enum HealtArea {
 }
 
 export class HealthProfessional extends GenericUser {
-    name: string;
     health_area: HealtArea;
     total_patients: number;
 
     constructor() {
         super();
-        this.name = '';
         this.total_patients = 0;
     }
 

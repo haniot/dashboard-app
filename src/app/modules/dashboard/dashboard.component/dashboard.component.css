@@ -1,6 +1,7 @@
-.main-content{
+.main-content {
     margin-top: 10px;
 }
+
 .background-card {
     background: linear-gradient(60deg, #00a594, #00a594);
 }
@@ -168,9 +169,92 @@ label {
     font-weight: bold;
     color: black;
 }
-.card-patients img{
+
+.card-patients img {
     width: 10%;
 }
-.card-studies img{
+
+.card-studies img {
     width: 10%;
 }
+
+.evaluation-complete {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #00a594;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+
+.evaluation-incomplete {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 5px;
+    border-radius: 5px;
+    background-color: #adada9;
+}
+
+.badge-haniot {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #00a594;
+}
+
+.classification {
+    color: #00a594;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: white;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* styles for classifications */
+/* nutrition status */
+.accentuated_thinness, .severe_obesity {
+    color: #d50000;
+}
+
+.thinness, .obesity {
+    color: #FF5722;
+}
+
+.eutrophy {
+    color: #00a594;
+}
+
+.overweight {
+    color: #FF9800;
+}
+
+/* taylor of cut*/
+.out_of_normality {
+    color: #FF5722;
+}
+
+/* overweight*/
+.overweight_obesity_risk {
+    color: #FF5722;
+}
+
+/* glucose*/
+.good {
+    color: #19bf79;
+}
+
+/* pressure*/
+.borderline {
+    color: #FF9800;
+}
+
+.hypertension_stage_1 {
+    color: #FF5722;
+}
+
+.hypertension_stage_2 {
+    color: #d50000;
+}
+

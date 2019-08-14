@@ -1,5 +1,6 @@
 export class GenericUser {
     id: string;
+    name: string;
     email: string;
     birth_date: string;
     phone_number: string;
@@ -11,6 +12,7 @@ export class GenericUser {
 
     constructor() {
         this.id = '';
+        this.name = '';
         this.email = '';
         this.birth_date = '';
         this.phone_number = '';

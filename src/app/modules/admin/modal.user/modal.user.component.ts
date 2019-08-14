@@ -101,7 +101,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         });
         if (this.typeUser === 'Admin') {
             this.userForm.removeControl('health_area');
-            this.userForm.removeControl('name');
         }
         if (this.userId) {
             this.userForm.removeControl('password');
