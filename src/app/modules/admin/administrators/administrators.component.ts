@@ -4,12 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from '../services/admin.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { Admin } from '../models/users';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
+import { Admin } from '../models/admin';
 import { TranslateService } from '@ngx-translate/core';
-import { User } from '../../../shared/shared.models/user';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -20,8 +20,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./administrators.component.scss']
 })
 export class AdministratorsComponent implements AfterViewChecked {
-    userEdit: User = new Admin();
-    admins: Array<User> = [];
+    userEdit: GenericUser = new Admin();
+    admins: Array<GenericUser> = [];
     errorCredentials = false;
     page: number;
     limit: number;
@@ -36,15 +36,17 @@ export class AdministratorsComponent implements AfterViewChecked {
         private translateService: TranslateService) {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
+        this.admins = new Array<GenericUser>();
         this.getAllAdministrators();
-        this.calcLengthAdministrators();
     }
 
     getAllAdministrators() {
         this.adminService.getAll(this.page, this.limit, this.search)
-            .then(admins => {
-                this.admins = admins;
-                this.calcLengthAdministrators();
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.admins = httpResponse.body;
+                }
                 this.loadinService.close();
             })
             .catch((errorResponse: HttpErrorResponse) => {
@@ -116,14 +118,6 @@ export class AdministratorsComponent implements AfterViewChecked {
         this.limit = event.limit;
         this.search = event.search;
         this.getAllAdministrators();
-    }
-
-    calcLengthAdministrators() {
-        this.adminService.getAll()
-            .then(admins => {
-                this.length = admins.length;
-            })
-            .catch();
     }
 
     ngAfterViewChecked() {

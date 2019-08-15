@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
-import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -47,7 +47,6 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.loadUserId();
         this.getAllPilotStudies();
-        this.getLengthPilotStudies();
     }
 
     loadUserId() {
@@ -57,9 +56,12 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     getAllPilotStudies() {
         if (this.authService.decodeToken().sub_type === 'admin') {
             this.pilotStudyService.getAll(this.page, this.limit, this.search)
-                .then(studies => {
-                    this.list = studies;
-                    this.listOfPilotsIsEmpty = !(studies && studies.length);
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
+                    this.listOfPilotsIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {
                     this.listOfPilotsIsEmpty = true;
@@ -67,9 +69,12 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         } else {
             this.userId = this.localStorageService.getItem('user');
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-                .then(studies => {
-                    this.list = studies;
-                    this.listOfPilotsIsEmpty = !(studies && studies.length);
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
+                    this.listOfPilotsIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {
                     this.listOfPilotsIsEmpty = true;
@@ -82,16 +87,21 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         this.searchTime = setTimeout(() => {
             if (this.authService.decodeToken().sub_type) {
                 this.pilotStudyService.getAll(this.page, this.limit, this.search)
-                    .then(studies => {
-                        this.list = studies;
-                        this.getLengthPilotStudies();
+                    .then(httpResponse => {
+                        this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                        if (httpResponse.body && httpResponse.body.length) {
+                            this.list = httpResponse.body;
+                        }
                     })
                     .catch();
             } else {
                 this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-                    .then(studies => {
-                        this.list = studies;
-                        this.getLengthPilotStudies();
+                    .then(httpResponse => {
+                        this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                        if (httpResponse.body && httpResponse.body.length) {
+                            this.list = httpResponse.body;
+                        }
+
                     })
                     .catch();
             }
@@ -111,22 +121,6 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         this.limit = event.pageSize;
         this.getAllPilotStudies();
         this.listClass = new Array<string>();
-    }
-
-    getLengthPilotStudies() {
-        if (this.userId) {
-            this.pilotStudyService.getAllByUserId(this.userId, undefined, undefined, this.search)
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        } else {
-            this.pilotStudyService.getAll()
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        }
     }
 
     selectStudy(study_id: string) {

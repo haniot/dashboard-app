@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 import { NutritionEvaluationComponent } from '../nutrition.evaluation/nutrition.evaluation.component';
 import { EvaluationComponentComponent } from '../evaluation.component/evaluation.component';
 import { NutritionalEvaluationListComponent } from '../nutritional.evaluation.list/nutritional.evaluation.list.component';
@@ -7,17 +8,18 @@ import { NutritionalEvaluationListComponent } from '../nutritional.evaluation.li
 const routes = [
     {
         path: 'nutritional',
-        component: NutritionalEvaluationListComponent
+        component: NutritionalEvaluationListComponent,
+        data: { scope: 'evaluations:read' }
     },
     {
-        path: ':pilostudy_id/:patient_id',
+        path: 'nutritional/:patient_id',
         component: EvaluationComponentComponent,
-        // data: { scope: 'patient:read patient:readAll' }
+        data: { scope: 'evaluations:read' }
     },
     {
         path: ':patient_id/nutritional/:nutritionevaluation_id',
         component: NutritionEvaluationComponent,
-        // data: { scope: 'patient:read patient:readAll' }
+        data: { scope: 'evaluations:read' }
     },
     { path: '**', redirectTo: '/page-not-found' }
 ];

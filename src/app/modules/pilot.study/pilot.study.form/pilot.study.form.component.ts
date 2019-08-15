@@ -8,9 +8,12 @@ import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
 import { PilotStudyService } from '../services/pilot.study.service';
-import { HealthProfessionalService } from 'app/modules/admin/services/health.professional.service';
-import { HealthProfessional } from 'app/modules/admin/models/users';
-import { AuthService } from 'app/security/auth/services/auth.service';
+import { Patient } from '../../patient/models/patient'
+import { GenericUser } from '../../../shared/shared.models/generic.user'
+import { PatientService } from '../../patient/services/patient.service'
+import { HealthProfessional } from '../../admin/models/health.professional'
+import { HealthProfessionalService } from '../../admin/services/health.professional.service'
+import { AuthService } from '../../../security/auth/services/auth.service'
 
 @Component({
     selector: 'pilot-study-form',
@@ -28,12 +31,17 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     checked = false;
     disabled = false;
     typeUserLogged: string;
+    patientForm: FormGroup;
+    listPatients: Array<Patient> = [];
+    patientsNotAssociated: Array<Patient> = [];
+    patientsAssociated: Array<Patient> = [];
     private subscriptions: Array<ISubscription>;
 
     constructor(
         private fb: FormBuilder,
         private pilotStudyService: PilotStudyService,
         private healthService: HealthProfessionalService,
+        private patientService: PatientService,
         private toastService: ToastrService,
         private router: Router,
         private activeRouter: ActivatedRoute,
@@ -43,32 +51,33 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     ) {
         this.professionalsAssociated = new Array<HealthProfessional>();
         this.professionalsNotAssociated = new Array<HealthProfessional>();
+        this.patientsAssociated = new Array<Patient>();
+        this.patientsNotAssociated = new Array<Patient>();
+        this.listProf = new Array<HealthProfessional>();
+        this.listPatients = new Array<Patient>();
         this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
         this.typeUserLogged = this.authService.decodeToken().sub_type;
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
-
             this.pilotStudyId = params.get('pilotStudyId');
-
             if (this.pilotStudyId) {
                 this.createForm();
                 this.getPilotStudy();
             }
-
             if (this.typeUserLogged && this.typeUserLogged === 'admin') {
-                this.loadProfessionalsAssociated();
                 this.getListProfessionals();
+                this.getListPatients();
+                this.loadProfessionalsAssociated();
+                this.loadPatientsAssociated();
             }
         }));
-
         this.createForm();
         this.getPilotStudy();
-
-
         if (this.typeUserLogged && this.typeUserLogged === 'admin') {
             this.getListProfessionals();
+            this.getListPatients();
         }
     }
 
@@ -90,7 +99,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 location: ['', Validators.required],
                 start: ['', Validators.required],
                 end: ['', Validators.required],
-                health_professionals_id: ['', Validators.required],
+                total_health_professionals: ['0'],
+                total_patients: ['0'],
                 is_active: [true, Validators.required]
             });
         } else {
@@ -100,12 +110,17 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 location: [''],
                 start: ['', Validators.required],
                 end: [{ value: '', disabled: true }, Validators.required],
-                health_professionals_id: ['', Validators.required],
+                total_health_professionals: ['0'],
+                total_patients: ['0'],
                 is_active: [true, Validators.required]
             });
         }
         this.professionalsForm = this.fb.group({
             health_professionals_id_add: ['', Validators.required]
+        });
+
+        this.patientForm = this.fb.group({
+            patients_id_add: ['', Validators.required]
         });
 
         this.subscriptions.push(this.pilotStudyForm.get('start').valueChanges.subscribe(val => {
@@ -146,8 +161,22 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
 
     getListProfessionals(): Promise<any> {
         return this.healthService.getAll()
-            .then(healthProfessionals => {
-                this.listProf = healthProfessionals;
+            .then(httpResponse => {
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listProf = httpResponse.body;
+                }
+
+            })
+            .catch();
+    }
+
+    getListPatients(): Promise<any> {
+        return this.patientService.getAll()
+            .then(httpResponse => {
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listPatients = httpResponse.body;
+                }
+
             })
             .catch();
     }
@@ -190,13 +219,53 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     loadProfessionalsNotAssociated() {
         this.professionalsNotAssociated = [];
         this.professionalsNotAssociated = this.listProf
-            .filter(professional => !this.searchProfessional(this.professionalsAssociated, professional));
-
+            .filter(professional => !this.search(this.professionalsAssociated, professional));
     }
 
-    private searchProfessional(listProf: Array<HealthProfessional>, professional: HealthProfessional): boolean {
-        return !!listProf.find(prof => {
-            return prof.id === professional.id;
+    dissociatePatientProfessional(patientId: string) {
+        this.pilotStudyService.dissociatePatientFromPilotStudy(this.pilotStudyId, patientId)
+            .then(() => {
+                this.loadPatientsAssociated();
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
+            })
+            .catch(() => {
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-REMOVED'));
+            });
+    }
+
+    addPatientInStudy() {
+        const patietId = this.patientForm.get('patients_id_add').value;
+        this.pilotStudyService.addPatientToPilotStudy(this.pilotStudyId, patietId)
+            .then(() => {
+                this.patientForm.reset();
+                this.loadPatientsAssociated();
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-ADD'));
+            })
+            .catch(() => {
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-ADD'));
+            });
+    }
+
+    loadPatientsAssociated() {
+        if (this.pilotStudyId) {
+            this.pilotStudyService.getPatientsByPilotStudy(this.pilotStudyId)
+                .then(patients => {
+                    this.patientsAssociated = patients;
+                    this.loadPatientsNotAssociated();
+                })
+                .catch();
+        }
+    }
+
+    loadPatientsNotAssociated() {
+        this.patientsNotAssociated = [];
+        this.patientsNotAssociated = this.listPatients
+            .filter(patient => !this.search(this.patientsAssociated, patient));
+    }
+
+    private search(list: Array<GenericUser>, item: GenericUser): boolean {
+        return !!list.find(element => {
+            return element.id === item.id;
         });
     }
 

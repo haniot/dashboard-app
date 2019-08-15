@@ -4,10 +4,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { PilotStudyService } from '../services/pilot.study.service';
 import { PilotStudy } from '../models/pilot.study';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -45,13 +45,15 @@ export class PilotStudyTableComponent implements OnInit {
 
     ngOnInit() {
         this.getAllPilotStudies();
-        this.calcLengthEstudies();
     }
 
     getAllPilotStudies() {
         this.pilotStudyService.getAll(this.page, this.limit)
-            .then(studies => {
-                this.list = studies;
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.list = httpResponse.body;
+                }
                 this.listOfPilotsIsEmpty = this.list.length === 0;
             })
             .catch();
@@ -61,9 +63,11 @@ export class PilotStudyTableComponent implements OnInit {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.pilotStudyService.getAll(this.page, this.limit, this.search)
-                .then(studies => {
-                    this.list = studies;
-                    this.calcLengthEstudies();
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
                 })
                 .catch();
         }, 200);
@@ -89,7 +93,6 @@ export class PilotStudyTableComponent implements OnInit {
                 .then(() => {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-REMOVED'));
                     this.getAllPilotStudies();
-                    this.calcLengthEstudies();
                     this.closeModalConfirmation();
                 })
                 .catch(error => {
@@ -97,22 +100,6 @@ export class PilotStudyTableComponent implements OnInit {
                 });
         } else {
             this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-REMOVED'));
-        }
-    }
-
-    calcLengthEstudies() {
-        if (this.search && this.search !== '') {
-            this.pilotStudyService.getAll(undefined, undefined, this.search)
-                .then(pilots => {
-                    this.length = pilots.length;
-                })
-                .catch();
-        } else {
-            this.pilotStudyService.getAll()
-                .then(pilots => {
-                    this.length = pilots.length;
-                })
-                .catch();
         }
     }
 

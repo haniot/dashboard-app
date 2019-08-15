@@ -1,11 +1,27 @@
-import { User } from '../../../shared/shared.models/user';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
 
 export enum Gender {
     male = 'male',
     female = 'female'
 }
 
-export class Patient extends User {
+
+export class PatientBasic {
+    id: string;
+    name: string;
+    email: string;
+    birth_date: string;
+    gender: Gender;
+
+    constructor() {
+        this.id = '';
+        this.name = '';
+        this.birth_date = '';
+    }
+
+}
+
+export class Patient extends GenericUser {
 
     name: string;
     gender: Gender;

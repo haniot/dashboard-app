@@ -6,12 +6,12 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
 import { EvaluationService } from '../services/evaluation.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { OdontologicEvaluation } from '../models/odontologic-evaluation';
 import { DentalEvaluationService } from '../services/dental.evaluation.service';
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -166,7 +166,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                     } else if (error.code === 400) {
                         this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-ERROR'));
                     } else {
-                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-GENERATED'));
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.DATA-NOT-SOLICITED'));
                     }
                 }
             )

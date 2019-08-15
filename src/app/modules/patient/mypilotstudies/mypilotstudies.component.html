@@ -1,0 +1,86 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <haniot-card [title]="'PATIENTS.MY-STUDIES.TITLE'|translate"
+                             [subtitle]="'PATIENTS.MY-STUDIES.SUBTITLE'|translate">
+                    <div class="table-responsive">
+                        <div class="input-group no-border">
+                            <input type="text" class="form-control" id="searchMyStudy" name="searchMyStudy"
+                                   [(ngModel)]="search" [placeholder]="'PILOT-STUDY.PLACEHOLDER-SEARCH'|translate"
+                                   (keyup)="searchOnSubmit()">
+                            <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
+                                    (click)="searchOnSubmit()">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{'PILOT-STUDY.NAME-OF-STUDY'|translate}}</th>
+                                <th>{{'PILOT-STUDY.START'|translate}}</th>
+                                <th>{{'PILOT-STUDY.END'|translate}}</th>
+                                <th>{{'PILOT-STUDY.SITUATION'|translate}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngIf="list.length==0">
+                                <td colspan="6" *ngIf="!listOfStudiesIsEmpty">
+                                    <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
+                                </td>
+                                <td colspan="6" *ngIf="listOfStudiesIsEmpty && !search">
+                                    <p class="second-title text-center">
+                                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY'|translate}}.</p>
+                                    <p>
+                                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY-MESSAGE'|translate}}.
+                                    </p>
+                                </td>
+                                <td colspan="6" *ngIf="listOfStudiesIsEmpty && search">
+                                    <p class="second-title text-center">
+                                        {{'PATIENTS.MY-EVALUATIONS.NONE-STUDIES'|translate}}
+                                    </p>
+                                    <p>
+                                        {{'PATIENTS.MY-EVALUATIONS.NONE-STUDIES-MESSAGE'|translate}}
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let study of list; index as i;trackBy: trackById">
+                                <td>{{getIndex(i)}}</td>
+                                <td>{{study.name}}</td>
+                                <td>{{study.start | date }}</td>
+                                <td>{{study.end | date}}</td>
+                                <td>
+                                        <span>
+                                            {{study.is_active | pilotStudySituation | translate}}
+                                        </span>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+                                   (page)="clickPagination($event)">
+                    </mat-paginator>
+                    <!-- <patient-table [pilotStudyId]="'5c9538e671f8395ce5ba5585'"></patient-table> -->
+                </haniot-card>
+
+                <!-- <div class="col-md">
+                  <button type="submit" class="btn btn-haniot-primary" (click)="newPilotStudy()">
+                    Adicionar
+                    <i class="material-icons">add</i>
+                  </button>
+                </div> -->
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<modal-confirmation [message]="'PILOT-STUDY.DELETE-CONFIRMATION'|translate" (confirmation)="removeStudy()"
+                    (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

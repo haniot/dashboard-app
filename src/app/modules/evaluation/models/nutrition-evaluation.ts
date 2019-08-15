@@ -1,13 +1,22 @@
-import { Counseling, Evaluation, EvaluationStatus } from './evaluation';
-import { HeartRate } from 'app/modules/measurement/models/heart-rate';
-import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
-import { PhysicalActivityHabitsRecord } from 'app/modules/habits/models/physical.activity';
-import { FeedingHabitsRecord } from 'app/modules/habits/models/feeding';
-import { MedicalRecord } from 'app/modules/habits/models/medical.record';
-import { Weight } from 'app/modules/measurement/models/weight';
-import { Patient } from '../../patient/models/patient';
+import { PatientBasic } from '../../patient/models/patient';
 import { SleepHabitsRecord } from '../../habits/models/sleep';
 import { Measurement } from '../../measurement/models/measurement'
+import { BloodGlucose } from '../../measurement/models/blood-glucose'
+import { BloodPressure } from '../../measurement/models/blood-pressure'
+import { Weight } from '../../measurement/models/weight'
+import { PhysicalActivityHabitsRecord } from '../../habits/models/physical.activity'
+import { FeedingHabitsRecord } from '../../habits/models/feeding'
+import { MedicalRecord } from '../../habits/models/medical.record'
+
+export enum EvaluationStatus {
+    complete = 'complete',
+    incomplete = 'incomplete'
+}
+
+export class Counseling {
+    suggested: any;
+    definitive: any
+}
 
 export enum NutritionalStatusPercentile {
     p01 = 'p01',
@@ -124,19 +133,13 @@ export interface IZoneBloodGlucose {
     great: { min: number, max: number }
 }
 
-export interface IZoneMeal {
-    [key: string]: IZoneBloodGlucose
-}
-
 export class BloodGlucoseEvaluation {
     value: number;
     meal: MealType;
     classification: BloodGlucoseClassification;
-    zones: Array<IZoneMeal>;
 
     constructor() {
         this.value = 0;
-        this.zones = new Array<IZoneMeal>();
     }
 }
 
@@ -200,9 +203,11 @@ export class TaylorCutPoint {
     }
 }
 
-export class NutritionEvaluation extends Evaluation {
+export class NutritionEvaluation {
+    id: string;
+    created_at: string;
     status: EvaluationStatus;
-    patient: Patient;
+    patient: PatientBasic;
     counseling: NutritionalCounseling;
     nutritional_status: NutritionalStatus;
     overweight_indicator: OverWeightIndicator;
@@ -210,15 +215,16 @@ export class NutritionEvaluation extends Evaluation {
     heart_rate: HeartRateEvaluation;
     blood_glucose: BloodGlucoseEvaluation;
     blood_pressure: BloodPressureEvaluation;
-    measurements: Array<Measurement | BloodPressure | HeartRate | Weight>;
+    measurements: Array<Measurement | BloodGlucose | BloodPressure | Weight>;
     physical_activity_habits: PhysicalActivityHabitsRecord;
     feeding_habits_record: FeedingHabitsRecord;
     medical_record: MedicalRecord
     sleep_habit: SleepHabitsRecord
 
     constructor() {
-        super();
-        this.patient = new Patient();
+        this.id = '';
+        this.created_at = '';
+        this.patient = new PatientBasic();
         this.counseling = new NutritionalCounseling();
         this.nutritional_status = new NutritionalStatus();
         this.overweight_indicator = new OverWeightIndicator();
@@ -226,7 +232,7 @@ export class NutritionEvaluation extends Evaluation {
         this.heart_rate = new HeartRateEvaluation();
         this.blood_glucose = new BloodGlucoseEvaluation();
         this.blood_pressure = new BloodPressureEvaluation();
-        this.measurements = new Array<Measurement | BloodPressure | HeartRate | Weight>();
+        this.measurements = new Array<Measurement | BloodGlucose | BloodPressure | Weight>();
         this.physical_activity_habits = new PhysicalActivityHabitsRecord();
         this.feeding_habits_record = new FeedingHabitsRecord();
         this.medical_record = new MedicalRecord();

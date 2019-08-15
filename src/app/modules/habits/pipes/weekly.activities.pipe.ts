@@ -10,7 +10,7 @@ export class WeeklyActivityPipe implements PipeTransform {
 
         switch (value) {
 
-            case 'soccer':
+            case 'football':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.SOCCER';
 
             case 'futsal':
@@ -22,16 +22,16 @@ export class WeeklyActivityPipe implements PipeTransform {
             case 'basketball':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.BASKETBALL';
 
-            case 'skates':
+            case 'roller_skate':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.SKATES';
 
             case 'athletics':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.ATHLETICS';
 
-            case 'swim':
+            case 'swimming':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.SWIM';
 
-            case 'gymnastics':
+            case 'olympic_rhythmic_gymnastics':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.GYMNASTICS';
 
             case 'fight':
@@ -43,34 +43,34 @@ export class WeeklyActivityPipe implements PipeTransform {
             case 'run':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.RUN';
 
-            case 'ride a bike':
+            case 'bike':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.RIDE-BIKE';
 
-            case 'walking as a physical exercise':
+            case 'exercise_walking':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.WALKING-PHYSICAL-EXERCISE';
 
-            case 'walking as a means of transport':
+            case 'locomotion_walking':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.WALKING-MEANS-TRANSPORT';
 
             case 'volleyball':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.VOLLEYBALL';
 
-            case 'musculation':
+            case 'bodybuilding':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.MUSCULATION';
 
-            case 'abdominal exercise':
+            case 'abdominal':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES-ABDOMINAL-EXERCISE';
 
             case 'tennis':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.TENNIS';
 
-            case 'walk with dog':
+            case 'dog_walk':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.WALK-WITH-DOG';
 
-            case 'gymnastics gym':
+            case 'gym_exercise':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.GYMNASTICS-GYM';
 
-            case 'no activity':
+            case 'none_activity':
                 return 'HABITS.PIPES.WEEKLY-ACTIVITIES.NO-ACTIVITY';
 
             case undefined:

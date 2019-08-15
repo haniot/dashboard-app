@@ -12,10 +12,8 @@ import { EvaluationComponentComponent } from './evaluation.component/evaluation.
 import { EvaluationRoutingModule } from './evaluation.routing/evaluation.routing.module';
 import { NutritionEvaluationComponent } from './nutrition.evaluation/nutrition.evaluation.component';
 import { NutritionEvaluationTableComponent } from './nutrition.evaluation.table/nutrition.evaluation.table.component';
-import { SharedModule } from 'app/shared/shared.module';
 import { EvaluationService } from './services/evaluation.service';
 import { NutritionEvaluationService } from './services/nutrition.evaluation.service';
-import { EvaluationStatustPipe } from './pipes/evaluation.status.pipe';
 import { NutritionalEvaluationListComponent } from './nutritional.evaluation.list/nutritional.evaluation.list.component';
 import { StudiesComponent } from './studies/studies.component';
 import { PatientsComponent } from './patients/patients.component';
@@ -31,6 +29,7 @@ import { DentalEvaluationListComponent } from './dental.evaluation.list/dental.e
 import { TaylorCutClassificationPipe } from './pipes/taylor.cut.classification.pipe';
 import { GeneratePdfService } from './services/generate.pdf.service';
 import { SendEmailService } from './services/send.email.service';
+import { SharedModule } from '../../shared/shared.module'
 
 
 @NgModule({
@@ -43,7 +42,6 @@ import { SendEmailService } from './services/send.email.service';
         StudiesComponent,
         PatientsComponent,
         /** pipes */
-        EvaluationStatustPipe,
         NutritionClassificationtPipe,
         OverweigthClassificationPipe,
         BloodglucoseClassificationPipe,
@@ -75,12 +73,10 @@ import { SendEmailService } from './services/send.email.service';
     providers: [
         /** services */
         EvaluationService,
-        NutritionEvaluationService,
         DentalEvaluationService,
         GeneratePdfService,
         SendEmailService,
         /** pipes */
-        EvaluationStatustPipe,
         DatePipe,
         NutritionClassificationtPipe,
         OverweigthClassificationPipe,
@@ -90,7 +86,11 @@ import { SendEmailService } from './services/send.email.service';
     ],
     exports: [
         DentalEvaluationTableComponent,
-        EvaluationStatustPipe
+        OverweigthClassificationPipe,
+        NutritionClassificationtPipe,
+        TaylorCutClassificationPipe,
+        BloodglucoseClassificationPipe,
+        BloodpressureClassificationPipe
     ]
 })
 export class EvaluationModule {

@@ -5,8 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { Weight } from '../models/weight';
 import { DecimalFormatterPipe } from '../pipes/decimal.formatter.pipe';
-import { MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
+import { EnumMeasurementType, SearchForPeriod } from '../models/measurement'
 
 @Component({
     selector: 'weight',
@@ -115,10 +115,10 @@ export class WeightComponent implements OnInit, OnChanges {
                 value: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
-            if (element.fat && element.fat.value) {
+            if (element.body_fat) {
                 xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
                 seriesFat.data.push({
-                    value: element.fat.value,
+                    value: element.body_fat,
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
                 });
             }
@@ -157,13 +157,13 @@ export class WeightComponent implements OnInit, OnChanges {
         };
     }
 
-    applyFilter(filter: any) {
+    applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.weight, null, null, filter)
-            .then((measurements: Array<any>) => {
-                this.data = measurements;
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, null, null, filter)
+            .then(httpResponse => {
+                this.data = httpResponse.body;
                 this.showSpinner = false;
-                this.updateGraph(measurements);
+                this.updateGraph(this.data);
             })
             .catch();
     }
@@ -180,10 +180,10 @@ export class WeightComponent implements OnInit, OnChanges {
                 value: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
-            if (element.fat && element.fat.value) {
+            if (element.body_fat) {
                 this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
                 this.weightGraph.series[1].data.push({
-                    value: element.fat.value,
+                    value: element.body_fat,
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
                 });
             }

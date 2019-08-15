@@ -20,3 +20,8 @@
 #linkLogo {
   margin: auto auto;
 }
+
+::ng-deep .sidebar-wrapper{
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

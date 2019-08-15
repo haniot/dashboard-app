@@ -16,9 +16,14 @@ export enum CorAndRace {
 }
 
 export class SocioDemographicRecord {
-    id: string;
-    created_at: string;
     color_race: CorAndRace;
     mother_scholarity: MotherSchoolarity;
     people_in_home: number;
+
+    constructor() {
+        this.color_race = CorAndRace.white;
+        this.mother_scholarity = MotherSchoolarity.undefined;
+        this.people_in_home = 0;
+    }
+
 }

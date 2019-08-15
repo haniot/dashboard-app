@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {MeasurementType} from "../models/measurement";
+import { Pipe, PipeTransform } from '@angular/core';
+import { EnumMeasurementType } from '../models/measurement';
 
 @Pipe({
     name: 'measurementType'
@@ -8,29 +8,29 @@ export class MeasurementTypePipe implements PipeTransform {
 
     transform(value: any, args?: any): any {
         switch (value) {
-            case MeasurementType.weight:
+            case EnumMeasurementType.weight:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.WEIGHT';
 
-            case MeasurementType.height:
+            case EnumMeasurementType.height:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.HEIGHT';
 
-            case MeasurementType.fat:
+            case EnumMeasurementType.body_fat:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.FAT';
 
-            case MeasurementType.waist_circumference:
+            case EnumMeasurementType.waist_circumference:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.WAIST-CIRCUMFERENCE';
 
-            case MeasurementType.body_temperature:
+            case EnumMeasurementType.body_temperature:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BODY-TEMPERATURE';
 
-            case MeasurementType.blood_glucose:
+            case EnumMeasurementType.blood_glucose:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BLOOD-GLUCOSE';
 
-            case MeasurementType.blood_pressure:
+            case EnumMeasurementType.blood_pressure:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BLOOD-PRESSURE';
-
-            case MeasurementType.heart_rate:
-                return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.HEART-RATE';
+            //
+            // case MeasurementType.heart_rate:
+            //     return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.HEART-RATE';
 
             default:
                 return 'MEASUREMENTS.PIPES.NOTFOUND';

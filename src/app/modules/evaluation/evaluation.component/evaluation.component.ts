@@ -4,8 +4,8 @@ import { Location } from '@angular/common';
 
 import { ISubscription } from 'rxjs/Subscription';
 
-import { Patient } from 'app/modules/patient/models/patient';
-import { PatientService } from 'app/modules/patient/services/patient.service';
+import { Patient } from '../../patient/models/patient'
+import { PatientService } from '../../patient/services/patient.service'
 
 @Component({
     selector: 'evaluation-component',
@@ -14,7 +14,6 @@ import { PatientService } from 'app/modules/patient/services/patient.service';
 })
 export class EvaluationComponentComponent implements OnInit, OnChanges, OnDestroy {
     @Input() patientId: string;
-    @Input() pilotStudyId: string;
     patient: Patient;
     private subscriptions: Array<ISubscription>;
 
@@ -30,14 +29,13 @@ export class EvaluationComponentComponent implements OnInit, OnChanges, OnDestro
     ngOnInit() {
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patient_id');
-            this.pilotStudyId = params.get('pilostudy_id');
             this.loadPatient();
         }));
         this.loadPatient();
     }
 
     loadPatient(): void {
-        if (this.pilotStudyId && this.patientId) {
+        if (this.patientId) {
             this.patientService.getById(this.patientId)
                 .then(patient => this.patient = patient)
                 .catch();

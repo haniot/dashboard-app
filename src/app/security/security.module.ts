@@ -4,11 +4,11 @@ import { ErrorHandler, NgModule } from '@angular/core';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ScopeGuard } from './guards/scope.guard';
-import { AplicationErrorHandle } from 'app/app.error-handle';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { RefreshTokenInterceptor } from './interceptors/refresh.token.interceptor';
-import { ChangePasswordInterceptor } from './interceptors/change.password.interceptor';
+import { AccessDeniedInterceptor } from './interceptors/access.denied.interceptor';
 import { VerifyScopeService } from './services/verify.scope.service';
+import { AplicationErrorHandle } from '../app.error-handle'
 
 @NgModule({
     declarations: [],
@@ -21,7 +21,7 @@ import { VerifyScopeService } from './services/verify.scope.service';
         VerifyScopeService,
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ChangePasswordInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AccessDeniedInterceptor, multi: true },
         { provide: ErrorHandler, useClass: AplicationErrorHandle }
     ]
 })

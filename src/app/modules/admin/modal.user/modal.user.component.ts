@@ -1,13 +1,16 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 
 import { ISubscription } from 'rxjs-compat/Subscription';
 
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health.professional.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { HealtArea } from '../models/users';
+import { HealtArea } from '../models/health.professional';
+import { LanguagesConfiguration } from '../../../../assets/i18n/config'
+import { TranslateService } from '@ngx-translate/core'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+
+const languagesConfig = LanguagesConfiguration;
 
 @Component({
     selector: 'app-modal-user',
@@ -31,37 +34,48 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     typeInputPassword = 'password';
     icon_password_confirm = 'visibility_off';
     typeInputPassword_confirm = 'password';
-    timerVerifyPassword;
+    languages = languagesConfig;
+    listOfLanguages: Array<String>;
     private subscriptions: Array<ISubscription>;
+    validateTimer: any;
+    matchTimer: any;
 
     constructor(
         private fb: FormBuilder,
-        private activeRouter: ActivatedRoute,
         private adminService: AdminService,
         private healthService: HealthProfessionalService,
-        private modalService: ModalService
+        private modalService: ModalService,
+        private translateService: TranslateService
     ) {
         this.name = '';
         this.email = '';
         this.password = ''
         this.onsubmit = new EventEmitter();
+        this.listOfLanguages = new Array<String>();
         this.subscriptions = new Array<ISubscription>();
     }
 
     ngOnInit() {
         this.createForm();
         this.loadUserInForm();
-        this.subscriptions.push(this.modalService.eventActionNotExecuted.subscribe((res) => {
-            this.createFormForUser(res.user);
-            this.userForm.setValue(res.user);
-        }));
+        this.subscriptions.push(
+            this.modalService.eventActionNotExecuted.subscribe((res) => {
+                if (res && res.error && res.error.code === 409) {
+                    this.userForm.get('email').setErrors({ 'incorrect': true });
+                }
+                this.createFormForUser(res.user);
+                this.userForm.setValue(res.user);
+            }));
+        this.listOfLanguages = this.translateService.getLangs();
     }
 
     onSubmit() {
         const form = this.userForm.getRawValue();
+        let dateFormat = form.birth_date.toISOString()
+        dateFormat = dateFormat.split('T')[0];
+        form.birth_date = dateFormat;
         const password = form.password;
         const password_confirm = form.password_confirm;
-
         if (password === password_confirm) {
             this.onsubmit.emit(form);
             this.userForm.reset();
@@ -78,11 +92,15 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.required],
             password_confirm: ['', Validators.required],
+            birth_date: ['', Validators.required],
+            phone_number: [''],
+            language: [''],
+            total_pilot_studies: [''],
+            total_patients: [''],
             health_area: ['', Validators.required]
         });
         if (this.typeUser === 'Admin') {
             this.userForm.removeControl('health_area');
-            this.userForm.removeControl('name');
         }
         if (this.userId) {
             this.userForm.removeControl('password');
@@ -92,7 +110,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
 
     createFormForUser(user: any) {
         this.userId = user.id;
-        this.typeUser = user.health_area ? 'HealthProfessional' : 'Admin';
         this.createForm();
     }
 
@@ -124,22 +141,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         this.passwordNotMatch = false;
     }
 
-    verifyMatchPassword() {
-        const form = this.userForm.getRawValue();
-        const password = form.password;
-        const password_confirm = form.password_confirm;
-        if (password === password_confirm) {
-            this.passwordNotMatch = false;
-        } else {
-            this.passwordNotMatch = true;
-            this.userForm.setErrors({});
-        }
-        clearTimeout(this.timerVerifyPassword);
-        this.timerVerifyPassword = setTimeout(() => {
-
-        }, 200);
-    }
-
     clickVisibilityPassword(): void {
         this.icon_password = this.icon_password === 'visibility_off' ? 'visibility' : 'visibility_off';
         this.typeInputPassword = this.icon_password === 'visibility_off' ? 'password' : 'text';
@@ -148,6 +149,44 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     clickVisibilityPasswordConfirm(): void {
         this.icon_password_confirm = this.icon_password_confirm === 'visibility_off' ? 'visibility' : 'visibility_off';
         this.typeInputPassword_confirm = this.icon_password_confirm === 'visibility_off' ? 'password' : 'text';
+    }
+
+    validatePassword(): void {
+        clearTimeout(this.validateTimer);
+        this.validateTimer = setTimeout(() => {
+            const pass = '' + this.userForm.get('password').value;
+            const len = pass.length;
+            const letter = pass.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').length;
+            const num = pass.replace(/[^\d]+/g, '').length;
+            const sym = pass.replace(/[A-Za-z0-9_]/gi, '').length;
+
+            if (len < 6 || letter <= 0 || num <= 0 || sym <= 0) {
+                this.userForm.get('password').setErrors({ 'incorrect': true });
+            }
+        }, 200);
+        if (this.userForm.get('password_confirm').value) {
+            this.matchPassword();
+        }
+    }
+
+    matchPassword(): void {
+        clearTimeout(this.matchTimer);
+        this.matchTimer = setTimeout(() => {
+            if (this.userForm.get('password').value !== this.userForm.get('password_confirm').value) {
+                this.userForm.get('password_confirm').setErrors({ 'incorrect': true });
+            }
+        }, 200);
+    }
+
+    applyMaskPhoneNumber() {
+        let number: string;
+        number = this.userForm.get('phone_number').value;
+
+        number = number.replace(/\D/g, '');
+        number = number.replace(/^(\d{2})(\d)/g, '($1) $2');
+        number = number.replace(/(\d)(\d{4})$/, '$1-$2');
+
+        this.userForm.get('phone_number').patchValue(number);
     }
 
     trackById(index, item) {

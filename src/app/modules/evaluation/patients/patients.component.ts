@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
-import { Patient } from 'app/modules/patient/models/patient';
-import { PatientService } from 'app/modules/patient/services/patient.service';
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { Patient } from '../../patient/models/patient'
+import { PatientService } from '../../patient/services/patient.service'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -32,7 +31,6 @@ export class PatientsComponent implements OnChanges {
 
     constructor(
         private patientService: PatientService,
-        private pilotstudyService: PilotStudyService,
         private paginatorService: PaginatorIntlService,
         private modalService: ModalService
     ) {
@@ -48,10 +46,12 @@ export class PatientsComponent implements OnChanges {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
-                .then(patients => {
-                    this.listOfPatients = patients;
-                    this.listOfPatientsIsEmpty = !(patients && patients.length);
-                    this.calcLengthPatients();
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10)
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listOfPatients = httpResponse.body;
+                    }
+                    this.listOfPatientsIsEmpty = !(this.listOfPatients && this.listOfPatients.length);
                 })
                 .catch(() => {
                     this.listOfPatientsIsEmpty = true;
@@ -61,12 +61,14 @@ export class PatientsComponent implements OnChanges {
 
     getAllPacients() {
         this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
-            .then(patients => {
-                this.listOfPatients = patients;
-                this.calcLengthPatients();
-                this.listOfPatientsIsEmpty = (patients.length === 0);
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10)
+                this.listOfPatients = this.listOfPatients;
+                this.listOfPatientsIsEmpty = !(this.listOfPatients && this.listOfPatients.length);
             })
-            .catch();
+            .catch(() => {
+                this.listOfPatientsIsEmpty = true;
+            });
     }
 
     clickPagination(event) {
@@ -94,14 +96,6 @@ export class PatientsComponent implements OnChanges {
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
-    calcLengthPatients() {
-        this.patientService.getAllByPilotStudy(this.pilotStudyId, undefined, undefined, this.search)
-            .then(patients => {
-                this.length = patients.length;
-            })
-            .catch();
-    }
-
     selectPatient(patient_id: string) {
         this.listClass = new Array<string>();
         let local_index = 0;
@@ -122,7 +116,6 @@ export class PatientsComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.pilotStudyId.currentValue !== '' && changes.pilotStudyId.currentValue !== changes.pilotStudyId.previousValue) {
             this.getAllPacients();
-            this.calcLengthPatients();
         }
     }
 }

@@ -30,7 +30,7 @@
   background: #00a594;
 }
 
-#listProfessionals {
+.form-manager {
   height: 300px;
   overflow: auto;
 }
@@ -86,4 +86,10 @@ table tr {
 .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus,
 .show > .btn-secondary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+}
+
+.label-description {
+  color: black;
+  font-size: 14px;
+  font-weight: normal;
 }

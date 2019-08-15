@@ -30,7 +30,7 @@ export class ScopeGuard implements CanActivate, CanActivateChild {
             const expectedScopes = route.data.scope.split(' ');
             const permission = this.verifyScopes(expectedScopes, userScopes);
             if (!permission) {
-                this.router.navigate(['access-denied']);
+                this.router.navigate(['/access-denied']);
             }
             return permission;
         } else {

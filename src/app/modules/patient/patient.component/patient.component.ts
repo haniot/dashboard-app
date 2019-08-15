@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { ISubscription } from 'rxjs/Subscription';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 
 @Component({
-    selector: 'app-patient-component',
+    selector: 'patient-component',
     templateUrl: './patient.component.html',
     styleUrls: ['./patient.component.scss']
 })
@@ -14,23 +15,21 @@ export class PatientComponent implements OnInit, OnDestroy {
 
     constructor(
         private router: Router,
-        private activeRouter: ActivatedRoute) {
+        private localStorageService: LocalStorageService) {
         this.subscriptions = new Array<ISubscription>();
     }
 
-    ngOnInit() {
-        this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
-            this.pilotStudyId = params.get('pilotstudy_id');
-            this.router.navigate(['patients', this.pilotStudyId]);
-        }));
+    ngOnInit(): void {
+        const userId = this.localStorageService.getItem('user');
+        this.pilotStudyId = this.localStorageService.getItem(userId);
     }
 
     newPatient() {
-        this.router.navigate(['patients', this.pilotStudyId, 'new']);
+        this.router.navigate(['/app/patients/new']);
     }
 
     onBack() {
-        this.router.navigate(['patients']);
+        this.router.navigate(['/app/patients']);
     }
 
     ngOnDestroy(): void {

@@ -1,12 +1,4 @@
-export enum EvaluationStatus {
-    complete = 'complete',
-    incomplete = 'incomplete'
-}
 
-export class Counseling {
-    suggested: any;
-    definitive: any
-}
 
 export class Evaluation {
 

@@ -25,10 +25,14 @@
 .icon_password {
   position: absolute;
   top: 35px;
-  right: 0;
+  right: 15px;
 }
 
 .icon_password:hover {
   border-radius: 20px;
   background: rgb(212, 207, 207);
+}
+
+::ng-deep .cdk-overlay-container {
+  z-index: 2000;
 }

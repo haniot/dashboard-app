@@ -12,22 +12,22 @@ const routes: Routes = [
     {
         path: 'configurations',
         component: HealthProfessionalConfigComponent,
-        data: { scope: '' }
+        data: { scope: 'healthprofessionals:update' }
     },
     {
         path: 'mystudies',
         component: MypilotstudiesComponent,
-        data: { scope: '' }
+        data: { scope: 'pilots:read' }
     },
     {
         path: 'mystudies/:userId/:pilotstudy_id',
         component: EditMypilotComponent,
-        data: { scope: '' }
+        data: { scope: 'pilots:update' }
     },
     {
         path: 'myevaluations',
         component: MyevaluationsComponent,
-        data: { scope: '' }
+        data: { scope: 'evaluations:read' }
     },
     { path: '**', redirectTo: 'page-not-found' }
 ];

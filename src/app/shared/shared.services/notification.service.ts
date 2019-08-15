@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { NotificationEmail } from '../../modules/evaluation/models/notification-email';
+import { Email } from '../../modules/evaluation/models/email';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class NotificationService {
+    version: string;
 
     constructor(
         private http: HttpClient) {
+        this.version = 'v1';
     }
 
-    sendEmail(userId: string, notification: NotificationEmail) {
-        return this.http.post<any>(`${environment.api_url}/users/${userId}/emails`, notification)
+    sendEmail(userId: string, notification: Email) {
+        return this.http.post<any>(`${environment.api_url}/${this.version}/users/${userId}/emails`, notification)
             .toPromise();
     }
 

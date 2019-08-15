@@ -1,8 +1,20 @@
-export enum MeasurementType {
+export class SearchForPeriod {
+    start_at: string;
+    end_at: string;
+    period?: string;
+
+    constructor() {
+        this.start_at = '';
+        this.end_at = '';
+        this.period = '';
+    }
+}
+
+export enum EnumMeasurementType {
     weight = 'weight',
     blood_glucose = 'blood_glucose',
-    fat = 'fat',
-    heart_rate = 'heart_rate',
+    body_fat = 'body_fat',
+    // heart_rate = 'heart_rate',
     blood_pressure = 'blood_pressure',
     height = 'height',
     waist_circumference = 'waist_circumference',
@@ -12,14 +24,14 @@ export enum MeasurementType {
 export class GenericMeasurement {
     id: string;
     unit: string;
-    type: MeasurementType;
-    user_id: string;
+    type: EnumMeasurementType;
+    patient_id: string;
     device_id?: string;
 
     constructor() {
         this.id = ''
         this.unit = '';
-        this.user_id = '';
+        this.patient_id = '';
         this.device_id = '';
     }
 }

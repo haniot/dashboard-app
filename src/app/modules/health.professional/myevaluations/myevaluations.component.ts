@@ -9,7 +9,7 @@ import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluatio
 import { EvaluationService } from '../../evaluation/services/evaluation.service';
 import { NutritionEvaluationService } from '../../evaluation/services/nutrition.evaluation.service';
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -66,10 +66,14 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.nutritionService.getAllByHealthprofessional(this.userId, this.page, this.limit, this.search)
-                .then(nutritionsEvaluations => {
-                    this.listOfEvaluations = nutritionsEvaluations;
-                    this.listOfEvaluationsIsEmpty = !nutritionsEvaluations.length;
-                    this.calcLenghtNutritionEvaluations();
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.listOfEvaluations = new Array<NutritionEvaluation>();
+                    if (httpResponse.body && httpResponse.body.length) {
+                        const nutritionsEvaluations = httpResponse.body
+                        this.listOfEvaluations = nutritionsEvaluations;
+                    }
+                    this.listOfEvaluationsIsEmpty = !(this.listOfEvaluations && this.listOfEvaluations.length);
                 })
                 .catch(() => {
                     this.listOfEvaluationsIsEmpty = true;
@@ -83,10 +87,14 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
             this.loadUserId();
         }
         this.nutritionService.getAllByHealthprofessional(this.userId, this.page, this.limit, this.search)
-            .then(nutritionsEvaluations => {
-                this.listOfEvaluations = nutritionsEvaluations;
-                this.calcLenghtNutritionEvaluations();
-                this.listOfEvaluationsIsEmpty = !(nutritionsEvaluations && nutritionsEvaluations.length);
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.listOfEvaluations = new Array<NutritionEvaluation>();
+                if (httpResponse.body && httpResponse.body.length) {
+                    const nutritionsEvaluations = httpResponse.body
+                    this.listOfEvaluations = nutritionsEvaluations;
+                }
+                this.listOfEvaluationsIsEmpty = !(this.listOfEvaluations && this.listOfEvaluations.length);
             })
             .catch(() => {
                 this.listOfEvaluationsIsEmpty = true;
@@ -118,7 +126,6 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
             this.nutritionService.remove(this.patientId, this.cacheIdEvaluationRemove)
                 .then(() => {
                     this.getAllNutritionEvaluations();
-                    this.calcLenghtNutritionEvaluations();
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-REMOVED'));
                     this.closeModalComfimation();
                 })
@@ -135,18 +142,6 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
 
-    calcLenghtNutritionEvaluations() {
-        if (!this.userId) {
-            this.loadUserId();
-        }
-        this.nutritionService.getAllByHealthprofessional(this.userId, undefined, undefined, this.search)
-            .then(nutritionEvaluations => {
-                this.length = nutritionEvaluations.length;
-            })
-            .catch();
-
-    }
-
     trackById(index, item) {
         return item.id;
     }
@@ -154,7 +149,6 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
     ngOnChanges(changes: SimpleChanges) {
         if (changes.patientId.currentValue !== undefined && changes.patientId.previousValue === undefined) {
             this.getAllNutritionEvaluations();
-            this.calcLenghtNutritionEvaluations();
         }
     }
 

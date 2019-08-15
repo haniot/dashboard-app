@@ -6,12 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { RecaptchaModule } from 'ng-recaptcha'
-import { ToastContainerModule } from 'ngx-toastr'
 
 import { LoginComponent } from './login/login.component';
 import { ChangePasswordComponent } from './change.password/change.password.component';
 import { AuthRoutingModule } from './auth.routing/auth.routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { ForgotPasswordComponent } from './forgot.password/forgot.password.component';
 
 @NgModule({
     imports: [
@@ -23,12 +23,12 @@ import { SharedModule } from '../../shared/shared.module';
         SharedModule,
 
         TranslateModule,
-        RecaptchaModule,
-        ToastContainerModule
+        RecaptchaModule
     ],
     declarations: [
         LoginComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        ForgotPasswordComponent
     ],
     providers: []
 })

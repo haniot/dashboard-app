@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { environment } from 'environments/environment';
-import { Admin } from '../models/users';
-import { User } from '../../../shared/shared.models/user';
+import { Admin } from '../models/admin';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
+import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class AdminService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
 
     getById(id: string): Promise<any> {
-        return this.http.get<any>(`${environment.api_url}/users/admins/${id}`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/admins/${id}`)
             .toPromise();
     }
 
-    getAll(page?: number, limit?: number, search?: string): Promise<User[]> {
+    getAll(page?: number, limit?: number, search?: string): Promise<HttpResponse<GenericUser[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -32,20 +34,19 @@ export class AdminService {
             myParams = myParams.append('?email', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/users/admins`;
+        const url = `${environment.api_url}/${this.version}/admins`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
-    create(administrator: Admin): Promise<User> {
-        return this.http.post<any>(`${environment.api_url}/users/admins`, administrator)
+    create(administrator: Admin): Promise<GenericUser> {
+        return this.http.post<any>(`${environment.api_url}/${this.version}/admins`, administrator)
             .toPromise();
     }
 
-    update(administrator: Admin): Promise<User> {
-
-        return this.http.patch<any>(`${environment.api_url}/users/admins/${administrator.id}`, administrator)
+    update(administrator: Admin): Promise<GenericUser> {
+        return this.http.patch<any>(`${environment.api_url}/${this.version}/admins/${administrator.id}`, administrator)
             .toPromise();
     }
 }

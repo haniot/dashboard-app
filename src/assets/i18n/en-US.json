@@ -44,6 +44,12 @@
       "VIEW": "View study",
       "STUDIES-EMPTY": "You have no associated studies.",
       "STUDIES-EMPTY-MESSAGE": "Please contact your administrator."
+    },
+    "CARD-EVALUATIONS": {
+      "TITLE": "Access your evaluations",
+      "SUBTITLE": "Click on the card to view evaluation information.",
+      "NONE-EVALUATIONS": "You do not have any evaluations available!",
+      "TOTAL": "Total Evaluations"
     }
   },
   "EVALUATION": {
@@ -162,6 +168,16 @@
     "FAMILY-COHESION": {
       "TITLE": "Family cohesion",
       "SUBTITLE": "",
+      "FAMILY-MUTUAL": "Mutual Family Help",
+      "FRIENDSHIP-APPROVAL": "Friendship Approval",
+      "FAMILY-ONLY-TASK": "Just Family Tasks",
+      "FAMILY-ONLY-PREFERENCE": "Family Only Preference",
+      "FREE-TIME-TOGETHER": "Free time together",
+      "FAMILY-PROXIMITY": "Proximity Perception",
+      "ALL-FAMILY-TASKS": "All Family Tasks",
+      "FAMILY-TASKS-OPPORTUNITY": "Family Task Opportunities",
+      "FAMILY-DECISION-SUPPORT": "Family Support for Decision Making",
+      "FAMILY-UNION": "Relevance of Family Union",
       "UNAVAILABLE-DATA": "Family cohesion data unavailable!"
     },
     "FEEDING": {
@@ -336,13 +352,24 @@
         "OFTEN": "Often",
         "ALMOST-ALWAYS": "Almost always"
       },
+      "QUESTIONNAIRE-TYPE": {
+        "SOCIO-DEMOGRAPHIC": "Sociodemographic Record",
+        "FAMILY-COHESION": "Family Cohesion Record",
+        "ORAL-HEALTH": "Oral Health Record",
+        "SLEEP": "Sleep Habit",
+        "PHYSICAL-ACTIVITY": "Physical Activity Habits",
+        "FEEDING": "Feeding Habits Record",
+        "MEDICAL": "Medical Record"
+      },
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND",
       "DO-NOT-KNOW": "I do not know/I do not remember"
     },
     "REGISTER-DATE": "Date of registration",
     "PREVIOUS": "Previous",
-    "NEXT": "Next"
+    "NEXT": "Next",
+    "DELETE-ODONTOLOGICAL-QUESTIONNAIRE": "Remove odontological questionnaire",
+    "DELETE-NUTRITIONAL-QUESTIONNAIRE": "Remove nutritional questionnaire"
   },
   "HEALTHPROFESSIONALS": {
     "TITLE": "List of health professionals",
@@ -427,6 +454,7 @@
       "WEIGHT": "Weight",
       "HEIGHT": "Height",
       "FAT": "Body fat",
+      "FAT-UNIT": "%",
       "WAIST-CIRCUMFERENCE": "Waist circumference",
       "TEMPERATURE": "Body temperature",
       "GLUCOSE": "Blood Glucose",
@@ -568,7 +596,19 @@
       },
       "HABITS": "HABITS",
       "MEASUREMENTS": "GRAPH OF MEASUREMENTS",
-      "LOG-MEASUREMENTS": "LOG OF MEASUREMENTS"
+      "LOG-MEASUREMENTS": "LOG OF MEASUREMENTS",
+      "LOADING-QUESTIONNAIRES": "Loading questionnaire...",
+      "REMOVE-QUESTIONNAIRE": "Remove questionnaire"
+    },
+    "MY-STUDIES": {
+      "TITLE": "Pilot Study List",
+      "SUBTITLE": "You have view only permission",
+      "NONE-STUDIES": "No studies found!",
+      "NONE-STUDIES-MESSAGE": "There is no study with the name searched."
+    },
+    "MY-EVALUATIONS": {
+      "TITLE": "List Evaluations",
+      "SUBTITLE": "Click"
     }
   },
   "PILOT-STUDY": {
@@ -592,7 +632,7 @@
     "ODONTOLOGICAL-EVALUATON": "Dental evaluation",
     "FILECSV": "File CSV",
     "FILEXLS": "File XLS",
-    "GENERATINGFILE": "Generating file",
+    "REQUESTING-DATA": "Requesting data",
     "REMOVINGFILE": "Removing file",
     "START": "Start",
     "END": "End",
@@ -603,12 +643,21 @@
     "SITUATION": "Situation",
     "PROFESSIONALS": "Professionals",
     "SELECT-PROFESSIONALS": "Select professionals",
+    "VIEW-DATA": "View Data",
     "MANAGE-PROFESSIONALS": {
       "TITLE": "Manage professionals",
       "SUBTITLE": "",
       "ADDPROFESSIONAL": "Add new professional",
       "ASSOCIATE-PROFESSIONALS": "Associate professionals",
       "DISASSOCIATE-PROFESSIONAL": "Disassociate professional...",
+      "REMOVE": "To remove"
+    },
+    "MANAGE-PATIENTS": {
+      "TITLE": "Manage patients",
+      "SUBTITLE": "",
+      "ADDPATIENT": "Add new patient",
+      "ASSOCIATE-PATIENTS": "Associated Patients",
+      "DISASSOCIATE-PATIENT": "Dissociate patient...",
       "REMOVE": "To remove"
     },
     "PLACEHOLDER-SEARCH": "Search for study...",
@@ -619,11 +668,29 @@
     "PROFESSIONAL": "Professional",
     "CARD-PILOT-STUDY": {
       "TITLE": "Pilot study",
-      "SUBTITLE": ""
+      "SUBTITLE": "",
+      "EDIT-INFO": "Edit Info",
+      "TOTAL-PROFESSIONALS": "Number of Professionalss",
+      "TOTAL-PATIENTS": "Number of Patients"
     },
     "CARD-FILES": {
       "TITLE": "Files available for download",
-      "SUBTITLE": ""
+      "SUBTITLE": "",
+      "DATA-SUCCESSFULLY-REQUEST": "Data successfully requested!",
+      "DATA-SUCCESSFULLY-REQUEST-MESSAGE": "The requested data will be available within a few minutes..",
+      "COMPLETION-ESTIMATE": "Estimated Completion",
+      "UNDERSTOOD": "Understood",
+      "CONFIG-RESQUEST-DATA": "Configure Data Request",
+      "TYPES-OF-QUESTIONNAIRES": "Questionnarie Types",
+      "TYPES-OF-MEASUREMENTS": "Measurements Types",
+      "SELECT-QUESTIONNAIRES": "Select the types of questionnaires you want to include",
+      "SELECT-MEASUREMENTS": "Select the types of measurements you want to include",
+      "SELECT-PATIENTS-TO-INCLUDE": "Select the patients you want to include",
+      "SELECT-ALL": "Select all",
+      "NUTRITIONAL-QUESTIONNAIRE": "Nutrition Questionnaire",
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Odontological Questionnaire",
+      "SELECT-PATIENTS": "Select patients",
+      "REQUEST": "Request"
     }
   },
   "SIDEBAR": {
@@ -647,6 +714,7 @@
     "PASSWORD-NEW": "New password",
     "INCORRECT-PASSWORD": "Incorret password",
     "PASSWORD-RULES-MESSAGE": "Your password must be at least 6 characters long including letters, numbers, and symbols",
+    "PASSWORD-CONFIRM-MESSAGE": "Passwords do not match!",
     "CHANGE-PASSWORD": "Change password",
     "CONFIG": "Settings",
     "LOGOUT": "Logout",
@@ -663,7 +731,9 @@
     "PASSWORD-NOTMATCH": "Enter the same password",
     "REQUERID-FIELD": "Required field",
     "CLOSE": "Close",
+    "TO-EDIT": "Edit",
     "DATE": "Date",
+    "HOUR": "Hour",
     "DATE-AND-HOUR": "Date and Hour",
     "AT": "at",
     "DATE-START": "Start date",
@@ -688,6 +758,10 @@
     "AGE": "Age",
     "YEARS": "YEARS",
     "CANCEL": "Cancel",
+    "PHONE-NUMBER": "Telephone",
+    "INVALID-PHONE-NUMBER": "Invalid phone",
+    "LANGUAGE": "Language",
+    "INVALID-LANGUAGE": "Invalid language",
     "PIPES": {
       "GENDER": {
         "MALE": "MALE",
@@ -727,11 +801,24 @@
       "RESET-HERE": "reset here"
     },
     "CHANGE": {
-      "FIRST-ACCESS": "First access",
-      "PASSWORD-OLD": "Old password",
-      "PLACEHOLDER-PASSWORD-OLD": "Enter your old password here...",
-      "PASSWORD-NEW": "New password",
-      "PLACEHOLDER-PASSWORD-NEW": "Enter your new password here..."
+      "CHANGE-PASSWORD": "Change Password",
+      "PASSWORD": "New Password",
+      "PLACEHOLDER-PASSWORD": "Enter your new password here...",
+      "CONFIRM-PASSWORD": "Confirm the Password",
+      "PLACEHOLDER-CONFIRM-PASSWORD": "Enter your new password here...",
+      "RESET-PROCESS": "Restart the recovery process",
+      "INVALID-TOKEN": "Invalid token!"
+    },
+    "FORGOT": {
+      "INFORMATION": "Email successfully sent!",
+      "INFORMATION-MESSAGE": "If the submitted email is properly registered on the platform, you will receive an email with instructions and a link to change the password. If you don't receive the email within a few minutes, check your spam box or repeat the process.",
+      "PASSWORD-RECOVERY": "Recovery Password",
+      "SUBMIT": "Submit",
+      "RECOVERY-SUCCESS": "Recovery email sent to",
+      "RECOVERY-ERROR": "Unable to recover password!",
+      "TRY-AGAIN": "Try again after 24 hours",
+      "TOO-MANY-ATTEMPTS": "Too many attempts!",
+      "UNDERSTOOD": "UNDERSTOOD"
     }
   },
   "TABLE-USER": {
@@ -766,7 +853,7 @@
     "HEALTHPROFESSIONALS-NOTFOUND": "Professional not found",
     "STUDY-EMPTY": "The selected study has no patients!",
     "PATIENT-ERROR": "Some patient does not have the necessary information!",
-    "EVALUATION-NOT-GENERATED": "Could not generate evaluation",
+    "DATA-NOT-SOLICITED": "Could not generate evaluation",
     "NOT-LOAD-NUTRITION-EVALUATION": "Could not load nutritional assessment!",
     "PATIENT-NOT-IDENTIFIED": "The patient could not be identified!",
     "EVALUATION-COMPLETED": "Evaluation completed successfully!",
@@ -795,13 +882,18 @@
     "HEALTHPROFESSIONAL-NOT-REMOVED": "Could not remove professional!",
     "HEALTHPROFESSIONAL-ADD": "Professional added successfully!",
     "HEALTHPROFESSIONAL-NOT-ADD": "Could not add professional!",
+    "PATIENT-ADD": "Successfully added patient!",
+    "PATIENT-NOT-ADD": "Unable to add professional!",
     "PASSWORD-UPDATED": "Password modified successfully!",
     "PASSWORD-NOT-UPDATED": "Could not change your password!",
-    "PASSWORD-OLD-INCORRECT": "Old password entered incorrect!",
+    "INVALID-TOKEN": "Token invalid or expired!o!",
+    "TOO-MANY-REQUESTS": "Request limit exceeded!",
     "INVALID-DATA": "Invalid data",
     "NOT-LOGIN": "Could not login",
     "BLOCKED-USER": "Blocked user!",
     "TRY-AGAIN": "Try again after 1 hour.",
-    "NOT-CHANGE-LANGUAGE": "Could not change language!"
+    "NOT-CHANGE-LANGUAGE": "Could not change language!",
+    "QUESTIONNAIRE-DELETED": "Questionnaire successfully removed!",
+    "QUESTIONNAIRE-NOT-DELETED": "Unable to remove questionnaire!"
   }
 }

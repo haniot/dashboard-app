@@ -8,11 +8,11 @@ import * as $ from 'jquery';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { RecaptchaComponent } from 'ng-recaptcha'
+import { RecaptchaComponent } from 'ng-recaptcha';
 
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service'
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 import { environment } from '../../../../environments/environment'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const ATTEMPTSSHOWCAPTCHA = 2;
 
@@ -62,12 +62,16 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     ngOnInit() {
+        const token = this.localStorageService.getItem('token');
+        if (token) {
+            this.router.navigate(['/app']);
+        }
+
         $('body').css('background-color', '#00a594');
         this.f = this.formBuilder.group({
             email: [null, [Validators.required, Validators.email]],
             password: [null, [Validators.required]]
         });
-        this.configLanguage();
         this.configReCaptcha();
     }
 
@@ -131,33 +135,40 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     onSubmit() {
         this.loading = true;
-        this.subscriptions.push(this.authService.login(this.f.value).subscribe(
-            (resp) => {
-                this.cleanAttempt()
-                this.router.navigate(['']);
-                this.loading = false;
-            },
-            (error: HttpErrorResponse) => {
-                const rateLimit = parseInt(error.headers.get('x-ratelimit-limit'), 10);
-                const rateLimitRemaining = parseInt(error.headers.get('x-ratelimit-remaining'), 10);
-                switch (error.status) {
-                    case 401:
-                        this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
-                            this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
-                        this.updateAttempt(rateLimit - rateLimitRemaining);
-                        break;
-                    case 429:
-                        this.toastr.error(this.translateService.instant('TOAST-MESSAGES.TRY-AGAIN'),
-                            this.translateService.instant('TOAST-MESSAGES.BLOCKED-USER'));
-                        this.showCaptcha = false;
-                        this.cleanAttempt();
-                        break;
-                }
-                this.loading = false;
-                this.verifyReCaptcha();
-                this.resetCaptcha();
-            }
-        ));
+        this.subscriptions.push(
+            this.authService.login(this.f.value)
+                .subscribe(
+                    (resp) => {
+                        this.cleanAttempt()
+                        const urlTemporary = this.localStorageService.getItem('urlTemporary');
+                        this.loading = false;
+                        this.router.navigate(['/app']);
+                        if (urlTemporary) {
+                            this.localStorageService.removeItem('urlTemporary');
+                            this.router.navigate([urlTemporary]);
+                        }
+                    },
+                    (error: HttpErrorResponse) => {
+                        const rateLimit = parseInt(error.headers.get('x-ratelimit-limit'), 10);
+                        const rateLimitRemaining = parseInt(error.headers.get('x-ratelimit-remaining'), 10);
+                        switch (error.status) {
+                            case 401:
+                                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
+                                    this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
+                                this.updateAttempt(rateLimit - rateLimitRemaining);
+                                break;
+                            case 429:
+                                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.TRY-AGAIN'),
+                                    this.translateService.instant('TOAST-MESSAGES.BLOCKED-USER'));
+                                this.showCaptcha = false;
+                                this.cleanAttempt();
+                                break;
+                        }
+                        this.loading = false;
+                        this.verifyReCaptcha();
+                        this.resetCaptcha();
+                    }
+                ));
     };
 
     clickVisibilityPassword(): void {
@@ -166,21 +177,6 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.typeInputPassword = 'password';
         } else {
             this.typeInputPassword = 'text';
-        }
-    }
-
-    configLanguage() {
-        const browserLang = this.translateService.getBrowserLang();
-        switch (browserLang) {
-            case 'en':
-                this.translateService.use('en-US');
-                break;
-            case 'pt':
-                this.translateService.use('pt-BR');
-                break;
-            default:
-                this.translateService.use('en-US');
-                break;
         }
     }
 
@@ -210,6 +206,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });
+        /* reset color*/
+        $('body').css('background-color', '#ececec');
     }
 
 }

@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -61,10 +61,12 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
     getAllPilotStudies() {
         this.userId = this.localStorageService.getItem('user');
         this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-            .then(studies => {
-                this.list = studies;
-                this.getLengthPilotStudies();
-                this.listOfStudiesIsEmpty = !(studies.length);
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.list = httpResponse.body;
+                }
+                this.listOfStudiesIsEmpty = !(this.list && this.list.length);
             })
             .catch(() => {
                 this.listOfStudiesIsEmpty = true;
@@ -75,10 +77,12 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-                .then(studies => {
-                    this.list = studies;
-                    this.getLengthPilotStudies();
-                    this.listOfStudiesIsEmpty = !studies.length;
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
+                    this.listOfStudiesIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {
                     this.listOfStudiesIsEmpty = true;
@@ -100,29 +104,12 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
         this.getAllPilotStudies();
     }
 
-    getLengthPilotStudies() {
-        if (this.userId) {
-            this.pilotStudyService.getAllByUserId(this.userId, undefined, undefined, this.search)
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        } else {
-            this.pilotStudyService.getAll()
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        }
-    }
-
     removeStudy() {
         if (this.cacheStudyIdRemove) {
             this.pilotStudyService.remove(this.cacheStudyIdRemove)
                 .then(() => {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-REMOVED'));
                     this.getAllPilotStudies();
-                    this.getLengthPilotStudies();
                     this.closeModalConfirmation();
                 })
                 .catch(error => {

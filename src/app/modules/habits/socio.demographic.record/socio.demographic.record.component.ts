@@ -1,8 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { SocioDemographicRecord } from '../models/socio.demographic.record';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { SocioDemographicRecordService } from '../services/socio.demographic.record.service';
+import { SocioDemographicRecord } from '../models/socio.demographic.record';
 import { MotherSchoolarityPipe } from '../pipes/mother.schoolarity.pipe';
 import { CorAndRacePipe } from '../pipes/cor.race.pipe';
 
@@ -12,19 +11,17 @@ import { CorAndRacePipe } from '../pipes/cor.race.pipe';
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class SocioDemographicRecordComponent implements OnInit, OnChanges {
-    @Input() patientId: string;
-    listSocioDemographic: Array<SocioDemographicRecord>;
+    @Input() socioDemographicRecord: SocioDemographicRecord;
     socioDemographicForm: FormGroup;
     index: number;
 
     constructor(
         private fb: FormBuilder,
-        private socioDemographicService: SocioDemographicRecordService,
         private motherSchoolarityPipe: MotherSchoolarityPipe,
         private corAndRacePipe: CorAndRacePipe
     ) {
         this.index = 0;
-        this.listSocioDemographic = new Array<SocioDemographicRecord>();
+        this.socioDemographicRecord = new SocioDemographicRecord();
     }
 
     ngOnInit() {
@@ -34,8 +31,6 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
 
     createSocioDemographicFormInit() {
         this.socioDemographicForm = this.fb.group({
-            id: [''],
-            created_at: [{ value: '', disabled: true }],
             color_race: [{ value: '', disabled: true }],
             mother_scholarity: [{ value: '', disabled: true }],
             people_in_home: [{ value: 0, disabled: true }]
@@ -45,8 +40,6 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
 
     createSocioDemographicForm(sociodemographicRecord: SocioDemographicRecord) {
         this.socioDemographicForm = this.fb.group({
-            id: [{ value: sociodemographicRecord.id, disabled: true }],
-            created_at: [{ value: sociodemographicRecord.created_at, disabled: true }],
             color_race: [{ value: sociodemographicRecord.color_race, disabled: true }],
             mother_scholarity: [{ value: sociodemographicRecord.mother_scholarity, disabled: true }],
             people_in_home: [{ value: sociodemographicRecord.people_in_home, disabled: true }]
@@ -58,26 +51,12 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
-            this.socioDemographicService.getAll(this.patientId)
-                .then(sociodemographics => {
-                    this.listSocioDemographic = sociodemographics;
-                    this.createSocioDemographicForm(sociodemographics[0]);
-                })
-                .catch();
+        if (changes.socioDemographicRecord.currentValue !== changes.socioDemographicRecord.previousValue) {
+            if (this.socioDemographicRecord) {
+                this.createSocioDemographicForm(this.socioDemographicRecord);
+            } else {
+                this.socioDemographicForm.reset();
+            }
         }
     }
-
-    prev() {
-        if (this.index) {
-            this.index--;
-        }
-        this.createSocioDemographicForm(this.listSocioDemographic[this.index]);
-    }
-
-    next() {
-        this.index++;
-        this.createSocioDemographicForm(this.listSocioDemographic[this.index]);
-    }
-
 }

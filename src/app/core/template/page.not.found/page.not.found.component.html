@@ -1,31 +1,37 @@
 <div class="row" id="div-body">
     <div id="top" class="col-md-12">
-      <div class="d-flex justify-content-center">
-        <span id="haniotTitle">{{'APP.TITLE' | translate}}</span>
-      </div>
-    </div>
-  
-    <div class="text-white py-5 col-md-12">
-      <div class="container py-5">
-        <div class="row">
-          <div class="col-md-2" id="silhueta-bg">
-            <img src="../../../../assets/img/haniot/silhueta-403.png" alt="" id="silhueta-bg">
-            <!-- <p><i class="fa fa-exclamation-triangle fa-5x"></i><br />Status Code: 403</p> -->
-          </div>
-          <div class="col-md-2">
-  
-          </div>
-          <div class="col-md-8 tabcontent" id="div-message">
-            <h2>{{'PAGE-NOT-FOUND.TITLE' | translate}}!</h2>
-            <p>{{'PAGE-NOT-FOUND.MESSAGE' | translate}}.</p>
-            <p>{{'PAGE-NOT-FOUND.REDIRECT-PART1' | translate}} {{time/1000}} {{'PAGE-NOT-FOUND.REDIRECT-PART2' | translate}}.</p>
-          </div>
+        <div class="d-flex justify-content-center">
+            <span id="haniotTitle">{{'APP.TITLE' | translate}}</span>
         </div>
-      </div>
-  
     </div>
-  </div>
-  
-  <div class="row" id="div-footer">
+
+    <div class="text-white py-5 col-md-12">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-md-2" id="silhueta-bg">
+                    <img src="../../../../assets/img/haniot/silhueta-403.png" alt="" id="silhueta-bg">
+                    <!-- <p><i class="fa fa-exclamation-triangle fa-5x"></i><br />Status Code: 403</p> -->
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-8 tabcontent align-content-center" id="div-message">
+                    <h2>{{'PAGE-NOT-FOUND.TITLE' | translate}}!</h2>
+                    <p>{{'PAGE-NOT-FOUND.MESSAGE' | translate}}.</p>
+                    <p>{{'PAGE-NOT-FOUND.REDIRECT-PART1' | translate}} {{'PAGE-NOT-FOUND.REDIRECT-PART2' | translate}}
+                        .</p>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 align-content-center">
+                            <button type="button" class="btn btn-haniot-primary btn-block" (click)="onBack()" style="font-weight: bold">{{'SHARED.HOME-PAGE'|translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row" id="div-footer">
     <app-footer></app-footer>
-  </div>
+</div>

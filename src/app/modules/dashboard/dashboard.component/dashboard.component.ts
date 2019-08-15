@@ -3,18 +3,19 @@ import { PageEvent } from '@angular/material/paginator';
 
 import * as $ from 'jquery';
 import { ISubscription } from 'rxjs/Subscription';
-import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
 
-import { DashboardService } from '../services/dashboard.service';
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { Unit } from '../models/unit';
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { Patient } from '../../patient/models/patient';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic } from '../../config.matpaginator';
+import { DashboardService } from '../services/dashboard.service'
+import { GenericUser } from '../../../shared/shared.models/generic.user'
+import { UserService } from '../../admin/services/users.service'
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -36,17 +37,24 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     pageStudies: number;
     limitStudies: number;
     lengthStudies: number;
+    /* Evaluations Paging Settings */
+    pageSizeOptionsEvaluations: number[];
+    pageEvaluations: number;
+    limitEvaluatins: number;
+    lengthEvaluations: number;
+    pageEventEvaluations: PageEvent;
     userId: string;
+    userLogged: GenericUser;
     patientsTotal: number;
-    studiesTotal: number;
     measurementsTotal: number;
     evaluationsTotal: number;
-    listPacientsAndWeigth: Array<Unit>;
-    listPacients: Array<Patient>;
+    listPatients: Array<Patient>;
     listPilots: Array<PilotStudy>;
+    listEvaluations: Array<NutritionEvaluation>;
     pilotStudyId: string;
     listOfStudiesIsEmpty: boolean;
     listOfPatientsIsEmpty: boolean;
+    listOfEvaluatioinsIsEmpty: boolean;
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -54,19 +62,19 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         private authService: AuthService,
         private loadinService: LoadingService,
         private localStorageService: LocalStorageService,
-        private toastService: ToastrService,
         private selectPilotService: SelectPilotStudyService,
-        private translateService: TranslateService
+        private userService: UserService
     ) {
         this.patientsTotal = 0;
         this.measurementsTotal = 0;
         this.evaluationsTotal = 0;
-        this.listPacientsAndWeigth = new Array<Unit>();
         this.listPilots = new Array<PilotStudy>();
-        this.listPacients = new Array<Patient>();
+        this.listPatients = new Array<Patient>();
+        this.listEvaluations = new Array<NutritionEvaluation>();
         this.pilotStudyId = '';
         this.listOfStudiesIsEmpty = false;
         this.listOfPatientsIsEmpty = false;
+        this.listOfEvaluatioinsIsEmpty = false;
         this.subscriptions = new Array<ISubscription>();
         this.pagePatients = PaginatorConfig.page;
         this.limitPatients = PaginatorConfig.limit;
@@ -74,6 +82,9 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.pageStudies = PaginatorConfig.page;
         this.limitStudies = PaginatorConfig.limit;
         this.pageSizeOptionsStudies = PaginatorConfig.pageSizeOptions;
+        this.pageEvaluations = PaginatorConfig.page;
+        this.limitEvaluatins = 2;
+        this.pageSizeOptionsEvaluations = PaginatorConfig.pageSizeOptions;
     }
 
 
@@ -103,6 +114,22 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     loadUser(): void {
         this.userId = this.localStorageService.getItem('user');
+        const localUserLogged = this.localStorageService.getItem('userLogged');
+        try {
+            this.userLogged = JSON.parse(localUserLogged);
+            if (!localUserLogged) {
+                throw new Error();
+            }
+        } catch (e) {
+            this.userService.getUserById(this.localStorageService.getItem('user'))
+                .then(user => {
+                    if (user) {
+                        this.userLogged = user;
+                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
+                    }
+                })
+                .catch();
+        }
     }
 
     load() {
@@ -118,6 +145,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
 
         this.getStudies();
+
+        if (this.getUserType() === 'patient') {
+            this.getEvaluations();
+        }
 
     }
 
@@ -135,24 +166,29 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.limitStudies = event.pageSize;
     }
 
+    clickPaginationEvaluations(event) {
+        this.pageEventPatients = event;
+        this.pagePatients = event.pageIndex + 1;
+        this.limitPatients = event.pageSize;
+        this.getEvaluations()
+    }
+
     getPatients() {
         if (!this.pilotStudyId) {
             this.loadPilotSelected();
         }
         this.dashboardService.getAllPatients(this.pilotStudyId, this.pagePatients, this.limitPatients)
-            .then(patients => {
-                this.listPacients = patients;
-                this.calcLengthPatients();
-                this.listOfPatientsIsEmpty = !patients.length;
+            .then(httpResponse => {
+                this.lengthPatients = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listPatients = httpResponse.body;
+                }
+                this.listOfPatientsIsEmpty = !(this.listPatients && this.listPatients.length);
             })
-    }
-
-    calcLengthPatients() {
-        this.dashboardService.getAllPatients(this.pilotStudyId, undefined, undefined)
-            .then(patients => {
-                this.lengthPatients = patients.length;
-            })
-            .catch();
+            .catch(() => {
+                this.lengthPatients = 0;
+                this.listOfPatientsIsEmpty = true;
+            });
     }
 
     getStudies() {
@@ -160,40 +196,49 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.loadUser();
         }
         this.dashboardService.getAllStudiesByUserId(this.userId, this.pageStudies, this.limitStudies)
-            .then(studies => {
-                this.listPilots = studies;
-                this.calcLengthStudies();
-                this.listOfStudiesIsEmpty = !studies.length;
+            .then(httpResponse => {
+                this.lengthStudies = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (!this.lengthStudies) {
+                    this.lengthStudies = 0;
+                }
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listPilots = httpResponse.body;
+                }
+                this.listOfStudiesIsEmpty = !(this.listPilots && this.listPilots.length);
             })
+            .catch(() => {
+                this.lengthStudies = 0;
+                this.listOfStudiesIsEmpty = true;
+            });
     }
 
-    calcLengthStudies() {
-        if (this.isNotUserAdmin()) {
-            this.dashboardService.getNumberOfStudies(this.userId)
-                .then(numberOfStudies => {
-                    this.lengthStudies = numberOfStudies;
-                    this.studiesTotal = numberOfStudies;
-
-                })
-                .catch();
-        } else {
-            this.dashboardService.getInfoByUser(this.userId)
-                .then((response: { studiesTotal: number, patientsTotal: number }) => {
-                    if (response) {
-                        this.studiesTotal = response.studiesTotal;
-                        this.lengthStudies = response.studiesTotal;
-                        this.patientsTotal = response.patientsTotal;
-                    }
-                })
-                .catch(error => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'))
-                });
+    getEvaluations() {
+        if (!this.userId) {
+            this.loadUser();
         }
-
+        this.dashboardService.getAllEvaluations(this.userId, this.pageStudies, this.limitStudies)
+            .then(httpResponse => {
+                this.lengthEvaluations = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (!this.lengthEvaluations) {
+                    this.lengthEvaluations = 0;
+                }
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.listEvaluations = httpResponse.body;
+                }
+                this.listOfEvaluatioinsIsEmpty = !(this.listEvaluations && this.listEvaluations.length);
+            })
+            .catch(() => {
+                this.lengthEvaluations = 0;
+                this.listOfEvaluatioinsIsEmpty = true;
+            });
     }
 
     isNotUserAdmin(): boolean {
-        return this.authService.decodeToken().sub_type !== 'admin';
+        return this.getUserType() !== 'admin';
+    }
+
+    getUserType(): string {
+        return this.authService.decodeToken().sub_type;
     }
 
     trackById(index, item) {

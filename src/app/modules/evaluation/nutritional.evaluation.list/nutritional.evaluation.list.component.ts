@@ -1,12 +1,12 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 @Component({
     selector: 'app-evaluation-list',
     templateUrl: './nutritional.evaluation.list.component.html',
-    styleUrls: ['./nutritinal.evaluation.list.component.scss'],
+    styleUrls: ['./nutritional.evaluation.list.component.scss'],
     providers: [{
         provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
     }]

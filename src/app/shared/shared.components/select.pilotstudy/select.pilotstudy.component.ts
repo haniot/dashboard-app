@@ -7,8 +7,9 @@ import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study';
 import { LoadingService } from '../loading.component/service/loading.service';
 import { SelectPilotStudyService } from './service/select.pilot.study.service';
 import { AuthService } from '../../../security/auth/services/auth.service';
-import { LocalStorageService } from '../../shared.services/localstorage.service';
+import { LocalStorageService } from '../../shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../../modules/config.matpaginator'
+import { UserService } from '../../../modules/admin/services/users.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -39,6 +40,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         private selecPilotService: SelectPilotStudyService,
         private selectPilot: SelectPilotStudyService,
         private authService: AuthService,
+        private userService: UserService,
         private localStorageService: LocalStorageService
     ) {
         this.page = PaginatorConfig.page;
@@ -49,12 +51,11 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-
+        this.getUser();
         if (this.authService.decodeToken().sub_type === 'admin') {
             this.selecPilotService.close();
         }
         this.getAllPilotStudies();
-        this.getUserName();
     }
 
     loadUser(): void {
@@ -72,15 +73,13 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
 
         if (this.userId) {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
-                .then(studies => {
-                    this.list = studies;
-                    this.getLengthPilotStudies();
-                    this.loadinService.close();
-                    if (studies.length) {
-                        this.listOfStudiesIsEmpty = false;
-                    } else {
-                        this.listOfStudiesIsEmpty = true;
+                .then(httpResponse => {
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
                     }
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    this.loadinService.close();
+                    this.listOfStudiesIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {
                     this.listOfStudiesIsEmpty = true;
@@ -92,9 +91,11 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
-                .then(studies => {
-                    this.list = studies;
-                    this.getLengthPilotStudies();
+                .then(httpResponse => {
+                    this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.list = httpResponse.body;
+                    }
                 })
                 .catch();
         }, 200);
@@ -114,16 +115,6 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         this.getAllPilotStudies();
     }
 
-    getLengthPilotStudies() {
-        if (this.userId && this.userId !== '') {
-            this.pilotStudyService.getAllByUserId(this.userId, undefined, undefined, this.search)
-                .then(studies => {
-                    this.length = studies.length;
-                })
-                .catch();
-        }
-    }
-
     selectPilotStudy(pilotstudy_id: string): void {
         if (!this.userId) {
             this.loadUser();
@@ -134,11 +125,27 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
 
-    getUserName() {
-        const username = this.localStorageService.getItem('username');
-        if (username) {
+    getUser() {
+        this.userId = this.localStorageService.getItem('user');
+        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+        try {
+            const username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
             this.userName = username;
+        } catch (e) {
+            this.userService.getUserById(this.localStorageService.getItem('user'))
+                .then(user => {
+                    if (user) {
+                        this.userName = user.name ? user.name : user.email;
+                        const health_area = user.health_area ? user.health_area : 'admin';
+                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
+                        this.localStorageService.setItem('email', user.email);
+                        this.localStorageService.setItem('health_area', health_area);
+                        this.localStorageService.setItem('language', user.language);
+                    }
+                })
+                .catch();
         }
+
     }
 
     closeModal() {

@@ -44,6 +44,12 @@
       "VIEW": "Visualizar estudo",
       "STUDIES-EMPTY": "Você não possui estudos associados.",
       "STUDIES-EMPTY-MESSAGE": "Entre em contato com o administrador."
+    },
+    "CARD-EVALUATIONS": {
+      "TITLE": "Acesse suas avaliações",
+      "SUBTITLE": "Clique sobre o card para visualizar informações da avaliação.",
+      "NONE-EVALUATIONS": "Você não possui avaliações disponivéis!",
+      "TOTAL": "Total de avaliações"
     }
   },
   "EVALUATION": {
@@ -162,6 +168,16 @@
     "FAMILY-COHESION": {
       "TITLE": "Coesão familiar",
       "SUBTITLE": "",
+      "FAMILY-MUTUAL": "Ajuda Mútua Familiar",
+      "FRIENDSHIP-APPROVAL": "Aprovação de Amizade",
+      "FAMILY-ONLY-TASK": "Tarefas Apenas Familiar",
+      "FAMILY-ONLY-PREFERENCE": "Preferência Apenas Para a Família",
+      "FREE-TIME-TOGETHER": "Tempo Livre Juntos",
+      "FAMILY-PROXIMITY": "Percepção de Proximidade",
+      "ALL-FAMILY-TASKS": "Todas as Tarefas Familiares",
+      "FAMILY-TASKS-OPPORTUNITY": "Oportunidades de Tarefas Familiares",
+      "FAMILY-DECISION-SUPPORT": "Apoio Familiar à Tomada de Decisão",
+      "FAMILY-UNION": "Relevância da União Familiar",
       "UNAVAILABLE-DATA": "Dados de coesão familiar indisponível!"
     },
     "FEEDING": {
@@ -336,13 +352,24 @@
         "OFTEN": "Frequentemente",
         "ALMOST-ALWAYS": "Quase sempre"
       },
+      "QUESTIONNAIRE-TYPE": {
+        "SOCIO-DEMOGRAPHIC": "Socio Demografica",
+        "FAMILY-COHESION": "Coesão Familiar",
+        "ORAL-HEALTH": "Saúde Bucal",
+        "SLEEP": "Habitos de Sono",
+        "PHYSICAL-ACTIVITY": "Atividade Fisica",
+        "FEEDING": "Habitos Alimentares",
+        "MEDICAL": "Historico Medico"
+      },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO",
       "DO-NOT-KNOW": "Não sei/Não lembro"
     },
     "REGISTER-DATE": "Data do registro",
     "PREVIOUS": "Anterior",
-    "NEXT": "Próximo"
+    "NEXT": "Próximo",
+    "DELETE-ODONTOLOGICAL-QUESTIONNAIRE": "Reomver questionário odontologico",
+    "DELETE-NUTRITIONAL-QUESTIONNAIRE": "Remover questionário nutricional"
   },
   "HEALTHPROFESSIONALS": {
     "TITLE": "Lista de profissionais de saúde",
@@ -427,6 +454,7 @@
       "WEIGHT": "Peso",
       "HEIGHT": "Altura",
       "FAT": "Gordura corporal",
+      "FAT-UNIT": "%",
       "WAIST-CIRCUMFERENCE": "Circunferência da cintura",
       "TEMPERATURE": "Temperatura corporal",
       "GLUCOSE": "Glicose no sangue",
@@ -568,7 +596,19 @@
       },
       "HABITS": "HÁBITOS",
       "MEASUREMENTS": "GRÁFICOS DAS MEDIÇÕES",
-      "LOG-MEASUREMENTS": "LOG DAS MEDIÇÕES"
+      "LOG-MEASUREMENTS": "LOG DAS MEDIÇÕES",
+      "LOADING-QUESTIONNAIRES": "Carregando questionário...",
+      "REMOVE-QUESTIONNAIRE": "Remover questionário"
+    },
+    "MY-STUDIES": {
+      "TITLE": "Lista de estudos piloto",
+      "SUBTITLE": "Você possui permissão apenas de visualização",
+      "NONE-STUDIES": "Nenhum estudo encontrado!",
+      "NONE-STUDIES-MESSAGE": " Não existe estudo com o nome pesquisado."
+    },
+    "MY-EVALUATIONS": {
+      "TITLE": "Lista de estudos piloto",
+      "SUBTITLE": "Você possui permissão apenas de visualização"
     }
   },
   "PILOT-STUDY": {
@@ -592,7 +632,7 @@
     "ODONTOLOGICAL-EVALUATON": "Avaliação odontológica",
     "FILECSV": "Arquivo CSV",
     "FILEXLS": "Arquivo XLS",
-    "GENERATINGFILE": "Gerando arquivo",
+    "REQUESTING-DATA": "Solicitando dados",
     "REMOVINGFILE": "Removendo arquivo",
     "START": "Ínicio",
     "END": "Término",
@@ -603,12 +643,21 @@
     "SITUATION": "Situação",
     "PROFESSIONALS": "Profissionais",
     "SELECT-PROFESSIONALS": "Selecione profissionais",
+    "VIEW-DATA": "Visualizar Dados",
     "MANAGE-PROFESSIONALS": {
       "TITLE": "Gerenciar profissionais",
       "SUBTITLE": "",
       "ADDPROFESSIONAL": "Adicionar novo profissional",
       "ASSOCIATE-PROFESSIONALS": "Profissionais associados",
       "DISASSOCIATE-PROFESSIONAL": "Disassociar profissional...",
+      "REMOVE": "Remover"
+    },
+    "MANAGE-PATIENTS": {
+      "TITLE": "Gerenciar pacientes",
+      "SUBTITLE": "",
+      "ADDPATIENT": "Adicionar novo paciente",
+      "ASSOCIATE-PATIENTS": "Pacientes associados",
+      "DISASSOCIATE-PATIENT": "Dissociar paciente...",
       "REMOVE": "Remover"
     },
     "PLACEHOLDER-SEARCH": "Pesquisar estudo...",
@@ -619,11 +668,29 @@
     "PROFESSIONAL": "Profissional",
     "CARD-PILOT-STUDY": {
       "TITLE": "Estudo piloto",
-      "SUBTITLE": ""
+      "SUBTITLE": "Informações disponiveis apenas para visualização",
+      "EDIT-INFO": "Editar informações",
+      "TOTAL-PROFESSIONALS": "Quantidade de Profissionais",
+      "TOTAL-PATIENTS": "Quantidade de Pacientes"
     },
     "CARD-FILES": {
       "TITLE": "Arquivos disponíveis para download",
-      "SUBTITLE": ""
+      "SUBTITLE": "",
+      "DATA-SUCCESSFULLY-REQUEST": "Dados solicitados com sucesso!",
+      "DATA-SUCCESSFULLY-REQUEST-MESSAGE": "Os dados solicitados estarão disponiveis dentro de alguns minutos.",
+      "COMPLETION-ESTIMATE": "Estimativa de conclusão",
+      "UNDERSTOOD": "Entendido",
+      "CONFIG-RESQUEST-DATA": "Configurar Solicitação de Dados",
+      "TYPES-OF-QUESTIONNAIRES": "Tipos de Questionários",
+      "TYPES-OF-MEASUREMENTS": "Tipos de Medições",
+      "SELECT-QUESTIONNAIRES": "Selecione os tipos de questionários que deseja incluir",
+      "SELECT-MEASUREMENTS": "Selecione os tipos de medições que deseja incluir",
+      "SELECT-PATIENTS-TO-INCLUDE": "Selecione os pacientes que deseja incluir",
+      "SELECT-ALL": "Selecionar todos",
+      "NUTRITIONAL-QUESTIONNAIRE": "Questionário Nutricional",
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Questionário Odontologico",
+      "SELECT-PATIENTS": "Selecionar pacientes",
+      "REQUEST": "Solicitar"
     }
   },
   "SIDEBAR": {
@@ -647,6 +714,7 @@
     "PASSWORD-NEW": "Senha nova",
     "INCORRECT-PASSWORD": "Senha incorreta",
     "PASSWORD-RULES-MESSAGE": "Sua senha deve ter no mínimo 6 caracteres incluindo letras, números e símbolos",
+    "PASSWORD-CONFIRM-MESSAGE": "As senhas não coincidem!",
     "CHANGE-PASSWORD": "Alterar senha",
     "CONFIG": "Configurações",
     "LOGOUT": "Sair",
@@ -663,7 +731,9 @@
     "PASSWORD-NOTMATCH": "Informe a mesma senha",
     "REQUERID-FIELD": "Campo obrigatório",
     "CLOSE": "Fechar",
+    "TO-EDIT": "Editar",
     "DATE": "Data",
+    "HOUR": "Hora",
     "DATE-AND-HOUR": "Data e Hora",
     "AT": "ás",
     "DATE-START": "Data ínicio",
@@ -688,6 +758,10 @@
     "YEARS": "ANOS",
     "AGE": "Idade",
     "CANCEL": "Cancelar",
+    "PHONE-NUMBER": "Telefone",
+    "INVALID-PHONE-NUMBER": "Telefone inválido",
+    "LANGUAGE": "Idioma",
+    "INVALID-LANGUAGE": "Idioma inválido",
     "PIPES": {
       "GENDER": {
         "MALE": "MASCULINO",
@@ -727,11 +801,24 @@
       "RESET-HERE": "redefina aqui"
     },
     "CHANGE": {
-      "FIRST-ACCESS": "Primeiro acesso",
-      "PASSWORD-OLD": "Senha antiga",
-      "PLACEHOLDER-PASSWORD-OLD": "Digite aqui sua senha antiga...",
-      "PASSWORD-NEW": "Senha nova",
-      "PLACEHOLDER-PASSWORD-NEW": "Digite aqui sua senha nova..."
+      "CHANGE-PASSWORD": "Alteração de senha",
+      "PASSWORD": "Nova Senha",
+      "PLACEHOLDER-PASSWORD": "Digite aqui sua nova senha...",
+      "CONFIRM-PASSWORD": "Confirme à senha",
+      "PLACEHOLDER-CONFIRM-PASSWORD": "Digite sua confirmação de senha aqui...",
+      "RESET-PROCESS": "Reinicie o processo de recuperação",
+      "INVALID-TOKEN": "Token inválido!"
+    },
+    "FORGOT": {
+      "INFORMATION": "E-mail enviado com sucesso!",
+      "INFORMATION-MESSAGE": "Se o e-mail submetido estiver devidamente cadastrado na plataforma, você receberá um e-mail com as instruções e o link para realizar a alteração da senha. Caso você não receba o e-mail em alguns minutos, verifique a sua caixa de spam ou repita o processo.",
+      "PASSWORD-RECOVERY": "Recuperação de senha",
+      "SUBMIT": "Enviar",
+      "RECOVERY-SUCCESS": "Email de recuperação enviado para",
+      "RECOVERY-ERROR": "Não foi possível recuperar senha!",
+      "TRY-AGAIN": "Tente novamente após 24 horas",
+      "TOO-MANY-ATTEMPTS": "Excesso de tentativas!",
+      "UNDERSTOOD": "ENTENDIDO"
     }
   },
   "TABLE-USER": {
@@ -766,7 +853,7 @@
     "HEALTHPROFESSIONALS-NOTFOUND": "Profissional não encontrado",
     "STUDY-EMPTY": "O estudo selecionado não possui pacientes!",
     "PATIENT-ERROR": "Algum paciente não possui as informações necessárias!",
-    "EVALUATION-NOT-GENERATED": "Não foi possível gerar avaliação",
+    "DATA-NOT-SOLICITED": "Não foi possível realizar a solicitação",
     "NOT-LOAD-NUTRITION-EVALUATION": "Não foi possível carregar avaliação nutricional!",
     "PATIENT-NOT-IDENTIFIED": "Não foi possível identificar o paciente!",
     "EVALUATION-COMPLETED": "Avaliação finalizada com sucesso!",
@@ -795,13 +882,18 @@
     "HEALTHPROFESSIONAL-NOT-REMOVED": "Não foi possível remover professional!",
     "HEALTHPROFESSIONAL-ADD": "Profissional adicionado com sucesso!",
     "HEALTHPROFESSIONAL-NOT-ADD": "Não foi possível adicionar professional!",
+    "PATIENT-ADD": "Paciente adicionado com sucesso!",
+    "PATIENT-NOT-ADD": "Não foi possível adicionar paciente!",
     "PASSWORD-UPDATED": "Senha modificada com sucesso!",
+    "INVALID-TOKEN": "Token inválido ou expirado!",
+    "TOO-MANY-REQUESTS": "Limite de solicitações excedido!",
     "PASSWORD-NOT-UPDATED": "Não foi possível mudar sua senha!",
-    "PASSWORD-OLD-INCORRECT": "Senha antiga informada incorreta!",
     "INVALID-DATA": "Dados inválidos",
     "NOT-LOGIN": "Não foi possível entrar",
     "BLOCKED-USER": "Usuário bloqueado!",
     "TRY-AGAIN": "Tente novamente após 1 hora.",
-    "NOT-CHANGE-LANGUAGE": "Não foi possível alterar o idioma!"
+    "NOT-CHANGE-LANGUAGE": "Não foi possível alterar o idioma!",
+    "QUESTIONNAIRE-DELETED": "Questionário removido com sucesso!",
+    "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!"
   }
 }

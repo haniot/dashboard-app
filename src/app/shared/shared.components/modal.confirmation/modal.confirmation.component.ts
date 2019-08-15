@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     styleUrls: ['./modal.confirmation.component.scss']
 })
 export class ModalConfirmationComponent {
+    @Input() id;
     @Input() message;
     @Output() confirmation = new EventEmitter();
     @Output() noconfirmation = new EventEmitter();

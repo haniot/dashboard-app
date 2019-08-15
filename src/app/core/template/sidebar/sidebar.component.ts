@@ -1,47 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { UserService } from 'app/modules/admin/services/users.service';
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { VerifyScopeService } from 'app/security/services/verify.scope.service';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { VerifyScopeService } from '../../../security/services/verify.scope.service'
+import { UserService } from '../../../modules/admin/services/users.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { Location } from '@angular/common'
 
 declare const $: any;
 
 export const configSideBar = [
     { title: 'Dashboard', scopes: [] },
     {
-        title: 'Usuários',
+        title: 'Users',
         scopes: ['admins:create', 'admins:delete', 'admins:readAll', 'admins:update',
             'healthprofessionals:create', 'healthprofessionals:readAll', 'healthprofessionals:update', 'healthprofessionals:delete']
     },
     {
-        title: 'Administradores',
+        title: 'Administrators',
         scopes: ['admins:create', 'admins:delete', 'admins:readAll', 'admins:update']
     },
     {
-        title: 'P. de Saúde',
+        title: 'HealthProfessionals',
         scopes: ['healthprofessionals:create', 'healthprofessionals:delete', 'healthprofessionals:readAll', 'healthprofessionals:update']
     },
     {
-        title: 'Estudos Pilotos',
+        title: 'PilotStudies',
         scopes: ['pilots:readAll', 'pilots:create', 'pilots:delete', 'pilots:update']
     },
     {
-        title: 'Pacientes',
+        title: 'Patients',
         scopes: ['patients:create', 'patients:read', 'patients:update', 'patients:delete']
     },
     {
-        title: 'Meus estudos',
+        title: 'MyStudies',
         scopes: []
     },
     {
-        title: 'Minhas avaliações',
+        title: 'MyEvaluations',
         scopes: []
     },
     {
-        title: 'Avaliações',
+        title: 'Evaluations',
         scopes: []
     }
 ];
@@ -56,6 +58,10 @@ export class SidebarComponent implements OnInit {
     configSideBar: { title: string, scopes: any[] }[];
     userName: String = '';
     iconUserMenu = 'keyboard_arrow_right';
+    activeMyPilots: string;
+    activeMyEvaluations: string;
+    activeDashboard: string;
+    activePatients: string;
 
     constructor(
         private authService: AuthService,
@@ -63,13 +69,17 @@ export class SidebarComponent implements OnInit {
         private userService: UserService,
         private loadingService: LoadingService,
         private localStorageService: LocalStorageService,
-        private router: Router
+        private router: Router,
+        private activedRoute: ActivatedRoute,
+        private location: Location
     ) {
     }
 
     ngOnInit() {
         this.configSideBar = configSideBar;
         this.getUserName();
+        this.router.events.subscribe(event => this.updateMenu());
+        this.activedRoute.paramMap.subscribe(() => this.updateMenu());
     }
 
     isMobileMenu() {
@@ -94,18 +104,74 @@ export class SidebarComponent implements OnInit {
 
     getUserName() {
         this.userId = this.localStorageService.getItem('user');
-        const username = this.localStorageService.getItem('username');
-        if (username) {
+        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+        let username = '';
+        try {
+            username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
             this.userName = username;
-        } else {
+        } catch (e) {
             this.userService.getUserById(this.userId)
                 .then(user => {
-                    if (user && user.name) {
-                        this.userName = user.name;
-                        this.localStorageService.setItem('username', this.userName.toString());
+                    if (user) {
+                        this.userName = user.name ? user.name : user.email;
+                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
                     }
                 })
                 .catch();
+        }
+    }
+
+    updateMenu() {
+
+        const path_current = this.location.path();
+
+        if (path_current.match('dashboard$')) {
+            this.activeDashboard = 'active'
+            this.activeMyPilots = '';
+            this.activeMyEvaluations = '';
+            this.activePatients = '';
+        }
+        if (path_current.match('mystudies$')) {
+            this.activeDashboard = ''
+            this.activeMyPilots = 'active';
+            this.activeMyEvaluations = '';
+            this.activePatients = '';
+        }
+        if (path_current.match('myevaluations$')) {
+            this.activeDashboard = ''
+            this.activeMyPilots = '';
+            this.activeMyEvaluations = 'active';
+            this.activePatients = '';
+        }
+        if (path_current.match('patients$')) {
+            this.activeDashboard = ''
+            this.activeMyPilots = '';
+            this.activeMyEvaluations = '';
+            this.activePatients = 'active';
+        }
+    }
+
+    myPilotStudies(): void {
+        this.openLoading();
+        switch (this.getTypeUser()) {
+            case 'health_professional':
+                this.router.navigate(['/app/healthprofessional/mystudies']);
+                break;
+            case 'patient':
+                this.router.navigate(['/app/patients/mystudies']);
+                break;
+        }
+    }
+
+    myEvaluations(): void {
+        this.openLoading();
+        switch (this.getTypeUser()) {
+            case 'health_professional':
+                this.router.navigate(['/app/healthprofessional/myevaluations']);
+                break;
+            case 'patient':
+                this.router.navigate(['/app/patients/myevaluations']);
+                break;
         }
     }
 
@@ -117,23 +183,31 @@ export class SidebarComponent implements OnInit {
         this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
     }
 
-    showMyStudies(): boolean {
-        return this.authService.decodeToken().sub_type === 'health_professional';
-    }
-
     openLoading() {
         this.loadingService.open();
     }
 
     isNotAdmin(): boolean {
-        return this.authService.decodeToken().sub_type !== 'admin';
+        return this.getTypeUser() !== 'admin';
     }
 
     config(): void {
-        if (this.isNotAdmin()) {
-            this.router.navigate(['/healthprofessional/configurations']);
-        } else {
-            this.router.navigate(['/admin/configurations']);
+        switch (this.getTypeUser()) {
+            case 'admin':
+                this.router.navigate(['/app/admin/configurations']);
+                break;
+
+            case 'health_professional':
+                this.router.navigate(['/app/healthprofessional/configurations']);
+                break;
+
+            case 'patient':
+                this.router.navigate(['/app/patients/configurations']);
+                break;
         }
+    }
+
+    getTypeUser(): string {
+        return this.authService.decodeToken().sub_type;
     }
 }

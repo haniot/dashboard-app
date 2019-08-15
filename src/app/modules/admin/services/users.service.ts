@@ -1,24 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from 'environments/environment';
 import { AdminService } from './admin.service';
 import { HealthProfessionalService } from './health.professional.service';
-import { AuthService } from 'app/security/auth/services/auth.service';
+import { PatientService } from '../../patient/services/patient.service'
+import { Admin } from '../models/admin';
+import { HealthProfessional } from '../models/health.professional';
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { environment } from '../../../../environments/environment';
+import { Patient } from '../../patient/models/patient'
 
 @Injectable()
 export class UserService {
+    version: string;
 
     constructor(
         private http: HttpClient,
         private adminService: AdminService,
         private healthService: HealthProfessionalService,
+        private patientService: PatientService,
         private authService: AuthService
     ) {
+        this.version = 'v1'
     }
 
     removeUser(id: string): Promise<any> {
-        return this.http.delete<any>(`${environment.api_url}/users/${id}`)
+        return this.http.delete<any>(`${environment.api_url}/${this.version}/users/${id}`)
             .toPromise();
     }
 
@@ -29,21 +36,47 @@ export class UserService {
 
             case 'health_professional':
                 return this.healthService.getById(id);
+
+            case 'patient':
+                return this.patientService.getById(id);
         }
 
     }
 
-    changePassword(userId: string, credentials: { old_password: string, new_password: string }): Promise<boolean> {
-        return this.http.patch<any>(`${environment.api_url}/users/${userId}/password`, credentials)
+    changePassword(body: { email: string, old_password: string, new_password: string }): Promise<boolean> {
+        return this.http.patch<any>(`${environment.api_url}/${this.version}/auth/password`, body)
             .toPromise();
     }
 
     changeLanguage(userId: string, language: string): Promise<boolean> {
-        /* TODO: Realizar request na rota de alterar profile do usuário e salvar o novo idioma favorito
-        *return this.http.patch<any>(`${environment.api_url}/users/${userId}/password`, credentials)
-            .toPromise();
-        */
-        return Promise.resolve(false);
+        let user;
+        let service;
+        switch (this.getTypeUser()) {
+            case 'admin':
+                user = new Admin();
+                user.id = userId;
+                user.language = language;
+                service = this.adminService;
+                break;
+
+            case 'health_professional':
+                user = new HealthProfessional();
+                user.id = userId;
+                user.language = language;
+                service = this.healthService;
+                break;
+            case 'patient':
+                user = new Patient();
+                user.id = userId;
+                user.language = language;
+                service = this.patientService;
+                break;
+        }
+        return service.update({ id: user.id, language: user.language })
+            .then(userUpdated => {
+                return !!userUpdated;
+            })
+            .catch(() => false);
     }
 
     getTypeUser(): string {

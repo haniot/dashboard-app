@@ -1,30 +1,30 @@
-import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-import {AdministratorsComponent} from '../administrators/administrators.component';
-import {HealthProfessionalComponent} from '../health.professionals/health.professionals.component';
-import {AdminConfigurationsComponent} from '../configurations/configurations.component';
+import { AdministratorsComponent } from '../administrators/administrators.component';
+import { HealthProfessionalComponent } from '../health.professionals/health.professionals.component';
+import { AdminConfigurationsComponent } from '../configurations/configurations.component';
 
 const routes = [
-    {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     {
         path: 'configurations',
         component: AdminConfigurationsComponent,
-        data: {scope: ""}
+        data: { scope: "admins:update" }
     },
     {
-        path: 'new/administrators',
+        path: 'administrators',
         component: AdministratorsComponent,
-        data: {scope: "admins:create admins:delete admins:readAll admins:update"}
+        data: { scope: "admins:create admins:delete admins:readAll admins:update" }
     },
     {
-        path: 'new/healthprofessionals',
+        path: 'healthprofessionals',
         component: HealthProfessionalComponent,
         data: {
             scope: "healthprofessionals:create healthprofessionals:readAll"
         }
     },
-    {path: '**', redirectTo: 'page-not-found'},
+    { path: '**', redirectTo: 'page-not-found' },
 
 ];
 

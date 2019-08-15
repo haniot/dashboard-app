@@ -1,17 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
 import { PatientService } from '../services/patient.service';
-import { PilotStudyService } from 'app/modules/pilot.study/services/pilot.study.service';
-import { Patient, Gender } from '../models/patient';
-import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
-import { FeedingRecordService } from '../../habits/services/feeding.record.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { Gender, Patient } from '../models/patient';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
+import { NutritionalQuestionnaire } from '../../habits/models/nutritional.questionnaire'
+import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
+import { OdontologicalQuestionnaire } from '../../habits/models/odontological.questionnaire'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { OdontologicalQuestionnairesService } from '../../habits/services/odontological.questionnaires.service'
+import { PageEvent } from '@angular/material'
+import { ConfigurationBasic } from '../../config.matpaginator'
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'app-view-habits',
@@ -23,7 +31,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     optionsGender: Array<string> = Object.keys(Gender);
     listPilots: Array<PilotStudy>;
     patientId: string;
-    pilotStudyId: string;
     userHealthArea: string;
     showMeasurements: boolean;
     configVisibility = {
@@ -36,33 +43,64 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         pressure: false,
         heartRate: false
     };
-
     private subscriptions: Array<ISubscription>;
+    nutritionalQuestionnaire: NutritionalQuestionnaire;
+    odontologicalQuestionnaire: OdontologicalQuestionnaire;
+    nutritionalQuestionnaireOptions: {
+        page: number, limit: number, pageSizeOptions: number[], length: number, pageEvent: PageEvent
+    }
+    odontologicalQuestionnaireOptions: {
+        page: number, limit: number, pageSizeOptions: number[], length: number, pageEvent: PageEvent
+    }
+    removingQuestionnaire: boolean;
+    loadingNutritionalQuestionnaire: boolean;
+    loadingOdontologicalQuestionnaire: boolean;
+
 
     constructor(
         private fb: FormBuilder,
         private patientService: PatientService,
         private pilotStudiesService: PilotStudyService,
-        private feedingService: FeedingRecordService,
         private toastService: ToastrService,
         private router: Router,
         private activeRouter: ActivatedRoute,
         private localStorageService: LocalStorageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private modalService: ModalService,
+        private nutritionalQuestionnaireService: NutritionalQuestionnairesService,
+        private odontologicalQuestionnaireService: OdontologicalQuestionnairesService
     ) {
         this.subscriptions = new Array<ISubscription>();
         this.showMeasurements = false;
+        this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
+        this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
+        this.nutritionalQuestionnaireOptions = {
+            page: PaginatorConfig.page,
+            pageSizeOptions: PaginatorConfig.pageSizeOptions,
+            limit: 1,
+            length: 0,
+            pageEvent: undefined
+        };
+        this.odontologicalQuestionnaireOptions = {
+            page: PaginatorConfig.page,
+            pageSizeOptions: PaginatorConfig.pageSizeOptions,
+            limit: 1,
+            length: 0,
+            pageEvent: undefined
+        };
+        this.removingQuestionnaire = false;
+        this.loadingNutritionalQuestionnaire = false;
+        this.loadingOdontologicalQuestionnaire = false;
+        this.listPilots = new Array<PilotStudy>();
     }
 
 
     ngOnInit() {
-        this.loaduserHealthArea();
+        this.loadUserHealthArea();
         this.createPatientFormInit();
         this.getAllPilotStudies();
-
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
-            this.pilotStudyId = params.get('pilotstudy_id');
             this.patientService.getById(this.patientId)
                 .then(patient => {
                     this.createPatientForm(patient);
@@ -71,9 +109,11 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                 });
         }));
+        this.getQuestionnaires();
     }
 
-    loaduserHealthArea(): void {
+
+    loadUserHealthArea(): void {
         this.userHealthArea = this.localStorageService.getItem('health_area');
     }
 
@@ -93,7 +133,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     createPatientForm(patient: Patient) {
         this.patientForm = this.fb.group({
             id: [patient.id],
-            pilotstudy_id: [this.pilotStudyId],
+            pilotstudy_id: [patient.selected_pilot_study],
             name: [{ value: patient.name, disabled: true }],
             email: [{ value: patient.email, disabled: true }],
             phone_number: [{ value: patient.phone_number, disabled: true }],
@@ -108,18 +148,121 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
         if (this.localStorageService.getItem('health_area') === 'admin') {
             this.pilotStudiesService.getAll()
-                .then(pilots => {
-                    this.listPilots = pilots;
+                .then(httpResponse => {
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listPilots = httpResponse.body;
+                    }
                 })
                 .catch();
         } else {
             this.pilotStudiesService.getAllByUserId(userId)
-                .then(pilots => {
-                    this.listPilots = pilots;
+                .then(httpResponse => {
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listPilots = httpResponse.body;
+                    }
                 })
                 .catch();
         }
 
+    }
+
+    openModalConfirmationRemoveNutritionalQuestionnaire(): void {
+        this.modalService.open('confirmationRemoveNutritionalQuestionnaire');
+    }
+
+    closeModalConfirmationNutritionalQuestionnaire(): void {
+        this.modalService.close('confirmationRemoveNutritionalQuestionnaire');
+    }
+
+    nutritionalQuestionnairePageEvent(pageEvent: PageEvent): void {
+        this.loadingNutritionalQuestionnaire = true;
+        /* + 1 because pageIndex starts at 0*/
+        this.nutritionalQuestionnaireOptions.page = pageEvent.pageIndex + 1;
+        this.nutritionalQuestionnaireOptions.limit = pageEvent.pageSize;
+        this.getAllNutritionalQuestionnaires();
+    }
+
+    getAllNutritionalQuestionnaires(): void {
+        this.nutritionalQuestionnaireService
+            .getAll(this.patientId, this.nutritionalQuestionnaireOptions.page, this.nutritionalQuestionnaireOptions.limit)
+            .then(httpResponse => {
+                this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
+                this.nutritionalQuestionnaireOptions.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (httpResponse.body && httpResponse.body.length) {
+                    const nutritionalQuestionnaires = httpResponse.body;
+                    this.nutritionalQuestionnaire = nutritionalQuestionnaires[0];
+                }
+                this.loadingNutritionalQuestionnaire = false;
+            })
+            .catch(() => {
+                this.loadingNutritionalQuestionnaire = false;
+            })
+    }
+
+    removeNutritionalQuestionnaires(): void {
+        this.removingQuestionnaire = true;
+        this.closeModalConfirmationNutritionalQuestionnaire();
+        this.nutritionalQuestionnaireService
+            .remove(this.patientId, this.nutritionalQuestionnaire.id)
+            .then(() => {
+                this.getAllNutritionalQuestionnaires();
+                this.removingQuestionnaire = false;
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
+            })
+            .catch((errorResponse => {
+                this.removingQuestionnaire = false;
+
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-NOT-DELETED'));
+            }))
+    }
+
+    openModalConfirmationRemoveOdontologicalQuestionnaire(): void {
+        this.modalService.open('confirmationRemoveOdontologicalQuestionnaire');
+    }
+
+    closeModalConfirmationOdontologicalQuestionnaire(): void {
+        this.modalService.close('confirmationRemoveOdontologicalQuestionnaire');
+    }
+
+    odontologicalQuestionnairePageEvent(pageEvent: PageEvent): void {
+        this.loadingOdontologicalQuestionnaire = true;
+        /* + 1 because pageIndex starts at 0*/
+        this.odontologicalQuestionnaireOptions.page = pageEvent.pageIndex + 1;
+        this.odontologicalQuestionnaireOptions.limit = pageEvent.pageSize;
+        this.getAllOdontologicalQuestionnaires();
+    }
+
+    getAllOdontologicalQuestionnaires(): void {
+        this.odontologicalQuestionnaireService
+            .getAll(this.patientId, this.odontologicalQuestionnaireOptions.page, this.odontologicalQuestionnaireOptions.limit)
+            .then(httpResponse => {
+                this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
+                this.odontologicalQuestionnaireOptions.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (httpResponse.body && httpResponse.body.length) {
+                    const odontologicalQuestionnaires = httpResponse.body;
+                    this.odontologicalQuestionnaire = odontologicalQuestionnaires[0];
+                }
+                this.loadingOdontologicalQuestionnaire = false;
+            })
+            .catch(() => {
+                this.loadingOdontologicalQuestionnaire = false;
+            })
+    }
+
+    removeOdontologicalQuestionnaires(): void {
+        this.removingQuestionnaire = true;
+        this.closeModalConfirmationOdontologicalQuestionnaire();
+        this.odontologicalQuestionnaireService
+            .remove(this.patientId, this.odontologicalQuestionnaire.id)
+            .then(() => {
+                this.getAllOdontologicalQuestionnaires();
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
+                this.removingQuestionnaire = false;
+            })
+            .catch((errorResponse => {
+                this.removingQuestionnaire = false;
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-NOT-DELETED'));
+            }))
     }
 
     clickOnMatTab(event) {
@@ -148,5 +291,11 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         });
     }
 
+    getQuestionnaires(): void {
+        this.getAllNutritionalQuestionnaires();
+        if (this.userHealthArea === 'dentistry' || this.userHealthArea === 'admin') {
+            this.getAllOdontologicalQuestionnaires();
+        }
+    }
 
 }

@@ -1,24 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { environment } from 'environments/environment';
-import { HealthProfessional } from '../models/users';
-import { User } from '../../../shared/shared.models/user';
+import { HealthProfessional } from '../models/health.professional';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
+import { environment } from '../../../../environments/environment'
 
 @Injectable()
 
 export class HealthProfessionalService {
+    version: string;
 
     constructor(private http: HttpClient) {
+        this.version = 'v1';
     }
 
 
     getById(id: string): Promise<any> {
-        return this.http.get<any>(`${environment.api_url}/users/healthprofessionals/${id}`)
+        return this.http.get<any>(`${environment.api_url}/${this.version}/healthprofessionals/${id}`)
             .toPromise();
     }
 
-    getAll(page?: number, limit?: number, search?: string): Promise<HealthProfessional[]> {
+    getAll(page?: number, limit?: number, search?: string): Promise<HttpResponse<HealthProfessional[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -33,20 +35,21 @@ export class HealthProfessionalService {
             myParams = myParams.append('?name', '*' + search + '*');
         }
 
-        const url = `${environment.api_url}/users/healthprofessionals`;
+        const url = `${environment.api_url}/${this.version}/healthprofessionals`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
 
     }
 
-    create(healthprofessionals: HealthProfessional): Promise<User> {
-        return this.http.post<any>(`${environment.api_url}/users/healthprofessionals`, healthprofessionals)
+    create(healthprofessionals: HealthProfessional): Promise<GenericUser> {
+        return this.http.post<any>(`${environment.api_url}/${this.version}/healthprofessionals`, healthprofessionals)
             .toPromise();
     }
 
     update(healthprofessionals: HealthProfessional): Promise<HealthProfessional> {
-        return this.http.patch<any>(`${environment.api_url}/users/healthprofessionals/${healthprofessionals.id}`, healthprofessionals)
+        const url = `${environment.api_url}/${this.version}/healthprofessionals/${healthprofessionals.id}`;
+        return this.http.patch<any>(url, healthprofessionals)
             .toPromise();
     }
 }

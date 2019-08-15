@@ -4,11 +4,11 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
 import { HealthProfessionalService } from '../services/health.professional.service';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { HealthProfessional } from '../models/users';
-import { LoadingService } from 'app/shared/shared.components/loading.component/service/loading.service';
-import { User } from '../../../shared/shared.models/user';
+import { HealthProfessional } from '../models/health.professional';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -18,8 +18,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./health.professionals.component.scss']
 })
 export class HealthProfessionalComponent implements AfterViewChecked {
-    userEdit: User = new HealthProfessional();
-    healthProfessionals: Array<User> = [];
+    userEdit: GenericUser = new HealthProfessional();
+    healthProfessionals: Array<GenericUser> = [];
     page: number;
     limit: number;
     length: number;
@@ -33,15 +33,17 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         private translateService: TranslateService) {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
+        this.healthProfessionals = new Array<GenericUser>();
         this.getAllHealthProfessionals();
-        this.getLengthHealthProfessionals();
     }
 
     getAllHealthProfessionals() {
         this.healthService.getAll(this.page, this.limit, this.search)
-            .then(healthProfessionals => {
-                this.healthProfessionals = healthProfessionals;
-                this.getLengthHealthProfessionals();
+            .then(httpResponse => {
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.healthProfessionals = httpResponse.body;
+                }
                 this.loadinService.close();
             })
             .catch(() => {
@@ -114,14 +116,6 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         this.limit = event.limit;
         this.search = event.search;
         this.getAllHealthProfessionals();
-    }
-
-    getLengthHealthProfessionals() {
-        this.healthService.getAll()
-            .then(caregivers => {
-                this.length = caregivers.length;
-            })
-            .catch();
     }
 
     ngAfterViewChecked() {

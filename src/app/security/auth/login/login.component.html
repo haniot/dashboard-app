@@ -4,7 +4,7 @@
             <div class="card card-signin">
                 <div class="card-body">
                     <div id="divLogo">
-                        <a [routerLink]="['/']" id="linkLogo">
+                        <a [routerLink]="['/app']" id="linkLogo">
                             <img src="assets/img/logo-login-new.png"/>
                             <span id="labelHaniot">{{'APP.TITLE'|translate}}</span>
                         </a>
@@ -67,7 +67,9 @@
                         </button>
                     </form>
                     <div>{{'SECURITY.LOGIN.FORGOT-PASSWORD'|translate}}<a
-                            href="javascript:void(0);"> {{'SECURITY.LOGIN.RESET-HERE'|translate}}.</a>
+                            href="javascript:void(0);"
+                            [routerLink]="['/forgot']"> {{'SECURITY.LOGIN.RESET-HERE'|translate}}
+                        .</a>
                     </div>
                 </div>
             </div>

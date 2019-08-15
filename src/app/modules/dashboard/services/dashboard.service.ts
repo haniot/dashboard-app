@@ -1,81 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { environment } from '../../../../environments/environment'
+import { Patient } from '../../patient/models/patient'
+import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation'
 
-import { environment } from 'environments/environment';
-import { Patient } from 'app/modules/patient/models/patient';
-import { PilotStudy } from 'app/modules/pilot.study/models/pilot.study';
-import { AuthService } from 'app/security/auth/services/auth.service';
-import { Unit } from '../models/unit';
 
 @Injectable()
 export class DashboardService {
-    cacheListPilots: Array<PilotStudy>;
-    cacheListPatients: Array<Patient>;
-    listNumberPatientsForEachStudy: Array<Unit>;
+    version: string;
 
     constructor(
         private http: HttpClient,
         private authService: AuthService
     ) {
-        this.cacheListPilots = new Array<PilotStudy>();
-        this.cacheListPatients = new Array<Patient>();
-        this.listNumberPatientsForEachStudy = new Array<Unit>();
-    }
-
-    async getInfoByUser(userId: string)
-        : Promise<{ studiesTotal: number, patientsTotal: number }> {
-
-        this.cacheListPilots = new Array<PilotStudy>();
-        this.cacheListPatients = new Array<Patient>();
-        this.listNumberPatientsForEachStudy = new Array<Unit>();
-
-        let patientsTotal;
-        let studiesTotal;
-
-        studiesTotal = await this.getNumberOfStudies(userId);
-
-        patientsTotal = await this.getNumberOfPatients();
-
-        return {
-            studiesTotal: studiesTotal,
-            patientsTotal: patientsTotal
-        };
-    }
-
-    getNumberOfStudies(userId: string): Promise<number> {
-        return this.getAllStudiesByUserId(userId)
-            .then(pilotstudies => {
-                this.cacheListPilots = pilotstudies;
-                return Promise.resolve(pilotstudies.length);
-            })
-            .catch(() => {
-                return Promise.resolve(0);
-            });
-    }
-
-    async getNumberOfPatients(): Promise<number> {
-
-        let totalOfPatients = 0;
-        for (const index in this.cacheListPilots) {
-            if (this.cacheListPilots.hasOwnProperty(index)) {
-                const pilot = this.cacheListPilots[index];
-                try {
-                    const listOfPatients: Array<Patient> = await this.getAllPatients(pilot.id);
-                    this.listNumberPatientsForEachStudy.push({ namePatient: pilot.name, value: listOfPatients.length });
-                    this.cacheListPatients = this.cacheListPatients.concat(listOfPatients);
-                    totalOfPatients += listOfPatients.length;
-                } catch (e) {
-
-                }
-            }
-        }
-        return totalOfPatients;
+        this.version = 'v1';
     }
 
     /**
      * get all studies from a userId
      */
-    getAllStudiesByUserId(userId: string, page?: number, limit?: number): Promise<PilotStudy[]> {
+    getAllStudiesByUserId(userId: string, page?: number, limit?: number): Promise<HttpResponse<PilotStudy[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -86,20 +32,30 @@ export class DashboardService {
             myParams = myParams.append('limit', String(limit));
         }
 
-        let url = `${environment.api_url}/users/healthprofessionals/${userId}/pilotstudies`;
+        let url = `${environment.api_url}/${this.version}/healthprofessionals/${userId}/pilotstudies`;
+        const type_user = this.authService.decodeToken().sub_type;
+        switch (type_user) {
+            case 'admin':
+                url = `${environment.api_url}/${this.version}/pilotstudies`;
+                break;
 
-        if (this.authService.decodeToken().sub_type === 'admin') {
-            url = `${environment.api_url}/pilotstudies`;
+            case 'health_professional':
+                url = `${environment.api_url}/${this.version}/healthprofessionals/${userId}/pilotstudies`;
+                break;
+
+            case 'patient':
+                url = `${environment.api_url}/${this.version}/patients/${userId}/pilotstudies`;
+                break;
         }
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
     /**
      * get all patients from a pilotstudyId
      */
-    getAllPatients(pilotstudyId: string, page?: number, limit?: number): Promise<Patient[]> {
+    getAllPatients(pilotstudyId: string, page?: number, limit?: number): Promise<HttpResponse<Patient[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -110,9 +66,29 @@ export class DashboardService {
             myParams = myParams.append('limit', String(limit));
         }
 
-        const url = `${environment.api_url}/pilotstudies/${pilotstudyId}/patients`;
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}/patients`;
 
-        return this.http.get<any>(url, { params: myParams })
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
+            .toPromise();
+    }
+
+    /**
+     * get all evaluations from a patient
+     */
+    getAllEvaluations(userId: string, page?: number, limit?: number): Promise<HttpResponse<NutritionEvaluation[]>> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
+
+        const url = `${environment.api_url}/${this.version}/patients/${userId}/nutritional/evaluations`;
+
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 }

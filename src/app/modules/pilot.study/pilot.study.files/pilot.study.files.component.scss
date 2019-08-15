@@ -3,6 +3,10 @@ table .material-icons {
   cursor: pointer;
 }
 
+table td{
+  cursor: pointer;
+}
+
 .nav-link i:hover {
   border-radius: 20px;
   background: rgb(212, 207, 207);
@@ -38,5 +42,57 @@ label {
 }
 
 td img {
-  width: 2%;
+  width: 5%;
 }
+
+.label-description {
+  margin-left: -25px;
+}
+
+// overwrite the checkbox background
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #00a594 !important;
+}
+
+// overwrite the ripple overlay on hover and click
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #00a594 !important;
+}
+
+::ng-deep.mat-step-header .mat-step-icon-selected {
+  background-color: #00a594;
+}
+
+::ng-deep.mat-step-header .mat-step-icon-state-edit {
+  background-color: #00a594;
+}
+
+::ng-deep .cdk-overlay-container {
+  z-index: 2000;
+}
+
+#tableOfPatients td {
+  cursor: pointer;
+}
+
+.measurement-type {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #00a594;
+  margin: 2px 2px;
+  padding: 2px 1px;
+  border-radius: .25rem !important;
+}
+
+.material-icons {
+  color: #00a594;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+

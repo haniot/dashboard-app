@@ -8,17 +8,33 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { NutritionEvaluationService } from '../services/nutrition.evaluation.service';
 import { NutritionalCouncil, NutritionEvaluation } from '../models/nutrition-evaluation';
-import { ModalService } from 'app/shared/shared.components/haniot.modal/service/modal.service';
-import { PatientService } from 'app/modules/patient/services/patient.service';
-import { Patient } from 'app/modules/patient/models/patient';
-import { Weight } from 'app/modules/measurement/models/weight';
-import { Measurement, MeasurementType } from 'app/modules/measurement/models/measurement';
-import { BloodPressure } from 'app/modules/measurement/models/blood-pressure';
-import { HeartRate } from 'app/modules/measurement/models/heart-rate';
 import { MealType } from '../../measurement/models/blood-glucose';
 import { GeneratePdfService } from '../services/generate.pdf.service';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SendEmailService } from '../services/send.email.service';
+import { Patient, PatientBasic } from '../../patient/models/patient'
+import { EnumMeasurementType, Measurement } from '../../measurement/models/measurement'
+import { BloodPressure } from '../../measurement/models/blood-pressure'
+import { HeartRate } from '../../measurement/models/heart-rate'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { PatientService } from '../../patient/services/patient.service'
+import { Weight } from '../../measurement/models/weight'
+
+// TODO: Pedir a Lucas os reais valores para os zones!!
+const zones = [{
+    preprandial: {
+        great: { min: 0, max: 0 },
+        good: { min: 0, max: 0 }
+    },
+    postprandial: {
+        great: { min: 0, max: 0 },
+        good: { min: 0, max: 0 }
+    },
+    bedtime: {
+        great: { min: 0, max: 0 },
+        good: { min: 0, max: 0 }
+    }
+}]
 
 @Component({
     selector: 'app-nutrition-evaluation',
@@ -31,7 +47,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     nutritionEvaluationId: string;
     optionsHeartRate: any;
     patientId: string;
-    patient: Patient;
+    patient: PatientBasic;
     ncSuggested: NutritionalCouncil;
     ncDefinitive: NutritionalCouncil;
     finalCounseling: string;
@@ -121,11 +137,10 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 this.nutritionalEvaluation = nutritionEvaluation;
                 this.verifyVisibityZonesClassification();
                 this.formatCounseling()
-                this.loadGraph(nutritionEvaluation.heart_rate.dataset);
                 this.separateMeasurements();
                 this.getPatient();
             })
-            .catch(() => {
+            .catch((error) => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.NOT-LOAD-NUTRITION-EVALUATION'));
             });
 
@@ -185,56 +200,6 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             }
             this.listChecksBloodPressure.push(false);
         });
-
-    }
-
-    loadGraph(dataset: Array<any>) {
-
-        const frequency = this.translateService
-            .instant('MEASUREMENTS.HEART-RATE.FREQUENCY');
-
-        const xAxis = {
-            data: []
-        };
-
-        const series = {
-            type: 'line',
-            data: []
-        };
-
-        if (dataset && dataset.length > 0) {
-
-            dataset.forEach((date: { value: number, timestamp: string }) => {
-
-                xAxis.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
-
-                series.data.push(date.value);
-
-            });
-        }
-
-        this.optionsHeartRate = {
-
-            tooltip: {
-                formatter: frequency + ': {c} bpm <br> Data: {b}',
-                trigger: 'axis'
-            },
-            xAxis: xAxis,
-            yAxis: {
-                splitLine: {
-                    show: false
-                },
-                axisLabel: {
-                    formatter: '{value} bpm'
-                }
-            },
-            dataZoom: [
-                {
-                    type: 'slider'
-                }
-            ],
-            series: series
-        };
 
     }
 
@@ -335,36 +300,36 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         const measurements: Array<any> = this.nutritionalEvaluation.measurements;
 
         this.listWeight = measurements.filter((element: Weight) => {
-            return element.type === MeasurementType.weight
+            return element.type === EnumMeasurementType.weight
         });
 
         this.listHeight = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.height
+            return element.type === EnumMeasurementType.height
         });
 
         this.listFat = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.fat
+            return element.type === EnumMeasurementType.body_fat
         });
 
         this.listWaistCircunference = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.waist_circumference
+            return element.type === EnumMeasurementType.waist_circumference
         });
 
         this.listBodyTemperature = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.body_temperature
+            return element.type === EnumMeasurementType.body_temperature
         });
 
         this.listBloodGlucose = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.blood_glucose
+            return element.type === EnumMeasurementType.blood_glucose
         });
 
         this.listBloodPressure = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.blood_pressure
+            return element.type === EnumMeasurementType.blood_pressure
         });
 
-        this.listHeartRate = measurements.filter((element: Measurement) => {
-            return element.type === MeasurementType.heart_rate
-        });
+        // this.listHeartRate = measurements.filter((element: Measurement) => {
+        //     return element.type === MeasurementType.heart_rate
+        // });
     }
 
     showNewCounseling(): void {
@@ -404,9 +369,11 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
         this.sendingEvaluation = true;
 
-        const health_professional_name = this.localStorageService.getItem('username');
+        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
 
-        const health_professional_email = this.localStorageService.getItem('email-template.html');
+        const health_professional_name = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
+
+        const health_professional_email = this.localStorageService.getItem('email');
 
         const health_professinal = {
             name: health_professional_name,
@@ -427,8 +394,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     }
 
     getZoneGood(): { min: number, max: number } {
+
         const meal = this.nutritionalEvaluation.blood_glucose.meal;
-        const zones = this.nutritionalEvaluation.blood_glucose.zones;
+
         switch (meal) {
             case MealType.preprandial:
                 return zones[0][MealType.preprandial].good;
@@ -446,7 +414,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     getZoneGreat(): { min: number, max: number } {
         const meal = this.nutritionalEvaluation.blood_glucose.meal;
-        const zones = this.nutritionalEvaluation.blood_glucose.zones;
+
         switch (meal) {
             case MealType.preprandial:
                 return zones[0][MealType.preprandial].great;
@@ -464,8 +432,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     async exportPDF() {
         this.generatingPDF = true;
-        const health_professional = this.localStorageService.getItem('username');
-        await this.generatePDF.exportPDF(this.nutritionalEvaluation, health_professional);
+        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+        const health_professional_name = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
+        await this.generatePDF.exportPDF(this.nutritionalEvaluation, health_professional_name);
         this.generatingPDF = false;
     }
 

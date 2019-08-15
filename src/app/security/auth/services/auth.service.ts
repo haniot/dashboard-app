@@ -1,23 +1,27 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from 'environments/environment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { Observable, of as observableOf } from 'rxjs';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
 import * as JWT_decode from 'jwt-decode';
 import { tap } from 'rxjs/operators';
 
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
+import { SessionStorageService } from '../../../shared/shared.services/session.storage.service'
+import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class AuthService {
+    version: string;
 
     constructor(
         private http: HttpClient,
         private localStorageService: LocalStorageService,
+        private sessionService: SessionStorageService,
         private router: Router) {
+        this.version = 'v1';
     }
 
     check(): boolean {
@@ -34,13 +38,10 @@ export class AuthService {
     login(credentials: { email: string, password: string }): Observable<boolean> {
         const myParams = new HttpParams();
         myParams.append('rejectUnauthorized', 'false');
-        return this.http.post<any>(`${environment.api_url}/auth`, credentials, { params: myParams })
+        return this.http.post<any>(`${environment.api_url}/${this.version}/auth`, credentials, { params: myParams })
             .pipe(
                 tap(data => {
-                    if (data.redirect_link) {
-                        localStorage.setItem('emailTemp', credentials.email)
-                        this.router.navigate(['auth/change'], { queryParams: { redirect_link: data.redirect_link } });
-                    } else {
+                    if (data && data.access_token) {
                         this.localStorageService.setItem('token', data.access_token)
                         let decodedToken: { sub: string, iss: string, iat: number, exp: number, scope: string };
                         try {
@@ -58,19 +59,28 @@ export class AuthService {
 
     logout(): void {
         this.localStorageService.logout();
-        this.router.navigate(['auth/login']);
+        this.router.navigate(['/login']);
     }
 
 
-    changePassowrd(credentials: { name: string, email: string, password: string }, redirect_link): Observable<boolean> {
-        return this.http.patch<any>(`${environment.api_url}${redirect_link}`, credentials)
+    changePassword(credentials: { email: string, new_password: string }): Promise<any> {
+        const temporaryToken = this.sessionService.getItem('temporaryToken');
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/json')
+            .append('Authorization', `Bearer ${temporaryToken}`);
+        return this.http.patch<any>(`${environment.api_url}/${this.version}/auth/password`, credentials, { headers: headers })
             .pipe(
-                tap(data => {
-                    this.router.navigate(['auth/login']);
-                    return observableOf(true);
+                tap(() => {
+                    this.sessionService.clean();
                 })
-            );
+            )
+            .toPromise();
 
+    }
+
+    forgot(email: string): Promise<any> {
+        return this.http.post<any>(`${environment.api_url}/${this.version}/auth/forgot`, { email })
+            .toPromise();
     }
 
     getScopeUser(): String {

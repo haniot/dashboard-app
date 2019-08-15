@@ -4,7 +4,6 @@ import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 
 import { HeartRate } from '../models/heart-rate';
-import { MeasurementType } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 
 @Component({
@@ -159,14 +158,14 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     applyFilter(filter: { start_at: string, end_at: string, period: string }) {
-        this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.heart_rate, null, null, filter)
-            .then((measurements: Array<any>) => {
-                this.data = measurements;
-                this.showSpinner = false;
-                this.updateGraph(measurements);
-            })
-            .catch();
+        // this.showSpinner = true;
+        // this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.heart_rate, null, null, filter)
+        //     .then(httpResponse => {
+        //         this.data = httpResponse.body;
+        //         this.showSpinner = false;
+        //         this.updateGraph(this.data);
+        //     })
+        //     .catch();
     }
 
     updateGraph(measurements: Array<HeartRate>): void {

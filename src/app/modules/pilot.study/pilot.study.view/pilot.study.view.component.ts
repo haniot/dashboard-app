@@ -1,16 +1,14 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
-
-import { HealthProfessional } from 'app/modules/admin/models/users';
 import { PilotStudyService } from '../services/pilot.study.service';
 import { PilotStudy } from '../models/pilot.study';
-import { LocalStorageService } from '../../../shared/shared.services/localstorage.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 
 @Component({
     selector: 'app-pilot-study-view',
@@ -20,8 +18,6 @@ import { LocalStorageService } from '../../../shared/shared.services/localstorag
 export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pilotStudyId: string;
     pilotStudyForm: FormGroup;
-    professionalsForm: FormGroup;
-    listProf: Array<HealthProfessional> = [];
     color = 'accent';
     checked = false;
     disabled = false;
@@ -77,61 +73,31 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         if (this.pilotStudyId) {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
-                name: ['', Validators.required],
-                location: ['', Validators.required],
-                start: ['', Validators.required],
-                end: ['', Validators.required],
-                health_professionals_id: ['', Validators.required],
-                is_active: [true, Validators.required]
+                name: [''],
+                location: [''],
+                start: [''],
+                end: [''],
+                total_health_professionals: [''],
+                total_patients: [''],
+                is_active: [{ value: true, disabled: true }]
             });
         } else {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
-                name: ['', Validators.required],
+                name: [''],
                 location: [''],
-                start: ['', Validators.required],
-                end: [{ value: '', disabled: true }, Validators.required],
-                health_professionals_id: ['', Validators.required],
-                is_active: [true, Validators.required]
+                start: [''],
+                end: [''],
+                total_health_professionals: [''],
+                total_patients: [''],
+                is_active: [{ value: true, disabled: true }]
             });
         }
-        this.professionalsForm = this.fb.group({
-            health_professionals_id_add: ['', Validators.required]
-        });
-
-        this.subscriptions.push(this.pilotStudyForm.get('start').valueChanges.subscribe(val => {
-            this.pilotStudyForm.get('end').enable();
-        }));
     }
 
-    onSubimt() {
-        const form = this.pilotStudyForm.getRawValue();
-        if (!this.pilotStudyId) {
-            this.pilotStudyService.create(form)
-                .then(pilotStudy => {
-                    this.pilotStudyForm.reset();
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-CREATED'));
-                })
-                .catch(error => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-CREATED'));
-                });
-        } else {
-            this.pilotStudyService.update(form)
-                .then(() => {
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.STUDY-UPDATED'));
-                })
-                .catch(() => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-UPDATED'));
-                });
-        }
-    }
 
     trackById(index, item) {
         return item.id;
-    }
-
-    onBack() {
-        this._location.back();
     }
 
     ngOnChanges() {
