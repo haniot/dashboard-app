@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { PatientService } from '../services/patient.service';
 import { Gender, Patient } from '../models/patient';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { SocioDemographicRecordService } from '../../habits/services/socio.demographic.record.service'
 import { NutritionalQuestionnaire } from '../../habits/models/nutritional.questionnaire'
 import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
 import { OdontologicalQuestionnaire } from '../../habits/models/odontological.questionnaire'
@@ -68,7 +67,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         private localStorageService: LocalStorageService,
         private translateService: TranslateService,
         private modalService: ModalService,
-        private socioDemographicService: SocioDemographicRecordService,
         private nutritionalQuestionnaireService: NutritionalQuestionnairesService,
         private odontologicalQuestionnaireService: OdontologicalQuestionnairesService
     ) {

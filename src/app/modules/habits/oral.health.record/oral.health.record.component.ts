@@ -1,9 +1,7 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { OralHealthRecord } from '../models/oral.health.record';
-import { OralhealthRecordService } from '../services/oralhealth.record.service';
-import { MedicalRecord } from '../models/medical.record'
 
 @Component({
     selector: 'oralhealth-record',
@@ -12,13 +10,11 @@ import { MedicalRecord } from '../models/medical.record'
 })
 export class OralHealthRecordComponent implements OnInit, OnChanges {
     @Input() oralHealthRecord: OralHealthRecord;
-    @Input() patientId: string;
     oralHealthForm: FormGroup;
     index: number;
 
     constructor(
-        private fb: FormBuilder,
-        private oralHealthService: OralhealthRecordService
+        private fb: FormBuilder
     ) {
         this.index = 0;
         this.oralHealthRecord = new OralHealthRecord();
@@ -44,13 +40,6 @@ export class OralHealthRecordComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
-            this.oralHealthService.getAll(this.patientId)
-                .then(oralhealthrecords => {
-                    this.createOralHealthForm(oralhealthrecords[0]);
-                })
-                .catch();
-        }
         if (changes.oralHealthRecord.currentValue !== changes.oralHealthRecord.previousValue) {
             if (this.oralHealthRecord) {
                 this.createOralHealthForm(this.oralHealthRecord);

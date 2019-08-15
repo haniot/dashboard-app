@@ -7,7 +7,7 @@ import { WaterGlassPipe } from '../pipes/water.glass.pipe';
 import { BreakFastPipe } from '../pipes/break.fast.pipe';
 import { BreastFeedingPipe } from '../pipes/breast.feeding.pipe';
 import { FeedingHabitsRecord } from '../models/feeding';
-import { FeedingRecordService } from '../services/feeding.record.service';
+
 
 @Component({
     selector: 'feeding-habits',
@@ -15,14 +15,12 @@ import { FeedingRecordService } from '../services/feeding.record.service';
     styleUrls: ['../shared.style/shared.styles.scss', './feeding.habits.component.scss']
 })
 export class FeedingHabitsComponent implements OnInit, OnChanges {
-    @Input() patientId: string;
     @Input() feedingHabitsRecord: FeedingHabitsRecord;
     feedingForm: FormGroup;
     index: number;
 
     constructor(
         private fb: FormBuilder,
-        private feedingService: FeedingRecordService,
         private translateService: TranslateService,
         private waterGlassPipe: WaterGlassPipe,
         private breakFastPipe: BreakFastPipe,
@@ -67,13 +65,6 @@ export class FeedingHabitsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
-            this.feedingService.getAll(this.patientId)
-                .then(feedingRecords => {
-                    this.createFeedingForm(feedingRecords[0]);
-                })
-                .catch();
-        }
         if (changes.feedingHabitsRecord.currentValue !== changes.feedingHabitsRecord.previousValue) {
             if (this.feedingHabitsRecord) {
                 this.createFeedingForm(this.feedingHabitsRecord);

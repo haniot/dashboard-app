@@ -12,14 +12,10 @@ import { BreastFeedingPipe } from './pipes/breast.feeding.pipe';
 import { FoodAllergyPipe } from './pipes/food.allergy.pipe';
 import { WeeklyFrequencyPipe } from './pipes/weekly.frequency.pipe';
 import { SleepHabitsComponent } from './sleep.habits/sleep.habits.component';
-import { SleepRecordService } from './services/sleep.record.service';
-import { FeedingRecordService } from './services/feeding.record.service';
 import { PhysicalActivityHabitsComponent } from './physical.activity.habits/physical.activity.habits.component';
-import { PhysicalActivityRecordService } from './services/physical.activity.record.service';
 import { PhysicalActivityPipe } from './pipes/physical.activity.frequency.pipe';
 import { WeeklyActivityPipe } from './pipes/weekly.activities.pipe';
 import { MedicalRecordComponent } from './medical.record/medical.record.component';
-import { MedicalRecordService } from './services/medical.record.service';
 import { ChronicDiseasePipe } from './pipes/chronic.disease.pipe';
 import { DiseaseHistoryPipe } from './pipes/disease.history.pipe';
 import { WeeklyFoodPipe } from './pipes/weekly.food.pipe';
@@ -27,9 +23,6 @@ import { SocioDemographicRecordComponent } from './socio.demographic.record/soci
 import { FamilyCohesionRecordComponent } from './family.cohesion.record/family.cohesion.record.component';
 import { OralHealthRecordComponent } from './oral.health.record/oral.health.record.component';
 import { FrequencyFamilycohesionPipe } from './pipes/frequency.familycohesion.pipe';
-import { FamilyCohesionRecordService } from './services/family.cohesion.record.service';
-import { OralhealthRecordService } from './services/oralhealth.record.service';
-import { SocioDemographicRecordService } from './services/socio.demographic.record.service';
 import { MotherSchoolarityPipe } from './pipes/mother.schoolarity.pipe';
 import { CorAndRacePipe } from './pipes/cor.race.pipe';
 import { TeethbushingPipe } from './pipes/teeth.brushing.frequency.pipe';
@@ -107,13 +100,6 @@ import { SharedModule } from '../../shared/shared.module'
         LesionTypePipe,
         QuestionnaireTypePipe,
         /** Services */
-        FeedingRecordService,
-        SleepRecordService,
-        PhysicalActivityRecordService,
-        MedicalRecordService,
-        FamilyCohesionRecordService,
-        OralhealthRecordService,
-        SocioDemographicRecordService,
         NutritionalQuestionnairesService,
         OdontologicalQuestionnairesService
     ]

@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { FamilyCohesionRecordService } from '../services/family.cohesion.record.service';
+import { TranslateService } from '@ngx-translate/core'
+
 import { FrequencyFamilycohesionPipe } from '../pipes/frequency.familycohesion.pipe';
 import { FamilyCohesionRecord } from '../models/family.cohesion.record';
-import { TranslateService } from '@ngx-translate/core'
 
 @Component({
     selector: 'familycohesion-record',
@@ -13,13 +13,11 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class FamilyCohesionRecordComponent implements OnInit, OnChanges {
     @Input() familyCohesionRecord: FamilyCohesionRecord;
-    @Input() patientId: string;
     familyForm: FormGroup;
     index: number;
 
     constructor(
         private fb: FormBuilder,
-        private familyService: FamilyCohesionRecordService,
         private frequencyPipe: FrequencyFamilycohesionPipe,
         private translateService: TranslateService
     ) {
@@ -88,13 +86,6 @@ export class FamilyCohesionRecordComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
-            this.familyService.getAll(this.patientId)
-                .then(familyRecords => {
-                    this.createFamilyForm(familyRecords[0]);
-                })
-                .catch();
-        }
         if (changes.familyCohesionRecord.currentValue !== changes.familyCohesionRecord.previousValue) {
             if (this.familyCohesionRecord) {
                 this.createFamilyForm(this.familyCohesionRecord);

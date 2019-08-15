@@ -2,7 +2,6 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { SleepHabitsRecord } from '../models/sleep';
-import { SleepRecordService } from '../services/sleep.record.service';
 
 @Component({
     selector: 'sleep-habits',
@@ -10,14 +9,12 @@ import { SleepRecordService } from '../services/sleep.record.service';
     styleUrls: ['../shared.style/shared.styles.scss', './sleep.habits.component.scss']
 })
 export class SleepHabitsComponent implements OnInit, OnChanges {
-    @Input() patientId: string;
     @Input() sleepHabit: SleepHabitsRecord;
     sleepForm: FormGroup;
     index: number;
 
     constructor(
-        private fb: FormBuilder,
-        private sleepService: SleepRecordService
+        private fb: FormBuilder
     ) {
         this.index = 0;
         this.sleepHabit = new SleepHabitsRecord();
@@ -42,13 +39,6 @@ export class SleepHabitsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
-            this.sleepService.getAll(this.patientId)
-                .then(sleepRecords => {
-                    this.createSleepForm(sleepRecords[0]);
-                })
-                .catch();
-        }
         if (changes.sleepHabit.currentValue !== changes.sleepHabit.previousValue) {
             if (this.sleepHabit) {
                 this.createSleepForm(this.sleepHabit);

@@ -1,8 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { SocioDemographicRecord } from '../models/socio.demographic.record';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { SocioDemographicRecordService } from '../services/socio.demographic.record.service';
+import { SocioDemographicRecord } from '../models/socio.demographic.record';
 import { MotherSchoolarityPipe } from '../pipes/mother.schoolarity.pipe';
 import { CorAndRacePipe } from '../pipes/cor.race.pipe';
 
@@ -13,13 +12,11 @@ import { CorAndRacePipe } from '../pipes/cor.race.pipe';
 })
 export class SocioDemographicRecordComponent implements OnInit, OnChanges {
     @Input() socioDemographicRecord: SocioDemographicRecord;
-    @Input() patientId: string;
     socioDemographicForm: FormGroup;
     index: number;
 
     constructor(
         private fb: FormBuilder,
-        private socioDemographicService: SocioDemographicRecordService,
         private motherSchoolarityPipe: MotherSchoolarityPipe,
         private corAndRacePipe: CorAndRacePipe
     ) {
@@ -54,13 +51,6 @@ export class SocioDemographicRecordComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
-            this.socioDemographicService.getAll(this.patientId)
-                .then(sociodemographics => {
-                    this.createSocioDemographicForm(sociodemographics[0]);
-                })
-                .catch();
-        }
         if (changes.socioDemographicRecord.currentValue !== changes.socioDemographicRecord.previousValue) {
             if (this.socioDemographicRecord) {
                 this.createSocioDemographicForm(this.socioDemographicRecord);

@@ -3,7 +3,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { MedicalRecord } from '../models/medical.record';
-import { MedicalRecordService } from '../services/medical.record.service';
 
 @Component({
     selector: 'medical-record',
@@ -18,7 +17,6 @@ export class MedicalRecordComponent implements OnInit, OnChanges {
 
     constructor(
         private fb: FormBuilder,
-        private medcalService: MedicalRecordService,
         private sanitizer: DomSanitizer
     ) {
         this.index = 0;
@@ -45,13 +43,6 @@ export class MedicalRecordComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
-            this.medcalService.getAll(this.patientId)
-                .then(medicalRecords => {
-                    this.createMedicalForm(medicalRecords[0]);
-                })
-                .catch();
-        }
         if (changes.medicalRecord.currentValue !== changes.medicalRecord.previousValue) {
             if (this.medicalRecord) {
                 this.createMedicalForm(this.medicalRecord);
