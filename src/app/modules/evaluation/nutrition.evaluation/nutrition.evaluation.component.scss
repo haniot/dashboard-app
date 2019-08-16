@@ -1,3 +1,13 @@
+
+.card .card-header-danger:not(.card-header-icon):not(.card-header-text), .card.bg-danger, .card.card-rotate.bg-danger .front, .card.card-rotate.bg-danger .back {
+  background: #00a594 !important;
+}
+
+.right {
+  position: absolute;
+  right: 10px;
+}
+
 label {
   color: black;
   font-size: 14px;
@@ -12,7 +22,7 @@ label {
 
 .shared .material-icons {
   cursor: pointer;
-  color: #00a594;
+  color: white;
   font-size: 30px;
   transition: font-size 500ms;
 }
@@ -121,12 +131,8 @@ label {
   border-top: 1px solid #eeeeee;
 }
 
-#finalingEvaluantion img {
-  width: 8%;
-}
-
 .externa {
-  position: absolute;
+  position: fixed;
   z-index: 2000;
   align-items: center;
   display: flex;
@@ -210,9 +216,11 @@ label {
 .borderline {
   color: #FF9800;
 }
+
 .hypertension_stage_1 {
   color: #FF5722;
 }
+
 .hypertension_stage_2 {
   color: #d50000;
 }

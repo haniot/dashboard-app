@@ -54,22 +54,4 @@
 
 </nav>
 
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center"
-             *ngIf="isNotAdmin() && flag">
-            <div class="dropdown" style="margin-top: 60px">
-                <label for="dropdownPilotSelected">{{'NAVBAR.SELECT-STUDY' | translate}}:</label>
-                <button class="btn btn-haniot-primary dropdown-toggle ellipsis" type="button" id="dropdownPilotSelected"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{pilotStudyName}}
-                </button>
-                <div class="dropdown-menu" id="dropdownSelectPilot" aria-labelledby="dropdownPilotSelected">
-                    <a class="dropdown-item background-green " *ngFor="let pilot of listPilots;trackBy: trackById"
-                       (click)="selectPilotStudy(pilot.id)">{{pilot.name}}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <select-pilotstudy></select-pilotstudy>

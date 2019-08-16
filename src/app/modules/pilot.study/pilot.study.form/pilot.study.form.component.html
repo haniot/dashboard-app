@@ -47,6 +47,7 @@
                                     <div class="col-md-10">
                                         <input matInput [matDatepicker]="pickerStart" class="form-control"
                                                formControlName="start" id="start"
+                                               (focus)="pickerStart.open()"
                                                [placeholder]="'PILOT-STUDY.PLACEHOLDER-DATE-START'|translate">
                                     </div>
                                     <div class="col-md-2">
@@ -71,6 +72,7 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <input matInput class="form-control" [matDatepicker]="pickerEnd"
+                                               (focus)="pickerEnd.open()"
                                                [min]="pilotStudyForm.get('start').value" formControlName="end"
                                                id="end" [placeholder]="'PILOT-STUDY.PLACEHOLDER-DATE-END'|translate">
                                     </div>
@@ -130,13 +132,13 @@
                             <!--              </div>-->
                         </div>
 
-                        <div class="d-flex justify-content-around">
-                            <div class="p-2">
-                                <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
-                                    <i class="material-icons" id="iconBack">arrow_back</i>
-                                    {{'SHARED.TOBACK'|translate}}
-                                </button>
-                            </div>
+                        <div class="d-flex justify-content-end">
+                            <!--                            <div class="p-2">-->
+                            <!--                                <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">-->
+                            <!--                                    <i class="material-icons" id="iconBack">arrow_back</i>-->
+                            <!--                                    {{'SHARED.TOBACK'|translate}}-->
+                            <!--                                </button>-->
+                            <!--                            </div>-->
                             <div class="p-2">
                                 <button type="button" class="btn btn-haniot-primary" (click)="onSubmit()"
                                         [disabled]="!pilotStudyForm.valid">
@@ -150,17 +152,21 @@
             </div>
 
             <!-- Gerenciar profissionais de saude no estudo piloto -->
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="pilotStudyId && typeUserLogged=='admin'">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6" *ngIf="pilotStudyId && typeUserLogged=='admin'">
                 <haniot-card [title]="'PILOT-STUDY.MANAGE-PROFESSIONALS.TITLE'|translate"
                              [subtitle]="'PILOT-STUDY.MANAGE-PROFESSIONALS.SUBTITLE'|translate">
                     <form [formGroup]="professionalsForm">
                         <div class="row container">
-                            <div class="form-group has-feedback col-md-10">
+                            <div class="form-group has-feedback col-sm-8 col-md-8">
                                 <mat-form-field>
                                     <mat-label>{{'PILOT-STUDY.MANAGE-PROFESSIONALS.ADDPROFESSIONAL'|translate}}:
                                     </mat-label>
                                     <mat-select formControlName="health_professionals_id_add"
                                                 name="health_professionals_id_add" id="health_professionals_id_add">
+                                        <mat-option
+                                                *ngIf="!professionalsNotAssociated || !professionalsNotAssociated.length">
+                                            {{'SHARED.LOADING'|translate}}
+                                        </mat-option>
                                         <mat-option *ngFor="let prof of professionalsNotAssociated;trackBy: trackById"
                                                     [value]="prof.id">{{prof.name}}
                                             , {{prof.health_area | healthArea | translate}}</mat-option>
@@ -168,8 +174,8 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="col-md-2">
-                                <button type="button" class="btn btn-haniot-primary" (click)="addProfessionalInStudy()"
+                            <div class="col-sm-4 col-md-4">
+                                <button type="button" class="btn btn-haniot-primary btn-block btn-sm ellipsis" (click)="addProfessionalInStudy()"
                                         [disabled]="!professionalsForm.valid">
                                     {{'SHARED.ADD'|translate}}
                                 </button>
@@ -194,7 +200,7 @@
                                 <td>{{professional.name}}</td>
                                 <td>{{professional.health_area | healthArea | translate}}</td>
                                 <td>
-                                    <a class="nav-link" (click)="dissociateHealthProfessional(professional.id)"
+                                    <a class="nav-link" (click)="openConfirmationRemoveProfessional(professional.id)"
                                        [title]="'PILOT-STUDY.MANAGE-PROFESSIONALS.DISASSOCIATE-PROFESSIONAL'|translate">
                                         <i class="material-icons">close</i>
                                     </a>
@@ -209,17 +215,20 @@
             </div>
 
             <!-- Gerenciar pacientes no estudo piloto -->
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="pilotStudyId && typeUserLogged=='admin'">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6" *ngIf="pilotStudyId && typeUserLogged=='admin'">
                 <haniot-card [title]="'PILOT-STUDY.MANAGE-PATIENTS.TITLE'|translate"
                              [subtitle]="'PILOT-STUDY.MANAGE-PATIENTS.SUBTITLE'|translate">
                     <form [formGroup]="patientForm">
                         <div class="row container">
-                            <div class="form-group has-feedback col-md-10">
+                            <div class="form-group has-feedback col-sm-8 col-md-8">
                                 <mat-form-field>
                                     <mat-label>{{'PILOT-STUDY.MANAGE-PATIENTS.ADDPATIENT'|translate}}:
                                     </mat-label>
                                     <mat-select formControlName="patients_id_add"
                                                 name="patients_id_add" id="patients_id_add">
+                                        <mat-option *ngIf="!patientsNotAssociated || !patientsNotAssociated.length">
+                                            {{'SHARED.LOADING'|translate}}
+                                        </mat-option>
                                         <mat-option *ngFor="let patient of patientsNotAssociated;trackBy: trackById"
                                                     [value]="patient.id">{{patient.name}},
                                             {{patient.gender | gender | translate}} -
@@ -229,8 +238,8 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="col-md-2">
-                                <button type="button" class="btn btn-haniot-primary" (click)="addPatientInStudy()"
+                            <div class="col-sm-4 col-md-4">
+                                <button type="button" class="btn btn-haniot-primary btn-block btn-sm ellipsis" (click)="addPatientInStudy()"
                                         [disabled]="!patientForm.valid">
                                     {{'SHARED.ADD'|translate}}
                                 </button>
@@ -257,7 +266,7 @@
                                 <td>{{patient.gender | gender | translate}}</td>
                                 <td>{{patient.birth_date | date}}</td>
                                 <td>
-                                    <a class="nav-link" (click)="dissociatePatientProfessional(patient.id)"
+                                    <a class="nav-link" (click)="openConfirmationRemovePatient(patient.id)"
                                        [title]="'PILOT-STUDY.MANAGE-PATIENTS.DISASSOCIATE-PATIENT'|translate">
                                         <i class="material-icons">close</i>
                                     </a>
@@ -272,5 +281,34 @@
             </div>
 
         </div>
+    </div>
+</div>
+
+<modal-confirmation [id]="'confirmRemovePatient'" [message]="'Tem certeza que deseja remover paciente?'"
+                    (confirmation)="dissociatePatient()"
+                    (noconfirmation)="closeAndCleanConfirmationRemovePatient()"></modal-confirmation>
+
+<modal-confirmation [id]="'confirmRemoveProfessional'" [message]="'Tem certeza que deseja remover profissional?'"
+                    (confirmation)="dissociateHealthProfessional()"
+                    (noconfirmation)="closeAndCleanConfirmationRemoveProfessional()"></modal-confirmation>
+
+<div *ngIf="removing">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'PILOT-STUDY.REMOVING'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
     </div>
 </div>

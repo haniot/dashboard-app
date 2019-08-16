@@ -39,7 +39,7 @@
     </div>
     <ul class="nav">
 
-        <li routerLinkActive="active" class="nav-item" >
+        <li routerLinkActive="active" class="nav-item">
             <a class="nav-link" [routerLink]="['/app/dashboard']" *ngIf="verifyScopes('Dashboard')"
                (click)="openLoading()">
                 <i class="material-icons">dashboard</i>
@@ -94,6 +94,14 @@
             </a>
         </li>
 
+        <li routerLinkActive="active" class="nav-item">
+            <a class="nav-link" [routerLink]="['/app/patients']" *ngIf="verifyScopes('Patients')"
+               (click)="openLoading()">
+                <i class="material-icons">face</i>
+                <p>{{'SHARED.PATIENTS' | translate}}</p>
+            </a>
+        </li>
+
         <li routerLinkActive="active" class="nav-item" *ngIf="isNotAdmin()" [ngClass]="activeMyEvaluations">
             <a class="nav-link"
                href="javascript:void(0)"
@@ -101,14 +109,6 @@
                (click)="myEvaluations()">
                 <i class="material-icons">assignment</i>
                 <p>{{'SHARED.MY-EVALUATIONS' | translate}}</p>
-            </a>
-        </li>
-
-        <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" [routerLink]="['/app/patients']" *ngIf="verifyScopes('Patients')"
-               (click)="openLoading()">
-                <i class="material-icons">face</i>
-                <p>{{'SHARED.PATIENTS' | translate}}</p>
             </a>
         </li>
 

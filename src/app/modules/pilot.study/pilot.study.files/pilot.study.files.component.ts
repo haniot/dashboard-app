@@ -116,7 +116,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                         this.listOfFilesIsEmpty = !this.listOfFiles.length;
                     })
                     .catch();
-            }, 200);
+            }, 500);
         }
     }
 

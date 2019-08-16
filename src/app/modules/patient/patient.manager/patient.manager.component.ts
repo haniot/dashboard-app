@@ -65,7 +65,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
                         }
                     })
                     .catch();
-            }, 200);
+            }, 500);
         }
     }
 

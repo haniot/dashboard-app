@@ -71,7 +71,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
                         this.calcLenghtNutritionEvaluations();
                     })
                     .catch();
-            }, 200);
+            }, 500);
         }
     }
 

@@ -87,7 +87,7 @@ export class MypilotstudiesComponent implements OnInit, AfterViewChecked {
                 .catch(() => {
                     this.listOfStudiesIsEmpty = true;
                 });
-        }, 200);
+        }, 500);
     }
 
     getIndex(index: number): number {

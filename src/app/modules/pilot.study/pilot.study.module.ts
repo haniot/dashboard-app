@@ -22,7 +22,7 @@ import { PilotStudyViewComponent } from './pilot.study.view/pilot.study.view.com
 import { EvaluationModule } from '../evaluation/evaluation.module';
 import { PilotStudyFilesComponent } from './pilot.study.files/pilot.study.files.component';
 import { MeasurementModule } from '../measurement/measurement.module'
-import { MatCheckboxModule, MatExpansionModule, MatStepperModule } from '@angular/material'
+import { MatCheckboxModule, MatExpansionModule, MatInputModule, MatStepperModule } from '@angular/material'
 import { HabitsModule } from '../habits/habits.module'
 import { SharedModule } from '../../shared/shared.module'
 
@@ -58,7 +58,8 @@ import { SharedModule } from '../../shared/shared.module'
         MatCheckboxModule,
         MatExpansionModule,
         MatStepperModule,
-        HabitsModule
+        HabitsModule,
+        MatInputModule
     ],
     providers: [
         PilotStudyService

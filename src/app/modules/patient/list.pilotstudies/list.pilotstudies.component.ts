@@ -93,7 +93,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
                     }
                 })
                 .catch();
-        }, 200);
+        }, 500);
     }
 
     getIndex(index: number): number {

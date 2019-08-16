@@ -5,68 +5,70 @@
             <div class="row">
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group has-feedback"
-                    [ngClass]="{'has-success': userForm.controls.name.valid,
+                     [ngClass]="{'has-success': userForm.controls.name.valid,
                           'has-error': userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)}">
                     <label>{{'SHARED.NAME'|translate}}:</label>
                     <input type="text" class="form-control" formControlName="name">
                     <span *ngIf="userForm.controls.name.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                        aria-hidden="true"></span>
+                          aria-hidden="true"></span>
                     <span
-                        *ngIf="userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)">
+                            *ngIf="userForm.controls.name.invalid && (userForm.controls.name.touched || userForm.controls.name.dirty)">
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         <span class="text-danger">{{'SHARED.INVALID-NAME'|translate}}.</span>
                     </span>
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group has-feedback"
-                    [ngClass]="{'has-success': userForm.controls.email.valid,
+                     [ngClass]="{'has-success': userForm.controls.email.valid,
             'has-error': userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)}">
                     <label>{{'SHARED.EMAIL'|translate}}:</label>
                     <input type="email" class="form-control" formControlName="email">
                     <span *ngIf="userForm.controls.email.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                        aria-hidden="true"></span>
+                          aria-hidden="true"></span>
                     <span
-                        *ngIf="userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)">
+                            *ngIf="userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)">
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         <span class="text-danger">{{'SHARED.INVALID-EMAIL'|translate}}.</span>
                     </span>
                 </div>
 
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group has-feedback"
-                    [ngClass]="{'has-success': userForm.controls.phone_number.valid,
+                     [ngClass]="{'has-success': userForm.controls.phone_number.valid,
             'has-error': userForm.controls.phone_number.invalid && (userForm.controls.phone_number.touched || userForm.controls.phone_number.dirty)}">
                     <label>{{'SHARED.PHONE-NUMBER'|translate}}:
                         <small>({{'SHARED.ONLY-NUMBERS'|translate}})</small>
                     </label>
-                    <input type="phone_number" class="form-control" formControlName="phone_number" (keyup)="applyMaskPhoneNumber()">
+                    <input type="phone_number" class="form-control" formControlName="phone_number"
+                           (keyup)="applyMaskPhoneNumber()">
                     <span *ngIf="userForm.controls.phone_number.valid"
-                        class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                          class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                     <span
-                        *ngIf="userForm.controls.phone_number.invalid && (userForm.controls.phone_number.touched || userForm.controls.phone_number.dirty)">
+                            *ngIf="userForm.controls.phone_number.invalid && (userForm.controls.phone_number.touched || userForm.controls.phone_number.dirty)">
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         <span class="text-danger">{{'SHARED.INVALID-PHONE-NUMBER'|translate}}.</span>
                     </span>
                 </div>
 
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group has-feedback"
-                    [ngClass]="{'has-success': userForm.controls.health_area.valid,
-            'has-error': userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)}" *ngIf="typeUser == 'HealthProfessional'">
+                     [ngClass]="{'has-success': userForm.controls.health_area.valid,
+            'has-error': userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)}"
+                     *ngIf="typeUser == 'HealthProfessional'">
                     <label>{{'SHARED.AREA'|translate}}: </label>
                     <select class="form-control" formControlName="health_area">
                         <option *ngFor="let area of healthAreaOptions; index as i;trackBy: trackById" [value]="area">
                             {{area | healthArea | translate}}</option>
                     </select>
                     <span *ngIf="userForm.controls.health_area.valid"
-                        class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                          class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                     <span
-                        *ngIf="userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)">
+                            *ngIf="userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)">
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         <span class="text-danger">{{'SHARED.INVALID-AREA'|translate}}.</span>
                     </span>
                 </div>
 
                 <div class="form-group has-feedback col-md"
-                    [ngClass]="{'has-success': userForm.controls.birth_date.valid,
+                     [ngClass]="{'has-success': userForm.controls.birth_date.valid,
             'has-error': userForm.controls.birth_date.invalid && (userForm.controls.birth_date.touched || userForm.controls.birth_date.dirty)}">
                     <label>
                         {{'SHARED.BIRTH-DATE'|translate}}:
@@ -74,76 +76,78 @@
                     <div class="row">
                         <div class="col-md-10">
                             <input class="form-control" [matDatepicker]="pickerBirthDate" formControlName="birth_date"
-                                name="birth_date" data-date-format="yyyy-MM-dd"
-                                [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate">
+                                   name="birth_date" data-date-format="yyyy-MM-dd"
+                                   (focus)="pickerBirthDate.open()"
+                                   [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate">
                         </div>
                         <div class="col-md-2">
                             <!--                                        <mat-datepicker-toggle matSuffix  [for]="pickerBirthDate"></mat-datepicker-toggle>-->
                             <!--                                        <mat-datepicker #pickerBirthDate></mat-datepicker>-->
                             <mat-datepicker-toggle matSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
-                            <mat-datepicker #pickerBirthDate startView="year"></mat-datepicker>
+                            <mat-datepicker #pickerBirthDate startView="multi-year"></mat-datepicker>
                         </div>
                     </div>
                     <span *ngIf="userForm.controls.birth_date.valid"
-                        class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                          class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                     <span
-                        *ngIf="userForm.controls.birth_date.invalid && (userForm.controls.birth_date.touched || userForm.controls.birth_date.dirty)">
+                            *ngIf="userForm.controls.birth_date.invalid && (userForm.controls.birth_date.touched || userForm.controls.birth_date.dirty)">
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         <span class="text-danger">{{'SHARED.INVALID-BIRTH-DATE'|translate}}.</span>
                     </span>
                 </div>
 
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group has-feedback"
-                    [ngClass]="{'has-success': userForm.controls.language.valid,
-            'has-error': userForm.controls.language.invalid && (userForm.controls.language.touched || userForm.controls.language.dirty)}" *ngIf="typeUser == 'HealthProfessional'">
+                     [ngClass]="{'has-success': userForm.controls.language.valid,
+            'has-error': userForm.controls.language.invalid && (userForm.controls.language.touched || userForm.controls.language.dirty)}"
+                     *ngIf="typeUser == 'HealthProfessional'">
                     <label>{{'SHARED.LANGUAGE'|translate}}: </label>
 
                     <select class="form-control" formControlName="language">
                         <option *ngFor="let lang of listOfLanguages" [value]="lang"
-                            [selected]="lang === translateService.currentLang">{{ languages[lang] }}</option>
+                                [selected]="lang === translateService.currentLang">{{ languages[lang] }}</option>
                     </select>
 
                     <span *ngIf="userForm.controls.language.valid" class="glyphicon glyphicon-ok form-control-feedback"
-                        aria-hidden="true"></span>
+                          aria-hidden="true"></span>
                     <span
-                        *ngIf="userForm.controls.language.invalid && (userForm.controls.language.touched || userForm.controls.language.dirty)">
+                            *ngIf="userForm.controls.language.invalid && (userForm.controls.language.touched || userForm.controls.language.dirty)">
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         <span class="text-danger">{{'SHARED.INVALID-LANGUAGE'|translate}}.</span>
                     </span>
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group"
-                    [ngClass]="{'has-success': userForm.controls.password.valid,
+                     [ngClass]="{'has-success': userForm.controls.password.valid,
              'has-error': userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)}"
-                    *ngIf="!userId && userForm.controls.password">
+                     *ngIf="!userId && userForm.controls.password">
                     <label>{{'SHARED.PASSWORD'|translate}}:</label>
                     <div>
                         <input [type]="typeInputPassword" formControlName="password" class="form-control" required
-                            minlength="6" (keyup)="validatePassword()">
+                               minlength="6" (keyup)="validatePassword()">
                         <i class="material-icons icon_password"
-                            (click)="clickVisibilityPassword()">{{icon_password}}</i>
+                           (click)="clickVisibilityPassword()">{{icon_password}}</i>
 
                     </div>
 
                     <span class="text-danger"
-                        *ngIf="userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)">
+                          *ngIf="userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)">
                         {{'SHARED.PASSWORD-RULES-MESSAGE'| translate}}
                     </span>
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group"
-                    [ngClass]="{'has-success': userForm.controls.password_confirm.valid,
+                     [ngClass]="{'has-success': userForm.controls.password_confirm.valid,
              'has-error': userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty)}"
-                    *ngIf="!userId && userForm.controls.password_confirm">
+                     *ngIf="!userId && userForm.controls.password_confirm">
                     <label>{{'SHARED.PASSWORD-CONFIRM'| translate}}:</label>
                     <div>
                         <input [type]="typeInputPassword_confirm" class="form-control"
-                            formControlName="password_confirm" (keyup)="matchPassword()">
+                               formControlName="password_confirm" (keyup)="matchPassword()">
                         <i class="material-icons icon_password"
-                            (click)="clickVisibilityPasswordConfirm()">{{icon_password_confirm}}</i>
+                           (click)="clickVisibilityPasswordConfirm()">{{icon_password_confirm}}</i>
                     </div>
                     <span class="text-danger"
-                        *ngIf="userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty) || passwordNotMatch">
+                          *ngIf="userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty) || passwordNotMatch">
                         {{'SHARED.PASSWORD-CONFIRM-MESSAGE'| translate}}.
                     </span>
                 </div>
@@ -156,7 +160,7 @@
                     </div>
                     <div class="col text-center">
                         <button type="submit" class="btn btn-haniot-primary" [disabled]="!userForm.valid"
-                            (click)="onSubmit()">
+                                (click)="onSubmit()">
                             {{'SHARED.SAVE'|translate}}
                         </button>
                     </div>

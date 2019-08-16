@@ -1,9 +1,24 @@
+
+.card .card-header-danger:not(.card-header-icon):not(.card-header-text), .card.bg-danger, .card.card-rotate.bg-danger .front, .card.card-rotate.bg-danger .back {
+  background: #00a594 !important;
+}
+
+.card-title {
+  margin-left: 5px !important;
+  color: white !important;
+}
+
+.right {
+  position: absolute;
+  right: 10px;
+}
+
 table .material-icons {
   color: #00a594;
   cursor: pointer;
 }
 
-table td{
+table td {
   cursor: pointer;
 }
 
@@ -96,3 +111,28 @@ td img {
   background: rgb(212, 207, 207);
 }
 
+
+/* satDatePicker*/
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;;
+}
+
+::ng-deep .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+.mat-datepicker-toggle {
+  color: white !important;
+}

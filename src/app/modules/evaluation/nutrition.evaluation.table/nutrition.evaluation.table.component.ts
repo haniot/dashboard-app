@@ -67,7 +67,7 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                     .catch(() => {
                         this.listOfEvaluationsIsEmpty = true;
                     });
-            }, 200);
+            }, 500);
         }
     }
 

@@ -5,10 +5,11 @@ import { ISubscription } from 'rxjs-compat/Subscription';
 
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health.professional.service';
-import { HealtArea } from '../models/health.professional';
+import { HealtArea, HealthProfessional } from '../models/health.professional';
 import { LanguagesConfiguration } from '../../../../assets/i18n/config'
 import { TranslateService } from '@ngx-translate/core'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { GenericUser } from '../../../shared/shared.models/generic.user'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -63,17 +64,30 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                 if (res && res.error && res.error.code === 409) {
                     this.userForm.get('email').setErrors({ 'incorrect': true });
                 }
-                this.createFormForUser(res.user);
-                this.userForm.setValue(res.user);
+                switch (this.typeUser) {
+                    case 'Admin':
+                        this.loadAdminInForm(res.user);
+                        break;
+
+                    case 'HealthProfessional':
+                        this.loadHealthProfessinalInForm(res.user);
+                        break;
+                }
             }));
         this.listOfLanguages = this.translateService.getLangs();
     }
 
     onSubmit() {
         const form = this.userForm.getRawValue();
-        let dateFormat = form.birth_date.toISOString()
-        dateFormat = dateFormat.split('T')[0];
-        form.birth_date = dateFormat;
+        const regexDate = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+        if (!regexDate.test(form.birth_date)) {
+            let dateFormat = form.birth_date.toISOString();
+            dateFormat = dateFormat.split('T')[0];
+            form.birth_date = dateFormat;
+        }
+        if (!this.userForm.get('email').touched || !this.userForm.get('email').dirty) {
+            delete form.email;
+        }
         const password = form.password;
         const password_confirm = form.password_confirm;
         if (password === password_confirm) {
@@ -90,14 +104,12 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             id: [''],
             name: ['', Validators.required],
             email: ['', Validators.compose([Validators.required, Validators.email])],
-            password: ['', Validators.required],
-            password_confirm: ['', Validators.required],
             birth_date: ['', Validators.required],
             phone_number: [''],
             language: [''],
-            total_pilot_studies: [''],
-            total_patients: [''],
-            health_area: ['', Validators.required]
+            health_area: ['', Validators.required],
+            password: ['', Validators.required],
+            password_confirm: ['', Validators.required]
         });
         if (this.typeUser === 'Admin') {
             this.userForm.removeControl('health_area');
@@ -105,12 +117,33 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         if (this.userId) {
             this.userForm.removeControl('password');
             this.userForm.removeControl('password_confirm');
+            this.userForm.removeControl('total_health_professionals');
         }
     }
 
-    createFormForUser(user: any) {
+    loadAdminInForm(user: GenericUser) {
         this.userId = user.id;
-        this.createForm();
+        this.userForm = this.fb.group({
+            id: [user.id],
+            name: [user.name, Validators.required],
+            email: [user.email, Validators.compose([Validators.required, Validators.email])],
+            birth_date: [user.birth_date, Validators.required],
+            phone_number: [user.phone_number],
+            language: [user.language]
+        });
+    }
+
+    loadHealthProfessinalInForm(user: HealthProfessional) {
+        this.userId = user.id;
+        this.userForm = this.fb.group({
+            id: [user.id],
+            name: [user.name, Validators.required],
+            email: [user.email, Validators.compose([Validators.required, Validators.email])],
+            birth_date: [user.birth_date, Validators.required],
+            phone_number: [user.phone_number],
+            language: [user.language],
+            health_area: [user.health_area, Validators.required]
+        });
     }
 
     loadUserInForm() {
@@ -119,14 +152,14 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                 case 'Admin':
                     this.adminService.getById(this.userId)
                         .then(admin => {
-                            this.userForm.setValue(admin);
+                            this.loadAdminInForm(admin);
                         })
                         .catch();
                     break;
                 case 'HealthProfessional':
                     this.healthService.getById(this.userId)
                         .then(healthprofessional => {
-                            this.userForm.setValue(healthprofessional);
+                            this.loadHealthProfessinalInForm(healthprofessional);
                         })
                         .catch();
                     break;
@@ -163,7 +196,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             if (len < 6 || letter <= 0 || num <= 0 || sym <= 0) {
                 this.userForm.get('password').setErrors({ 'incorrect': true });
             }
-        }, 200);
+        }, 500);
         if (this.userForm.get('password_confirm').value) {
             this.matchPassword();
         }
@@ -175,17 +208,17 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             if (this.userForm.get('password').value !== this.userForm.get('password_confirm').value) {
                 this.userForm.get('password_confirm').setErrors({ 'incorrect': true });
             }
-        }, 200);
+        }, 500);
     }
 
     applyMaskPhoneNumber() {
         let number: string;
         number = this.userForm.get('phone_number').value;
-
-        number = number.replace(/\D/g, '');
-        number = number.replace(/^(\d{2})(\d)/g, '($1) $2');
-        number = number.replace(/(\d)(\d{4})$/, '$1-$2');
-
+        if (number) {
+            number = number.replace(/\D/g, '');
+            number = number.replace(/^(\d{2})(\d)/g, '($1) $2');
+            number = number.replace(/(\d)(\d{4})$/, '$1-$2');
+        }
         this.userForm.get('phone_number').patchValue(number);
     }
 

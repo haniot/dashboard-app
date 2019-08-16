@@ -28,7 +28,7 @@
     "CARD-PATIENTS-FROM-THE-STUDY": "Total Patients in Selected Study",
     "CARD-PATIENTS-TOTAL": "Total Patients",
     "CARD-PATIENTS": {
-      "TITLE": "Access your patients",
+      "TITLE": "Last registered patients",
       "SUBTITLE": "Click on the card to view patient information.",
       "SPINNER-MESSAGE": "Loading Patients",
       "STUDY-EMPTY": "The selected study does not have registered patients",
@@ -38,7 +38,7 @@
     },
     "CARD-STUDIES-TOTAL": "Total Number of Studies",
     "CARD-STUDIES": {
-      "TITLE": "Access your studies",
+      "TITLE": "Last registered studies",
       "SUBTITLE": "Click on the card to view study information.",
       "SPINNER-MESSAGE": "Loading studies",
       "VIEW": "View study",
@@ -46,7 +46,7 @@
       "STUDIES-EMPTY-MESSAGE": "Please contact your administrator."
     },
     "CARD-EVALUATIONS": {
-      "TITLE": "Access your evaluations",
+      "TITLE": "Last registered evaluations",
       "SUBTITLE": "Click on the card to view evaluation information.",
       "NONE-EVALUATIONS": "You do not have any evaluations available!",
       "TOTAL": "Total Evaluations"
@@ -598,7 +598,10 @@
       "MEASUREMENTS": "GRAPH OF MEASUREMENTS",
       "LOG-MEASUREMENTS": "LOG OF MEASUREMENTS",
       "LOADING-QUESTIONNAIRES": "Loading questionnaire...",
-      "REMOVE-QUESTIONNAIRE": "Remove questionnaire"
+      "REMOVE-QUESTIONNAIRE": "Remove questionnaire",
+      "SPINNER-MESSAGE": "Removing questionnaire...",
+      "NUTRITIONAL-QUESTIONNAIRE": "Q. NUTRITIONAL",
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Q. ODONTOLOGICAL"
     },
     "MY-STUDIES": {
       "TITLE": "Pilot Study List",
@@ -660,6 +663,8 @@
       "DISASSOCIATE-PATIENT": "Dissociate patient...",
       "REMOVE": "To remove"
     },
+    "REMOVING": "Removing...",
+    "VIEW-ONLY": "View only",
     "PLACEHOLDER-SEARCH": "Search for study...",
     "NAME-OF-STUDY": "Name of study",
     "TOVIEW-STUDY": "To view study...",
@@ -762,6 +767,7 @@
     "INVALID-PHONE-NUMBER": "Invalid phone",
     "LANGUAGE": "Language",
     "INVALID-LANGUAGE": "Invalid language",
+    "LOADING": "Loading...",
     "PIPES": {
       "GENDER": {
         "MALE": "MALE",

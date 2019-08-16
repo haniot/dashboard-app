@@ -158,7 +158,7 @@ export class HaniotTableComponent implements OnInit {
                     break;
             }
             this.updateStateOfList();
-        }, 200);
+        }, 500);
     }
 
     clickPagination(event) {

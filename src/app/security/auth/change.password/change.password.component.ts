@@ -177,7 +177,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
             if (len < 6 || letter <= 0 || num <= 0 || sym <= 0) {
                 this.f.get('new_password').setErrors({ 'incorrect': true });
             }
-        }, 200);
+        }, 500);
         if (this.f.get('confirm_password').value) {
             this.matchPassword();
         }
@@ -189,7 +189,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
             if (this.f.get('new_password').value !== this.f.get('confirm_password').value) {
                 this.f.get('confirm_password').setErrors({ 'incorrect': true });
             }
-        }, 200);
+        }, 500);
     }
 
     gotoLogin(): void {

@@ -1,95 +1,164 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <haniot-card [title]="'PILOT-STUDY.CARD-PILOT-STUDY.TITLE'|translate"
-                             [subtitle]="'PILOT-STUDY.CARD-PILOT-STUDY.SUBTITLE'|translate">
-                    <form [formGroup]="pilotStudyForm">
-                        <div class="row">
-                            <div class="form-group has-feedback col-sm-12 col-md-6">
-                                <label>
-                                    {{'SHARED.NAME'|translate}}:
-                                    <label class="label-description">{{pilotStudyForm.get('name').value}}</label>
-                                </label>
-                            </div>
-                            <div class="form-group has-feedback col-sm-12 col-md-6">
-                                <label>
-                                    {{'SHARED.LOCAL'|translate}}:
-                                    <label class="label-description">{{pilotStudyForm.get('location').value}}</label>
-                                </label>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                <label>
-                                    {{'PILOT-STUDY.START'|translate}}: <label
-                                        class="label-description">{{pilotStudyForm.get('start').value|date:'fullDate'}}</label>
-                                </label>
-                            </div>
-
-
-                            <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                <label>
-                                    {{'PILOT-STUDY.END'|translate}}: <label
-                                        class="label-description">{{pilotStudyForm.get('end').value|date:'fullDate'}}</label>
-                                </label>
-                            </div>
-                            <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                <label>
-                                    {{'PILOT-STUDY.SITUATION'|translate}}:
-                                </label>
-
-                                <mat-slide-toggle class="example-margin" [color]="color" formControlName="is_active"
-                                                  id="is_active"  style="margin-left: 5px">
-                                </mat-slide-toggle>
-                                <label style="margin-left: 5px">
-                                    {{pilotStudyForm.controls.is_active.value | pilotStudySituation| translate}}
-                                </label>
-
+            <div class="col-sm-12 col-md-12 col-lg-12 colxl-12">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-danger">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">
+                                    <h4 class="card-title">{{'PILOT-STUDY.CARD-PILOT-STUDY.TITLE'|translate}}</h4>
+                                    <p class="card-category"> {{'PILOT-STUDY.CARD-PILOT-STUDY.SUBTITLE'|translate}}</p>
+                                </span>
+                                <ul class="nav nav-tabs right" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab"
+                                           [routerLink]="['/app/pilotstudies',pilotStudyId]"
+                                           [title]="'PILOT-STUDY.EDIT-STUDY'|translate">
+                                            {{'SHARED.TO-EDIT'|translate}}
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                </ul>
 
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group has-feedback col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                <label>
-                                    {{'PILOT-STUDY.CARD-PILOT-STUDY.TOTAL-PROFESSIONALS'|translate}}:
-                                    <label class="label-description">{{pilotStudyForm.get('total_health_professionals').value}}</label>
-                                </label>
-                            </div>
-                            <div class="form-group has-feedback col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                <label>
-                                    {{'PILOT-STUDY.CARD-PILOT-STUDY.TOTAL-PATIENTS'|translate}}:
-                                    <label class="label-description">{{pilotStudyForm.get('total_patients').value}}</label>
-                                </label>
-                            </div>
-                            <div class="form-group has-feedback col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                <label>
-                                    {{'PILOT-STUDY.CARD-PILOT-STUDY.EDIT-INFO'|translate}}:
-                                </label>
-
-                                <button class="btn btn-haniot-primary btn-sm"
-                                        [routerLink]="['/app/pilotstudies',pilotStudyId]"
-                                        [title]="'PILOT-STUDY.EDIT-STUDY'|translate"
-                                        style="margin-left: 10px">{{'SHARED.TO-EDIT'|translate}}</button>
-
-                            </div>
-                        </div>
-
-                    </form>
-                </haniot-card>
-            </div>
-            <div class="col-md-12">
-                <haniot-card [title]="'PILOT-STUDY.CARD-FILES.TITLE'|translate"
-                             [subtitle]="'PILOT-STUDY.CARD-FILES.SUBTITLE'|translate">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <pilot-study-files [pilotStudy]="pilotStudy"></pilot-study-files>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <form [formGroup]="pilotStudyForm">
+                            <div class="row">
+                                <div class="form-group has-feedback col-sm-12 col-md-6">
+                                    <label>
+                                        {{'SHARED.NAME'|translate}}:
+                                        <label class="label-description">{{pilotStudyForm.get('name').value}}</label>
+                                    </label>
+                                </div>
+                                <div class="form-group has-feedback col-sm-12 col-md-6">
+                                    <label>
+                                        {{'SHARED.LOCAL'|translate}}:
+                                        <label class="label-description">{{pilotStudyForm.get('location').value}}</label>
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label>
+                                        {{'PILOT-STUDY.START'|translate}}: <label
+                                            class="label-description">{{pilotStudyForm.get('start').value|date:'fullDate'}}</label>
+                                    </label>
+                                </div>
+
+
+                                <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label>
+                                        {{'PILOT-STUDY.END'|translate}}: <label
+                                            class="label-description">{{pilotStudyForm.get('end').value|date:'fullDate'}}</label>
+                                    </label>
+                                </div>
+                                <div class="form-group has-feedback col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label>
+                                        {{'PILOT-STUDY.SITUATION'|translate}}:
+                                    </label>
+
+                                    <mat-slide-toggle class="example-margin" [color]="color" formControlName="is_active"
+                                                      id="is_active" style="margin-left: 5px">
+                                    </mat-slide-toggle>
+                                    <label style="margin-left: 5px">
+                                        {{pilotStudyForm.controls.is_active.value | pilotStudySituation| translate}}
+                                    </label>
+
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group has-feedback col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <label>
+                                        {{'PILOT-STUDY.CARD-PILOT-STUDY.TOTAL-PROFESSIONALS'|translate}}:
+                                        <label class="label-description">{{pilotStudyForm.get('total_health_professionals').value}}</label>
+                                    </label>
+                                </div>
+                                <div class="form-group has-feedback col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <label>
+                                        {{'PILOT-STUDY.CARD-PILOT-STUDY.TOTAL-PATIENTS'|translate}}:
+                                        <label class="label-description">{{pilotStudyForm.get('total_patients').value}}</label>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- profissionais de saude associados ao estudo piloto -->
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                <haniot-card [title]="'PILOT-STUDY.MANAGE-PROFESSIONALS.ASSOCIATE-PROFESSIONALS'|translate"
+                             [subtitle]="'PILOT-STUDY.VIEW-ONLY'|translate">
+
+                    <div class="form-group table-responsive form-manager">
+                        <label>{{'PILOT-STUDY.MANAGE-PROFESSIONALS.ASSOCIATE-PROFESSIONALS'|translate}}:</label>
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th>{{'SHARED.NAME'|translate}}</th>
+                                <th>{{'SHARED.EMAIL'|translate}}</th>
+                                <th>{{'SHARED.AREA'|translate}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let professional of listOfProfessionalsAux; index as i;trackBy: trackById">
+                                <td>{{professional.name}}</td>
+                                <td>{{professional.health_area | healthArea | translate}}</td>
+                                <td>{{professional.email}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <mat-paginator [length]="professionalLength" [pageSize]="professionalLimit"
+                                       [pageSizeOptions]="professionalPageSizeOptions"
+                                       (page)="clickProfessionalPagination($event)">
+                        </mat-paginator>
+
+                    </div>
                 </haniot-card>
+            </div>
+
+            <!-- pacientes associados ao estudo piloto -->
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                <haniot-card [title]="'PILOT-STUDY.MANAGE-PATIENTS.ASSOCIATE-PATIENTS'|translate"
+                             [subtitle]="'PILOT-STUDY.VIEW-ONLY'|translate">
+                    <div class="form-group table-responsive form-manager">
+                        <label>{{'PILOT-STUDY.MANAGE-PATIENTS.ASSOCIATE-PATIENTS'|translate}}:</label>
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th>{{'SHARED.NAME'|translate}}</th>
+                                <th>{{'SHARED.EMAIL'|translate}}</th>
+                                <th>{{'SHARED.GENDER'|translate}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let patient of listOfPatientsAux; index as i;trackBy: trackById">
+                                <td>{{patient.name}}</td>
+                                <td>{{patient.email}}</td>
+                                <td>{{patient.gender | gender | translate}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <mat-paginator [length]="patientLength" [pageSize]="patientLimit"
+                                       [pageSizeOptions]="patientPageSizeOptions"
+                                       (page)="clickPatientPagination($event)">
+                        </mat-paginator>
+
+                    </div>
+                </haniot-card>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <pilot-study-files [pilotStudy]="pilotStudy"></pilot-study-files>
             </div>
 
 

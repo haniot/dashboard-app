@@ -79,6 +79,37 @@ export class UserService {
             .catch(() => false);
     }
 
+    changePilotStudySelected(userId: string, pilotStudyId: string): Promise<boolean> {
+        let user;
+        let service;
+        switch (this.getTypeUser()) {
+            case 'admin':
+                user = new Admin();
+                user.id = userId;
+                user.selected_pilot_study = pilotStudyId;
+                service = this.adminService;
+                break;
+
+            case 'health_professional':
+                user = new HealthProfessional();
+                user.id = userId;
+                user.selected_pilot_study = pilotStudyId;
+                service = this.healthService;
+                break;
+            case 'patient':
+                user = new Patient();
+                user.id = userId;
+                user.selected_pilot_study = pilotStudyId;
+                service = this.patientService;
+                break;
+        }
+        return service.update({ id: user.id, selected_pilot_study: user.selected_pilot_study })
+            .then(userUpdated => {
+                return !!userUpdated;
+            })
+            .catch(() => false);
+    }
+
     getTypeUser(): string {
         return this.authService.decodeToken().sub_type;
     }

@@ -3,6 +3,7 @@
   margin-left: 15px;
   width: 95%;
 }
+
 .nav-item {
 }
 
@@ -17,11 +18,12 @@
 .logo {
   display: flex;
 }
+
 #linkLogo {
   margin: auto auto;
 }
 
-::ng-deep .sidebar-wrapper{
-  overflow-x: hidden;
-  overflow-y: hidden;
+.sidebar-wrapper {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
 }

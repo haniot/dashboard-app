@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SessionStorageService } from '../../../shared/shared.services/session.storage.service'
 import { environment } from '../../../../environments/environment'
+import { UserService } from '../../../modules/admin/services/users.service'
 
 @Injectable()
 export class AuthService {
@@ -40,7 +41,7 @@ export class AuthService {
         myParams.append('rejectUnauthorized', 'false');
         return this.http.post<any>(`${environment.api_url}/${this.version}/auth`, credentials, { params: myParams })
             .pipe(
-                tap(data => {
+                tap(async data => {
                     if (data && data.access_token) {
                         this.localStorageService.setItem('token', data.access_token)
                         let decodedToken: { sub: string, iss: string, iat: number, exp: number, scope: string };

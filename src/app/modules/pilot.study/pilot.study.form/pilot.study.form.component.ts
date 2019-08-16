@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
@@ -14,6 +14,7 @@ import { PatientService } from '../../patient/services/patient.service'
 import { HealthProfessional } from '../../admin/models/health.professional'
 import { HealthProfessionalService } from '../../admin/services/health.professional.service'
 import { AuthService } from '../../../security/auth/services/auth.service'
+import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 @Component({
     selector: 'pilot-study-form',
@@ -35,6 +36,9 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     listPatients: Array<Patient> = [];
     patientsNotAssociated: Array<Patient> = [];
     patientsAssociated: Array<Patient> = [];
+    cacheIdPatientRemove: string;
+    cacheIdProfessionalRemove: string;
+    removing: boolean;
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -47,7 +51,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         private activeRouter: ActivatedRoute,
         private _location: Location,
         private authService: AuthService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private modalService: ModalService
     ) {
         this.professionalsAssociated = new Array<HealthProfessional>();
         this.professionalsNotAssociated = new Array<HealthProfessional>();
@@ -56,39 +61,51 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         this.listProf = new Array<HealthProfessional>();
         this.listPatients = new Array<Patient>();
         this.subscriptions = new Array<ISubscription>();
+        this.cacheIdProfessionalRemove = '';
+        this.cacheIdPatientRemove = '';
+        this.removing = false;
     }
 
     ngOnInit() {
-        this.typeUserLogged = this.authService.decodeToken().sub_type;
-        this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
+        this.subscriptions.push(this.activeRouter.paramMap.subscribe(async (params) => {
             this.pilotStudyId = params.get('pilotStudyId');
+            this.typeUserLogged = this.authService.decodeToken().sub_type;
             if (this.pilotStudyId) {
                 this.createForm();
-                this.getPilotStudy();
+                const pilot = await this.getPilotStudy();
+                if (pilot && this.typeUserLogged && this.typeUserLogged === 'admin') {
+                    await this.getListProfessionals();
+                    this.loadProfessionalsAssociated();
+                    await this.getListPatients();
+                    this.loadPatientsAssociated()
+                }
             }
+
+        }));
+        if (!this.pilotStudyId) {
+            this.typeUserLogged = this.authService.decodeToken().sub_type;
+            this.createForm();
             if (this.typeUserLogged && this.typeUserLogged === 'admin') {
                 this.getListProfessionals();
                 this.getListPatients();
-                this.loadProfessionalsAssociated();
-                this.loadPatientsAssociated();
             }
-        }));
-        this.createForm();
-        this.getPilotStudy();
-        if (this.typeUserLogged && this.typeUserLogged === 'admin') {
-            this.getListProfessionals();
-            this.getListPatients();
         }
     }
 
-    getPilotStudy() {
+    getPilotStudy(): Promise<any> {
         if (this.pilotStudyId) {
-            this.pilotStudyService.getById(this.pilotStudyId)
-                .then(res => this.pilotStudyForm.setValue(res))
+            return this.pilotStudyService.getById(this.pilotStudyId)
+                .then(res => {
+                    this.pilotStudyForm.setValue(res);
+                    return res;
+                })
                 .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FIND'));
                 })
+        } else {
+            return Promise.reject();
         }
+
     }
 
     createForm() {
@@ -181,13 +198,17 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
             .catch();
     }
 
-    dissociateHealthProfessional(health_professionals_id: string) {
-        this.pilotStudyService.dissociateHealthProfessionalsFromPilotStudy(this.pilotStudyId, health_professionals_id)
+    dissociateHealthProfessional() {
+        this.closeConfirmationRemoveProfessional();
+        this.removing = true;
+        this.pilotStudyService.dissociateHealthProfessionalsFromPilotStudy(this.pilotStudyId, this.cacheIdProfessionalRemove)
             .then(() => {
                 this.loadProfessionalsAssociated();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-REMOVED'));
+                this.removing = false;
             })
             .catch(() => {
+                this.removing = false;
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.HEALTHPROFESSIONAL-NOT-REMOVED'));
             });
     }
@@ -222,13 +243,17 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
             .filter(professional => !this.search(this.professionalsAssociated, professional));
     }
 
-    dissociatePatientProfessional(patientId: string) {
-        this.pilotStudyService.dissociatePatientFromPilotStudy(this.pilotStudyId, patientId)
+    dissociatePatient() {
+        this.closeConfirmationRemovePatient()
+        this.removing = true;
+        this.pilotStudyService.dissociatePatientFromPilotStudy(this.pilotStudyId, this.cacheIdPatientRemove)
             .then(() => {
                 this.loadPatientsAssociated();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-REMOVED'));
+                this.removing = false;
             })
             .catch(() => {
+                this.removing = false;
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-REMOVED'));
             });
     }
@@ -261,6 +286,34 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         this.patientsNotAssociated = [];
         this.patientsNotAssociated = this.listPatients
             .filter(patient => !this.search(this.patientsAssociated, patient));
+    }
+
+    openConfirmationRemovePatient(patietnId: string): void {
+        this.cacheIdPatientRemove = patietnId;
+        this.modalService.open('confirmRemovePatient');
+    }
+
+    closeConfirmationRemovePatient(): void {
+        this.modalService.close('confirmRemovePatient');
+    }
+
+    closeAndCleanConfirmationRemovePatient(): void {
+        this.cacheIdPatientRemove = '';
+        this.closeConfirmationRemovePatient();
+    }
+
+    openConfirmationRemoveProfessional(professionalID: string): void {
+        this.cacheIdProfessionalRemove = professionalID;
+        this.modalService.open('confirmRemoveProfessional');
+    }
+
+    closeConfirmationRemoveProfessional(): void {
+        this.modalService.close('confirmRemoveProfessional');
+    }
+
+    closeAndCleanConfirmationRemoveProfessional(): void {
+        this.cacheIdProfessionalRemove = '';
+        this.closeConfirmationRemoveProfessional();
     }
 
     private search(list: Array<GenericUser>, item: GenericUser): boolean {

@@ -76,14 +76,14 @@
 
                         <div class="row">
                             <div class="form-group has-feedback col-md">
-                                <label for="pilotstudy_id">
+                                <label for="selected_pilot_study">
                                     {{'PATIENTS.PATIENTS-FORM.ASSOCIATE-STUDY'|translate}}:
                                 </label>
-                                <select class="form-control" formControlName="pilotstudy_id" name="pilotstudy_id"
-                                        id="pilotstudy_id">
+                                <select class="form-control" formControlName="selected_pilot_study"
+                                        name="selected_pilot_study"
+                                        id="selected_pilot_study">
                                     <option value="undefined">{{'PATIENTS.PATIENTS-FORM.SELECT-STUDY'|translate}}</option>
-                                    <option *ngFor="let pilot of listPilots;trackBy: trackById"
-                                            [value]="pilot.id">{{pilot.name}}</option>
+                                    <option [value]="pilotStudy.id">{{pilotStudy.name}}</option>
                                 </select>
                             </div>
 
@@ -95,27 +95,38 @@
                 </haniot-card>
             </div>
 
-            <!--  Odontological Questionnaires -->
-            <div class="container-fluid">
-                <div class="row" style="position:relative;">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 backdropLoadingQuestionnaire">
-                        <!--Fundo preto do modal-->
-                        <div class="modal-backdrop show backdropLoadingQuestionnaire"
-                             *ngIf="loadingOdontologicalQuestionnaire">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"
-                         *ngIf="loadingOdontologicalQuestionnaire">
-                        <div class="d-flex justify-content-center">
-                            <div class="p-2">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <div class="container">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6 text-center">
-                                                        <spinner
-                                                                [message]="'PATIENTS.VIEW-HABITS.LOADING-QUESTIONNAIRES'|translate"></spinner>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">
+
+                <mat-tab [label]="'PATIENTS.VIEW-HABITS.ODONTOLOGICAL-QUESTIONNAIRE'|translate"
+                         *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
+                    <!--  Odontological Questionnaires -->
+                    <div class="container-fluid">
+                        <div class="row" style="position:relative;">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 backdropLoadingQuestionnaire">
+                                <!--Fundo preto do modal-->
+                                <div class="modal-backdrop show backdropLoadingQuestionnaire"
+                                     *ngIf="loadingOdontologicalQuestionnaire">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"
+                                 *ngIf="loadingOdontologicalQuestionnaire">
+                                <div class="d-flex justify-content-center">
+                                    <div class="p-2">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="container">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6 text-center">
+                                                                <spinner
+                                                                        [message]="'PATIENTS.VIEW-HABITS.LOADING-QUESTIONNAIRES'|translate"></spinner>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -123,73 +134,61 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex justify-content-end">
+
+                                <div class="form-group mb-2">
+                                    <label>{{'PATIENTS.VIEW-HABITS.REMOVE-QUESTIONNAIRE'|translate}}:</label>
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <button mat-raised-button type="button"
+                                            class="btn btn-white btn-round btn-just-icon pull-right"
+                                            [title]="'HABITS.DELETE-ODONTOLOGICAL-QUESTIONNAIRE'|translate"
+                                            (click)="openModalConfirmationRemoveOdontologicalQuestionnaire()"
+                                            [disabled]="!odontologicalQuestionnaireOptions.length">
+                                        <i class="material-icons">delete</i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <familycohesion-record
+                                        [familyCohesionRecord]="odontologicalQuestionnaire.family_cohesion_record"></familycohesion-record>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <sociodemographic-record
+                                        [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <oralhealth-record
+                                        [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <small class="pull-right"
+                                       *ngIf="odontologicalQuestionnaire.created_at">
+                                    {{'HABITS.REGISTER-DATE'|translate}}:
+                                    {{odontologicalQuestionnaire.created_at | myDate }}</small>
+                                <small class="pull-right"
+                                       *ngIf="!odontologicalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                                    : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <mat-paginator [length]="odontologicalQuestionnaireOptions.length"
+                                               [pageSize]="odontologicalQuestionnaireOptions.limit"
+                                               [pageSizeOptions]="odontologicalQuestionnaireOptions.pageSizeOptions"
+                                               (page)="odontologicalQuestionnairePageEvent($event)">
+                                </mat-paginator>
+                            </div>
+
                         </div>
                     </div>
+                </mat-tab>
 
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex justify-content-end"
-                         *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-
-                        <div class="form-group mb-2">
-                            <label>{{'PATIENTS.VIEW-HABITS.REMOVE-QUESTIONNAIRE'|translate}}:</label>
-                        </div>
-                        <div class="form-group mx-sm-3 mb-2">
-                            <button mat-raised-button type="button"
-                                    class="btn btn-white btn-round btn-just-icon pull-right"
-                                    [title]="'HABITS.DELETE-ODONTOLOGICAL-QUESTIONNAIRE'|translate"
-                                    (click)="openModalConfirmationRemoveOdontologicalQuestionnaire()"
-                                    [disabled]="!odontologicalQuestionnaireOptions.length">
-                                <i class="material-icons">delete</i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                         *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                        <familycohesion-record
-                                [familyCohesionRecord]="odontologicalQuestionnaire.family_cohesion_record"></familycohesion-record>
-                    </div>
-
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                         *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                        <sociodemographic-record
-                                [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>
-                    </div>
-
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                         *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                        <oralhealth-record
-                                [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
-                    </div>
-
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                         *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                        <small class="pull-right"
-                               *ngIf="odontologicalQuestionnaire.created_at">
-                            {{'HABITS.REGISTER-DATE'|translate}}:
-                            {{odontologicalQuestionnaire.created_at | myDate }}</small>
-                        <small class="pull-right"
-                               *ngIf="!odontologicalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
-                            : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
-                    </div>
-
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                         *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                        <mat-paginator [length]="odontologicalQuestionnaireOptions.length"
-                                       [pageSize]="odontologicalQuestionnaireOptions.limit"
-                                       [pageSizeOptions]="odontologicalQuestionnaireOptions.pageSizeOptions"
-                                       (page)="odontologicalQuestionnairePageEvent($event)">
-                        </mat-paginator>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">
-                <mat-tab [label]="'PATIENTS.VIEW-HABITS.HABITS'|translate">
+                <mat-tab [label]="'PATIENTS.VIEW-HABITS.NUTRITIONAL-QUESTIONNAIRE'|translate">
                     <!--Fundo preto do modal-->
                     <div class="modal-backdrop show backdropLoadingQuestionnaire"
                          *ngIf="loadingNutritionalQuestionnaire">
@@ -279,11 +278,12 @@
 
                 <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">
                     <measurement-component [(patientId)]="patientId" [configVisibility]="configVisibility"
-                                           *ngIf="showMeasurements"></measurement-component>
+                                           *ngIf="showMeasurements && patientForm.get('id').value"></measurement-component>
                 </mat-tab>
 
                 <mat-tab [label]="'PATIENTS.VIEW-HABITS.LOG-MEASUREMENTS'|translate">
-                    <measurement-logs [(patientId)]="patientId"></measurement-logs>
+                    <measurement-logs [(patientId)]="patientId"
+                                      *ngIf="showLogMeasurements && patientForm.get('id').value"></measurement-logs>
 
                 </mat-tab>
 
@@ -312,7 +312,7 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner [message]="'Removendo questionário...'"></spinner>
+                                <spinner [message]="'PATIENTS.VIEW-HABITS.SPINNER-MESSAGE'|translate"></spinner>
                             </div>
                         </div>
                     </div>

@@ -94,7 +94,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                     this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
                 })
                 .catch();
-        }, 200);
+        }, 500);
     }
 
     getAllPacients() {
@@ -127,12 +127,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         this.loadListPatientAux();
     }
 
-    openModalConfirmation(pilotstudy_id
-                              :
-                              string, patientId
-                              :
-                              string
-    ) {
+    openModalConfirmation(pilotstudy_id: string, patientId: string): void {
         this.cacheIdPatientRemove = patientId;
         this.pilotStudyId = pilotstudy_id;
         this.modalService.open('modalConfirmation');

@@ -40,13 +40,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy{
         const email = this.f.get('email').value;
         this.authService.forgot(email)
             .then(() => {
-                setTimeout(() => {
-                    this.loading = false;
-                    const message = `${this.translateService.instant('SECURITY.FORGOT.RECOVERY-SUCCESS')} ${email}.`
-                    // this.toastr.info(message)
-                    this.showEmailSent = true;
-                    this.f.reset();
-                }, 3000)
+                this.loading = false;
+                const message = `${this.translateService.instant('SECURITY.FORGOT.RECOVERY-SUCCESS')} ${email}.`
+                // this.toastr.info(message)
+                this.showEmailSent = true;
+                this.f.reset();
             })
             .catch(errorResponse => {
                 this.loading = false;

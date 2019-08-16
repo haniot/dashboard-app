@@ -1,128 +1,135 @@
-<div class="input-group no-border">
-    <div class="has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12 text-right">
-        <div class="row">
+<div class="card">
+    <div class="card-header card-header-tabs card-header-danger">
+        <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">
+                                    <h4 class="card-title">{{'PILOT-STUDY.CARD-FILES.TITLE'|translate}}</h4>
+                                    <p class="card-category"> {{'PILOT-STUDY.CARD-FILES.SUBTITLE'|translate}}</p>
+                                </span>
+                <ul class="nav nav-tabs right" data-tabs="tabs">
+                    <li class="nav-item">
+                        <mat-form-field>
+                            <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
+                                   [satDatepicker]="picker"
+                                   [(ngModel)]="search"
+                                   (focus)="picker.open()"
+                                   (ngModelChange)="getAllFiles()" id="rangeDate">
 
-            <div class="col-sm-6 col-md-10 col-lg-10 col-xl-10 text-right">
-                <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate" [satDatepicker]="picker"
-                       [(ngModel)]="search"
-                       (ngModelChange)="getAllFiles()" id="rangeDate">
+                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                        </mat-form-field>
+                    </li>
+                </ul>
 
-                <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
-                <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
             </div>
-
-            <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2 text-left">
-                <button class="btn btn-haniot-primary"
-                        (click)="cleanDateRange()">{{'SHARED.TOCLEAN'|translate}}</button>
-            </div>
-
         </div>
-
     </div>
-
-</div>
-<div class="table-responsive">
-    <table class="table table-hover table-sm">
-        <thead>
-        <tr>
-            <th style="max-width: 100px">{{'PILOT-STUDY.TOTAL-PATIENTS'|translate}}</th>
-            <th>Tipos de medições</th>
-            <th>Tipos de questionarios</th>
-            <th>{{'SHARED.DATE'|translate}}</th>
-            <th>{{'SHARED.ACTIONS'|translate}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngIf="listOfFiles.length==0">
-            <td colspan="5" *ngIf="!listOfFilesIsEmpty">
-                <spinner [message]="'PILOT-STUDY.SPINNER-MESSAGE'|translate"></spinner>
-            </td>
-            <td colspan="5" *ngIf="listOfFilesIsEmpty">
-                <h4>{{'PILOT-STUDY.FILESEMPTY'|translate}}
-                    <br>
-                    <small>{{'PILOT-STUDY.FILESEMPTY-MESSAGE'|translate}}</small>
-                </h4>
-            </td>
-        </tr>
-        <tr *ngFor="let file of listOfFiles; index as i;trackBy: trackById">
-            <td style="max-width: 20px" (click)="fileGenerated(i)">{{file.total_patients}}</td>
-            <td (click)="fileGenerated(i)">
-                <div *ngIf="this.listOfDataTypes[i].measurement_type && this.listOfDataTypes[i].measurement_type.length <= LengthDataTypes">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <thead>
+                <tr>
+                    <th style="max-width: 100px">{{'PILOT-STUDY.TOTAL-PATIENTS'|translate}}</th>
+                    <th>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-MEASUREMENTS'|translate}}</th>
+                    <th>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-QUESTIONNAIRES'|translate}}</th>
+                    <th>{{'SHARED.DATE'|translate}}</th>
+                    <th>{{'SHARED.ACTIONS'|translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngIf="listOfFiles.length==0">
+                    <td colspan="5" *ngIf="!listOfFilesIsEmpty">
+                        <spinner [message]="'PILOT-STUDY.SPINNER-MESSAGE'|translate"></spinner>
+                    </td>
+                    <td colspan="5" *ngIf="listOfFilesIsEmpty">
+                        <h4>{{'PILOT-STUDY.FILESEMPTY'|translate}}
+                            <br>
+                            <small>{{'PILOT-STUDY.FILESEMPTY-MESSAGE'|translate}}</small>
+                        </h4>
+                    </td>
+                </tr>
+                <tr *ngFor="let file of listOfFiles; index as i;trackBy: trackById">
+                    <td style="max-width: 20px" (click)="fileGenerated(i)">{{file.total_patients}}</td>
+                    <td (click)="fileGenerated(i)">
+                        <div *ngIf="this.listOfDataTypes[i].measurement_type && this.listOfDataTypes[i].measurement_type.length <= LengthDataTypes">
                     <span class="ellipsis measurement-type"
                           *ngFor="let type of listOfDataTypes[i].measurement_type">{{type | measurementType | translate}}</span>
-                </div>
+                        </div>
 
-                <div class="nav-link"
-                     *ngIf="this.listOfDataTypes[i].measurement_type && this.listOfDataTypes[i].measurement_type.length > LengthDataTypes">
+                        <div class="nav-link"
+                             *ngIf="this.listOfDataTypes[i].measurement_type && this.listOfDataTypes[i].measurement_type.length > LengthDataTypes">
                     <span *ngFor="let index of dataTypeIndexs; let j = index">
                         <span class="ellipsis measurement-type"
                               *ngIf="(listOfDataTypes[i].measurement_type[j]|measurementType)!=='MEASUREMENTS.PIPES.NOTFOUND'">
                         {{listOfDataTypes[i].measurement_type[j] | measurementType | translate}}
                     </span>
                     </span>
-                    ...
+                            ...
 
-                    <i class="material-icons" [title]="'Visualizar mais...'">info</i>
+                            <i class="material-icons" [title]="'Visualizar mais...'">info</i>
 
-                </div>
-            </td>
-            <td (click)="fileGenerated(i)">
-                <div *ngIf="this.listOfDataTypes[i].questionnaires && this.listOfDataTypes[i].questionnaires.length <= LengthDataTypes">
+                        </div>
+                    </td>
+                    <td (click)="fileGenerated(i)">
+                        <div *ngIf="this.listOfDataTypes[i].questionnaires && this.listOfDataTypes[i].questionnaires.length <= LengthDataTypes">
                     <span class="ellipsis measurement-type"
                           *ngFor="let type of listOfDataTypes[i].questionnaires">{{type | questionnaireType | translate}}</span>
-                </div>
+                        </div>
 
-                <div class="nav-link"
-                     *ngIf="this.listOfDataTypes[i].questionnaires && this.listOfDataTypes[i].questionnaires.length > LengthDataTypes">
+                        <div class="nav-link"
+                             *ngIf="this.listOfDataTypes[i].questionnaires && this.listOfDataTypes[i].questionnaires.length > LengthDataTypes">
                     <span *ngFor="let index of dataTypeIndexs; let j = index">
                         <span class="ellipsis measurement-type"
                               *ngIf="(listOfDataTypes[i].questionnaires[j]|questionnaireType)!=='HABITS.PIPES.DO-NOT-KNOW'">
                         {{listOfDataTypes[i].questionnaires[j] | questionnaireType | translate}}
                     </span>
                     </span>
-                    ...
+                            ...
 
-                    <i class="material-icons" [title]="'Visualizar mais...'">info</i>
+                            <i class="material-icons" [title]="'Visualizar mais...'">info</i>
 
-                </div>
-            </td>
-            <td (click)="fileGenerated(i)">{{file.created_at | date}}</td>
-            <td style="color: white">
-                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"
-                   [title]="'PILOT-STUDY.OPTIONS-DOWNLOAD'|translate">
-                    <i class="material-icons">more_vert</i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        </div>
+                    </td>
+                    <td (click)="fileGenerated(i)">{{file.created_at | date}}</td>
+                    <td style="color: white">
+                        <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false"
+                           [title]="'PILOT-STUDY.OPTIONS-DOWNLOAD'|translate">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
-                    <a class="dropdown-item background-green" [href]="getTrustedUrl(file.file_csv)" download
-                       target="_blank">
-                        {{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}
-                    </a>
+                            <a class="dropdown-item background-green" [href]="getTrustedUrl(file.file_csv)" download
+                               target="_blank">
+                                {{'PILOT-STUDY.DOWNLOAD-CSV'|translate}}
+                            </a>
 
-                    <a class="dropdown-item background-green" [href]="getTrustedUrl(file.file_xls)" download
-                       target="_blank">
-                        {{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}
-                    </a>
+                            <a class="dropdown-item background-green" [href]="getTrustedUrl(file.file_xls)" download
+                               target="_blank">
+                                {{'PILOT-STUDY.DOWNLOAD-XLS'|translate}}
+                            </a>
 
-                </div>
-            </td>
+                        </div>
+                    </td>
 
-        </tr>
-        </tbody>
-    </table>
+                </tr>
+                </tbody>
+            </table>
 
-</div>
-<div class="row">
-    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-        <button type="button" class="btn btn-haniot-primary" (click)="openModalFileConfig()">
-            {{'PILOT-STUDY.NEW-FILE'|translate}}
-        </button>
-    </div>
-    <div class="col-sm col-md col-lg col-xl">
-        <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
-                       (page)="clickPagination($event)">
-        </mat-paginator>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                <button type="button" class="btn btn-haniot-primary" (click)="openModalFileConfig()">
+                    {{'PILOT-STUDY.NEW-FILE'|translate}}
+                </button>
+            </div>
+            <div class="col-sm col-md col-lg col-xl">
+                <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+                               (page)="clickPagination($event)">
+                </mat-paginator>
+            </div>
+        </div>
+
     </div>
 </div>
 

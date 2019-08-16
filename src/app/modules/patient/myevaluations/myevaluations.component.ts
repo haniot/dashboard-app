@@ -77,7 +77,7 @@ export class PatientMyEvaluationsComponent implements OnInit, OnChanges, AfterVi
                 .catch(() => {
                     this.listOfEvaluationsIsEmpty = true;
                 });
-        }, 200);
+        }, 500);
 
     }
 

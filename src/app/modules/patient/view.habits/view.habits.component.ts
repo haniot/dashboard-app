@@ -29,10 +29,11 @@ const PaginatorConfig = ConfigurationBasic;
 export class ViewHabitsComponent implements OnInit, OnDestroy {
     patientForm: FormGroup;
     optionsGender: Array<string> = Object.keys(Gender);
-    listPilots: Array<PilotStudy>;
+    pilotStudy: PilotStudy;
     patientId: string;
     userHealthArea: string;
     showMeasurements: boolean;
+    showLogMeasurements: boolean;
     configVisibility = {
         weight: false,
         height: false,
@@ -72,6 +73,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     ) {
         this.subscriptions = new Array<ISubscription>();
         this.showMeasurements = false;
+        this.showLogMeasurements = false;
         this.nutritionalQuestionnaire = new NutritionalQuestionnaire();
         this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
         this.nutritionalQuestionnaireOptions = {
@@ -91,37 +93,34 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.removingQuestionnaire = false;
         this.loadingNutritionalQuestionnaire = false;
         this.loadingOdontologicalQuestionnaire = false;
-        this.listPilots = new Array<PilotStudy>();
+        this.pilotStudy = new PilotStudy();
     }
 
 
     ngOnInit() {
-        this.loadUserHealthArea();
-        this.createPatientFormInit();
-        this.getAllPilotStudies();
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
             this.patientService.getById(this.patientId)
                 .then(patient => {
                     this.createPatientForm(patient);
+                    this.getAllPilotStudies();
+                    this.getQuestionnaires();
                 })
                 .catch(errorResponse => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                 });
         }));
-        this.getQuestionnaires();
+        if (!this.patientId) {
+
+        }
+        this.loadUserHealthArea();
+        this.createPatientFormInit();
     }
-
-
-    loadUserHealthArea(): void {
-        this.userHealthArea = this.localStorageService.getItem('health_area');
-    }
-
 
     createPatientFormInit() {
         this.patientForm = this.fb.group({
             id: [''],
-            pilotstudy_id: [{ value: '', disabled: true }],
+            selected_pilot_study: [{ value: '', disabled: true }],
             name: [{ value: '', disabled: true }],
             email: [{ value: '', disabled: true }],
             phone_number: [{ value: '', disabled: true }],
@@ -133,7 +132,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     createPatientForm(patient: Patient) {
         this.patientForm = this.fb.group({
             id: [patient.id],
-            pilotstudy_id: [patient.selected_pilot_study],
+            selected_pilot_study: [patient.selected_pilot_study],
             name: [{ value: patient.name, disabled: true }],
             email: [{ value: patient.email, disabled: true }],
             phone_number: [{ value: patient.phone_number, disabled: true }],
@@ -142,26 +141,20 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         });
     }
 
+    loadUserHealthArea(): void {
+        this.userHealthArea = this.localStorageService.getItem('health_area');
+    }
+
 
     getAllPilotStudies() {
-        const userId = this.localStorageService.getItem('user');
-
-        if (this.localStorageService.getItem('health_area') === 'admin') {
-            this.pilotStudiesService.getAll()
-                .then(httpResponse => {
-                    if (httpResponse.body && httpResponse.body.length) {
-                        this.listPilots = httpResponse.body;
-                    }
+        const pilotId = this.patientForm.get('selected_pilot_study').value;
+        if (pilotId) {
+            this.pilotStudiesService.getById(pilotId)
+                .then(pilot => {
+                    this.pilotStudy = pilot;
                 })
-                .catch();
-        } else {
-            this.pilotStudiesService.getAllByUserId(userId)
-                .then(httpResponse => {
-                    if (httpResponse.body && httpResponse.body.length) {
-                        this.listPilots = httpResponse.body;
-                    }
-                })
-                .catch();
+                .catch(() => {
+                });
         }
 
     }
@@ -266,8 +259,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     }
 
     clickOnMatTab(event) {
-        this.showMeasurements = true;
         if (event.index === 1) {
+            this.showMeasurements = true;
             this.configVisibility = {
                 weight: true,
                 height: true,
@@ -278,6 +271,10 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                 pressure: true,
                 heartRate: true
             };
+        }
+
+        if (event.index === 2) {
+            this.showLogMeasurements = true;
         }
     }
 

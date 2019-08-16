@@ -25,9 +25,9 @@
             <div class="d-flex flex-row-reverse">
                 <div class="p-2">
                     <small class="pull-right" *ngIf="lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
-                        :{{lastData.timestamp | myDate}}</small>
-                    <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:
-                        {{'MEASUREMENTS.PATTERN-DATE'|translate}}
+                        : {{lastData.timestamp | myDate}}</small>
+                    <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                        :{{'MEASUREMENTS.PATTERN-DATE'|translate}}
                     </small>
                 </div>
             </div>

@@ -51,16 +51,15 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        this.getUser();
         if (this.authService.decodeToken().sub_type === 'admin') {
             this.selecPilotService.close();
         }
+        this.getUser();
         this.getAllPilotStudies();
     }
 
     loadUser(): void {
         const user_id = this.localStorageService.getItem('user');
-
         if (user_id) {
             this.userId = user_id;
         }
@@ -98,7 +97,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
                     }
                 })
                 .catch();
-        }, 200);
+        }, 500);
     }
 
     getIndex(index: number): number {
@@ -120,8 +119,8 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
             this.loadUser();
         }
         this.localStorageService.setItem(this.userId, pilotstudy_id);
-        this.selecPilotService.pilotStudyHasUpdated();
-        this.selectPilot.close();
+        this.selecPilotService.pilotStudyHasUpdated(pilotstudy_id);
+        this.closeModal();
     }
 
 
@@ -131,19 +130,27 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         try {
             const username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
             this.userName = username;
+            if (localUserLogged.selected_pilot_study) {
+                this.selectPilotStudy(localUserLogged.selected_pilot_study);
+            }
+
         } catch (e) {
             this.userService.getUserById(this.localStorageService.getItem('user'))
                 .then(user => {
                     if (user) {
+                        this.userId = user.id;
                         this.userName = user.name ? user.name : user.email;
                         const health_area = user.health_area ? user.health_area : 'admin';
                         this.localStorageService.setItem('userLogged', JSON.stringify(user));
                         this.localStorageService.setItem('email', user.email);
                         this.localStorageService.setItem('health_area', health_area);
-                        this.localStorageService.setItem('language', user.language);
+                        if (user.selected_pilot_study) {
+                            this.selectPilotStudy(user.selected_pilot_study);
+                        }
                     }
                 })
-                .catch();
+                .catch(() => {
+                });
         }
 
     }

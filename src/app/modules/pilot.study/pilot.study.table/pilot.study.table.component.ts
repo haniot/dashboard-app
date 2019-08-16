@@ -70,7 +70,7 @@ export class PilotStudyTableComponent implements OnInit {
                     }
                 })
                 .catch();
-        }, 200);
+        }, 500);
     }
 
     clickPagination(event) {

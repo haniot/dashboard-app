@@ -65,7 +65,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     listHeartRate: Array<HeartRate>;
     newCounseling = '';
     newCounselingType = 'bmi_whr';
-    finalingEvaluantion = false;
+    finalingEvaluantion: boolean;
     /* flag used to control the visibility of classification zones */
     showZonesClassification: boolean;
     /* flag used to control the visibility of the PDF generation modal */
@@ -111,6 +111,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HYPERTENSION')
         ];
         this.generatingPDF = false;
+        this.finalingEvaluantion = false;
         this.sendingEvaluation = false;
         this.finalCounseling = '';
     }
@@ -121,7 +122,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             this.nutritionEvaluationId = params.get('nutritionevaluation_id');
             this.getNutritionEvaluation();
         }));
-        this.getNutritionEvaluation();
+        if (!this.patientId) {
+            this.getNutritionEvaluation();
+        }
         this.translateService.onLangChange.subscribe(() => {
             this.typeCousenling = [
                 this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.STATE-NUTRITION'),
@@ -208,8 +211,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     }
 
     finalizeEvaluation() {
-
-        this.modalService.open('finalingEvaluantion');
+        this.finalingEvaluantion = true;
 
         const counselingBwr: Array<number> = new Array<number>();
         this.listChecksBmiWhr.forEach((element, index) => {
@@ -249,14 +251,10 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
             .then(nutritionEvaluation => {
                 this.getNutritionEvaluation();
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-COMPLETED'));
-                setTimeout(() => {
-                    this.modalService.close('finalingEvaluantion');
-                }, 2000)
+                this.finalingEvaluantion = false;
             })
             .catch(errorResponse => {
-                setTimeout(() => {
-                    this.modalService.close('finalingEvaluantion');
-                }, 2000)
+                this.finalingEvaluantion = false;
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.EVALUATION-NOT-COMPLETED'));
             });
     }

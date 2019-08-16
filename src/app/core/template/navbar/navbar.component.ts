@@ -12,7 +12,6 @@ import { LocalStorageService } from '../../../shared/shared.services/local.stora
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { UserService } from '../../../modules/admin/services/users.service'
-import { compareNumbers } from '@angular/compiler-cli/src/diagnostics/typescript_version'
 
 
 export declare interface RouteInfo {
@@ -77,10 +76,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions.push(this.selectPilotService.pilotStudyUpdated.subscribe(() => {
-            this.loadPilotSelected();
-            this.getNamePilotStudy();
-        }));
         this.subscriptions.push(this.router.events.subscribe((event) => {
             this.sidebarClose();
             const $layer: any = document.getElementsByClassName('close-layer')[0];
@@ -90,15 +85,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
             }
             this.getTitle();
         }));
-
         this.pilotStudyId = this.localStorageService.getItem('pilotstudy_id');
-        this.getUserName();
         this.listTitles = ROUTES;
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-        this.loadPilotSelected();
+        this.getUserName();
         this.getTitle();
-        this.getAllPilotStudies();
     }
 
     sidebarOpen() {
@@ -222,60 +214,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
                         this.configLanguage(user.language);
                     }
                 })
-                .catch();
+                .catch(() => {
+
+                });
         }
 
-    }
-
-    loadUser(): void {
-        this.userId = this.localStorageService.getItem('user');
-    }
-
-    getAllPilotStudies() {
-        if (!this.userId) {
-            this.loadUser();
-        }
-        this.pilotStudyService.getAllByUserId(this.userId)
-            .then(httpResponse => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.listPilots = httpResponse.body;
-                }
-                this.getNamePilotStudy();
-            })
-            .catch();
-    }
-
-    isNotAdmin(): boolean {
-        return this.authService.decodeToken().sub_type !== 'admin';
-    }
-
-    getNamePilotStudy(): void {
-        this.listPilots.forEach(pilot => {
-            if (pilot.id === this.pilotStudyId) {
-                this.pilotStudyName = pilot.name;
-            }
-        })
-    }
-
-    selectPilotStudy(pilot_id: string): void {
-        this.pilotStudyId = pilot_id;
-        if (!this.userId) {
-            this.loadUser()
-        }
-        this.localStorageService.setItem(this.userId, this.pilotStudyId);
-        this.selectPilotService.pilotStudyHasUpdated();
-    }
-
-    loadPilotSelected(): void {
-        if (!this.userId) {
-            this.loadUser();
-        }
-        const pilotselected = this.localStorageService.getItem(this.userId);
-        if (pilotselected) {
-            this.pilotStudyId = pilotselected;
-        } else if (this.authService.decodeToken().sub_type !== 'admin') {
-            this.selectPilotService.open();
-        }
     }
 
     config(): void {

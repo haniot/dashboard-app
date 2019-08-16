@@ -28,7 +28,7 @@
     "CARD-PATIENTS-FROM-THE-STUDY": "Total de Pacientes do Estudo Selecionado",
     "CARD-PATIENTS-TOTAL": "Total de Pacientes",
     "CARD-PATIENTS": {
-      "TITLE": "Acesse seus pacientes",
+      "TITLE": "Ultimos pacientes cadastrados",
       "SUBTITLE": "Clique sobre o card para visualizar informações do paciente.",
       "SPINNER-MESSAGE": "Carregando pacientes",
       "STUDY-EMPTY": "O estudo selecionado não possui pacientes cadastrados",
@@ -38,7 +38,7 @@
     },
     "CARD-STUDIES-TOTAL": "Total de Estudos",
     "CARD-STUDIES": {
-      "TITLE": "Acesse seus estudos",
+      "TITLE": "Ultimos estudos cadastrados",
       "SUBTITLE": "Clique sobre o card para visualizar informações do estudo.",
       "SPINNER-MESSAGE": "Carregando estudos",
       "VIEW": "Visualizar estudo",
@@ -46,7 +46,7 @@
       "STUDIES-EMPTY-MESSAGE": "Entre em contato com o administrador."
     },
     "CARD-EVALUATIONS": {
-      "TITLE": "Acesse suas avaliações",
+      "TITLE": "Ultimas avaliações cadastradas",
       "SUBTITLE": "Clique sobre o card para visualizar informações da avaliação.",
       "NONE-EVALUATIONS": "Você não possui avaliações disponivéis!",
       "TOTAL": "Total de avaliações"
@@ -595,10 +595,13 @@
         "SUBTITLE": ""
       },
       "HABITS": "HÁBITOS",
-      "MEASUREMENTS": "GRÁFICOS DAS MEDIÇÕES",
-      "LOG-MEASUREMENTS": "LOG DAS MEDIÇÕES",
+      "MEASUREMENTS": "Gráficos das Medições",
+      "LOG-MEASUREMENTS": "Log das Medições",
       "LOADING-QUESTIONNAIRES": "Carregando questionário...",
-      "REMOVE-QUESTIONNAIRE": "Remover questionário"
+      "REMOVE-QUESTIONNAIRE": "Remover questionário",
+      "SPINNER-MESSAGE": "Removendo questionário...",
+      "NUTRITIONAL-QUESTIONNAIRE": "Quest. Nutricional",
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Quest. Odontologico"
     },
     "MY-STUDIES": {
       "TITLE": "Lista de estudos piloto",
@@ -660,6 +663,8 @@
       "DISASSOCIATE-PATIENT": "Dissociar paciente...",
       "REMOVE": "Remover"
     },
+    "REMOVING": "Removendo...",
+    "VIEW-ONLY": "Apenas visualizaçao",
     "PLACEHOLDER-SEARCH": "Pesquisar estudo...",
     "NAME-OF-STUDY": "Nome do estudo",
     "TOVIEW-STUDY": "Visualizar estudo...",
@@ -762,6 +767,7 @@
     "INVALID-PHONE-NUMBER": "Telefone inválido",
     "LANGUAGE": "Idioma",
     "INVALID-LANGUAGE": "Idioma inválido",
+    "LOADING": "Carregando...",
     "PIPES": {
       "GENDER": {
         "MALE": "MASCULINO",

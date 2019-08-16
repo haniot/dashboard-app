@@ -56,7 +56,7 @@ export class PatientsComponent implements OnChanges {
                 .catch(() => {
                     this.listOfPatientsIsEmpty = true;
                 });
-        }, 200);
+        }, 500);
     }
 
     getAllPacients() {

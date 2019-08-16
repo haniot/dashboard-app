@@ -61,11 +61,12 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             this.patientId = params.get('patientId');
             this.createForm();
             this.loadPatientInForm();
-            this.getAllPilotStudies();
         }));
-        this.calMinBirthDate();
-        this.createForm();
-        this.getAllPilotStudies();
+        if (!this.patientId) {
+            this.calMinBirthDate();
+            this.createForm();
+            this.getAllPilotStudies();
+        }
     }
 
     calMinBirthDate(): void {
@@ -81,8 +82,6 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             gender: ['', Validators.required],
             email: ['', Validators.compose([Validators.email])],
             phone_number: [''],
-            last_login: [''],
-            last_sync: [''],
             selected_pilot_study: [''],
             language: [''],
             password: [''],
@@ -98,8 +97,6 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             gender: [patient.gender],
             email: [patient.email],
             phone_number: [patient.phone_number],
-            last_login: [patient.last_login],
-            last_sync: [patient.last_sync],
             selected_pilot_study: [patient.selected_pilot_study],
             language: [patient.language],
             password: [''],
@@ -114,8 +111,11 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
                     patient.password = '';
                     patient.password_confirm = '';
                     this.setPatientInForm(patient);
+                    this.getAllPilotStudies();
                 })
-                .catch();
+                .catch(() => {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
+                });
         }
     }
 
@@ -149,9 +149,11 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-CREATED'));
                 });
         } else {
+            if (!this.patientForm.get('email').touched || !this.patientForm.get('email').dirty) {
+                delete form.email;
+            }
             delete form.password;
             delete form.password_confirm;
-            delete form.selected_pilot_study;
             this.patientService.update(form)
                 .then(() => {
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-UPDATED'));
@@ -202,7 +204,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             if (len < 6 || letter <= 0 || num <= 0 || sym <= 0) {
                 this.patientForm.get('password').setErrors({ 'incorrect': true });
             }
-        }, 200);
+        }, 500);
         if (this.patientForm.get('password_confirm').value) {
             this.matchPassword();
         }
@@ -214,7 +216,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             if (this.patientForm.get('password').value !== this.patientForm.get('password_confirm').value) {
                 this.patientForm.get('password_confirm').setErrors({ 'incorrect': true });
             }
-        }, 200);
+        }, 500);
     }
 
     clickVisibilityPassword(): void {

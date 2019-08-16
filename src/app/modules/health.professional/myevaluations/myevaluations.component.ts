@@ -78,7 +78,7 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
                 .catch(() => {
                     this.listOfEvaluationsIsEmpty = true;
                 });
-        }, 200);
+        }, 500);
 
     }
 
