@@ -161,6 +161,17 @@ label {
 }
 
 .card-patient {
+    max-width: 350px;
+    cursor: pointer;
+}
+
+.card-studies {
+    max-width: 350px;
+    cursor: pointer;
+}
+
+.card-evaluations {
+    max-width: 400px;
     cursor: pointer;
 }
 

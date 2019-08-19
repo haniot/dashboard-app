@@ -19,6 +19,7 @@ export class PatientConfigComponent implements OnInit {
     patientForm: FormGroup;
     optionsGender: Array<string> = Object.keys(Gender);
     min_birth_date: Date;
+    max_birth_date: Date;
     userId: string;
     visibilityButtonSave: boolean;
     disabledButtonEdit: boolean;
@@ -37,6 +38,7 @@ export class PatientConfigComponent implements OnInit {
     ) {
         this.min_birth_date = new Date();
         this.user = new Patient();
+        this.max_birth_date = new Date();
     }
 
     ngOnInit() {

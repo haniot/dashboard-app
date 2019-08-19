@@ -1,53 +1,50 @@
-<haniot-card [title]="'HABITS.PHYSICAL-ACTIVITY.TITLE'|translate"
-             [subtitle]="'HABITS.PHYSICAL-ACTIVITY.SUBTITLE'|translate">
+<form [formGroup]="physicalActivityForm">
+    <div class="row">
+        <!-- <div class="form-group col-md-4">
+          <label for="created_at">
+            Data do registro:
+          </label>
+          <input matInput class="form-control" [matDatepicker]="pickerCreated" formControlName="created_at"
+            name="created_at" data-date-format="yyyy-MM-dd">
+        </div> -->
 
-    <form [formGroup]="physicalActivityForm">
-        <div class="row">
-            <!-- <div class="form-group col-md-4">
-              <label for="created_at">
-                Data do registro:
-              </label>
-              <input matInput class="form-control" [matDatepicker]="pickerCreated" formControlName="created_at"
-                name="created_at" data-date-format="yyyy-MM-dd">
-            </div> -->
-
-            <div class="form-group has-feedback col-md">
-                <label for="school_activity_freq">
-                    {{'HABITS.PHYSICAL-ACTIVITY.SCHOOL-ACTIVITY-FREQUENCY'|translate}}:
-                </label>
-                <input class="form-control" type="text" formControlName="school_activity_freq"
-                       id="school_activity_freq">
-            </div>
+        <div class="form-group has-feedback col-md">
+            <label for="school_activity_freq">
+                {{'HABITS.PHYSICAL-ACTIVITY.SCHOOL-ACTIVITY-FREQUENCY'|translate}}:
+            </label>
+            <input class="form-control" type="text" formControlName="school_activity_freq"
+                   id="school_activity_freq">
         </div>
+    </div>
 
-        <div class="row justify-content-center">
-            <div class="form-group has-feedback col-md">
-                <label for="weekly_activities">
-                    {{'HABITS.PHYSICAL-ACTIVITY.LIST-ACTIVITY-PRATICED'|translate}}:
-                </label>
-                <div class="col text-center">
-                    <ul class="list-inline">
-                        <li class="list-inline-item"
-                            *ngFor="let activity of physicalActivityForm.get('weekly_activities').value;"
-                            id="weekly_activities">
+    <div class="row justify-content-center">
+        <div class="form-group has-feedback col-md">
+            <label for="weekly_activities">
+                {{'HABITS.PHYSICAL-ACTIVITY.LIST-ACTIVITY-PRATICED'|translate}}:
+            </label>
+            <div class="col text-center">
+                <ul class="list-inline">
+                    <li class="list-inline-item"
+                        *ngFor="let activity of physicalActivityForm.get('weekly_activities').value;"
+                        id="weekly_activities">
 
-                            <div class="activity">
+                        <div class="activity">
                                 <span class="align-top">
                                     {{activity | weeklyActivity | translate}}
                                 </span>
-                                <img [src]="getTrustedUrl('../../../../assets/img/haniot/physicalActivities/'+activity+'.png')"
-                                     alt="">
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                            <img [src]="getTrustedUrl('../../../../assets/img/haniot/physicalActivities/'+activity+'.png')"
+                                 alt="">
+                        </div>
+                    </li>
+                </ul>
             </div>
-
         </div>
 
-    </form>
-
-    <div *ngIf="!physicalRecord">
-        <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.PHYSICAL-ACTIVITY.UNAVAILABLE-DATA'|translate}}</span>
     </div>
-</haniot-card>
+
+</form>
+
+<div *ngIf="!physicalRecord">
+    <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.PHYSICAL-ACTIVITY.UNAVAILABLE-DATA'|translate}}</span>
+</div>
+

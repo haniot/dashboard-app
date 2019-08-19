@@ -1,49 +1,46 @@
-<form [formGroup]="socioDemographicForm">
-    <div class="row">
-        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-            <div class="card card-stats ">
-                <div class="card-header card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">insert_emoticon</i>
-                    </div>
-                    <br>
-                    <p class="card-category">{{'HABITS.SOCIO-DEMOGRAPHIC.COLOR-RACE'|translate}}:</p>
-                    <h3 class="card-title">{{socioDemographicForm.get('color_race').value | translate}} </h3>
+<div class="row">
+
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card card-stats ">
+            <div class="card-header card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">insert_emoticon</i>
                 </div>
+                <br>
+                <p class="card-category">{{'HABITS.SOCIO-DEMOGRAPHIC.COLOR-RACE'|translate}}:</p>
+                <h3 class="card-title">{{socioDemographicForm.get('color_race').value | translate}} </h3>
             </div>
         </div>
-
-        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-            <div class="card card-stats">
-                <div class="card-header card-header-icon">
-                    <div class="card-icon">
-                        <img src="../../../../assets/img/haniot/schoolarity.png" alt="">
-                    </div>
-                    <br>
-                    <p class="card-category">{{'HABITS.SOCIO-DEMOGRAPHIC.MOTHER-EDUCATION'|translate}}:</p>
-                    <h3 class="card-title">{{socioDemographicForm.get('mother_scholarity').value | motherSchoolarity | translate}}</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-            <div class="card card-stats ">
-                <div class="card-header card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">people</i>
-                    </div>
-                    <br>
-                    <p class="card-category">{{'HABITS.SOCIO-DEMOGRAPHIC.NUMBER-PEOPLE-HOME'|translate}}:</p>
-                    <h3 class="card-title">{{socioDemographicForm.get('people_in_home').value}}</h3>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-</form>
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card card-stats">
+            <div class="card-header card-header-icon">
+                <div class="card-icon">
+                    <img src="../../../../assets/img/haniot/schoolarity.png" alt="">
+                </div>
+                <br>
+                <p class="card-category">{{'HABITS.SOCIO-DEMOGRAPHIC.MOTHER-EDUCATION'|translate}}:</p>
+                <h3 class="card-title">{{socioDemographicForm.get('mother_scholarity').value | motherSchoolarity | translate}}</h3>
+            </div>
+        </div>
+    </div>
 
-<div *ngIf="!socioDemographicRecord">
-    <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.SLEEP.UNAVAILABLE-DATA'|translate}}</span>
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card card-stats ">
+            <div class="card-header card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">people</i>
+                </div>
+                <br>
+                <p class="card-category">{{'HABITS.SOCIO-DEMOGRAPHIC.NUMBER-PEOPLE-HOME'|translate}}:</p>
+                <h3 class="card-title">{{socioDemographicForm.get('people_in_home').value}}</h3>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<div *ngIf="!socioDemographicRecord">
+    <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.SOCIO-DEMOGRAPHIC.UNAVAILABLE-DATA'|translate}}</span>
+</div>

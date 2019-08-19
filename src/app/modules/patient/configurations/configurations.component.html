@@ -96,6 +96,7 @@
                                         <input matInput class="form-control" [matDatepicker]="pickerBirthDate"
                                                formControlName="birth_date" name="birth_date"
                                                data-date-format="yyyy-MM-dd"
+                                               [max]="max_birth_date"
                                                [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate">
                                     </div>
                                     <div class="col-md-2">

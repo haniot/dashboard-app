@@ -40,6 +40,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     private subscriptions: Array<ISubscription>;
     validateTimer: any;
     matchTimer: any;
+    maxBirthDate: Date;
 
     constructor(
         private fb: FormBuilder,
@@ -54,6 +55,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         this.onsubmit = new EventEmitter();
         this.listOfLanguages = new Array<String>();
         this.subscriptions = new Array<ISubscription>();
+        this.maxBirthDate = new Date();
     }
 
     ngOnInit() {

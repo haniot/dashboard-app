@@ -1,45 +1,43 @@
-<haniot-card [title]="'HABITS.SLEEP.TITLE'|translate" [subtitle]="'HABITS.SLEEP.SUBTITLE'|translate">
+<div class="container">
 
-    <div class="container">
+    <form [formGroup]="sleepForm">
 
-        <form [formGroup]="sleepForm">
+        <div class="row">
 
-            <div class="row">
-
-                <div class="col-md col-sm">
-                    <div class="card card-stats">
-                        <div class="card-header card-header-timer card-header-icon">
-                            <div class="card-icon">
-                                <i class="material-icons" id="alarm_on">alarm_on</i>
-                            </div>
-                            <p class="label">{{'HABITS.SLEEP.WAKE-UP-TIME'|translate}}:</p>
-                            <h3 class="card-title">{{sleepForm.get('week_day_wake_up').value}} {{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</h3>
+            <div class="col-md col-sm">
+                <div class="card card-stats">
+                    <div class="card-header card-header-timer card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons" id="alarm_on">alarm_on</i>
                         </div>
+                        <p class="label">{{'HABITS.SLEEP.WAKE-UP-TIME'|translate}}:</p>
+                        <h3 class="card-title">{{sleepForm.get('week_day_wake_up').value}} {{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</h3>
                     </div>
                 </div>
-
             </div>
 
-            <div class="row">
+        </div>
 
-                <div class="col-md col-sm">
-                    <div class="card card-stats">
-                        <div class="card-header card-header-timer card-header-icon">
-                            <div class="card-icon">
-                                <i class="material-icons" id="alarm">alarm</i>
-                            </div>
-                            <p class="label">{{'HABITS.SLEEP.TIME-TO-SLEEP'|translate}}:</p>
-                            <h3 class="card-title">{{sleepForm.get('week_day_sleep').value}} {{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</h3>
+        <div class="row">
+
+            <div class="col-md col-sm">
+                <div class="card card-stats">
+                    <div class="card-header card-header-timer card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons" id="alarm">alarm</i>
                         </div>
+                        <p class="label">{{'HABITS.SLEEP.TIME-TO-SLEEP'|translate}}:</p>
+                        <h3 class="card-title">{{sleepForm.get('week_day_sleep').value}} {{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</h3>
                     </div>
                 </div>
-
             </div>
-        </form>
 
-    </div>
+        </div>
+    </form>
 
-    <div *ngIf="!sleepHabit">
-        <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.SLEEP.UNAVAILABLE-DATA'|translate}}</span>
-    </div>
-</haniot-card>
+</div>
+
+<div *ngIf="!sleepHabit">
+    <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.SLEEP.UNAVAILABLE-DATA'|translate}}</span>
+</div>
+

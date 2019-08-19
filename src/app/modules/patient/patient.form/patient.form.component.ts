@@ -32,6 +32,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     icon_password_confirm = 'visibility_off';
     typeInputPassword_confirm = 'password';
     min_birth_date: Date;
+    max_birth_date: Date;
     languages = languagesConfig;
     listOfLanguages: Array<String>;
     validateTimer: any;
@@ -54,6 +55,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         this.subscriptions = new Array<ISubscription>();
         this.listPilots = new Array<PilotStudy>();
         this.listOfLanguages = this.translateService.getLangs();
+        this.max_birth_date = new Date();
     }
 
     ngOnInit() {

@@ -600,8 +600,10 @@
       "LOADING-QUESTIONNAIRES": "Loading questionnaire...",
       "REMOVE-QUESTIONNAIRE": "Remove questionnaire",
       "SPINNER-MESSAGE": "Removing questionnaire...",
-      "NUTRITIONAL-QUESTIONNAIRE": "Q. NUTRITIONAL",
-      "ODONTOLOGICAL-QUESTIONNAIRE": "Q. ODONTOLOGICAL"
+      "TAB-NUTRITIONAL-QUESTIONNAIRE": "Q. NUTRITIONAL",
+      "TAB-ODONTOLOGICAL-QUESTIONNAIRE": "Q. ODONTOLOGICAL",
+      "NUTRITIONAL-QUESTIONNAIRE": "Nutritional Questionnaire",
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Odontological Questionnaire"
     },
     "MY-STUDIES": {
       "TITLE": "Pilot Study List",

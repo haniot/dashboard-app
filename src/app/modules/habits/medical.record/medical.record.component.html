@@ -1,54 +1,51 @@
-<haniot-card [title]="'HABITS.MEDICAL-RECORD.TITLE'|translate" [subtitle]="'HABITS.MEDICAL-RECORD.SUBTITLE'|translate">
+<form [formGroup]="medicalForm">
 
-    <form [formGroup]="medicalForm">
+    <label>
+        {{'HABITS.MEDICAL-RECORD.LIST-CHRONIC-DISEASES'|translate}}:
+    </label>
 
-        <label>
-            {{'HABITS.MEDICAL-RECORD.LIST-CHRONIC-DISEASES'|translate}}:
-        </label>
+    <div class="container">
 
-        <div class="container">
+        <!-- <div class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
+            <span class="disease-type">
+              {{disease.type | chronicDisease}}
+            </span>
+            <span class="disease-history">{{disease.disease_history | diseaseHistory}}</span>
 
-            <!-- <div class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
-                <span class="disease-type">
-                  {{disease.type | chronicDisease}}
-                </span>
-                <span class="disease-history">{{disease.disease_history | diseaseHistory}}</span>
+          </div> -->
 
-              </div> -->
+        <div class="col-md-6" class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
+            <div class="card card-stats diseaseHistory">
+                <div class="row container">
+                    <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">
+                        <div class="card-icon-disease">
 
-            <div class="col-md-6" class="diseases" *ngFor="let disease of medicalForm.get('chronic_diseases').value;">
-                <div class="card card-stats diseaseHistory">
-                    <div class="row container">
-                        <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">
-                            <div class="card-icon-disease">
+                            <img [src]="getTrustedUrl('../../../../assets/img/haniot/'+disease.type+'.png')" alt="">
 
-                                <img [src]="getTrustedUrl('../../../../assets/img/haniot/'+disease.type+'.png')" alt="">
-
-                            </div>
-                        </div>
-                        <div class="col-md row">
-                            <div class="col-sm">
-                                <label for="">
-                                    {{'HABITS.MEDICAL-RECORD.DISEASE'|translate}}:
-                                </label>
-                                <h4 class="card-category">{{disease.type | chronicDisease | translate}}</h4>
-                            </div>
-                            <div class="col-sm">
-                                <label for="">
-                                    {{'HABITS.MEDICAL-RECORD.HISTORIC'|translate}}:
-                                </label>
-                                <h4 class="card-category">{{disease.disease_history | diseaseHistory | translate}}</h4>
-                            </div>
                         </div>
                     </div>
-
+                    <div class="col-md row">
+                        <div class="col-sm">
+                            <label for="">
+                                {{'HABITS.MEDICAL-RECORD.DISEASE'|translate}}:
+                            </label>
+                            <h4 class="card-category">{{disease.type | chronicDisease | translate}}</h4>
+                        </div>
+                        <div class="col-sm">
+                            <label for="">
+                                {{'HABITS.MEDICAL-RECORD.HISTORIC'|translate}}:
+                            </label>
+                            <h4 class="card-category">{{disease.disease_history | diseaseHistory | translate}}</h4>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
 
-    </form>
-    <div *ngIf="!medicalRecord">
-        <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.MEDICAL-RECORD.UNAVAILABLE-DATA'|translate}}</span>
     </div>
-</haniot-card>
+
+</form>
+<div *ngIf="!medicalRecord">
+    <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.MEDICAL-RECORD.UNAVAILABLE-DATA'|translate}}</span>
+</div>

@@ -805,12 +805,14 @@
             </div>
         </div>
         <div class="modal-footer">
+
+            <button type="button" class="btn btn-haniot-secondary"
+                    (click)="hiddenNewCounseling()">{{'SHARED.CANCEL'|translate}}</button>
+
             <button type="button" class="btn btn-haniot-primary" (click)="addNewCounseling()"
                     [disabled]="(!counselingModel.valid && !counselingTypeModel.valid) || newCounseling == ''">
                 {{'SHARED.ADD'|translate}}
             </button>
-            <button type="button" class="btn btn-haniot-secondary"
-                    (click)="hiddenNewCounseling()">{{'SHARED.CANCEL'|translate}}</button>
         </div>
     </div>
 </haniot-modal>

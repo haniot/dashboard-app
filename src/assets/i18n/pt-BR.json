@@ -230,7 +230,7 @@
       "COLOR-RACE": "Cor ou raça",
       "MOTHER-EDUCATION": "Escolaridade da mãe",
       "NUMBER-PEOPLE-HOME": "Quantidade de pessoas em casa",
-      "UNAVAILABLE-DATA": "Dados de sócio-demográficos indisponível!"
+      "UNAVAILABLE-DATA": "Dados sócio-demográficos indisponível!"
     },
     "PIPES": {
       "WEEKLY-FOOD": {
@@ -368,7 +368,7 @@
     "REGISTER-DATE": "Data do registro",
     "PREVIOUS": "Anterior",
     "NEXT": "Próximo",
-    "DELETE-ODONTOLOGICAL-QUESTIONNAIRE": "Reomver questionário odontologico",
+    "DELETE-ODONTOLOGICAL-QUESTIONNAIRE": "Remover questionário odontologico",
     "DELETE-NUTRITIONAL-QUESTIONNAIRE": "Remover questionário nutricional"
   },
   "HEALTHPROFESSIONALS": {
@@ -600,8 +600,10 @@
       "LOADING-QUESTIONNAIRES": "Carregando questionário...",
       "REMOVE-QUESTIONNAIRE": "Remover questionário",
       "SPINNER-MESSAGE": "Removendo questionário...",
-      "NUTRITIONAL-QUESTIONNAIRE": "Quest. Nutricional",
-      "ODONTOLOGICAL-QUESTIONNAIRE": "Quest. Odontologico"
+      "TAB-NUTRITIONAL-QUESTIONNAIRE": "Quest. Nutricional",
+      "TAB-ODONTOLOGICAL-QUESTIONNAIRE": "Quest. Odontologico",
+      "NUTRITIONAL-QUESTIONNAIRE": "Questionário Nutricional",
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Questionário Odontologico"
     },
     "MY-STUDIES": {
       "TITLE": "Lista de estudos piloto",
