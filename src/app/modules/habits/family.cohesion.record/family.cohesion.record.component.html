@@ -1,109 +1,108 @@
-<haniot-card [title]="'HABITS.FAMILY-COHESION.TITLE'|translate"
-             [subtitle]="'HABITS.FAMILY-COHESION.SUBTITLE'|translate">
-    <form [formGroup]="familyForm">
+<form [formGroup]="familyForm">
+    <div class="row">
+        <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 row justify-content-center">
 
-        <div class="row">
-
-            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                <div class="card card-stats ">
-                    <div class="card-header card-header-icon">
-                        <div class="card-icon">
-                            <img src="../../../../assets/img/haniot/cohesion.png" alt="">
-                        </div>
-                        <br>
-                        <p class="card-category">{{'HABITS.FAMILY-COHESION.TITLE'|translate}}</p>
-                        <h3 class="card-title">{{familyForm.get('family_cohesion_result').value}}</h3>
-                    </div>
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                <label for="family_mutual_aid_freq">
+                    {{'HABITS.FAMILY-COHESION.FAMILY-MUTUAL'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="family_mutual_aid_freq"
+                       id="family_mutual_aid_freq">
             </div>
 
-            <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9 row">
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="family_mutual_aid_freq">
-                        {{'HABITS.FAMILY-COHESION.FAMILY-MUTUAL'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="family_mutual_aid_freq"
-                           id="family_mutual_aid_freq">
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                <label for="friendship_approval_freq">
+                    {{'HABITS.FAMILY-COHESION.FRIENDSHIP-APPROVAL'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="friendship_approval_freq"
+                       id="friendship_approval_freq">
+            </div>
 
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="friendship_approval_freq">
-                        {{'HABITS.FAMILY-COHESION.FRIENDSHIP-APPROVAL'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="friendship_approval_freq"
-                           id="friendship_approval_freq">
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                <label for="family_only_task_freq">
+                    {{'HABITS.FAMILY-COHESION.FAMILY-ONLY-TASK'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="family_only_task_freq"
+                       id="family_only_task_freq">
+            </div>
 
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="family_only_task_freq">
-                        {{'HABITS.FAMILY-COHESION.FAMILY-ONLY-TASK'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="family_only_task_freq"
-                           id="family_only_task_freq">
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                <label for="free_time_together_freq">
+                    {{'HABITS.FAMILY-COHESION.FREE-TIME-TOGETHER'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="free_time_together_freq"
+                       id="free_time_together_freq">
+            </div>
 
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="family_only_preference_freq">
-                        {{'HABITS.FAMILY-COHESION.FAMILY-ONLY-PREFERENCE'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="family_only_preference_freq"
-                           id="family_only_preference_freq">
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                <label for="family_only_preference_freq">
+                    {{'HABITS.FAMILY-COHESION.FAMILY-ONLY-PREFERENCE'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="family_only_preference_freq"
+                       id="family_only_preference_freq">
+            </div>
 
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="free_time_together_freq">
-                        {{'HABITS.FAMILY-COHESION.FREE-TIME-TOGETHER'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="free_time_together_freq"
-                           id="free_time_together_freq">
-                </div>
 
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="family_proximity_perception_freq">
-                        {{'HABITS.FAMILY-COHESION.FAMILY-PROXIMITY'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="family_proximity_perception_freq"
-                           id="family_proximity_perception_freq">
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                <label for="family_proximity_perception_freq">
+                    {{'HABITS.FAMILY-COHESION.FAMILY-PROXIMITY'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="family_proximity_perception_freq"
+                       id="family_proximity_perception_freq">
+            </div>
 
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="all_family_tasks_freq">
-                        {{'HABITS.FAMILY-COHESION.ALL-FAMILY-TASKS'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="all_family_tasks_freq"
-                           id="all_family_tasks_freq">
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                <label for="all_family_tasks_freq">
+                    {{'HABITS.FAMILY-COHESION.ALL-FAMILY-TASKS'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="all_family_tasks_freq"
+                       id="all_family_tasks_freq">
+            </div>
 
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="family_tasks_opportunity_freq">
-                        {{'HABITS.FAMILY-COHESION.FAMILY-TASKS-OPPORTUNITY'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="family_tasks_opportunity_freq"
-                           id="family_tasks_opportunity_freq">
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                <label for="family_tasks_opportunity_freq">
+                    {{'HABITS.FAMILY-COHESION.FAMILY-TASKS-OPPORTUNITY'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="family_tasks_opportunity_freq"
+                       id="family_tasks_opportunity_freq">
+            </div>
 
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="family_decision_support_freq">
-                        {{'HABITS.FAMILY-COHESION.FAMILY-DECISION-SUPPORT'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="family_decision_support_freq"
-                           id="family_decision_support_freq">
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                <label for="family_decision_support_freq">
+                    {{'HABITS.FAMILY-COHESION.FAMILY-DECISION-SUPPORT'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="family_decision_support_freq"
+                       id="family_decision_support_freq">
+            </div>
 
-                <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <label for="family_union_relevance_freq">
-                        {{'HABITS.FAMILY-COHESION.FAMILY-UNION'|translate}}:
-                    </label>
-                    <input class="form-control" type="text" formControlName="family_union_relevance_freq"
-                           id="family_union_relevance_freq">
-                </div>
+            <div class="form-group has-feedback col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                <label for="family_union_relevance_freq">
+                    {{'HABITS.FAMILY-COHESION.FAMILY-UNION'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="family_union_relevance_freq"
+                       id="family_union_relevance_freq">
             </div>
 
         </div>
 
-    </form>
+        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+            <div class="card card-stats ">
+                <div class="card-header card-header-icon">
+                    <div class="card-icon">
+                        <img src="../../../../assets/img/haniot/cohesion.png" alt="">
+                    </div>
+                    <br>
+                    <p class="card-category">{{'HABITS.FAMILY-COHESION.TITLE'|translate}}</p>
+                    <h3 class="card-title">{{familyForm.get('family_cohesion_result').value}}</h3>
+                </div>
+            </div>
+        </div>
 
-    <div *ngIf="!familyCohesionRecord">
-        <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.FAMILY-COHESION.UNAVAILABLE-DATA'|translate}}</span>
+
     </div>
-</haniot-card>
+
+</form>
+
+<div *ngIf="!familyCohesionRecord">
+    <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.FAMILY-COHESION.UNAVAILABLE-DATA'|translate}}</span>
+</div>

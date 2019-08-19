@@ -163,6 +163,10 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
                                 this.showCaptcha = false;
                                 this.cleanAttempt();
                                 break;
+                            default:
+                                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
+                                    this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
+                                break;
                         }
                         this.loading = false;
                         this.verifyReCaptcha();

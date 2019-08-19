@@ -133,7 +133,6 @@
     </div>
 </div>
 
-
 <haniot-modal [modalId]="'modalFile'">
     <div class="modal-content">
         <div class="modal-header">
@@ -200,8 +199,8 @@
         <div class="modal-body">
             <div class="container-fluid">
                 <div class="row">
-                    <mat-horizontal-stepper #stepper>
-                        <mat-step>
+                    <mat-horizontal-stepper [linear]="true" ear #stepper>
+                        <mat-step [editable]="true">
                             <ng-template
                                     matStepLabel>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-MEASUREMENTS'|translate}}</ng-template>
 
@@ -223,7 +222,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                                <div class="p-2">
                                     <button class="btn btn-haniot-primary"
                                             matStepperNext
                                             [disabled]="!anyMeasurementTypeSelected()">
@@ -232,7 +231,7 @@
                                 </div>
                             </div>
                         </mat-step>
-                        <mat-step>
+                        <mat-step [editable]="true">
                             <ng-template
                                     matStepLabel>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-QUESTIONNAIRES'|translate}}</ng-template>
 
@@ -277,14 +276,14 @@
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                                <div class="p-2">
                                     <button type="button" class="btn btn-haniot-primary"
                                             matStepperPrevious>
                                         {{'EVALUATION.NUTRITION-EVALUATION-LIST.PREVIOUS'|translate}}
                                     </button>
                                 </div>
 
-                                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                                <div class="p-2">
                                     <button class="btn btn-haniot-primary"
                                             matStepperNext
                                             [disabled]="!anyQuestionnaireSelected()">
@@ -294,7 +293,7 @@
                             </div>
 
                         </mat-step>
-                        <mat-step>
+                        <mat-step [editable]="true">
                             <ng-template
                                     matStepLabel>{{'PILOT-STUDY.CARD-FILES.SELECT-PATIENTS'|translate}}</ng-template>
                             <div class="form-group row justify-content-between">
@@ -351,11 +350,17 @@
 
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                            <div class="d-flex justify-content-between">
+                                <div class="p-2">
+                                    <button type="button" class="btn btn-haniot-primary"
+                                            matStepperPrevious>
+                                        {{'EVALUATION.NUTRITION-EVALUATION-LIST.PREVIOUS'|translate}}
+                                    </button>
+                                </div>
+                                <div class="p-2">
                                     <button class="btn btn-haniot-primary"
                                             matStepperNext
-                                            [disabled]="!anyPatientSelected()"
+                                            [disabled]="!anyMeasurementTypeSelected() || !anyQuestionnaireSelected() || !anyPatientSelected() "
                                             (click)="generateFile(stepper)">
                                         {{'PILOT-STUDY.CARD-FILES.REQUEST'|translate}}
                                     </button>

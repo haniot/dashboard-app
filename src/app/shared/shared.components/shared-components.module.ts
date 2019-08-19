@@ -16,6 +16,7 @@ import {ModalConfirmationComponent} from './modal.confirmation/modal.confirmatio
 import {LoadingService} from './loading.component/service/loading.service';
 import {SelectPilotstudyComponent} from './select.pilotstudy/select.pilotstudy.component';
 import {SpinnerComponent} from './spinner/spinner.component';
+import { HaniotSubcardComponent } from './haniot.subcard/haniot.subcard.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import {SpinnerComponent} from './spinner/spinner.component';
         LoadingComponent,
         ModalConfirmationComponent,
         SelectPilotstudyComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        HaniotSubcardComponent
     ],
     imports: [
         CommonModule,
@@ -43,7 +45,8 @@ import {SpinnerComponent} from './spinner/spinner.component';
         LoadingComponent,
         ModalConfirmationComponent,
         SelectPilotstudyComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        HaniotSubcardComponent
     ],
     providers: [
         ModalService,

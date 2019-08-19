@@ -89,73 +89,77 @@
                             </div>
 
                         </form>
+
+                        <div class="container-fluid row justify-content-center">
+
+                            <!-- profissionais de saude associados ao estudo piloto -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                                <haniot-subcard
+                                        [title]="'PILOT-STUDY.MANAGE-PROFESSIONALS.ASSOCIATE-PROFESSIONALS'|translate">
+                                    <div class="form-group table-responsive form-manager">
+                                        <table class="table table-sm table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>{{'SHARED.NAME'|translate}}</th>
+                                                <th>{{'SHARED.EMAIL'|translate}}</th>
+                                                <th>{{'SHARED.AREA'|translate}}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let professional of listOfProfessionalsAux; index as i;trackBy: trackById">
+                                                <td (click)="editHealthProfessional(professional.id)">{{professional.name}}</td>
+                                                <td (click)="editHealthProfessional(professional.id)">{{professional.health_area | healthArea | translate}}</td>
+                                                <td (click)="editHealthProfessional(professional.id)">{{professional.email}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <mat-paginator [length]="professionalLength" [pageSize]="professionalLimit"
+                                                       [pageSizeOptions]="professionalPageSizeOptions"
+                                                       (page)="clickProfessionalPagination($event)">
+                                        </mat-paginator>
+
+                                    </div>
+                                </haniot-subcard>
+                            </div>
+
+                            <!-- pacientes associados ao estudo piloto -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                                <haniot-subcard
+                                        [title]="'PILOT-STUDY.MANAGE-PATIENTS.ASSOCIATE-PATIENTS'|translate">
+                                    <div class="form-group table-responsive form-manager">
+
+                                        <table class="table table-sm table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>{{'SHARED.NAME'|translate}}</th>
+                                                <th>{{'SHARED.EMAIL'|translate}}</th>
+                                                <th>{{'SHARED.GENDER'|translate}}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let patient of listOfPatientsAux; index as i;trackBy: trackById">
+                                                <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.name}}</td>
+                                                <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.email}}</td>
+                                                <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.gender | gender | translate}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <mat-paginator [length]="patientLength" [pageSize]="patientLimit"
+                                                       [pageSizeOptions]="patientPageSizeOptions"
+                                                       (page)="clickPatientPagination($event)">
+                                        </mat-paginator>
+
+                                    </div>
+                                </haniot-subcard>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <!-- profissionais de saude associados ao estudo piloto -->
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
-                <haniot-card [title]="'PILOT-STUDY.MANAGE-PROFESSIONALS.ASSOCIATE-PROFESSIONALS'|translate"
-                             [subtitle]="'PILOT-STUDY.VIEW-ONLY'|translate">
-
-                    <div class="form-group table-responsive form-manager">
-                        <label>{{'PILOT-STUDY.MANAGE-PROFESSIONALS.ASSOCIATE-PROFESSIONALS'|translate}}:</label>
-                        <table class="table table-sm table-hover">
-                            <thead>
-                            <tr>
-                                <th>{{'SHARED.NAME'|translate}}</th>
-                                <th>{{'SHARED.EMAIL'|translate}}</th>
-                                <th>{{'SHARED.AREA'|translate}}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let professional of listOfProfessionalsAux; index as i;trackBy: trackById">
-                                <td>{{professional.name}}</td>
-                                <td>{{professional.health_area | healthArea | translate}}</td>
-                                <td>{{professional.email}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <mat-paginator [length]="professionalLength" [pageSize]="professionalLimit"
-                                       [pageSizeOptions]="professionalPageSizeOptions"
-                                       (page)="clickProfessionalPagination($event)">
-                        </mat-paginator>
-
-                    </div>
-                </haniot-card>
-            </div>
-
-            <!-- pacientes associados ao estudo piloto -->
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
-                <haniot-card [title]="'PILOT-STUDY.MANAGE-PATIENTS.ASSOCIATE-PATIENTS'|translate"
-                             [subtitle]="'PILOT-STUDY.VIEW-ONLY'|translate">
-                    <div class="form-group table-responsive form-manager">
-                        <label>{{'PILOT-STUDY.MANAGE-PATIENTS.ASSOCIATE-PATIENTS'|translate}}:</label>
-                        <table class="table table-sm table-hover">
-                            <thead>
-                            <tr>
-                                <th>{{'SHARED.NAME'|translate}}</th>
-                                <th>{{'SHARED.EMAIL'|translate}}</th>
-                                <th>{{'SHARED.GENDER'|translate}}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let patient of listOfPatientsAux; index as i;trackBy: trackById">
-                                <td>{{patient.name}}</td>
-                                <td>{{patient.email}}</td>
-                                <td>{{patient.gender | gender | translate}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <mat-paginator [length]="patientLength" [pageSize]="patientLimit"
-                                       [pageSizeOptions]="patientPageSizeOptions"
-                                       (page)="clickPatientPagination($event)">
-                        </mat-paginator>
-
-                    </div>
-                </haniot-card>
-            </div>
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <pilot-study-files [pilotStudy]="pilotStudy"></pilot-study-files>

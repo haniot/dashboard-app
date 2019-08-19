@@ -653,7 +653,8 @@
       "ADDPROFESSIONAL": "Add new professional",
       "ASSOCIATE-PROFESSIONALS": "Associate professionals",
       "DISASSOCIATE-PROFESSIONAL": "Disassociate professional...",
-      "REMOVE": "To remove"
+      "REMOVE": "To remove",
+      "NONE-PROFESSIONAL": "No professionals available"
     },
     "MANAGE-PATIENTS": {
       "TITLE": "Manage patients",
@@ -661,7 +662,8 @@
       "ADDPATIENT": "Add new patient",
       "ASSOCIATE-PATIENTS": "Associated Patients",
       "DISASSOCIATE-PATIENT": "Dissociate patient...",
-      "REMOVE": "To remove"
+      "REMOVE": "To remove",
+      "NONE-PATIENT": "No patients available"
     },
     "REMOVING": "Removing...",
     "VIEW-ONLY": "View only",

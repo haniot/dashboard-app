@@ -1,68 +1,66 @@
-<haniot-card [title]="'HABITS.ORAL-HEALTH.TITLE'|translate" [subtitle]="'HABITS.ORAL-HEALTH.SUBTITLE'|translate">
-    <form [formGroup]="oralHealthForm">
+<form [formGroup]="oralHealthForm">
 
-        <div class="row justify-content-md-start">
+    <div class="row justify-content-md-start">
 
-            <div class="col-sm-12 col-md-8 col-lg-4 col-xl-4">
-                <div class="card card-stats">
-                    <div class="card-header card-header-timer card-header-icon">
-                        <div class="card-icon">
-                            <img src="../../../../assets/img/haniot/oral-health.png" alt="">
-                        </div>
-                        <p class="label">{{'HABITS.ORAL-HEALTH.FREQUENCY-ORAL-HEALTH'|translate}}:</p>
-                        <h3 class="card-title">{{oralHealthForm.get('teeth_brushing_freq').value | teethBushing | translate}}</h3>
+        <div class="col-sm-12 col-md-8 col-lg-4 col-xl-4">
+            <div class="card card-stats">
+                <div class="card-header card-header-timer card-header-icon">
+                    <div class="card-icon">
+                        <img src="../../../../assets/img/haniot/oral-health.png" alt="">
                     </div>
-                </div>
-            </div>
-
-
-            <!-- Lista de lesões -->
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="card card-stats">
-                    <div class="card-header card-header-timer card-header-icon text-center">
-                        <h3 class="card-title">{{'HABITS.ORAL-HEALTH.LIST-OF-LESIONS'|translate}}</h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="row  justify-content-md-center">
-                            <div *ngIf="oralHealthForm.get('teeth_lesions').value && oralHealthForm.get('teeth_lesions').value.length==0">
-                                <span class="badge badge-warning badge-12">{{'HABITS.ORAL-HEALTH.NONE-LESION'|translate}}</span>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" class="diseases"
-                                 *ngFor="let disease of oralHealthForm.get('teeth_lesions').value">
-                                <div class="card card-stats diseaseHistory">
-                                    <div class="row container">
-                                        <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">
-                                            <div class="card-icon-disease">
-                                                <img src="../../../../assets/img/haniot/oral-lesion.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md row">
-                                            <div class="col-sm">
-                                                <label for="">
-                                                    {{'HABITS.ORAL-HEALTH.TYPE-TEETH'|translate}}:
-                                                </label>
-                                                <h4 class="card-category">{{disease.tooth_type | toothType | translate}}</h4>
-                                            </div>
-                                            <div class="col-sm">
-                                                <label for="">
-                                                    {{'HABITS.ORAL-HEALTH.TYPE-LESION'|translate}}:
-                                                </label>
-                                                <h4 class="card-category">{{disease.lesion_type | lesionType | translate}}</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                    <p class="label">{{'HABITS.ORAL-HEALTH.FREQUENCY-ORAL-HEALTH'|translate}}:</p>
+                    <h3 class="card-title">{{oralHealthForm.get('teeth_brushing_freq').value | teethBushing | translate}}</h3>
                 </div>
             </div>
         </div>
 
-    </form>
 
-    <div *ngIf="!oralHealthRecord">
-        <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.ORAL-HEALTH.UNAVAILABLE-DATA'|translate}}</span>
+        <!-- Lista de lesões -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="card card-stats">
+                <div class="card-header card-header-timer card-header-icon text-center">
+                    <h3 class="card-title">{{'HABITS.ORAL-HEALTH.LIST-OF-LESIONS'|translate}}</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="row  justify-content-md-center">
+                        <div *ngIf="oralHealthForm.get('teeth_lesions').value && oralHealthForm.get('teeth_lesions').value.length==0">
+                            <span class="badge badge-warning badge-12">{{'HABITS.ORAL-HEALTH.NONE-LESION'|translate}}</span>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" class="diseases"
+                             *ngFor="let disease of oralHealthForm.get('teeth_lesions').value">
+                            <div class="card card-stats diseaseHistory">
+                                <div class="row container">
+                                    <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">
+                                        <div class="card-icon-disease">
+                                            <img src="../../../../assets/img/haniot/oral-lesion.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md row">
+                                        <div class="col-sm">
+                                            <label for="">
+                                                {{'HABITS.ORAL-HEALTH.TYPE-TEETH'|translate}}:
+                                            </label>
+                                            <h4 class="card-category">{{disease.tooth_type | toothType | translate}}</h4>
+                                        </div>
+                                        <div class="col-sm">
+                                            <label for="">
+                                                {{'HABITS.ORAL-HEALTH.TYPE-LESION'|translate}}:
+                                            </label>
+                                            <h4 class="card-category">{{disease.lesion_type | lesionType | translate}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</haniot-card>
+
+</form>
+
+<div *ngIf="!oralHealthRecord">
+    <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.ORAL-HEALTH.UNAVAILABLE-DATA'|translate}}</span>
+</div>

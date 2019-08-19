@@ -27,6 +27,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     professionalsForm: FormGroup;
     listProf: Array<HealthProfessional> = [];
     professionalsNotAssociated: Array<HealthProfessional> = [];
+    professionalsNotAssociatedIsEmpty: boolean;
     professionalsAssociated: Array<HealthProfessional> = [];
     color = 'accent';
     checked = false;
@@ -35,6 +36,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     patientForm: FormGroup;
     listPatients: Array<Patient> = [];
     patientsNotAssociated: Array<Patient> = [];
+    patientsNotAssociatedIsEmpty: boolean;
     patientsAssociated: Array<Patient> = [];
     cacheIdPatientRemove: string;
     cacheIdProfessionalRemove: string;
@@ -64,6 +66,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         this.cacheIdProfessionalRemove = '';
         this.cacheIdPatientRemove = '';
         this.removing = false;
+        this.professionalsNotAssociatedIsEmpty = false;
+        this.patientsNotAssociatedIsEmpty = false;
     }
 
     ngOnInit() {
@@ -73,10 +77,12 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
             if (this.pilotStudyId) {
                 this.createForm();
                 const pilot = await this.getPilotStudy();
-                if (pilot && this.typeUserLogged && this.typeUserLogged === 'admin') {
-                    await this.getListProfessionals();
+                if (pilot) {
+                    if (this.typeUserLogged && this.typeUserLogged === 'admin') {
+                        await this.getListProfessionals();
+                        await this.getListPatients();
+                    }
                     this.loadProfessionalsAssociated();
-                    await this.getListPatients();
                     this.loadPatientsAssociated()
                 }
             }
@@ -241,6 +247,12 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         this.professionalsNotAssociated = [];
         this.professionalsNotAssociated = this.listProf
             .filter(professional => !this.search(this.professionalsAssociated, professional));
+        this.professionalsNotAssociatedIsEmpty = !(this.professionalsNotAssociated && this.professionalsNotAssociated.length)
+
+        if (this.professionalsNotAssociatedIsEmpty) {
+            this.professionalsNotAssociated = undefined
+        }
+
     }
 
     dissociatePatient() {
@@ -286,6 +298,10 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         this.patientsNotAssociated = [];
         this.patientsNotAssociated = this.listPatients
             .filter(patient => !this.search(this.patientsAssociated, patient));
+        this.patientsNotAssociatedIsEmpty = !(this.patientsNotAssociated && this.patientsNotAssociated.length);
+        if (this.patientsNotAssociatedIsEmpty) {
+            this.patientsNotAssociated = undefined;
+        }
     }
 
     openConfirmationRemovePatient(patietnId: string): void {

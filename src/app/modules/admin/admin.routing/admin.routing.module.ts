@@ -10,21 +10,33 @@ const routes = [
     {
         path: 'configurations',
         component: AdminConfigurationsComponent,
-        data: { scope: "admins:update" }
+        data: { scope: 'admins:update' }
     },
     {
         path: 'administrators',
         component: AdministratorsComponent,
-        data: { scope: "admins:create admins:delete admins:readAll admins:update" }
+        data: { scope: 'admins:create admins:delete admins:readAll admins:update' }
+    },
+    {
+        path: 'administrators/:administratorId',
+        component: AdministratorsComponent,
+        data: { scope: 'admins:readAll admins:update' }
     },
     {
         path: 'healthprofessionals',
         component: HealthProfessionalComponent,
         data: {
-            scope: "healthprofessionals:create healthprofessionals:readAll"
+            scope: 'healthprofessionals:create healthprofessionals:delete healthprofessionals:readAll healthprofessionals:update'
         }
     },
-    { path: '**', redirectTo: 'page-not-found' },
+    {
+        path: 'healthprofessionals/:healthprofessionalId',
+        component: HealthProfessionalComponent,
+        data: {
+            scope: 'healthprofessionals:read healthprofessionals:update'
+        }
+    },
+    { path: '**', redirectTo: 'page-not-found' }
 
 ];
 

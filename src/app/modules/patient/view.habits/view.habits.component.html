@@ -152,18 +152,32 @@
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <familycohesion-record
-                                        [familyCohesionRecord]="odontologicalQuestionnaire.family_cohesion_record"></familycohesion-record>
-                            </div>
+                                <haniot-card [title]="'Questinario Odontologico'">
+                                    <div class="row justify-content-center">
 
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <sociodemographic-record
-                                        [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>
-                            </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <haniot-subcard [title]="'HABITS.FAMILY-COHESION.TITLE'|translate">
+                                                <familycohesion-record
+                                                        [familyCohesionRecord]="odontologicalQuestionnaire.family_cohesion_record"></familycohesion-record>
+                                            </haniot-subcard>
+                                        </div>
 
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <oralhealth-record
-                                        [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <haniot-subcard [title]="'HABITS.SOCIO-DEMOGRAPHIC.TITLE'|translate">
+                                                <sociodemographic-record
+                                                        [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>
+                                            </haniot-subcard>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <haniot-subcard [title]="'HABITS.ORAL-HEALTH.TITLE'|translate">
+                                                <oralhealth-record
+                                                        [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
+                                            </haniot-subcard>
+                                        </div>
+
+                                    </div>
+                                </haniot-card>
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">

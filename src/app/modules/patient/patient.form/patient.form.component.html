@@ -125,7 +125,7 @@
 
                                 <select class="form-control" formControlName="language">
                                     <option *ngFor="let lang of listOfLanguages" [value]="lang"
-                                            [selected]="lang === translateService.currentLang">{{ languages[lang] }}
+                                            [selected]="lang.match(translateService.currentLang)">{{ languages[lang] }}
                                     </option>
                                 </select>
 

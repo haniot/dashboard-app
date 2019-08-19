@@ -122,28 +122,24 @@ export class SidebarComponent implements OnInit {
     }
 
     updateMenu() {
-
         const path_current = this.location.path();
 
-        if (path_current.match('dashboard$')) {
+        if (path_current.match('dashboard')) {
             this.activeDashboard = 'active'
             this.activeMyPilots = '';
             this.activeMyEvaluations = '';
             this.activePatients = '';
-        }
-        if (path_current.match('mystudies$')) {
+        } else if (path_current.match('mystudies') || path_current.match('pilotstudies')) {
             this.activeDashboard = ''
             this.activeMyPilots = 'active';
             this.activeMyEvaluations = '';
             this.activePatients = '';
-        }
-        if (path_current.match('myevaluations$')) {
+        } else if (path_current.match('myevaluations')) {
             this.activeDashboard = ''
             this.activeMyPilots = '';
             this.activeMyEvaluations = 'active';
             this.activePatients = '';
-        }
-        if (path_current.match('patients$')) {
+        } else if (path_current.match('patients')) {
             this.activeDashboard = ''
             this.activeMyPilots = '';
             this.activeMyEvaluations = '';

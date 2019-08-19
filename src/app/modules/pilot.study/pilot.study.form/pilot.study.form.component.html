@@ -152,7 +152,7 @@
             </div>
 
             <!-- Gerenciar profissionais de saude no estudo piloto -->
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6" *ngIf="pilotStudyId && typeUserLogged=='admin'">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6" *ngIf="pilotStudyId">
                 <haniot-card [title]="'PILOT-STUDY.MANAGE-PROFESSIONALS.TITLE'|translate"
                              [subtitle]="'PILOT-STUDY.MANAGE-PROFESSIONALS.SUBTITLE'|translate">
                     <form [formGroup]="professionalsForm">
@@ -164,7 +164,11 @@
                                     <mat-select formControlName="health_professionals_id_add"
                                                 name="health_professionals_id_add" id="health_professionals_id_add">
                                         <mat-option
-                                                *ngIf="!professionalsNotAssociated || !professionalsNotAssociated.length">
+                                                *ngIf="professionalsNotAssociatedIsEmpty">
+                                            {{'PILOT-STUDY.MANAGE-PROFESSIONALS.NONE-PROFESSIONAL'|translate}}
+                                        </mat-option>
+                                        <mat-option
+                                                *ngIf="!professionalsNotAssociated && !professionalsNotAssociatedIsEmpty">
                                             {{'SHARED.LOADING'|translate}}
                                         </mat-option>
                                         <mat-option *ngFor="let prof of professionalsNotAssociated;trackBy: trackById"
@@ -175,7 +179,8 @@
                             </div>
 
                             <div class="col-sm-4 col-md-4">
-                                <button type="button" class="btn btn-haniot-primary btn-block btn-sm ellipsis" (click)="addProfessionalInStudy()"
+                                <button type="button" class="btn btn-haniot-primary btn-block btn-sm ellipsis"
+                                        (click)="addProfessionalInStudy()"
                                         [disabled]="!professionalsForm.valid">
                                     {{'SHARED.ADD'|translate}}
                                 </button>
@@ -215,7 +220,7 @@
             </div>
 
             <!-- Gerenciar pacientes no estudo piloto -->
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6" *ngIf="pilotStudyId && typeUserLogged=='admin'">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6" *ngIf="pilotStudyId">
                 <haniot-card [title]="'PILOT-STUDY.MANAGE-PATIENTS.TITLE'|translate"
                              [subtitle]="'PILOT-STUDY.MANAGE-PATIENTS.SUBTITLE'|translate">
                     <form [formGroup]="patientForm">
@@ -226,7 +231,11 @@
                                     </mat-label>
                                     <mat-select formControlName="patients_id_add"
                                                 name="patients_id_add" id="patients_id_add">
-                                        <mat-option *ngIf="!patientsNotAssociated || !patientsNotAssociated.length">
+                                        <mat-option
+                                                *ngIf="patientsNotAssociatedIsEmpty">
+                                            {{'PILOT-STUDY.MANAGE-PATIENTS.NONE-PATIENT'|translate}}
+                                        </mat-option>
+                                        <mat-option *ngIf="!patientsNotAssociated && !patientsNotAssociatedIsEmpty">
                                             {{'SHARED.LOADING'|translate}}
                                         </mat-option>
                                         <mat-option *ngFor="let patient of patientsNotAssociated;trackBy: trackById"
@@ -239,7 +248,8 @@
                             </div>
 
                             <div class="col-sm-4 col-md-4">
-                                <button type="button" class="btn btn-haniot-primary btn-block btn-sm ellipsis" (click)="addPatientInStudy()"
+                                <button type="button" class="btn btn-haniot-primary btn-block btn-sm ellipsis"
+                                        (click)="addPatientInStudy()"
                                         [disabled]="!patientForm.valid">
                                     {{'SHARED.ADD'|translate}}
                                 </button>

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,7 @@ import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { ActivatedRoute } from '@angular/router'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -19,7 +20,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './administrators.component.html',
     styleUrls: ['./administrators.component.scss']
 })
-export class AdministratorsComponent implements AfterViewChecked {
+export class AdministratorsComponent implements OnInit, AfterViewChecked {
     userEdit: GenericUser = new Admin();
     admins: Array<GenericUser> = [];
     errorCredentials = false;
@@ -31,6 +32,7 @@ export class AdministratorsComponent implements AfterViewChecked {
     constructor(
         private adminService: AdminService,
         private toastr: ToastrService,
+        private activeRouter: ActivatedRoute,
         private modalService: ModalService,
         private loadinService: LoadingService,
         private translateService: TranslateService) {
@@ -38,6 +40,21 @@ export class AdministratorsComponent implements AfterViewChecked {
         this.limit = PaginatorConfig.limit;
         this.admins = new Array<GenericUser>();
         this.getAllAdministrators();
+    }
+
+    ngOnInit(): void {
+        this.activeRouter.paramMap.subscribe((params) => {
+            const administratorId = params.get('administratorId');
+            if (administratorId) {
+                this.adminService.getById(administratorId)
+                    .then(user => {
+                        this.editUser(user);
+                    })
+                    .catch(() => {
+                        this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER'));
+                    })
+            }
+        })
     }
 
     getAllAdministrators() {

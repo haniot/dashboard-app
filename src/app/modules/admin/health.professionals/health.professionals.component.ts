@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,6 +9,7 @@ import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { ActivatedRoute } from '@angular/router'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -17,7 +18,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './health.professionals.component.html',
     styleUrls: ['./health.professionals.component.scss']
 })
-export class HealthProfessionalComponent implements AfterViewChecked {
+export class HealthProfessionalComponent implements OnInit, AfterViewChecked {
     userEdit: GenericUser = new HealthProfessional();
     healthProfessionals: Array<GenericUser> = [];
     page: number;
@@ -29,12 +30,28 @@ export class HealthProfessionalComponent implements AfterViewChecked {
         private healthService: HealthProfessionalService,
         private toastr: ToastrService,
         private modalService: ModalService,
+        private activeRouter: ActivatedRoute,
         private loadinService: LoadingService,
         private translateService: TranslateService) {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
         this.healthProfessionals = new Array<GenericUser>();
         this.getAllHealthProfessionals();
+    }
+
+    ngOnInit(): void {
+        this.activeRouter.paramMap.subscribe((params) => {
+            const healthprofessionalId = params.get('healthprofessionalId');
+            if (healthprofessionalId) {
+                this.healthService.getById(healthprofessionalId)
+                    .then(user => {
+                        this.editUser(user);
+                    })
+                    .catch(() => {
+                        this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER'));
+                    })
+            }
+        })
     }
 
     getAllHealthProfessionals() {

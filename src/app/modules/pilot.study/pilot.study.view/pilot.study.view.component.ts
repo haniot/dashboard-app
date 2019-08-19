@@ -15,6 +15,7 @@ import { SelectPilotStudyService } from '../../../shared/shared.components/selec
 import { Patient } from '../../patient/models/patient'
 import { HealthProfessional } from '../../admin/models/health.professional'
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { AuthService } from '../../../security/auth/services/auth.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -58,7 +59,8 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         private _location: Location,
         private localStorageService: LocalStorageService,
         private translateService: TranslateService,
-        private selectPilotService: SelectPilotStudyService
+        private selectPilotService: SelectPilotStudyService,
+        private authService: AuthService
     ) {
         this.pilotStudy = new PilotStudy();
         this.subscriptions = new Array<ISubscription>();
@@ -185,6 +187,13 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
                 this.listOfPatientsAux.push(this.patientsAssociated[i]);
             }
         }
+    }
+
+    editHealthProfessional(healthProfessionalId: string): void {
+        if (this.authService.decodeToken().sub_type === 'admin') {
+            this.router.navigate(['/app/admin/healthprofessionals', healthProfessionalId]);
+        }
+
     }
 
     loadListProfessionalsAux(): void {

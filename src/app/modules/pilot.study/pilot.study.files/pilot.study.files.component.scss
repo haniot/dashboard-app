@@ -83,6 +83,10 @@ td img {
   background-color: #00a594;
 }
 
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: all !important;
+}
+
 ::ng-deep .cdk-overlay-container {
   z-index: 2000;
 }
