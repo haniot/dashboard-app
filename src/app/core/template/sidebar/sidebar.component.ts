@@ -144,6 +144,11 @@ export class SidebarComponent implements OnInit {
             this.activeMyPilots = '';
             this.activeMyEvaluations = '';
             this.activePatients = 'active';
+        } else if (path_current.match('evaluations')) {
+            this.activeDashboard = ''
+            this.activeMyPilots = '';
+            this.activeMyEvaluations = 'active';
+            this.activePatients = '';
         }
     }
 

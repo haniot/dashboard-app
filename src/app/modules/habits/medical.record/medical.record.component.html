@@ -1,4 +1,4 @@
-<form [formGroup]="medicalForm">
+<form [formGroup]="medicalForm" *ngIf="medicalRecord">
 
     <label>
         {{'HABITS.MEDICAL-RECORD.LIST-CHRONIC-DISEASES'|translate}}:
@@ -46,6 +46,7 @@
     </div>
 
 </form>
+
 <div *ngIf="!medicalRecord">
     <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.MEDICAL-RECORD.UNAVAILABLE-DATA'|translate}}</span>
 </div>
