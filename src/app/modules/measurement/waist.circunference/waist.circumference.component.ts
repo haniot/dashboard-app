@@ -66,6 +66,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
             barWidth: '60%',
             color: '#00a594',
             data: [],
+            barMaxWidth: 100,
             markLine: {
                 tooltip: {
                     trigger: 'item',

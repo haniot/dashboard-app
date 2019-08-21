@@ -63,7 +63,7 @@
       "CARD-NUTRITION": {
         "TITLE": "Avaliação nutricional",
         "SUBTITLE": "",
-        "EVALUATION": "AVALIAÇÃO",
+        "EVALUATION": "Avaliação",
         "NUTRITION-STATE": "Estado Nutricional",
         "BMI": "IMC",
         "CENTIMETER": "cm",
@@ -537,7 +537,7 @@
     "AVERAGE-VALUE": "Valor médio"
   },
   "MYDATEPIPE": {
-    "AT": "as",
+    "AT": "às",
     "HOURS": "horas."
   },
   "NAVBAR": {
@@ -594,7 +594,7 @@
         "TITLE": "Informações pessoais do paciente",
         "SUBTITLE": ""
       },
-      "HABITS": "HÁBITOS",
+      "HABITS": "Hábitos",
       "MEASUREMENTS": "Gráficos das Medições",
       "LOG-MEASUREMENTS": "Log das Medições",
       "LOADING-QUESTIONNAIRES": "Carregando questionário...",
@@ -744,7 +744,7 @@
     "DATE": "Data",
     "HOUR": "Hora",
     "DATE-AND-HOUR": "Data e Hora",
-    "AT": "ás",
+    "AT": "às",
     "DATE-START": "Data ínicio",
     "DATE-END": "Data término",
     "STUDY-ACTIVATED": "ATIVADO",

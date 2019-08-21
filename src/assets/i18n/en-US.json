@@ -63,7 +63,7 @@
       "CARD-NUTRITION": {
         "TITLE": "Nutrition evaluation",
         "SUBTITLE": "",
-        "EVALUATION": "EVALUATION",
+        "EVALUATION": "Evaluation",
         "NUTRITION-STATE": "Nutritional Status",
         "BMI": "BMI",
         "CENTIMETER": "cm",
@@ -594,14 +594,14 @@
         "TITLE": "Patient personal information",
         "SUBTITLE": ""
       },
-      "HABITS": "HABITS",
-      "MEASUREMENTS": "GRAPH OF MEASUREMENTS",
-      "LOG-MEASUREMENTS": "LOG OF MEASUREMENTS",
+      "HABITS": "Habits",
+      "MEASUREMENTS": "Graph of Measurements",
+      "LOG-MEASUREMENTS": "Log Of Measurements",
       "LOADING-QUESTIONNAIRES": "Loading questionnaire...",
       "REMOVE-QUESTIONNAIRE": "Remove questionnaire",
       "SPINNER-MESSAGE": "Removing questionnaire...",
-      "TAB-NUTRITIONAL-QUESTIONNAIRE": "Q. NUTRITIONAL",
-      "TAB-ODONTOLOGICAL-QUESTIONNAIRE": "Q. ODONTOLOGICAL",
+      "TAB-NUTRITIONAL-QUESTIONNAIRE": "Q. Nutritional",
+      "TAB-ODONTOLOGICAL-QUESTIONNAIRE": "Q. Odontological",
       "NUTRITIONAL-QUESTIONNAIRE": "Nutritional Questionnaire",
       "ODONTOLOGICAL-QUESTIONNAIRE": "Odontological Questionnaire"
     },

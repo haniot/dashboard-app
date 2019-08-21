@@ -100,6 +100,16 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.options = {
             tooltip: {
                 formatter: function (params) {
+                    if (!params.data || !params.data.time) {
+                        const t = series.data.find(currentHeight => {
+                            return currentHeight.value.match(params.value);
+                        });
+                        if (t) {
+                            params.data.value = t.value;
+                            params.data.time = t.time;
+                        }
+
+                    }
                     return `${temperature}: ${params.data.value}°C<br>${date}:<br>${params.name} ${at} ${params.data.time}`
                 },
                 trigger: 'item'
@@ -125,13 +135,13 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, null, null, filter)
             .then(httpResponse => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.data = httpResponse.body;
-                    this.updateGraph(this.data);
-                }
+                this.data = httpResponse.body;
+                this.updateGraph(this.data);
                 this.showSpinner = false;
             })
-            .catch();
+            .catch(() => {
+                this.showSpinner = false;
+            });
     }
 
     updateGraph(measurements: Array<any>): void {

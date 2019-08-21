@@ -77,10 +77,7 @@ export class HeightComponent implements OnInit, OnChanges {
                         }
                     }
                 },
-                data: [
-                    { type: 'max' },
-                    { type: 'min' }
-                ]
+                data: [{ type: 'max' }, { type: 'min' }]
             }
         };
 
@@ -97,6 +94,13 @@ export class HeightComponent implements OnInit, OnChanges {
             tooltip: {
                 trigger: 'item',
                 formatter: function (params) {
+                    if (!params.data || !params.data.time) {
+                        const t = series.data.find(currentHeight => {
+                            return currentHeight.value === params.data.value;
+                        });
+                        params.data.time = t.time;
+
+                    }
                     return `${height}: ${params.data.value} cm <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
@@ -107,11 +111,7 @@ export class HeightComponent implements OnInit, OnChanges {
                     formatter: '{value} cm'
                 }
             },
-            dataZoom: [
-                {
-                    type: 'slider'
-                }
-            ],
+            dataZoom: [{ type: 'slider' }],
             series: series
         };
 
@@ -126,7 +126,9 @@ export class HeightComponent implements OnInit, OnChanges {
                 this.showSpinner = false;
                 this.updateGraph(this.data);
             })
-            .catch();
+            .catch(() => {
+                this.showSpinner = false;
+            });
     }
 
     updateGraph(measurements: Array<any>): void {

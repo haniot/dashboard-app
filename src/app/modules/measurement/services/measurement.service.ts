@@ -7,6 +7,7 @@ import { HeartRate } from '../models/heart-rate';
 import { MeasurementType } from '../models/measurement.types'
 import { Weight } from '../models/weight';
 import { environment } from '../../../../environments/environment'
+import { MeasurementLast } from '../models/measurement.last'
 
 @Injectable()
 export class MeasurementService {
@@ -79,6 +80,12 @@ export class MeasurementService {
         const url = `${environment.api_url}/${this.version}/patients/${userId}/measurements`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
+            .toPromise();
+    }
+
+    getLastByUser(userId: string): Promise<MeasurementLast> {
+        const url = `${environment.api_url}/${this.version}/patients/${userId}/measurements/last`;
+        return this.http.get<any>(url)
             .toPromise();
     }
 

@@ -52,6 +52,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     ncDefinitive: NutritionalCouncil;
     finalCounseling: string;
     allCounselings = false;
+    allCounselingsBmiWhr: boolean;
+    allCounselingsGlycemia: boolean;
+    allCounselingsBloodPressure: boolean;
     listChecksBmiWhr: Array<boolean>;
     listChecksGlycemia: Array<boolean>;
     listChecksBloodPressure: Array<boolean>;
@@ -114,6 +117,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         this.finalingEvaluantion = false;
         this.sendingEvaluation = false;
         this.finalCounseling = '';
+        this.allCounselingsBmiWhr = false;
+        this.allCounselingsGlycemia = false;
+        this.allCounselingsBloodPressure = false;
     }
 
     ngOnInit() {
@@ -261,6 +267,24 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
     onBack() {
         this.location.back();
+    }
+
+    clickCheckAllBmiWhr() {
+        this.listChecksBmiWhr.forEach((element, index) => {
+            this.listChecksBmiWhr[index] = !this.allCounselingsBmiWhr;
+        });
+    }
+
+    clickCheckAllGlycemia() {
+        this.listChecksGlycemia.forEach((element, index) => {
+            this.listChecksGlycemia[index] = !this.allCounselingsGlycemia;
+        });
+    }
+
+    clickCheckAllBloodPressure() {
+        this.listChecksBloodPressure.forEach((element, index) => {
+            this.listChecksBloodPressure[index] = !this.allCounselingsBloodPressure;
+        });
     }
 
     clickCheckAll() {

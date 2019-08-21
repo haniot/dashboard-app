@@ -132,7 +132,7 @@ export class WeightComponent implements OnInit, OnChanges {
                             `: ${params.data.value} Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                     }
                     return body_fat +
-                        `: ${params.data} % <br> ${date}: ${params.name}`;
+                        `: ${params.data.value} % <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
             xAxis: xAxisWeight,
@@ -165,7 +165,9 @@ export class WeightComponent implements OnInit, OnChanges {
                 this.showSpinner = false;
                 this.updateGraph(this.data);
             })
-            .catch();
+            .catch(() => {
+                this.showSpinner = false;
+            });
     }
 
     updateGraph(measurements: Array<any>): void {
@@ -188,6 +190,7 @@ export class WeightComponent implements OnInit, OnChanges {
                 });
             }
         });
+
         this.echartsInstance.setOption(this.weightGraph);
     }
 

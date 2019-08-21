@@ -61,6 +61,7 @@ export class FatComponent implements OnInit, OnChanges {
             type: 'bar',
             data: [],
             color: 'orange',
+            barMaxWidth: 100,
             label: {
                 normal: {
                     show: true,

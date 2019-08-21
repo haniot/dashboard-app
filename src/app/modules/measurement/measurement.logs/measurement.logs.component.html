@@ -75,7 +75,7 @@
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
-                                {{measurement.value}}
+                                {{measurement.value | decimalFormatter}}
                                 {{measurement.unit}}
                             </td>
                             <td>
@@ -123,7 +123,7 @@
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
-                                {{measurement.value}}
+                                {{measurement.value | decimalFormatter}}
                                 {{measurement.unit}}
                             </td>
                             <td>

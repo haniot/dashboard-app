@@ -1,3 +1,7 @@
+#login {
+  max-width: 550px;
+}
+
 .row {
   margin-top: 20vh;
   align-items: center;
@@ -131,6 +135,7 @@ label {
   right: 10px;
   width: 350px;
 }
-.toast-container .ngx-toastr{
+
+.toast-container .ngx-toastr {
   width: 100%;
 }

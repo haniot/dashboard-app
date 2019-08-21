@@ -74,85 +74,98 @@ export class MeasurementComponent implements OnInit, OnChanges {
     }
 
     loadMeasurements() {
-        this.loadWeight();
-        this.loadHeight();
-        this.loadFat();
-        this.loadWaistCircumference();
-        this.loadBodyTemperature();
-        this.loadBloodGlucose();
-        this.loadBloodPressure();
+        this.measurementService.getLastByUser(this.patientId)
+            .then((measurementLast) => {
+                this.listWeight = [measurementLast.weight];
+                this.listFat = [measurementLast.body_fat];
+                this.listHeight = [measurementLast.height];
+                this.listWaistCircumference = [measurementLast.waist_circumference];
+                this.listBodyTemperature = [measurementLast.body_temperature];
+                this.listBloodGlucose = [measurementLast.blood_glucose];
+                this.listBloodPressure = [measurementLast.blood_pressure];
+            })
+            .catch(() => {
+            });
+
+        // this.loadWeight();
+        // this.loadHeight();
+        // this.loadFat();
+        // this.loadWaistCircumference();
+        // this.loadBodyTemperature();
+        // this.loadBloodGlucose();
+        // this.loadBloodPressure();
         // this.loadHeartRate()
     }
 
-    loadWeight() {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, null, null, this.filter)
-            .then((httpResponse) => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.listWeight = httpResponse.body;
-                }
-            })
-            .catch();
-    }
-
-    loadHeight() {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.height, null, null, this.filter)
-            .then((httpResponse) => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.listHeight = httpResponse.body;
-                }
-            })
-            .catch();
-    }
-
-    loadFat() {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, this.filter)
-            .then(httpResponse => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.listFat = httpResponse.body;
-                }
-            })
-            .catch();
-    }
-
-    loadWaistCircumference() {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, this.filter)
-            .then(httpResponse => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.listWaistCircumference = httpResponse.body;
-                }
-            })
-            .catch();
-    }
-
-    loadBodyTemperature() {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, null, null, this.filter)
-            .then(httpResponse => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.listBodyTemperature = httpResponse.body;
-                }
-            })
-            .catch();
-    }
-
-    loadBloodGlucose() {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, this.filter)
-            .then(httpResponse => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.listBloodGlucose = httpResponse.body;
-                }
-            })
-            .catch();
-    }
-
-    loadBloodPressure() {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, null, null, this.filter)
-            .then(httpResponse => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.listBloodPressure = httpResponse.body;
-                }
-            })
-            .catch();
-    }
+    // loadWeight() {
+    //     this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, null, null, this.filter)
+    //         .then((httpResponse) => {
+    //             if (httpResponse.body && httpResponse.body.length) {
+    //                 this.listWeight = httpResponse.body;
+    //             }
+    //         })
+    //         .catch();
+    // }
+    //
+    // loadHeight() {
+    //     this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.height, null, null, this.filter)
+    //         .then((httpResponse) => {
+    //             if (httpResponse.body && httpResponse.body.length) {
+    //                 this.listHeight = httpResponse.body;
+    //             }
+    //         })
+    //         .catch();
+    // }
+    //
+    // loadFat() {
+    //     this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, this.filter)
+    //         .then(httpResponse => {
+    //             if (httpResponse.body && httpResponse.body.length) {
+    //                 this.listFat = httpResponse.body;
+    //             }
+    //         })
+    //         .catch();
+    // }
+    //
+    // loadWaistCircumference() {
+    //     this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, this.filter)
+    //         .then(httpResponse => {
+    //             if (httpResponse.body && httpResponse.body.length) {
+    //                 this.listWaistCircumference = httpResponse.body;
+    //             }
+    //         })
+    //         .catch();
+    // }
+    //
+    // loadBodyTemperature() {
+    //     this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, null, null, this.filter)
+    //         .then(httpResponse => {
+    //             if (httpResponse.body && httpResponse.body.length) {
+    //                 this.listBodyTemperature = httpResponse.body;
+    //             }
+    //         })
+    //         .catch();
+    // }
+    //
+    // loadBloodGlucose() {
+    //     this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, this.filter)
+    //         .then(httpResponse => {
+    //             if (httpResponse.body && httpResponse.body.length) {
+    //                 this.listBloodGlucose = httpResponse.body;
+    //             }
+    //         })
+    //         .catch();
+    // }
+    //
+    // loadBloodPressure() {
+    //     this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, null, null, this.filter)
+    //         .then(httpResponse => {
+    //             if (httpResponse.body && httpResponse.body.length) {
+    //                 this.listBloodPressure = httpResponse.body;
+    //             }
+    //         })
+    //         .catch();
+    // }
 
     // loadHeartRate() {
     //     this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.heart_rate, null, null, this.filter)
