@@ -149,7 +149,7 @@
     "STATUS-INCOMPLETE": "INCOMPLETA",
     "ACCESS-EVALUATION": "Acessar avaliação...",
     "DELETE-EVALUATION": "Excluir avaliação...",
-    "DELETE-CONFIRMATION": "Tem certeza que deseja remover avaliação?",
+    "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente avaliação?",
     "STATE": "Estado",
     "OPTIONS-DOWNLOAD": "Opções de download...",
     "GENERATING-ODONTOLOGICAL-EVALUATIONS": "Gerando avaliação odontológica"
@@ -521,8 +521,8 @@
         "DATASET": "Frequências"
       },
       "MODAL-REMOVE": {
-        "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover a medição?",
-        "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover ",
+        "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover definitivamente a medição?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover definitivamente",
         "CONFIRM-MULTIPLE-REMOVE-PART2": "medição(es)?"
       }
     },
@@ -585,7 +585,9 @@
       "TOVIEW-PATIENT": "Visualizar detalhes...",
       "EDIT-PATIENT": "Editar paciente...",
       "DELETE-PATIENT": "Excluir paciente...",
-      "DELETE-CONFIRMATION": "'Tem certeza que deseja remover paciente?'"
+      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente o paciente?",
+      "OBSERVATION": "Observação",
+      "DELETE-CONFIRMATION-OBS": "a remoção é definitiva e Irreversível, excluindo o paciente todos os dados relacionados ao mesmo também serão excluidos definitivamente."
     },
     "VIEW-HABITS": {
       "TOVIEW-EVALUATIONS": "Visualizar avaliações...",
@@ -633,7 +635,7 @@
     "DOWNLOAD-CSV": "Baixar CSV",
     "DOWNLOAD-XLS": "Baixar XLS",
     "NEW-FILE": "Solicitar Novo Arquivo",
-    "DELETE-CONFIRMATION": "Tem certeza que deseja remover estudo piloto?",
+    "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente o estudo piloto?",
     "ODONTOLOGICAL-EVALUATON": "Avaliação odontológica",
     "FILECSV": "Arquivo CSV",
     "FILEXLS": "Arquivo XLS",
@@ -772,6 +774,7 @@
     "LANGUAGE": "Idioma",
     "INVALID-LANGUAGE": "Idioma inválido",
     "LOADING": "Carregando...",
+    "LAST-LOGIN": "Último login",
     "PIPES": {
       "GENDER": {
         "MALE": "MASCULINO",
@@ -817,7 +820,11 @@
       "CONFIRM-PASSWORD": "Confirme à senha",
       "PLACEHOLDER-CONFIRM-PASSWORD": "Digite sua confirmação de senha aqui...",
       "RESET-PROCESS": "Reinicie o processo de recuperação",
-      "INVALID-TOKEN": "Token inválido!"
+      "INVALID-TOKEN": "Token inválido!",
+      "INFORMATIONS": "Informações",
+      "RECOVERY-FAILED": "Não foi possível recuperar senha!",
+      "RECOVERY-FAILED-MESSAGE1": "O processo de recuperação de senha exige a presença de um token de acesso.",
+      "RECOVERY-FAILED-MESSAGE2": "Reinicie o processo de recuperação de senha, pois, o token informado encontra-se ausente ou inválido."
     },
     "FORGOT": {
       "INFORMATION": "E-mail enviado com sucesso!",
@@ -837,7 +844,7 @@
     "LIST-EMPTY": "Nenhum registro encontrado",
     "EDIT": "Editar usuário...",
     "DELETE": "Excluir usuário...",
-    "DELETE-CONFIRMATION": "Tem certeza que deseja remover usuário?"
+    "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente o usuário?"
   },
   "TOAST-MESSAGES": {
     "NOT-LIST-ADMIN": "Não foi possível listar administrador!",
@@ -902,6 +909,7 @@
     "NOT-LOGIN": "Não foi possível entrar",
     "BLOCKED-USER": "Usuário bloqueado!",
     "TRY-AGAIN": "Tente novamente após 1 hora.",
+    "TOO-MANY-ATTEMPTS": "Excesso de tentativas!",
     "NOT-CHANGE-LANGUAGE": "Não foi possível alterar o idioma!",
     "QUESTIONNAIRE-DELETED": "Questionário removido com sucesso!",
     "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!"

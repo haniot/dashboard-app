@@ -545,29 +545,24 @@
                                         <!-- Sugestões de aconselhamentos -->
                                         <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                              *ngIf="nutritionalEvaluation.status==='incomplete'">
-                                            <label>
-                                                {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SUGGESTED-COUNSELING'|translate}}
-                                                :
-                                            </label>
+
+
+                                            <div class="form-group row">
+                                                <label>
+                                                    {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SUGGESTED-COUNSELING'|translate}}
+                                                    :
+                                                </label>
+                                            </div>
+                                            <div class="form-group row">
+                                                <button type="button" class="btn btn-haniot-primary btn-sm"
+                                                        (click)="showNewCounseling()">
+                                                    {{'SHARED.ADD'|translate}}
+                                                    <i class="material-icons">add</i>
+                                                </button>
+                                            </div>
+
 
                                             <div class="counselings">
-
-                                                <div class="row">
-                                                    <div class="form-group col-sm-12 col-md-4">
-                                                        <mat-checkbox class="example-margin"
-                                                                      [(ngModel)]="allCounselings"
-                                                                      (click)="clickCheckAll()">
-                                                            {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
-                                                        </mat-checkbox>
-                                                    </div>
-                                                    <div class="form-group col-sm-12 col-md-4">
-                                                        <button type="button" class="btn btn-haniot-primary btn-sm"
-                                                                (click)="showNewCounseling()">
-                                                            {{'SHARED.ADD'|translate}}
-                                                            <i class="material-icons">add</i>
-                                                        </button>
-                                                    </div>
-                                                </div>
 
                                                 <div class="row"
                                                      *ngIf="ncSuggested.bmi_whr && ncSuggested.bmi_whr.length">
@@ -575,6 +570,13 @@
                                                         <label>
                                                             {{typeCousenling[0]}}
                                                         </label>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-4">
+                                                        <mat-checkbox class="example-margin"
+                                                                      [(ngModel)]="allCounselingsBmiWhr"
+                                                                      (click)="clickCheckAllBmiWhr()">
+                                                            {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
+                                                        </mat-checkbox>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
                                                          *ngFor="let counseling of ncSuggested.bmi_whr; let i = index">
@@ -593,6 +595,13 @@
                                                             {{typeCousenling[1]}}
                                                         </label>
                                                     </div>
+                                                    <div class="form-group col-sm-12 col-md-4">
+                                                        <mat-checkbox class="example-margin"
+                                                                      [(ngModel)]="allCounselingsGlycemia"
+                                                                      (click)="clickCheckAllGlycemia()">
+                                                            {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
+                                                        </mat-checkbox>
+                                                    </div>
                                                     <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
                                                          *ngFor="let counseling of ncSuggested.glycemia; let i = index">
                                                         <mat-checkbox
@@ -610,6 +619,13 @@
                                                         <label>
                                                             {{typeCousenling[2]}}
                                                         </label>
+                                                    </div>
+                                                    <div class="form-group col-sm-12 col-md-4">
+                                                        <mat-checkbox class="example-margin"
+                                                                      [(ngModel)]="allCounselingsBloodPressure"
+                                                                      (click)="clickCheckAllBloodPressure()">
+                                                            {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
+                                                        </mat-checkbox>
                                                     </div>
                                                     <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center"
                                                          *ngFor="let counseling of ncSuggested.blood_pressure;let i = index">
@@ -734,7 +750,7 @@
                             </div>
                             <div class="p-2" *ngIf="nutritionalEvaluation.status==='incomplete'">
                                 <button type="submit" class="btn btn-haniot-primary" (click)="finalizeEvaluation()"
-                                        [disabled]="allChecksDisabled() && !allCounselings">
+                                        [disabled]="allChecksDisabled() && (!allCounselingsBmiWhr||!allCounselingsGlycemia||!allCounselingsBloodPressure)">
                                     {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.FINISH-EVALUATION'|translate}}
                                 </button>
                             </div>

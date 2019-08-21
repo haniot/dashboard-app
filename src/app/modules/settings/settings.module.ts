@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -13,12 +13,13 @@ import { SharedModule } from '../../shared/shared.module';
     AccessSettingsComponent,
     LanguageSettingsComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    TranslateModule,
-    SharedModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        TranslateModule,
+        SharedModule,
+        ReactiveFormsModule
+    ],
   exports:[
     AccessSettingsComponent,
     LanguageSettingsComponent,

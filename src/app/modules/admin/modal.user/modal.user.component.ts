@@ -41,6 +41,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     validateTimer: any;
     matchTimer: any;
     maxBirthDate: Date;
+    user: GenericUser;
 
     constructor(
         private fb: FormBuilder,
@@ -154,16 +155,20 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                 case 'Admin':
                     this.adminService.getById(this.userId)
                         .then(admin => {
+                            this.user = admin;
                             this.loadAdminInForm(admin);
                         })
-                        .catch();
+                        .catch(() => {
+                        });
                     break;
                 case 'HealthProfessional':
                     this.healthService.getById(this.userId)
                         .then(healthprofessional => {
+                            this.user = healthprofessional;
                             this.loadHealthProfessinalInForm(healthprofessional);
                         })
-                        .catch();
+                        .catch(() => {
+                        });
                     break;
             }
         }

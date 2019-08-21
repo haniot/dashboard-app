@@ -19,7 +19,6 @@ import { SessionStorageService } from '../../../shared/shared.services/session.s
 export class ChangePasswordComponent implements OnInit, OnDestroy {
     f: FormGroup;
     errorCredentials = false;
-    redirect_link;
     loading: boolean;
     icon_password = 'visibility_off';
     typeInputPassword = 'password';
@@ -57,10 +56,17 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.route.paramMap
                 .subscribe(params => {
+                    const languages = this.translateService.getLangs();
                     const language = params.get('language');
+                    this.translateService.use(this.translateService.getDefaultLang());
                     if (language) {
-                        this.translateService.use(language);
+                        languages.forEach(localLanguage => {
+                            if (localLanguage.match(language) && localLanguage.match(language).length) {
+                                return this.translateService.use(localLanguage);
+                            }
+                        })
                     }
+
                 })
         );
 

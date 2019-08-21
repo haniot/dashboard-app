@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ModalConfirmationComponent {
     @Input() id;
     @Input() message;
+    @Input() observation;
     @Output() confirmation = new EventEmitter();
     @Output() noconfirmation = new EventEmitter();
 

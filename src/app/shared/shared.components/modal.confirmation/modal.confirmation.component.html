@@ -8,6 +8,8 @@
         </div>
         <div class="modal-body">
             <p>{{message}}</p>
+            <p *ngIf="observation"><strong style="font-weight: bold">{{'PATIENTS.PATIENTS-TABLE.OBSERVATION'|translate}}
+                :</strong> {{observation}}</p>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-haniot-secondary"

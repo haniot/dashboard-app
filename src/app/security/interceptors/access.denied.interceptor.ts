@@ -14,7 +14,7 @@ export class AccessDeniedInterceptor implements HttpInterceptor {
 
         return next.handle(request).catch((errorResponse: HttpErrorResponse) => {
             if (errorResponse.status === 403) {
-                this.router.navigate(['/access-denied']);
+                // this.router.navigate(['/access-denied']);
             }
             return Observable.throw(errorResponse);
         });

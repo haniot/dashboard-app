@@ -585,7 +585,9 @@
       "TOVIEW-PATIENT": "View details ...",
       "EDIT-PATIENT": "Edit patient ...",
       "DELETE-PATIENT": "Delete patient ...",
-      "DELETE-CONFIRMATION": "Are you sure you want to remove patient?"
+      "DELETE-CONFIRMATION": "Are you sure you want to remove patient?",
+      "OBSERVATION": "Observation",
+      "DELETE-CONFIRMATION-OBS": "the removal is final and irreversible, excluding the patient all data related to it will also be permanently deleted."
     },
     "VIEW-HABITS": {
       "TOVIEW-EVALUATIONS": "View evaluations...",
@@ -772,6 +774,7 @@
     "LANGUAGE": "Language",
     "INVALID-LANGUAGE": "Invalid language",
     "LOADING": "Loading...",
+    "LAST-LOGIN": "Last login",
     "PIPES": {
       "GENDER": {
         "MALE": "MALE",
@@ -817,7 +820,11 @@
       "CONFIRM-PASSWORD": "Confirm the Password",
       "PLACEHOLDER-CONFIRM-PASSWORD": "Enter your new password here...",
       "RESET-PROCESS": "Restart the recovery process",
-      "INVALID-TOKEN": "Invalid token!"
+      "INVALID-TOKEN": "Invalid token!",
+      "INFORMATIONS": "Informations",
+      "RECOVERY-FAILED": "Unable to recover password!",
+      "RECOVERY-FAILED-MESSAGE1": "The password recovery process requires the presence of an access token.",
+      "RECOVERY-FAILED-MESSAGE2": "Restart the password recovery process as the token entered is missing or invalid."
     },
     "FORGOT": {
       "INFORMATION": "Email successfully sent!",
@@ -902,6 +909,7 @@
     "NOT-LOGIN": "Could not login",
     "BLOCKED-USER": "Blocked user!",
     "TRY-AGAIN": "Try again after 1 hour.",
+    "TOO-MANY-ATTEMPTS": "Too many attempts!",
     "NOT-CHANGE-LANGUAGE": "Could not change language!",
     "QUESTIONNAIRE-DELETED": "Questionnaire successfully removed!",
     "QUESTIONNAIRE-NOT-DELETED": "Unable to remove questionnaire!"

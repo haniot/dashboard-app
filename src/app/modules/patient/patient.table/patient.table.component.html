@@ -67,5 +67,7 @@
                (page)="clickPagination($event)">
 </mat-paginator>
 
-<modal-confirmation [message]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION'|translate" (confirmation)="removePatient()"
+<modal-confirmation [message]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION'|translate"
+                    [observation]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION-OBS'|translate"
+                    (confirmation)="removePatient()"
                     (noconfirmation)="closeModalConfimation()"></modal-confirmation>
