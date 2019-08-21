@@ -18,11 +18,11 @@
                         <table class="table table-sm table-hover">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>{{'PILOT-STUDY.NAME-OF-STUDY'|translate}}</th>
-                                <th>{{'PILOT-STUDY.START'|translate}}</th>
-                                <th>{{'PILOT-STUDY.END'|translate}}</th>
-                                <th>{{'PILOT-STUDY.SITUATION'|translate}}</th>
+                                <th scope="col">#</th>
+                                <th scope="col">{{'PILOT-STUDY.NAME-OF-STUDY'|translate}}</th>
+                                <th scope="col">{{'PILOT-STUDY.START'|translate}}</th>
+                                <th scope="col">{{'PILOT-STUDY.END'|translate}}</th>
+                                <th scope="col">{{'PILOT-STUDY.SITUATION'|translate}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -47,11 +47,11 @@
                                 </td>
                             </tr>
                             <tr *ngFor="let study of list; index as i;trackBy: trackById">
-                                <td>{{getIndex(i)}}</td>
+                                <td class="max-width-60">{{getIndex(i)}}</td>
                                 <td>{{study.name}}</td>
-                                <td>{{study.start | date }}</td>
-                                <td>{{study.end | date}}</td>
-                                <td>
+                                <td class="max-width-150">{{study.start | date }}</td>
+                                <td class="max-width-150">{{study.end | date}}</td>
+                                <td class="max-width-150">
                                         <span>
                                             {{study.is_active | pilotStudySituation | translate}}
                                         </span>

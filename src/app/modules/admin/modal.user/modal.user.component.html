@@ -245,7 +245,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="user">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="user && user.last_login">
                     <div class="d-flex flex-row-reverse bd-highlight">
                         <div class="p-2">
                             <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}: {{user.last_login|date:'fullDate'}}

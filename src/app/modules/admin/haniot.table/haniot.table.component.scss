@@ -3,10 +3,27 @@
 
   cursor: pointer;
 }
+
 .nav-link i:hover {
   border-radius: 20px;
   background: rgb(212, 207, 207);
 }
+
 table tr {
   cursor: pointer;
+}
+
+.max-width-60 {
+  width: 60px;
+  max-width: 60px;
+}
+
+.max-width-150 {
+  width: 150px;
+  max-width: 150px;
+}
+
+.max-width-180 {
+  width: 180px;
+  max-width: 180px;
 }

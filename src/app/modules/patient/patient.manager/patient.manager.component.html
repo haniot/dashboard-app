@@ -30,24 +30,28 @@
                             <tbody>
 
                             <tr *ngIf="listOfPatients.length==0">
-                                <td colspan="6" *ngIf="!listOfPatientsIsEmpty">
+                                <td colspan="7" *ngIf="!listOfPatientsIsEmpty">
                                     <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
                                 </td>
-                                <td colspan="6" *ngIf="listOfPatientsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
+                                <td colspan="7" *ngIf="listOfPatientsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
                             </tr>
                             <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">
-                                <td [routerLink]="['/app/patients',patient.id, 'details']">{{getIndex(i)}}</td>
-                                <td colspan="2" [routerLink]="['/app/patients',patient.id, 'details']">{{patient.name}}</td>
-                                <td [routerLink]="['/app/patients',patient.id, 'details']">{{patient.gender | gender |translate}}</td>
-                                <td [routerLink]="['/app/patients',patient.id, 'details']">{{patient.birth_date | date}}</td>
-                                <td>
+                                <td [routerLink]="['/app/patients',patient.id, 'details']"
+                                    class="max-width-60">{{getIndex(i)}}</td>
+                                <td colspan="2"
+                                    [routerLink]="['/app/patients',patient.id, 'details']">{{patient.name}}</td>
+                                <td [routerLink]="['/app/patients',patient.id, 'details']"
+                                    class="max-width-150">{{patient.gender | gender |translate}}</td>
+                                <td [routerLink]="['/app/patients',patient.id, 'details']"
+                                    class="max-width-180">{{patient.birth_date | date}}</td>
+                                <td class="max-width-60">
                                     <a class="nav-link"
                                        [routerLink]="['/app/patients',patient.id ]"
                                        [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">
                                         <i class="material-icons">edit</i>
                                     </a>
                                 </td>
-                                <td>
+                                <td class="max-width-60">
                                     <a class="nav-link" (click)="openModalConfirmation(patient.id)"
                                        [title]="'PATIENTS.PATIENTS-TABLE.DELETE-PATIENT'|translate">
                                         <i class="material-icons">delete</i>

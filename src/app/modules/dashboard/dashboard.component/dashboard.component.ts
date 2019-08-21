@@ -1,21 +1,18 @@
 import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
 
 import * as $ from 'jquery';
 import { ISubscription } from 'rxjs/Subscription';
+
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { Patient } from '../../patient/models/patient';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { ConfigurationBasic } from '../../config.matpaginator';
-import { DashboardService } from '../services/dashboard.service'
-import { GenericUser } from '../../../shared/shared.models/generic.user'
-import { UserService } from '../../admin/services/users.service'
-import { AuthService } from '../../../security/auth/services/auth.service'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
-import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation'
-
-const PaginatorConfig = ConfigurationBasic;
+import { DashboardService } from '../services/dashboard.service';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
+import { UserService } from '../../admin/services/users.service';
+import { AuthService } from '../../../security/auth/services/auth.service';
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
+import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation';
 
 @Component({
     selector: 'app-dashboard',
@@ -64,17 +61,30 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.listOfEvaluatioinsIsEmpty = false;
         this.subscriptions = new Array<ISubscription>();
         this.userId = this.localStorageService.getItem('user');
+        this.subscriptions.push(
+            this.selectPilotService.pilotStudyUpdated.subscribe(() => {
+                this.load();
+            }));
     }
 
-
     ngOnInit() {
-        this.subscriptions.push(this.selectPilotService.pilotStudyUpdated.subscribe(() => {
-            this.loadPilotSelected();
-            this.getPatients();
-        }));
         $('body').css('background-color', '#ececec');
-        this.loadPilotSelected();
         this.load();
+    }
+
+    load() {
+        if (!this.userId || this.userId === '') {
+            this.loadUser();
+        }
+
+        this.loadPilotSelected();
+
+        this.getStudies();
+
+        if (this.getUserType() === 'patient') {
+            this.getEvaluations();
+        }
+
     }
 
     loadPilotSelected(): void {
@@ -90,7 +100,8 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
                     this.selectPilotService.open();
                 }
             })
-            .catch();
+            .catch(() => {
+            });
 
     }
 
@@ -115,32 +126,13 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
                             this.selectPilotService.pilotStudyHasUpdated(this.userLogged.selected_pilot_study);
                         }
                     })
-                    .catch();
+                    .catch(() => {
+                    });
             }
         }
         return Promise.resolve(this.userLogged);
 
     }
-
-    load() {
-        if (!this.userId || this.userId === '') {
-            this.loadUser();
-        }
-
-        this.loadPilotSelected();
-
-        if (this.pilotStudyId) {
-            this.getPatients();
-        }
-
-        this.getStudies();
-
-        if (this.getUserType() === 'patient') {
-            this.getEvaluations();
-        }
-
-    }
-
 
     getPatients() {
         if (!this.pilotStudyId) {

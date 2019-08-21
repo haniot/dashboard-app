@@ -6,12 +6,11 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
 import * as JWT_decode from 'jwt-decode';
-import { tap } from 'rxjs/operators';
+import { delay, tap } from 'rxjs/operators';
 
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SessionStorageService } from '../../../shared/shared.services/session.storage.service'
 import { environment } from '../../../../environments/environment'
-import { UserService } from '../../../modules/admin/services/users.service'
 
 @Injectable()
 export class AuthService {
@@ -53,8 +52,10 @@ export class AuthService {
                             return false;
                         }
                         this.localStorageService.setItem('user', decodedToken.sub);
+                        this.saveUserInLocalStorage(data.access_token);
                     }
-                })
+                }),
+                delay(2000)
             );
     }
 
@@ -90,6 +91,57 @@ export class AuthService {
 
     decodeToken(): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string } {
         const token = this.localStorageService.getItem('token');
+        return this.decodeTokenJWT(token);
+    }
+
+    saveUserInLocalStorage(token: string): void {
+        const userId = this.decodeTokenJWT(token).sub;
+        this.getUserById(userId, token)
+            .then(user => {
+                if (user) {
+                    const health_area = user.health_area ? user.health_area : 'admin';
+                    this.localStorageService.setItem('userLogged', JSON.stringify(user));
+                    this.localStorageService.setItem('email', user.email);
+                    this.localStorageService.setItem('health_area', health_area);
+                }
+            })
+            .catch(() => {
+            });
+    }
+
+    getUserById(id: string, token: string): Promise<any> {
+        let url = '';
+        switch (this.decodeToken().sub_type) {
+            case 'admin':
+                url = `${environment.api_url}/${this.version}/admins/${id}`;
+                break;
+
+            case 'health_professional':
+                url = `${environment.api_url}/${this.version}/healthprofessionals/${id}`;
+                break;
+
+            case 'patient':
+                url = `${environment.api_url}/${this.version}/patients/${id}`;
+                break;
+        }
+
+
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/json')
+            .append('Authorization', `Bearer ${token}`);
+
+        return this.http.get<any>(url, { headers: headers })
+            .toPromise();
+
+    }
+
+    validateReCaptcha(responseRecaptcha: string): Promise<any> {
+        return this.http.post<any>(
+            `${environment.reCaptcha_urlVerify}?secret=${environment.reCaptcha_serverKey}&&response=${responseRecaptcha}`, {})
+            .toPromise();
+    }
+
+    private decodeTokenJWT(token: string): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string } {
         let decodedToken: { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string };
         try {
             decodedToken = JWT_decode(token);
@@ -97,11 +149,5 @@ export class AuthService {
             decodedToken = { sub: '', sub_type: '', iss: '', iat: 0, exp: 0, scope: '' };
         }
         return decodedToken;
-    }
-
-    validateReCaptcha(responseRecaptcha: string): Promise<any> {
-        return this.http.post<any>(
-            `${environment.reCaptcha_urlVerify}?secret=${environment.reCaptcha_serverKey}&&response=${responseRecaptcha}`, {})
-            .toPromise();
     }
 }

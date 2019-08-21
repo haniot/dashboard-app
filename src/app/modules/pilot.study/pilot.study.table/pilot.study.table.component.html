@@ -1,54 +1,58 @@
 <div class="input-group no-border">
-  <input type="text" class="form-control" id="searchStudy" name="searchStudy" [(ngModel)]="search"
-    [placeholder]="'PILOT-STUDY.PLACEHOLDER-SEARCH'|translate" (keyup)="searchOnSubmit()">
-  <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
-    <i class="material-icons">search</i>
-    <div class="ripple-container"></div>
-  </button>
+    <input type="text" class="form-control" id="searchStudy" name="searchStudy" [(ngModel)]="search"
+           [placeholder]="'PILOT-STUDY.PLACEHOLDER-SEARCH'|translate" (keyup)="searchOnSubmit()">
+    <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon" (click)="searchOnSubmit()">
+        <i class="material-icons">search</i>
+        <div class="ripple-container"></div>
+    </button>
 </div>
 <div class="table-responsive">
-  <table class="table table-sm table-hover">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>{{'PILOT-STUDY.NAME-OF-STUDY'|translate}}</th>
-        <th>{{'PILOT-STUDY.START'|translate}}</th>
-        <th>{{'PILOT-STUDY.END'|translate}}</th>
-        <th>{{'PILOT-STUDY.SITUATION'|translate}}</th>
-        <th colspan="2">{{'SHARED.ACTIONS'|translate}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngIf="list.length==0">
-        <td colspan="7" *ngIf="!listOfPilotsIsEmpty">
-          <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
-        </td>
-        <td colspan="7" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
-      </tr>
-      <tr *ngFor="let study of list; index as i;trackBy: trackById">
-        <td [routerLink]="['/app/pilotstudies',study.id,'details']" style="max-width: 25px">{{getIndex(i)}}</td>
-        <td [routerLink]="['/app/pilotstudies',study.id,'details']">{{study.name}}</td>
-        <td [routerLink]="['/app/pilotstudies',study.id,'details']" style="max-width: 50px">{{study.start | date }}</td>
-        <td [routerLink]="['/app/pilotstudies',study.id,'details']" style="max-width: 50px">{{study.end | date}}</td>
-        <td [routerLink]="['/app/pilotstudies',study.id,'details']" style="max-width: 50px">
+    <table class="table table-sm table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">{{'PILOT-STUDY.NAME-OF-STUDY'|translate}}</th>
+            <th scope="col">{{'PILOT-STUDY.START'|translate}}</th>
+            <th scope="col">{{'PILOT-STUDY.END'|translate}}</th>
+            <th scope="col">{{'PILOT-STUDY.SITUATION'|translate}}</th>
+            <th scope="col" colspan="2">{{'SHARED.ACTIONS'|translate}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="list.length==0">
+            <td colspan="7" *ngIf="!listOfPilotsIsEmpty">
+                <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
+            </td>
+            <td colspan="7" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
+        </tr>
+        <tr *ngFor="let study of list; index as i;trackBy: trackById">
+            <td [routerLink]="['/app/pilotstudies',study.id,'details']" class="max-width-60">{{getIndex(i)}}</td>
+            <td [routerLink]="['/app/pilotstudies',study.id,'details']">{{study.name}}</td>
+            <td [routerLink]="['/app/pilotstudies',study.id,'details']"
+                class="max-width-150">{{study.start | date }}</td>
+            <td [routerLink]="['/app/pilotstudies',study.id,'details']"
+                class="max-width-150">{{study.end | date}}</td>
+            <td [routerLink]="['/app/pilotstudies',study.id,'details']" class="max-width-150">
           <span>
             {{study.is_active | pilotStudySituation | translate}}
           </span>
-        </td>
-        <td style="max-width: 20px"><a class="nav-link" [routerLink]="['/app/pilotstudies',study.id]" [title]="'PILOT-STUDY.EDIT-STUDY'|translate"><i
-              class="material-icons">edit</i></a></td>
-        <td style="max-width: 20px"><a class="nav-link" (click)="openModalConfirmation(study.id)" [title]="'PILOT-STUDY.DELETE-STUDY'|translate"><i
-              class="material-icons">delete</i></a></td>
-      </tr>
-    </tbody>
-  </table>
+            </td>
+            <td class="max-width-60"><a class="nav-link" [routerLink]="['/app/pilotstudies',study.id]"
+                                           [title]="'PILOT-STUDY.EDIT-STUDY'|translate"><i
+                    class="material-icons">edit</i></a></td>
+            <td class="max-width-60"><a class="nav-link" (click)="openModalConfirmation(study.id)"
+                                           [title]="'PILOT-STUDY.DELETE-STUDY'|translate"><i
+                    class="material-icons">delete</i></a></td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 
 <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
-  (page)="clickPagination($event)">
+               (page)="clickPagination($event)">
 </mat-paginator>
 <view-health-professional [pilotStudyId]="pilotStudy_id"></view-health-professional>
 
 <modal-confirmation [message]="'PILOT-STUDY.DELETE-CONFIRMATION'|translate" (confirmation)="removeStudy()"
-  (noconfirmation)="closeModalConfirmation()"></modal-confirmation>
+                    (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

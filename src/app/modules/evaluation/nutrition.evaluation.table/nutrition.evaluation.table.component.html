@@ -13,15 +13,15 @@
             <th>#</th>
             <th>{{'SHARED.DATE'|translate}}</th>
             <th>{{'EVALUATION.STATE'|translate}}</th>
-            <th colspan="2">{{'SHARED.ACTIONS'|translate}}</th>
+            <th>{{'SHARED.ACTIONS'|translate}}</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngIf="listOfEvaluations.length==0">
-            <td colspan="5" *ngIf="!listOfEvaluationsIsEmpty">
+            <td colspan="4" *ngIf="!listOfEvaluationsIsEmpty">
                 <spinner [message]="'EVALUATION.SPINNER-MESSAGE'|translate"></spinner>
             </td>
-            <td colspan="5" *ngIf="listOfEvaluationsIsEmpty">
+            <td colspan="4" *ngIf="listOfEvaluationsIsEmpty">
                 <h4>{{'EVALUATION.LIST-EMPTY'|translate}}.<br>
                     <small>{{'EVALUATION.LIST-EMPTY-MESSAGE'|translate}}!</small>
                 </h4>
@@ -33,12 +33,6 @@
             <td [routerLink]="['/app/evaluations',patientId, 'nutritional', evaluation.id]">{{evaluation.created_at | date}}</td>
             <td [routerLink]="['/app/evaluations',patientId, 'nutritional', evaluation.id]">
                 <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus | translate}}</span>
-            </td>
-            <td>
-                <a class="nav-link" [routerLink]="['/app/evaluations',patientId, 'nutritional', evaluation.id]"
-                   [title]="'EVALUATION.ACCESS-EVALUATION'|translate">
-                    <i class="material-icons">input</i>
-                </a>
             </td>
             <td>
                 <a class="nav-link" (click)="openModalConfirmation(evaluation.patient.id,evaluation.id)"

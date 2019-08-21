@@ -16,11 +16,11 @@
                         <table class="table table-sm table-hover">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>{{'SHARED.PATIENT'|translate}}</th>
-                                <th>{{'SHARED.DATE'|translate}}</th>
-                                <th>{{'EVALUATION.STATE'|translate}}</th>
-                                <th>{{'SHARED.ACTIONS'|translate}}</th>
+                                <th scope="col">#</th>
+                                <th scope="col">{{'SHARED.PATIENT'|translate}}</th>
+                                <th scope="col">{{'SHARED.DATE'|translate}}</th>
+                                <th scope="col">{{'EVALUATION.STATE'|translate}}</th>
+                                <th scope="col">{{'SHARED.ACTIONS'|translate}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -34,13 +34,16 @@
                                 </td>
                             </tr>
                             <tr *ngFor="let evaluation of listOfEvaluations; index as i;trackBy: trackById">
-                                <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{getIndex(i)}}</td>
+                                <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
+                                    class="max-width-60">{{getIndex(i)}}</td>
                                 <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.patient.name}}</td>
-                                <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.created_at | date}}</td>
-                                <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">
+                                <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
+                                    class="max-width-150">{{evaluation.created_at | date}}</td>
+                                <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
+                                    class="max-width-150">
                                     <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus | translate}}</span>
                                 </td>
-                                <td>
+                                <td class="max-width-60">
                                     <a class="nav-link"
                                        [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
                                        [title]="'EVALUATION.ACCESS-EVALUATION'|translate">
