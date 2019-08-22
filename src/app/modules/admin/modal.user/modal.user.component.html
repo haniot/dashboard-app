@@ -206,13 +206,19 @@
                     </span>
                 </div>
 
-
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center">
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group"
                          [ngClass]="{'has-success': userForm.controls.password.valid,
              'has-error': userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)}"
                          *ngIf="!userId && userForm.controls.password">
-                        <label>{{'SHARED.PASSWORD'|translate}}:</label>
+                        <label>{{'SHARED.PASSWORD'|translate}}: </label>
+                        <label>
+                            <small>
+                                ( {{'SHARED.GENERATE-PASSWORD'|translate}}:
+                                <i class="material-icons" (click)="generatePassword()">vpn_key</i> )
+
+                            </small>
+                        </label>
                         <div>
                             <input [type]="typeInputPassword" formControlName="password" class="form-control" required
                                    minlength="6" (keyup)="validatePassword()">
@@ -248,7 +254,8 @@
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="user && user.last_login">
                     <div class="d-flex flex-row-reverse bd-highlight">
                         <div class="p-2">
-                            <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}: {{user.last_login|date:'fullDate'}}
+                            <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}
+                                : {{user.last_login|date:'fullDate'}}
                                 {{'SHARED.AT'|translate}}
                                 {{user.last_login|date:'mediumTime'}}</small>
                         </div>

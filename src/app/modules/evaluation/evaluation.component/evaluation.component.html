@@ -49,12 +49,90 @@
                 </haniot-card>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <haniot-card [title]="'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate">
-                    <nutrition-evaluation-table [(patientId)]="patientId"></nutrition-evaluation-table>
-                </haniot-card>
+
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-danger">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">
+                                    <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}</h4>
+                                </span>
+                                <ul class="nav nav-tabs right" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <mat-form-field>
+                                            <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
+                                                   [satDatepicker]="picker"
+                                                   [(ngModel)]="search"
+                                                   (focus)="picker.open()"
+                                                   (ngModelChange)="getAllNutritionEvaluations()"
+                                                   [max]="maxDate"
+                                                   id="rangeDate">
+
+                                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                                        </mat-form-field>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'SHARED.DATE'|translate}}</th>
+                                    <th>{{'EVALUATION.STATE'|translate}}</th>
+                                    <th>{{'SHARED.ACTIONS'|translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngIf="listOfEvaluations.length==0">
+                                    <td colspan="4" *ngIf="!listOfEvaluationsIsEmpty">
+                                        <spinner [message]="'EVALUATION.SPINNER-MESSAGE'|translate"></spinner>
+                                    </td>
+                                    <td colspan="4" *ngIf="listOfEvaluationsIsEmpty">
+                                        <h4>{{'EVALUATION.LIST-EMPTY'|translate}}.<br>
+                                            <small>{{'EVALUATION.LIST-EMPTY-MESSAGE'|translate}}!</small>
+                                        </h4>
+                                    </td>
+                                </tr>
+
+                                <tr *ngFor="let evaluation of listOfEvaluations; index as i;trackBy: trackById">
+                                    <td [routerLink]="['/app/evaluations',patientId, 'nutritional', evaluation.id]">{{getIndex(i)}}</td>
+                                    <td [routerLink]="['/app/evaluations',patientId, 'nutritional', evaluation.id]">{{evaluation.created_at | date}}</td>
+                                    <td [routerLink]="['/app/evaluations',patientId, 'nutritional', evaluation.id]">
+                                        <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus | translate}}</span>
+                                    </td>
+                                    <td>
+                                        <a class="nav-link"
+                                           (click)="openModalConfirmation(evaluation.patient.id,evaluation.id)"
+                                           [title]="'EVALUATION.DELETE-EVALUATION'|translate">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
+                                       (page)="clickPagination($event)">
+                        </mat-paginator>
+
+                        <modal-confirmation [message]="'EVALUATION.DELETE-CONFIRMATION'|translate"
+                                            (confirmation)="removeEvaluation()"
+                                            (noconfirmation)="closeModalComfimation()"></modal-confirmation>
+
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="d-flex justify-content-around">
+        <div class="d-flex justify-content-start">
             <div class="p-2">
                 <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">
                     <i class="material-icons">arrow_back</i>

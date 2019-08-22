@@ -775,6 +775,7 @@
     "INVALID-LANGUAGE": "Invalid language",
     "LOADING": "Loading...",
     "LAST-LOGIN": "Last login",
+    "GENERATE-PASSWORD": "Generate random password",
     "PIPES": {
       "GENDER": {
         "MALE": "MALE",

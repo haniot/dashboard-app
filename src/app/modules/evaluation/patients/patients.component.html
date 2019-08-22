@@ -10,11 +10,11 @@
     <table class="table table-sm table-hover">
         <thead>
         <tr>
-            <th>#</th>
-            <th>{{'SHARED.NAME-OF-PATIENT'|translate}}</th>
-            <th>{{'SHARED.EMAIL'|translate}}</th>
-            <th>{{'SHARED.GENDER'|translate}}</th>
-            <th>{{'SHARED.BIRTH-DATE'|translate}}</th>
+            <th scope="col">#</th>
+            <th scope="col">{{'SHARED.NAME-OF-PATIENT'|translate}}</th>
+            <th scope="col">{{'SHARED.EMAIL'|translate}}</th>
+            <th scope="col">{{'SHARED.GENDER'|translate}}</th>
+            <th scope="col">{{'SHARED.BIRTH-DATE'|translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
             <td colspan="5" *ngIf="listOfPatientsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
         </tr>
         <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById" (click)="selectPatient(patient.id)"
-            [(ngClass)]="listClass[i]">
+            [ngClass]="listClass[i]">
             <td>{{getIndex(i)}}</td>
             <td>{{patient.name}}</td>
             <td>{{patient.email}}</td>

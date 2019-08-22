@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
@@ -13,7 +13,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './patients.component.html',
     styleUrls: ['./patients.component.scss']
 })
-export class PatientsComponent implements OnChanges {
+export class PatientsComponent implements OnInit, OnChanges {
     @Input() pilotStudyId;
     @Output() selected = new EventEmitter();
     /*  */
@@ -42,6 +42,10 @@ export class PatientsComponent implements OnChanges {
         this.listClass = new Array<string>();
     }
 
+    ngOnInit(): void {
+
+    }
+
     searchOnSubmit() {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
@@ -63,7 +67,7 @@ export class PatientsComponent implements OnChanges {
         this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10)
-                this.listOfPatients = this.listOfPatients;
+                this.listOfPatients = httpResponse.body;
                 this.listOfPatientsIsEmpty = !(this.listOfPatients && this.listOfPatients.length);
             })
             .catch(() => {

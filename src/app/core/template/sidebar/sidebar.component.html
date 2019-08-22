@@ -112,32 +112,15 @@
             </a>
         </li>
 
-        <!--        <li routerLinkActive="active" class="nav-item">-->
-        <!--            <a class="nav-link" href="#pageSubmenuEvaluation" data-toggle="collapse" aria-expanded="false"-->
-        <!--               (click)="onClickMenuEvaluation()">-->
-        <!--                <p>-->
-        <!--                    Avaliações-->
-        <!--                    <i class="material-icons">{{iconEvaluatioinMenu}}</i>-->
-        <!--                </p>-->
-
-        <!--            </a>-->
-        <!--            <ul class="collapse list-unstyled submenu" id="pageSubmenuEvaluation">-->
-        <!--                <li routerLinkActive="active" class="nav-subitem">-->
-        <!--                    <a class="nav-link" [routerLink]="['/evaluations/nutritional']" *ngIf="verifyScopes('Avaliações')"-->
-        <!--                       (click)="openLoading()">-->
-        <!--                        <i class="material-icons">accessibility</i>-->
-        <!--                        <p>Nutricionais</p>-->
-        <!--                    </a>-->
-        <!--                </li>-->
-        <!--                <li routerLinkActive="active" class="nav-subitem">-->
-        <!--                    <a class="nav-link" [routerLink]="['/evaluations/odontological']" *ngIf="verifyScopes('Avaliações')"-->
-        <!--                       (click)="openLoading()">-->
-        <!--                        <i class="material-icons">mood</i>-->
-        <!--                        <p>Odontológicas</p>-->
-        <!--                    </a>-->
-        <!--                </li>-->
-        <!--            </ul>-->
-        <!--        </li>-->
+        <li routerLinkActive="active" class="nav-item" [ngClass]="activeEvaluations">
+            <a class="nav-link"
+               href="javascript:void(0)"
+               *ngIf="verifyScopes('Evaluations')"
+               (click)="nutritionalEvaluations()">
+                <i class="material-icons">accessibility</i>
+                <p>{{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS' | translate}}</p>
+            </a>
+        </li>
 
     </ul>
 

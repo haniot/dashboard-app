@@ -13,7 +13,8 @@
                                    [satDatepicker]="picker"
                                    [(ngModel)]="search"
                                    (focus)="picker.open()"
-                                   (ngModelChange)="getAllFiles()" id="rangeDate">
+                                   (ngModelChange)="getAllFiles()"
+                                   [max]="maxDate" id="rangeDate">
 
                             <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
                             <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>

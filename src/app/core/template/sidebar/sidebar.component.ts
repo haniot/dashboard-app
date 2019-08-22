@@ -44,7 +44,7 @@ export const configSideBar = [
     },
     {
         title: 'Evaluations',
-        scopes: []
+        scopes: ['evaluations:read']
     }
 ];
 
@@ -62,6 +62,7 @@ export class SidebarComponent implements OnInit {
     activeMyEvaluations: string;
     activeDashboard: string;
     activePatients: string;
+    activeEvaluations: string;
 
     constructor(
         private authService: AuthService,
@@ -129,26 +130,31 @@ export class SidebarComponent implements OnInit {
             this.activeMyPilots = '';
             this.activeMyEvaluations = '';
             this.activePatients = '';
+            this.activeEvaluations = '';
         } else if (path_current.match('mystudies') || path_current.match('pilotstudies')) {
             this.activeDashboard = ''
             this.activeMyPilots = 'active';
             this.activeMyEvaluations = '';
             this.activePatients = '';
+            this.activeEvaluations = '';
         } else if (path_current.match('myevaluations')) {
             this.activeDashboard = ''
             this.activeMyPilots = '';
             this.activeMyEvaluations = 'active';
             this.activePatients = '';
+            this.activeEvaluations = '';
         } else if (path_current.match('patients')) {
             this.activeDashboard = ''
             this.activeMyPilots = '';
             this.activeMyEvaluations = '';
             this.activePatients = 'active';
-        } else if (path_current.match('evaluations')) {
+            this.activeEvaluations = '';
+        } else if (path_current.match('evaluations/nutritional')) {
             this.activeDashboard = ''
             this.activeMyPilots = '';
-            this.activeMyEvaluations = 'active';
+            this.activeMyEvaluations = '';
             this.activePatients = '';
+            this.activeEvaluations = 'active';
         }
     }
 
@@ -174,6 +180,11 @@ export class SidebarComponent implements OnInit {
                 this.router.navigate(['/app/patients/myevaluations']);
                 break;
         }
+    }
+
+    nutritionalEvaluations(): void {
+        this.openLoading();
+        this.router.navigate(['/app/evaluations/nutritional']);
     }
 
     logout() {

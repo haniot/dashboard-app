@@ -775,6 +775,7 @@
     "INVALID-LANGUAGE": "Idioma inválido",
     "LOADING": "Carregando...",
     "LAST-LOGIN": "Último login",
+    "GENERATE-PASSWORD": "Gerar senha aleatória",
     "PIPES": {
       "GENDER": {
         "MALE": "MASCULINO",

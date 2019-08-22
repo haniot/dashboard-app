@@ -39,6 +39,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     listOfFiles: Array<Data>;
     listOfDataTypes: Array<{ measurement_type: Array<EnumMeasurementType>, questionnaires: Array<string> }>;
     search: DateRange;
+    maxDate: Date;
     searchTime;
     lastFile: Data;
     generatingFile: boolean;
@@ -82,6 +83,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.listOfFiles = new Array<Data>();
         this.listOfFilesIsEmpty = false;
         this.search = new DateRange();
+        this.maxDate = new Date();
         this.dataResponse = new DataResponse();
         this.checkSelectMeasurementTypeAll = false;
         this.listCheckMeasurementTypes = new Array<boolean>();
@@ -103,26 +105,9 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.getAllFiles();
     }
 
-    searchOnSubmit() {
-        if (this.pilotStudy && this.pilotStudy.id) {
-            clearInterval(this.searchTime);
-            this.searchTime = setTimeout(() => {
-                this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
-                    .then(httpResponse => {
-                        this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                        if (httpResponse.body && httpResponse.body.length) {
-                            this.listOfFiles = httpResponse.body;
-                        }
-                        this.listOfFilesIsEmpty = !this.listOfFiles.length;
-                    })
-                    .catch();
-            }, 500);
-        }
-    }
-
     getAllFiles() {
         if (this.pilotStudy && this.pilotStudy.id) {
-            this.listOfFiles = [];
+            this.listOfFiles = new Array<Data>();
             this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);

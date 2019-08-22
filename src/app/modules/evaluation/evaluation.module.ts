@@ -30,6 +30,7 @@ import { TaylorCutClassificationPipe } from './pipes/taylor.cut.classification.p
 import { GeneratePdfService } from './services/generate.pdf.service';
 import { SendEmailService } from './services/send.email.service';
 import { SharedModule } from '../../shared/shared.module'
+import { SatDatepickerModule } from 'saturn-datepicker'
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { SharedModule } from '../../shared/shared.module'
         HabitsModule,
         MeasurementModule,
         EvaluationRoutingModule,
-        MeasurementModule
+        MeasurementModule,
+        SatDatepickerModule
     ],
     providers: [
         /** services */

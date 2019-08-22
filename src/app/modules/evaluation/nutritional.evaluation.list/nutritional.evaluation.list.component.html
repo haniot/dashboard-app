@@ -7,11 +7,12 @@
                         <form [formGroup]="pilotForm">
                             <ng-template
                                     matStepLabel>{{'EVALUATION.NUTRITION-EVALUATION-LIST.SELECT-STUDY-PILOT'|translate}}</ng-template>
-                            <studies (selected)="selectStudy($event)"></studies>
-                            <div class="d-flex justify-content-center">
-                                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                                    <button class="btn btn-haniot-primary" matStepperNext [disabled]="!pilotForm.valid">
-                                        {{'EVALUATION.NUTRITION-EVALUATION-LIST.SELECT-STUDY-PILOT'|translate}}
+                            <studies (selected)="selectStudy($event,stepper)"></studies>
+                            <div class="d-flex justify-content-end">
+                                <div class="p-2">
+                                    <button class="btn btn-haniot-primary" matStepperNext
+                                            [disabled]="!pilotForm.valid">
+                                        {{'EVALUATION.NUTRITION-EVALUATION-LIST.NEXT'|translate}}
                                     </button>
                                 </div>
                             </div>
@@ -21,30 +22,18 @@
                         <form [formGroup]="patientForm">
                             <ng-template
                                     matStepLabel>{{'EVALUATION.NUTRITION-EVALUATION-LIST.SELECT-PATIENT'|translate}}</ng-template>
-                            <patients (selected)="selectPatient($event)" [(pilotStudyId)]="pilotstudy_id">
+                            <patients (selected)="selectPatient($event)"
+                                      [pilotStudyId]="pilotForm.get('pilotstudyId').value">
                             </patients>
-                            <div class="d-flex justify-content-center">
-                                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                            <div class="d-flex justify-content-start">
+                                <div class="p-2">
                                     <button type="button" class="btn btn-haniot-primary"
                                             matStepperPrevious>
                                         {{'EVALUATION.NUTRITION-EVALUATION-LIST.PREVIOUS'|translate}}
                                     </button>
                                 </div>
-
-                                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                                    <button class="btn btn-haniot-primary" matStepperNext
-                                            [disabled]="!patientForm.valid">
-                                        {{'EVALUATION.NUTRITION-EVALUATION-LIST.NEXT'|translate}}
-                                    </button>
-                                </div>
                             </div>
                         </form>
-                    </mat-step>
-                    <mat-step>
-                        <ng-template
-                                matStepLabel>{{'EVALUATION.NUTRITION-EVALUATION-LIST.EVALUATIONS'|translate}}</ng-template>
-                        <evaluation-component [(patientId)]="patient_id">
-                        </evaluation-component>
                     </mat-step>
                 </mat-horizontal-stepper>
             </div>

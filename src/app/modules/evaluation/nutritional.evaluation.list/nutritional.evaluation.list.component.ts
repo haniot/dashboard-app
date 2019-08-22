@@ -1,6 +1,8 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router'
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 @Component({
@@ -19,6 +21,7 @@ export class NutritionalEvaluationListComponent implements OnInit, AfterViewChec
 
     constructor(
         private formBuilder: FormBuilder,
+        private router: Router,
         private loadingService: LoadingService
     ) {
         this.patient_id = '';
@@ -38,15 +41,17 @@ export class NutritionalEvaluationListComponent implements OnInit, AfterViewChec
         });
     }
 
-    selectStudy(pilotstudy_id) {
+    selectStudy(pilotstudy_id, stepper) {
         this.patientForm.reset();
         this.pilotForm.get('pilotstudyId').setValue(pilotstudy_id);
         this.pilotstudy_id = pilotstudy_id;
+        stepper.next();
     }
 
     selectPatient(patient_id) {
         this.patientForm.get('patientId').setValue(patient_id);
         this.patient_id = patient_id;
+        this.router.navigate(['/app/evaluations/nutritional', patient_id]);
     }
 
     ngAfterViewChecked() {

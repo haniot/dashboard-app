@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 import { NutritionalCouncil, NutritionEvaluation } from '../models/nutrition-evaluation';
 import { environment } from '../../../../environments/environment'
+import { DateRange } from '../../pilot.study/models/range-date'
 
 @Injectable()
 export class NutritionEvaluationService {
@@ -46,6 +47,35 @@ export class NutritionEvaluationService {
 
         if (search) {
             myParams = myParams.append('?patient.name', '*' + search + '*');
+        }
+
+        const url = `${environment.api_url}/${this.version}/patients/${patient_id}/nutritional/evaluations`;
+
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
+            .toPromise();
+    }
+
+    getAllByPatientWithFilters(patient_id: string, page?: number, limit?: number, search?: DateRange)
+        : Promise<HttpResponse<Array<NutritionEvaluation>>> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
+
+        if (search && search.begin && search.end) {
+
+            const start_at = search.begin.toISOString().split('T')[0];
+            const end_at = search.end.toISOString().split('T')[0];
+
+            myParams = myParams.append('start_at', start_at);
+
+            myParams = myParams.append('end_at', end_at);
+
         }
 
         const url = `${environment.api_url}/${this.version}/patients/${patient_id}/nutritional/evaluations`;

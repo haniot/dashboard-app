@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ISubscription } from 'rxjs-compat/Subscription';
+import * as RandExp from 'randexp';
 
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health.professional.service';
@@ -10,6 +11,7 @@ import { LanguagesConfiguration } from '../../../../assets/i18n/config'
 import { TranslateService } from '@ngx-translate/core'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 import { GenericUser } from '../../../shared/shared.models/generic.user'
+import { ToastrService } from 'ngx-toastr'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -42,12 +44,15 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     matchTimer: any;
     maxBirthDate: Date;
     user: GenericUser;
+    passwordGenerated: string;
+    copyPasswordGenerated: boolean
 
     constructor(
         private fb: FormBuilder,
         private adminService: AdminService,
         private healthService: HealthProfessionalService,
         private modalService: ModalService,
+        private toastr: ToastrService,
         private translateService: TranslateService
     ) {
         this.name = '';
@@ -218,6 +223,16 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         }, 500);
     }
 
+    generatePassword(): void {
+        const randexp = new RandExp(/([a-z]|[0-9]|[!@#\$%\^&]){6,10}/);
+        this.passwordGenerated = randexp.gen();
+        this.userForm.get('password').patchValue(this.passwordGenerated);
+        this.userForm.get('password_confirm').patchValue(this.passwordGenerated);
+        this.copyPasswordGenerated = true;
+        this.icon_password = 'visibility';
+        this.typeInputPassword = 'text';
+    }
+
     applyMaskPhoneNumber() {
         let number: string;
         number = this.userForm.get('phone_number').value;
@@ -242,5 +257,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });
+        this.userForm.reset();
     }
 }
