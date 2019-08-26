@@ -216,6 +216,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     closeModalFileConfig() {
         this.modalService.close('modalFileConfig');
+        this.modalService.close('modalFileConfig');
     }
 
     closeAndResetConfigurations(stepper): void {
