@@ -140,3 +140,38 @@ td img {
 .mat-datepicker-toggle {
   color: white !important;
 }
+
+.reference-worksheet .material-icons {
+  margin-top: 10px;
+  color: white;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 28px;
+  transition: font-size 500ms;
+}
+
+.reference-worksheet .material-icons:hover {
+  font-size: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+  -webkit-transition: font-size 500ms; /* Safari */
+}
+
+.material-icons {
+  color: #00a594;
+  cursor: pointer;
+}
+
+.shared .material-icons {
+  cursor: pointer;
+  color: white;
+
+}
+
+.nav-item {
+  padding: 2px 5px;
+}
+
+
+
+

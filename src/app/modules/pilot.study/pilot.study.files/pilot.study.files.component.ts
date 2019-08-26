@@ -212,7 +212,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             .catch();
         this.loadQuestionnaireTypes();
         this.loadPatients();
-
     }
 
     closeModalFileConfig() {
@@ -249,11 +248,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
     closeModalFile() {
         this.modalService.close('modalFile');
-    }
-
-    cleanDateRange() {
-        this.search = new DateRange();
-        this.getAllFiles();
     }
 
     loadMeasurementsTypes(): Promise<any> {

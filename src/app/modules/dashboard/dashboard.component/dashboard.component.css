@@ -271,5 +271,6 @@ label {
 
 .pilotSelected {
     background-color: #F7F6F6;
-    border: 1px solid #E7E3E3;
+    border-left: 1px solid #00a594;
+    border-right: 1px solid #00a594;
 }

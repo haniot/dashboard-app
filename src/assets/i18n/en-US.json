@@ -701,7 +701,9 @@
       "NUTRITIONAL-QUESTIONNAIRE": "Nutrition Questionnaire",
       "ODONTOLOGICAL-QUESTIONNAIRE": "Odontological Questionnaire",
       "SELECT-PATIENTS": "Select patients",
-      "REQUEST": "Request"
+      "REQUEST": "Request",
+      "REFERENCE-WORKSHEET": "Reference worksheet",
+      "OPEN-REFERENCE-WORKSHEET": "Open reference worksheet..."
     }
   },
   "SIDEBAR": {
