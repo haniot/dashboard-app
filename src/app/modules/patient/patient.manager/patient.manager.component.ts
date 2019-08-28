@@ -12,6 +12,7 @@ import { HttpResponse } from '@angular/common/http'
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -39,6 +40,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         private toastService: ToastrService,
         private modalService: ModalService,
         private loadingService: LoadingService,
+        private localStorageService: LocalStorageService,
         private router: Router,
         private translateService: TranslateService
     ) {
@@ -57,7 +59,9 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         if (this.IsAdmin()) {
             clearInterval(this.searchTime);
             this.searchTime = setTimeout(() => {
-                this.patientService.getAll(this.page, this.limit, this.search)
+                const userId = this.localStorageService.getItem('user');
+                const studyId = this.localStorageService.getItem(userId);
+                this.patientService.getAllByPilotStudy(studyId, this.page, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                         if (httpResponse.body) {
@@ -71,7 +75,9 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
 
     getAllPatients() {
         if (this.IsAdmin()) {
-            this.patientService.getAll(this.page, this.limit, this.search)
+            const userId = this.localStorageService.getItem('user');
+            const studyId = this.localStorageService.getItem(userId);
+            this.patientService.getAllByPilotStudy(studyId, this.page, this.limit, this.search)
                 .then((httpResponse: HttpResponse<any>) => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                     if (httpResponse.body) {

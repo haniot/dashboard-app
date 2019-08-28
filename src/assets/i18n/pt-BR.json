@@ -28,8 +28,8 @@
     "CARD-PATIENTS-FROM-THE-STUDY": "Total de Pacientes do Estudo Selecionado",
     "CARD-PATIENTS-TOTAL": "Total de Pacientes",
     "CARD-PATIENTS": {
-      "TITLE": "Ultimos pacientes cadastrados",
-      "SUBTITLE": "Clique sobre o card para visualizar informações do paciente.",
+      "TITLE": "Últimos pacientes cadastrados",
+      "SUBTITLE": "Clique sobre o paciente para visualizá-lo.",
       "SPINNER-MESSAGE": "Carregando pacientes",
       "STUDY-EMPTY": "O estudo selecionado não possui pacientes cadastrados",
       "STUDY-EMPTY-MESSAGE": "Ir para a página de cadastro de pacientes",
@@ -38,16 +38,16 @@
     },
     "CARD-STUDIES-TOTAL": "Total de Estudos",
     "CARD-STUDIES": {
-      "TITLE": "Ultimos estudos cadastrados",
-      "SUBTITLE": "Clique sobre o card para visualizar informações do estudo.",
+      "TITLE": "Últimos estudos cadastrados",
+      "SUBTITLE": "Clique sobre o estudo para visualizá-lo.",
       "SPINNER-MESSAGE": "Carregando estudos",
       "VIEW": "Visualizar estudo",
       "STUDIES-EMPTY": "Você não possui estudos associados.",
       "STUDIES-EMPTY-MESSAGE": "Entre em contato com o administrador."
     },
     "CARD-EVALUATIONS": {
-      "TITLE": "Ultimas avaliações cadastradas",
-      "SUBTITLE": "Clique sobre o card para visualizar informações da avaliação.",
+      "TITLE": "Últimas avaliações cadastradas",
+      "SUBTITLE": "Clique sobre a avaliação para visualizá-la.",
       "NONE-EVALUATIONS": "Você não possui avaliações disponivéis!",
       "TOTAL": "Total de avaliações"
     }
@@ -207,7 +207,8 @@
       "NONE-LESION": "Nenhuma lesão cadastrada!",
       "TYPE-TEETH": "Tipo de dente",
       "TYPE-LESION": "Tipo de lesão",
-      "UNAVAILABLE-DATA": "Dados sobre saúde bucal indisponível!"
+      "UNAVAILABLE-DATA": "Dados sobre saúde bucal indisponível!",
+      "TEETH-LESIONS-UNAVAILABLE-DATA": "Dados sobre lesões indisponível!"
     },
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Hábitos de atividades físicas do paciente",
@@ -508,7 +509,7 @@
       "WEIGHT-TABLE": {
         "WEIGHT": "Peso",
         "BODY-FAT": "Gordura Corporal",
-        "NOT-COLLECTED": "Não coletada"
+        "NOT-COLLECTED": "- -"
       },
       "GLUCOSE-TABLE": {
         "MEAL": "Tipo de Refeição"
@@ -521,6 +522,7 @@
         "DATASET": "Frequências"
       },
       "MODAL-REMOVE": {
+        "SPINNER-MESSAGE": "Removendo medição(es)...",
         "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover definitivamente a medição?",
         "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover definitivamente",
         "CONFIRM-MULTIPLE-REMOVE-PART2": "medição(es)?"
@@ -529,7 +531,7 @@
     "LAST-REGISTER": "Último registro",
     "LAST-REGISTER-DATE": "Data do último registro",
     "PATTERN-DATE": "dia/mês/ano horário",
-    "VALUE": "Valor",
+    "VALUE": "- -",
     "UNIT": "Unidade",
     "MIN": "MIN",
     "MAX": "MAX",
@@ -574,7 +576,7 @@
       "TITLE-EDIT": "Editar paciente",
       "SUBTITLE": "",
       "SELECT-BIRTH-DATE": "Selecione a data de nascimento",
-      "ASSOCIATE-STUDY": "Estudo associado",
+      "ASSOCIATE-STUDY": "Associar ao estudo",
       "SELECT-STUDY": "- - - - selecione um estudo - - - -",
       "INVALID-STUDY": "Estudo inválido"
     },
@@ -605,7 +607,8 @@
       "TAB-NUTRITIONAL-QUESTIONNAIRE": "Quest. Nutricional",
       "TAB-ODONTOLOGICAL-QUESTIONNAIRE": "Quest. Odontologico",
       "NUTRITIONAL-QUESTIONNAIRE": "Questionário Nutricional",
-      "ODONTOLOGICAL-QUESTIONNAIRE": "Questionário Odontologico"
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Questionário Odontologico",
+      "ASSOCIATED-STUDIES": "Estudos Associados"
     },
     "MY-STUDIES": {
       "TITLE": "Lista de estudos piloto",
@@ -709,7 +712,10 @@
   "SIDEBAR": {
     "USERS": "Usuários",
     "ADMINS": "Administradores",
-    "HEALTHPROFESSIONALS": "Profissionais de Saúde"
+    "HEALTHPROFESSIONALS": "Profissionais de Saúde",
+    "SELECTED-STUDY": "Estudo Selecionado",
+    "TOTAL-OF-PROFESSIONALS": "Total de Profissionais",
+    "TOTAL-OF-PATIENTS": "Total de Pacientes"
   },
   "SHARED": {
     "NAME": "Nome",
@@ -751,8 +757,8 @@
     "AT": "às",
     "DATE-START": "Data ínicio",
     "DATE-END": "Data término",
-    "STUDY-ACTIVATED": "ATIVADO",
-    "STUDY-DISABLED": "DESATIVADO",
+    "STUDY-ACTIVATED": "Ativo",
+    "STUDY-DISABLED": "Inativo",
     "TOCLEAN": "Limpar",
     "LOCAL": "Local",
     "INVALID-LOCAL": "Local inválido",
@@ -768,7 +774,7 @@
     "BIRTH-DATE": "Date de nascimento",
     "INVALID-BIRTH-DATE": "Date de nascimento inválida",
     "NAME-OF-PATIENT": "Nome do paciente",
-    "YEARS": "ANOS",
+    "YEARS": "Anos",
     "AGE": "Idade",
     "CANCEL": "Cancelar",
     "PHONE-NUMBER": "Telefone",
@@ -780,11 +786,11 @@
     "GENERATE-PASSWORD": "Gerar senha aleatória",
     "PIPES": {
       "GENDER": {
-        "MALE": "MASCULINO",
-        "FEMALE": "FEMININO"
+        "MALE": "Masculino",
+        "FEMALE": "Feminino"
       },
       "UNDEFINED": "Fora dos parâmetros",
-      "NOTFOUND": "NÃO ENCONTRADO"
+      "NOTFOUND": "Não encontrado"
     },
     "COMPONENTS": {
       "MODAL-CONFIRMATION": {
@@ -915,6 +921,8 @@
     "TOO-MANY-ATTEMPTS": "Excesso de tentativas!",
     "NOT-CHANGE-LANGUAGE": "Não foi possível alterar o idioma!",
     "QUESTIONNAIRE-DELETED": "Questionário removido com sucesso!",
-    "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!"
+    "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!",
+    "MEASUREMENT-REMOVED": "Medição removida com sucesso!",
+    "MEASUREMENT-NOT-REMOVED": "Não foi possível remover medição!"
   }
 }

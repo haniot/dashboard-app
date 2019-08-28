@@ -68,7 +68,7 @@ export class FatComponent implements OnInit, OnChanges {
                     position: 'outside',
                     offset: [0, -20],
                     formatter: function (params) {
-                        return `${params.value} % `;
+                        return `${params.value}% `;
                     },
                     textStyle: {
                         fontSize: 18,
@@ -81,7 +81,7 @@ export class FatComponent implements OnInit, OnChanges {
                     tooltip: {
                         trigger: 'item',
                         formatter:
-                            average_value + ' : {c} %'
+                            average_value + ' :{c} %'
                     }
                     ,
                     lineStyle: {
@@ -108,7 +108,7 @@ export class FatComponent implements OnInit, OnChanges {
             tooltip: {
                 trigger: 'item',
                 formatter: function (params) {
-                    return `${fat}: ${params.data.value} %<br> ${date}: <br> ${params.name} ${at} ${params.data.time}`
+                    return `${fat}: ${params.data.value}%<br> ${date}: <br> ${params.name} ${at} ${params.data.time}`
                 }
             },
             xAxis: xAxis,

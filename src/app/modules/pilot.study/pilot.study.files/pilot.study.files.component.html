@@ -341,7 +341,7 @@
                                             <td>
                                                 <mat-checkbox class="example-margin"
                                                               (change)="changePatientCheck()"
-                                                              [(ngModel)]="listCheckPatients[i]">
+                                                              [(ngModel)]="listCheckPatients[i+patientLimit*(patientPage-1)]">
                                                 </mat-checkbox>
                                             </td>
                                             <td (click)="selectPatient(i)">{{patient.name}}</td>

@@ -4,6 +4,7 @@
         <span id="haniotTitle">{{'APP.TITLE' | translate}}</span>
     </a>
 </div>
+
 <div class="sidebar-wrapper">
     <div *ngIf="isMobileMenu()">
         <form class="navbar-form">
@@ -37,6 +38,7 @@
         </ul>
 
     </div>
+
     <ul class="nav">
 
         <li routerLinkActive="active" class="nav-item">
@@ -123,5 +125,28 @@
         </li>
 
     </ul>
+
+
+    <div class="card card-stats card-studies"
+         style="cursor: pointer"
+         (click)="collapse()"
+         [title]="'SIDEBAR.SELECTED-STUDY'|translate">
+        <div class="card-header text-left" style="padding: 5px 10px">
+            <p class="card-category text-center ellipsis" style="max-width: 300px">
+                <i class=" material-icons">{{iconCollapse}}</i>
+                {{study.name}}
+            </p>
+        </div>
+
+        <div class="collapse show" id="collapseStudy" style="padding: 5px 10px">
+            <hr style="margin: 0px 0px">
+            <p class="card-title">{{'SIDEBAR.TOTAL-OF-PROFESSIONALS'|translate}}
+                : {{study.total_health_professionals}}</p>
+            <p class="card-title">{{'SIDEBAR.TOTAL-OF-PATIENTS'|translate}}: {{study.total_patients}}</p>
+            <p class="card-title" style="margin-top: 5px; font-size: 12px">{{study.start|date:'shortDate'}}
+                - {{study.end|date:'shortDate'}}</p>
+        </div>
+    </div>
+
 
 </div>

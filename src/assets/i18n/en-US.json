@@ -29,7 +29,7 @@
     "CARD-PATIENTS-TOTAL": "Total Patients",
     "CARD-PATIENTS": {
       "TITLE": "Last registered patients",
-      "SUBTITLE": "Click on the card to view patient information.",
+      "SUBTITLE": "Click on the patient to view it.",
       "SPINNER-MESSAGE": "Loading Patients",
       "STUDY-EMPTY": "The selected study does not have registered patients",
       "STUDY-EMPTY-MESSAGE": "Go to the patient record page",
@@ -39,7 +39,7 @@
     "CARD-STUDIES-TOTAL": "Total Number of Studies",
     "CARD-STUDIES": {
       "TITLE": "Last registered studies",
-      "SUBTITLE": "Click on the card to view study information.",
+      "SUBTITLE": "Click on the study to view it.",
       "SPINNER-MESSAGE": "Loading studies",
       "VIEW": "View study",
       "STUDIES-EMPTY": "You have no associated studies.",
@@ -47,7 +47,7 @@
     },
     "CARD-EVALUATIONS": {
       "TITLE": "Last registered evaluations",
-      "SUBTITLE": "Click on the card to view evaluation information.",
+      "SUBTITLE": "Click on the evaluation to view it.",
       "NONE-EVALUATIONS": "You do not have any evaluations available!",
       "TOTAL": "Total Evaluations"
     }
@@ -207,7 +207,8 @@
       "NONE-LESION": "No lesions registered!",
       "TYPE-TEETH": "Tooth type",
       "TYPE-LESION": "Type of lesion",
-      "UNAVAILABLE-DATA": "Oral health data unavailable!"
+      "UNAVAILABLE-DATA": "Oral health data unavailable!",
+      "TEETH-LESIONS-UNAVAILABLE-DATA": "Lesions data unavailable!"
     },
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Physical activity habits of the patient",
@@ -508,7 +509,7 @@
       "WEIGHT-TABLE": {
         "WEIGHT": "Weight",
         "BODY-FAT": "Body Fat",
-        "NOT-COLLECTED": "Not collected"
+        "NOT-COLLECTED": "--"
       },
       "GLUCOSE-TABLE": {
         "MEAL": "Meal Type"
@@ -521,6 +522,7 @@
         "DATASET": "Frequencies"
       },
       "MODAL-REMOVE": {
+        "SPINNER-MESSAGE": "Removing measurement(s)...",
         "CONFIRM-UNIQUE-REMOVE": "Are you sure you want to remove the measurement?",
         "CONFIRM-MULTIPLE-REMOVE-PART1": "Are you sure you want to remove ",
         "CONFIRM-MULTIPLE-REMOVE-PART2": "measurement(s)?"
@@ -529,7 +531,7 @@
     "LAST-REGISTER": "Last register",
     "LAST-REGISTER-DATE": "Date of last record",
     "PATTERN-DATE": "month/day/year hour",
-    "VALUE": "Value",
+    "VALUE": "--",
     "UNIT": "Unit",
     "MIN": "MIN",
     "MAX": "MAX",
@@ -574,7 +576,7 @@
       "TITLE-EDIT": "Edit patient",
       "SUBTITLE": "",
       "SELECT-BIRTH-DATE": "Select the date of birth",
-      "ASSOCIATE-STUDY": "Associated study",
+      "ASSOCIATE-STUDY": "Link to study",
       "SELECT-STUDY": "- - - - select a study - - - -",
       "INVALID-STUDY": "Invalid study"
     },
@@ -605,7 +607,8 @@
       "TAB-NUTRITIONAL-QUESTIONNAIRE": "Q. Nutritional",
       "TAB-ODONTOLOGICAL-QUESTIONNAIRE": "Q. Odontological",
       "NUTRITIONAL-QUESTIONNAIRE": "Nutritional Questionnaire",
-      "ODONTOLOGICAL-QUESTIONNAIRE": "Odontological Questionnaire"
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Odontological Questionnaire",
+      "ASSOCIATED-STUDIES": "Associated studies"
     },
     "MY-STUDIES": {
       "TITLE": "Pilot Study List",
@@ -709,7 +712,10 @@
   "SIDEBAR": {
     "USERS": "Users",
     "ADMINS": "Admins",
-    "HEALTHPROFESSIONALS": "Health professionals"
+    "HEALTHPROFESSIONALS": "Health professionals",
+    "SELECTED-STUDY": "Selected study",
+    "TOTAL-OF-PROFESSIONALS": "Total Professionals",
+    "TOTAL-OF-PATIENTS": "Total Patients"
   },
   "SHARED": {
     "NAME": "Name",
@@ -769,7 +775,7 @@
     "INVALID-BIRTH-DATE": "Invalid birth date",
     "NAME-OF-PATIENT": "Name of patient",
     "AGE": "Age",
-    "YEARS": "YEARS",
+    "YEARS": "Years",
     "CANCEL": "Cancel",
     "PHONE-NUMBER": "Telephone",
     "INVALID-PHONE-NUMBER": "Invalid phone",
@@ -780,11 +786,11 @@
     "GENERATE-PASSWORD": "Generate random password",
     "PIPES": {
       "GENDER": {
-        "MALE": "MALE",
-        "FEMALE": "FEMALE"
+        "MALE": "Male",
+        "FEMALE": "Female"
       },
       "UNDEFINED": "Out of parameters",
-      "NOTFOUND": "NOT FOUND"
+      "NOTFOUND": "Not found"
     },
     "COMPONENTS": {
       "MODAL-CONFIRMATION": {
@@ -915,6 +921,8 @@
     "TOO-MANY-ATTEMPTS": "Too many attempts!",
     "NOT-CHANGE-LANGUAGE": "Could not change language!",
     "QUESTIONNAIRE-DELETED": "Questionnaire successfully removed!",
-    "QUESTIONNAIRE-NOT-DELETED": "Unable to remove questionnaire!"
+    "QUESTIONNAIRE-NOT-DELETED": "Unable to remove questionnaire!",
+    "MEASUREMENT-REMOVED": "Measurement successfully removed!",
+    "MEASUREMENT-NOT-REMOVED": "Could not remove measurement!"
   }
 }

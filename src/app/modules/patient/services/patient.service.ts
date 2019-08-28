@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 import { Patient } from '../models/patient';
 import { environment } from '../../../../environments/environment'
+import { PilotStudy } from '../../pilot.study/models/pilot.study'
 
 @Injectable()
 export class PatientService {
@@ -34,6 +35,27 @@ export class PatientService {
         }
 
         const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}/patients`;
+
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
+            .toPromise();
+    }
+
+    getAllByPatientId(patientId: string, page?: number, limit?: number, search?: string): Promise<HttpResponse<PilotStudy[]>> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
+
+        if (search) {
+            myParams = myParams.append('?name', '*' + search + '*');
+        }
+
+        const url = `${environment.api_url}/${this.version}/patients/${patientId}/pilotstudies`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();

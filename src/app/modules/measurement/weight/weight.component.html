@@ -11,13 +11,11 @@
                                 <img src="../../../../assets/img/haniot/weight.png" alt="">
                             </div>
                             <p class="card-category">{{'MEASUREMENTS.COMPONENT.WEIGHT'|translate}}: </p>
-                            <h3 class="card-title" *ngIf="lastData">
-                                {{lastData.value | decimalFormatter}}
-                                <small>{{lastData.unit }}</small>
+                            <h3 class="card-title" *ngIf="lastData && lastData.value">
+                                {{(lastData.value|decimalFormatter) + '' + lastData.unit}}
                             </h3>
-                            <h3 class="card-title" *ngIf="!lastData">
+                            <h3 class="card-title" *ngIf="!lastData || !lastData.value">
                                 {{'MEASUREMENTS.VALUE'|translate}}
-                                <small>{{'MEASUREMENTS.UNIT'|translate}}</small>
                             </h3>
                         </div>
 
@@ -32,12 +30,10 @@
                             </div>
                             <p class="card-category">{{'MEASUREMENTS.COMPONENT.FAT'|translate}}: </p>
                             <h3 class="card-title" *ngIf="lastData && lastData.body_fat">
-                                {{lastData.body_fat}}
-                                <small>{{'MEASUREMENTS.COMPONENT.FAT-UNIT'|translate}}</small>
+                                {{lastData.body_fat + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}
                             </h3>
                             <h3 class="card-title" *ngIf="!lastData || !lastData.body_fat">
                                 {{'MEASUREMENTS.VALUE'|translate}}
-                                <small>{{'MEASUREMENTS.UNIT'|translate}}</small>
                             </h3>
                         </div>
 
@@ -47,9 +43,9 @@
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
                     <div class="d-flex flex-row-reverse">
                         <div class="p-2">
-                            <small class="pull-right" *ngIf="lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            <small class="pull-right" *ngIf="lastData && lastData.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
                                 :{{lastData.timestamp | myDate}}</small>
-                            <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:
+                            <small class="pull-right" *ngIf="!lastData || !lastData.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:
                                 {{'MEASUREMENTS.PATTERN-DATE'|translate}}
                             </small>
                         </div>

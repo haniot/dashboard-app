@@ -21,6 +21,9 @@
                 <div class="card-header card-header-timer card-header-icon text-center">
                     <h3 class="card-title">{{'HABITS.ORAL-HEALTH.LIST-OF-LESIONS'|translate}}</h3>
                 </div>
+                <div class="card-footer" *ngIf="!oralHealthForm.get('teeth_lesions').value">
+                    <span class="badge badge-warning badge-12 ellipsis">{{'HABITS.ORAL-HEALTH.TEETH-LESIONS-UNAVAILABLE-DATA'|translate}}</span>
+                </div>
                 <div class="card-footer">
                     <div class="row  justify-content-md-center">
                         <div *ngIf="oralHealthForm.get('teeth_lesions').value && oralHealthForm.get('teeth_lesions').value.length==0">

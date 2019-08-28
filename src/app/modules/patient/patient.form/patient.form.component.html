@@ -148,7 +148,8 @@
 
                             <div class="form-group has-feedback col-md"
                                  [ngClass]="{'has-success': patientForm.controls.selected_pilot_study.valid,
-                                              'has-error': patientForm.controls.selected_pilot_study.invalid && (patientForm.controls.selected_pilot_study.touched || patientForm.controls.selected_pilot_study.dirty)}">
+                                              'has-error': patientForm.controls.selected_pilot_study.invalid && (patientForm.controls.selected_pilot_study.touched || patientForm.controls.selected_pilot_study.dirty)}"
+                            *ngIf="!patientForm.get('id').value">
                                 <label for="selected_pilot_study">
                                     {{'PATIENTS.PATIENTS-FORM.ASSOCIATE-STUDY'|translate}}:
                                 </label>

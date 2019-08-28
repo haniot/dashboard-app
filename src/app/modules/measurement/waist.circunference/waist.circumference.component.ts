@@ -70,7 +70,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
             markLine: {
                 tooltip: {
                     trigger: 'item',
-                    formatter: average_value + ' : {c} cm'
+                    formatter: average_value + ' : {c}cm'
                 },
                 lineStyle: {
                     color: 'black'
@@ -95,7 +95,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
             color: ['#3398DB'],
             tooltip: {
                 formatter: function (params) {
-                    return `${circumference}: ${params[0].data.value} cm <br> ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
+                    return `${circumference}: ${params[0].data.value}cm <br> ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
                 },
                 trigger: 'axis',
                 axisPointer: {
@@ -107,7 +107,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
                 {
                     type: 'value',
                     axisLabel: {
-                        formatter: '{value} cm'
+                        formatter: '{value}cm'
                     }
                 }
             ],

@@ -101,14 +101,14 @@ export class HeightComponent implements OnInit, OnChanges {
                         params.data.time = t.time;
 
                     }
-                    return `${height}: ${params.data.value} cm <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                    return `${height}: ${params.data.value}cm <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
             xAxis: xAxis,
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value} cm'
+                    formatter: '{value}cm'
                 }
             },
             dataZoom: [{ type: 'slider' }],

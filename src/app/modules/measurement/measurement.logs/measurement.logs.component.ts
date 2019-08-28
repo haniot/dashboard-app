@@ -4,6 +4,8 @@ import { PageEvent } from '@angular/material';
 import { MeasurementService } from '../services/measurement.service';
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { EnumMeasurementType } from '../models/measurement'
+import { ToastrService } from 'ngx-toastr'
+import { TranslateService } from '@ngx-translate/core'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -32,7 +34,9 @@ export class MeasurementLogsComponent implements OnInit {
     stateButtonRemoveSelected: boolean;
 
     constructor(
-        private measurementService: MeasurementService) {
+        private toastService: ToastrService,
+        private measurementService: MeasurementService,
+        private translateService: TranslateService) {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
@@ -54,6 +58,7 @@ export class MeasurementLogsComponent implements OnInit {
     }
 
     loadMeasurements(): void {
+        this.listOfMeasurements = new Array<any>();
         this.loadingMeasurements = true;
         this.measurementService.getAllByUserAndType(this.patientId, this.measurementTypeSelected, this.page, this.limit)
             .then(httpResponse => {
@@ -114,8 +119,13 @@ export class MeasurementLogsComponent implements OnInit {
                 this.loadMeasurements();
                 this.loadingMeasurements = false;
                 this.modalConfirmRemoveMeasurement = false;
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
             })
-            .catch()
+            .catch(() => {
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'));
+                this.loadingMeasurements = false;
+                this.modalConfirmRemoveMeasurement = false;
+            })
     }
 
     changeOnMeasurement(): void {

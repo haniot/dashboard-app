@@ -5,6 +5,22 @@
                 <haniot-card [title]="'CONFIG.CONFIG-MYDATES-TITLE' | translate" [subtitle]="'CONFIG.CONFIG-MYDATES-SUBTITLE' | translate">
                     <form #formMyProfile="ngForm" (ngSubmit)="onSubmit(formMyProfile)">
 
+                        <div class="form-group has-feedback" [ngClass]="{'has-success': nomeModelEdit.valid,
+                                  'has-error': nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)}">
+                            <label for="nomeEdit">{{'SHARED.NAME' | translate}}:</label>
+                            <input type="text" class="form-control" id="nomeEdit" required minlength="4" type="text"
+                                   name="name" #nomeModelEdit="ngModel"
+                                   [(ngModel)]="user.name" [placeholder]="'SHARED.NAME' | translate"
+                                   [disabled]="visibilityButtonSave?null:'disabled'">
+                            <span *ngIf="nomeModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                  aria-hidden="true"></span>
+                            <span *ngIf="nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty) && visibilityButtonSave">
+                                <span class="glyphicon glyphicon-remove form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span class="text-danger">{{'SHARED.INVALID-NAME' | translate}}.</span>
+                            </span>
+                        </div>
+
                         <div class="form-group has-feedback" [ngClass]="{'has-success': emailModelEdit.valid,
                     'has-error': emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty)}">
                             <label for="emailEdit">{{'SHARED.EMAIL' | translate}}:</label>
@@ -15,6 +31,56 @@
                                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                 <span class="text-danger">{{'SHARED.INVALID_EMAIL' | translate}}.</span>
                             </span>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group has-feedback col-md-6" [ngClass]="{'has-success': phoneNumber.valid,
+            'has-error': phoneNumber.invalid && (phoneNumber.touched || phoneNumber.dirty)}">
+                                <label for="phoneNumberEdit">{{'SHARED.PHONE-NUMBER' | translate}}: </label>
+                                <input class="form-control" id="phoneNumberEdit" required minlength="8"
+                                       type="text" name="phone_number" #phoneNumber="ngModel"
+                                       [(ngModel)]="user==undefined?email:user.phone_number"
+                                       [placeholder]="'SHARED.PHONE-NUMBER' | translate"
+                                       [disabled]="visibilityButtonSave?null:'disabled'">
+                                <span *ngIf="phoneNumber.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span *ngIf="phoneNumber.invalid && (phoneNumber.touched || phoneNumber.dirty)">
+                                <span class="glyphicon glyphicon-remove form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span class="text-danger">{{'SHARED.INVALID-PHONE-NUMBER' | translate}}.</span>
+                            </span>
+                            </div>
+
+                            <div class="form-group has-feedback col-md-6" [ngClass]="{'has-success': birthDate.valid,
+            'has-error': birthDate.invalid && (birthDate.touched || birthDate.dirty)}">
+                                <label for="birthDateEdit">{{'SHARED.BIRTH-DATE' | translate}}: </label>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <input class="form-control" [matDatepicker]="pickerBirthDate"
+                                               name="birthDateEdit"
+                                               id="birthDateEdit"
+                                               data-date-format="yyyy-MM-dd"
+                                               (focus)="pickerBirthDate.open()"
+                                               [max]="maxBirthDate"
+                                               #birthDate="ngModel"
+                                               [(ngModel)]="user==undefined?email:user.birth_date"
+                                               [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!--                                        <mat-datepicker-toggle matSuffix  [for]="pickerBirthDate"></mat-datepicker-toggle>-->
+                                        <!--                                        <mat-datepicker #pickerBirthDate></mat-datepicker>-->
+                                        <mat-datepicker-toggle matSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
+                                        <mat-datepicker #pickerBirthDate startView="multi-year"></mat-datepicker>
+                                    </div>
+                                </div>
+                                <span *ngIf="birthDate.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span *ngIf="birthDate.invalid && (birthDate.touched || birthDate.dirty)">
+                                <span class="glyphicon glyphicon-remove form-control-feedback"
+                                      aria-hidden="true"></span>
+                                <span class="text-danger">{{'SHARED.INVALID-BIRTH-DATE' | translate}}.</span>
+                            </span>
+                            </div>
                         </div>
 
                         <div class="row container-fluid">

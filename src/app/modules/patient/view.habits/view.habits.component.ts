@@ -35,7 +35,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     showMeasurements: boolean;
     showLogMeasurements: boolean;
     configVisibility = {
-        weight: false,
+        weight: true,
         height: false,
         fat: false,
         circumference: false,
@@ -56,6 +56,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     removingQuestionnaire: boolean;
     loadingNutritionalQuestionnaire: boolean;
     loadingOdontologicalQuestionnaire: boolean;
+    associatedStudies: Array<PilotStudy>;
 
 
     constructor(
@@ -94,6 +95,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.loadingNutritionalQuestionnaire = false;
         this.loadingOdontologicalQuestionnaire = false;
         this.pilotStudy = new PilotStudy();
+        this.associatedStudies = new Array<PilotStudy>();
     }
 
 
@@ -103,8 +105,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             this.patientService.getById(this.patientId)
                 .then(patient => {
                     this.createPatientForm(patient);
-                    this.getAllPilotStudies();
                     this.getQuestionnaires();
+                    this.getAssociateStudies();
                 })
                 .catch(errorResponse => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
@@ -146,17 +148,14 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     }
 
 
-    getAllPilotStudies() {
-        const pilotId = this.patientForm.get('selected_pilot_study').value;
-        if (pilotId) {
-            this.pilotStudiesService.getById(pilotId)
-                .then(pilot => {
-                    this.pilotStudy = pilot;
-                })
-                .catch(() => {
-                });
-        }
-
+    getAssociateStudies() {
+        const patientId = this.patientForm.get('id').value;
+        this.patientService.getAllByPatientId(patientId)
+            .then(httpResponse => {
+                this.associatedStudies = httpResponse.body;
+            })
+            .catch(() => {
+            });
     }
 
     openModalConfirmationRemoveNutritionalQuestionnaire(): void {
@@ -259,22 +258,24 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     }
 
     clickOnMatTab(event) {
-        if (event.index === 1) {
-            this.showMeasurements = true;
-            this.configVisibility = {
-                weight: true,
-                height: true,
-                fat: true,
-                circumference: true,
-                temperature: true,
-                glucose: true,
-                pressure: true,
-                heartRate: true
-            };
-        }
-
-        if (event.index === 2) {
-            this.showLogMeasurements = true;
+        if (this.userHealthArea === 'dentistry' || this.userHealthArea === 'admin') {
+            switch (event.index) {
+                case 2:
+                    this.showMeasurements = true;
+                    break;
+                case 3:
+                    this.showLogMeasurements = true;
+                    break;
+            }
+        } else {
+            switch (event.index) {
+                case 1:
+                    this.showMeasurements = true;
+                    break;
+                case 2:
+                    this.showLogMeasurements = true;
+                    break;
+            }
         }
     }
 

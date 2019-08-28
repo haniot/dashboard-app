@@ -125,8 +125,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         const form = this.patientForm.getRawValue();
         const regexDate = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
         if (!regexDate.test(form.birth_date)) {
-            let dateFormat = form.birth_date.toISOString();
-
+            let dateFormat = new Date(form.birth_date).toISOString();
             dateFormat = dateFormat.split('T')[0];
             form.birth_date = dateFormat;
         }

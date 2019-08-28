@@ -1,6 +1,4 @@
-.main-content {
-    margin-top: 10px;
-}
+
 
 .background-card {
     background: linear-gradient(60deg, #00a594, #00a594);
@@ -41,6 +39,14 @@ label {
     color: black;
     font-size: 14px;
     font-weight: bold;
+}
+
+
+.badge-haniot {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #00a594;
 }
 
 .study-active {
@@ -106,12 +112,6 @@ label {
     height: 50px;
 }
 
-.badge-haniot {
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    background-color: #00a594;
-}
 
 .category {
     color: rgb(0, 0, 0);

@@ -329,9 +329,10 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     clickCheckPatientsAll() {
-        this.listCheckPatients.forEach((item, index) => {
-            this.listCheckPatients[index] = !this.checkSelectPatientsAll;
-        });
+        for (let i = this.patientLimit * (this.patientPage - 1); i < this.patientLimit; i++) {
+            this.listCheckPatients[i + this.patientLimit * (this.patientPage - 1)] = !this.checkSelectPatientsAll;
+        }
+
     }
 
     changeMeasurementTypeCheck(): void {
@@ -376,7 +377,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     selectPatient(index: number): void {
-        this.listCheckPatients[index] = !this.listCheckPatients[index];
+        const localIndex = index + this.patientLimit * (this.patientPage - 1);
+        this.listCheckPatients[localIndex] = !this.listCheckPatients[localIndex];
         this.changePatientCheck();
     }
 
