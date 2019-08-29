@@ -142,13 +142,15 @@ export class SidebarComponent implements OnInit {
 
     getPilotSelected(): void {
         const pilotselected = this.localStorageService.getItem(this.userId);
-        this.studyService.getById(pilotselected)
-            .then(study => {
-                this.study = study
-            })
-            .catch(() => {
+        if (pilotselected) {
+            this.studyService.getById(pilotselected)
+                .then(study => {
+                    this.study = study
+                })
+                .catch(() => {
 
-            })
+                });
+        }
 
     }
 

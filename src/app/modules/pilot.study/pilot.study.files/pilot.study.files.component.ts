@@ -106,6 +106,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     getAllFiles() {
+        this.listOfFilesIsEmpty = true;
         if (this.pilotStudy && this.pilotStudy.id) {
             this.listOfFiles = new Array<Data>();
             this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)

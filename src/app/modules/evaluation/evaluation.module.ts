@@ -13,7 +13,6 @@ import { EvaluationRoutingModule } from './evaluation.routing/evaluation.routing
 import { NutritionEvaluationComponent } from './nutrition.evaluation/nutrition.evaluation.component';
 import { NutritionEvaluationTableComponent } from './nutrition.evaluation.table/nutrition.evaluation.table.component';
 import { EvaluationService } from './services/evaluation.service';
-import { NutritionEvaluationService } from './services/nutrition.evaluation.service';
 import { NutritionalEvaluationListComponent } from './nutritional.evaluation.list/nutritional.evaluation.list.component';
 import { StudiesComponent } from './studies/studies.component';
 import { PatientsComponent } from './patients/patients.component';

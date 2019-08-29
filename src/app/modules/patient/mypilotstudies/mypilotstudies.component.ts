@@ -70,6 +70,7 @@ export class PatientMypilotstudiesComponent implements OnInit, AfterViewChecked 
             })
             .catch(() => {
                 this.listOfStudiesIsEmpty = true;
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'));
             });
     }
 

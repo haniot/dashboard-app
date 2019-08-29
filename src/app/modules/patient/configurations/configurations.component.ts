@@ -89,7 +89,9 @@ export class PatientConfigComponent implements OnInit {
                 this.user = patient;
                 this.createForm(this.user);
             })
-            .catch();
+            .catch(() => {
+                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER'));
+            });
 
     }
 

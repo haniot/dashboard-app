@@ -46,7 +46,9 @@ export class AdminConfigurationsComponent implements OnInit {
         this.userId = this.localStorageService.getItem('user');
         this.adminService.getById(this.userId)
             .then(admin => this.user = admin)
-            .catch();
+            .catch(() => {
+                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER'));
+            });
 
     }
 

@@ -7,6 +7,8 @@ import { PilotStudy } from '../../pilot.study/models/pilot.study'
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { ToastrService } from 'ngx-toastr'
+import { TranslateService } from '@ngx-translate/core'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -34,7 +36,9 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         private authService: AuthService,
         private paginatorService: PaginatorIntlService,
         private loadinService: LoadingService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private toastService: ToastrService,
+        private translateService: TranslateService
     ) {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
@@ -65,6 +69,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                 })
                 .catch(() => {
                     this.listOfPilotsIsEmpty = true;
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'));
                 });
         } else {
             this.userId = this.localStorageService.getItem('user');
@@ -78,6 +83,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
                 })
                 .catch(() => {
                     this.listOfPilotsIsEmpty = true;
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'));
                 });
         }
     }

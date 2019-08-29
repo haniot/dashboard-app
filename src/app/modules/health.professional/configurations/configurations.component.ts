@@ -44,7 +44,9 @@ export class HealthProfessionalConfigComponent implements OnInit {
         this.userId = this.localStorageService.getItem('user');
         this.healthService.getById(this.userId)
             .then(healthProfessional => this.user = healthProfessional)
-            .catch();
+            .catch(() => {
+                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER'));
+            });
 
     }
 

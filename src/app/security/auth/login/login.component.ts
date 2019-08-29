@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     reCaptcha: RecaptchaComponent;
     site_key = environment.reCaptcha_siteKey;
     captchaResolved: boolean;
+    recaptchaResponse: string;
     showCaptcha: boolean;
     attemptUser: Attempt;
     f: FormGroup;
@@ -96,9 +97,10 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     resetCaptcha(): void {
-        if (this.reCaptcha) {
+        if (this.reCaptcha && this.recaptchaResponse) {
             this.reCaptcha.reset();
             this.captchaResolved = false;
+            this.recaptchaResponse = undefined;
         }
     }
 
@@ -135,8 +137,9 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     onSubmit() {
         this.loading = true;
+        const body = Object.assign(this.f.value, { recaptchaResponse: this.recaptchaResponse })
         this.subscriptions.push(
-            this.authService.login(this.f.value)
+            this.authService.login(body)
                 .subscribe(
                     (resp) => {
                         this.cleanAttempt()
@@ -151,11 +154,11 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
                     (error: HttpErrorResponse) => {
                         const rateLimit = parseInt(error.headers.get('x-ratelimit-limit'), 10);
                         const rateLimitRemaining = parseInt(error.headers.get('x-ratelimit-remaining'), 10);
+                        this.updateAttempt(rateLimit - rateLimitRemaining);
                         switch (error.status) {
                             case 401:
                                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
                                     this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
-                                this.updateAttempt(rateLimit - rateLimitRemaining);
                                 break;
                             case 429:
                                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.TRY-AGAIN'),
@@ -191,14 +194,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     solveCaptcha(captchaResponse: string, reCaptcha: RecaptchaComponent) {
         this.reCaptcha = reCaptcha;
-        this.authService.validateReCaptcha(captchaResponse)
-            .then((response) => {
-                this.captchaResolved = !!response.success;
-                if (!response.success) {
-                    this.resetCaptcha();
-                }
-
-            }).catch()
+        this.recaptchaResponse = captchaResponse
+        this.captchaResolved = true;
     }
 
     ngAfterViewChecked() {

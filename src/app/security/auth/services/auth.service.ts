@@ -132,13 +132,6 @@ export class AuthService {
 
         return this.http.get<any>(url, { headers: headers })
             .toPromise();
-
-    }
-
-    validateReCaptcha(responseRecaptcha: string): Promise<any> {
-        return this.http.post<any>(
-            `${environment.reCaptcha_urlVerify}?secret=${environment.reCaptcha_serverKey}&&response=${responseRecaptcha}`, {})
-            .toPromise();
     }
 
     private decodeTokenJWT(token: string): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string } {

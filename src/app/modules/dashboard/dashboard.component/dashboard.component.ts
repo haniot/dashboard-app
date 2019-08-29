@@ -13,6 +13,8 @@ import { UserService } from '../../admin/services/users.service';
 import { AuthService } from '../../../security/auth/services/auth.service';
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation';
+import { ToastrService } from 'ngx-toastr'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
     selector: 'app-dashboard',
@@ -47,7 +49,9 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         private loadinService: LoadingService,
         private localStorageService: LocalStorageService,
         private selectPilotService: SelectPilotStudyService,
-        private userService: UserService
+        private userService: UserService,
+        private toastService: ToastrService,
+        private translateService: TranslateService
     ) {
         this.patientsTotal = 0;
         this.measurementsTotal = 0;
@@ -170,6 +174,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
             .catch(() => {
                 this.lengthStudies = 0;
                 this.listOfStudiesIsEmpty = true;
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'));
             });
     }
 

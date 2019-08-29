@@ -97,6 +97,7 @@ export class PatientMyEvaluationsComponent implements OnInit, OnChanges, AfterVi
             })
             .catch(() => {
                 this.listOfEvaluationsIsEmpty = true;
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'));
             });
 
     }

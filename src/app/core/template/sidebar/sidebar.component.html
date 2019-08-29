@@ -130,9 +130,10 @@
     <div class="card card-stats card-studies"
          style="cursor: pointer"
          (click)="collapse()"
-         [title]="'SIDEBAR.SELECTED-STUDY'|translate">
+         [title]="'SIDEBAR.SELECTED-STUDY'|translate"
+         *ngIf="study.id">
         <div class="card-header text-left" style="padding: 5px 10px">
-            <p class="card-category text-center ellipsis" style="max-width: 300px">
+            <p class="card-category text-left ellipsis" style="max-width: 300px">
                 <i class=" material-icons">{{iconCollapse}}</i>
                 {{study.name}}
             </p>
