@@ -29,6 +29,9 @@ export class AuthService {
         if (!token) {
             return false;
         }
+        if (Date.now() >= token.exp * 1000) {
+            return false;
+        }
         const user = this.localStorageService.getItem('user');
 
         return user === token.sub;

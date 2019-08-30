@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import * as jsPDF from 'jspdf-yworks';
+import * as jsPDF from 'jspdf';
 import { TranslateService } from '@ngx-translate/core';
 
 import { NutritionEvaluation } from '../models/nutrition-evaluation';
@@ -58,7 +58,8 @@ export class GeneratePdfService {
         this.doc.text('RESULTADO DA AVALIAÇÃO NUTRICIONAL', CENTER_X, 87, 'center');
         this.doc.setFontSize(13);
 
-        const html = '<p style=\'text-align:center;font-family: Courier New, courier\'><b>NUTRICIONISTA: </b>' + healthProfessional + '</p>';
+        const html =
+            '<p style=\'text-align:center;font-family: Courier New, courier\'><b>NUTRICIONISTA: </b>' + healthProfessional + '</p>';
 
         const maxWidth = 215 - (2.5 * healthProfessional.length);
 

@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AuthService } from '../services/auth.service';
 import { SessionStorageService } from '../../../shared/shared.services/session.storage.service'
+import { Title } from '@angular/platform-browser'
 
 @Component({
     selector: 'app-change-password',
@@ -37,7 +38,8 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private toastr: ToastrService,
         private sessionService: SessionStorageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private titleService: Title
     ) {
         this.loading = false;
         this.subscriptions = new Array<ISubscription>();
@@ -45,7 +47,8 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        $('body').css('background-color', '#00a594')
+        $('body').css('background-color', '#00a594');
+        this.titleService.setTitle(this.translateService.instant('SECURITY.CHANGE.TITLE'))
 
         this.f = this.formBuilder.group({
             email: [{ value: '', disabled: true }],
@@ -82,7 +85,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
                 })
         );
         this.token = this.sessionService.getItem('temporaryToken');
-        this.decodeToken()
+        this.decodeToken();
     }
 
     decodeToken(): void {

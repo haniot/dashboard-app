@@ -68,7 +68,10 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
                             this.listOfPatients = httpResponse.body;
                         }
                     })
-                    .catch();
+                    .catch(() => {
+                        this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'));
+                    });
             }, 500);
         }
     }

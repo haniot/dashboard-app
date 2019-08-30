@@ -1,6 +1,7 @@
 export class PilotStudy {
 
     id: string;
+    created_at: string;
     name: string;
     is_active: boolean;
     start: string;
@@ -11,6 +12,7 @@ export class PilotStudy {
 
     constructor() {
         this.id = '';
+        this.created_at = '';
         this.name = '';
         this.is_active = true;
         this.start = '';

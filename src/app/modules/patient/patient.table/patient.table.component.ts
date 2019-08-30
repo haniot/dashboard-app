@@ -29,7 +29,6 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
     length: number;
     listOfPatientsIsEmpty: boolean;
     listOfPatients: Array<Patient>;
-    listOfPatientsAux: Array<Patient>;
     search: string;
     searchTime;
     cacheIdPatientRemove: string;
@@ -93,7 +92,10 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                     }
                     this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
                 })
-                .catch();
+                .catch(() => {
+                    this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'));
+                });
         }, 500);
     }
 
@@ -105,7 +107,6 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
                     this.listOfPatients = httpResponse.body;
                 }
                 this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
-                this.loadListPatientAux();
             })
             .catch(() => {
                 this.listOfPatientsIsEmpty = this.listOfPatients.length === 0;
@@ -113,21 +114,10 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
             });
     }
 
-    loadListPatientAux(): void {
-        this.listOfPatientsAux = new Array<Patient>();
-        /* -1 because pagination starts at 1 and indexing starts at 0 */
-        for (let i = (this.limit * (this.page - 1)); i < this.limit * this.page; i++) {
-            if (i < this.listOfPatients.length) {
-                this.listOfPatientsAux.push(this.listOfPatients[i]);
-            }
-        }
-    }
-
     clickPagination(event) {
         this.pageEvent = event;
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this.loadListPatientAux();
     }
 
     openModalConfirmation(pilotstudy_id: string, patientId: string): void {

@@ -32,7 +32,7 @@
                 <br>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY-MESSAGE'|translate}}.
             </td>
         </tr>
-        <tr *ngFor="let patient of listOfPatientsAux; index as i;trackBy: trackById">
+        <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">
             <td [routerLink]="['/app/patients',patient.id, 'details']" class="max-width-60">{{getIndex(i)}}</td>
             <td [routerLink]="['/app/patients',patient.id, 'details']">{{patient.name}}</td>
             <td [routerLink]="['/app/patients',patient.id, 'details']"

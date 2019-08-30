@@ -784,6 +784,7 @@
     "LOADING": "Loading...",
     "LAST-LOGIN": "Last login",
     "GENERATE-PASSWORD": "Generate random password",
+    "CREATED-AT": "Created at",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",
@@ -816,6 +817,7 @@
   },
   "SECURITY": {
     "LOGIN": {
+      "TITLE": "HANIoT - Login",
       "PLACEHOLDER-EMAIL": "Enter your email here...",
       "PLACEHOLDER-PASSWORD": "Enter your password here...",
       "LOGIN": "Login",
@@ -823,6 +825,7 @@
       "RESET-HERE": "reset here"
     },
     "CHANGE": {
+      "TITLE": "HANIoT - Change Password",
       "CHANGE-PASSWORD": "Change Password",
       "PASSWORD": "New Password",
       "PLACEHOLDER-PASSWORD": "Enter your new password here...",
@@ -836,6 +839,7 @@
       "RECOVERY-FAILED-MESSAGE2": "Restart the password recovery process as the token entered is missing or invalid."
     },
     "FORGOT": {
+      "TITLE": "HANIoT - Password recovery",
       "INFORMATION": "Email successfully sent!",
       "INFORMATION-MESSAGE": "If the submitted email is properly registered on the platform, you will receive an email with instructions and a link to change the password. If you don't receive the email within a few minutes, check your spam box or repeat the process.",
       "PASSWORD-RECOVERY": "Recovery Password",

@@ -13,6 +13,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 import { environment } from '../../../../environments/environment'
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { Title } from '@angular/platform-browser'
 
 const ATTEMPTSSHOWCAPTCHA = 2;
 
@@ -53,7 +54,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         private toastr: ToastrService,
         private loadinService: LoadingService,
         private translateService: TranslateService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private titleService: Title
     ) {
         this.loading = false;
         this.showCaptcha = false;
@@ -63,12 +65,13 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     ngOnInit() {
+        $('body').css('background-color', '#00a594');
+        this.titleService.setTitle(this.translateService.instant('SECURITY.LOGIN.TITLE'));
+
         const token = this.localStorageService.getItem('token');
         if (token) {
             this.router.navigate(['/app']);
         }
-
-        $('body').css('background-color', '#00a594');
         this.f = this.formBuilder.group({
             email: [null, [Validators.required, Validators.email]],
             password: [null, [Validators.required]]

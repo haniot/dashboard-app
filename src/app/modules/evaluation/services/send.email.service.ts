@@ -7,6 +7,7 @@ import Mustache from 'mustache';
 import { NutritionEvaluation } from '../models/nutrition-evaluation';
 import { Attachments, Email } from '../models/email';
 import { NotificationService } from '../../../shared/shared.services/notification.service';
+import { Patient } from '../../patient/models/patient'
 
 @Injectable()
 export class SendEmailService {
@@ -17,18 +18,19 @@ export class SendEmailService {
         private notificationService: NotificationService) {
     }
 
-    async sendNutritionalEvaluationViaEmail(healthProfessinal: { name: string, email: string },
+    async sendNutritionalEvaluationViaEmail(healthProfessional: { name: string, email: string },
+                                            patient: Patient,
                                             nutritonalEvaluation: NutritionEvaluation, filePDF: any) {
 
         const notification = new Email();
 
-        notification.reply = { name: healthProfessinal.name, email: healthProfessinal.email };
+        notification.reply = { name: healthProfessional.name, email: healthProfessional.email };
 
-        notification.to.push({ name: nutritonalEvaluation.patient.name, email: nutritonalEvaluation.patient.email });
+        notification.to.push({ name: patient.name, email: patient.email });
 
         notification.subject = 'Resultado da Avaliação Nutricional';
 
-        notification.html = await this.getHtml(nutritonalEvaluation.patient.name, healthProfessinal.name, nutritonalEvaluation.created_at);
+        notification.html = await this.getHtml(nutritonalEvaluation.patient.name, healthProfessional, nutritonalEvaluation.created_at);
 
         const attachment = new Attachments();
 
@@ -46,19 +48,23 @@ export class SendEmailService {
         return this.notificationService.sendEmail(nutritonalEvaluation.patient.id, notification);
     }
 
-    getHtml(patientName: string, healthProfessionalName: string, dateEvaluation: string): Promise<string> {
+    getHtml(patientName: string, healthProfessional: any, dateEvaluation: string): Promise<string> {
 
         const variables = {
             patientName,
-            healthProfessionalName,
-            dateEvaluation: this.datePipe.transform(dateEvaluation, 'fullDate')
+            dateEvaluation: this.datePipe.transform(dateEvaluation, 'longDate'),
+            healthProfessionalEmail: healthProfessional.email,
+            healthProfessionalPhoneNumber: healthProfessional.phone_number,
+            healthProfessionalName: healthProfessional.name
         };
 
-        return this.http.get('assets/html/email-template.html', { responseType: 'text' })
+        return this.http.get('assets/html/evaluation.html', { responseType: 'text' })
             .toPromise()
             .then(data => {
-                const html_output = Mustache.render(data, variables);
-                return html_output;
+                const htmlOutput = Mustache.render(data, variables);
+                return htmlOutput;
+            })
+            .catch(() => {
             })
     }
 }

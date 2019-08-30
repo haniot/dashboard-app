@@ -114,7 +114,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             email: ['', Validators.compose([Validators.required, Validators.email])],
             birth_date: ['', Validators.required],
             phone_number: [''],
-            language: [''],
+            language: ['pt-BR'],
             health_area: ['', Validators.required],
             password: ['', Validators.required],
             password_confirm: ['', Validators.required]

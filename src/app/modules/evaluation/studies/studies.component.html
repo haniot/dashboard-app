@@ -20,10 +20,10 @@
         </thead>
         <tbody>
         <tr *ngIf="list.length==0">
-            <td colspan="8" *ngIf="!listOfPilotsIsEmpty">
+            <td colspan="5" *ngIf="!listOfPilotsIsEmpty">
                 <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
             </td>
-            <td colspan="8" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
+            <td colspan="5" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
         </tr>
         <tr *ngFor="let study of list; index as i;trackBy: trackById" (click)="selectStudy(study.id)"
             [(ngClass)]="listClass[i]">

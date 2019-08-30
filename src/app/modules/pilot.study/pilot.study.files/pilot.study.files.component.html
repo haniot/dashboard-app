@@ -337,7 +337,7 @@
                                                 <br> {{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.
                                             </td>
                                         </tr>
-                                        <tr *ngFor="let patient of listOfPatientsAux; index as i;">
+                                        <tr *ngFor="let patient of listOfPatients; index as i;">
                                             <td>
                                                 <mat-checkbox class="example-margin"
                                                               (change)="changePatientCheck()"

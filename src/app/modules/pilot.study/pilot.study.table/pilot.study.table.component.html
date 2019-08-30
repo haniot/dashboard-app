@@ -20,10 +20,10 @@
         </thead>
         <tbody>
         <tr *ngIf="list.length==0">
-            <td colspan="7" *ngIf="!listOfPilotsIsEmpty">
+            <td colspan="8" *ngIf="!listOfPilotsIsEmpty">
                 <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
             </td>
-            <td colspan="7" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
+            <td colspan="8" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
         </tr>
         <tr *ngFor="let study of list; index as i;trackBy: trackById">
             <td [routerLink]="['/app/pilotstudies',study.id,'details']" class="max-width-60">{{getIndex(i)}}</td>
@@ -38,10 +38,10 @@
           </span>
             </td>
             <td class="max-width-60"><a class="nav-link" [routerLink]="['/app/pilotstudies',study.id]"
-                                           [title]="'PILOT-STUDY.EDIT-STUDY'|translate"><i
+                                        [title]="'PILOT-STUDY.EDIT-STUDY'|translate"><i
                     class="material-icons">edit</i></a></td>
             <td class="max-width-60"><a class="nav-link" (click)="openModalConfirmation(study.id)"
-                                           [title]="'PILOT-STUDY.DELETE-STUDY'|translate"><i
+                                        [title]="'PILOT-STUDY.DELETE-STUDY'|translate"><i
                     class="material-icons">delete</i></a></td>
         </tr>
         </tbody>

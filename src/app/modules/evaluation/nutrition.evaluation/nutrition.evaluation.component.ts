@@ -47,7 +47,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     nutritionEvaluationId: string;
     optionsHeartRate: any;
     patientId: string;
-    patient: PatientBasic;
+    patient: Patient;
     ncSuggested: NutritionalCouncil;
     ncDefinitive: NutritionalCouncil;
     finalCounseling: string;
@@ -146,18 +146,11 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
                 this.verifyVisibityZonesClassification();
                 this.formatCounseling()
                 this.separateMeasurements();
+                this.patientId = this.nutritionalEvaluation.patient.id;
                 this.getPatient();
             })
             .catch((error) => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.NOT-LOAD-NUTRITION-EVALUATION'));
-            });
-
-        this.patientService.getById(this.patientId)
-            .then(patient => {
-                this.patient = patient;
-            })
-            .catch(() => {
-                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-IDENTIFIED'))
             });
     }
 
@@ -212,7 +205,14 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     }
 
     getPatient(): void {
-        this.patient = this.nutritionalEvaluation.patient;
+        this.patientService.getById(this.patientId)
+            .then(patient => {
+                this.patient = patient;
+            })
+            .catch(() => {
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-IDENTIFIED'))
+            });
+
     }
 
     finalizeEvaluation() {
@@ -377,18 +377,21 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
 
         const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
 
-        const health_professional_name = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
+        const healthProfessionalName = localUserLogged.name;
 
-        const health_professional_email = this.localStorageService.getItem('email');
+        const healthProfessionalEmail = localUserLogged.email;
+
+        const healthProfessionalPhone = localUserLogged.phone_number;
 
         const health_professinal = {
-            name: health_professional_name,
-            email: health_professional_email
+            name: healthProfessionalName,
+            email: healthProfessionalEmail,
+            phone_number: healthProfessionalPhone
         }
 
-        const pdf = this.generatePDF.getPDF(this.nutritionalEvaluation, health_professional_name);
+        const pdf = this.generatePDF.getPDF(this.nutritionalEvaluation, health_professinal.name);
 
-        this.sendEmailService.sendNutritionalEvaluationViaEmail(health_professinal, this.nutritionalEvaluation, pdf)
+        this.sendEmailService.sendNutritionalEvaluationViaEmail(health_professinal, this.patient, this.nutritionalEvaluation, pdf)
             .then(() => {
                 this.sendingEvaluation = false;
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.EVALUATION-SEND'));

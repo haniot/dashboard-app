@@ -226,12 +226,12 @@
       "TIME-ABBREVIATION": "hs"
     },
     "SOCIO-DEMOGRAPHIC": {
-      "TITLE": "Informações sócio-demográficas",
+      "TITLE": "Informações sócio demográficas",
       "SUBTITLE": "",
       "COLOR-RACE": "Cor ou raça",
       "MOTHER-EDUCATION": "Escolaridade da mãe",
       "NUMBER-PEOPLE-HOME": "Quantidade de pessoas em casa",
-      "UNAVAILABLE-DATA": "Dados sócio-demográficos indisponível!"
+      "UNAVAILABLE-DATA": "Dados sócio demográficos indisponível!"
     },
     "PIPES": {
       "WEEKLY-FOOD": {
@@ -784,6 +784,7 @@
     "LOADING": "Carregando...",
     "LAST-LOGIN": "Último login",
     "GENERATE-PASSWORD": "Gerar senha aleatória",
+    "CREATED-AT": "Criado em",
     "PIPES": {
       "GENDER": {
         "MALE": "Masculino",
@@ -816,6 +817,7 @@
   },
   "SECURITY": {
     "LOGIN": {
+      "TITLE": "HANIoT - Login",
       "PLACEHOLDER-EMAIL": "Digite aqui seu email...",
       "PLACEHOLDER-PASSWORD": "Digite aqui sua senha...",
       "LOGIN": "Entrar",
@@ -823,6 +825,7 @@
       "RESET-HERE": "redefina aqui"
     },
     "CHANGE": {
+      "TITLE": "HANIoT - Alterar Senha",
       "CHANGE-PASSWORD": "Alteração de senha",
       "PASSWORD": "Nova Senha",
       "PLACEHOLDER-PASSWORD": "Digite aqui sua nova senha...",
@@ -836,6 +839,7 @@
       "RECOVERY-FAILED-MESSAGE2": "Reinicie o processo de recuperação de senha, pois, o token informado encontra-se ausente ou inválido."
     },
     "FORGOT": {
+      "TITLE": "HANIoT - Recuperar Senha",
       "INFORMATION": "E-mail enviado com sucesso!",
       "INFORMATION-MESSAGE": "Se o e-mail submetido estiver devidamente cadastrado na plataforma, você receberá um e-mail com as instruções e o link para realizar a alteração da senha. Caso você não receba o e-mail em alguns minutos, verifique a sua caixa de spam ou repita o processo.",
       "PASSWORD-RECOVERY": "Recuperação de senha",

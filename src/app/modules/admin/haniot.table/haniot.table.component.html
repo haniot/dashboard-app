@@ -19,10 +19,10 @@
         </thead>
         <tbody>
         <tr *ngIf="list.length==0">
-            <td colspan="5" *ngIf="!listOfUserIsEmpty">
+            <td colspan="6" *ngIf="!listOfUserIsEmpty">
                 <spinner [message]="'TABLE-USER.SPINNER-MESSAGE'|translate"></spinner>
             </td>
-            <td colspan="5" *ngIf="listOfUserIsEmpty">{{'TABLE-USER.LIST-EMPTY'|translate}}.</td>
+            <td colspan="6" *ngIf="listOfUserIsEmpty">{{'TABLE-USER.LIST-EMPTY'|translate}}.</td>
         </tr>
         <tr *ngFor="let user of list; index as i;trackBy: trackById">
             <td (click)="editUser(user.id)" class="max-width-60">{{getIndex(i)}}</td>

@@ -30,10 +30,10 @@
                             <tbody>
 
                             <tr *ngIf="listOfPatients.length==0">
-                                <td colspan="7" *ngIf="!listOfPatientsIsEmpty">
+                                <td colspan="6" *ngIf="!listOfPatientsIsEmpty">
                                     <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
                                 </td>
-                                <td colspan="7" *ngIf="listOfPatientsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
+                                <td colspan="6" *ngIf="listOfPatientsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
                             </tr>
                             <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">
                                 <td [routerLink]="['/app/patients',patient.id, 'details']"

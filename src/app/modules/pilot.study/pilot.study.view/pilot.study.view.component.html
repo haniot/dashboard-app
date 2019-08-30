@@ -106,7 +106,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr *ngFor="let professional of listOfProfessionalsAux; index as i;trackBy: trackById">
+                                            <tr *ngFor="let professional of professionalsAssociated; index as i;trackBy: trackById">
                                                 <td (click)="editHealthProfessional(professional.id)">{{professional.name}}</td>
                                                 <td (click)="editHealthProfessional(professional.id)">{{professional.health_area | healthArea | translate}}</td>
                                                 <td (click)="editHealthProfessional(professional.id)">{{professional.email}}</td>
@@ -138,7 +138,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr *ngFor="let patient of listOfPatientsAux; index as i;trackBy: trackById">
+                                            <tr *ngFor="let patient of patientsAssociated; index as i;trackBy: trackById">
                                                 <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.name}}</td>
                                                 <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.email}}</td>
                                                 <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.gender | gender | translate}}</td>
