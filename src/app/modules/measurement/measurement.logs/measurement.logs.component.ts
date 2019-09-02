@@ -28,7 +28,7 @@ export class MeasurementLogsComponent implements OnInit {
     loadingMeasurements: boolean;
     modalConfirmRemoveMeasurement: boolean;
     cacheIdMeasurementRemove: string;
-    cacheListIdMeasurementRemove: Array<string>;
+    cacheListIdMeasurementRemove: Array<any>;
     selectAll: boolean;
     listCheckMeasurements: Array<boolean>;
     stateButtonRemoveSelected: boolean;
@@ -112,20 +112,41 @@ export class MeasurementLogsComponent implements OnInit {
         this.modalConfirmRemoveMeasurement = false;
     }
 
-    removeMeasurement(): void {
+    async removeMeasurement(): Promise<any> {
         this.loadingMeasurements = true;
-        this.measurementService.remove(this.patientId, this.cacheIdMeasurementRemove)
-            .then(measurements => {
-                this.loadMeasurements();
-                this.loadingMeasurements = false;
-                this.modalConfirmRemoveMeasurement = false;
-                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
-            })
-            .catch(() => {
-                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'));
-                this.loadingMeasurements = false;
-                this.modalConfirmRemoveMeasurement = false;
-            })
+        if (!this.cacheListIdMeasurementRemove || !this.cacheListIdMeasurementRemove.length) {
+            this.measurementService.remove(this.patientId, this.cacheIdMeasurementRemove)
+                .then(measurements => {
+                    this.loadMeasurements();
+                    this.loadingMeasurements = false;
+                    this.modalConfirmRemoveMeasurement = false;
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
+                })
+                .catch(() => {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'));
+                    this.loadingMeasurements = false;
+                    this.modalConfirmRemoveMeasurement = false;
+                })
+        } else {
+            let occuredError = false;
+            for (let i = 0; i < this.cacheListIdMeasurementRemove.length; i++) {
+                try {
+                    const measurementRemove = this.cacheListIdMeasurementRemove[i];
+                    await this.measurementService.remove(this.patientId, measurementRemove.id);
+                } catch (e) {
+                    occuredError = true;
+                }
+            }
+            occuredError ? this.toastService
+                    .error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'))
+                : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
+
+            this.loadMeasurements();
+            this.loadingMeasurements = false;
+            this.modalConfirmRemoveMeasurement = false;
+
+
+        }
     }
 
     changeOnMeasurement(): void {

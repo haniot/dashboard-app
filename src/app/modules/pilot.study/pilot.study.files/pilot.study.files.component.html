@@ -8,7 +8,7 @@
                                 </span>
                 <ul class="nav nav-tabs right" data-tabs="tabs">
                     <li class="nav-item">
-                        <mat-form-field>
+                        <mat-form-field [ngClass]="isMobile()?'hidden':''">
                             <input matInput [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
                                    [satDatepicker]="picker"
                                    [(ngModel)]="search"
@@ -19,6 +19,10 @@
                             <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
                             <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
                         </mat-form-field>
+                        <a class="nav-link-mobile" *ngIf="isMobile()" (click)="picker.open()"
+                           [title]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate">
+                            <i class="material-icons">date_range</i>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="reference-worksheet"
@@ -35,9 +39,10 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover table-sm">
+            <table class="table table-hover table-sm rwd-table">
                 <thead>
                 <tr>
+                    <th style="max-width: 100px">#</th>
                     <th style="max-width: 100px">{{'PILOT-STUDY.TOTAL-PATIENTS'|translate}}</th>
                     <th>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-MEASUREMENTS'|translate}}</th>
                     <th>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-QUESTIONNAIRES'|translate}}</th>
@@ -58,8 +63,12 @@
                     </td>
                 </tr>
                 <tr *ngFor="let file of listOfFiles; index as i;trackBy: trackById">
-                    <td style="max-width: 20px" (click)="fileGenerated(i)">{{file.total_patients}}</td>
-                    <td (click)="fileGenerated(i)">
+                    <td class="max-width-20" (click)="fileGenerated(i)"
+                        [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
+                    <td class="max-width-20" (click)="fileGenerated(i)"
+                        [attr.data-th]="'PILOT-STUDY.TOTAL-PATIENTS'|translate">{{file.total_patients}}</td>
+                    <td (click)="fileGenerated(i)"
+                        [attr.data-th]="'PILOT-STUDY.CARD-FILES.TYPES-OF-MEASUREMENTS'|translate">
                         <div *ngIf="this.listOfDataTypes[i].measurement_type && this.listOfDataTypes[i].measurement_type.length <= LengthDataTypes">
                     <span class="ellipsis measurement-type"
                           *ngFor="let type of listOfDataTypes[i].measurement_type">{{type | measurementType | translate}}</span>
@@ -79,7 +88,8 @@
 
                         </div>
                     </td>
-                    <td (click)="fileGenerated(i)">
+                    <td (click)="fileGenerated(i)"
+                        [attr.data-th]="'PILOT-STUDY.CARD-FILES.TYPES-OF-QUESTIONNAIRES'|translate">
                         <div *ngIf="this.listOfDataTypes[i].questionnaires && this.listOfDataTypes[i].questionnaires.length <= LengthDataTypes">
                     <span class="ellipsis measurement-type"
                           *ngFor="let type of listOfDataTypes[i].questionnaires">{{type | questionnaireType | translate}}</span>
@@ -99,8 +109,9 @@
 
                         </div>
                     </td>
-                    <td (click)="fileGenerated(i)">{{file.created_at | date}}</td>
-                    <td style="color: white">
+                    <td (click)="fileGenerated(i)"
+                        [attr.data-th]="'SHARED.DATE'|translate">{{file.created_at | date}}</td>
+                    <td [attr.data-th]="'SHARED.ACTIONS'|translate">
                         <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false"
                            [title]="'PILOT-STUDY.OPTIONS-DOWNLOAD'|translate">

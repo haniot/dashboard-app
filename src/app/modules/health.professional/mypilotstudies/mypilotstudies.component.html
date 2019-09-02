@@ -14,7 +14,7 @@
                                 <div class="ripple-container"></div>
                             </button>
                         </div>
-                        <table class="table table-sm table-hover">
+                        <table class="table table-sm table-hover rwd-table">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -40,30 +40,40 @@
                             </tr>
                             <tr *ngFor="let study of list; index as i;trackBy: trackById">
                                 <td [routerLink]="['/app/pilotstudies',study.id,'details']"
-                                    class="max-width-60">{{getIndex(i)}}</td>
-                                <td [routerLink]="['/app/pilotstudies',study.id,'details']">{{study.name}}</td>
+                                    class="max-width-60"
+                                    [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
                                 <td [routerLink]="['/app/pilotstudies',study.id,'details']"
-                                    class="max-width-150">{{study.start | date }}</td>
+                                    [attr.data-th]="'PILOT-STUDY.NAME-OF-STUDY'|translate">{{study.name}}</td>
                                 <td [routerLink]="['/app/pilotstudies',study.id,'details']"
-                                    class="max-width-150">{{study.end | date}}</td>
-                                <td [routerLink]="['/app/pilotstudies',study.id,'details']" class="max-width-150">
+                                    class="max-width-150"
+                                    [attr.data-th]="'PILOT-STUDY.START'|translate">{{study.start | date }}</td>
+                                <td [routerLink]="['/app/pilotstudies',study.id,'details']"
+                                    class="max-width-150"
+                                    [attr.data-th]="'PILOT-STUDY.END'|translate">{{study.end | date}}</td>
+                                <td [routerLink]="['/app/pilotstudies',study.id,'details']" class="max-width-150"
+                                    [attr.data-th]="'PILOT-STUDY.SITUATION'|translate">
                                         <span>
                                             {{study.is_active | pilotStudySituation | translate}}
                                         </span>
                                 </td>
-                                <td class="max-width-60">
-                                    <a class="nav-link" [routerLink]="['/app/pilotstudies',study.id]"
-                                       [title]="'PILOT-STUDY.EDIT-STUDY'|translate">
-                                        <i class="material-icons">edit</i>
-                                    </a>
+                                <td class="max-width-200" [attr.data-th]="'SHARED.ACTIONS'|translate">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <a class="nav-link" [routerLink]="['/app/pilotstudies',study.id]"
+                                                   [title]="'PILOT-STUDY.EDIT-STUDY'|translate">
+                                                    <i class="material-icons">edit</i>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="nav-link" (click)="openModalConfirmation(study.id)"
+                                                   [title]="'PILOT-STUDY.DELETE-STUDY'|translate">
+                                                    <i class="material-icons">delete</i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td class="max-width-60">
-                                    <a class="nav-link" (click)="openModalConfirmation(study.id)"
-                                       [title]="'PILOT-STUDY.DELETE-STUDY'|translate">
-                                        <i class="material-icons">delete</i>
-                                    </a>
-                                </td>
-
                             </tr>
                             </tbody>
                         </table>

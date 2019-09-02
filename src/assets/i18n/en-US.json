@@ -785,6 +785,7 @@
     "LAST-LOGIN": "Last login",
     "GENERATE-PASSWORD": "Generate random password",
     "CREATED-AT": "Created at",
+    "POSITION": "Position",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",

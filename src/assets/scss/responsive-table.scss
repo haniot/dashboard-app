@@ -1,0 +1,72 @@
+/* responsive table
+* Based on the code of Geoff Yuen
+* https://codepen.io/geoffyuen
+* https://codepen.io/geoffyuen/pen/FCBEg
+*/
+
+$breakpoint-alpha: 480px; // adjust to your needs
+
+.rwd-table {
+  overflow: hidden;
+  min-width: 300px; // adjust to your needs
+
+  th {
+    display: none; // for accessibility, use a visually hidden method here instead! Thanks, reddit!
+  }
+
+  td {
+    display: block;
+
+    &:before {
+      text-align: left;
+      content: attr(data-th) ": "; // who knew you could do this? The internet, that's who.
+      font-weight: bold;
+
+      // optional stuff to make it look nicer
+      width: 100%; // magic number :( adjust according to your own content
+      display: inline-block;
+      // end options
+
+      @media (min-width: $breakpoint-alpha) {
+        display: none;
+      }
+    }
+  }
+
+  th, td {
+    text-align: center;
+
+    @media (min-width: $breakpoint-alpha) {
+      display: table-cell;
+    }
+
+  }
+
+}
+
+@media (max-width: $breakpoint-alpha) {
+  .rwd-table {
+    border-collapse: separate;
+    border-spacing: 0px 15px;
+
+    td {
+      padding: 5px 20px;
+      border-top: 0px;
+      border-bottom: 0px;
+      border-left: 2px solid #F7F6F6;
+      border-right: 2px solid #F7F6F6;
+
+      &:first-child {
+        border-top: 2px solid #F7F6F6;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+
+      &:last-child {
+        border-bottom: 2px solid #F7F6F6;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+    }
+  }
+}

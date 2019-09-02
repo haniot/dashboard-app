@@ -17,7 +17,7 @@
                         </button>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-sm table-hover">
+                        <table class="table table-sm table-hover rwd-table">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -37,25 +37,35 @@
                             </tr>
                             <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">
                                 <td [routerLink]="['/app/patients',patient.id, 'details']"
-                                    class="max-width-60">{{getIndex(i)}}</td>
+                                    class="max-width-60"
+                                    [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
                                 <td colspan="2"
-                                    [routerLink]="['/app/patients',patient.id, 'details']">{{patient.name}}</td>
+                                    [routerLink]="['/app/patients',patient.id, 'details']"
+                                    [attr.data-th]="'SHARED.NAME-OF-PATIENT'|translate">{{patient.name}}</td>
                                 <td [routerLink]="['/app/patients',patient.id, 'details']"
-                                    class="max-width-150">{{patient.gender | gender |translate}}</td>
+                                    class="max-width-150"
+                                    [attr.data-th]="'SHARED.GENDER'|translate">{{patient.gender | gender |translate}}</td>
                                 <td [routerLink]="['/app/patients',patient.id, 'details']"
-                                    class="max-width-180">{{patient.birth_date | date}}</td>
-                                <td class="max-width-60">
-                                    <a class="nav-link"
-                                       [routerLink]="['/app/patients',patient.id ]"
-                                       [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                </td>
-                                <td class="max-width-60">
-                                    <a class="nav-link" (click)="openModalConfirmation(patient.id)"
-                                       [title]="'PATIENTS.PATIENTS-TABLE.DELETE-PATIENT'|translate">
-                                        <i class="material-icons">delete</i>
-                                    </a>
+                                    class="max-width-180"
+                                    [attr.data-th]="'SHARED.BIRTH-DATE'|translate">{{patient.birth_date | date}}</td>
+                                <td class="max-width-200" [attr.data-th]="'SHARED.ACTIONS'|translate">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <a class="nav-link"
+                                                   [routerLink]="['/app/patients',patient.id ]"
+                                                   [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">
+                                                    <i class="material-icons">edit</i>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="nav-link" (click)="openModalConfirmation(patient.id)"
+                                                   [title]="'PATIENTS.PATIENTS-TABLE.DELETE-PATIENT'|translate">
+                                                    <i class="material-icons">delete</i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>

@@ -7,7 +7,7 @@
     </button>
 </div>
 <div class="table-responsive">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover rwd-table">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -26,11 +26,11 @@
         </tr>
         <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById" (click)="selectPatient(patient.id)"
             [ngClass]="listClass[i]">
-            <td>{{getIndex(i)}}</td>
-            <td>{{patient.name}}</td>
-            <td>{{patient.email}}</td>
-            <td>{{patient.gender | gender | translate}}</td>
-            <td>{{patient.birth_date | date}}</td>
+            <td [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
+            <td [attr.data-th]="'SHARED.NAME-OF-PATIENT'|translate">{{patient.name}}</td>
+            <td [attr.data-th]="'SHARED.EMAIL'|translate">{{patient.email}}</td>
+            <td [attr.data-th]="'SHARED.GENDER'|translate">{{patient.gender | gender | translate}}</td>
+            <td [attr.data-th]="'SHARED.BIRTH-DATE'|translate">{{patient.birth_date | date}}</td>
         </tr>
         </tbody>
     </table>

@@ -18,6 +18,7 @@ import { QuestionnairesCategory, QuestionnaireType } from '../../habits/models/q
 import { Patient } from '../../patient/models/patient'
 import { PatientService } from '../../patient/services/patient.service'
 import { MeasurementType } from '../../measurement/models/measurement.types'
+import * as $ from 'jquery'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -140,7 +141,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     getIndex(index: number): number {
-        if (this.search) {
+        if (this.search && this.search.begin && this.search.end) {
             return null;
         }
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
@@ -389,6 +390,10 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             })
             this.listOfDataTypes.push(dataReturn);
         });
+    }
+
+    isMobile(): boolean {
+        return $(window).width() < 950;
     }
 
     trackById(index, item) {

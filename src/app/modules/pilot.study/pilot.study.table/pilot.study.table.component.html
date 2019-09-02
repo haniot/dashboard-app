@@ -7,7 +7,7 @@
     </button>
 </div>
 <div class="table-responsive">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover rwd-table">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -20,29 +20,47 @@
         </thead>
         <tbody>
         <tr *ngIf="list.length==0">
-            <td colspan="8" *ngIf="!listOfPilotsIsEmpty">
+            <td colspan="7" *ngIf="!listOfPilotsIsEmpty">
                 <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
             </td>
-            <td colspan="8" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
+            <td colspan="7" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
         </tr>
         <tr *ngFor="let study of list; index as i;trackBy: trackById">
-            <td [routerLink]="['/app/pilotstudies',study.id,'details']" class="max-width-60">{{getIndex(i)}}</td>
-            <td [routerLink]="['/app/pilotstudies',study.id,'details']">{{study.name}}</td>
             <td [routerLink]="['/app/pilotstudies',study.id,'details']"
-                class="max-width-150">{{study.start | date }}</td>
+                class="max-width-60"
+                [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
             <td [routerLink]="['/app/pilotstudies',study.id,'details']"
-                class="max-width-150">{{study.end | date}}</td>
-            <td [routerLink]="['/app/pilotstudies',study.id,'details']" class="max-width-150">
+                [attr.data-th]="'PILOT-STUDY.NAME-OF-STUDY'|translate">{{study.name}}</td>
+            <td [routerLink]="['/app/pilotstudies',study.id,'details']"
+                class="max-width-150"
+                [attr.data-th]="'PILOT-STUDY.START'|translate">{{study.start | date }}</td>
+            <td [routerLink]="['/app/pilotstudies',study.id,'details']"
+                [attr.data-th]="'PILOT-STUDY.END'|translate" class="max-width-150">{{study.end | date}}</td>
+            <td [routerLink]="['/app/pilotstudies',study.id,'details']"
+                [attr.data-th]="'PILOT-STUDY.SITUATION'|translate"
+                class="max-width-150">
           <span>
             {{study.is_active | pilotStudySituation | translate}}
           </span>
             </td>
-            <td class="max-width-60"><a class="nav-link" [routerLink]="['/app/pilotstudies',study.id]"
-                                        [title]="'PILOT-STUDY.EDIT-STUDY'|translate"><i
-                    class="material-icons">edit</i></a></td>
-            <td class="max-width-60"><a class="nav-link" (click)="openModalConfirmation(study.id)"
-                                        [title]="'PILOT-STUDY.DELETE-STUDY'|translate"><i
-                    class="material-icons">delete</i></a></td>
+            <td class="max-width-200" [attr.data-th]="'SHARED.ACTIONS'|translate">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <a class="nav-link" [routerLink]="['/app/pilotstudies',study.id]"
+                               [title]="'PILOT-STUDY.EDIT-STUDY'|translate">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="nav-link" (click)="openModalConfirmation(study.id)"
+                               [title]="'PILOT-STUDY.DELETE-STUDY'|translate">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
