@@ -1,7 +1,13 @@
 
 .list-inline-item {
   display: inline-flex;
+  padding: 10px 5px;
 }
+
+.list-inline {
+  margin-top: 10px;
+}
+
 
 .activity {
   height: 30px;
@@ -13,37 +19,179 @@
   padding: 5px 5px;
   border-radius: 0.25rem;
   box-shadow: 0px 0px 10px 3px #ccc;
+
+  span {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  img {
+    position: relative;
+    margin-top: -20px;
+    margin-left: 5px;
+    margin-right: -5px;
+    width: 48px;
+    color: #fff;
+    text-decoration: none;
+    outline: 0;
+    padding: 5px 5px;
+    border-radius: 0.25rem;
+    border: 1px solid #00a594;
+    background-color: #f8f8f8;
+    box-shadow: 0px 0px 10px 3px #ccc;
+  }
+
 }
 
-.activity span {
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-}
 
-.activity img {
-  position: relative;
-  margin-top: -20px;
-  margin-left: 5px;
-  margin-right: -5px;
+.bg-abdominal {
   width: 48px;
-  color: #fff;
-  text-decoration: none;
-  outline: 0;
-  padding: 5px 5px;
-  border-radius: 0.25rem;
-  border: 1px solid #00a594;
-  background-color: #f8f8f8;
-  box-shadow: 0px 0px 10px 3px #ccc;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -10px -10px;
 }
 
-.list-inline {
-  margin-top: 10px;
+
+.bg-athletics {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -78px -10px;
 }
 
-.list-inline-item {
-  padding: 10px 5px;
+
+.bg-basketball {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -10px -78px;
+}
+
+
+.bg-bike {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -78px -78px;
+}
+
+
+.bg-bodybuilding {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -146px -10px;
+}
+
+
+.bg-dance {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -146px -78px;
+}
+
+
+.bg-dog_walk {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -10px -146px;
+}
+
+
+.bg-exercise_walking {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -78px -146px;
+}
+
+
+.bg-fight {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -146px -146px;
+}
+
+
+.bg-football {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -214px -10px;
+}
+
+
+.bg-futsal {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -214px -78px;
+}
+
+
+.bg-gym_exercise {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -214px -146px;
+}
+
+
+.bg-handball {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -10px -214px;
+}
+
+
+.bg-locomotion_walking {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -78px -214px;
+}
+
+
+.bg-none_activity {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -146px -214px;
+}
+
+
+.bg-olympic_rhythmic_gymnastics {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -214px -214px;
+}
+
+
+.bg-roller_skate {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -282px -10px;
+}
+
+.bg-run {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -282px -78px;
+}
+
+.bg-swim {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -282px -146px;
+}
+
+.bg-swimming {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -282px -214px;
+}
+
+.bg-tennis {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -10px -282px;
+}
+
+.bg-volleyball {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/physicalActivities.png') -78px -282px;
 }

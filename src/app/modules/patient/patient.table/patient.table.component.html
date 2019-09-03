@@ -25,11 +25,17 @@
                 <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
             </td>
             <td colspan="7" *ngIf="listOfPatientsIsEmpty">
-                <img src="../../../../assets/img/haniot/no_patient.png"
-                     [alt]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"
-                     id="listOfPatientsIsEmpty">
-                <br> {{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.
-                <br>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY-MESSAGE'|translate}}.
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="bg-no-patient"></div>
+                    </div>
+                    <label>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.</label>
+                    <p>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY-MESSAGE'|translate}}.</p>
+                </div>
+                <!--                <img src="../../../../assets/img/haniot/no_patient.png"-->
+                <!--                     [alt]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"-->
+                <!--                     id="listOfPatientsIsEmpty">-->
+
             </td>
         </tr>
         <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">

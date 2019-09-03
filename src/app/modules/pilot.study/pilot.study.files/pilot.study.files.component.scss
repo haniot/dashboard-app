@@ -174,7 +174,7 @@ td img {
   -webkit-transition: font-size 500ms; /* Safari */
 }
 
-.nav-tabs .nav-item .material-icons{
+.nav-tabs .nav-item .material-icons {
   margin: 5px 0px;
 }
 
@@ -227,3 +227,10 @@ $breakpoint-alpha: 480px;
     z-index: 1050 !important;
   }
 }
+
+.bg-no-patient {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -360px -150px;
+}
+

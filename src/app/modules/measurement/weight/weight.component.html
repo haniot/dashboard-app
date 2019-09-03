@@ -8,7 +8,7 @@
                     <div class="card card-stats">
                         <div class="card-header card-header-timer card-header-icon">
                             <div class="card-icon">
-                                <img src="../../../../assets/img/haniot/weight.png" alt="">
+                                <div class="bg-weight"></div>
                             </div>
                             <p class="card-category">{{'MEASUREMENTS.COMPONENT.WEIGHT'|translate}}: </p>
                             <h3 class="card-title" *ngIf="lastData && lastData.value">
@@ -26,7 +26,7 @@
                     <div class="card card-stats">
                         <div class="card-header card-header-timer card-header-icon">
                             <div class="card-icon">
-                                <img src="../../../../assets/img/haniot/fat.png" alt="">
+                                <div class="bg-fat"></div>
                             </div>
                             <p class="card-category">{{'MEASUREMENTS.COMPONENT.FAT'|translate}}: </p>
                             <h3 class="card-title" *ngIf="lastData && lastData.body_fat">
@@ -43,9 +43,12 @@
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
                     <div class="d-flex flex-row-reverse">
                         <div class="p-2">
-                            <small class="pull-right" *ngIf="lastData && lastData.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            <small class="pull-right"
+                                   *ngIf="lastData && lastData.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
                                 :{{lastData.timestamp | myDate}}</small>
-                            <small class="pull-right" *ngIf="!lastData || !lastData.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:
+                            <small class="pull-right"
+                                   *ngIf="!lastData || !lastData.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                                :
                                 {{'MEASUREMENTS.PATTERN-DATE'|translate}}
                             </small>
                         </div>

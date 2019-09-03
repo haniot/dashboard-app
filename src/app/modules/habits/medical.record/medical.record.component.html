@@ -19,9 +19,7 @@
                 <div class="row container">
                     <div class="col-md-2 d-flex justify-content-center d-flex align-items-center">
                         <div class="card-icon-disease">
-
-                            <img [src]="getTrustedUrl('../../../../assets/img/haniot/'+disease.type+'.png')" alt="">
-
+                            <div [ngClass]="'bg-'+disease.type"></div>
                         </div>
                     </div>
                     <div class="col-md row">

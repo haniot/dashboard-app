@@ -1,13 +1,5 @@
 <form [formGroup]="physicalActivityForm" *ngIf="physicalRecord">
     <div class="row">
-        <!-- <div class="form-group col-md-4">
-          <label for="created_at">
-            Data do registro:
-          </label>
-          <input matInput class="form-control" [matDatepicker]="pickerCreated" formControlName="created_at"
-            name="created_at" data-date-format="yyyy-MM-dd">
-        </div> -->
-
         <div class="form-group has-feedback col-md">
             <label for="school_activity_freq">
                 {{'HABITS.PHYSICAL-ACTIVITY.SCHOOL-ACTIVITY-FREQUENCY'|translate}}:
@@ -29,12 +21,12 @@
                         id="weekly_activities">
 
                         <div class="activity">
-                                <span class="align-top">
+                            <span class="align-top">
                                     {{activity | weeklyActivity | translate}}
-                                </span>
-                            <img [src]="getTrustedUrl('../../../../assets/img/haniot/physicalActivities/'+activity+'.png')"
-                                 alt="">
+                            </span>
+                            <img [ngClass]="'bg-'+activity" src="../../../../assets/img/haniot/bg.png">
                         </div>
+
                     </li>
                 </ul>
             </div>

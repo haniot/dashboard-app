@@ -202,8 +202,8 @@
                     <div class="card card-stats">
                         <div class="card-header card-header-timer card-header-icon">
                             <div class="card-icon" style="padding: 5px 5px">
-                                <img src="../../../../assets/img/haniot/x_boy.png" *ngIf="patient.gender === 'male'">
-                                <img src="../../../../assets/img/haniot/x_girl.png" *ngIf="patient.gender === 'female'">
+                                <div class="bg-x_boy" *ngIf="patient.gender === 'male'"></div>
+                                <div class="bg-x_girl" *ngIf="patient.gender === 'female'"></div>
                             </div>
 
                             <h4 class="card-title ellipsis">

@@ -52,10 +52,10 @@
                 </thead>
                 <tbody>
                 <tr *ngIf="listOfFiles.length==0">
-                    <td colspan="5" *ngIf="!listOfFilesIsEmpty">
+                    <td colspan="6" *ngIf="!listOfFilesIsEmpty">
                         <spinner [message]="'PILOT-STUDY.SPINNER-MESSAGE'|translate"></spinner>
                     </td>
-                    <td colspan="5" *ngIf="listOfFilesIsEmpty">
+                    <td colspan="6" *ngIf="listOfFilesIsEmpty">
                         <h4>{{'PILOT-STUDY.FILESEMPTY'|translate}}
                             <br>
                             <small>{{'PILOT-STUDY.FILESEMPTY-MESSAGE'|translate}}</small>
@@ -337,15 +337,17 @@
                                         </thead>
                                         <tbody>
                                         <tr *ngIf="listOfPatients.length==0">
-                                            <td colspan="6" *ngIf="!listOfPatientsIsEmpty">
+                                            <td colspan="5" *ngIf="!listOfPatientsIsEmpty">
                                                 <spinner
                                                         [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
                                             </td>
-                                            <td colspan="6" *ngIf="listOfPatientsIsEmpty">
-                                                <img src="../../../../assets/img/haniot/no_patient.png"
-                                                     [alt]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"
-                                                     id="listOfPatientsIsEmpty">
-                                                <br> {{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.
+                                            <td colspan="5" *ngIf="listOfPatientsIsEmpty">
+                                                <div class="container">
+                                                    <div class="row justify-content-center">
+                                                        <div class="bg-no-patient"></div>
+                                                    </div>
+                                                    <label>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.</label>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr *ngFor="let patient of listOfPatients; index as i;">
