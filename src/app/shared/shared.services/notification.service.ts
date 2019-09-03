@@ -14,7 +14,7 @@ export class NotificationService {
     }
 
     sendEmail(userId: string, notification: Email) {
-        return this.http.post<any>(`/local/${this.version}/users/${userId}/emails`, notification)
+        return this.http.post<any>(`${environment.api_url}/${this.version}/users/${userId}/emails`, notification)
             .toPromise();
     }
 
