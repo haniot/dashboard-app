@@ -1,6 +1,6 @@
 <div class="logo">
     <a [routerLink]="['/app/dashboard']" id="linkLogo">
-        <img src="/assets/img/haniot/silhueta-50x40.png"/>
+        <img src="/assets/img/haniot/silhueta-50x40.png" alt="HANIoT"/>
         <span id="haniotTitle">{{'APP.TITLE' | translate}}</span>
     </a>
 </div>
@@ -27,8 +27,8 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 
-                    <a class="dropdown-item background-green" href="javascript:void(0);"
-                    >{{'SHARED.CONFIG' | translate}}</a>
+                    <a class="dropdown-item background-green"
+                       href="javascript:void(0);">{{'SHARED.CONFIG' | translate}}</a>
 
                     <a class="dropdown-item background-green" href="javascript:void(0);"
                        (click)="logout()">{{'SHARED.LOGOUT' | translate}}</a>

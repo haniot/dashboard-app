@@ -103,7 +103,8 @@
         "FINALIZING-EVALUATION": "Finalizando avaliação",
         "ADD-EVALUATION": "Adicionar aconselhamento",
         "GENERATING-PDF": "Gerando PDF...",
-        "SENDING": "Enviando..."
+        "SENDING": "Enviando...",
+        "VALUE": "Valor"
       },
       "PIPES": {
         "CLASSIFICATION": {
@@ -554,8 +555,8 @@
   "PAGE-NOT-FOUND": {
     "TITLE": "Página não encontrada",
     "MESSAGE": "Você tentou acessar uma página não encontrada pelo nosso servidor",
-    "REDIRECT-PART1": "Redirecionando para página inicial em",
-    "REDIRECT-PART2": "segundos"
+    "REDIRECT-PART1": "Please return to the main page by clicking the button below.",
+    "REDIRECT-PART2": ""
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE": "Itens por página",

@@ -24,7 +24,8 @@
                             <span class="align-top">
                                     {{activity | weeklyActivity | translate}}
                             </span>
-                            <img [ngClass]="'bg-'+activity" src="../../../../assets/img/haniot/bg.png">
+                            <img [ngClass]="'bg-'+activity" src="../../../../assets/img/haniot/bg.png"
+                                 [alt]="(activity|weeklyActivity)|translate">
                         </div>
 
                     </li>

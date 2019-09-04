@@ -393,7 +393,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     isMobile(): boolean {
-        return $(window).width() < 950;
+        return $(window).width() < 590;
     }
 
     trackById(index, item) {

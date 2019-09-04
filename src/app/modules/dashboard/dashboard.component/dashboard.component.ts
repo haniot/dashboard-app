@@ -2,6 +2,8 @@ import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 
 import * as $ from 'jquery';
 import { ISubscription } from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr'
+import { TranslateService } from '@ngx-translate/core'
 
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
@@ -13,8 +15,9 @@ import { UserService } from '../../admin/services/users.service';
 import { AuthService } from '../../../security/auth/services/auth.service';
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation';
-import { ToastrService } from 'ngx-toastr'
-import { TranslateService } from '@ngx-translate/core'
+import { ConfigurationBasic } from '../../config.matpaginator'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'app-dashboard',
@@ -28,6 +31,8 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     pageStudies: number;
     limitStudies: number;
     lengthStudies: number;
+    pageEvaluations: number;
+    limitEvaluations: number;
     lengthEvaluations: number;
     userId: string;
     userLogged: GenericUser;
@@ -65,6 +70,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.listOfEvaluatioinsIsEmpty = false;
         this.subscriptions = new Array<ISubscription>();
         this.userId = this.localStorageService.getItem('user');
+        this.pagePatients = PaginatorConfig.page;
+        this.pageStudies = PaginatorConfig.page;
+        this.pageEvaluations = PaginatorConfig.page;
+        this.limitPatients = 8;
+        this.limitStudies = 4;
+        this.limitEvaluations = 4;
         this.subscriptions.push(
             this.selectPilotService.pilotStudyUpdated.subscribe(() => {
                 this.load();
@@ -182,7 +193,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         if (!this.userId) {
             this.loadUser();
         }
-        this.dashboardService.getAllEvaluations(this.userId, this.pageStudies, this.limitStudies)
+        this.dashboardService.getAllEvaluations(this.userId, this.pageEvaluations, this.limitEvaluations)
             .then(httpResponse => {
                 this.lengthEvaluations = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 if (!this.lengthEvaluations) {

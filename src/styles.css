@@ -1,3 +1,27 @@
+@font-face {
+    font-family: 'Material Icons';
+    font-display: auto;
+    font-style: normal;
+    font-weight: 400;
+    src: local('Material Icons'), url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
 /*Styles buttons HANIOT*/
 
 .mat-button.btn, .mat-button.btn.btn-haniot-primary, .mat-raised-button.btn, .mat-raised-button.btn.btn-haniot-primary, .mat-raised-button.btn:not([class*=mat-elevation-z]), .mat-raised-button.btn:not([class*=mat-elevation-z]).btn-haniot-primary, .btn, .btn.btn-haniot-primary {

@@ -103,7 +103,8 @@
         "FINALIZING-EVALUATION": "Finalizing evaluation",
         "ADD-EVALUATION": "Add counseling",
         "GENERATING-PDF": "Generating PDF...",
-        "SENDING": "Sending..."
+        "SENDING": "Sending...",
+        "VALUE": "Value"
       },
       "PIPES": {
         "CLASSIFICATION": {
@@ -554,8 +555,8 @@
   "PAGE-NOT-FOUND": {
     "TITLE": "Page not found",
     "MESSAGE": "You tried to access a page not found by our server",
-    "REDIRECT-PART1": "Redirecting to homepage at",
-    "REDIRECT-PART2": "seconds"
+    "REDIRECT-PART1": "Use the button below to return to the home page",
+    "REDIRECT-PART2": ""
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE": "Items per page",
