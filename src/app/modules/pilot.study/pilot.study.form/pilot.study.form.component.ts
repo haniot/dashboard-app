@@ -122,6 +122,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         if (this.pilotStudyId) {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
+                created_at: [''],
                 name: ['', Validators.required],
                 location: ['', Validators.required],
                 start: ['', Validators.required],
@@ -133,6 +134,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
+                created_at: [''],
                 name: ['', Validators.required],
                 location: [''],
                 start: ['', Validators.required],

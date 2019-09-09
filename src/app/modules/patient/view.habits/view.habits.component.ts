@@ -122,6 +122,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     createPatientFormInit() {
         this.patientForm = this.fb.group({
             id: [''],
+            created_at: [''],
             selected_pilot_study: [{ value: '', disabled: true }],
             name: [{ value: '', disabled: true }],
             email: [{ value: '', disabled: true }],
@@ -134,6 +135,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     createPatientForm(patient: Patient) {
         this.patientForm = this.fb.group({
             id: [patient.id],
+            created_at: [patient.created_at],
             selected_pilot_study: [patient.selected_pilot_study],
             name: [{ value: patient.name, disabled: true }],
             email: [{ value: patient.email, disabled: true }],

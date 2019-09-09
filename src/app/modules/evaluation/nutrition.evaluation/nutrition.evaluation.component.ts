@@ -12,7 +12,7 @@ import { MealType } from '../../measurement/models/blood-glucose';
 import { GeneratePdfService } from '../services/generate.pdf.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SendEmailService } from '../services/send.email.service';
-import { Patient, PatientBasic } from '../../patient/models/patient'
+import { Patient } from '../../patient/models/patient'
 import { EnumMeasurementType, Measurement } from '../../measurement/models/measurement'
 import { BloodPressure } from '../../measurement/models/blood-pressure'
 import { HeartRate } from '../../measurement/models/heart-rate'
@@ -20,19 +20,36 @@ import { ModalService } from '../../../shared/shared.components/haniot.modal/ser
 import { PatientService } from '../../patient/services/patient.service'
 import { Weight } from '../../measurement/models/weight'
 
-// TODO: Pedir a Lucas os reais valores para os zones!!
 const zones = [{
     preprandial: {
-        great: { min: 0, max: 0 },
-        good: { min: 0, max: 0 }
+        good: {
+            min: 65,
+            max: 100
+        },
+        great: {
+            min: 90,
+            max: 145
+        }
     },
     postprandial: {
-        great: { min: 0, max: 0 },
-        good: { min: 0, max: 0 }
+        good: {
+            min: 80,
+            max: 126
+        },
+        great: {
+            min: 90,
+            max: 180
+        }
     },
     bedtime: {
-        great: { min: 0, max: 0 },
-        good: { min: 0, max: 0 }
+        good: {
+            min: 80,
+            max: 100
+        },
+        great: {
+            min: 120,
+            max: 180
+        }
     }
 }]
 

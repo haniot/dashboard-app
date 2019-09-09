@@ -61,6 +61,7 @@ export class EditMypilotComponent implements OnInit, OnChanges, OnDestroy {
         if (this.pilotStudyId) {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
+                created_at: [''],
                 name: ['', Validators.required],
                 start: ['', Validators.required],
                 end: ['', Validators.required],
