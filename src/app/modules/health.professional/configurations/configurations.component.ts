@@ -4,10 +4,11 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { HealtArea, HealthProfessional } from '../../admin/models/health.professional';
+import { HealthProfessional } from '../../admin/models/health.professional';
 import { HealthProfessionalService } from '../../admin/services/health.professional.service';
 import { UserService } from '../../admin/services/users.service';
 import { AuthService } from '../../../security/auth/services/auth.service'
+import { NgForm } from '@angular/forms'
 
 @Component({
     selector: 'health-professional-configurations',
@@ -19,9 +20,9 @@ export class HealthProfessionalConfigComponent implements OnInit {
     visibilityButtonSave: boolean;
     disabledButtonEdit: boolean;
     user: HealthProfessional;
-    healthAreaOptions = Object.keys(HealtArea);
     email: string;
     password: string;
+    maxBirthDate: Date;
 
     constructor(
         private healthService: HealthProfessionalService,
@@ -32,6 +33,7 @@ export class HealthProfessionalConfigComponent implements OnInit {
         private translateService: TranslateService
     ) {
         this.user = new HealthProfessional();
+        this.maxBirthDate = new Date();
     }
 
     ngOnInit() {
@@ -42,7 +44,9 @@ export class HealthProfessionalConfigComponent implements OnInit {
         this.userId = this.localStorageService.getItem('user');
         this.healthService.getById(this.userId)
             .then(healthProfessional => this.user = healthProfessional)
-            .catch();
+            .catch(() => {
+                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER'));
+            });
 
     }
 
@@ -51,8 +55,11 @@ export class HealthProfessionalConfigComponent implements OnInit {
         this.visibilityButtonSave = true;
     }
 
-    onSubmit(form) {
+    onSubmit(form: NgForm) {
         const healthProfessional = form.value;
+        if (!form.controls['email'].touched || !form.controls['email'].dirty) {
+            delete healthProfessional.email;
+        }
         healthProfessional.id = this.localStorageService.getItem('user');
         this.healthService.update(healthProfessional)
             .then((healthprofesional) => {

@@ -8,7 +8,7 @@
     </button>
 </div>
 <div class="table-responsive">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover rwd-table">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -25,39 +25,81 @@
                 <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
             </td>
             <td colspan="7" *ngIf="listOfPatientsIsEmpty">
-                <img src="../../../../assets/img/haniot/no_patient.png"
-                     [alt]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"
-                     id="listOfPatientsIsEmpty">
-                <br> {{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.
-                <br>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY-MESSAGE'|translate}}.
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="bg-no-patient"></div>
+                    </div>
+                    <label>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.</label>
+                    <p>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY-MESSAGE'|translate}}.</p>
+                </div>
+                <!--                <img src="../../../../assets/img/haniot/no_patient.png"-->
+                <!--                     [alt]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"-->
+                <!--                     id="listOfPatientsIsEmpty">-->
+
             </td>
         </tr>
-        <tr *ngFor="let patient of listOfPatientsAux; index as i;trackBy: trackById">
-            <td [routerLink]="['/app/patients',patient.id, 'details']" class="max-width-60">{{getIndex(i)}}</td>
-            <td [routerLink]="['/app/patients',patient.id, 'details']">{{patient.name}}</td>
+        <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">
             <td [routerLink]="['/app/patients',patient.id, 'details']"
-                class="max-width-150">{{patient.gender | gender | translate}}</td>
+                class="max-width-60"
+                [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
             <td [routerLink]="['/app/patients',patient.id, 'details']"
-                class="max-width-150">{{patient.birth_date | convertInAge }}</td>
-
+                [attr.data-th]="'SHARED.NAME-OF-PATIENT'|translate">{{patient.name}}</td>
             <td [routerLink]="['/app/patients',patient.id, 'details']"
-                class="max-width-180">{{patient.birth_date | date}}</td>
-            <td class="max-width-60">
-                <a class="nav-link" [routerLink]="['/app/patients',patient.id ]"
-                   [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">
-                    <i class="material-icons">edit</i>
-                </a>
-            </td>
-            <td class="max-width-60">
-                <a class="nav-link" (click)="openModalConfirmation(patient.selected_pilot_study,patient.id)"
-                   [title]="'PATIENTS.PATIENTS-TABLE.DELETE-PATIENT'|translate">
-                    <i class="material-icons">delete</i>
-                </a>
+                class="max-width-150"
+                [attr.data-th]="'SHARED.GENDER'|translate">{{patient.gender | gender | translate}}</td>
+            <td [routerLink]="['/app/patients',patient.id, 'details']"
+                class="max-width-150"
+                [attr.data-th]="'SHARED.AGE'|translate">{{patient.birth_date | convertInAge }}</td>
+            <td [routerLink]="['/app/patients',patient.id, 'details']"
+                class="max-width-180"
+                [attr.data-th]="'SHARED.BIRTH-DATE'|translate">{{patient.birth_date | date}}</td>
+            <td class="max-width-200" [attr.data-th]="'SHARED.ACTIONS'|translate">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <a class="nav-link" [routerLink]="['/app/patients',patient.id ]"
+                               [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="nav-link" (click)="openModalConfirmation(patient.selected_pilot_study,patient.id)"
+                               [title]="'PATIENTS.PATIENTS-TABLE.DELETE-PATIENT'|translate">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>
     </table>
-
+    <!--    <table class="rwd-table">-->
+    <!--        <tr>-->
+    <!--            <th>Movie Title</th>-->
+    <!--            <th>Genre</th>-->
+    <!--            <th>Year</th>-->
+    <!--            <th>Gross</th>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td data-th="Movie Title">Star Wars</td>-->
+    <!--            <td data-th="Genre">Adventure, Sci-fi</td>-->
+    <!--            <td data-th="Year">1977</td>-->
+    <!--            <td data-th="Gross">$460,935,665</td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td data-th="Movie Title">Howard The Duck</td>-->
+    <!--            <td data-th="Genre">"Comedy"</td>-->
+    <!--            <td data-th="Year">1986</td>-->
+    <!--            <td data-th="Gross">$16,295,774</td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td data-th="Movie Title">American Graffiti</td>-->
+    <!--            <td data-th="Genre">Comedy, Drama</td>-->
+    <!--            <td data-th="Year">1973</td>-->
+    <!--            <td data-th="Gross">$115,000,000</td>-->
+    <!--        </tr>-->
+    <!--    </table>-->
 </div>
 
 <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"

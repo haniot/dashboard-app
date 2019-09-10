@@ -8,6 +8,10 @@ import { VerifyScopeService } from '../../../security/services/verify.scope.serv
 import { UserService } from '../../../modules/admin/services/users.service'
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 import { Location } from '@angular/common'
+import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study'
+import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service'
+import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service'
+import { GenericUser } from '../../../shared/shared.models/generic.user'
 
 declare const $: any;
 
@@ -63,6 +67,9 @@ export class SidebarComponent implements OnInit {
     activeDashboard: string;
     activePatients: string;
     activeEvaluations: string;
+    study: PilotStudy;
+    iconCollapse = 'keyboard_arrow_down';
+    userLogged: GenericUser;
 
     constructor(
         private authService: AuthService,
@@ -70,10 +77,17 @@ export class SidebarComponent implements OnInit {
         private userService: UserService,
         private loadingService: LoadingService,
         private localStorageService: LocalStorageService,
+        private selectPilotService: SelectPilotStudyService,
+        private studyService: PilotStudyService,
         private router: Router,
         private activedRoute: ActivatedRoute,
         private location: Location
     ) {
+        this.userLogged = new GenericUser();
+        this.study = new PilotStudy();
+        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
+            this.getPilotSelected();
+        });
     }
 
     ngOnInit() {
@@ -81,6 +95,7 @@ export class SidebarComponent implements OnInit {
         this.getUserName();
         this.router.events.subscribe(event => this.updateMenu());
         this.activedRoute.paramMap.subscribe(() => this.updateMenu());
+        this.getPilotSelected();
     }
 
     isMobileMenu() {
@@ -108,6 +123,7 @@ export class SidebarComponent implements OnInit {
         const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
         let username = '';
         try {
+            this.userLogged = localUserLogged;
             username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
             this.userName = username;
         } catch (e) {
@@ -118,8 +134,24 @@ export class SidebarComponent implements OnInit {
                         this.localStorageService.setItem('userLogged', JSON.stringify(user));
                     }
                 })
-                .catch();
+                .catch(() => {
+
+                });
         }
+    }
+
+    getPilotSelected(): void {
+        const pilotselected = this.localStorageService.getItem(this.userId);
+        if (pilotselected) {
+            this.studyService.getById(pilotselected)
+                .then(study => {
+                    this.study = study
+                })
+                .catch(() => {
+
+                });
+        }
+
     }
 
     updateMenu() {
@@ -167,6 +199,15 @@ export class SidebarComponent implements OnInit {
             case 'patient':
                 this.router.navigate(['/app/patients/mystudies']);
                 break;
+        }
+    }
+
+    collapse() {
+        this.iconCollapse = this.iconCollapse === 'keyboard_arrow_up' ? 'keyboard_arrow_down' : 'keyboard_arrow_up';
+        if (this.iconCollapse === 'keyboard_arrow_up') {
+            $('#collapseStudy').collapse('hide');
+        } else {
+            $('#collapseStudy').collapse('show');
         }
     }
 

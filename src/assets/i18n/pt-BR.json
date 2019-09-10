@@ -28,8 +28,8 @@
     "CARD-PATIENTS-FROM-THE-STUDY": "Total de Pacientes do Estudo Selecionado",
     "CARD-PATIENTS-TOTAL": "Total de Pacientes",
     "CARD-PATIENTS": {
-      "TITLE": "Ultimos pacientes cadastrados",
-      "SUBTITLE": "Clique sobre o card para visualizar informações do paciente.",
+      "TITLE": "Últimos pacientes cadastrados",
+      "SUBTITLE": "Clique sobre o paciente para visualizá-lo.",
       "SPINNER-MESSAGE": "Carregando pacientes",
       "STUDY-EMPTY": "O estudo selecionado não possui pacientes cadastrados",
       "STUDY-EMPTY-MESSAGE": "Ir para a página de cadastro de pacientes",
@@ -38,16 +38,16 @@
     },
     "CARD-STUDIES-TOTAL": "Total de Estudos",
     "CARD-STUDIES": {
-      "TITLE": "Ultimos estudos cadastrados",
-      "SUBTITLE": "Clique sobre o card para visualizar informações do estudo.",
+      "TITLE": "Últimos estudos cadastrados",
+      "SUBTITLE": "Clique sobre o estudo para visualizá-lo.",
       "SPINNER-MESSAGE": "Carregando estudos",
       "VIEW": "Visualizar estudo",
       "STUDIES-EMPTY": "Você não possui estudos associados.",
       "STUDIES-EMPTY-MESSAGE": "Entre em contato com o administrador."
     },
     "CARD-EVALUATIONS": {
-      "TITLE": "Ultimas avaliações cadastradas",
-      "SUBTITLE": "Clique sobre o card para visualizar informações da avaliação.",
+      "TITLE": "Últimas avaliações cadastradas",
+      "SUBTITLE": "Clique sobre a avaliação para visualizá-la.",
       "NONE-EVALUATIONS": "Você não possui avaliações disponivéis!",
       "TOTAL": "Total de avaliações"
     }
@@ -103,7 +103,8 @@
         "FINALIZING-EVALUATION": "Finalizando avaliação",
         "ADD-EVALUATION": "Adicionar aconselhamento",
         "GENERATING-PDF": "Gerando PDF...",
-        "SENDING": "Enviando..."
+        "SENDING": "Enviando...",
+        "VALUE": "Valor"
       },
       "PIPES": {
         "CLASSIFICATION": {
@@ -207,7 +208,8 @@
       "NONE-LESION": "Nenhuma lesão cadastrada!",
       "TYPE-TEETH": "Tipo de dente",
       "TYPE-LESION": "Tipo de lesão",
-      "UNAVAILABLE-DATA": "Dados sobre saúde bucal indisponível!"
+      "UNAVAILABLE-DATA": "Dados sobre saúde bucal indisponível!",
+      "TEETH-LESIONS-UNAVAILABLE-DATA": "Dados sobre lesões indisponível!"
     },
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Hábitos de atividades físicas do paciente",
@@ -225,12 +227,12 @@
       "TIME-ABBREVIATION": "hs"
     },
     "SOCIO-DEMOGRAPHIC": {
-      "TITLE": "Informações sócio-demográficas",
+      "TITLE": "Informações sócio demográficas",
       "SUBTITLE": "",
       "COLOR-RACE": "Cor ou raça",
       "MOTHER-EDUCATION": "Escolaridade da mãe",
       "NUMBER-PEOPLE-HOME": "Quantidade de pessoas em casa",
-      "UNAVAILABLE-DATA": "Dados sócio-demográficos indisponível!"
+      "UNAVAILABLE-DATA": "Dados sócio demográficos indisponível!"
     },
     "PIPES": {
       "WEEKLY-FOOD": {
@@ -508,7 +510,7 @@
       "WEIGHT-TABLE": {
         "WEIGHT": "Peso",
         "BODY-FAT": "Gordura Corporal",
-        "NOT-COLLECTED": "Não coletada"
+        "NOT-COLLECTED": "- -"
       },
       "GLUCOSE-TABLE": {
         "MEAL": "Tipo de Refeição"
@@ -521,6 +523,7 @@
         "DATASET": "Frequências"
       },
       "MODAL-REMOVE": {
+        "SPINNER-MESSAGE": "Removendo medição(es)...",
         "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover definitivamente a medição?",
         "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover definitivamente",
         "CONFIRM-MULTIPLE-REMOVE-PART2": "medição(es)?"
@@ -529,7 +532,7 @@
     "LAST-REGISTER": "Último registro",
     "LAST-REGISTER-DATE": "Data do último registro",
     "PATTERN-DATE": "dia/mês/ano horário",
-    "VALUE": "Valor",
+    "VALUE": "- -",
     "UNIT": "Unidade",
     "MIN": "MIN",
     "MAX": "MAX",
@@ -552,8 +555,8 @@
   "PAGE-NOT-FOUND": {
     "TITLE": "Página não encontrada",
     "MESSAGE": "Você tentou acessar uma página não encontrada pelo nosso servidor",
-    "REDIRECT-PART1": "Redirecionando para página inicial em",
-    "REDIRECT-PART2": "segundos"
+    "REDIRECT-PART1": "Please return to the main page by clicking the button below.",
+    "REDIRECT-PART2": ""
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE": "Itens por página",
@@ -574,7 +577,7 @@
       "TITLE-EDIT": "Editar paciente",
       "SUBTITLE": "",
       "SELECT-BIRTH-DATE": "Selecione a data de nascimento",
-      "ASSOCIATE-STUDY": "Estudo associado",
+      "ASSOCIATE-STUDY": "Associar ao estudo",
       "SELECT-STUDY": "- - - - selecione um estudo - - - -",
       "INVALID-STUDY": "Estudo inválido"
     },
@@ -605,7 +608,8 @@
       "TAB-NUTRITIONAL-QUESTIONNAIRE": "Quest. Nutricional",
       "TAB-ODONTOLOGICAL-QUESTIONNAIRE": "Quest. Odontologico",
       "NUTRITIONAL-QUESTIONNAIRE": "Questionário Nutricional",
-      "ODONTOLOGICAL-QUESTIONNAIRE": "Questionário Odontologico"
+      "ODONTOLOGICAL-QUESTIONNAIRE": "Questionário Odontologico",
+      "ASSOCIATED-STUDIES": "Estudos Associados"
     },
     "MY-STUDIES": {
       "TITLE": "Lista de estudos piloto",
@@ -709,7 +713,10 @@
   "SIDEBAR": {
     "USERS": "Usuários",
     "ADMINS": "Administradores",
-    "HEALTHPROFESSIONALS": "Profissionais de Saúde"
+    "HEALTHPROFESSIONALS": "Profissionais de Saúde",
+    "SELECTED-STUDY": "Estudo Selecionado",
+    "TOTAL-OF-PROFESSIONALS": "Total de Profissionais",
+    "TOTAL-OF-PATIENTS": "Total de Pacientes"
   },
   "SHARED": {
     "NAME": "Nome",
@@ -751,8 +758,8 @@
     "AT": "às",
     "DATE-START": "Data ínicio",
     "DATE-END": "Data término",
-    "STUDY-ACTIVATED": "ATIVADO",
-    "STUDY-DISABLED": "DESATIVADO",
+    "STUDY-ACTIVATED": "Ativo",
+    "STUDY-DISABLED": "Inativo",
     "TOCLEAN": "Limpar",
     "LOCAL": "Local",
     "INVALID-LOCAL": "Local inválido",
@@ -768,7 +775,7 @@
     "BIRTH-DATE": "Date de nascimento",
     "INVALID-BIRTH-DATE": "Date de nascimento inválida",
     "NAME-OF-PATIENT": "Nome do paciente",
-    "YEARS": "ANOS",
+    "YEARS": "Anos",
     "AGE": "Idade",
     "CANCEL": "Cancelar",
     "PHONE-NUMBER": "Telefone",
@@ -778,13 +785,15 @@
     "LOADING": "Carregando...",
     "LAST-LOGIN": "Último login",
     "GENERATE-PASSWORD": "Gerar senha aleatória",
+    "CREATED-AT": "Criado em",
+    "POSITION": "Posição",
     "PIPES": {
       "GENDER": {
-        "MALE": "MASCULINO",
-        "FEMALE": "FEMININO"
+        "MALE": "Masculino",
+        "FEMALE": "Feminino"
       },
       "UNDEFINED": "Fora dos parâmetros",
-      "NOTFOUND": "NÃO ENCONTRADO"
+      "NOTFOUND": "Não encontrado"
     },
     "COMPONENTS": {
       "MODAL-CONFIRMATION": {
@@ -810,6 +819,7 @@
   },
   "SECURITY": {
     "LOGIN": {
+      "TITLE": "HANIoT - Login",
       "PLACEHOLDER-EMAIL": "Digite aqui seu email...",
       "PLACEHOLDER-PASSWORD": "Digite aqui sua senha...",
       "LOGIN": "Entrar",
@@ -817,6 +827,7 @@
       "RESET-HERE": "redefina aqui"
     },
     "CHANGE": {
+      "TITLE": "HANIoT - Alterar Senha",
       "CHANGE-PASSWORD": "Alteração de senha",
       "PASSWORD": "Nova Senha",
       "PLACEHOLDER-PASSWORD": "Digite aqui sua nova senha...",
@@ -830,6 +841,7 @@
       "RECOVERY-FAILED-MESSAGE2": "Reinicie o processo de recuperação de senha, pois, o token informado encontra-se ausente ou inválido."
     },
     "FORGOT": {
+      "TITLE": "HANIoT - Recuperar Senha",
       "INFORMATION": "E-mail enviado com sucesso!",
       "INFORMATION-MESSAGE": "Se o e-mail submetido estiver devidamente cadastrado na plataforma, você receberá um e-mail com as instruções e o link para realizar a alteração da senha. Caso você não receba o e-mail em alguns minutos, verifique a sua caixa de spam ou repita o processo.",
       "PASSWORD-RECOVERY": "Recuperação de senha",
@@ -915,6 +927,8 @@
     "TOO-MANY-ATTEMPTS": "Excesso de tentativas!",
     "NOT-CHANGE-LANGUAGE": "Não foi possível alterar o idioma!",
     "QUESTIONNAIRE-DELETED": "Questionário removido com sucesso!",
-    "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!"
+    "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!",
+    "MEASUREMENT-REMOVED": "Medição removida com sucesso!",
+    "MEASUREMENT-NOT-REMOVED": "Não foi possível remover medição!"
   }
 }

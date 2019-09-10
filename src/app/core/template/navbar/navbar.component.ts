@@ -12,6 +12,7 @@ import { LocalStorageService } from '../../../shared/shared.services/local.stora
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { UserService } from '../../../modules/admin/services/users.service'
+import { Title } from '@angular/platform-browser'
 
 
 export declare interface RouteInfo {
@@ -67,7 +68,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private selectPilotService: SelectPilotStudyService,
         private localStorageService: LocalStorageService,
         private loadingService: LoadingService,
-        private translateService: TranslateService) {
+        private translateService: TranslateService,
+        private titleService: Title) {
         this.location = location;
         this.sidebarVisible = false;
         this.subscriptions = new Array<ISubscription>();
@@ -170,6 +172,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.listTitles.forEach(element => {
             if (RegExp(element.path).test(path_current)) {
                 this.title = element.title;
+                this.titleService.setTitle(this.translateService.instant(this.title));
             }
         });
         this.verifyVisibilityOfSeletorOfPilotStudy();

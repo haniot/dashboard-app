@@ -13,6 +13,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 import { environment } from '../../../../environments/environment'
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { Title } from '@angular/platform-browser'
 
 const ATTEMPTSSHOWCAPTCHA = 2;
 
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     reCaptcha: RecaptchaComponent;
     site_key = environment.reCaptcha_siteKey;
     captchaResolved: boolean;
+    recaptchaResponse: string;
     showCaptcha: boolean;
     attemptUser: Attempt;
     f: FormGroup;
@@ -52,7 +54,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         private toastr: ToastrService,
         private loadinService: LoadingService,
         private translateService: TranslateService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private titleService: Title
     ) {
         this.loading = false;
         this.showCaptcha = false;
@@ -62,12 +65,13 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     ngOnInit() {
+        $('body').css('background-color', '#00a594');
+        this.titleService.setTitle(this.translateService.instant('SECURITY.LOGIN.TITLE'));
+
         const token = this.localStorageService.getItem('token');
         if (token) {
             this.router.navigate(['/app']);
         }
-
-        $('body').css('background-color', '#00a594');
         this.f = this.formBuilder.group({
             email: [null, [Validators.required, Validators.email]],
             password: [null, [Validators.required]]
@@ -96,9 +100,10 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     resetCaptcha(): void {
-        if (this.reCaptcha) {
+        if (this.reCaptcha && this.recaptchaResponse) {
             this.reCaptcha.reset();
             this.captchaResolved = false;
+            this.recaptchaResponse = undefined;
         }
     }
 
@@ -135,8 +140,9 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     onSubmit() {
         this.loading = true;
+        const body = Object.assign(this.f.value, { recaptchaResponse: this.recaptchaResponse })
         this.subscriptions.push(
-            this.authService.login(this.f.value)
+            this.authService.login(body)
                 .subscribe(
                     (resp) => {
                         this.cleanAttempt()
@@ -151,11 +157,11 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
                     (error: HttpErrorResponse) => {
                         const rateLimit = parseInt(error.headers.get('x-ratelimit-limit'), 10);
                         const rateLimitRemaining = parseInt(error.headers.get('x-ratelimit-remaining'), 10);
+                        this.updateAttempt(rateLimit - rateLimitRemaining);
                         switch (error.status) {
                             case 401:
                                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.INVALID-DATA'),
                                     this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
-                                this.updateAttempt(rateLimit - rateLimitRemaining);
                                 break;
                             case 429:
                                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.TRY-AGAIN'),
@@ -191,14 +197,8 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     solveCaptcha(captchaResponse: string, reCaptcha: RecaptchaComponent) {
         this.reCaptcha = reCaptcha;
-        this.authService.validateReCaptcha(captchaResponse)
-            .then((response) => {
-                this.captchaResolved = !!response.success;
-                if (!response.success) {
-                    this.resetCaptcha();
-                }
-
-            }).catch()
+        this.recaptchaResponse = captchaResponse
+        this.captchaResolved = true;
     }
 
     ngAfterViewChecked() {

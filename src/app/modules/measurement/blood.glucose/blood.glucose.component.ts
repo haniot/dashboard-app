@@ -204,7 +204,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                         params.data.time = t.time;
 
                     }
-                    return `${glucose}: ${params.data.value} mg/dl<br> ${date}: <br>${params.name} ${at} ${params.data.time}`
+                    return `${glucose}: ${params.data.value}mg/dl<br> ${date}: <br>${params.name} ${at} ${params.data.time}`
                 }
             },
             legend: {
@@ -215,7 +215,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 {
                     type: 'value',
                     axisLabel: {
-                        formatter: '{value} mg/dl'
+                        formatter: '{value}mg/dl'
                     }
                 }
             ],

@@ -45,7 +45,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     maxBirthDate: Date;
     user: GenericUser;
     passwordGenerated: string;
-    copyPasswordGenerated: boolean
+    errorConflitEmail: boolean;
 
     constructor(
         private fb: FormBuilder,
@@ -69,9 +69,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         this.loadUserInForm();
         this.subscriptions.push(
             this.modalService.eventActionNotExecuted.subscribe((res) => {
-                if (res && res.error && res.error.code === 409) {
-                    this.userForm.get('email').setErrors({ 'incorrect': true });
-                }
                 switch (this.typeUser) {
                     case 'Admin':
                         this.loadAdminInForm(res.user);
@@ -80,6 +77,9 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                     case 'HealthProfessional':
                         this.loadHealthProfessinalInForm(res.user);
                         break;
+                }
+                if (res && res.error && res.error.code === 409) {
+                    this.errorConflitEmail = true;
                 }
             }));
         this.listOfLanguages = this.translateService.getLangs();
@@ -102,6 +102,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             this.onsubmit.emit(form);
             this.userForm.reset();
             this.userId = undefined;
+            this.cleanEmailConflit();
         } else {
             this.passwordNotMatch = true;
         }
@@ -114,7 +115,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             email: ['', Validators.compose([Validators.required, Validators.email])],
             birth_date: ['', Validators.required],
             phone_number: [''],
-            language: [''],
+            language: [this.translateService.defaultLang],
             health_area: ['', Validators.required],
             password: ['', Validators.required],
             password_confirm: ['', Validators.required]
@@ -137,7 +138,9 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             email: [user.email, Validators.compose([Validators.required, Validators.email])],
             birth_date: [user.birth_date, Validators.required],
             phone_number: [user.phone_number],
-            language: [user.language]
+            language: [user.language],
+            password: [''],
+            password_confirm: ['']
         });
     }
 
@@ -150,7 +153,9 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             birth_date: [user.birth_date, Validators.required],
             phone_number: [user.phone_number],
             language: [user.language],
-            health_area: [user.health_area, Validators.required]
+            health_area: [user.health_area, Validators.required],
+            password: [''],
+            password_confirm: ['']
         });
     }
 
@@ -184,6 +189,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             this.userForm.reset();
         }
         this.passwordNotMatch = false;
+        this.errorConflitEmail = false;
     }
 
     clickVisibilityPassword(): void {
@@ -228,9 +234,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         this.passwordGenerated = randexp.gen();
         this.userForm.get('password').patchValue(this.passwordGenerated);
         this.userForm.get('password_confirm').patchValue(this.passwordGenerated);
-        this.copyPasswordGenerated = true;
-        this.icon_password = 'visibility';
-        this.typeInputPassword = 'text';
     }
 
     applyMaskPhoneNumber() {
@@ -242,6 +245,10 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             number = number.replace(/(\d)(\d{4})$/, '$1-$2');
         }
         this.userForm.get('phone_number').patchValue(number);
+    }
+
+    cleanEmailConflit(): void {
+        this.errorConflitEmail = false;
     }
 
     trackById(index, item) {
@@ -258,5 +265,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             subscription.unsubscribe();
         });
         this.userForm.reset();
+        this.errorConflitEmail = false;
     }
 }

@@ -27,10 +27,10 @@
                             </thead>
                             <tbody>
                             <tr *ngIf="list.length==0">
-                                <td colspan="6" *ngIf="!listOfStudiesIsEmpty">
+                                <td colspan="5" *ngIf="!listOfStudiesIsEmpty">
                                     <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
                                 </td>
-                                <td colspan="6" *ngIf="listOfStudiesIsEmpty && !search">
+                                <td colspan="5" *ngIf="listOfStudiesIsEmpty && !search">
                                     <p class="second-title text-center">
                                         {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY'|translate}}.</p>
                                     <p>

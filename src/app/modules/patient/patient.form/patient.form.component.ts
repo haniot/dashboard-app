@@ -1,19 +1,20 @@
-import { Component, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
+import * as RandExp from 'randexp';
 
 import { Gender, Patient } from '../models/patient';
 import { PatientService } from '../services/patient.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { LanguagesConfiguration } from '../../../../assets/i18n/config';
-import { PilotStudy } from '../../pilot.study/models/pilot.study'
-import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
-import { AuthService } from '../../../security/auth/services/auth.service'
+import { PilotStudy } from '../../pilot.study/models/pilot.study';
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
+import { AuthService } from '../../../security/auth/services/auth.service';
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -37,6 +38,8 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     listOfLanguages: Array<String>;
     validateTimer: any;
     matchTimer: any;
+    errorEmailConflit: boolean;
+    passwordGenerated: string;
 
     private subscriptions: Array<ISubscription>;
 
@@ -85,7 +88,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             email: ['', Validators.compose([Validators.email])],
             phone_number: [''],
             selected_pilot_study: [''],
-            language: [''],
+            language: [this.translateService.defaultLang],
             password: [''],
             password_confirm: ['']
         });
@@ -94,6 +97,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     setPatientInForm(patient: Patient) {
         this.patientForm = this.fb.group({
             id: [patient.id],
+            created_at: [patient.created_at],
             name: [patient.name],
             birth_date: [patient.birth_date],
             gender: [patient.gender],
@@ -125,8 +129,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         const form = this.patientForm.getRawValue();
         const regexDate = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
         if (!regexDate.test(form.birth_date)) {
-            let dateFormat = form.birth_date.toISOString();
-
+            let dateFormat = new Date(form.birth_date).toISOString();
             dateFormat = dateFormat.split('T')[0];
             form.birth_date = dateFormat;
         }
@@ -143,10 +146,11 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
                     }
                     this.patientForm.reset();
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-CREATED'));
+                    this.cleanEmailConflit();
                 })
                 .catch((httpResponse) => {
                     if (httpResponse.error && httpResponse.error.code === 409) {
-                        this.patientForm.get('email').setErrors({});
+                        this.errorEmailConflit = true;
                     }
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-CREATED'));
                 });
@@ -248,6 +252,17 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         number = number.replace(/(\d)(\d{4})$/, '$1-$2');
 
         this.patientForm.get('phone_number').patchValue(number);
+    }
+
+    generatePassword(): void {
+        const randexp = new RandExp(/([a-z]|[0-9]|[!@#\$%\^&]){6,10}/);
+        this.passwordGenerated = randexp.gen();
+        this.patientForm.get('password').patchValue(this.passwordGenerated);
+        this.patientForm.get('password_confirm').patchValue(this.passwordGenerated);
+    }
+
+    cleanEmailConflit(): void {
+        this.errorEmailConflit = false;
     }
 
     trackById(index, item) {

@@ -26,6 +26,10 @@ export class SelectPilotStudyService {
 
     pilotStudyHasUpdated(pilotId: string) {
         const userId = this.localStorageService.getItem('user');
+        this.localStorageService.setItem(userId, pilotId);
+        const userLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+        userLogged.selected_pilot_study = pilotId;
+        this.localStorageService.setItem('userLogged', JSON.stringify(userLogged));
         this.userService.changePilotStudySelected(userId, pilotId)
             .then(() => this.pilotStudyUpdated.emit())
             .catch(() => {

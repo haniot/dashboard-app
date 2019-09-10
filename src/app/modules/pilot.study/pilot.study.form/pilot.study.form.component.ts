@@ -15,6 +15,8 @@ import { HealthProfessional } from '../../admin/models/health.professional'
 import { HealthProfessionalService } from '../../admin/services/health.professional.service'
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service'
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 
 @Component({
     selector: 'pilot-study-form',
@@ -46,8 +48,10 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     constructor(
         private fb: FormBuilder,
         private pilotStudyService: PilotStudyService,
+        private selectPilotService: SelectPilotStudyService,
         private healthService: HealthProfessionalService,
         private patientService: PatientService,
+        private localStorageService: LocalStorageService,
         private toastService: ToastrService,
         private router: Router,
         private activeRouter: ActivatedRoute,
@@ -118,6 +122,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         if (this.pilotStudyId) {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
+                created_at: [''],
                 name: ['', Validators.required],
                 location: ['', Validators.required],
                 start: ['', Validators.required],
@@ -129,6 +134,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
+                created_at: [''],
                 name: ['', Validators.required],
                 location: [''],
                 start: ['', Validators.required],
@@ -170,6 +176,14 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-UPDATED'));
                 });
+        }
+        /*If the study being edited is the same study selected by the user,
+        * you must fire the event so that the component showing the selected study is updated.
+        * */
+        const userId = this.localStorageService.getItem('user');
+        const pilotSelectedId = this.localStorageService.getItem(userId);
+        if (this.pilotStudyId === pilotSelectedId) {
+            this.selectPilotService.pilotStudyHasUpdated(this.pilotStudyId);
         }
     }
 

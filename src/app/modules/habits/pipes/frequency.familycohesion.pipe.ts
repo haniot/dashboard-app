@@ -20,7 +20,7 @@ export class FrequencyFamilycohesionPipe implements PipeTransform {
             case 'often':
                 return 'HABITS.PIPES.FAMILY-COHESION-FREQUENCY.OFTEN';
 
-            case 'almost_aways':
+            case 'almost_always':
                 return 'HABITS.PIPES.FAMILY-COHESION-FREQUENCY.ALMOST-ALWAYS';
 
             default:

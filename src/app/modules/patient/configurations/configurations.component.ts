@@ -44,6 +44,7 @@ export class PatientConfigComponent implements OnInit {
     ngOnInit() {
         this.patientForm = this.fb.group({
             id: [''],
+            created_at: [''],
             name: [''],
             birth_date: [''],
             gender: [''],
@@ -67,6 +68,7 @@ export class PatientConfigComponent implements OnInit {
     createForm(patient: Patient) {
         this.patientForm = this.fb.group({
             id: [patient.id],
+            created_at: [patient.created_at],
             name: [patient.name],
             birth_date: [patient.birth_date],
             gender: [patient.gender],
@@ -89,7 +91,9 @@ export class PatientConfigComponent implements OnInit {
                 this.user = patient;
                 this.createForm(this.user);
             })
-            .catch();
+            .catch(() => {
+                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER'));
+            });
 
     }
 

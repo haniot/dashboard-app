@@ -50,7 +50,8 @@
                                 <label for="email">
                                     {{'SHARED.EMAIL'|translate}}:
                                 </label>
-                                <input class="form-control" type="text" formControlName="email" id="email">
+                                <input class="form-control" type="text" formControlName="email" id="email"
+                                       (focus)="cleanEmailConflit()">
                                 <span *ngIf="patientForm.controls.email.valid"
                                       class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                                 <span
@@ -58,6 +59,12 @@
                                     <span class="glyphicon glyphicon-remove form-control-feedback"
                                           aria-hidden="true"></span>
                                     <span class="text-danger">{{'SHARED.INVALID-EMAIL'|translate}}.</span>
+                                </span>
+                                <span
+                                        *ngIf="errorEmailConflit">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'TOAST-MESSAGES.EMAIL-REGISTRED'|translate}}.</span>
                                 </span>
                             </div>
                         </div>
@@ -105,7 +112,8 @@
                                         <!--                                        <mat-datepicker #pickerBirthDate></mat-datepicker>-->
                                         <mat-datepicker-toggle matSuffix [for]="pickerBirthDate">
                                         </mat-datepicker-toggle>
-                                        <mat-datepicker #pickerBirthDate startView="multi-year" [startAt]="min_birth_date">
+                                        <mat-datepicker #pickerBirthDate startView="multi-year"
+                                                        [startAt]="min_birth_date">
                                         </mat-datepicker>
                                     </div>
                                 </div>
@@ -125,8 +133,7 @@
                                 <label>{{'SHARED.LANGUAGE'|translate}}: </label>
 
                                 <select class="form-control" formControlName="language">
-                                    <option *ngFor="let lang of listOfLanguages" [value]="lang"
-                                            [selected]="lang.match(translateService.currentLang)">{{ languages[lang] }}
+                                    <option *ngFor="let lang of listOfLanguages" [value]="lang">{{ languages[lang] }}
                                     </option>
                                 </select>
 
@@ -148,7 +155,8 @@
 
                             <div class="form-group has-feedback col-md"
                                  [ngClass]="{'has-success': patientForm.controls.selected_pilot_study.valid,
-                                              'has-error': patientForm.controls.selected_pilot_study.invalid && (patientForm.controls.selected_pilot_study.touched || patientForm.controls.selected_pilot_study.dirty)}">
+                                              'has-error': patientForm.controls.selected_pilot_study.invalid && (patientForm.controls.selected_pilot_study.touched || patientForm.controls.selected_pilot_study.dirty)}"
+                                 *ngIf="!patientForm.get('id').value">
                                 <label for="selected_pilot_study">
                                     {{'PATIENTS.PATIENTS-FORM.ASSOCIATE-STUDY'|translate}}:
                                 </label>
@@ -178,6 +186,13 @@
                 'has-error': patientForm.controls.password.invalid && (patientForm.controls.password.touched || patientForm.controls.password.dirty)}">
                                 <label for="password">
                                     {{'SHARED.PASSWORD'|translate}}:
+                                </label>
+                                <label>
+                                    <small>
+                                        ( {{'SHARED.GENERATE-PASSWORD'|translate}}:
+                                        <i class="material-icons generatePassword" (click)="generatePassword()">vpn_key</i> )
+
+                                    </small>
                                 </label>
                                 <div>
                                     <input class="form-control" [type]="typeInputPassword" formControlName="password"
@@ -225,12 +240,12 @@
                         </div>
 
                         <div class="d-flex justify-content-end">
-<!--                            <div class="p-2">-->
-<!--                                <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">-->
-<!--                                    <i class="material-icons">arrow_back</i>-->
-<!--                                    {{'SHARED.TOBACK'|translate}}-->
-<!--                                </button>-->
-<!--                            </div>-->
+                            <!--                            <div class="p-2">-->
+                            <!--                                <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">-->
+                            <!--                                    <i class="material-icons">arrow_back</i>-->
+                            <!--                                    {{'SHARED.TOBACK'|translate}}-->
+                            <!--                                </button>-->
+                            <!--                            </div>-->
                             <div class="p-2">
                                 <button type="button" class="btn btn-haniot-primary" (click)="onSubimt()"
                                         [disabled]="!patientForm.valid">

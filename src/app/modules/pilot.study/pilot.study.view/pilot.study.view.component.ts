@@ -32,9 +32,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
     disabled = false;
     pilotStudy: PilotStudy;
     professionalsAssociated: Array<HealthProfessional>;
-    listOfProfessionalsAux: Array<HealthProfessional>;
     patientsAssociated: Array<Patient>;
-    listOfPatientsAux: Array<Patient>;
     userHealthArea: string;
     private subscriptions: Array<ISubscription>;
     /* pagging settings*/
@@ -122,7 +120,6 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
             .then((healthProfessionals => {
                 this.professionalsAssociated = healthProfessionals;
                 this.professionalLength = this.professionalsAssociated.length;
-                this.loadListProfessionalsAux();
             }))
             .catch(() => {
             });
@@ -133,7 +130,6 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
             .then((patients => {
                 this.patientsAssociated = patients;
                 this.patientLength = this.patientsAssociated.length;
-                this.loadListPatientAux();
             }))
             .catch(() => {
             });
@@ -143,6 +139,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         if (this.pilotStudyId) {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
+                created_at: [''],
                 name: [''],
                 location: [''],
                 start: [''],
@@ -154,6 +151,7 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.pilotStudyForm = this.fb.group({
                 id: [''],
+                created_at: [''],
                 name: [''],
                 location: [''],
                 start: [''],
@@ -169,24 +167,12 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         this.professionalPageEvent = event;
         this.professionalPage = event.pageIndex + 1;
         this.professionalLimit = event.pageSize;
-        this.loadListProfessionalsAux();
     }
 
     clickPatientPagination(event) {
         this.patientPageEvent = event;
         this.patientPage = event.pageIndex + 1;
         this.patientLimit = event.pageSize;
-        this.loadListPatientAux();
-    }
-
-    loadListPatientAux(): void {
-        this.listOfPatientsAux = new Array<Patient>();
-        /* -1 because pagination starts at 1 and indexing starts at 0 */
-        for (let i = (this.patientLimit * (this.patientPage - 1)); i < this.patientLimit * this.patientPage; i++) {
-            if (i < this.patientsAssociated.length) {
-                this.listOfPatientsAux.push(this.patientsAssociated[i]);
-            }
-        }
     }
 
     editHealthProfessional(healthProfessionalId: string): void {
@@ -195,17 +181,6 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         }
 
     }
-
-    loadListProfessionalsAux(): void {
-        this.listOfProfessionalsAux = new Array<HealthProfessional>();
-        /* -1 because pagination starts at 1 and indexing starts at 0 */
-        for (let i = (this.professionalLimit * (this.professionalPage - 1)); i < this.professionalLimit * this.professionalPage; i++) {
-            if (i < this.professionalsAssociated.length) {
-                this.listOfProfessionalsAux.push(this.professionalsAssociated[i]);
-            }
-        }
-    }
-
 
     trackById(index, item) {
         return item.id;

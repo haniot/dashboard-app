@@ -21,7 +21,7 @@ export class BreastFeedingPipe implements PipeTransform {
         return 'HABITS.PIPES.BREAST-FEEDING.OTHER';
 
       default:
-        return 'HABITS.PIPES.BREAST-FEEDING.DO-NOT-KNOW';
+        return 'HABITS.PIPES.DO-NOT-KNOW';
     }
 
   }

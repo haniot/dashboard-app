@@ -18,6 +18,7 @@ import { QuestionnairesCategory, QuestionnaireType } from '../../habits/models/q
 import { Patient } from '../../patient/models/patient'
 import { PatientService } from '../../patient/services/patient.service'
 import { MeasurementType } from '../../measurement/models/measurement.types'
+import * as $ from 'jquery'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -53,7 +54,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     listCheckQuestionnaireNutritionalTypes: Array<boolean>;
     listCheckQuestionnaireOdontologicalTypes: Array<boolean>;
     listOfPatients: Array<Patient>;
-    listOfPatientsAux: Array<Patient>;
     checkSelectPatientsAll: boolean;
     listCheckPatients: Array<boolean>;
     listOfPatientsIsEmpty: boolean;
@@ -106,6 +106,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     getAllFiles() {
+        this.listOfFilesIsEmpty = true;
         if (this.pilotStudy && this.pilotStudy.id) {
             this.listOfFiles = new Array<Data>();
             this.pilotService.getAllFiles(this.pilotStudy.id, this.page, this.limit, this.search)
@@ -133,7 +134,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         this.patientPageEvent = event;
         this.patientPage = event.pageIndex + 1;
         this.patientLimit = event.pageSize;
-        this.loadListPatientAux();
     }
 
     closeModalComfimation() {
@@ -141,7 +141,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     getIndex(index: number): number {
-        if (this.search) {
+        if (this.search && this.search.begin && this.search.end) {
             return null;
         }
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
@@ -293,24 +293,12 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
                 this.listOfPatients.forEach(() => {
                     this.listCheckPatients.push(false);
                 })
-                /* Used for paginator*/
-                this.loadListPatientAux();
 
             })
             .catch(() => {
                 this.listOfPatientsIsEmpty = true;
             })
 
-    }
-
-    loadListPatientAux(): void {
-        this.listOfPatientsAux = new Array<Patient>();
-        /* -1 because pagination starts at 1 and indexing starts at 0 */
-        for (let i = (this.patientLimit * (this.patientPage - 1)); i < this.patientLimit * this.patientPage; i++) {
-            if (i < this.listOfPatients.length) {
-                this.listOfPatientsAux.push(this.listOfPatients[i]);
-            }
-        }
     }
 
     clickCheckMeasurementTypeAll() {
@@ -329,9 +317,10 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     clickCheckPatientsAll() {
-        this.listCheckPatients.forEach((item, index) => {
-            this.listCheckPatients[index] = !this.checkSelectPatientsAll;
-        });
+        for (let i = this.patientLimit * (this.patientPage - 1); i < this.patientLimit; i++) {
+            this.listCheckPatients[i + this.patientLimit * (this.patientPage - 1)] = !this.checkSelectPatientsAll;
+        }
+
     }
 
     changeMeasurementTypeCheck(): void {
@@ -376,7 +365,8 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     selectPatient(index: number): void {
-        this.listCheckPatients[index] = !this.listCheckPatients[index];
+        const localIndex = index + this.patientLimit * (this.patientPage - 1);
+        this.listCheckPatients[localIndex] = !this.listCheckPatients[localIndex];
         this.changePatientCheck();
     }
 
@@ -400,6 +390,10 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
             })
             this.listOfDataTypes.push(dataReturn);
         });
+    }
+
+    isMobile(): boolean {
+        return $(window).width() < 590;
     }
 
     trackById(index, item) {

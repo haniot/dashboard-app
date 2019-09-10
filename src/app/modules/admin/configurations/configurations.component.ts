@@ -23,6 +23,7 @@ export class AdminConfigurationsComponent implements OnInit {
     user: GenericUser;
     email: string;
     password: string;
+    maxBirthDate: Date;
 
     constructor(
         private adminService: AdminService,
@@ -34,6 +35,7 @@ export class AdminConfigurationsComponent implements OnInit {
         private translateService: TranslateService
     ) {
         this.user = new Admin();
+        this.maxBirthDate = new Date();
     }
 
     ngOnInit() {
@@ -44,7 +46,9 @@ export class AdminConfigurationsComponent implements OnInit {
         this.userId = this.localStorageService.getItem('user');
         this.adminService.getById(this.userId)
             .then(admin => this.user = admin)
-            .catch();
+            .catch(() => {
+                this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER'));
+            });
 
     }
 
@@ -55,6 +59,9 @@ export class AdminConfigurationsComponent implements OnInit {
 
     onSubmit(form) {
         const admin = form.value;
+        if (!form.controls['email'].touched || !form.controls['email'].dirty) {
+            delete admin.email;
+        }
         admin.id = this.localStorageService.getItem('user');
         this.adminService.update(admin)
             .then((userAdmin) => {

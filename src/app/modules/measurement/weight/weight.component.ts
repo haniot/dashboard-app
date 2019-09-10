@@ -129,10 +129,10 @@ export class WeightComponent implements OnInit, OnChanges {
                 formatter: function (params) {
                     if (params.seriesName === weigth) {
                         return weigth +
-                            `: ${params.data.value} Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                            `: ${params.data.value}Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                     }
                     return body_fat +
-                        `: ${params.data.value} % <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                        `: ${params.data.value}% <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
             xAxis: xAxisWeight,

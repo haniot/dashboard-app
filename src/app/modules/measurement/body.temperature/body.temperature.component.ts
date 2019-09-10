@@ -118,7 +118,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value} °C'
+                    formatter: '{value}°C'
                 }
             },
             dataZoom: [

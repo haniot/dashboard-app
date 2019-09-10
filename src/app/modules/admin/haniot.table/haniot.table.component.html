@@ -7,7 +7,7 @@
     </button>
 </div>
 <div class="table-responsive">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover rwd-table">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -19,23 +19,36 @@
         </thead>
         <tbody>
         <tr *ngIf="list.length==0">
-            <td colspan="5" *ngIf="!listOfUserIsEmpty">
+            <td colspan="6" *ngIf="!listOfUserIsEmpty">
                 <spinner [message]="'TABLE-USER.SPINNER-MESSAGE'|translate"></spinner>
             </td>
-            <td colspan="5" *ngIf="listOfUserIsEmpty">{{'TABLE-USER.LIST-EMPTY'|translate}}.</td>
+            <td colspan="6" *ngIf="listOfUserIsEmpty">{{'TABLE-USER.LIST-EMPTY'|translate}}.</td>
         </tr>
         <tr *ngFor="let user of list; index as i;trackBy: trackById">
-            <td (click)="editUser(user.id)" class="max-width-60">{{getIndex(i)}}</td>
-            <td (click)="editUser(user.id)">{{user.name}}</td>
-            <td (click)="editUser(user.id)">{{user.email}}</td>
-            <td (click)="editUser(user.id)" class="max-width-150"
+            <td [attr.data-th]="'SHARED.POSITION'|translate"
+                (click)="editUser(user.id)" class="max-width-60">{{getIndex(i)}}</td>
+            <td [attr.data-th]="'SHARED.NAME'|translate"
+                (click)="editUser(user.id)">{{user.name}}</td>
+            <td [attr.data-th]="'SHARED.EMAIL'|translate"
+                (click)="editUser(user.id)">{{user.email}}</td>
+            <td [attr.data-th]="'SHARED.AREA'|translate"
+                (click)="editUser(user.id)" class="max-width-150"
                 *ngIf="userType == 'HealthProfessional'">{{user.health_area | healthArea | translate}}</td>
-            <td class="max-width-60"><a class="nav-link" (click)="editUser(user.id)"
-                                        [title]="'TABLE-USER.EDIT'|translate"><i
-                    class="material-icons">edit</i></a></td>
-            <td class="max-width-60" *ngIf="!verifySameUser(user)">
-                <a class="nav-link" (click)="openModalConfirmRemove(user.id)" [title]="'TABLE-USER.DELETE'|translate"><i
-                        class="material-icons">delete</i></a>
+            <td [attr.data-th]="'SHARED.ACTIONS'|translate" class="max-width-200">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <a class="nav-link" (click)="editUser(user.id)"
+                               [title]="'TABLE-USER.EDIT'|translate">
+                                <i class="material-icons">edit</i></a>
+                        </div>
+                        <div class="col" *ngIf="!verifySameUser(user)">
+                            <a class="nav-link" (click)="openModalConfirmRemove(user.id)"
+                               [title]="'TABLE-USER.DELETE'|translate">
+                                <i class="material-icons">delete</i></a>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>

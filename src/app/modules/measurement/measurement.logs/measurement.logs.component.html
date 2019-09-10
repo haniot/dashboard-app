@@ -75,8 +75,7 @@
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
-                                {{measurement.value | decimalFormatter}}
-                                {{measurement.unit}}
+                                {{(measurement.value | decimalFormatter) + '' + measurement.unit}}
                             </td>
                             <td>
                                 {{measurement.timestamp | date : "mediumDate"}}
@@ -123,14 +122,11 @@
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
-                                {{measurement.value | decimalFormatter}}
-                                {{measurement.unit}}
+                                {{(measurement.value | decimalFormatter) + '' + measurement.unit}}
                             </td>
                             <td>
-                                <span *ngIf="measurement.fat">{{measurement.fat.value}}
-                                    {{measurement.fat.unit}}</span>
-                                <span *ngIf="!measurement.fat">{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.NOT-COLLECTED'|translate}}
-                                    !</span>
+                                <span *ngIf="measurement.fat">{{measurement.fat.value + '' + measurement.fat.unit}}</span>
+                                <span *ngIf="!measurement.fat">{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.NOT-COLLECTED'|translate}}</span>
                             </td>
                             <td>
                                 {{measurement.timestamp | date : "mediumDate"}}
@@ -177,8 +173,7 @@
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
-                                {{measurement.value}}
-                                {{measurement.unit}}
+                                {{measurement.value + '' + measurement.unit}}
                             </td>
                             <td>
                                 {{measurement.meal | meal | translate}}
@@ -228,10 +223,10 @@
                                               [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                             </td>
                             <td>
-                                {{measurement.systolic}}/{{measurement.diastolic}} {{measurement.unit}}
+                                {{measurement.systolic + '/' + measurement.diastolic + '' + measurement.unit}}
                             </td>
                             <td>
-                                {{measurement.pulse}} bpm
+                                {{measurement.pulse}}bpm
                             </td>
                             <td>
                                 {{measurement.timestamp | date : "mediumDate"}}
@@ -331,7 +326,9 @@
                                     {{cacheListIdMeasurementRemove.length}}
                                     {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate}}
                                 </p>
-                                <spinner [message]="'Removendo medição(es)...'" *ngIf="loadingMeasurements"></spinner>
+                                <spinner
+                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.SPINNER-MESSAGE'|translate"
+                                        *ngIf="loadingMeasurements"></spinner>
 
                             </div>
                             <div class="modal-footer" *ngIf="!loadingMeasurements">

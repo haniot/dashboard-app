@@ -29,6 +29,9 @@ export class AuthService {
         if (!token) {
             return false;
         }
+        if (Date.now() >= token.exp * 1000) {
+            return false;
+        }
         const user = this.localStorageService.getItem('user');
 
         return user === token.sub;
@@ -131,13 +134,6 @@ export class AuthService {
             .append('Authorization', `Bearer ${token}`);
 
         return this.http.get<any>(url, { headers: headers })
-            .toPromise();
-
-    }
-
-    validateReCaptcha(responseRecaptcha: string): Promise<any> {
-        return this.http.post<any>(
-            `${environment.reCaptcha_urlVerify}?secret=${environment.reCaptcha_serverKey}&&response=${responseRecaptcha}`, {})
             .toPromise();
     }
 

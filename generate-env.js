@@ -12,10 +12,6 @@ const api_url = process.env.API_GATEWAY_SERVICE
 const node_env = process.env.NODE_ENV
 const ls_secret_key = process.env.LS_SECRET_KEY
 const reCaptcha_siteKey = process.env.RECAPTCHA_KEY
-const reCaptcha_serverKey = process.env.RECAPTCHA_SERVER_KEY
-let reCaptcha_urlVerify = process.env.RECAPTCHA_URL_VERIFY
-
-if (process.env.NODE_ENV === 'development') reCaptcha_urlVerify = '/api/siteverify'
 
 var wstream = fs.createWriteStream(envsPath + '/environment.ts')
 wstream.write('export const environment = {\n')
@@ -23,8 +19,6 @@ wstream.write(`\tproduction: ${node_env === 'production'},\n`)
 wstream.write('\tapi_url: "' + api_url + '",\n')
 wstream.write('\tls_secret_key: "' + ls_secret_key + '",\n')
 wstream.write('\treCaptcha_siteKey: "' + reCaptcha_siteKey + '",\n')
-wstream.write('\treCaptcha_serverKey: "' + reCaptcha_serverKey + '",\n')
-wstream.write('\treCaptcha_urlVerify: "' + reCaptcha_urlVerify + '",\n')
 wstream.write('};\n')
 wstream.end()
 
@@ -34,7 +28,5 @@ wstream.write(`\tproduction: ${node_env === 'production'},\n`)
 wstream.write('\tapi_url: "' + api_url + '",\n')
 wstream.write('\tls_secret_key: "' + ls_secret_key + '",\n')
 wstream.write('\treCaptcha_siteKey: "' + reCaptcha_siteKey + '",\n')
-wstream.write('\treCaptcha_serverKey: "' + reCaptcha_serverKey + '",\n')
-wstream.write('\treCaptcha_urlVerify: "' + reCaptcha_urlVerify + '",\n')
 wstream.write('};\n')
 wstream.end()

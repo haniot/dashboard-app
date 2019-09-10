@@ -7,13 +7,14 @@ import { TranslateService } from '@ngx-translate/core'
 import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '../services/auth.service'
+import { Title } from '@angular/platform-browser'
 
 @Component({
     selector: 'app-forgot.password',
     templateUrl: './forgot.password.component.html',
     styleUrls: ['./forgot.password.component.scss']
 })
-export class ForgotPasswordComponent implements OnInit, OnDestroy{
+export class ForgotPasswordComponent implements OnInit, OnDestroy {
     loading: boolean;
     f: FormGroup;
     showEmailSent: boolean;
@@ -23,6 +24,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy{
         private authService: AuthService,
         private toastr: ToastrService,
         private router: Router,
+        private titleService: Title,
         private translateService: TranslateService) {
         this.loading = false;
         this.showEmailSent = false;
@@ -30,9 +32,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy{
 
     ngOnInit() {
         $('body').css('background-color', '#00a594');
+        this.titleService.setTitle(this.translateService.instant('SECURITY.FORGOT.TITLE'));
         this.f = this.formBuilder.group({
             email: [null, [Validators.required, Validators.email]]
         });
+
     }
 
     onSubmit() {

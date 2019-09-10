@@ -1,10 +1,4 @@
 {
-  "/api/siteverify": {
-    "target": "https://www.google.com/recaptcha",
-    "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true
-  },
   "/local": {
     "target": "https://localhost:8081",
     "secure": false,

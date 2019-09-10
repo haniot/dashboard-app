@@ -13,7 +13,7 @@
                         </button>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-sm table-hover">
+                        <table class="table table-sm table-hover rwd-table">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -36,15 +36,19 @@
                             </tr>
                             <tr *ngFor="let evaluation of listOfEvaluations; index as i;trackBy: trackById">
                                 <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
-                                    class="max-width-60">{{getIndex(i)}}</td>
-                                <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]">{{evaluation.patient.name}}</td>
+                                    class="max-width-60"
+                                    [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
                                 <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
-                                    class="max-width-150">{{evaluation.created_at | date}}</td>
+                                    [attr.data-th]="'SHARED.PATIENT'|translate">{{evaluation.patient.name}}</td>
                                 <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
-                                    class="max-width-150">
+                                    class="max-width-150"
+                                    [attr.data-th]="'SHARED.DATE'|translate">{{evaluation.created_at | date}}</td>
+                                <td [routerLink]="['/app/evaluations',evaluation.patient.id, 'nutritional', evaluation.id]"
+                                    class="max-width-150"
+                                    [attr.data-th]="'EVALUATION.STATE'|translate">
                                     <span [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus | translate}}</span>
                                 </td>
-                                <td class="max-width-60">
+                                <td class="max-width-60" [attr.data-th]="'SHARED.ACTIONS'|translate">
                                     <a class="nav-link"
                                        (click)="openModalConfirmation(evaluation.patient.id,evaluation.id)"
                                        [title]="'EVALUATION.DELETE-EVALUATION'|translate">

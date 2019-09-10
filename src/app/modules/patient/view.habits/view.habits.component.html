@@ -75,16 +75,17 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group has-feedback col-md">
-                                <label for="selected_pilot_study">
-                                    {{'PATIENTS.PATIENTS-FORM.ASSOCIATE-STUDY'|translate}}:
+                            <div class="form-group has-feedback col-md" *ngIf="associatedStudies.length">
+                                <label>
+                                    {{'PATIENTS.VIEW-HABITS.ASSOCIATED-STUDIES'|translate}}:
                                 </label>
-                                <select class="form-control" formControlName="selected_pilot_study"
-                                        name="selected_pilot_study"
-                                        id="selected_pilot_study">
-                                    <option value="undefined">{{'PATIENTS.PATIENTS-FORM.SELECT-STUDY'|translate}}</option>
-                                    <option [value]="pilotStudy.id">{{pilotStudy.name}}</option>
-                                </select>
+                                <ul class="list-inline ellipsis" style="width: 100%;display: inline-block;">
+                                    <li class="list-inline-item ellipsis"
+                                        *ngFor="let pilotStudy of associatedStudies;let i=index">
+                                        {{pilotStudy.name}}<span *ngIf="i!==associatedStudies.length-1">,</span><span
+                                            *ngIf="i===associatedStudies.length-1">.</span>
+                                    </li>
+                                </ul>
                             </div>
 
 

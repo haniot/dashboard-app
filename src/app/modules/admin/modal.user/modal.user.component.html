@@ -24,7 +24,7 @@
             'has-error': userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)}"
                      *ngIf="typeUser == 'Admin'">
                     <label>{{'SHARED.EMAIL'|translate}}:</label>
-                    <input type="email" class="form-control" formControlName="email">
+                    <input type="email" class="form-control" formControlName="email" (focus)="cleanEmailConflit()">
                     <span *ngIf="userForm.controls.email.valid" class="glyphicon glyphicon-ok form-control-feedback"
                           aria-hidden="true"></span>
                     <span
@@ -90,8 +90,7 @@
                     <label>{{'SHARED.LANGUAGE'|translate}}: </label>
 
                     <select class="form-control" formControlName="language">
-                        <option *ngFor="let lang of listOfLanguages" [value]="lang"
-                                [selected]="lang.match(translateService.currentLang)">{{ languages[lang] }}</option>
+                        <option *ngFor="let lang of listOfLanguages" [value]="lang">{{ languages[lang] }}</option>
                     </select>
 
                     <span *ngIf="userForm.controls.language.valid" class="glyphicon glyphicon-ok form-control-feedback"
@@ -109,13 +108,18 @@
             'has-error': userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)}"
                      *ngIf="typeUser == 'HealthProfessional'">
                     <label>{{'SHARED.EMAIL'|translate}}:</label>
-                    <input type="email" class="form-control" formControlName="email">
+                    <input type="email" class="form-control" formControlName="email" (focus)="cleanEmailConflit()">
                     <span *ngIf="userForm.controls.email.valid" class="glyphicon glyphicon-ok form-control-feedback"
                           aria-hidden="true"></span>
                     <span
                             *ngIf="userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)">
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         <span class="text-danger">{{'SHARED.INVALID-EMAIL'|translate}}.</span>
+                    </span>
+                    <span
+                            *ngIf="errorConflitEmail">
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        <span class="text-danger">{{'TOAST-MESSAGES.EMAIL-REGISTRED'|translate}}</span>
                     </span>
                 </div>
 
@@ -193,8 +197,7 @@
                     <label>{{'SHARED.LANGUAGE'|translate}}: </label>
 
                     <select class="form-control" formControlName="language">
-                        <option *ngFor="let lang of listOfLanguages" [value]="lang"
-                                [selected]="lang.match(translateService.currentLang)">{{ languages[lang] }}</option>
+                        <option *ngFor="let lang of listOfLanguages" [value]="lang">{{ languages[lang] }}</option>
                     </select>
 
                     <span *ngIf="userForm.controls.language.valid" class="glyphicon glyphicon-ok form-control-feedback"
@@ -210,7 +213,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group"
                          [ngClass]="{'has-success': userForm.controls.password.valid,
              'has-error': userForm.controls.password.invalid && (userForm.controls.password.touched || userForm.controls.password.dirty)}"
-                         *ngIf="!userId && userForm.controls.password">
+                         *ngIf="!userId">
                         <label>{{'SHARED.PASSWORD'|translate}}: </label>
                         <label>
                             <small>
@@ -236,7 +239,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group"
                          [ngClass]="{'has-success': userForm.controls.password_confirm.valid,
              'has-error': userForm.controls.password_confirm.invalid && (userForm.controls.password_confirm.touched || userForm.controls.password_confirm.dirty)}"
-                         *ngIf="!userId && userForm.controls.password_confirm">
+                         *ngIf="!userId">
                         <label>{{'SHARED.PASSWORD-CONFIRM'| translate}}:</label>
                         <div>
                             <input [type]="typeInputPassword_confirm" class="form-control"
@@ -251,9 +254,16 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="user && user.last_login">
-                    <div class="d-flex flex-row-reverse bd-highlight">
-                        <div class="p-2">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="user && (user.created_at||user.last_login)">
+                    <div class="d-flex justify-content-end">
+                        <div class="p-2" *ngIf="user && user.created_at">
+                            <small style="font-size: 12px">{{'SHARED.CREATED-AT'|translate}}
+                                : {{user.created_at|date:'shortDate'}}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="p-2" *ngIf="user && user.last_login">
                             <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}
                                 : {{user.last_login|date:'fullDate'}}
                                 {{'SHARED.AT'|translate}}
@@ -261,6 +271,17 @@
                         </div>
                     </div>
                 </div>
+
+                <!--                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="user && user.last_login">-->
+                <!--                    <div class="d-flex justify-content-end">-->
+                <!--                        <div class="p-2">-->
+                <!--                            <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}-->
+                <!--                                : {{user.last_login|date:'fullDate'}}-->
+                <!--                                {{'SHARED.AT'|translate}}-->
+                <!--                                {{user.last_login|date:'mediumTime'}}</small>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center">
                     <div class="col text-center">

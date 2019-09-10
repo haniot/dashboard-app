@@ -85,6 +85,7 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
                 })
                 .catch(() => {
                     this.listOfEvaluationsIsEmpty = true;
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.INFO-NOT-LOAD'));
                 });
         }
     }

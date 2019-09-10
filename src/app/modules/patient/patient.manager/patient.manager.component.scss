@@ -16,17 +16,32 @@ td img {
   width: 2%;
 }
 
-.max-width-60 {
-  width: 60px;
-  max-width: 60px;
+$breakpoint-alpha: 480px;
+
+@media (min-width: $breakpoint-alpha) {
+  .max-width-60 {
+    width: 60px;
+    max-width: 60px;
+  }
+
+  .max-width-150 {
+    width: 150px;
+    max-width: 150px;
+  }
+
+  .max-width-180 {
+    width: 180px;
+    max-width: 180px;
+  }
+
+  .max-width-200 {
+    width: 200px;
+    max-width: 200px;
+  }
 }
 
-.max-width-150 {
-  width: 150px;
-  max-width: 150px;
-}
-
-.max-width-180 {
-  width: 180px;
-  max-width: 180px;
+.bg-no-patient {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -360px -150px;
 }

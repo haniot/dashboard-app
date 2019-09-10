@@ -32,6 +32,8 @@ export class DashboardService {
             myParams = myParams.append('limit', String(limit));
         }
 
+        myParams = myParams.append('sort', '+created_at');
+
         let url = `${environment.api_url}/${this.version}/healthprofessionals/${userId}/pilotstudies`;
         const type_user = this.authService.decodeToken().sub_type;
         switch (type_user) {
@@ -66,6 +68,8 @@ export class DashboardService {
             myParams = myParams.append('limit', String(limit));
         }
 
+        myParams = myParams.append('sort', '+created_at');
+
         const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}/patients`;
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
@@ -85,6 +89,8 @@ export class DashboardService {
         if (limit) {
             myParams = myParams.append('limit', String(limit));
         }
+
+        myParams = myParams.append('sort', '+created_at');
 
         const url = `${environment.api_url}/${this.version}/patients/${userId}/nutritional/evaluations`;
 

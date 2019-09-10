@@ -131,7 +131,7 @@ export class EvaluationComponentComponent implements OnInit, OnChanges, OnDestro
     }
 
     getIndex(index: number): number {
-        if (this.search) {
+        if (this.search && this.search.begin && this.search.end) {
             return null;
         }
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);

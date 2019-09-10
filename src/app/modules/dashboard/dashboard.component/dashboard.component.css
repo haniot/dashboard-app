@@ -1,6 +1,3 @@
-.main-content {
-    margin-top: 10px;
-}
 
 .background-card {
     background: linear-gradient(60deg, #00a594, #00a594);
@@ -41,6 +38,14 @@ label {
     color: black;
     font-size: 14px;
     font-weight: bold;
+}
+
+
+.badge-haniot {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #00a594;
 }
 
 .study-active {
@@ -106,12 +111,6 @@ label {
     height: 50px;
 }
 
-.badge-haniot {
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    background-color: #00a594;
-}
 
 .category {
     color: rgb(0, 0, 0);
@@ -273,4 +272,17 @@ label {
     background-color: #F7F6F6;
     border-left: 1px solid #00a594;
     border-right: 1px solid #00a594;
+}
+
+.bg-x_boy {
+    width: 50px;
+    height: 50px;
+    background: url('assets/img/questionnaires.png') -10px -10px;
+}
+
+
+.bg-x_girl {
+    width: 50px;
+    height: 50px;
+    background: url('assets/img/questionnaires.png') -80px -10px;
 }

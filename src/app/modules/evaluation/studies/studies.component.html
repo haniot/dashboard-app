@@ -8,7 +8,7 @@
             <div class="ripple-container"></div>
         </button>
     </div>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover rwd-table">
         <thead>
         <tr>
             <th>#</th>
@@ -20,18 +20,18 @@
         </thead>
         <tbody>
         <tr *ngIf="list.length==0">
-            <td colspan="8" *ngIf="!listOfPilotsIsEmpty">
+            <td colspan="5" *ngIf="!listOfPilotsIsEmpty">
                 <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
             </td>
-            <td colspan="8" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
+            <td colspan="5" *ngIf="listOfPilotsIsEmpty">{{'SHARED.LIST-EMPTY'|translate}}.</td>
         </tr>
         <tr *ngFor="let study of list; index as i;trackBy: trackById" (click)="selectStudy(study.id)"
             [(ngClass)]="listClass[i]">
-            <td>{{getIndex(i)}}</td>
-            <td>{{study.name}}</td>
-            <td>{{study.start | date }}</td>
-            <td>{{study.end | date}}</td>
-            <td>
+            <td [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
+            <td [attr.data-th]="'PILOT-STUDY.NAME-OF-STUDY'|translate">{{study.name}}</td>
+            <td [attr.data-th]="'PILOT-STUDY.START'|translate">{{study.start | date }}</td>
+            <td [attr.data-th]="'PILOT-STUDY.END'|translate">{{study.end | date}}</td>
+            <td [attr.data-th]="'PILOT-STUDY.SITUATION'|translate">
           <span>
             {{study.is_active | pilotStudySituation | translate}}
           </span>

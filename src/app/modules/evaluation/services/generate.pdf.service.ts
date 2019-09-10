@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import * as jsPDF from 'jspdf-yworks';
+import * as jsPDF from 'jspdf';
 import { TranslateService } from '@ngx-translate/core';
 
 import { NutritionEvaluation } from '../models/nutrition-evaluation';
@@ -11,6 +11,7 @@ import { OverweigthClassificationPipe } from '../pipes/overweigth.classification
 import { BloodglucoseClassificationPipe } from '../pipes/bloodglucose.classification.pipe';
 import { MealPipe } from '../../measurement/pipes/meal.pipe';
 import { BloodpressureClassificationPipe } from '../pipes/bloodpressure.classification.pipe';
+import { DecimalFormatterPipe } from '../../measurement/pipes/decimal.formatter.pipe'
 
 const START_X = 15;
 const START_Y = 15;
@@ -33,6 +34,7 @@ export class GeneratePdfService {
         private glycemiaPipe: BloodglucoseClassificationPipe,
         private mealPipe: MealPipe,
         private pressurePipe: BloodpressureClassificationPipe,
+        private decimalFormatter: DecimalFormatterPipe,
         private translate: TranslateService) {
         this.doc = new jsPDF('portrait', 'mm', 'a4');
     }
@@ -58,7 +60,8 @@ export class GeneratePdfService {
         this.doc.text('RESULTADO DA AVALIAÇÃO NUTRICIONAL', CENTER_X, 87, 'center');
         this.doc.setFontSize(13);
 
-        const html = '<p style=\'text-align:center;font-family: Courier New, courier\'><b>NUTRICIONISTA: </b>' + healthProfessional + '</p>';
+        const html =
+            '<p style=\'text-align:center;font-family: Courier New, courier\'><b>NUTRICIONISTA: </b>' + healthProfessional + '</p>';
 
         const maxWidth = 215 - (2.5 * healthProfessional.length);
 
@@ -122,11 +125,15 @@ export class GeneratePdfService {
 
         this.doc.rect(150, 152, 45, 6);
         this.doc.setFontStyle('normal');
-        this.doc.text(evaluation.nutritional_status.weight + ' kg', 172, 156, 'center');
+        this.doc.text(this.decimalFormatter.transform(evaluation.nutritional_status.weight) + ' kg', 172, 156, 'center');
 
         this.doc.rect(150, 158, 45, 6);
         this.doc.setFontStyle('normal');
-        this.doc.text(evaluation.nutritional_status.percentile, 172, 162, 'center');
+        if (evaluation.nutritional_status.percentile && evaluation.nutritional_status.percentile !== 'undefined') {
+            this.doc.text(evaluation.nutritional_status.percentile, 172, 162, 'center');
+        } else {
+            this.doc.text('- -', 172, 162, 'center');
+        }
 
         /* Indicadores de Sobrepeso */
         this.doc.setFontStyle('bold');
@@ -225,7 +232,11 @@ export class GeneratePdfService {
 
         this.doc.rect(150, 242, 45, 6);
         this.doc.setFontStyle('normal');
-        this.doc.text(evaluation.blood_pressure.systolic_percentile, 90, 246);
+        if (evaluation.blood_pressure.systolic_percentile && evaluation.blood_pressure.systolic_percentile !== 'undefined') {
+            this.doc.text(evaluation.blood_pressure.systolic_percentile, 90, 246);
+        } else {
+            this.doc.text('- -', 90, 246);
+        }
 
         this.doc.rect(15, 242, 45, 6);
         this.doc.setFontStyle('bold');
@@ -239,7 +250,11 @@ export class GeneratePdfService {
 
         this.doc.rect(150, 242, 45, 6);
         this.doc.setFontStyle('normal');
-        this.doc.text(evaluation.blood_pressure.diastolic_percentile, 180, 246);
+        if (evaluation.blood_pressure.diastolic_percentile && evaluation.blood_pressure.diastolic_percentile !== 'undefined') {
+            this.doc.text(evaluation.blood_pressure.diastolic_percentile, 180, 246);
+        } else {
+            this.doc.text('- -', 180, 246);
+        }
 
         /* Ponto de Corte de Taylor */
         this.doc.setFontStyle('bold');

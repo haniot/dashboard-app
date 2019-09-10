@@ -4,6 +4,8 @@ import { PageEvent } from '@angular/material';
 import { MeasurementService } from '../services/measurement.service';
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { EnumMeasurementType } from '../models/measurement'
+import { ToastrService } from 'ngx-toastr'
+import { TranslateService } from '@ngx-translate/core'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -26,13 +28,15 @@ export class MeasurementLogsComponent implements OnInit {
     loadingMeasurements: boolean;
     modalConfirmRemoveMeasurement: boolean;
     cacheIdMeasurementRemove: string;
-    cacheListIdMeasurementRemove: Array<string>;
+    cacheListIdMeasurementRemove: Array<any>;
     selectAll: boolean;
     listCheckMeasurements: Array<boolean>;
     stateButtonRemoveSelected: boolean;
 
     constructor(
-        private measurementService: MeasurementService) {
+        private toastService: ToastrService,
+        private measurementService: MeasurementService,
+        private translateService: TranslateService) {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
@@ -54,6 +58,7 @@ export class MeasurementLogsComponent implements OnInit {
     }
 
     loadMeasurements(): void {
+        this.listOfMeasurements = new Array<any>();
         this.loadingMeasurements = true;
         this.measurementService.getAllByUserAndType(this.patientId, this.measurementTypeSelected, this.page, this.limit)
             .then(httpResponse => {
@@ -107,15 +112,41 @@ export class MeasurementLogsComponent implements OnInit {
         this.modalConfirmRemoveMeasurement = false;
     }
 
-    removeMeasurement(): void {
+    async removeMeasurement(): Promise<any> {
         this.loadingMeasurements = true;
-        this.measurementService.remove(this.patientId, this.cacheIdMeasurementRemove)
-            .then(measurements => {
-                this.loadMeasurements();
-                this.loadingMeasurements = false;
-                this.modalConfirmRemoveMeasurement = false;
-            })
-            .catch()
+        if (!this.cacheListIdMeasurementRemove || !this.cacheListIdMeasurementRemove.length) {
+            this.measurementService.remove(this.patientId, this.cacheIdMeasurementRemove)
+                .then(measurements => {
+                    this.loadMeasurements();
+                    this.loadingMeasurements = false;
+                    this.modalConfirmRemoveMeasurement = false;
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
+                })
+                .catch(() => {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'));
+                    this.loadingMeasurements = false;
+                    this.modalConfirmRemoveMeasurement = false;
+                })
+        } else {
+            let occuredError = false;
+            for (let i = 0; i < this.cacheListIdMeasurementRemove.length; i++) {
+                try {
+                    const measurementRemove = this.cacheListIdMeasurementRemove[i];
+                    await this.measurementService.remove(this.patientId, measurementRemove.id);
+                } catch (e) {
+                    occuredError = true;
+                }
+            }
+            occuredError ? this.toastService
+                    .error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'))
+                : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
+
+            this.loadMeasurements();
+            this.loadingMeasurements = false;
+            this.modalConfirmRemoveMeasurement = false;
+
+
+        }
     }
 
     changeOnMeasurement(): void {

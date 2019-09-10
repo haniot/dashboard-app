@@ -36,13 +36,10 @@
   color: #00a594;
   cursor: pointer;
 }
+
 .btn .material-icons {
   color: white;
   cursor: pointer;
-}
-.nav-link i:hover {
-  border-radius: 20px;
-  background: rgb(212, 207, 207);
 }
 
 .icon_password {
@@ -52,6 +49,11 @@
 }
 
 .icon_password:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.generatePassword:hover {
   border-radius: 20px;
   background: rgb(212, 207, 207);
 }
