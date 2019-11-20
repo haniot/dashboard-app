@@ -1,6 +1,7 @@
+@import "../../../../assets/scss/template-colors";
 
 .card .card-header-danger:not(.card-header-icon):not(.card-header-text), .card.bg-danger, .card.card-rotate.bg-danger .front, .card.card-rotate.bg-danger .back {
-  background: #00a594 !important;
+  background: $primary-color !important;
 }
 
 .card-title {
@@ -14,7 +15,7 @@
 }
 
 table .material-icons {
-  color: #00a594;
+  color: $primary-color;
   cursor: pointer;
 }
 
@@ -48,12 +49,12 @@ label {
 }
 
 .background-green:hover {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 #navbarDropdownMenuLink i:hover {
   cursor: pointer;
-  color: #00a594;
+  color: $primary-color;
 }
 
 td img {
@@ -67,20 +68,20 @@ td img {
 // overwrite the checkbox background
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background-color: #00a594 !important;
+  background-color: $primary-color !important;
 }
 
 // overwrite the ripple overlay on hover and click
 ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
-  background-color: #00a594 !important;
+  background-color: $primary-color !important;
 }
 
 ::ng-deep.mat-step-header .mat-step-icon-selected {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 ::ng-deep.mat-step-header .mat-step-icon-state-edit {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 ::ng-deep .mat-horizontal-stepper-header {
@@ -99,14 +100,14 @@ td img {
   color: white;
   font-size: 14px;
   font-weight: bold;
-  background-color: #00a594;
+  background-color: $primary-color;
   margin: 2px 2px;
   padding: 2px 1px;
   border-radius: .25rem !important;
 }
 
 .material-icons {
-  color: #00a594;
+  color: $primary-color;
   cursor: pointer;
 }
 
@@ -179,7 +180,7 @@ td img {
 }
 
 .material-icons {
-  color: #00a594;
+  color: $primary-color;
   cursor: pointer;
 }
 

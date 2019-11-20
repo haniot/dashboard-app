@@ -22,7 +22,7 @@ const PaginatorConfig = ConfigurationBasic;
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css']
+    styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     pagePatients: number;
@@ -76,14 +76,15 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.limitPatients = 8;
         this.limitStudies = 4;
         this.limitEvaluations = 4;
-        this.subscriptions.push(
-            this.selectPilotService.pilotStudyUpdated.subscribe(() => {
-                this.load();
-            }));
+        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
+            this.load();
+        })
+        this.dashboardService.userLoggedUpdated.subscribe(() => {
+            this.requestUserLogged();
+        })
     }
 
     ngOnInit() {
-        $('body').css('background-color', '#ececec');
         this.load();
     }
 
@@ -131,22 +132,26 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
                 }
                 return Promise.resolve(this.userLogged);
             } catch (e) {
-                return this.userService.getUserById(this.localStorageService.getItem('user'))
-                    .then(user => {
-                        if (user) {
-                            this.userId = user.id;
-                            this.userLogged = user;
-                            this.localStorageService.setItem('userLogged', JSON.stringify(user));
-                            this.localStorageService.setItem(this.userLogged.id, this.userLogged.selected_pilot_study);
-                            this.selectPilotService.pilotStudyHasUpdated(this.userLogged.selected_pilot_study);
-                        }
-                    })
-                    .catch(() => {
-                    });
+                return this.requestUserLogged()
             }
         }
         return Promise.resolve(this.userLogged);
 
+    }
+
+    requestUserLogged(): Promise<any> {
+        return this.userService.getUserById(this.localStorageService.getItem('user'))
+            .then(user => {
+                if (user) {
+                    this.userId = user.id;
+                    this.userLogged = user;
+                    this.localStorageService.setItem('userLogged', JSON.stringify(user));
+                    this.localStorageService.setItem(this.userLogged.id, this.userLogged.selected_pilot_study);
+                    this.selectPilotService.pilotStudyHasUpdated(this.userLogged.selected_pilot_study);
+                }
+            })
+            .catch(() => {
+            });
     }
 
     getPatients() {

@@ -1,9 +1,11 @@
+@import "../../../../assets/scss/template-colors";
+
 .card .card-header {
   z-index: 2 !important;
 }
 
 .card-header-timer div {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 .badge-12 {
@@ -25,7 +27,7 @@
   color: white;
   font-size: 12px;
   font-weight: bold;
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 .badge-warning {

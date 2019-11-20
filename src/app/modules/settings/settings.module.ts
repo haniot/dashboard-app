@@ -7,12 +7,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AccessSettingsComponent } from './access.settings/access.settings.component';
 import { LanguageSettingsComponent } from './language.settings/language.settings.component';
 import { SharedModule } from '../../shared/shared.module';
+import { DeleteAccountComponent } from './delete.account/delete.account.component';
 
 @NgModule({
-  declarations: [
-    AccessSettingsComponent,
-    LanguageSettingsComponent
-  ],
+    declarations: [
+        AccessSettingsComponent,
+        LanguageSettingsComponent,
+        DeleteAccountComponent
+    ],
     imports: [
         CommonModule,
         FormsModule,
@@ -20,10 +22,12 @@ import { SharedModule } from '../../shared/shared.module';
         SharedModule,
         ReactiveFormsModule
     ],
-  exports:[
-    AccessSettingsComponent,
-    LanguageSettingsComponent,
-    TranslateModule
-  ]
+    exports: [
+        AccessSettingsComponent,
+        LanguageSettingsComponent,
+        TranslateModule,
+        DeleteAccountComponent
+    ]
 })
-export class SettingsModule { }
+export class SettingsModule {
+}

@@ -82,6 +82,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     createForm() {
         this.patientForm = this.fb.group({
             id: [''],
+            created_at: [''],
             name: ['', Validators.required],
             birth_date: ['', Validators.required],
             gender: ['', Validators.required],
@@ -90,7 +91,9 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             selected_pilot_study: [''],
             language: [this.translateService.defaultLang],
             password: [''],
-            password_confirm: ['']
+            password_confirm: [''],
+            last_login: [''],
+            last_sync: ['']
         });
     }
 
@@ -106,7 +109,9 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             selected_pilot_study: [patient.selected_pilot_study],
             language: [patient.language],
             password: [''],
-            password_confirm: ['']
+            password_confirm: [''],
+            last_login: [patient.last_login],
+            last_sync: [patient.last_sync]
         });
     }
 

@@ -1,10 +1,11 @@
+@import "../../../../assets/scss/template-colors";
 
 .background-card {
-    background: linear-gradient(60deg, #00a594, #00a594);
+    background: linear-gradient(60deg, $primary-color, $primary-color);
 }
 
 .card .card-header-success .card-icon, .card .card-header-success .card-text, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card.bg-success, .card.card-rotate.bg-success .front, .card.card-rotate.bg-success .back {
-    background: linear-gradient(60deg, #00a594, #199e91);
+    background: linear-gradient(60deg, $primary-color, $primary-color);
 }
 
 .card-stats .card-header .card-category:not([class*="text-"]) {
@@ -21,11 +22,11 @@ label {
 
 .card-icon {
     border-radius: 50%;
-    background-color: #00a594;
+    background-color: $primary-color;
 }
 
 .card-header-timer div {
-    background-color: #00a594;
+    background-color: $primary-color;
 }
 
 label {
@@ -45,14 +46,14 @@ label {
     color: white;
     font-size: 14px;
     font-weight: bold;
-    background-color: #00a594;
+    background-color: $primary-color;
 }
 
 .study-active {
     color: white;
     font-size: 14px;
     font-weight: bold;
-    background-color: #00a594;
+    background-color: $primary-color;
 }
 
 .study-disable {
@@ -64,7 +65,7 @@ label {
 
 .shared .material-icons {
     cursor: pointer;
-    color: #00a594;
+    color: $primary-color;
     border-radius: 10px;
     font-size: 30px;
     -webkit-transition: font-size 500ms; /* Safari */
@@ -98,7 +99,7 @@ label {
 
 
 .card-header-timer div {
-    background-color: #00a594;
+    background-color: $primary-color;
 }
 
 #alarm_on {
@@ -123,7 +124,7 @@ label {
 }
 
 .classification {
-    color: #00a594;
+    color: $primary-color;
     font-size: 20px;
     font-weight: bold;
     background-color: white;
@@ -134,13 +135,13 @@ label {
 /*overwrite the checkbox background*/
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background-color: #00a594 !important;
+    background-color: $primary-color !important;
 }
 
 
 /*overwrite the ripple overlay on hover and click*/
 ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
-    background-color: #00a594 !important;
+    background-color: $primary-color !important;
 }
 
 .counselings {
@@ -192,7 +193,7 @@ label {
     color: white;
     font-size: 12px;
     font-weight: bold;
-    background-color: #00a594;
+    background-color: $primary-color;
     padding: 5px 5px;
     border-radius: 5px;
 }
@@ -210,11 +211,11 @@ label {
     color: white;
     font-size: 12px;
     font-weight: bold;
-    background-color: #00a594;
+    background-color: $primary-color;
 }
 
 .classification {
-    color: #00a594;
+    color: $primary-color;
     font-size: 16px;
     font-weight: bold;
     background-color: white;
@@ -233,7 +234,7 @@ label {
 }
 
 .eutrophy {
-    color: #00a594;
+    color: $primary-color;
 }
 
 .overweight {
@@ -270,8 +271,8 @@ label {
 
 .pilotSelected {
     background-color: #F7F6F6;
-    border-left: 1px solid #00a594;
-    border-right: 1px solid #00a594;
+    border-left: 1px solid $primary-color;
+    border-right: 1px solid $primary-color;
 }
 
 .bg-x_boy {

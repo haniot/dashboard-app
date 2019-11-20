@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import * as JWT_decode from 'jwt-decode';
-import * as $ from 'jquery';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AuthService } from '../services/auth.service';
@@ -47,7 +46,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        $('body').css('background-color', '#00a594');
         this.titleService.setTitle(this.translateService.instant('SECURITY.CHANGE.TITLE'))
 
         this.f = this.formBuilder.group({
@@ -209,8 +207,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });
-        /* reset color*/
-        $('body').css('background-color', '#ececec');
     }
 
 

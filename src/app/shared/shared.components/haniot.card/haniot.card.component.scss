@@ -1,6 +1,6 @@
-
+@import '../../../../assets/scss/template-colors';
 .card .card-header-danger:not(.card-header-icon):not(.card-header-text), .card.bg-danger, .card.card-rotate.bg-danger .front, .card.card-rotate.bg-danger .back {
-  background: #00a594 !important;
+  background: $primary-color !important;
 }
 
 .card-title{

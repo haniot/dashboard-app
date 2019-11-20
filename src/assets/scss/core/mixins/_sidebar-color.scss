@@ -1,24 +1,24 @@
 @mixin sidebar-background-color($background-color, $font-color){
-    .nav{
-        .nav-item{
-            .nav-link{
-              color: $font-color;
-            }
-            i{
-              color: rgba($font-color, .8);
-            }
-
-            &.active,
-            &:hover{
-                [data-toggle="collapse"]{
-                  color: $font-color;
-                    i{
-                        color: rgba($font-color, .8);
-                    }
-                }
-            }
-        }
-    }
+    //.nav{
+    //    .nav-item{
+    //        .nav-link{
+    //          color: $font-color;
+    //        }
+    //        i{
+    //          color: rgba($font-color, .8);
+    //        }
+    //
+    //        &.active,
+    //        &:hover{
+    //            [data-toggle="collapse"]{
+    //              color: $font-color;
+    //                i{
+    //                    color: rgba($font-color, .8);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
     .user{
         a{
           color: $font-color;

@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/template-colors";
+
 .label {
   color: black;
   font-size: 14px;
@@ -10,7 +12,7 @@
 }
 
 .card-header-icon .card-icon {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 table th {
@@ -25,7 +27,6 @@ ul {
 .badge-warning {
   max-width: 100%;
   color: white;
-
   font-weight: bold;
   background-color: #FF9800;
 }

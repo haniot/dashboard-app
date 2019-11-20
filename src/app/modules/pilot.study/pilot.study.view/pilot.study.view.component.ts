@@ -116,20 +116,26 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     loadHealthProfessionals(): void {
-        this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudy.id)
-            .then((healthProfessionals => {
-                this.professionalsAssociated = healthProfessionals;
-                this.professionalLength = this.professionalsAssociated.length;
+        this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudy.id, this.professionalPage, this.professionalLimit)
+            .then((httpResponse => {
+                this.professionalLength = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.professionalsAssociated = []
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.professionalsAssociated = httpResponse.body;
+                }
             }))
             .catch(() => {
             });
     }
 
     loadPatients(): void {
-        this.pilotStudyService.getPatientsByPilotStudy(this.pilotStudy.id)
-            .then((patients => {
-                this.patientsAssociated = patients;
-                this.patientLength = this.patientsAssociated.length;
+        this.pilotStudyService.getPatientsByPilotStudy(this.pilotStudy.id, this.patientPage, this.patientLimit)
+            .then((httpResponse => {
+                this.patientLength = parseInt(httpResponse.headers.get('x-total-count'), 10);
+                this.patientsAssociated = []
+                if (httpResponse.body && httpResponse.body.length) {
+                    this.patientsAssociated = httpResponse.body;
+                }
             }))
             .catch(() => {
             });
@@ -167,12 +173,14 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         this.professionalPageEvent = event;
         this.professionalPage = event.pageIndex + 1;
         this.professionalLimit = event.pageSize;
+        this.loadHealthProfessionals()
     }
 
     clickPatientPagination(event) {
         this.patientPageEvent = event;
         this.patientPage = event.pageIndex + 1;
         this.patientLimit = event.pageSize;
+        this.loadPatients()
     }
 
     editHealthProfessional(healthProfessionalId: string): void {

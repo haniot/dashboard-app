@@ -1,6 +1,7 @@
+@import "../../../../assets/scss/template-colors";
 
 .card .card-header-danger:not(.card-header-icon):not(.card-header-text), .card.bg-danger, .card.card-rotate.bg-danger .front, .card.card-rotate.bg-danger .back {
-  background: #00a594 !important;
+  background: $primary-color !important;
 }
 
 .card-title {
@@ -30,11 +31,11 @@
 /* CSS to change Default/'Accent' color */
 
 ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-  background-color: #00a594; /*replace with your color*/
+  background-color: $primary-color; /*replace with your color*/
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #00a594; /*replace with your color*/
+  background-color: $primary-color; /*replace with your color*/
 }
 
 #listProfessionals {
@@ -43,7 +44,7 @@
 }
 
 .material-icons {
-  color: #00a594;
+  color: $primary-color;
   cursor: pointer;
 }
 

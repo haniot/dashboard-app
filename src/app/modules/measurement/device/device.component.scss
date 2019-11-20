@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/template-colors";
+
 label {
   color: black;
   font-size: 14px;
@@ -5,7 +7,7 @@ label {
 }
 
 .card-header-timer div {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 #alarm_on {
   width: 40px;
@@ -19,6 +21,6 @@ label {
     color: white;
     font-size: 12px;
     font-weight: bold;
-    background-color: #00a594;
+    background-color: $primary-color;
 
   }

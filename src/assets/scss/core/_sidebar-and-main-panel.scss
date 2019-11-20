@@ -1,3 +1,4 @@
+@import "../template-colors";
 .wrapper{
     position: relative;
     top: 0;
@@ -11,8 +12,6 @@
     left: 0;
     z-index: 2;
     width: 260px;
-    background: red;
-   
 
     .caret{
       display: inline-block;
@@ -323,7 +322,7 @@
     }
 
     &[data-color="white-haniot"]{
-        @include set-background-color-button($brand-white-haniot);
+        @include set-background-color-button($sidebar-active-color);
     }
 
     &[data-color="white"]{
@@ -331,8 +330,8 @@
         @include sidebar-active-color($black-color);
     }
 
-    &[data-background-color="red"]{
-        @include sidebar-background-color($brand-danger, $white-color);
+    &[data-background-color="sidebar-backdround"]{
+        @include sidebar-background-color($sidebar-bg-color, #3C4858);
 
         .user,
         .logo,

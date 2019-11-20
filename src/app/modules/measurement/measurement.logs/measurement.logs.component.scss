@@ -1,5 +1,7 @@
+@import "../../../../assets/scss/template-colors";
+
 .material-icons {
-  color: #00a594;
+  color: $primary-color;
   cursor: pointer;
 }
 
@@ -12,7 +14,7 @@
   color: white;
   font-size: 12px;
   font-weight: bold;
-  background-color: #00a594;
+  background-color: $primary-color;
   margin: 1px 1px;
 }
 
@@ -30,10 +32,10 @@
 // overwrite the checkbox background
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background-color: #00a594 !important;
+  background-color: $primary-color !important;
 }
 
 // overwrite the ripple overlay on hover and click
 ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
-  background-color: #00a594 !important;
+  background-color: $primary-color !important;
 }

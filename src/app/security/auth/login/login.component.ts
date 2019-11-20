@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     ngOnInit() {
-        $('body').css('background-color', '#00a594');
         this.titleService.setTitle(this.translateService.instant('SECURITY.LOGIN.TITLE'));
 
         const token = this.localStorageService.getItem('token');
@@ -210,8 +209,6 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });
-        /* reset color*/
-        $('body').css('background-color', '#ececec');
     }
 
 }

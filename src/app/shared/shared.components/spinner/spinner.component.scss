@@ -1,3 +1,5 @@
+@import '../../../../assets/scss/template-colors';
+
 /* spinner */
 .lds-spinner {
   display: inline-block;
@@ -20,7 +22,7 @@
   width: 5px;
   height: 14px;
   border-radius: 20%;
-  background: #00a594;
+  background: $primary-color;
 }
 
 .lds-spinner div:nth-child(1) {

@@ -22,7 +22,11 @@
     "CONFIG-LANGUAGE-LABEL": "Selecione o idioma desejado",
     "CONFIG-MYDATES-TITLE": "Meus dados",
     "CONFIG-MYDATES-SUBTITLE": "Clique no botão habilitar edição para alterar suas informações",
-    "CONFIG-MYDATES-ENABLE-EDITING": "Habilitar edição"
+    "CONFIG-MYDATES-ENABLE-EDITING": "Habilitar edição",
+    "CONFIG-MYDATES-DELETE-MY-ACCOUNT": "Excluir conta",
+    "CONFIG-MYDATES-DELETE-MY-ACCOUNT-TITLE": "Clique aqui para excluir sua conta...",
+    "CONFIG-MYDATES-DELETE-MY-ACCOUNT-MESSAGE": "Tem certeza que deseja excluir sua conta definitivamente?",
+    "CONFIG-MYDATES-DELETE-MY-ACCOUNT-OBSERVATION": "Essa ação é irreversível e após a confirmação não será possível recuperar sua conta."
   },
   "DASHBOARD": {
     "CARD-PATIENTS-FROM-THE-STUDY": "Total de Pacientes do Estudo Selecionado",
@@ -929,6 +933,7 @@
     "QUESTIONNAIRE-DELETED": "Questionário removido com sucesso!",
     "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!",
     "MEASUREMENT-REMOVED": "Medição removida com sucesso!",
-    "MEASUREMENT-NOT-REMOVED": "Não foi possível remover medição!"
+    "MEASUREMENT-NOT-REMOVED": "Não foi possível remover medição!",
+    "ACCOUNT-NOT-DELETED": "Não foi possível excluir conta, tente novamente!"
   }
 }

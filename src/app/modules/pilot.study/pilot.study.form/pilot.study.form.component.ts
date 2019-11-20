@@ -249,8 +249,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     loadProfessionalsAssociated() {
         if (this.pilotStudyId) {
             this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudyId)
-                .then(professionals => {
-                    this.professionalsAssociated = professionals
+                .then(httpResponse => {
+                    this.professionalsAssociated = httpResponse.body
                     this.loadProfessionalsNotAssociated();
                 })
                 .catch();
@@ -300,8 +300,8 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     loadPatientsAssociated() {
         if (this.pilotStudyId) {
             this.pilotStudyService.getPatientsByPilotStudy(this.pilotStudyId)
-                .then(patients => {
-                    this.patientsAssociated = patients;
+                .then(httpResponse => {
+                    this.patientsAssociated = httpResponse.body;
                     this.loadPatientsNotAssociated();
                 })
                 .catch();

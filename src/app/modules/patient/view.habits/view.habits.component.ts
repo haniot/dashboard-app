@@ -128,7 +128,9 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             email: [{ value: '', disabled: true }],
             phone_number: [{ value: '', disabled: true }],
             gender: [{ value: '', disabled: true }],
-            birth_date: [{ value: '', disabled: true }]
+            birth_date: [{ value: '', disabled: true }],
+            last_login: [{ value: '', disabled: true }],
+            last_sync: [{ value: '', disabled: true }]
         });
     }
 
@@ -141,7 +143,9 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             email: [{ value: patient.email, disabled: true }],
             phone_number: [{ value: patient.phone_number, disabled: true }],
             gender: [{ value: patient.gender, disabled: true }],
-            birth_date: [{ value: patient.birth_date, disabled: true }]
+            birth_date: [{ value: patient.birth_date, disabled: true }],
+            last_login: [{ value: patient.last_login, disabled: true }],
+            last_sync: [{ value: patient.last_sync, disabled: true }]
         });
     }
 

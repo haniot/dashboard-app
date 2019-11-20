@@ -1,16 +1,16 @@
-import { enableProdMode, NgModule, LOCALE_ID } from '@angular/core';
+import { enableProdMode, LOCALE_ID, NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { CommonModule, registerLocaleData } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import localePt from '@angular/common/locales/pt';
 import localePtExtra from '@angular/common/locales/extra/pt';
 
 import { ToastrModule } from 'ngx-toastr';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
@@ -22,6 +22,7 @@ import { AppRoutingModule } from './core/app.routing/app.routing.module';
 import { SelectPilotStudyService } from './shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { environment } from '../environments/environment';
 import { LanguagesConfiguration } from '../assets/i18n/config.js';
+import { DashboardService } from './modules/dashboard/services/dashboard.service';
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -80,7 +81,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     providers: [
         { provide: LOCALE_ID, useClass: DynamicLocaleId, deps: [TranslateService] },
         { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
-        SelectPilotStudyService
+        SelectPilotStudyService,
+        DashboardService
     ],
     bootstrap: [AppComponent]
 })

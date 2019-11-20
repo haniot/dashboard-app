@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/template-colors.scss";
+
 #dropdownPilotSelected {
     margin-left: 10px;
 }
@@ -13,7 +15,7 @@
 }
 
 .background-green:hover {
-    background-color: #00a594;
+    background-color: $primary-color;
     cursor: pointer;
 }
 
@@ -41,7 +43,7 @@
 
 #navbarDropdownMenuLink i:hover {
     cursor: pointer;
-    color: #00a594;
+    color: $primary-color;
 }
 
 label {

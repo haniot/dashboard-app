@@ -16,22 +16,7 @@
                 </div>
 
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center"
-                     [title]="'DASHBOARD.CARD-PATIENTS-FROM-THE-STUDY'|translate"
-                     *ngIf="getUserType()==='health_professional'">
-                    <div class="card card-stats ">
-                        <div class="card-header card-header-success card-header-icon">
-                            <div class="card-icon">
-                                <i class="material-icons">face</i>
-                            </div>
-                            <br>
-                            <h2 class="card-title">{{listPatients.length}}</h2>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center"
-                     [title]="'DASHBOARD.CARD-PATIENTS-TOTAL'|translate"
-                     *ngIf="getUserType()==='admin'">
+                     [title]="'DASHBOARD.CARD-PATIENTS-TOTAL'|translate"  *ngIf="getUserType()!=='patient'">
                     <div class="card card-stats">
                         <div class="card-header card-header-success card-header-icon">
                             <div class="card-icon">

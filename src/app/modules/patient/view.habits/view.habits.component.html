@@ -20,6 +20,26 @@
                     <form [formGroup]="patientForm">
 
                         <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                 *ngIf="patientForm.get('created_at').value" style="position: absolute; top: 0px;">
+                                <div class="d-flex justify-content-end">
+                                    <div class="p-2">
+                                        <small style="font-size: 12px">{{'SHARED.CREATED-AT'|translate}}
+                                            : {{patientForm.get('created_at').value|date:'shortDate'}}
+                                        </small>
+                                    </div>
+                                </div>
+                                <!--                                <div class="d-flex justify-content-end">-->
+                                <!--                                    <div class="p-2" *ngIf="patientForm.get('last_login').value">-->
+                                <!--                                        <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}-->
+                                <!--                                            : {{patientForm.get('last_login').value|date:'fullDate'}}-->
+                                <!--                                            {{'SHARED.AT'|translate}}-->
+                                <!--                                            {{patientForm.get('last_login').value|date:'mediumTime'}}</small>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                            </div>
+
                             <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <label for="name">
                                     {{'SHARED.NAME'|translate}}:
@@ -87,7 +107,6 @@
                                     </li>
                                 </ul>
                             </div>
-
 
                         </div>
 

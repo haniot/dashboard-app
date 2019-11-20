@@ -2,7 +2,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <haniot-card [title]="'CONFIG.CONFIG-MYDATES-TITLE' | translate" [subtitle]="'CONFIG.CONFIG-MYDATES-SUBTITLE' | translate">
+                <haniot-card [title]="'CONFIG.CONFIG-MYDATES-TITLE' | translate"
+                             [subtitle]="'CONFIG.CONFIG-MYDATES-SUBTITLE' | translate">
                     <form #formMyProfile="ngForm" (ngSubmit)="onSubmit(formMyProfile)">
 
                         <div class="form-group has-feedback" [ngClass]="{'has-success': nomeModelEdit.valid,
@@ -24,11 +25,15 @@
                         <div class="form-group has-feedback" [ngClass]="{'has-success': emailModelEdit.valid,
                     'has-error': emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty)}">
                             <label for="emailEdit">{{'SHARED.EMAIL' | translate}}:</label>
-                            <input type="email" class="form-control" id="emailEdit" required minlength="4" type="text" name="email" #emailModelEdit="ngModel"
-                                [(ngModel)]="user.email" [placeholder]="'SHARED.EMAIL' | translate" [disabled]="visibilityButtonSave?null:'disabled'">
-                            <span *ngIf="emailModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                            <input type="email" class="form-control" id="emailEdit" required minlength="4" type="text"
+                                   name="email" #emailModelEdit="ngModel"
+                                   [(ngModel)]="user.email" [placeholder]="'SHARED.EMAIL' | translate"
+                                   [disabled]="visibilityButtonSave?null:'disabled'">
+                            <span *ngIf="emailModelEdit.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                  aria-hidden="true"></span>
                             <span *ngIf="emailModelEdit.invalid && (emailModelEdit.touched || emailModelEdit.dirty) && visibilityButtonSave">
-                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-remove form-control-feedback"
+                                      aria-hidden="true"></span>
                                 <span class="text-danger">{{'SHARED.INVALID_EMAIL' | translate}}.</span>
                             </span>
                         </div>
@@ -69,7 +74,8 @@
                                     <div class="col-md-2">
                                         <!--                                        <mat-datepicker-toggle matSuffix  [for]="pickerBirthDate"></mat-datepicker-toggle>-->
                                         <!--                                        <mat-datepicker #pickerBirthDate></mat-datepicker>-->
-                                        <mat-datepicker-toggle matSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
+                                        <mat-datepicker-toggle matSuffix
+                                                               [for]="pickerBirthDate"></mat-datepicker-toggle>
                                         <mat-datepicker #pickerBirthDate startView="multi-year"></mat-datepicker>
                                     </div>
                                 </div>
@@ -83,21 +89,29 @@
                             </div>
                         </div>
 
-                        <div class="row container-fluid">
-                            <div class="col-md">
-                                <button type="button" class="btn btn-haniot-primary" (click)="enabledEdit()" [disabled]="disabledButtonEdit">
-                                    {{'CONFIG.CONFIG-MYDATES-ENABLE-EDITING' | translate}}
-                                </button>
-                            </div>
-                            <div class="col-md" *ngIf="visibilityButtonSave">
-                                <button type="submit" class="btn btn-haniot-primary" [disabled]="!formMyProfile.valid">
+                        <div class="container-fluid" style="padding-left: 0px;padding-right: 0px">
+                            <div class="d-flex justify-content-between align-items-end">
+                                <div class="p-2">
+                                    <button type="button" class="btn btn-haniot-primary" (click)="enabledEdit()"
+                                            [disabled]="disabledButtonEdit">
+                                        {{'CONFIG.CONFIG-MYDATES-ENABLE-EDITING' | translate}}
+                                    </button>
+                                </div>
+                                <div class="p-2" *ngIf="visibilityButtonSave">
+                                    <button type="submit" class="btn btn-haniot-primary"
+                                            [disabled]="!formMyProfile.valid">
                                         {{'SHARED.SAVE' | translate}}
-                                </button>
+                                    </button>
+                                </div>
+                                <div class="p-2">
+                                    <delete-account [userId]="this.userId"></delete-account>
+                                </div>
                             </div>
                         </div>
                     </form>
                 </haniot-card>
             </div>
+
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <access-settings [userId]="userId"></access-settings>
             </div>
@@ -105,6 +119,7 @@
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <language-settings></language-settings>
             </div>
+
         </div>
     </div>
 </div>

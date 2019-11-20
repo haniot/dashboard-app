@@ -9,7 +9,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { DashboardComponent } from './dashboard.component/dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing/dashboard.routing.module';
-import { DashboardService } from './services/dashboard.service'
 import { SharedModule } from '../../shared/shared.module'
 import { EvaluationModule } from '../evaluation/evaluation.module'
 
@@ -29,8 +28,7 @@ import { EvaluationModule } from '../evaluation/evaluation.module'
     ],
     declarations: [
         DashboardComponent
-    ],
-    providers: [DashboardService]
+    ]
 })
 export class DashboardModule {
 }

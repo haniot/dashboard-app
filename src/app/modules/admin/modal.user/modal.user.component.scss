@@ -1,3 +1,5 @@
+@import '../../../../assets/scss/template-colors';
+
 .modal-haniot {
   position: relative;
   display: -ms-flexbox;
@@ -13,7 +15,7 @@
 }
 
 .material-icons {
-  color: #00a594;
+  color: $primary-color;
   cursor: pointer;
 }
 

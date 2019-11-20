@@ -22,7 +22,11 @@
     "CONFIG-LANGUAGE-LABEL": "Select the desired language",
     "CONFIG-MYDATES-TITLE": "My data",
     "CONFIG-MYDATES-SUBTITLE": "Click the enable edit button to change your information",
-    "CONFIG-MYDATES-ENABLE-EDITING": "Enable editing"
+    "CONFIG-MYDATES-ENABLE-EDITING": "Enable editing",
+    "CONFIG-MYDATES-DELETE-MY-ACCOUNT": "Delete account",
+    "CONFIG-MYDATES-DELETE-MY-ACCOUNT-TITLE": "Click here to delete your account....",
+    "CONFIG-MYDATES-DELETE-MY-ACCOUNT-MESSAGE": "Are you sure you want to permanently delete your account?",
+    "CONFIG-MYDATES-DELETE-MY-ACCOUNT-OBSERVATION": "This action is irreversible and upon confirmation you will not be able to recover your account.."
   },
   "DASHBOARD": {
     "CARD-PATIENTS-FROM-THE-STUDY": "Total Patients in Selected Study",
@@ -929,6 +933,7 @@
     "QUESTIONNAIRE-DELETED": "Questionnaire successfully removed!",
     "QUESTIONNAIRE-NOT-DELETED": "Unable to remove questionnaire!",
     "MEASUREMENT-REMOVED": "Measurement successfully removed!",
-    "MEASUREMENT-NOT-REMOVED": "Could not remove measurement!"
+    "MEASUREMENT-NOT-REMOVED": "Could not remove measurement!",
+    "ACCOUNT-NOT-DELETED": "Unable to delete account, please try again!"
   }
 }

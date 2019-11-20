@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/template-colors";
+
 .foodAllergy {
   padding: 5px 5px;
 }
@@ -7,11 +9,11 @@
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
-  border: 1px solid #00a594;
+  border: 1px solid $primary-color;
   color: #fff;
   text-decoration: none;
   outline: 0;
-  background-color: #00a594;
+  background-color: $primary-color;
   padding: 10px 10px;
   border-radius: 0.25rem;
 }
@@ -25,11 +27,11 @@
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
-  border: 1px solid #00a594;
+  border: 1px solid $primary-color;
   color: #fff;
   text-decoration: none;
   outline: 0;
-  background-color: #00a594;
+  background-color: $primary-color;
   padding-left: 5px;
   padding-right: 0px;
   border-radius: 0.25rem;
@@ -45,7 +47,7 @@
   font-size: 10px;
   font-weight: bold;
   border: 2px solid #ffffff;
-  color: #00a594;
+  color: $primary-color;
   text-decoration: none;
   outline: 0;
   background-color: #fff;

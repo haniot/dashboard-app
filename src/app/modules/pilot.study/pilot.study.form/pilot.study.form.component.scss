@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/template-colors";
+
 .modal-haniot {
   position: relative;
   display: -ms-flexbox;
@@ -15,19 +17,19 @@
 /* CSS to change Default/'Accent' color */
 
 ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #00a594; /*replace with your color*/
+  background-color: $primary-color; /*replace with your color*/
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: #00a594; /*replace with your color*/
+  background-color: $primary-color; /*replace with your color*/
 }
 
 ::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
-  color: #00a594;
+  color: $primary-color;
 }
 
 ::ng-deep .mat-primary .mat-pseudo-checkbox-checked, .mat-primary .mat-pseudo-checkbox-indeterminate {
-  background: #00a594;
+  background: $primary-color;
 }
 
 .form-manager {
@@ -36,7 +38,7 @@
 }
 
 .material-icons {
-  color: #00a594;
+  color: $primary-color;
   transform: rotate(180deg) scaleX(-1);
   cursor: pointer;
 }

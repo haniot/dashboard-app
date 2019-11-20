@@ -1,5 +1,7 @@
+@import "../../../../assets/scss/template-colors";
+
 table .material-icons {
-  color: #00a594;
+  color: $primary-color;
   cursor: pointer;
 }
 
@@ -29,10 +31,10 @@ label {
 }
 
 .background-green:hover {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 #navbarDropdownMenuLink i:hover {
   cursor: pointer;
-  color: #00a594;
+  color: $primary-color;
 }

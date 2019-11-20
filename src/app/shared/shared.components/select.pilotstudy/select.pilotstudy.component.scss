@@ -1,5 +1,7 @@
+@import "../../../../assets/scss/template-colors";
+
 .material-icons {
-  color: #00a594;
+  color: $primary-color;
   transform: rotate(180deg) scaleX(-1);
   cursor: pointer;
 }
@@ -34,7 +36,7 @@ td img {
 #main-title {
   font-size: 24px;
   font-weight: bold;
-  color: #00a594;
+  color: $primary-color;
 }
 
 .second-title {
@@ -50,11 +52,11 @@ td img {
 }
 
 ::ng-deep.mat-step-header .mat-step-icon-selected {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 ::ng-deep.mat-step-header .mat-step-icon-state-edit {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 ::ng-deep .mat-horizontal-stepper-header {

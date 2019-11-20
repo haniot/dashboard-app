@@ -1,0 +1,9 @@
+<a href="JavaScript:void(0);" style="color: red; bottom: 0px;"
+   [title]="'CONFIG.CONFIG-MYDATES-DELETE-MY-ACCOUNT-TITLE'|translate"
+   (click)="openModalDeleteAccount()"> {{'CONFIG.CONFIG-MYDATES-DELETE-MY-ACCOUNT' | translate}}</a>
+
+
+<modal-confirmation [message]="'CONFIG.CONFIG-MYDATES-DELETE-MY-ACCOUNT-MESSAGE'|translate"
+                    [observation]="'CONFIG.CONFIG-MYDATES-DELETE-MY-ACCOUNT-OBSERVATION'|translate"
+                    (confirmation)="deleteAccount()"
+                    (noconfirmation)="closeModalDeleteAccount()"></modal-confirmation>

@@ -7,6 +7,8 @@ import { Data, DataResponse } from '../../evaluation/models/data'
 import { Patient } from '../../patient/models/patient'
 import { environment } from '../../../../environments/environment'
 import { AuthService } from '../../../security/auth/services/auth.service'
+import { HealthProfessional } from '../../admin/models/health.professional'
+import { DashboardService } from '../../dashboard/services/dashboard.service'
 
 @Injectable()
 export class PilotStudyService {
@@ -14,7 +16,8 @@ export class PilotStudyService {
 
     constructor(
         private http: HttpClient,
-        private authService: AuthService) {
+        private authService: AuthService,
+        private dashboardService: DashboardService) {
         this.version = 'v1';
     }
 
@@ -120,7 +123,11 @@ export class PilotStudyService {
 
     create(pilotstudy: PilotStudy): Promise<boolean> {
         return this.http.post<any>(`${environment.api_url}/${this.version}/pilotstudies`, pilotstudy)
-            .toPromise();
+            .toPromise()
+            .then(respose => {
+                this.dashboardService.updateUser()
+                return Promise.resolve(respose)
+            })
     }
 
     update(pilotstudy: PilotStudy): Promise<boolean> {
@@ -130,11 +137,41 @@ export class PilotStudyService {
 
     remove(pilotstudyId: string): Promise<boolean> {
         return this.http.delete<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}`)
-            .toPromise();
+            .toPromise()
+            .then(respose => {
+                this.dashboardService.updateUser()
+                return Promise.resolve(respose)
+            })
     }
 
-    getHealthProfessionalsByPilotStudyId(pilotStudyId: string) {
-        return this.http.get<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotStudyId}/healthprofessionals`)
+    getHealthProfessionalsByPilotStudyId(pilotStudyId: string, page?: number, limit?: number, search?: DateRange):
+        Promise<HttpResponse<HealthProfessional[]>> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
+
+
+        if (search && search.begin && search.end) {
+
+            const start_at = search.begin.toISOString().split('T')[0];
+            const end_at = search.end.toISOString().split('T')[0];
+
+            myParams = myParams.append('start_at', start_at);
+
+            myParams = myParams.append('end_at', end_at);
+
+        }
+
+        myParams = myParams.append('sort', '+created_at');
+
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotStudyId}/healthprofessionals`;
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
@@ -150,8 +187,33 @@ export class PilotStudyService {
             .toPromise();
     }
 
-    getPatientsByPilotStudy(pilotstudyId: string): Promise<Patient[]> {
-        return this.http.get<any>(`${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}/patients`)
+    getPatientsByPilotStudy(pilotstudyId: string, page?: number, limit?: number, search?: DateRange): Promise<HttpResponse<Patient[]>> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
+
+
+        if (search && search.begin && search.end) {
+
+            const start_at = search.begin.toISOString().split('T')[0];
+            const end_at = search.end.toISOString().split('T')[0];
+
+            myParams = myParams.append('start_at', start_at);
+
+            myParams = myParams.append('end_at', end_at);
+
+        }
+
+        myParams = myParams.append('sort', '+created_at');
+
+        const url = `${environment.api_url}/${this.version}/pilotstudies/${pilotstudyId}/patients`;
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 

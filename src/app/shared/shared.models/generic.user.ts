@@ -5,8 +5,8 @@ export class GenericUser {
     email: string;
     birth_date: string;
     phone_number: string;
-    last_login: number;
-    last_sync: number;
+    last_login: string;
+    last_sync: string;
     selected_pilot_study: string;
     total_pilot_studies: number;
     language: string;
@@ -18,8 +18,8 @@ export class GenericUser {
         this.email = '';
         this.birth_date = '';
         this.phone_number = '';
-        this.last_login = 0;
-        this.last_sync = 0;
+        this.last_login = '';
+        this.last_sync = '';
         this.selected_pilot_study = '';
         this.total_pilot_studies = 0;
         this.language = '';

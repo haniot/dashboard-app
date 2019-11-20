@@ -1,5 +1,7 @@
+@import "../../../../assets/scss/template-colors";
+
 .material-icons{
-    color : #00a594;
+    color : $primary-color;
     transform: rotate(180deg) scaleX(-1);
     cursor: pointer;
   }

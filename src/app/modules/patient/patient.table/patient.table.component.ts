@@ -118,6 +118,7 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         this.pageEvent = event;
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
+        this.getAllPacients();
     }
 
     openModalConfirmation(pilotstudy_id: string, patientId: string): void {

@@ -4,12 +4,15 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Patient } from '../models/patient';
 import { environment } from '../../../../environments/environment'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { DashboardService } from '../../dashboard/services/dashboard.service'
 
 @Injectable()
 export class PatientService {
     version: string;
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private dashboardService: DashboardService) {
         this.version = 'v1';
     }
 
@@ -84,7 +87,11 @@ export class PatientService {
 
     create(patient: Patient): Promise<Patient> {
         return this.http.post<any>(`${environment.api_url}/${this.version}/patients`, patient)
-            .toPromise();
+            .toPromise()
+            .then(respose => {
+                this.dashboardService.updateUser()
+                return Promise.resolve(respose)
+            })
     }
 
     update(patient: Patient): Promise<Patient> {
@@ -94,6 +101,10 @@ export class PatientService {
 
     remove(patientId: string): Promise<boolean> {
         return this.http.delete<any>(`${environment.api_url}/${this.version}/users/${patientId}`)
-            .toPromise();
+            .toPromise()
+            .then(respose => {
+                this.dashboardService.updateUser()
+                return Promise.resolve(respose)
+            })
     }
 }

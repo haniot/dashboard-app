@@ -1,10 +1,11 @@
+@import '../../../../assets/scss/template-colors';
 
 .background-card{
-    background: linear-gradient(60deg, #00a594, #00a594);
+    background: linear-gradient(60deg, $primary-color, $primary-color);
 }
 
 .card .card-header-success .card-icon, .card .card-header-success .card-text, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card.bg-success, .card.card-rotate.bg-success .front, .card.card-rotate.bg-success .back{
-    background: linear-gradient(60deg, #00a594, #199e91);
+    background: linear-gradient(60deg, $primary-color, $primary-color);
 }
 
 .card-stats .card-header .card-category:not([class*="text-"]) {

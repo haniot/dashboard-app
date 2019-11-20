@@ -10,6 +10,7 @@ import { UserService } from '../services/users.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { AuthService } from '../../../security/auth/services/auth.service'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 @Component({
     selector: 'admin-configurations',
@@ -30,6 +31,7 @@ export class AdminConfigurationsComponent implements OnInit {
         private healthService: HealthProfessionalService,
         private userService: UserService,
         private authService: AuthService,
+        private loadingService: LoadingService,
         private toastr: ToastrService,
         private localStorageService: LocalStorageService,
         private translateService: TranslateService
@@ -74,5 +76,6 @@ export class AdminConfigurationsComponent implements OnInit {
                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-UPDATED-INFO'));
             });
     }
+
 
 }

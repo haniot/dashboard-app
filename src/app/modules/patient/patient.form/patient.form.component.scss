@@ -1,3 +1,5 @@
+@import '../../../../assets/scss/template-colors';
+
 .btn-secondary {
   color: #fff;
   background-color: #6c757d;
@@ -33,7 +35,7 @@
 }
 
 .material-icons {
-  color: #00a594;
+  color: $primary-color;
   cursor: pointer;
 }
 

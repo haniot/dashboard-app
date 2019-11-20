@@ -1,5 +1,6 @@
+@import '../template-colors';
 body{
-    background-color: #eee;
+    background-color: $background-color;
     color: $black-color;
     font-weight: 300;
 }

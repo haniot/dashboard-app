@@ -1,3 +1,5 @@
+@import '../../../../assets/scss/template-colors';
+
 .submenu {
   position: relative;
   margin-left: 15px;
@@ -5,7 +7,7 @@
 }
 
 #haniotTitle {
-  color: #00675c;
+  color: $app-title-color;
   text-align: center;
   font-size: 22px;
   font-weight: bold;
@@ -38,11 +40,11 @@
 
 
 .background-card {
-  background: linear-gradient(60deg, #00a594, #00a594);
+  background: linear-gradient(60deg, $primary-color, $primary-color);
 }
 
 .card .card-header-success .card-icon, .card .card-header-success .card-text, .card .card-header-success:not(.card-header-icon):not(.card-header-text), .card.bg-success, .card.card-rotate.bg-success .front, .card.card-rotate.bg-success .back {
-  background: linear-gradient(60deg, #00a594, #199e91);
+  background: linear-gradient(60deg, $primary-color, $primary-color);
 }
 
 .card-stats .card-header .card-category:not([class*="text-"]) {
@@ -59,16 +61,16 @@ label {
 
 .card-icon {
   border-radius: 50%;
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 .card-header-timer div {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 
 .shared .material-icons {
   cursor: pointer;
-  color: #00a594;
+  color: $primary-color;
   border-radius: 10px;
   font-size: 30px;
   -webkit-transition: font-size 500ms; /* Safari */
@@ -81,6 +83,6 @@ label {
   font-weight: bold;
 }
 
-.card-title{
+.card-title {
   margin-bottom: 0px;
 }

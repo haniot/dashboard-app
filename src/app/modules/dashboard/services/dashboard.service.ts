@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
@@ -6,10 +6,10 @@ import { environment } from '../../../../environments/environment'
 import { Patient } from '../../patient/models/patient'
 import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation'
 
-
 @Injectable()
 export class DashboardService {
     version: string;
+    userLoggedUpdated = new EventEmitter<any>();
 
     constructor(
         private http: HttpClient,
@@ -96,5 +96,9 @@ export class DashboardService {
 
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
+    }
+
+    updateUser(): void {
+        this.userLoggedUpdated.emit()
     }
 }

@@ -25,8 +25,8 @@ export class ViewHealthProfessionalComponent implements OnChanges {
     ngOnChanges() {
         if (this.pilotStudyId) {
             this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudyId)
-                .then(healthProfessionals => {
-                    this.healthProfessionals = healthProfessionals;
+                .then(httpResponse => {
+                    this.healthProfessionals = httpResponse.body;
                 })
                 .catch();
         }

@@ -1,6 +1,8 @@
+@import "../../../../assets/scss/template-colors";
+
 ::ng-deep.mat-step-header .mat-step-icon-selected {
-  background-color: #00a594;
+  background-color: $primary-color;
 }
 ::ng-deep.mat-step-header .mat-step-icon-state-edit {
-  background-color: #00a594;
+  background-color: $primary-color;
 }

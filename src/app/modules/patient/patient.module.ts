@@ -55,7 +55,7 @@ import { PatientMyEvaluationsComponent } from './myevaluations/myevaluations.com
         PatientRoutingModule,
         HabitsModule,
         MeasurementModule,
-        SettingsModule
+        SettingsModule,
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
