@@ -7,6 +7,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
 import * as JWT_decode from 'jwt-decode';
 import { delay, tap } from 'rxjs/operators';
+import * as RandExp from 'randexp';
 
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SessionStorageService } from '../../../shared/shared.services/session.storage.service'
@@ -135,6 +136,11 @@ export class AuthService {
 
         return this.http.get<any>(url, { headers: headers })
             .toPromise();
+    }
+
+    generatePassword(): string {
+        const randexp = new RandExp(/[a-f]{3,5}[!@#\$%\^&]{1}[0-9]{2,4}/);
+        return randexp.gen();
     }
 
     private decodeTokenJWT(token: string): { sub: string, sub_type: string, iss: string, iat: number, exp: number, scope: string } {

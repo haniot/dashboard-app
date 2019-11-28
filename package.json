@@ -50,6 +50,7 @@
     "moment": "^2.24.0",
     "mustache": "^3.0.1",
     "ng-recaptcha": "^5.0.0",
+    "ng5-slider": "^1.2.4",
     "ngx-echarts": "^4.2.1",
     "ngx-toastr": "^10.0.4",
     "node-sass": "^4.12.0",

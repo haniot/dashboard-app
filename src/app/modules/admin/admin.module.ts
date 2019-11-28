@@ -54,6 +54,9 @@ import { SharedModule } from '../../shared/shared.module'
         HaniotTableComponent
 
     ],
+    exports: [
+        ModalUserComponent
+    ],
     providers: [
         UserService,
         AdminService,

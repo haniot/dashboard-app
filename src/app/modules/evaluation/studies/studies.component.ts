@@ -58,6 +58,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     }
 
     getAllPilotStudies() {
+        this.list = [];
         if (this.authService.decodeToken().sub_type === 'admin') {
             this.pilotStudyService.getAll(this.page, this.limit, this.search)
                 .then(httpResponse => {
@@ -91,6 +92,7 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     searchOnSubmit() {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
+            this.list = [];
             if (this.authService.decodeToken().sub_type) {
                 this.pilotStudyService.getAll(this.page, this.limit, this.search)
                     .then(httpResponse => {

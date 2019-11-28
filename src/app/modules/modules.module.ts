@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { PaginatorIntlService } from './config.matpaginator';
 
 @NgModule({
-    declarations: [],
     imports: [
         CommonModule
     ],

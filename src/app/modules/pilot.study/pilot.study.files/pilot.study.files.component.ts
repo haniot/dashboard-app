@@ -279,6 +279,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     }
 
     loadPatients(): void {
+        this.listOfPatients = [];
         this.patientService.getAllByPilotStudy(this.pilotStudy.id, this.patientPage, this.patientLimit)
             .then(httpResponse => {
                 this.patientLength = parseInt(httpResponse.headers.get('x-total-count'), 10);

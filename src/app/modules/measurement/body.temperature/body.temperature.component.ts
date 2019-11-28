@@ -68,9 +68,10 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
             name: historic_temperature,
             type: 'line',
             data: [],
-            color: '#3F51B5',
+            color: '#7f7f7f',
             markPoint: {
                 label: {
+                    color: '#FFFFFF',
                     fontSize: 10,
                     formatter: function (params) {
                         if (params.data.type === 'max') {
@@ -86,6 +87,14 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
                     { type: 'min' }
                 ]
             }
+            // markLine: {
+            //     silent: true,
+            //     data: [{
+            //         yAxis: 35.7
+            //     }, {
+            //         yAxis: 37.5
+            //     }]
+            // }
         };
 
         this.data.forEach((element: Measurement) => {
@@ -120,6 +129,28 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
                 axisLabel: {
                     formatter: '{value}°C'
                 }
+            },
+            visualMap: {
+                orient: 'horizontal',
+                top: 20,
+                right: 0,
+                pieces: [{
+                    gt: 0,
+                    lte: 35.7,
+                    color: '#285699',
+                    label: 'Hipotermia'
+
+                }, {
+                    gt: 35.7,
+                    lte: 37.5,
+                    color: '#096',
+                    label: 'Normal'
+
+                }, {
+                    gt: 37.5,
+                    color: '#ff1207',
+                    label: 'Febre'
+                }]
             },
             dataZoom: [
                 {

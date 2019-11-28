@@ -106,6 +106,19 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            <tr *ngIf="professionalsAssociated.length==0">
+                                                <td colspan="7" *ngIf="!listOfProfessionalIsEmpty">
+                                                    <spinner [message]="'HEALTHPROFESSIONALS.SPINNER-MESSAGE'|translate"></spinner>
+                                                </td>
+                                                <td colspan="7" *ngIf="listOfProfessionalIsEmpty">
+                                                    <div class="container">
+                                                        <div class="row justify-content-center">
+                                                            <div class="bg-no-patient"></div>
+                                                        </div>
+                                                        <label>{{'HEALTHPROFESSIONALS.LIST-EMPTY'|translate}}.</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             <tr *ngFor="let professional of professionalsAssociated; index as i;trackBy: trackById">
                                                 <td (click)="editHealthProfessional(professional.id)">{{professional.name}}</td>
                                                 <td (click)="editHealthProfessional(professional.id)">{{professional.health_area | healthArea | translate}}</td>
@@ -138,6 +151,19 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            <tr *ngIf="patientsAssociated.length==0">
+                                                <td colspan="7" *ngIf="!listOfPatientsIsEmpty">
+                                                    <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
+                                                </td>
+                                                <td colspan="7" *ngIf="listOfPatientsIsEmpty">
+                                                    <div class="container">
+                                                        <div class="row justify-content-center">
+                                                            <div class="bg-no-patient"></div>
+                                                        </div>
+                                                        <label>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             <tr *ngFor="let patient of patientsAssociated; index as i;trackBy: trackById">
                                                 <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.name}}</td>
                                                 <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.email}}</td>

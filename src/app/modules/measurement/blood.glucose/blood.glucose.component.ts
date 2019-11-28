@@ -63,7 +63,12 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
         const xAxis = {
             type: 'category',
-            data: []
+            data: [],
+            axisLabel: {
+                formatter: function (params: string) {
+                    return params.substring(0, 10)
+                }
+            }
         };
 
         const markPoint = {
@@ -84,17 +89,59 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             ]
         }
 
+        const labelOption = {
+            normal: {
+                show: true,
+                position: 'inside',
+                align: 'left',
+                verticalAlign: 'middle',
+                rotate: 270,
+                formatter: function (params) {
+                    const { data: { time } } = params
+                    return time
+                },
+                fontSize: 14,
+                rich: {
+                    name: {
+                        textBorderColor: '#fff'
+                    }
+                }
+            }
+        };
+
         const series = [
             {
                 name: preprandial,
+                label: labelOption,
                 type: 'bar',
                 data: [],
                 barMaxWidth: 100,
                 color: '#e57373',
-                markPoint: markPoint
+                markPoint: markPoint,
+                markLine: {
+                    silent: true,
+                    data: [
+                        {
+                            label: {
+                                formatter: ' Hipoglicemia'
+                            },
+                            yAxis: 70
+                        }, {
+                            label: {
+                                formatter: ' Normal'
+                            },
+                            yAxis: 140
+                        }, {
+                            label: {
+                                formatter: ' ALVO'
+                            },
+                            yAxis: 250
+                        }]
+                }
             },
             {
                 name: postprandial,
+                label: labelOption,
                 type: 'bar',
                 data: [],
                 barMaxWidth: 100,
@@ -103,50 +150,72 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             },
             {
                 name: fasting,
+                label: labelOption,
                 type: 'bar',
                 data: [],
                 barMaxWidth: 100,
                 color: '#629fa6',
                 markPoint: markPoint
+                // markArea: {
+                //     silent: true,
+                //     itemStyle: {
+                //         normal: {
+                //             color: 'transparent',
+                //             borderWidth: 1,
+                //             borderType: 'dashed'
+                //         }
+                //     },
+                //     data: [[{
+                //         name: 'Area',
+                //         xAxis: 'min',
+                //         yAxis: 'min'
+                //     }, {
+                //         xAxis: 'max',
+                //         yAxis: 'max'
+                //     }]]
+                // }
             },
             {
                 name: casual,
+                label: labelOption,
                 type: 'bar',
                 data: [],
                 barMaxWidth: 100,
                 color: '#d28168',
                 markPoint: markPoint
+
             },
             {
                 name: bedtime,
+                label: labelOption,
                 type: 'bar',
                 data: [],
                 barMaxWidth: 100,
-                color: '#629fa6',
+                color: '#D2B48C',
                 markPoint: markPoint
             }
         ];
 
-        const preprandials = this.data.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.preprandial;
-        });
-        const postprandials = this.data.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.postprandial;
-        });
-        const fastings = this.data.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.fasting;
-        });
-        const casuals = this.data.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.casual;
-        });
-        const bedtimes = this.data.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.bedtime;
-        });
+        // const preprandials = this.data.filter((measurement: BloodGlucose) => {
+        //     return measurement.meal === MealType.preprandial;
+        // });
+        // const postprandials = this.data.filter((measurement: BloodGlucose) => {
+        //     return measurement.meal === MealType.postprandial;
+        // });
+        // const fastings = this.data.filter((measurement: BloodGlucose) => {
+        //     return measurement.meal === MealType.fasting;
+        // });
+        // const casuals = this.data.filter((measurement: BloodGlucose) => {
+        //     return measurement.meal === MealType.casual;
+        // });
+        // const bedtimes = this.data.filter((measurement: BloodGlucose) => {
+        //     return measurement.meal === MealType.bedtime;
+        // });
 
 
         this.data.forEach((element: BloodGlucose, index) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
-            const newDate = this.datePipe.transform(element.timestamp, 'shortDate');
+            const newDate = this.datePipe.transform(element.timestamp, 'short');
             const findDate = xAxis.data.find(currentDate => {
                 return currentDate === newDate
             })

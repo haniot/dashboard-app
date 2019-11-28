@@ -61,6 +61,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
             this.searchTime = setTimeout(() => {
                 const userId = this.localStorageService.getItem('user');
                 const studyId = this.localStorageService.getItem(userId);
+                this.listOfPatients = [];
                 this.patientService.getAllByPilotStudy(studyId, this.page, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
@@ -80,6 +81,7 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         if (this.IsAdmin()) {
             const userId = this.localStorageService.getItem('user');
             const studyId = this.localStorageService.getItem(userId);
+            this.listOfPatients = [];
             this.patientService.getAllByPilotStudy(studyId, this.page, this.limit, this.search)
                 .then((httpResponse: HttpResponse<any>) => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);

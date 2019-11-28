@@ -71,6 +71,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         }
 
         if (this.userId) {
+            this.list = [];
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit)
                 .then(httpResponse => {
                     if (httpResponse.body && httpResponse.body.length) {
@@ -89,6 +90,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     searchOnSubmit() {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
+            this.list = [];
             this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);

@@ -19,7 +19,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './haniot.table.component.html',
     styleUrls: ['./haniot.table.component.scss']
 })
-export class HaniotTableComponent implements OnInit {
+export class HaniotTableComponent {
     @Input() length: number;
     @Input() pageSize: number;
     @Input() list: Array<GenericUser>;
@@ -46,10 +46,6 @@ export class HaniotTableComponent implements OnInit {
         this.list = new Array<GenericUser>();
         this.listOfUserIsEmpty = false;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
-    }
-
-    ngOnInit() {
-        this.updateStateOfList();
     }
 
     verifySameUser(user: any): boolean {
@@ -111,6 +107,7 @@ export class HaniotTableComponent implements OnInit {
         this.searchTime = setTimeout(() => {
             const page = this.pageEvent && this.pageEvent.pageIndex ? this.pageEvent.pageIndex : 0;
             const limit = this.pageEvent && this.pageEvent.pageSize ? this.pageEvent.pageSize : 5;
+            this.list = [];
             switch (this.userType) {
                 case 'Admin':
                     if (this.search && this.search !== '') {
@@ -150,7 +147,6 @@ export class HaniotTableComponent implements OnInit {
                                 if (httpResponse.body && httpResponse.body.length) {
                                     this.list = httpResponse.body;
                                 }
-                                this.updateStateOfList();
                             })
                             .catch();
                     }

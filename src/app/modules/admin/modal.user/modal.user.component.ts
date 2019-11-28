@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 import { GenericUser } from '../../../shared/shared.models/generic.user'
 import { ToastrService } from 'ngx-toastr'
+import { AuthService } from '../../../security/auth/services/auth.service'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -52,6 +53,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         private adminService: AdminService,
         private healthService: HealthProfessionalService,
         private modalService: ModalService,
+        private authService: AuthService,
         private toastr: ToastrService,
         private translateService: TranslateService
     ) {
@@ -230,8 +232,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     generatePassword(): void {
-        const randexp = new RandExp(/([a-z]|[0-9]|[!@#\$%\^&]){6,10}/);
-        this.passwordGenerated = randexp.gen();
+        this.passwordGenerated = this.authService.generatePassword();
         this.userForm.get('password').patchValue(this.passwordGenerated);
         this.userForm.get('password_confirm').patchValue(this.passwordGenerated);
     }

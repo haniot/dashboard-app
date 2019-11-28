@@ -65,13 +65,13 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         }
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
+            this.listOfEvaluations = [];
             this.nutritionService.getAllByHealthprofessional(this.userId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                     this.listOfEvaluations = new Array<NutritionEvaluation>();
                     if (httpResponse.body && httpResponse.body.length) {
-                        const nutritionsEvaluations = httpResponse.body
-                        this.listOfEvaluations = nutritionsEvaluations;
+                        this.listOfEvaluations = httpResponse.body;
                     }
                     this.listOfEvaluationsIsEmpty = !(this.listOfEvaluations && this.listOfEvaluations.length);
                 })
@@ -86,13 +86,13 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         if (!this.userId) {
             this.loadUserId();
         }
+        this.listOfEvaluations = [];
         this.nutritionService.getAllByHealthprofessional(this.userId, this.page, this.limit, this.search)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.listOfEvaluations = new Array<NutritionEvaluation>();
                 if (httpResponse.body && httpResponse.body.length) {
-                    const nutritionsEvaluations = httpResponse.body
-                    this.listOfEvaluations = nutritionsEvaluations;
+                    this.listOfEvaluations = httpResponse.body
                 }
                 this.listOfEvaluationsIsEmpty = !(this.listOfEvaluations && this.listOfEvaluations.length);
             })

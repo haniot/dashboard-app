@@ -49,6 +49,7 @@ export class PatientsComponent implements OnInit, OnChanges {
     searchOnSubmit() {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
+            this.listOfPatients = [];
             this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10)
@@ -64,6 +65,7 @@ export class PatientsComponent implements OnInit, OnChanges {
     }
 
     getAllPacients() {
+        this.listOfPatients = [];
         this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10)

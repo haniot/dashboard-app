@@ -7,13 +7,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { TranslateModule } from '@ngx-translate/core';
 import { SatDatepickerModule } from 'saturn-datepicker';
-import {
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatPaginatorModule
-} from '@angular/material';
+import { MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatPaginatorModule } from '@angular/material';
 
 import { MeasurementComponent } from './measurement.component/measurement.component';
 import { MeasurementService } from './services/measurement.service';
@@ -34,6 +28,9 @@ import { MeasurementCardComponent } from './measurement.card/measurement.card.co
 import { MeasurementLogsComponent } from './measurement.logs/measurement.logs.component';
 import { MeasurementTypePipe } from './pipes/measurement.type.pipe';
 import { SharedModule } from '../../shared/shared.module'
+import { Ng5SliderModule } from 'ng5-slider'
+import { SleepComponent } from './sleep/sleep.component';
+import { SleepPipe } from './pipes/sleep.pipe'
 
 @NgModule({
     declarations: [
@@ -45,6 +42,7 @@ import { SharedModule } from '../../shared/shared.module'
         BloodGlucoseComponent,
         BloodPressureComponent,
         HeartRateComponent,
+        SleepComponent,
         MealPipe,
         DeviceTypePipe,
         FatComponent,
@@ -52,7 +50,8 @@ import { SharedModule } from '../../shared/shared.module'
         DecimalFormatterPipe,
         MeasurementCardComponent,
         MeasurementLogsComponent,
-        MeasurementTypePipe
+        MeasurementTypePipe,
+        SleepPipe
     ],
     imports: [
         CommonModule,
@@ -68,7 +67,8 @@ import { SharedModule } from '../../shared/shared.module'
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        Ng5SliderModule
     ],
     exports: [
         MeasurementComponent,
@@ -84,7 +84,8 @@ import { SharedModule } from '../../shared/shared.module'
         HeartRateComponent,
         FatComponent,
         DecimalFormatterPipe,
-        MeasurementTypePipe
+        MeasurementTypePipe,
+        SleepPipe
     ],
     providers: [
         MeasurementService,
@@ -92,7 +93,8 @@ import { SharedModule } from '../../shared/shared.module'
         DatePipe,
         MealPipe,
         DeviceTypePipe,
-        DecimalFormatterPipe
+        DecimalFormatterPipe,
+        SleepPipe
     ]
 })
 export class MeasurementModule {

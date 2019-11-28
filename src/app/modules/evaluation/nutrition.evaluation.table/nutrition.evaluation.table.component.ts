@@ -54,13 +54,13 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
         if (this.patientId) {
             clearInterval(this.searchTime);
             this.searchTime = setTimeout(() => {
+                this.listOfEvaluations = [];
                 this.nutritionService.getAllByPatient(this.patientId, this.page, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                         this.listOfEvaluations = new Array<NutritionEvaluation>();
                         if (httpResponse.body && httpResponse.body.length) {
-                            const nutritionsEvaluations = httpResponse.body
-                            this.listOfEvaluations = nutritionsEvaluations;
+                            this.listOfEvaluations = httpResponse.body
                         }
                         this.listOfEvaluationsIsEmpty = !(this.listOfEvaluations && this.listOfEvaluations.length);
                     })
@@ -73,13 +73,13 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
 
     getAllNutritionEvaluations() {
         if (this.patientId) {
+            this.listOfEvaluations = [];
             this.nutritionService.getAllByPatient(this.patientId, this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                     this.listOfEvaluations = new Array<NutritionEvaluation>();
                     if (httpResponse.body && httpResponse.body.length) {
-                        const nutritionsEvaluations = httpResponse.body
-                        this.listOfEvaluations = nutritionsEvaluations;
+                        this.listOfEvaluations = httpResponse.body;
                     }
                     this.listOfEvaluationsIsEmpty = !(this.listOfEvaluations && this.listOfEvaluations.length);
                 })

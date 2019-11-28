@@ -48,6 +48,7 @@ export class PilotStudyTableComponent implements OnInit {
     }
 
     getAllPilotStudies() {
+        this.list = [];
         this.pilotStudyService.getAll(this.page, this.limit)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
@@ -65,6 +66,7 @@ export class PilotStudyTableComponent implements OnInit {
     searchOnSubmit() {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
+            this.list = [];
             this.pilotStudyService.getAll(this.page, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);

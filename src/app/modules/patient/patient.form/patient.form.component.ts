@@ -260,8 +260,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     }
 
     generatePassword(): void {
-        const randexp = new RandExp(/([a-z]|[0-9]|[!@#\$%\^&]){6,10}/);
-        this.passwordGenerated = randexp.gen();
+        this.passwordGenerated = this.authService.generatePassword();
         this.patientForm.get('password').patchValue(this.passwordGenerated);
         this.patientForm.get('password_confirm').patchValue(this.passwordGenerated);
     }

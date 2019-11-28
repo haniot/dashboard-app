@@ -1,0 +1,140 @@
+<measurement-card [title]="'MEASUREMENTS.SLEEP.TITLE'|translate"
+                  [subtitle]="'MEASUREMENTS.SLEEP.SUBTITLE'|translate" [filter_visibility]="filter_visibility"
+                  (filter_change)="applyFilter($event)">
+
+    <div class="row fadeIn" *ngIf="!showSleepStages">
+
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center">
+            <div class="card card-stats">
+                <div class="card-header card-header-timer card-header-icon">
+                    <div class="card-icon">
+                        <div class="bg-height"></div>
+                    </div>
+                    <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>
+                    <h3 class="card-title" *ngIf="lastData && lastData.duration">
+                        {{((lastData.duration / 3600000)|decimalFormatter) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
+                    </h3>
+                    <h3 class="card-title" *ngIf="!lastData || !lastData.duration">
+                        {{'MEASUREMENTS.VALUE'|translate}}
+                    </h3>
+                </div>
+
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2">
+                    <small class="pull-right" *ngIf="lastData && lastData.start_time">
+                        {{'MEASUREMENTS.LAST-REGISTER'|translate}}: {{lastData.start_time | date}}</small>
+                    <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                        : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center"
+             style="display: flex; justify-content: center;">
+
+            <div class="echarts-div-graph" echarts
+                 [options]="options" (chartClick)="loadSleepGraph($event)" (chartInit)="onSleepChartInit($event)"></div>
+
+            <div class="unavailable-data">
+                <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
+                <span *ngIf="data.length==0 && !showSpinner"
+                      class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.WEIGHT.UNAVAILABLE-DATA'|translate}}</span>
+            </div>
+        </div>
+
+        <!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">-->
+        <!--            <div class="d-flex flex-row-reverse">-->
+        <!--                <div class="p-2">-->
+        <!--                    <small class="pull-right" *ngIf="lastData && lastData.dataset">-->
+        <!--                        {{'MEASUREMENTS.LAST-REGISTER'|translate}}: {{lastData.dataset[0].timestamp | date}}</small>-->
+        <!--                    <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}-->
+        <!--                        : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+    </div>
+
+    <div class="row fadeIn" *ngIf="showSleepStages">
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 row justify-content-center">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-timer card-header-icon">
+                        <div class="card-icon">
+                            <div class="bg-height"></div>
+                        </div>
+                        <p class="card-category">{{'MEASUREMENTS.PIPES.SLEEP.AWAKE'|translate}}: </p>
+                        <h3 class="card-title">
+                            {{sleepSelected.pattern.summary.awake.count + '%'}}
+                        </h3>
+                        <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                        <!--                        {{lastData.value + '' + lastData.unit}}-->
+                        <!--                    </h3>-->
+                        <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                        <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                        <!--                    </h3>-->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-timer card-header-icon">
+                        <div class="card-icon">
+                            <div class="bg-height"></div>
+                        </div>
+                        <p class="card-category">{{'MEASUREMENTS.PIPES.SLEEP.RESTLESS'|translate}}: </p>
+                        <h3 class="card-title">
+                            {{sleepSelected.pattern.summary.restless.count + '%'}}
+                        </h3>
+                        <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                        <!--                        {{lastData.value + '' + lastData.unit}}-->
+                        <!--                    </h3>-->
+                        <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                        <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                        <!--                    </h3>-->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-timer card-header-icon">
+                        <div class="card-icon">
+                            <div class="bg-height"></div>
+                        </div>
+                        <p class="card-category">{{'MEASUREMENTS.PIPES.SLEEP.ASLEEP'|translate}}: </p>
+                        <h3 class="card-title">
+                            {{sleepSelected.pattern.summary.asleep.count + '%'}}
+                        </h3>
+                        <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                        <!--                        {{lastData.value + '' + lastData.unit}}-->
+                        <!--                    </h3>-->
+                        <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                        <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                        <!--                    </h3>-->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center echarts-div-graph"
+             echarts
+             [options]="sleepStages"
+             (chartInit)="onStagesChartInit($event)"></div>
+
+        <a class="nav-link"
+           [title]="'Voltar'"
+           (click)="back()">
+            <i class="material-icons">keyboard_arrow_left</i>
+        </a>
+    </div>
+
+
+</measurement-card>

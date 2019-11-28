@@ -83,6 +83,46 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                         borderColor: 'white',
                         color: color_systolic
                     }
+                },
+                markLine: {
+                    silent: true,
+                    data: [{
+                        label: {
+                            formatter: ' Hipotensão',
+                            position: 'middle'
+                        },
+                        yAxis: 90
+                    }, {
+                        label: {
+                            formatter: ' Normal',
+                            position: 'middle'
+                        },
+                        yAxis: 120
+                    }, {
+                        label: {
+                            formatter: ' Elevada',
+                            position: 'middle'
+                        },
+                        yAxis: 130
+                    }, {
+                        label: {
+                            formatter: 'Estágio 1',
+                            position: 'middle'
+                        },
+                        yAxis: 140
+                    }, {
+                        label: {
+                            formatter: 'Estágio 2',
+                            position: 'middle'
+                        },
+                        yAxis: 180
+                    }, {
+                        label: {
+                            formatter: 'Urgência Hipertensiva',
+                            position: 'middle'
+                        },
+                        yAxis: 180
+                    }]
                 }
             },
             {
@@ -104,6 +144,40 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                         borderColor: 'white',
                         color: color_diastolic
                     }
+                },
+                markLine: {
+                    silent: true,
+                    data: [{
+                        label: {
+                            formatter: ' Hipotensão'
+                        },
+                        yAxis: 50
+                    }, {
+                        label: {
+                            formatter: ' Normal'
+                        },
+                        yAxis: 70
+                    }, {
+                        label: {
+                            formatter: ' Elevada'
+                        },
+                        yAxis: 80
+                    }, {
+                        label: {
+                            formatter: 'Estágio 1'
+                        },
+                        yAxis: 90
+                    }, {
+                        label: {
+                            formatter: 'Estágio 2'
+                        },
+                        yAxis: 120
+                    }, {
+                        label: {
+                            formatter: 'Urgência Hipertensiva'
+                        },
+                        yAxis: 180
+                    }]
                 }
             },
             {
@@ -175,6 +249,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 }
             },
             legend: {
+                selectedMode: 'single',
                 data: [systolic, diastolic, pulse]
             },
             xAxis: xAxis,
@@ -191,7 +266,6 @@ export class BloodPressureComponent implements OnInit, OnChanges {
             ],
             series: series
         };
-
 
     }
 

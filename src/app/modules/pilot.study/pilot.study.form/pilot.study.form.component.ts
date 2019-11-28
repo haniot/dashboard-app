@@ -31,6 +31,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     professionalsNotAssociated: Array<HealthProfessional> = [];
     professionalsNotAssociatedIsEmpty: boolean;
     professionalsAssociated: Array<HealthProfessional> = [];
+    listOfProfessionalIsEmpty: boolean
     color = 'accent';
     checked = false;
     disabled = false;
@@ -40,6 +41,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     patientsNotAssociated: Array<Patient> = [];
     patientsNotAssociatedIsEmpty: boolean;
     patientsAssociated: Array<Patient> = [];
+    listOfPatientsIsEmpty: boolean;
     cacheIdPatientRemove: string;
     cacheIdProfessionalRemove: string;
     removing: boolean;
@@ -202,7 +204,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.listProf = httpResponse.body;
                 }
-
+                this.listOfProfessionalIsEmpty = this.listProf.length === 0;
             })
             .catch();
     }
@@ -213,7 +215,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.listPatients = httpResponse.body;
                 }
-
+                this.listOfPatientsIsEmpty = this.listPatients.length === 0;
             })
             .catch();
     }
@@ -248,9 +250,11 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
 
     loadProfessionalsAssociated() {
         if (this.pilotStudyId) {
+            this.professionalsAssociated = [];
             this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudyId)
                 .then(httpResponse => {
                     this.professionalsAssociated = httpResponse.body
+                    this.listOfProfessionalIsEmpty = this.professionalsAssociated.length === 0;
                     this.loadProfessionalsNotAssociated();
                 })
                 .catch();
@@ -299,9 +303,11 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
 
     loadPatientsAssociated() {
         if (this.pilotStudyId) {
+            this.patientsAssociated = [];
             this.pilotStudyService.getPatientsByPilotStudy(this.pilotStudyId)
                 .then(httpResponse => {
                     this.patientsAssociated = httpResponse.body;
+                    this.listOfPatientsIsEmpty = this.patientsAssociated.length === 0;
                     this.loadPatientsNotAssociated();
                 })
                 .catch();

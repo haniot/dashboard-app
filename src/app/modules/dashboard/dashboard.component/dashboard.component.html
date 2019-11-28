@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 text-center"
-                     [title]="'DASHBOARD.CARD-PATIENTS-TOTAL'|translate"  *ngIf="getUserType()!=='patient'">
+                     [title]="'DASHBOARD.CARD-PATIENTS-TOTAL'|translate" *ngIf="getUserType()!=='patient'">
                     <div class="card card-stats">
                         <div class="card-header card-header-success card-header-icon">
                             <div class="card-icon">
@@ -60,7 +60,8 @@
                      *ngFor="let study of listPilots;trackBy: trackById">
                     <a class="card-patient"
                        [title]="'DASHBOARD.CARD-STUDIES.VIEW'|translate"
-                       [routerLink]="['/app/pilotstudies',study.id,'details']">
+                       [routerLink]="['/app/pilotstudies',study.id,'details']"
+                       (click)="openLoading()">
                         <div class="card card-stats"
                              [ngClass]="study.id===pilotStudyId?'pilotSelected':''">
                             <div class="card-header card-header-timer card-header-icon">
@@ -183,7 +184,8 @@
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
                    *ngFor="let patient of listPatients;trackBy: trackById"
                    [routerLink]="['/app/patients',patient.id, 'details']"
-                   [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate">
+                   [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate"
+                   (click)="openLoading()">
                     <div class="card card-stats">
                         <div class="card-header card-header-timer card-header-icon">
                             <div class="card-icon" style="padding: 5px 5px">
@@ -222,7 +224,8 @@
                      *ngFor="let evaluation of listEvaluations;trackBy: trackById">
                     <a class="card-patient"
                        [routerLink]="['/app/evaluations',userId,'nutritional',evaluation.id]"
-                       [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate">
+                       [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate"
+                       (click)="openLoading()">
                         <div class="card card-stats">
                             <div class="card-header card-header-timer card-header-icon">
                                 <div class="card-icon" style="padding: 0px 0px">

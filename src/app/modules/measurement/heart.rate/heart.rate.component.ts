@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { HeartRate } from '../models/heart-rate';
 import { MeasurementService } from '../services/measurement.service';
+import { EnumMeasurementType } from '../models/measurement'
 
 @Component({
     selector: 'heart-rate',
@@ -44,11 +45,11 @@ export class HeartRateComponent implements OnInit, OnChanges {
         const historic_subtext = this.translateService.instant('MEASUREMENTS.HEART-RATE.HISTORIC.SUBTEXT');
         const frequency = this.translateService.instant('MEASUREMENTS.HEART-RATE.FREQUENCY');
 
-        const last_date_text = this.translateService.instant('MEASUREMENTS.HEART-RATE.LAST-DATE.TEXT');
-        const last_date_subtext = this.translateService.instant('MEASUREMENTS.HEART-RATE.LAST-DATE.SUBTEXT');
-
-        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const dateAndHour = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
+
+        const max = this.translateService.instant('MEASUREMENTS.MAX');
+        const min = this.translateService.instant('MEASUREMENTS.MIN');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -67,7 +68,41 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
         const seriesOptionsLastDate = {
             type: 'line',
-            data: []
+            data: [],
+            color: '#7F7F7F',
+            lineStyle: {
+                normal: {
+                    width: 4
+                }
+            },
+            markLine: {
+                silent: true,
+                data: [{
+                    yAxis: 50
+                }, {
+                    yAxis: 100
+                }, {
+                    yAxis: 200
+                }]
+            },
+            markPoint: {
+                label: {
+                    color: '#FFFFFF',
+                    fontSize: 10,
+                    formatter: function (params) {
+                        if (params.data.type === 'max') {
+                            return max;
+                        }
+                        if (params.data.type === 'min') {
+                            return min;
+                        }
+                    }
+                },
+                data: [
+                    { type: 'max' },
+                    { type: 'min' }
+                ]
+            }
         };
 
         this.data.forEach((heartRate) => {
@@ -92,11 +127,24 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
                     seriesOptionsLastDate.data.push({
                         value: elementHeartRate.value,
-                        time: this.datePipe.transform(elementHeartRate.timestamp, 'mediumTime')
+                        time: this.datePipe.transform(elementHeartRate.timestamp, 'mediumTime'),
+                        date: this.datePipe.transform(elementHeartRate.timestamp, 'shortDate')
                     });
 
                 });
             }
+        }
+
+        const values = seriesOptionsLastDate.data.map(element => {
+            return element.value
+        })
+
+        const maxValue = values.reduce((first, second) => {
+            return Math.max(first, second);
+        })
+
+        if (seriesOptionsLastDate.markLine.data[2]) {
+            seriesOptionsLastDate.markLine.data[2].yAxis = maxValue;
         }
 
         this.options = {
@@ -106,9 +154,11 @@ export class HeartRateComponent implements OnInit, OnChanges {
             },
             tooltip: {
                 formatter: function (params) {
-                    return `${frequency} : ${params[0].data.value} bpm <br> ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
+                    console.log(params)
+                    const { value, date, time } = params[0].data
+                    return `${frequency} : ${value} bpm <br> ${dateAndHour}: <br> ${date} ${at} ${time}`
                 },
-                trigger: 'axis'
+                trigger: 'item'
             },
             xAxis: xAxisOptions,
             yAxis: {
@@ -128,15 +178,25 @@ export class HeartRateComponent implements OnInit, OnChanges {
         };
 
         this.optionsLastData = {
-            title: {
-                text: last_date_text,
-                subtext: last_date_subtext
-            },
+            // title: {
+            //     text: last_date_text,
+            //     subtext: last_date_subtext
+            // },
             tooltip: {
                 formatter: function (params) {
-                    return `${frequency} : ${params[0].data.value} bpm <br> ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
+                    if (params.data.type === 'max' || params.data.type === 'min') {
+                        const t = seriesOptionsLastDate.data.find(currenHeartRate => {
+                            return currenHeartRate.value === params.value;
+                        });
+                        if (t) {
+                            return `${frequency} : ${t.value} bpm <br> ${dateAndHour}: <br> ${t.date} ${at} ${t.time}`
+                        }
+
+                    }
+                    const { value, date, time } = params.data
+                    return `${frequency} : ${value} bpm <br> ${dateAndHour}: <br> ${date} ${at} ${time}`
                 },
-                trigger: 'axis'
+                trigger: 'item'
             },
             xAxis: xAxisOptionsLastDate,
             yAxis: {
@@ -152,32 +212,55 @@ export class HeartRateComponent implements OnInit, OnChanges {
                     type: 'slider'
                 }
             ],
+            visualMap: {
+                orient: 'horizontal',
+                top: 20,
+                right: 0,
+                pieces: [{
+                    gt: 0,
+                    lte: 50,
+                    label: 'Baixa',
+                    color: '#236399'
+                }, {
+                    gt: 50,
+                    lte: 100,
+                    label: 'Normal',
+                    color: '#ffde33'
+                }, {
+                    gt: 100,
+                    label: 'Alta',
+                    color: '#7e0023'
+                }],
+                outOfRange: {
+                    color: '#999'
+                }
+            },
             series: seriesOptionsLastDate
         };
 
     }
 
     applyFilter(filter: { start_at: string, end_at: string, period: string }) {
-        // this.showSpinner = true;
-        // this.measurementService.getAllByUserAndType(this.patientId, MeasurementType.heart_rate, null, null, filter)
-        //     .then(httpResponse => {
-        //         this.data = httpResponse.body;
-        //         this.showSpinner = false;
-        //         this.updateGraph(this.data);
-        //     })
-        //     .catch();
+        this.showSpinner = true;
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.heart_rate, null, null, filter)
+            .then(httpResponse => {
+                this.data = httpResponse.body;
+                this.showSpinner = false;
+                this.updateGraph(this.data);
+            })
+            .catch();
     }
 
     updateGraph(measurements: Array<HeartRate>): void {
 
-        this.options.xAxis.data = [];
-        this.options.series.data = [];
+        this.optionsLastData.xAxis.data = [];
+        this.optionsLastData.series.data = [];
 
         measurements.forEach((heartRate: HeartRate) => {
             if (heartRate.dataset) {
                 heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
-                    this.options.xAxis.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
-                    this.options.series.data.push({
+                    this.optionsLastData.xAxis.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
+                    this.optionsLastData.series.data.push({
                         value: date.value,
                         time: this.datePipe.transform(date.timestamp, 'mediumTime')
                     });
@@ -186,7 +269,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
         });
 
-        this.echartsInstance.setOption(this.options);
+        this.echartsInstance.setOption(this.optionsLastData);
     }
 
     ngOnChanges(changes: SimpleChanges) {

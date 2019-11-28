@@ -158,6 +158,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         if (!this.pilotStudyId) {
             return this.loadPilotSelected();
         }
+        this.listPatients = [];
         this.dashboardService.getAllPatients(this.pilotStudyId, this.pagePatients, this.limitPatients)
             .then(httpResponse => {
                 this.lengthPatients = parseInt(httpResponse.headers.get('x-total-count'), 10);
@@ -176,6 +177,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         if (!this.userId) {
             this.loadUser();
         }
+        this.listPilots = [];
         this.dashboardService.getAllStudiesByUserId(this.userId, this.pageStudies, this.limitStudies)
             .then(httpResponse => {
                 this.lengthStudies = parseInt(httpResponse.headers.get('x-total-count'), 10);
@@ -198,6 +200,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         if (!this.userId) {
             this.loadUser();
         }
+        this.listEvaluations = [];
         this.dashboardService.getAllEvaluations(this.userId, this.pageEvaluations, this.limitEvaluations)
             .then(httpResponse => {
                 this.lengthEvaluations = parseInt(httpResponse.headers.get('x-total-count'), 10);
@@ -217,6 +220,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     getUserType(): string {
         return this.authService.decodeToken().sub_type;
+    }
+
+    openLoading(): void {
+        this.loadinService.open();
     }
 
     trackById(index, item) {

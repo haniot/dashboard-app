@@ -228,7 +228,8 @@
       "WAKE-UP-TIME": "Horário que acorda",
       "TIME-TO-SLEEP": "Horário que vai dormir",
       "UNAVAILABLE-DATA": "Nenhum hábito de sono cadastrado!",
-      "TIME-ABBREVIATION": "hs"
+      "TIME-ABBREVIATION": "hs",
+      "MINUTES-ABBREVIATION": "min"
     },
     "SOCIO-DEMOGRAPHIC": {
       "TITLE": "Informações sócio demográficas",
@@ -381,7 +382,9 @@
     "TITLE": "Lista de profissionais de saúde",
     "SUBTITLE": "",
     "TITLE-ADD": "Criar profissional de saúde",
-    "TITLE-EDIT": "Editar profissional de saúde"
+    "TITLE-EDIT": "Editar profissional de saúde",
+    "LIST-EMPTY": "Nenhum profissional cadastrado",
+    "SPINNER-MESSAGE": "Carregando profissionais"
   },
   "MYEVALUATIONS": {
     "TITLE": "Lista de avaliações",
@@ -454,6 +457,14 @@
       "FAT": "Gordura",
       "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
     },
+    "SLEEP": {
+      "TITLE": "Medições de Sono",
+      "SUBTITLE": "",
+      "PERIOD": "Período da medição",
+      "SLEEP": "Sono",
+      "DURATION": "Duração",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
     "COMPONENT": {
       "CONFIG-GRAPH": "Configurar gráficos visíveis",
       "EXPAND-COLLAPSE": "Clique para expandir/retrair...",
@@ -483,7 +494,13 @@
         "BODY-TEMPERATURE": "Temperatura Corporal",
         "BLOOD-GLUCOSE": "Glicose",
         "BLOOD-PRESSURE": "Pressão Arterial",
-        "HEART-RATE": "Frequência Cardíaca"
+        "HEART-RATE": "Frequência Cardíaca",
+        "SLEEP": "Sono"
+      },
+      "SLEEP": {
+        "AWAKE": "Acordado",
+        "RESTLESS": "Inquieto",
+        "ASLEEP": "Adormecido"
       },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"
@@ -559,7 +576,7 @@
   "PAGE-NOT-FOUND": {
     "TITLE": "Página não encontrada",
     "MESSAGE": "Você tentou acessar uma página não encontrada pelo nosso servidor",
-    "REDIRECT-PART1": "Please return to the main page by clicking the button below.",
+    "REDIRECT-PART1": "Use o botão abaixo para retornar à página inicial",
     "REDIRECT-PART2": ""
   },
   "PAGINATOR": {

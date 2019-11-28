@@ -228,7 +228,8 @@
       "WAKE-UP-TIME": "Wake up time",
       "TIME-TO-SLEEP": "Time to sleep",
       "UNAVAILABLE-DATA": "No registered sleep habits!",
-      "TIME-ABBREVIATION": "hrs"
+      "TIME-ABBREVIATION": "hrs",
+      "MINUTES-ABBREVIATION": "min"
     },
     "SOCIO-DEMOGRAPHIC": {
       "TITLE": "Sociodemographic information",
@@ -381,7 +382,9 @@
     "TITLE": "List of health professionals",
     "SUBTITLE": "",
     "TITLE-ADD": "Create health professional",
-    "TITLE-EDIT": "Edit health professional"
+    "TITLE-EDIT": "Edit health professional",
+    "LIST-EMPTY": "No registered professionals",
+    "SPINNER-MESSAGE": "Loading professionals"
   },
   "MYEVALUATIONS": {
     "TITLE": "List of reviews",
@@ -454,6 +457,14 @@
       "FAT": "Fat",
       "UNAVAILABLE-DATA": "No record of height registered!"
     },
+    "SLEEP": {
+      "TITLE": "Sleep Measurements",
+      "SUBTITLE": "",
+      "PERIOD": "Measurement period",
+      "SLEEP": "Sleep",
+      "DURATION": "Duration",
+      "UNAVAILABLE-DATA": "No records within selected period!"
+    },
     "COMPONENT": {
       "CONFIG-GRAPH": "Set up visible graphics",
       "EXPAND-COLLAPSE": "Click to expand/collapse...",
@@ -483,7 +494,13 @@
         "BODY-TEMPERATURE": "Body Temperature",
         "BLOOD-GLUCOSE": "Glucose",
         "BLOOD-PRESSURE": "Blood Pressure",
-        "HEART-RATE": "Heart Rate"
+        "HEART-RATE": "Heart Rate",
+        "SLEEP": "Sleep"
+      },
+      "SLEEP": {
+        "AWAKE": "Awake",
+        "RESTLESS": "Restless",
+        "ASLEEP": "Asleep"
       },
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND"

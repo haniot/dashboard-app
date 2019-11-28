@@ -32,7 +32,9 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
     disabled = false;
     pilotStudy: PilotStudy;
     professionalsAssociated: Array<HealthProfessional>;
+    listOfProfessionalIsEmpty: boolean;
     patientsAssociated: Array<Patient>;
+    listOfPatientsIsEmpty: boolean;
     userHealthArea: string;
     private subscriptions: Array<ISubscription>;
     /* pagging settings*/
@@ -116,28 +118,32 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     loadHealthProfessionals(): void {
+        this.professionalsAssociated = []
         this.pilotStudyService.getHealthProfessionalsByPilotStudyId(this.pilotStudy.id, this.professionalPage, this.professionalLimit)
             .then((httpResponse => {
                 this.professionalLength = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                this.professionalsAssociated = []
                 if (httpResponse.body && httpResponse.body.length) {
                     this.professionalsAssociated = httpResponse.body;
                 }
+                this.listOfProfessionalIsEmpty = this.professionalsAssociated.length === 0;
             }))
             .catch(() => {
+                this.listOfProfessionalIsEmpty = this.professionalsAssociated.length === 0;
             });
     }
 
     loadPatients(): void {
+        this.patientsAssociated = []
         this.pilotStudyService.getPatientsByPilotStudy(this.pilotStudy.id, this.patientPage, this.patientLimit)
             .then((httpResponse => {
                 this.patientLength = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                this.patientsAssociated = []
                 if (httpResponse.body && httpResponse.body.length) {
                     this.patientsAssociated = httpResponse.body;
                 }
+                this.listOfPatientsIsEmpty = this.patientsAssociated.length === 0;
             }))
             .catch(() => {
+                this.listOfPatientsIsEmpty = this.patientsAssociated.length === 0;
             });
     }
 

@@ -55,6 +55,7 @@ export class HealthProfessionalComponent implements OnInit, AfterViewChecked {
     }
 
     getAllHealthProfessionals() {
+        this.healthProfessionals = [];
         this.healthService.getAll(this.page, this.limit, this.search)
             .then(httpResponse => {
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);

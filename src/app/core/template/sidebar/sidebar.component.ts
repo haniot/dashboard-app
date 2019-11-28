@@ -187,6 +187,12 @@ export class SidebarComponent implements OnInit {
             this.activeMyEvaluations = '';
             this.activePatients = '';
             this.activeEvaluations = 'active';
+        }else{
+            this.activeDashboard = ''
+            this.activeMyPilots = '';
+            this.activeMyEvaluations = '';
+            this.activePatients = '';
+            this.activeEvaluations = '';
         }
     }
 
