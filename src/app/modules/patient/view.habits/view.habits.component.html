@@ -19,6 +19,10 @@
                              [subtitle]="'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.SUBTITLE'|translate">
                     <form [formGroup]="patientForm">
 
+                        <div class="divSpinner" *ngIf="!patientForm.get('id').value">
+                            <spinner></spinner>
+                        </div>
+
                         <div class="row">
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
@@ -56,6 +60,7 @@
                             </div>
 
                         </div>
+
                         <div class="row">
                             <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <label for="email">
@@ -64,6 +69,7 @@
                                 <input class="form-control" type="text" formControlName="email" id="email">
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="form-group has-feedback col-md">
                                 <label for="gender">
@@ -124,9 +130,10 @@
 
                 <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-NUTRITIONAL-QUESTIONNAIRE'|translate">
                     <!--Fundo preto do modal-->
-                    <div class="modal-backdrop show backdropLoadingQuestionnaire"
-                         *ngIf="loadingNutritionalQuestionnaire">
-                    </div>
+<!--                    <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
+<!--                         *ngIf="loadingNutritionalQuestionnaire">-->
+<!--                    </div>-->
+
                     <!--  Nutritional Questionnaires -->
                     <div class="container-fluid">
                         <div class="row">
@@ -227,7 +234,6 @@
                                 </div>
                             </div>
 
-
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <mat-paginator [length]="nutritionalQuestionnaireOptions.length"
                                                [pageSize]="nutritionalQuestionnaireOptions.limit"
@@ -248,9 +254,9 @@
                         <div class="row" style="position:relative;">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 backdropLoadingQuestionnaire">
                                 <!--Fundo preto do modal-->
-                                <div class="modal-backdrop show backdropLoadingQuestionnaire"
-                                     *ngIf="loadingOdontologicalQuestionnaire">
-                                </div>
+<!--                                <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
+<!--                                     *ngIf="loadingOdontologicalQuestionnaire">-->
+<!--                                </div>-->
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"

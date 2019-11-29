@@ -219,3 +219,17 @@ label {
   left: 0px;
   right: 0px;
 }
+
+.divSpinner {
+  z-index: 2000;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

@@ -6,6 +6,10 @@
                              [subtitle]="'CONFIG.CONFIG-MYDATES-SUBTITLE' | translate">
                     <form #formMyProfile="ngForm" (ngSubmit)="onSubmit(formMyProfile)">
 
+                        <div class="divSpinner" *ngIf="!user.id">
+                            <spinner></spinner>
+                        </div>
+
                         <div class="form-group has-feedback" [ngClass]="{'has-success': nomeModelEdit.valid,
                                   'has-error': nomeModelEdit.invalid && (nomeModelEdit.touched || nomeModelEdit.dirty)}">
                             <label for="nomeEdit">{{'SHARED.NAME' | translate}}:</label>

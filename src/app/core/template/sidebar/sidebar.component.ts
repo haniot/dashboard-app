@@ -70,6 +70,7 @@ export class SidebarComponent implements OnInit {
     study: PilotStudy;
     iconCollapse = 'keyboard_arrow_down';
     userLogged: GenericUser;
+    loadUserTime: any
 
     constructor(
         private authService: AuthService,
@@ -85,9 +86,6 @@ export class SidebarComponent implements OnInit {
     ) {
         this.userLogged = new GenericUser();
         this.study = new PilotStudy();
-        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
-            this.getPilotSelected();
-        });
     }
 
     ngOnInit() {
@@ -95,6 +93,9 @@ export class SidebarComponent implements OnInit {
         this.getUserName();
         this.router.events.subscribe(event => this.updateMenu());
         this.activedRoute.paramMap.subscribe(() => this.updateMenu());
+        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
+            this.getPilotSelected();
+        });
         this.getPilotSelected();
     }
 
@@ -119,25 +120,19 @@ export class SidebarComponent implements OnInit {
     }
 
     getUserName() {
-        this.userId = this.localStorageService.getItem('user');
-        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
-        let username = '';
-        try {
-            this.userLogged = localUserLogged;
-            username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
-            this.userName = username;
-        } catch (e) {
-            this.userService.getUserById(this.userId)
-                .then(user => {
-                    if (user) {
-                        this.userName = user.name ? user.name : user.email;
-                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
-                    }
-                })
-                .catch(() => {
+        this.loadUserTime = setInterval(() => {
+            this.userId = this.localStorageService.getItem('user');
+            const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+            let username = '';
+            try {
+                this.userLogged = localUserLogged;
+                username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
+                this.userName = username;
+                clearInterval(this.loadUserTime)
+            } catch (e) {
 
-                });
-        }
+            }
+        }, 1000)
     }
 
     getPilotSelected(): void {
@@ -187,7 +182,7 @@ export class SidebarComponent implements OnInit {
             this.activeMyEvaluations = '';
             this.activePatients = '';
             this.activeEvaluations = 'active';
-        }else{
+        } else {
             this.activeDashboard = ''
             this.activeMyPilots = '';
             this.activeMyEvaluations = '';

@@ -76,30 +76,33 @@ export class HaniotTableComponent {
     }
 
     editUser(id: string) {
-
         const not_find_user = this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER');
-
-        switch (this.userType) {
-            case 'Admin':
-                this.adminService.getById(id)
-                    .then((user) => {
-                        this.onedit.emit(user);
-                    })
-                    .catch(() => {
-                        this.toastr.error(not_find_user);
-                    });
-                break;
-
-            case 'HealthProfessional':
-                this.healthService.getById(id)
-                    .then((user) => {
-                        this.onedit.emit(user);
-                    })
-                    .catch(() => {
-                        this.toastr.error(not_find_user);
-                    });
-                break;
-        }
+        this.modalService.open('modalUserEdit');
+        const userSelected = this.list.find((user) => {
+                return user.id === id
+        })
+        this.onedit.emit(userSelected);
+        // switch (this.userType) {
+        //     case 'Admin':
+        //         this.adminService.getById(id)
+        //             .then((user) => {
+        //                 this.onedit.emit(user);
+        //             })
+        //             .catch(() => {
+        //                 this.toastr.error(not_find_user);
+        //             });
+        //         break;
+        //
+        //     case 'HealthProfessional':
+        //         this.healthService.getById(id)
+        //             .then((user) => {
+        //                 this.onedit.emit(user);
+        //             })
+        //             .catch(() => {
+        //                 this.toastr.error(not_find_user);
+        //             });
+        //         break;
+        // }
     }
 
     searchOnSubmit() {

@@ -1,6 +1,5 @@
 import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 
-import * as $ from 'jquery';
 import { ISubscription } from 'rxjs/Subscription';
 import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
@@ -76,15 +75,15 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.limitPatients = 8;
         this.limitStudies = 4;
         this.limitEvaluations = 4;
+    }
+
+    ngOnInit() {
         this.selectPilotService.pilotStudyUpdated.subscribe(() => {
-            this.load();
+            this.loadPilotSelected();
         })
         this.dashboardService.userLoggedUpdated.subscribe(() => {
             this.requestUserLogged();
         })
-    }
-
-    ngOnInit() {
         this.load();
     }
 
@@ -136,7 +135,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
             }
         }
         return Promise.resolve(this.userLogged);
-
     }
 
     requestUserLogged(): Promise<any> {

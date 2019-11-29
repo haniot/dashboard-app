@@ -24,7 +24,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './pilot.study.view.component.html',
     styleUrls: ['./pilot.study.view.component.scss']
 })
-export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
+export class PilotStudyViewComponent implements OnInit, OnDestroy {
     @Input() pilotStudyId: string;
     pilotStudyForm: FormGroup;
     color = 'accent';
@@ -81,13 +81,9 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
             if (this.pilotStudyId) {
                 this.createForm();
                 this.getPilotStudy();
-                this.selectPilotStudy();
             }
         }));
-        if (!this.pilotStudyId) {
-            this.createForm();
-            this.getPilotStudy();
-        }
+        this.createForm();
     }
 
     selectPilotStudy(): void {
@@ -97,7 +93,6 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
             this.selectPilotService.pilotStudyHasUpdated(this.pilotStudyId);
         }
     }
-
 
     loadUserHealthArea(): void {
         this.userHealthArea = this.localStorageService.getItem('health_area');
@@ -111,8 +106,14 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
                     this.pilotStudy = res;
                     this.loadHealthProfessionals();
                     this.loadPatients();
+                    this.selectPilotStudy();
                 }).catch(() => {
+                const userId = this.localStorageService.getItem('user');
+                const localPilotSelected = this.localStorageService.getItem(userId);
+                this.selectPilotService.pilotStudyHasUpdated(localPilotSelected);
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FIND'));
+                this.listOfProfessionalIsEmpty = true;
+                this.listOfPatientsIsEmpty = true;
             })
         }
     }
@@ -200,10 +201,10 @@ export class PilotStudyViewComponent implements OnInit, OnChanges, OnDestroy {
         return item.id;
     }
 
-    ngOnChanges() {
-        this.createForm();
-        this.getPilotStudy();
-    }
+    // ngOnChanges() {
+    //     this.createForm();
+    //     this.getPilotStudy();
+    // }
 
     ngOnDestroy(): void {
         /* cancel all subscriptions */

@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ISubscription } from 'rxjs-compat/Subscription';
-import * as RandExp from 'randexp';
 
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health.professional.service';
@@ -26,8 +25,8 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     @Input() subtitle: string;
     @Output() onsubmit: EventEmitter<any>;
     @Input() typeUser: string;
-    userForm: FormGroup;
     @Input() userId: string;
+    userForm: FormGroup;
     name: string;
     email: string;
     password: string;
@@ -47,6 +46,13 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     user: GenericUser;
     passwordGenerated: string;
     errorConflitEmail: boolean;
+
+    @HostListener('document:keydown', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        if (event.key === 'Escape') {
+            this.close()
+        }
+    }
 
     constructor(
         private fb: FormBuilder,
@@ -187,9 +193,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     close() {
-        if (!this.userId) {
-            this.userForm.reset();
-        }
+        this.userForm.reset();
         this.passwordNotMatch = false;
         this.errorConflitEmail = false;
     }

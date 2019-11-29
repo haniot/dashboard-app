@@ -92,8 +92,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             pageEvent: undefined
         };
         this.removingQuestionnaire = false;
-        this.loadingNutritionalQuestionnaire = false;
-        this.loadingOdontologicalQuestionnaire = false;
+        this.loadingNutritionalQuestionnaire = true;
+        this.loadingOdontologicalQuestionnaire = true;
         this.pilotStudy = new PilotStudy();
         this.associatedStudies = new Array<PilotStudy>();
     }

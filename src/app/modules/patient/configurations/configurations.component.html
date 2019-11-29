@@ -6,6 +6,10 @@
                              [subtitle]="'CONFIG.CONFIG-MYDATES-SUBTITLE' | translate">
                     <form [formGroup]="patientForm" (ngSubmit)="onSubmit(patientForm)">
 
+                        <div class="divSpinner" *ngIf="!user.id">
+                            <spinner></spinner>
+                        </div>
+
                         <div class="row">
                             <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
                                  [ngClass]="{'has-success': patientForm.controls.name.valid,

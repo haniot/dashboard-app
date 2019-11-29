@@ -31,6 +31,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
     listOfStudiesIsEmpty: boolean;
     userId: string;
     userName = '';
+    loadUserTime: any;
 
     constructor(
         private pilotStudyService: PilotStudyService,
@@ -55,7 +56,6 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
             this.selecPilotService.close();
         }
         this.getUser();
-        this.getAllPilotStudies();
     }
 
     loadUser(): void {
@@ -127,33 +127,37 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
 
 
     getUser() {
-        this.userId = this.localStorageService.getItem('user');
-        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
-        try {
-            const username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
-            this.userName = username;
-            if (localUserLogged.selected_pilot_study) {
-                this.selectPilotStudy(localUserLogged.selected_pilot_study);
+        this.loadUserTime = setInterval(() => {
+            this.userId = this.localStorageService.getItem('user');
+            const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+            try {
+                const username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
+                this.userName = username;
+                if (localUserLogged.selected_pilot_study) {
+                    this.selectPilotStudy(localUserLogged.selected_pilot_study);
+                    clearInterval(this.loadUserTime);
+                } else {
+                    this.getAllPilotStudies();
+                }
+            } catch (e) {
+                // this.userService.getUserById(this.localStorageService.getItem('user'))
+                //     .then(user => {
+                //         if (user) {
+                //             this.userId = user.id;
+                //             this.userName = user.name ? user.name : user.email;
+                //             const health_area = user.health_area ? user.health_area : 'admin';
+                //             this.localStorageService.setItem('userLogged', JSON.stringify(user));
+                //             this.localStorageService.setItem('email', user.email);
+                //             this.localStorageService.setItem('health_area', health_area);
+                //             if (user.selected_pilot_study) {
+                //                 this.selectPilotStudy(user.selected_pilot_study);
+                //             }
+                //         }
+                //     })
+                //     .catch(() => {
+                //     });
             }
-
-        } catch (e) {
-            this.userService.getUserById(this.localStorageService.getItem('user'))
-                .then(user => {
-                    if (user) {
-                        this.userId = user.id;
-                        this.userName = user.name ? user.name : user.email;
-                        const health_area = user.health_area ? user.health_area : 'admin';
-                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
-                        this.localStorageService.setItem('email', user.email);
-                        this.localStorageService.setItem('health_area', health_area);
-                        if (user.selected_pilot_study) {
-                            this.selectPilotStudy(user.selected_pilot_study);
-                        }
-                    }
-                })
-                .catch(() => {
-                });
-        }
+        }, 1000);
 
     }
 

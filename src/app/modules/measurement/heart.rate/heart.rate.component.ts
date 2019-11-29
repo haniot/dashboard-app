@@ -154,7 +154,6 @@ export class HeartRateComponent implements OnInit, OnChanges {
             },
             tooltip: {
                 formatter: function (params) {
-                    console.log(params)
                     const { value, date, time } = params[0].data
                     return `${frequency} : ${value} bpm <br> ${dateAndHour}: <br> ${date} ${at} ${time}`
                 },

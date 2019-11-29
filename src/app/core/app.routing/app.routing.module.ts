@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-
 import { AccessDeniedComponent } from '../template/access.denied/access.denied.component'
 import { NotfoundComponent } from '../template/page.not.found/page.not.found.component'
 import { TemplateComponent } from '../template/template.component/template.component'

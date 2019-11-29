@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     flag = true;
     private subscriptions: Array<ISubscription>;
     userName: string;
-
+    loadUserTime: any;
 
     constructor(
         location: Location,
@@ -197,34 +197,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     getUserName() {
-        const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
-        const language = this.localStorageService.getItem('language');
-        try {
-            this.userLogged = localUserLogged;
-            this.userName = this.userLogged.name ? this.userLogged.name : this.userLogged.email;
-            this.configLanguage(language);
-        } catch (e) {
-            this.userService.getUserById(this.localStorageService.getItem('user'))
-                .then(user => {
-                    if (user) {
-                        this.userLogged = user;
-                        this.userName = this.userLogged.name ? this.userLogged.name : this.userLogged.email;
-                        const health_area = user.health_area ? user.health_area : 'admin';
-                        this.localStorageService.setItem('userLogged', JSON.stringify(user));
-                        this.localStorageService.setItem('email', user.email);
-                        this.localStorageService.setItem('health_area', health_area);
-                        this.localStorageService.setItem('language', user.language);
-                        this.configLanguage(user.language);
-                    }
-                })
-                .catch(() => {
+        this.loadUserTime = setInterval(() => {
+            const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+            const language = this.localStorageService.getItem('language');
+            try {
+                this.userLogged = localUserLogged;
+                this.userName = this.userLogged.name ? this.userLogged.name : this.userLogged.email;
+                this.configLanguage(language);
+                clearInterval(this.loadUserTime);
+            } catch (e) {
 
-                });
-        }
-
+            }
+        }, 1000)
     }
 
     config(): void {
+        this.loadingService.open();
         switch (this.getTypeUser()) {
             case 'admin':
                 this.router.navigate(['/app/admin/configurations']);

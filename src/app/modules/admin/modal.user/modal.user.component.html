@@ -2,6 +2,9 @@
 
     <haniot-card [title]="title" [subtitle]="subtitle">
         <form [formGroup]="userForm">
+            <div class="divSpinner" *ngIf="!userForm.get('id').value">
+                <spinner></spinner>
+            </div>
             <div class="row">
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group has-feedback"

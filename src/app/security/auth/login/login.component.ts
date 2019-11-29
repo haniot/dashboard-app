@@ -143,10 +143,10 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.subscriptions.push(
             this.authService.login(body)
                 .subscribe(
-                    (resp) => {
+                    () => {
                         this.cleanAttempt()
                         const urlTemporary = this.localStorageService.getItem('urlTemporary');
-                        this.loading = false;
+                        // this.loading = false;
                         this.router.navigate(['/app']);
                         if (urlTemporary) {
                             this.localStorageService.removeItem('urlTemporary');
