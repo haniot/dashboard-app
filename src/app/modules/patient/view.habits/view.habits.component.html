@@ -15,110 +15,138 @@
         <div class="row">
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <haniot-card [title]="'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.TITLE'|translate"
-                             [subtitle]="'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.SUBTITLE'|translate">
-                    <form [formGroup]="patientForm">
 
-                        <div class="divSpinner" *ngIf="!patientForm.get('id').value">
-                            <spinner></spinner>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                 *ngIf="patientForm.get('created_at').value" style="position: absolute; top: 0px;">
-                                <div class="d-flex justify-content-end">
-                                    <div class="p-2">
-                                        <small style="font-size: 12px">{{'SHARED.CREATED-AT'|translate}}
-                                            : {{patientForm.get('created_at').value|date:'shortDate'}}
-                                        </small>
-                                    </div>
-                                </div>
-                                <!--                                <div class="d-flex justify-content-end">-->
-                                <!--                                    <div class="p-2" *ngIf="patientForm.get('last_login').value">-->
-                                <!--                                        <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}-->
-                                <!--                                            : {{patientForm.get('last_login').value|date:'fullDate'}}-->
-                                <!--                                            {{'SHARED.AT'|translate}}-->
-                                <!--                                            {{patientForm.get('last_login').value|date:'mediumTime'}}</small>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-                            </div>
-
-                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                <label for="name">
-                                    {{'SHARED.NAME'|translate}}:
-                                </label>
-                                <input class="form-control" type="text" formControlName="name" id="name">
-                            </div>
-
-                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                <label for="phone_number">
-                                    {{'SHARED.PHONE'|translate}}:
-                                </label>
-                                <input class="form-control" type="text" formControlName="phone_number"
-                                       id="phone_number">
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <label for="email">
-                                    {{'SHARED.EMAIL'|translate}}:
-                                </label>
-                                <input class="form-control" type="text" formControlName="email" id="email">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group has-feedback col-md">
-                                <label for="gender">
-                                    {{'SHARED.GENDER'|translate}}:
-                                </label>
-                                <select class="form-control" formControlName="gender" name="gender" id="gender">
-                                    <option *ngFor="let itemGender of optionsGender"
-                                            [value]="itemGender">{{itemGender | gender | translate}}</option>
-                                </select>
-
-                            </div>
-
-                            <div class="form-group has-feedback col-md">
-                                <label for="birth_date">
-                                    {{'SHARED.BIRTH-DATE'|translate}}:
-                                </label>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <input matInput class="form-control" [matDatepicker]="pickerBirthDate"
-                                               formControlName="birth_date" name="birth_date"
-                                               data-date-format="yyyy-MM-dd"
-                                               [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate"
-                                               id="birth_date">
-                                        <mat-datepicker #pickerBirthDate></mat-datepicker>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group has-feedback col-md" *ngIf="associatedStudies.length">
-                                <label>
-                                    {{'PATIENTS.VIEW-HABITS.ASSOCIATED-STUDIES'|translate}}:
-                                </label>
-                                <ul class="list-inline ellipsis" style="width: 100%;display: inline-block;">
-                                    <li class="list-inline-item ellipsis"
-                                        *ngFor="let pilotStudy of associatedStudies;let i=index">
-                                        {{pilotStudy.name}}<span *ngIf="i!==associatedStudies.length-1">,</span><span
-                                            *ngIf="i===associatedStudies.length-1">.</span>
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-danger">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">
+                                    <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.TITLE'|translate}}</h4>
+                                    <p class="card-category"> {{'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.SUBTITLE'|translate}}</p>
+                                </span>
+                                <ul class="nav nav-tabs right" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab"
+                                           [routerLink]="['/app/patients',patientId]"
+                                           [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">
+                                            {{'SHARED.TO-EDIT'|translate}}
+                                            <div class="ripple-container"></div>
+                                        </a>
                                     </li>
                                 </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <form [formGroup]="patientForm">
+
+                            <div class="divSpinner" *ngIf="!patientForm.get('id').value">
+                                <spinner></spinner>
                             </div>
 
-                        </div>
+                            <div class="row">
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     *ngIf="patientForm.get('created_at').value"
+                                     style="position: absolute; top: 0px;">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="p-2">
+                                            <small style="font-size: 12px">{{'SHARED.CREATED-AT'|translate}}
+                                                : {{patientForm.get('created_at').value|date:'shortDate'}}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <!--                                <div class="d-flex justify-content-end">-->
+                                    <!--                                    <div class="p-2" *ngIf="patientForm.get('last_login').value">-->
+                                    <!--                                        <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}-->
+                                    <!--                                            : {{patientForm.get('last_login').value|date:'fullDate'}}-->
+                                    <!--                                            {{'SHARED.AT'|translate}}-->
+                                    <!--                                            {{patientForm.get('last_login').value|date:'mediumTime'}}</small>-->
+                                    <!--                                    </div>-->
+                                    <!--                                </div>-->
+                                </div>
+
+                                <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <label for="name">
+                                        {{'SHARED.NAME'|translate}}:
+                                    </label>
+                                    <input class="form-control" type="text" formControlName="name" id="name">
+                                </div>
+
+                                <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <label for="phone_number">
+                                        {{'SHARED.PHONE'|translate}}:
+                                    </label>
+                                    <input class="form-control" type="text" formControlName="phone_number"
+                                           id="phone_number">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <label for="email">
+                                        {{'SHARED.EMAIL'|translate}}:
+                                    </label>
+                                    <input class="form-control" type="text" formControlName="email" id="email">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group has-feedback col-md">
+                                    <label for="gender">
+                                        {{'SHARED.GENDER'|translate}}:
+                                    </label>
+                                    <select class="form-control" formControlName="gender" name="gender" id="gender">
+                                        <option *ngFor="let itemGender of optionsGender"
+                                                [value]="itemGender">{{itemGender | gender | translate}}</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group has-feedback col-md">
+                                    <label for="birth_date">
+                                        {{'SHARED.BIRTH-DATE'|translate}}:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <input matInput class="form-control" [matDatepicker]="pickerBirthDate"
+                                                   formControlName="birth_date" name="birth_date"
+                                                   data-date-format="yyyy-MM-dd"
+                                                   [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate"
+                                                   id="birth_date">
+                                            <mat-datepicker #pickerBirthDate></mat-datepicker>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group has-feedback col-md" *ngIf="associatedStudies.length">
+                                    <label>
+                                        {{'PATIENTS.VIEW-HABITS.ASSOCIATED-STUDIES'|translate}}:
+                                    </label>
+                                    <ul class="list-inline ellipsis" style="width: 100%;display: inline-block;">
+                                        <li class="list-inline-item ellipsis"
+                                            *ngFor="let pilotStudy of associatedStudies;let i=index">
+                                            {{pilotStudy.name}}<span
+                                                *ngIf="i!==associatedStudies.length-1">,</span><span
+                                                *ngIf="i===associatedStudies.length-1">.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
 
 
-                    </form>
-                </haniot-card>
+                        </form>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -130,9 +158,9 @@
 
                 <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-NUTRITIONAL-QUESTIONNAIRE'|translate">
                     <!--Fundo preto do modal-->
-<!--                    <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
-<!--                         *ngIf="loadingNutritionalQuestionnaire">-->
-<!--                    </div>-->
+                    <!--                    <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
+                    <!--                         *ngIf="loadingNutritionalQuestionnaire">-->
+                    <!--                    </div>-->
 
                     <!--  Nutritional Questionnaires -->
                     <div class="container-fluid">
@@ -161,6 +189,7 @@
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
                                 <div class="card">
                                     <div class="card-header card-header-tabs card-header-danger">
                                         <div class="nav-tabs-navigation">
@@ -184,11 +213,13 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="card-body">
 
                                         <div class="row justify-content-center">
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                 [ngClass]="fadeInNutritioalQuestionnaire">
                                                 <haniot-subcard [title]="'HABITS.FEEDING.TITLE'|translate">
                                                     <feeding-habits
                                                             [feedingHabitsRecord]="nutritionalQuestionnaire.feeding_habits_record"></feeding-habits>
@@ -196,6 +227,7 @@
                                             </div>
 
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                 [ngClass]="fadeInNutritioalQuestionnaire"
                                                  *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
                                                 <haniot-subcard [title]="'HABITS.PHYSICAL-ACTIVITY.TITLE'|translate">
                                                     <physical-activity-habits
@@ -203,7 +235,8 @@
                                                 </haniot-subcard>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                                 [ngClass]="fadeInNutritioalQuestionnaire">
                                                 <haniot-subcard [title]="'HABITS.SLEEP.TITLE'|translate">
                                                     <sleep-habits
                                                             [sleepHabit]="nutritionalQuestionnaire.sleep_habit"></sleep-habits>
@@ -211,6 +244,7 @@
                                             </div>
 
                                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                                 [ngClass]="fadeInNutritioalQuestionnaire"
                                                  *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
                                                 <haniot-subcard [title]="'HABITS.MEDICAL-RECORD.TITLE'|translate">
                                                     <medical-record
@@ -235,11 +269,13 @@
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
                                 <mat-paginator [length]="nutritionalQuestionnaireOptions.length"
                                                [pageSize]="nutritionalQuestionnaireOptions.limit"
                                                [pageSizeOptions]="nutritionalQuestionnaireOptions.pageSizeOptions"
                                                (page)="nutritionalQuestionnairePageEvent($event)">
                                 </mat-paginator>
+
                             </div>
 
                         </div>
@@ -254,9 +290,9 @@
                         <div class="row" style="position:relative;">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 backdropLoadingQuestionnaire">
                                 <!--Fundo preto do modal-->
-<!--                                <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
-<!--                                     *ngIf="loadingOdontologicalQuestionnaire">-->
-<!--                                </div>-->
+                                <!--                                <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
+                                <!--                                     *ngIf="loadingOdontologicalQuestionnaire">-->
+                                <!--                                </div>-->
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"
@@ -308,21 +344,24 @@
                                     <div class="card-body">
                                         <div class="row justify-content-center">
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                 [ngClass]="fadeInOdontologicalQuestionnaire">
                                                 <haniot-subcard [title]="'HABITS.FAMILY-COHESION.TITLE'|translate">
                                                     <familycohesion-record
                                                             [familyCohesionRecord]="odontologicalQuestionnaire.family_cohesion_record"></familycohesion-record>
                                                 </haniot-subcard>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                 [ngClass]="fadeInOdontologicalQuestionnaire">
                                                 <haniot-subcard [title]="'HABITS.SOCIO-DEMOGRAPHIC.TITLE'|translate">
                                                     <sociodemographic-record
                                                             [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>
                                                 </haniot-subcard>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                 [ngClass]="fadeInOdontologicalQuestionnaire">
                                                 <haniot-subcard [title]="'HABITS.ORAL-HEALTH.TITLE'|translate">
                                                     <oralhealth-record
                                                             [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
@@ -330,7 +369,8 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                             [ngClass]="fadeInOdontologicalQuestionnaire">
                                             <small class="pull-right"
                                                    *ngIf="odontologicalQuestionnaire.created_at">
                                                 {{'HABITS.REGISTER-DATE'|translate}}:

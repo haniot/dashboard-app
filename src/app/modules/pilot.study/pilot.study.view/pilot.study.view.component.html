@@ -26,7 +26,15 @@
                     </div>
                     <div class="card-body">
                         <form [formGroup]="pilotStudyForm">
+
+                            <div class="divSpinner"
+                                 style="bottom: unset; top: 5%"
+                                 *ngIf="!pilotStudyForm.get('id').value">
+                                <spinner></spinner>
+                            </div>
+
                             <div class="row">
+
                                 <div class="form-group has-feedback col-sm-12 col-md-6">
                                     <label>
                                         {{'SHARED.NAME'|translate}}:
@@ -108,7 +116,8 @@
                                             <tbody>
                                             <tr *ngIf="professionalsAssociated.length==0">
                                                 <td colspan="7" *ngIf="!listOfProfessionalIsEmpty">
-                                                    <spinner [message]="'HEALTHPROFESSIONALS.SPINNER-MESSAGE'|translate"></spinner>
+                                                    <spinner
+                                                            [message]="'HEALTHPROFESSIONALS.SPINNER-MESSAGE'|translate"></spinner>
                                                 </td>
                                                 <td colspan="7" *ngIf="listOfProfessionalIsEmpty">
                                                     <div class="container">
@@ -153,14 +162,16 @@
                                             <tbody>
                                             <tr *ngIf="patientsAssociated.length==0">
                                                 <td colspan="7" *ngIf="!listOfPatientsIsEmpty">
-                                                    <spinner [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
+                                                    <spinner
+                                                            [message]="'DASHBOARD.CARD-PATIENTS.SPINNER-MESSAGE'|translate"></spinner>
                                                 </td>
                                                 <td colspan="7" *ngIf="listOfPatientsIsEmpty">
                                                     <div class="container">
                                                         <div class="row justify-content-center">
                                                             <div class="bg-no-patient"></div>
                                                         </div>
-                                                        <label>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}.</label>
+                                                        <label>{{'PATIENTS.PATIENTS-TABLE.LIST-EMPTY'|translate}}
+                                                            .</label>
                                                     </div>
                                                 </td>
                                             </tr>

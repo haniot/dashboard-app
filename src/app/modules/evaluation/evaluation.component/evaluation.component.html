@@ -7,6 +7,11 @@
                              *ngIf="patient">
 
                     <div class="row">
+
+                        <div class="divSpinner" *ngIf="!patient.id">
+                            <spinner></spinner>
+                        </div>
+
                         <div class="form-group col-md">
                             <label>
                                 {{'SHARED.NAME'|translate}}:

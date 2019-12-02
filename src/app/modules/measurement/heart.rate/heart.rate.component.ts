@@ -40,7 +40,6 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
-
         const historic_text = this.translateService.instant('MEASUREMENTS.HEART-RATE.HISTORIC.TEXT');
         const historic_subtext = this.translateService.instant('MEASUREMENTS.HEART-RATE.HISTORIC.SUBTEXT');
         const frequency = this.translateService.instant('MEASUREMENTS.HEART-RATE.FREQUENCY');
@@ -51,6 +50,12 @@ export class HeartRateComponent implements OnInit, OnChanges {
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
 
+        const low = this.translateService.instant('MEASUREMENTS.HEART-RATE.LOW');
+        const normal = this.translateService.instant('MEASUREMENTS.HEART-RATE.NORMAL');
+        const high = this.translateService.instant('MEASUREMENTS.HEART-RATE.HIGH');
+        const upperLimit = this.translateService.instant('SHARED.UPPER-LIMIT');
+        const classification = this.translateService.instant('SHARED.CLASSIFICATION');
+
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
         } else {
@@ -58,7 +63,6 @@ export class HeartRateComponent implements OnInit, OnChanges {
         }
 
         const xAxisOptions = { data: [] };
-
         const seriesOptions = {
             type: 'line',
             data: []
@@ -76,12 +80,31 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 }
             },
             markLine: {
-                silent: true,
+                silent: false,
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function (params) {
+                        try {
+                            const { data: { label: { formatter } }, value } = params
+                            return `${upperLimit}: ${value}bpm<br>${classification}: ${formatter}`;
+                        } catch (e) {
+                        }
+                    }
+                },
                 data: [{
+                    label: {
+                        formatter: low
+                    },
                     yAxis: 50
                 }, {
+                    label: {
+                        formatter: normal
+                    },
                     yAxis: 100
                 }, {
+                    label: {
+                        formatter: high
+                    },
                     yAxis: 200
                 }]
             },
@@ -119,7 +142,6 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
 
         if (this.lastData) {
-
             if (this.lastData.dataset) {
                 this.lastData.dataset.forEach((elementHeartRate: { value: number, timestamp: string }) => {
 
@@ -133,18 +155,6 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
                 });
             }
-        }
-
-        const values = seriesOptionsLastDate.data.map(element => {
-            return element.value
-        })
-
-        const maxValue = values.reduce((first, second) => {
-            return Math.max(first, second);
-        })
-
-        if (seriesOptionsLastDate.markLine.data[2]) {
-            seriesOptionsLastDate.markLine.data[2].yAxis = maxValue;
         }
 
         this.options = {
@@ -161,12 +171,15 @@ export class HeartRateComponent implements OnInit, OnChanges {
             },
             xAxis: xAxisOptions,
             yAxis: {
+                type: 'value',
                 splitLine: {
                     show: false
                 },
                 axisLabel: {
                     formatter: '{value} bpm'
-                }
+                },
+                min: 0,
+                max: 200
             },
             dataZoom: [
                 {
@@ -204,7 +217,9 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 },
                 axisLabel: {
                     formatter: '{value} bpm'
-                }
+                },
+                min: 0,
+                max: 200
             },
             dataZoom: [
                 {
@@ -218,16 +233,16 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 pieces: [{
                     gt: 0,
                     lte: 50,
-                    label: 'Baixa',
+                    label: low,
                     color: '#236399'
                 }, {
                     gt: 50,
                     lte: 100,
-                    label: 'Normal',
+                    label: normal,
                     color: '#ffde33'
                 }, {
                     gt: 100,
-                    label: 'Alta',
+                    label: high,
                     color: '#7e0023'
                 }],
                 outOfRange: {

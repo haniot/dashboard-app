@@ -57,7 +57,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     loadingNutritionalQuestionnaire: boolean;
     loadingOdontologicalQuestionnaire: boolean;
     associatedStudies: Array<PilotStudy>;
-
+    fadeInNutritioalQuestionnaire: string;
+    fadeInOdontologicalQuestionnaire: string;
 
     constructor(
         private fb: FormBuilder,
@@ -189,6 +190,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                 if (httpResponse.body && httpResponse.body.length) {
                     const nutritionalQuestionnaires = httpResponse.body;
                     this.nutritionalQuestionnaire = nutritionalQuestionnaires[0];
+                    this.fadeInNutritioalQuestionnaire = 'fadeIn';
+                    this.cleanFadeIn();
                 }
                 this.loadingNutritionalQuestionnaire = false;
             })
@@ -239,6 +242,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                 if (httpResponse.body && httpResponse.body.length) {
                     const odontologicalQuestionnaires = httpResponse.body;
                     this.odontologicalQuestionnaire = odontologicalQuestionnaires[0];
+                    this.fadeInOdontologicalQuestionnaire = 'fadeIn';
+                    this.cleanFadeIn();
                 }
                 this.loadingOdontologicalQuestionnaire = false;
             })
@@ -283,6 +288,13 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                     break;
             }
         }
+    }
+
+    cleanFadeIn(): void {
+        setTimeout(() => {
+            this.fadeInNutritioalQuestionnaire = '';
+            this.fadeInOdontologicalQuestionnaire = '';
+        }, 1000);
     }
 
     trackById(index, item) {

@@ -41,7 +41,6 @@ export class AuthService {
 
     login(credentials: { email: string, password: string }): Observable<boolean> {
         const myParams = new HttpParams();
-        myParams.append('rejectUnauthorized', 'false');
         return this.http.post<any>(`${environment.api_url}/${this.version}/auth`, credentials, { params: myParams })
             .pipe(
                 tap(async data => {
@@ -58,8 +57,7 @@ export class AuthService {
                         this.localStorageService.setItem('user', decodedToken.sub);
                         this.saveUserInLocalStorage(data.access_token);
                     }
-                }),
-                delay(2000)
+                })
             );
     }
 

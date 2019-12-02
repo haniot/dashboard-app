@@ -51,6 +51,9 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         const temperature = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.TEMPERATURE');
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
+        const hypothermia = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.HYPOTHERMIA');
+        const normal = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.NORMAL');
+        const fever = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.FEVER');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -138,18 +141,18 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
                     gt: 0,
                     lte: 35.7,
                     color: '#285699',
-                    label: 'Hipotermia'
+                    label: hypothermia
 
                 }, {
                     gt: 35.7,
                     lte: 37.5,
                     color: '#096',
-                    label: 'Normal'
+                    label: normal
 
                 }, {
                     gt: 37.5,
                     color: '#ff1207',
-                    label: 'Febre'
+                    label: fever
                 }]
             },
             dataZoom: [

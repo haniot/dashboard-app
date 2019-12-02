@@ -33,7 +33,7 @@ export class SelectPilotStudyService {
         this.localStorageService.setItem('userLogged', JSON.stringify(userLogged));
         if (pilotId !== oldPilotSelected) {
             this.userService.changePilotStudySelected(userId, pilotId)
-                .then(() => this.pilotStudyUpdated.emit())
+                .then(() => this.pilotStudyUpdated.emit(pilotId))
                 .catch(() => {
                 })
         } else {

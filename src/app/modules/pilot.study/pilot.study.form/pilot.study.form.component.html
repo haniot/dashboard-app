@@ -7,6 +7,11 @@
                         [subtitle]="'PILOT-STUDY.CARD-PILOTSTUDIES.SUBTITLE'|translate">
                     <form [formGroup]="pilotStudyForm">
 
+                        <div class="divSpinner"
+                             *ngIf="pilotStudyId && !pilotStudyForm.get('id').value">
+                            <spinner></spinner>
+                        </div>
+
                         <div class="row">
                             <div class="form-group has-feedback col-sm-12 col-md-6" [ngClass]="{'has-success': pilotStudyForm.controls.name.valid,
           'has-error': pilotStudyForm.controls.name.invalid && (pilotStudyForm.controls.name.touched || pilotStudyForm.controls.name.dirty)}">

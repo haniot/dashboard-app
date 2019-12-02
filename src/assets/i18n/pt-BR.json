@@ -16,12 +16,12 @@
   },
   "CONFIG": {
     "CONFIG-ACCESS-TITLE": "Configurações de acesso",
-    "CONFIG-ACCESS-SUBTITLE": "Para mudar sua senha de acesso preencha as informações abaixo e clique em ALTERAR SENHA",
+    "CONFIG-ACCESS-SUBTITLE": "Para mudar sua senha de acesso preencha as informações abaixo e clique em ALTERAR SENHA.",
     "CONFIG-LANGUAGE-TITLE": "Configurações de idioma",
-    "CONFIG-LANGUAGE-SUBTITLE": "Utilize o seletor para selecionar o  idioma desejado",
+    "CONFIG-LANGUAGE-SUBTITLE": "Utilize o seletor para selecionar o  idioma desejado.",
     "CONFIG-LANGUAGE-LABEL": "Selecione o idioma desejado",
     "CONFIG-MYDATES-TITLE": "Meus dados",
-    "CONFIG-MYDATES-SUBTITLE": "Clique no botão habilitar edição para alterar suas informações",
+    "CONFIG-MYDATES-SUBTITLE": "Clique no botão habilitar edição para alterar suas informações.",
     "CONFIG-MYDATES-ENABLE-EDITING": "Habilitar edição",
     "CONFIG-MYDATES-DELETE-MY-ACCOUNT": "Excluir conta",
     "CONFIG-MYDATES-DELETE-MY-ACCOUNT-TITLE": "Clique aqui para excluir sua conta...",
@@ -388,11 +388,11 @@
   },
   "MYEVALUATIONS": {
     "TITLE": "Lista de avaliações",
-    "SUBTITLE": "Abaixo estão as avaliações relacionadas a seu perfil"
+    "SUBTITLE": "Abaixo estão as avaliações relacionadas a seu perfil."
   },
   "MYPILOTS": {
     "TITLE": "Lista de estudos piloto",
-    "SUBTITLE": "Selecione um estudo piloto para visualizar"
+    "SUBTITLE": "Selecione um estudo piloto para visualizar."
   },
   "MEASUREMENTS": {
     "BLOOD-GLUCOSE": {
@@ -400,7 +400,10 @@
       "SUBTITLE": "",
       "PERIOD": "Período da medição",
       "GLUCOSE": "Glicose",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
+      "HYPOGLYCEMIA": "Hipoglicemia",
+      "NORMAL": "Normal",
+      "TARGET": "Alvo"
     },
     "BLOOD-PRESSURE": {
       "TITLE": "Pressão arterial",
@@ -409,14 +412,23 @@
       "SYSTOLIC": "Sistólica",
       "PULSE": "Pulso",
       "DIASTOLIC": "Diastólica",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
+      "HYPOTENSION": "Hipotensão",
+      "NORMAL": "Normal",
+      "HIGH": "Elevada",
+      "STAGE1": "Estágio 1",
+      "STAGE2": "Estágio 2",
+      "HYPERTENSIVE-URGENCY": "Urgência Hipertensiva"
     },
     "BODY-TEMPERATURE": {
       "TITLE": "Temperatura corporal",
       "SUBTITLE": "",
       "TEMPERATURE-HISTORIC": "Histórico de temperatura",
       "TEMPERATURE": "Temperatura",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
+      "HYPOTHERMIA": "Hipotermia",
+      "NORMAL": "Normal",
+      "FEVER": "Febre"
     },
     "FAT": {
       "TITLE": "Gordura corporal",
@@ -436,7 +448,10 @@
         "SUBTEXT": "O gráfico abaixo representa todos os valores captados na última medição realizada"
       },
       "FREQUENCY": "Frequência",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
+      "LOW": "Baixa",
+      "NORMAL": "Normal",
+      "HIGH": "Alta"
     },
     "HEIGHT": {
       "TITLE": "Estatura",
@@ -618,7 +633,7 @@
       "NUTRITION-EVALUATIONS": "Avaliações nutricionais",
       "CARD-PERSONAL-INFO": {
         "TITLE": "Informações pessoais do paciente",
-        "SUBTITLE": ""
+        "SUBTITLE": "Informações disponiveis apenas para visualização."
       },
       "HABITS": "Hábitos",
       "MEASUREMENTS": "Gráficos das Medições",
@@ -634,13 +649,13 @@
     },
     "MY-STUDIES": {
       "TITLE": "Lista de estudos piloto",
-      "SUBTITLE": "Você possui permissão apenas de visualização",
+      "SUBTITLE": "Você possui permissão apenas de visualização.",
       "NONE-STUDIES": "Nenhum estudo encontrado!",
       "NONE-STUDIES-MESSAGE": " Não existe estudo com o nome pesquisado."
     },
     "MY-EVALUATIONS": {
       "TITLE": "Lista de estudos piloto",
-      "SUBTITLE": "Você possui permissão apenas de visualização"
+      "SUBTITLE": "Você possui permissão apenas de visualização."
     }
   },
   "PILOT-STUDY": {
@@ -704,7 +719,7 @@
     "PROFESSIONAL": "Profissional",
     "CARD-PILOT-STUDY": {
       "TITLE": "Estudo piloto",
-      "SUBTITLE": "Informações disponiveis apenas para visualização",
+      "SUBTITLE": "Informações disponiveis apenas para visualização.",
       "EDIT-INFO": "Editar informações",
       "TOTAL-PROFESSIONALS": "Quantidade de Profissionais",
       "TOTAL-PATIENTS": "Quantidade de Pacientes"
@@ -808,6 +823,8 @@
     "GENERATE-PASSWORD": "Gerar senha aleatória",
     "CREATED-AT": "Criado em",
     "POSITION": "Posição",
+    "UPPER-LIMIT": "Limite superior",
+    "CLASSIFICATION": "Classificação",
     "PIPES": {
       "GENDER": {
         "MALE": "Masculino",

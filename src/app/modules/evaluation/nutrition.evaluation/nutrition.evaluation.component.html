@@ -5,6 +5,11 @@
                 <haniot-card [title]="'EVALUATION.NUTRITION-EVALUATION.CARD-PATIENT.TITLE'|translate"
                              [subtitle]="'EVALUATION.NUTRITION-EVALUATION.CARD-PATIENT.SUBTITLE'|translate">
                     <div class="row">
+
+                        <div class="divSpinner" *ngIf="!patient.id">
+                            <spinner></spinner>
+                        </div>
+
                         <div class="form-group col-md">
                             <label>
                                 {{'SHARED.NAME'|translate}}:
@@ -91,6 +96,11 @@
                                              *ngIf="nutritionalEvaluation && nutritionalEvaluation.nutritional_status &&
                                          nutritionalEvaluation.overweight_indicator && nutritionalEvaluation.blood_glucose &&
                                          nutritionalEvaluation.blood_pressure">
+
+                                            <div class="divSpinner" *ngIf="!nutritionalEvaluation.id">
+                                                <spinner></spinner>
+                                            </div>
+
                                             <div class="row">
                                                 <!-- Estado Nutricional -->
                                                 <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 align-self-center">
@@ -316,7 +326,7 @@
                                                                       [ngClass]="nutritionalEvaluation.blood_pressure.classification">{{nutritionalEvaluation.blood_pressure.classification | bloodpressureClassification | translate}}</span>
                                                             </div>
                                                             <div class="card-footer">
-                                                                <div class="container row justify-content-center">
+                                                                <div class="container-fluid row">
                                                                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center row">
                                                                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center"><span
                                                                                 class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SYSTOLIC'|translate}}</span>
@@ -440,6 +450,11 @@
                                     <mat-tab [label]="'PATIENTS.VIEW-HABITS.HABITS'|translate">
 
                                         <div class="container-fluid ">
+
+                                            <div class="divSpinner" *ngIf="!nutritionalEvaluation.id">
+                                                <spinner></spinner>
+                                            </div>
+
                                             <div class="row">
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -483,6 +498,11 @@
 
                                     <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">
                                         <div class="container-fluid ">
+
+                                            <div class="divSpinner" *ngIf="!nutritionalEvaluation.id">
+                                                <spinner></spinner>
+                                            </div>
+
                                             <div class="row">
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"

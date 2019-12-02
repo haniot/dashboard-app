@@ -16,12 +16,12 @@
   },
   "CONFIG": {
     "CONFIG-ACCESS-TITLE": "Access settings",
-    "CONFIG-ACCESS-SUBTITLE": "To change your password, fill in the information below and click on CHANGE PASSWORD",
+    "CONFIG-ACCESS-SUBTITLE": "To change your password, fill in the information below and click on CHANGE PASSWORD.",
     "CONFIG-LANGUAGE-TITLE": "Language Settings",
-    "CONFIG-LANGUAGE-SUBTITLE": "Use the selector to select the desired language",
+    "CONFIG-LANGUAGE-SUBTITLE": "Use the selector to select the desired language.",
     "CONFIG-LANGUAGE-LABEL": "Select the desired language",
     "CONFIG-MYDATES-TITLE": "My data",
-    "CONFIG-MYDATES-SUBTITLE": "Click the enable edit button to change your information",
+    "CONFIG-MYDATES-SUBTITLE": "Click the enable edit button to change your information.",
     "CONFIG-MYDATES-ENABLE-EDITING": "Enable editing",
     "CONFIG-MYDATES-DELETE-MY-ACCOUNT": "Delete account",
     "CONFIG-MYDATES-DELETE-MY-ACCOUNT-TITLE": "Click here to delete your account....",
@@ -392,7 +392,7 @@
   },
   "MYPILOTS": {
     "TITLE": "List of pilot studies",
-    "SUBTITLE": "Select a pilot study to view"
+    "SUBTITLE": "Select a pilot study to view."
   },
   "MEASUREMENTS": {
     "BLOOD-GLUCOSE": {
@@ -400,7 +400,10 @@
       "SUBTITLE": "",
       "GLUCOSE": "Glucose",
       "PERIOD": "Measurement period",
-      "UNAVAILABLE-DATA": "No record of glucose enrolled!"
+      "UNAVAILABLE-DATA": "No record of glucose enrolled!",
+      "HYPOGLYCEMIA": "Hypoglycemia",
+      "NORMAL": "Normal",
+      "TARGET": "Target"
     },
     "BLOOD-PRESSURE": {
       "TITLE": "Blood pressure",
@@ -409,14 +412,23 @@
       "SYSTOLIC": "Systolic",
       "PULSE": "Pulse",
       "DIASTOLIC": "Diastolic",
-      "UNAVAILABLE-DATA": "No record of blood pressure recorded!"
+      "UNAVAILABLE-DATA": "No record of blood pressure recorded!",
+      "HYPOTENSION": "Hypotension",
+      "NORMAL": "Normal",
+      "HIGH": "High",
+      "STAGE1": "Stage 1",
+      "STAGE2": "Stage 2",
+      "HYPERTENSIVE-URGENCY": "Hypertensive Urgency"
     },
     "BODY-TEMPERATURE": {
       "TITLE": "Body temperature",
       "SUBTITLE": "",
       "TEMPERATURE-HISTORIC": "Temperature historic",
       "TEMPERATURE": "Temperature",
-      "UNAVAILABLE-DATA": "No record of body temperature recorded!"
+      "UNAVAILABLE-DATA": "No record of body temperature recorded!",
+      "HYPOTHERMIA": "Hypothermia",
+      "NORMAL": "Normal",
+      "FEVER": "Fever"
     },
     "FAT": {
       "TITLE": "Body fat",
@@ -436,7 +448,10 @@
         "SUBTEXT": "The graph below represents all the values captured in the last measurement performed"
       },
       "FREQUENCY": "Frequency",
-      "UNAVAILABLE-DATA": "No registered heart rate record!"
+      "UNAVAILABLE-DATA": "No registered heart rate record!",
+      "LOW": "Low",
+      "NORMAL": "Normal",
+      "HIGH": "High"
     },
     "HEIGHT": {
       "TITLE": "Stature",
@@ -618,7 +633,7 @@
       "NUTRITION-EVALUATIONS": "Nutritional evaluations",
       "CARD-PERSONAL-INFO": {
         "TITLE": "Patient personal information",
-        "SUBTITLE": ""
+        "SUBTITLE": "Information available for viewing only."
       },
       "HABITS": "Habits",
       "MEASUREMENTS": "Graph of Measurements",
@@ -634,13 +649,13 @@
     },
     "MY-STUDIES": {
       "TITLE": "Pilot Study List",
-      "SUBTITLE": "You have view only permission",
+      "SUBTITLE": "You have view only permission.",
       "NONE-STUDIES": "No studies found!",
       "NONE-STUDIES-MESSAGE": "There is no study with the name searched."
     },
     "MY-EVALUATIONS": {
       "TITLE": "List Evaluations",
-      "SUBTITLE": "Click"
+      "SUBTITLE": "You have view only permission."
     }
   },
   "PILOT-STUDY": {
@@ -695,7 +710,7 @@
       "NONE-PATIENT": "No patients available"
     },
     "REMOVING": "Removing...",
-    "VIEW-ONLY": "View only",
+    "VIEW-ONLY": "View only.",
     "PLACEHOLDER-SEARCH": "Search for study...",
     "NAME-OF-STUDY": "Name of study",
     "TOVIEW-STUDY": "To view study...",
@@ -704,9 +719,9 @@
     "PROFESSIONAL": "Professional",
     "CARD-PILOT-STUDY": {
       "TITLE": "Pilot study",
-      "SUBTITLE": "",
+      "SUBTITLE": "Information available for viewing only.",
       "EDIT-INFO": "Edit Info",
-      "TOTAL-PROFESSIONALS": "Number of Professionalss",
+      "TOTAL-PROFESSIONALS": "Number of Professionals",
       "TOTAL-PATIENTS": "Number of Patients"
     },
     "CARD-FILES": {
@@ -808,6 +823,8 @@
     "GENERATE-PASSWORD": "Generate random password",
     "CREATED-AT": "Created at",
     "POSITION": "Position",
+    "UPPER-LIMIT": "Upper limit",
+    "CLASSIFICATION": "Classification",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",

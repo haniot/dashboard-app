@@ -54,6 +54,11 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const glucose = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.GLUCOSE');
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
+        const hypoglycemia = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.HYPOGLYCEMIA');
+        const normal = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.NORMAL');
+        const target = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.TARGET');
+        const upperLimit = this.translateService.instant('SHARED.UPPER-LIMIT');
+        const classification = this.translateService.instant('SHARED.CLASSIFICATION');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -66,7 +71,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             data: [],
             axisLabel: {
                 formatter: function (params: string) {
-                    return params.substring(0, 10)
+                    return params.split(/,|\s/)[0];
                 }
             }
         };
@@ -119,21 +124,31 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 color: '#e57373',
                 markPoint: markPoint,
                 markLine: {
-                    silent: true,
+                    silent: false,
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: function (params) {
+                            try {
+                                const { data: { label: { formatter } }, value } = params
+                                return `${upperLimit}: ${value}mg/dl<br>${classification}: ${formatter}`;
+                            } catch (e) {
+                            }
+                        }
+                    },
                     data: [
                         {
                             label: {
-                                formatter: ' Hipoglicemia'
+                                formatter: hypoglycemia
                             },
                             yAxis: 70
                         }, {
                             label: {
-                                formatter: ' Normal'
+                                formatter: normal
                             },
                             yAxis: 140
                         }, {
                             label: {
-                                formatter: ' ALVO'
+                                formatter: target
                             },
                             yAxis: 250
                         }]
@@ -273,7 +288,8 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                         params.data.time = t.time;
 
                     }
-                    return `${glucose}: ${params.data.value}mg/dl<br> ${date}: <br>${params.name} ${at} ${params.data.time}`
+                    return `${glucose}: ${params.data.value}mg/dl<br>` +
+                       `${date}: <br>${params.name.split(/,|\s/)[0]} ${at} ${params.data.time}`
                 }
             },
             legend: {

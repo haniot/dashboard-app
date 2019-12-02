@@ -6,6 +6,11 @@
                         [title]="(patientId)?('PATIENTS.PATIENTS-FORM.TITLE-EDIT'|translate):('PATIENTS.PATIENTS-FORM.TITLE-CREATE'|translate)"
                         [subtitle]="'PATIENTS.PATIENTS-FORM.SUBTITLE'|translate">
                     <form [formGroup]="patientForm">
+
+                        <div class="divSpinner" *ngIf="patientId && !patientForm.get('id').value">
+                            <spinner></spinner>
+                        </div>
+
                         <div class="row">
                             <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
                                  [ngClass]="{'has-success': patientForm.controls.name.valid,

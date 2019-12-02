@@ -96,7 +96,6 @@ export class SidebarComponent implements OnInit {
         this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.getPilotSelected();
         });
-        this.getPilotSelected();
     }
 
     isMobileMenu() {
@@ -140,7 +139,7 @@ export class SidebarComponent implements OnInit {
         if (pilotselected) {
             this.studyService.getById(pilotselected)
                 .then(study => {
-                    this.study = study
+                    this.study = study;
                 })
                 .catch(() => {
 

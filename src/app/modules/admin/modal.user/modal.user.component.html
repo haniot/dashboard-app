@@ -2,7 +2,7 @@
 
     <haniot-card [title]="title" [subtitle]="subtitle">
         <form [formGroup]="userForm">
-            <div class="divSpinner" *ngIf="!userForm.get('id').value">
+            <div class="divSpinner" *ngIf="userId && !userForm.get('id').value">
                 <spinner></spinner>
             </div>
             <div class="row">

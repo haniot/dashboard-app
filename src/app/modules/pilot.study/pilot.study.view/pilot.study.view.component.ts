@@ -87,11 +87,7 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
     }
 
     selectPilotStudy(): void {
-        const userId = this.localStorageService.getItem('user');
-        if (userId) {
-            this.localStorageService.setItem(userId, this.pilotStudyId);
-            this.selectPilotService.pilotStudyHasUpdated(this.pilotStudyId);
-        }
+        this.selectPilotService.pilotStudyHasUpdated(this.pilotStudyId);
     }
 
     loadUserHealthArea(): void {
@@ -104,9 +100,9 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
                 .then(res => {
                     this.pilotStudyForm.setValue(res);
                     this.pilotStudy = res;
+                    this.selectPilotStudy();
                     this.loadHealthProfessionals();
                     this.loadPatients();
-                    this.selectPilotStudy();
                 }).catch(() => {
                 const userId = this.localStorageService.getItem('user');
                 const localPilotSelected = this.localStorageService.getItem(userId);

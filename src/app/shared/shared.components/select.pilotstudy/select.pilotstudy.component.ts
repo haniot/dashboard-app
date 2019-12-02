@@ -120,7 +120,6 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         if (!this.userId) {
             this.loadUser();
         }
-        this.localStorageService.setItem(this.userId, pilotstudy_id);
         this.selecPilotService.pilotStudyHasUpdated(pilotstudy_id);
         this.closeModal();
     }
@@ -130,32 +129,34 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         this.loadUserTime = setInterval(() => {
             this.userId = this.localStorageService.getItem('user');
             const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
-            try {
-                const username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
-                this.userName = username;
-                if (localUserLogged.selected_pilot_study) {
-                    this.selectPilotStudy(localUserLogged.selected_pilot_study);
-                    clearInterval(this.loadUserTime);
-                } else {
-                    this.getAllPilotStudies();
+            if (localUserLogged) {
+                clearInterval(this.loadUserTime);
+                try {
+                    const username = localUserLogged.name ? localUserLogged.name : localUserLogged.email;
+                    this.userName = username;
+                    if (localUserLogged.selected_pilot_study) {
+                        this.selectPilotStudy(localUserLogged.selected_pilot_study);
+                    } else {
+                        this.getAllPilotStudies();
+                    }
+                } catch (e) {
+                    // this.userService.getUserById(this.localStorageService.getItem('user'))
+                    //     .then(user => {
+                    //         if (user) {
+                    //             this.userId = user.id;
+                    //             this.userName = user.name ? user.name : user.email;
+                    //             const health_area = user.health_area ? user.health_area : 'admin';
+                    //             this.localStorageService.setItem('userLogged', JSON.stringify(user));
+                    //             this.localStorageService.setItem('email', user.email);
+                    //             this.localStorageService.setItem('health_area', health_area);
+                    //             if (user.selected_pilot_study) {
+                    //                 this.selectPilotStudy(user.selected_pilot_study);
+                    //             }
+                    //         }
+                    //     })
+                    //     .catch(() => {
+                    //     });
                 }
-            } catch (e) {
-                // this.userService.getUserById(this.localStorageService.getItem('user'))
-                //     .then(user => {
-                //         if (user) {
-                //             this.userId = user.id;
-                //             this.userName = user.name ? user.name : user.email;
-                //             const health_area = user.health_area ? user.health_area : 'admin';
-                //             this.localStorageService.setItem('userLogged', JSON.stringify(user));
-                //             this.localStorageService.setItem('email', user.email);
-                //             this.localStorageService.setItem('health_area', health_area);
-                //             if (user.selected_pilot_study) {
-                //                 this.selectPilotStudy(user.selected_pilot_study);
-                //             }
-                //         }
-                //     })
-                //     .catch(() => {
-                //     });
             }
         }, 1000);
 

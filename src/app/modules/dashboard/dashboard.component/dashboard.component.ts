@@ -78,8 +78,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     ngOnInit() {
-        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
-            this.loadPilotSelected();
+        this.selectPilotService.pilotStudyUpdated.subscribe((pilotIdSelected) => {
+            if (this.pilotStudyId !== pilotIdSelected) {
+                this.loadPilotSelected();
+            }
         })
         this.dashboardService.userLoggedUpdated.subscribe(() => {
             this.requestUserLogged();
@@ -144,7 +146,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
                     this.userId = user.id;
                     this.userLogged = user;
                     this.localStorageService.setItem('userLogged', JSON.stringify(user));
-                    this.localStorageService.setItem(this.userLogged.id, this.userLogged.selected_pilot_study);
+                    // this.localStorageService.setItem(this.userLogged.id, this.userLogged.selected_pilot_study);
                     this.selectPilotService.pilotStudyHasUpdated(this.userLogged.selected_pilot_study);
                 }
             })

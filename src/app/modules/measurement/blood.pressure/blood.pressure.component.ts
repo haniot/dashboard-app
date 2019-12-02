@@ -47,6 +47,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         const pulse = this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.PULSE');
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
+        const classification = this.translateService.instant('SHARED.CLASSIFICATION');
 
         const color_systolic = '#3F51B5';
         const color_diastolic = '#009688';
@@ -83,47 +84,47 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                         borderColor: 'white',
                         color: color_systolic
                     }
-                },
-                markLine: {
-                    silent: true,
-                    data: [{
-                        label: {
-                            formatter: ' Hipotensão',
-                            position: 'middle'
-                        },
-                        yAxis: 90
-                    }, {
-                        label: {
-                            formatter: ' Normal',
-                            position: 'middle'
-                        },
-                        yAxis: 120
-                    }, {
-                        label: {
-                            formatter: ' Elevada',
-                            position: 'middle'
-                        },
-                        yAxis: 130
-                    }, {
-                        label: {
-                            formatter: 'Estágio 1',
-                            position: 'middle'
-                        },
-                        yAxis: 140
-                    }, {
-                        label: {
-                            formatter: 'Estágio 2',
-                            position: 'middle'
-                        },
-                        yAxis: 180
-                    }, {
-                        label: {
-                            formatter: 'Urgência Hipertensiva',
-                            position: 'middle'
-                        },
-                        yAxis: 180
-                    }]
                 }
+                // markLine: {
+                //     silent: true,
+                //     data: [{
+                //         label: {
+                //             formatter: hypotension,
+                //             position: 'middle'
+                //         },
+                //         yAxis: 90
+                //     }, {
+                //         label: {
+                //             formatter: normal,
+                //             position: 'middle'
+                //         },
+                //         yAxis: 120
+                //     }, {
+                //         label: {
+                //             formatter: high,
+                //             position: 'middle'
+                //         },
+                //         yAxis: 130
+                //     }, {
+                //         label: {
+                //             formatter: stage1,
+                //             position: 'middle'
+                //         },
+                //         yAxis: 140
+                //     }, {
+                //         label: {
+                //             formatter: stage2,
+                //             position: 'middle'
+                //         },
+                //         yAxis: 180
+                //     }, {
+                //         label: {
+                //             formatter: hypertensiveUrgency,
+                //             position: 'middle'
+                //         },
+                //         yAxis: 180
+                //     }]
+                // }
             },
             {
                 name: diastolic,
@@ -144,41 +145,41 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                         borderColor: 'white',
                         color: color_diastolic
                     }
-                },
-                markLine: {
-                    silent: true,
-                    data: [{
-                        label: {
-                            formatter: ' Hipotensão'
-                        },
-                        yAxis: 50
-                    }, {
-                        label: {
-                            formatter: ' Normal'
-                        },
-                        yAxis: 70
-                    }, {
-                        label: {
-                            formatter: ' Elevada'
-                        },
-                        yAxis: 80
-                    }, {
-                        label: {
-                            formatter: 'Estágio 1'
-                        },
-                        yAxis: 90
-                    }, {
-                        label: {
-                            formatter: 'Estágio 2'
-                        },
-                        yAxis: 120
-                    }, {
-                        label: {
-                            formatter: 'Urgência Hipertensiva'
-                        },
-                        yAxis: 180
-                    }]
                 }
+                // markLine: {
+                //     silent: true,
+                //     data: [{
+                //         label: {
+                //             formatter: ' Hipotensão'
+                //         },
+                //         yAxis: 50
+                //     }, {
+                //         label: {
+                //             formatter: ' Normal'
+                //         },
+                //         yAxis: 70
+                //     }, {
+                //         label: {
+                //             formatter: ' Elevada'
+                //         },
+                //         yAxis: 80
+                //     }, {
+                //         label: {
+                //             formatter: 'Estágio 1'
+                //         },
+                //         yAxis: 90
+                //     }, {
+                //         label: {
+                //             formatter: 'Estágio 2'
+                //         },
+                //         yAxis: 120
+                //     }, {
+                //         label: {
+                //             formatter: 'Urgência Hipertensiva'
+                //         },
+                //         yAxis: 180
+                //     }]
+                // }
             },
             {
                 name: pulse,
@@ -210,7 +211,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
             series[0].data.push({
                 value: element.systolic,
-                time: mediumTime
+                time: mediumTime,
+                classification: this.classificate(element)
             });
 
             series[1].data.push({
@@ -226,30 +228,35 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
         this.options = {
             tooltip: {
-                trigger: 'item',
+                trigger: 'axis',
                 formatter: function (params) {
-                    let legend = '', unid = '';
-                    switch (params.seriesName) {
-                        case systolic:
-                            legend = systolic;
-                            unid = 'mmHg';
-                            break;
-                        case diastolic:
-                            legend = diastolic;
-                            unid = 'mmHg';
-                            break;
-                        case pulse:
-                            legend = pulse;
-                            unid = 'bpm';
-                            break;
-                    }
-                    const tooltip = `${legend}: ${params.data.value}${unid}<br>` +
-                        `${date}:<br>${params.name} ${at} ${params.data.time}`;
-                    return tooltip;
+                    // let legend = '', unid = '';
+                    // switch (params.seriesName) {
+                    //     case systolic:
+                    //         legend = systolic;
+                    //         unid = 'mmHg';
+                    //         break;
+                    //     case diastolic:
+                    //         legend = diastolic;
+                    //         unid = 'mmHg';
+                    //         break;
+                    //     case pulse:
+                    //         legend = pulse;
+                    //         unid = 'bpm';
+                    //         break;
+                    // }
+                    // const tooltip = `${legend}: ${params.data.value}${unid}<br>` +
+                    //     `${date}:<br>${params.name} ${at} ${params.data.time}`;
+                    // return tooltip;
+
+                    return `${params[0].seriesName}: ${params[0].value}${params[0].seriesName !== pulse ? 'mmHg' : 'bpm'}<br>` +
+                        `${params[1].seriesName}: ${params[1].value}${params[1].seriesName !== pulse ? 'mmHg' : 'bpm'}<br>` +
+                        `${params[2].seriesName}: ${params[1].value}${params[2].seriesName !== pulse ? 'mmHg' : 'bpm'}<br>` +
+                        `${classification}: ${params[0].data.classification}<br>` +
+                        `${date}:<br>${params[0].axisValue} ${at} ${params[0].data.time}`;
                 }
             },
             legend: {
-                selectedMode: 'single',
                 data: [systolic, diastolic, pulse]
             },
             xAxis: xAxis,
@@ -302,6 +309,23 @@ export class BloodPressureComponent implements OnInit, OnChanges {
             });
         });
         this.echartsInstance.setOption(this.options);
+    }
+
+    classificate(measurement: BloodPressure): string {
+        if (measurement.systolic < 90) {
+            return this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.HYPOTENSION');
+        } else if (measurement.systolic < 120 && measurement.diastolic < 90) {
+            return this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.NORMAL');
+        } else if (measurement.systolic >= 120 && measurement.systolic < 129 && measurement.diastolic < 80) {
+            return this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.HIGH');
+        } else if ((measurement.systolic >= 130 && measurement.systolic < 139) ||
+            (measurement.diastolic >= 80 || measurement.diastolic < 90)) {
+            return this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.STAGE1');
+        } else if (measurement.systolic >= 140 || measurement.diastolic >= 90) {
+            return this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.STAGE2');
+        } else if (measurement.systolic >= 180 || measurement.diastolic >= 120) {
+            return this.translateService.instant('MEASUREMENTS.BLOOD-PRESSURE.HYPERTENSIVE-URGENCY');
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
