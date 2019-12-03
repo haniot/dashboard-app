@@ -226,7 +226,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     openLoading(): void {
-        this.loadinService.open();
+        // this.loadinService.open();
     }
 
     trackById(index, item) {

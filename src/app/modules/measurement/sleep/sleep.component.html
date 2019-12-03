@@ -12,7 +12,11 @@
                     </div>
                     <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>
                     <h3 class="card-title" *ngIf="lastData && lastData.duration">
-                        {{((lastData.duration / 3600000)|decimalFormatter) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
+                        {{Math.floor((lastData.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
+                        {{(lastData.duration % 3600000) ?
+                        ('SHARED.AND'|translate) + ' ' + Math.floor((lastData.duration % 3600000) / 60000) +
+                        ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
+                        }}
                     </h3>
                     <h3 class="card-title" *ngIf="!lastData || !lastData.duration">
                         {{'MEASUREMENTS.VALUE'|translate}}

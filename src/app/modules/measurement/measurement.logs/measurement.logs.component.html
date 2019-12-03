@@ -246,7 +246,57 @@
                     </table>
 
                     <!-- Table for type heart_rate-->
-                    <!--
+                    <table class="table table-hover table-sm" *ngIf="measurementTypeSelected === 'heart_rate'">
+                        <thead>
+                        <th></th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.HEART-RATE-TABLE.DATASET'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate}}</th>
+                        <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                        </thead>
+                        <tbody>
+                        <tr *ngIf="listOfMeasurements.length==0">
+                            <td colspan="4" *ngIf="!listOfMeasurementsIsEmpty">
+                                <spinner
+                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                            </td>
+                            <td colspan="4" *ngIf="listOfMeasurementsIsEmpty">
+                                <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                    <br>
+                                    <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let measurement of listOfMeasurements;let i= index; trackBy: trackById">
+                            <td>
+                                <mat-checkbox (change)="changeOnMeasurement()"
+                                              [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
+                            </td>
+                            <td>
+                                <span class="badge badge-haniot"
+                                      *ngFor="let heartRate of measurement.dataset">{{heartRate.value}}
+                                    {{measurement.unit}}
+                                    </span>
+                            </td>
+                            <td>
+                                <span *ngIf="measurement.dataset && measurement.dataset.length">
+                                    {{measurement.dataset[0].timestamp | date :"mediumDate" }}
+                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}
+                                    {{measurement.dataset[0].timestamp | date : "shortTime"}}
+                                </span>
+                            </td>
+                            <td>
+                                <a class="nav-link"
+                                   [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
+                                   (click)="openModalConfirmation(measurement.id)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <!-- Table for type sleep
                     <table class="table table-hover table-sm" *ngIf="measurementTypeSelected === 'heart_rate'">
                         <thead>
                         <th></th>

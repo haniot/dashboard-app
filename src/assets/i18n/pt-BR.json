@@ -229,7 +229,7 @@
       "TIME-TO-SLEEP": "Horário que vai dormir",
       "UNAVAILABLE-DATA": "Nenhum hábito de sono cadastrado!",
       "TIME-ABBREVIATION": "hs",
-      "MINUTES-ABBREVIATION": "min"
+      "MINUTES-ABBREVIATION": "mins"
     },
     "SOCIO-DEMOGRAPHIC": {
       "TITLE": "Informações sócio demográficas",
@@ -478,7 +478,9 @@
       "PERIOD": "Período da medição",
       "SLEEP": "Sono",
       "DURATION": "Duração",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
+      "VIEW-STAGES": "Visualizar estágios",
+      "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono."
     },
     "COMPONENT": {
       "CONFIG-GRAPH": "Configurar gráficos visíveis",
@@ -577,7 +579,7 @@
   },
   "MYDATEPIPE": {
     "AT": "às",
-    "HOURS": "horas."
+    "HOURS": "horas"
   },
   "NAVBAR": {
     "ADMINS-USERS": "Usuários - Administradores",
@@ -792,6 +794,7 @@
     "HOUR": "Hora",
     "DATE-AND-HOUR": "Data e Hora",
     "AT": "às",
+    "AND": "e",
     "DATE-START": "Data ínicio",
     "DATE-END": "Data término",
     "STUDY-ACTIVATED": "Ativo",

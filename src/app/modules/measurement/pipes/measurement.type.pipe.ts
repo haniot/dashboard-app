@@ -28,9 +28,12 @@ export class MeasurementTypePipe implements PipeTransform {
 
             case EnumMeasurementType.blood_pressure:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BLOOD-PRESSURE';
-            //
-            // case MeasurementType.heart_rate:
-            //     return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.HEART-RATE';
+
+            case EnumMeasurementType.heart_rate:
+                return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.HEART-RATE';
+
+            case EnumMeasurementType.sleep:
+                return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.SLEEP';
 
             default:
                 return 'MEASUREMENTS.PIPES.NOTFOUND';

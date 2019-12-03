@@ -229,7 +229,7 @@
       "TIME-TO-SLEEP": "Time to sleep",
       "UNAVAILABLE-DATA": "No registered sleep habits!",
       "TIME-ABBREVIATION": "hrs",
-      "MINUTES-ABBREVIATION": "min"
+      "MINUTES-ABBREVIATION": "mins"
     },
     "SOCIO-DEMOGRAPHIC": {
       "TITLE": "Sociodemographic information",
@@ -478,7 +478,9 @@
       "PERIOD": "Measurement period",
       "SLEEP": "Sleep",
       "DURATION": "Duration",
-      "UNAVAILABLE-DATA": "No records within selected period!"
+      "UNAVAILABLE-DATA": "No records within selected period!",
+      "VIEW-STAGES": "View stages",
+      "CLICK-TO-VIEW": "Click on the log to view the stages of sleep."
     },
     "COMPONENT": {
       "CONFIG-GRAPH": "Set up visible graphics",
@@ -577,7 +579,7 @@
   },
   "MYDATEPIPE": {
     "AT": "at",
-    "HOURS": "hours."
+    "HOURS": "hours"
   },
   "NAVBAR": {
     "ADMINS-USERS": "Users - Admins",
@@ -792,6 +794,7 @@
     "HOUR": "Hour",
     "DATE-AND-HOUR": "Date and Hour",
     "AT": "at",
+    "AND": "and",
     "DATE-START": "Start date",
     "DATE-END": "End date",
     "STUDY-ACTIVATED": "ACTIVATED",

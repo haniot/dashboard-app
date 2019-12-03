@@ -27,6 +27,7 @@ export class SleepComponent implements OnInit {
     echartStagesInstance: any;
     showSpinner: boolean;
     showSleepStages: boolean;
+    Math: any;
 
     constructor(
         private datePipe: DatePipe,
@@ -35,6 +36,7 @@ export class SleepComponent implements OnInit {
         private sleepPipe: SleepPipe,
         private decimalFormatter: DecimalFormatterPipe
     ) {
+        this.Math = Math;
     }
 
     ngOnInit() {
@@ -61,6 +63,10 @@ export class SleepComponent implements OnInit {
         const hours = this.translateService.instant('MYDATEPIPE.HOURS');
         const hours_abbreviation = this.translateService.instant('HABITS.SLEEP.TIME-ABBREVIATION');
         const duration = this.translateService.instant('MEASUREMENTS.SLEEP.DURATION');
+        const title = this.translateService.instant('MEASUREMENTS.SLEEP.CLICK-TO-VIEW');
+        const viewStages = this.translateService.instant('MEASUREMENTS.SLEEP.VIEW-STAGES');
+        const and = this.translateService.instant('SHARED.AND');
+        const minutes_abbreviation = this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION');
 
         if (this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
@@ -88,10 +94,13 @@ export class SleepComponent implements OnInit {
                     show: true,
                     color: '#FFFFFF',
                     position: 'top',
-                    distance: -20,
+                    distance: -30,
                     verticalAlign: 'middle',
                     rotate: 0,
-                    formatter: '{c} ' + hours_abbreviation,
+                    formatter: function (params) {
+                        const { data: { value } } = params;
+                        return `${value.toFixed(1)}\n${hours_abbreviation}`
+                    },
                     fontSize: 16
                 },
                 itemStyle: {
@@ -123,7 +132,7 @@ export class SleepComponent implements OnInit {
                         label: {
                             formatter: ''
                         },
-                        yAxis: 8
+                        yAxis: IDEAL_SLEEP_VALUE
                     }]
                 }
             }
@@ -133,23 +142,36 @@ export class SleepComponent implements OnInit {
             xAxis.data.push(this.datePipe.transform(element.start_time, 'shortDate'));
             series[0].data.push(MAX_SLEEP_VALUE);
             series[1].data.push({
-                value: parseFloat(this.decimalFormatter.transform(element.duration / 3600000)),
+                value: element.duration / 3600000,
                 time: this.datePipe.transform(element.start_time, 'mediumTime')
             });
         });
 
         const yAxis = {
-            data: []
+            min: 0,
+            max: MAX_SLEEP_VALUE,
+            axisLabel: {
+                formatter: function (value) {
+                    return `${value} ${hours_abbreviation}`
+                }
+            }
         }
 
-        for (let i = 0; i <= MAX_SLEEP_VALUE; i++) {
-            i === IDEAL_SLEEP_VALUE ? yAxis.data.push(`${i} ${hours}`) : yAxis.data.push(i)
-        }
+        // for (let i = 0; i <= MAX_SLEEP_VALUE; i++) {
+        //     i === IDEAL_SLEEP_VALUE ? yAxis.data.push({ value: i, label: `${i} ${hours}` }) : yAxis.data.push(i)
+        // }
 
         this.options = {
+            title: {
+                subtext: title
+            },
             tooltip: {
                 formatter: function (params) {
-                    return `${duration}: ${params.data.value} ${hours} <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                    const hours_trucate = Math.floor(params.data.value);
+                    const minutes = Math.floor(((params.data.value * 3600000) % 3600000) / 60000);
+                    return `${duration}: ${hours_trucate + hours_abbreviation} ${minutes ? and + ' '
+                        + minutes + minutes_abbreviation : ''}  <br>` +
+                        `${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
             xAxis,
@@ -229,10 +251,10 @@ export class SleepComponent implements OnInit {
                                 return awake
 
                             case 2:
-                                return restless
+                                return asleep
 
                             case 1:
-                                return asleep
+                                return restless
 
                         }
 
