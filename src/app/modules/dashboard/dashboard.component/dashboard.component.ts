@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ISubscription } from 'rxjs/Subscription';
 import { ToastrService } from 'ngx-toastr'
@@ -23,7 +23,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy {
     pagePatients: number;
     limitPatients: number;
     lengthPatients: number;
@@ -117,24 +117,27 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
                     this.selectPilotService.open();
                 }
             })
-            .catch(() => {
+            .catch((e) => {
+                this.selectPilotService.open();
             });
 
     }
 
     loadUser(): Promise<any> {
         if (!this.userId || !this.userLogged) {
-            this.userId = this.localStorageService.getItem('user');
-            const localUserLogged = this.localStorageService.getItem('userLogged');
-            try {
-                this.userLogged = JSON.parse(localUserLogged);
-                if (!localUserLogged) {
-                    throw new Error();
+            const interval = setInterval(() => {
+                this.userId = this.localStorageService.getItem('user');
+                const localUserLogged = this.localStorageService.getItem('userLogged');
+                try {
+                    this.userLogged = JSON.parse(localUserLogged);
+                    if (!localUserLogged) {
+                        throw new Error();
+                    }
+                    clearInterval(interval)
+                    return Promise.resolve(this.userLogged);
+                } catch (e) {
                 }
-                return Promise.resolve(this.userLogged);
-            } catch (e) {
-                return this.requestUserLogged()
-            }
+            }, 1000)
         }
         return Promise.resolve(this.userLogged);
     }
@@ -228,10 +231,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     trackById(index, item) {
         return item.id;
-    }
-
-    ngAfterViewChecked() {
-        this.loadinService.close();
     }
 
     ngOnDestroy(): void {

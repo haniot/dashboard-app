@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -11,7 +11,6 @@ import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpagina
 import { HttpResponse } from '@angular/common/http'
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -21,7 +20,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './patient.manager.component.html',
     styleUrls: ['./patient.manager.component.scss']
 })
-export class PatientManagerComponent implements OnInit, AfterViewChecked {
+export class PatientManagerComponent implements OnInit {
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -39,7 +38,6 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
         private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
-        private loadingService: LoadingService,
         private localStorageService: LocalStorageService,
         private router: Router,
         private translateService: TranslateService
@@ -143,9 +141,5 @@ export class PatientManagerComponent implements OnInit, AfterViewChecked {
 
     trackById(index, item) {
         return item.id;
-    }
-
-    ngAfterViewChecked() {
-        this.loadingService.close();
     }
 }

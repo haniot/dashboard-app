@@ -24,6 +24,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     @Input() title: string;
     @Input() subtitle: string;
     @Output() onsubmit: EventEmitter<any>;
+    @Output() onclose: EventEmitter<any>;
     @Input() typeUser: string;
     @Input() userId: string;
     userForm: FormGroup;
@@ -67,6 +68,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         this.email = '';
         this.password = ''
         this.onsubmit = new EventEmitter();
+        this.onclose = new EventEmitter();
         this.listOfLanguages = new Array<String>();
         this.subscriptions = new Array<ISubscription>();
         this.maxBirthDate = new Date();
@@ -194,8 +196,10 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
 
     close() {
         this.userForm.reset();
+        this.user = new GenericUser();
         this.passwordNotMatch = false;
         this.errorConflitEmail = false;
+        this.onclose.emit();
     }
 
     clickVisibilityPassword(): void {
@@ -261,15 +265,16 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges() {
-        this.createForm();
-        this.loadUserInForm();
+        if (this.userId && this.userId !== 'FLAG') {
+            this.createForm();
+            this.loadUserInForm();
+        }
     }
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });
-        this.userForm.reset();
-        this.errorConflitEmail = false;
+        this.close();
     }
 }

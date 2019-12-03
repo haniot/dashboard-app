@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 
@@ -9,7 +9,6 @@ import { LocalStorageService } from '../../../shared/shared.services/local.stora
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -19,7 +18,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './mypilotstudies.component.html',
     styleUrls: ['./mypilotstudies.component.scss']
 })
-export class PatientMypilotstudiesComponent implements OnInit, AfterViewChecked {
+export class PatientMypilotstudiesComponent implements OnInit {
     userId: string;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -34,7 +33,6 @@ export class PatientMypilotstudiesComponent implements OnInit, AfterViewChecked 
 
     constructor(
         private pilotStudyService: PilotStudyService,
-        private loadingService: LoadingService,
         private router: Router,
         private modalService: ModalService,
         private paginatorService: PaginatorIntlService,
@@ -137,10 +135,5 @@ export class PatientMypilotstudiesComponent implements OnInit, AfterViewChecked 
     trackById(index, item) {
         return item.id;
     }
-
-    ngAfterViewChecked() {
-        this.loadingService.close();
-    }
-
 }
 

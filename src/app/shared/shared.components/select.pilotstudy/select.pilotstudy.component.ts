@@ -1,10 +1,9 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service';
 import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study';
-import { LoadingService } from '../loading.component/service/loading.service';
 import { SelectPilotStudyService } from './service/select.pilot.study.service';
 import { AuthService } from '../../../security/auth/services/auth.service';
 import { LocalStorageService } from '../../shared.services/local.storage.service';
@@ -18,7 +17,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './select.pilotstudy.component.html',
     styleUrls: ['./select.pilotstudy.component.scss']
 })
-export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
+export class SelectPilotstudyComponent implements OnInit {
     /* Paging Settings */
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -37,7 +36,6 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
         private pilotStudyService: PilotStudyService,
         private paginatorService: PaginatorIntlService,
         private activeRouter: ActivatedRoute,
-        private loadinService: LoadingService,
         private selecPilotService: SelectPilotStudyService,
         private selectPilot: SelectPilotStudyService,
         private authService: AuthService,
@@ -53,7 +51,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
 
     ngOnInit() {
         if (this.authService.decodeToken().sub_type === 'admin') {
-            this.selecPilotService.close();
+            // this.selecPilotService.close();
         }
         this.getUser();
     }
@@ -78,7 +76,7 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
                         this.list = httpResponse.body;
                     }
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
-                    this.loadinService.close();
+                    // this.loadinService.close();
                     this.listOfStudiesIsEmpty = !(this.list && this.list.length);
                 })
                 .catch(() => {
@@ -168,10 +166,6 @@ export class SelectPilotstudyComponent implements OnInit, AfterViewChecked {
 
     trackById(index, item) {
         return item.id;
-    }
-
-    ngAfterViewChecked() {
-        this.loadinService.close();
     }
 
 }

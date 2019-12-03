@@ -1,10 +1,8 @@
-import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-
-import * as $ from 'jquery';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -12,8 +10,8 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 import { environment } from '../../../../environments/environment'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 import { Title } from '@angular/platform-browser'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const ATTEMPTSSHOWCAPTCHA = 2;
 
@@ -33,7 +31,7 @@ class Attempt {
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
     /* reCaptcha config*/
     reCaptcha: RecaptchaComponent;
     site_key = environment.reCaptcha_siteKey;
@@ -52,9 +50,9 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         private authService: AuthService,
         private router: Router,
         private toastr: ToastrService,
-        private loadinService: LoadingService,
         private translateService: TranslateService,
         private localStorageService: LocalStorageService,
+        private loadingService: LoadingService,
         private titleService: Title
     ) {
         this.loading = false;
@@ -138,7 +136,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
 
 
     onSubmit() {
-        this.loading = true;
+        this.loadingService.open();
         const body = Object.assign(this.f.value, { recaptchaResponse: this.recaptchaResponse })
         this.subscriptions.push(
             this.authService.login(body)
@@ -152,6 +150,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
                             this.localStorageService.removeItem('urlTemporary');
                             this.router.navigate([urlTemporary]);
                         }
+                        this.loadingService.close();
                     },
                     (error: HttpErrorResponse) => {
                         const rateLimit = parseInt(error.headers.get('x-ratelimit-limit'), 10);
@@ -173,7 +172,7 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
                                     this.translateService.instant('TOAST-MESSAGES.NOT-LOGIN'));
                                 break;
                         }
-                        this.loading = false;
+                        this.loadingService.close();
                         this.verifyReCaptcha();
                         this.resetCaptcha();
                     }
@@ -198,10 +197,6 @@ export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.reCaptcha = reCaptcha;
         this.recaptchaResponse = captchaResponse
         this.captchaResolved = true;
-    }
-
-    ngAfterViewChecked() {
-        this.loadinService.close();
     }
 
     ngOnDestroy(): void {

@@ -6,12 +6,13 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
 import * as JWT_decode from 'jwt-decode';
-import { delay, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import * as RandExp from 'randexp';
 
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { SessionStorageService } from '../../../shared/shared.services/session.storage.service'
 import { environment } from '../../../../environments/environment'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 @Injectable()
 export class AuthService {
@@ -21,6 +22,7 @@ export class AuthService {
         private http: HttpClient,
         private localStorageService: LocalStorageService,
         private sessionService: SessionStorageService,
+        private loadingService: LoadingService,
         private router: Router) {
         this.version = 'v1';
     }
@@ -63,7 +65,10 @@ export class AuthService {
 
     logout(): void {
         this.localStorageService.logout();
-        this.router.navigate(['/login']);
+        setTimeout(() => {
+            this.router.navigate(['/login']);
+            this.loadingService.close();
+        }, 3000)
     }
 
 

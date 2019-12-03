@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
-declare var $: any;
-
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class LoadingService {
 
-    constructor() { }
+    change = new EventEmitter();
 
     open() {
-        $('#modalLoading').modal('show');
+        this.change.emit(true)
     }
 
     close() {
-        $('#modalLoading').modal('hide');
+        this.change.emit(false)
     }
 }

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,7 +8,6 @@ import { HealthProfessional } from '../models/health.professional';
 import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 import { ActivatedRoute } from '@angular/router'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -18,7 +17,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './health.professionals.component.html',
     styleUrls: ['./health.professionals.component.scss']
 })
-export class HealthProfessionalComponent implements OnInit, AfterViewChecked {
+export class HealthProfessionalComponent implements OnInit {
     userEdit: GenericUser = new HealthProfessional();
     healthProfessionals: Array<GenericUser> = [];
     page: number;
@@ -31,7 +30,6 @@ export class HealthProfessionalComponent implements OnInit, AfterViewChecked {
         private toastr: ToastrService,
         private modalService: ModalService,
         private activeRouter: ActivatedRoute,
-        private loadinService: LoadingService,
         private translateService: TranslateService) {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
@@ -62,7 +60,7 @@ export class HealthProfessionalComponent implements OnInit, AfterViewChecked {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.healthProfessionals = httpResponse.body;
                 }
-                this.loadinService.close();
+                // this.loadinService.close();
             })
             .catch(() => {
                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-LIST-HEALTHPROFESSIONALS'));
@@ -129,15 +127,16 @@ export class HealthProfessionalComponent implements OnInit, AfterViewChecked {
         this.userEdit = event;
     }
 
+    cleanUser(): void {
+        this.userEdit = new HealthProfessional();
+        this.userEdit.id = 'FLAG';
+    }
+
     paginationEvent(event) {
         this.page = event.page;
         this.limit = event.limit;
         this.search = event.search;
         this.getAllHealthProfessionals();
-    }
-
-    ngAfterViewChecked() {
-        this.loadinService.close();
     }
 
 }

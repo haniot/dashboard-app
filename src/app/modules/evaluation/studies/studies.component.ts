@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
@@ -6,7 +6,6 @@ import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpagina
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
 import { AuthService } from '../../../security/auth/services/auth.service'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -17,7 +16,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './studies.component.html',
     styleUrls: ['./studies.component.scss']
 })
-export class StudiesComponent implements OnInit, AfterViewInit {
+export class StudiesComponent implements OnInit {
     @Output() selected = new EventEmitter();
     userId: string;
     pageSizeOptions: number[];
@@ -35,7 +34,6 @@ export class StudiesComponent implements OnInit, AfterViewInit {
         private pilotStudyService: PilotStudyService,
         private authService: AuthService,
         private paginatorService: PaginatorIntlService,
-        private loadinService: LoadingService,
         private localStorageService: LocalStorageService,
         private toastService: ToastrService,
         private translateService: TranslateService
@@ -147,11 +145,4 @@ export class StudiesComponent implements OnInit, AfterViewInit {
     trackById(index, item) {
         return item.id;
     }
-
-    ngAfterViewInit() {
-        setTimeout(() => {
-            this.loadinService.close();
-        }, 500);
-    }
-
 }

@@ -1,10 +1,8 @@
-import { AfterViewChecked, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 import { PageEvent } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { NutritionEvaluation } from '../../evaluation/models/nutrition-evaluation';
 import { EvaluationService } from '../../evaluation/services/evaluation.service';
 import { NutritionEvaluationService } from '../../evaluation/services/nutrition.evaluation.service';
@@ -19,7 +17,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './myevaluations.component.html',
     styleUrls: ['./myevaluations.component.scss']
 })
-export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewChecked {
+export class MyevaluationsComponent implements OnInit, OnChanges {
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -39,7 +37,6 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
-        private loadingService: LoadingService,
         private localStorageService: LocalStorageService,
         private translateService: TranslateService
     ) {
@@ -150,9 +147,5 @@ export class MyevaluationsComponent implements OnInit, OnChanges, AfterViewCheck
         if (changes.patientId.currentValue !== undefined && changes.patientId.previousValue === undefined) {
             this.getAllNutritionEvaluations();
         }
-    }
-
-    ngAfterViewChecked() {
-        this.loadingService.close();
     }
 }

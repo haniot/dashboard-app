@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 import { ActivatedRoute } from '@angular/router'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -20,7 +19,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './administrators.component.html',
     styleUrls: ['./administrators.component.scss']
 })
-export class AdministratorsComponent implements OnInit, AfterViewChecked {
+export class AdministratorsComponent implements OnInit{
     userEdit: GenericUser = new Admin();
     admins: Array<GenericUser> = [];
     errorCredentials = false;
@@ -34,7 +33,6 @@ export class AdministratorsComponent implements OnInit, AfterViewChecked {
         private toastr: ToastrService,
         private activeRouter: ActivatedRoute,
         private modalService: ModalService,
-        private loadinService: LoadingService,
         private translateService: TranslateService) {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
@@ -65,7 +63,7 @@ export class AdministratorsComponent implements OnInit, AfterViewChecked {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.admins = httpResponse.body;
                 }
-                this.loadinService.close();
+                // this.loadinService.close();
             })
             .catch((errorResponse: HttpErrorResponse) => {
                 if (errorResponse.status === 401) {
@@ -131,15 +129,15 @@ export class AdministratorsComponent implements OnInit, AfterViewChecked {
         this.userEdit = event;
     }
 
+    cleanUser(): void {
+        this.userEdit = new Admin();
+        this.userEdit.id = 'FLAG';
+    }
+
     paginationEvent(event) {
         this.page = event.page;
         this.limit = event.limit;
         this.search = event.search;
         this.getAllAdministrators();
     }
-
-    ngAfterViewChecked() {
-        this.loadinService.close();
-    }
-
 }

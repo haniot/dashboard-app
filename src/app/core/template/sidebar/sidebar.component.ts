@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { VerifyScopeService } from '../../../security/services/verify.scope.service'
 import { UserService } from '../../../modules/admin/services/users.service'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 import { Location } from '@angular/common'
 import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study'
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service'
@@ -76,7 +74,6 @@ export class SidebarComponent implements OnInit {
         private authService: AuthService,
         private verifyScopesService: VerifyScopeService,
         private userService: UserService,
-        private loadingService: LoadingService,
         private localStorageService: LocalStorageService,
         private selectPilotService: SelectPilotStudyService,
         private studyService: PilotStudyService,
@@ -191,7 +188,6 @@ export class SidebarComponent implements OnInit {
     }
 
     myPilotStudies(): void {
-        this.openLoading();
         switch (this.getTypeUser()) {
             case 'health_professional':
                 this.router.navigate(['/app/healthprofessional/mystudies']);
@@ -212,7 +208,6 @@ export class SidebarComponent implements OnInit {
     }
 
     myEvaluations(): void {
-        this.openLoading();
         switch (this.getTypeUser()) {
             case 'health_professional':
                 this.router.navigate(['/app/healthprofessional/myevaluations']);
@@ -224,7 +219,6 @@ export class SidebarComponent implements OnInit {
     }
 
     nutritionalEvaluations(): void {
-        this.openLoading();
         this.router.navigate(['/app/evaluations/nutritional']);
     }
 
@@ -234,10 +228,6 @@ export class SidebarComponent implements OnInit {
 
     onclickMenuUser(): void {
         this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
-    }
-
-    openLoading() {
-        this.loadingService.open();
     }
 
     isNotAdmin(): boolean {

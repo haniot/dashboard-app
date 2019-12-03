@@ -9,10 +9,10 @@ import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { UserService } from '../../../modules/admin/services/users.service'
 import { Title } from '@angular/platform-browser'
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 
 export declare interface RouteInfo {
@@ -212,7 +212,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     config(): void {
-        this.loadingService.open();
         switch (this.getTypeUser()) {
             case 'admin':
                 this.router.navigate(['/app/admin/configurations']);

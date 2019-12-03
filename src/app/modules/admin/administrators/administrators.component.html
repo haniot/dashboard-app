@@ -1,28 +1,32 @@
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <haniot-card [title]="'ADMINISTRADORS.TITLE' | translate" [subtitle]="'ADMINISTRADORS.SUBTITLE' | translate">
-          <haniot-table [(list)]="admins" (onremove)="getAllAdministrators()" (onedit)="editUser($event)"
-            [userType]="'Admin'" (pagination)="paginationEvent($event)" [(length)]="length" [pageSize]="limit">
-          </haniot-table>
-        </haniot-card>
-      </div>
-      <div class="col-md">
-        <button type="submit" class="btn btn-haniot-primary" (click)="openModal()">
-          {{'SHARED.ADD' | translate}}
-          <i class="material-icons">add</i>
-        </button>
-      </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <haniot-card [title]="'ADMINISTRADORS.TITLE' | translate"
+                             [subtitle]="'ADMINISTRADORS.SUBTITLE' | translate">
+                    <haniot-table [(list)]="admins" (onremove)="getAllAdministrators()" (onedit)="editUser($event)"
+                                  [userType]="'Admin'" (pagination)="paginationEvent($event)" [(length)]="length"
+                                  [pageSize]="limit">
+                    </haniot-table>
+                </haniot-card>
+            </div>
+            <div class="col-md">
+                <button type="submit" class="btn btn-haniot-primary" (click)="openModal()">
+                    {{'SHARED.ADD' | translate}}
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <haniot-modal [modalId]="'modalUser'">
-  <app-modal-user [title]="'ADMINISTRADORS.TITLE-ADD'|translate" (onsubmit)="createAdmin($event)" [typeUser]="'Admin'">
-  </app-modal-user>
+    <app-modal-user [title]="'ADMINISTRADORS.TITLE-ADD'|translate" (onsubmit)="createAdmin($event)"
+                    [typeUser]="'Admin'">
+    </app-modal-user>
 </haniot-modal>
 
 <haniot-modal [modalId]="'modalUserEdit'">
-    <app-modal-user [title]="'ADMINISTRADORS.TITLE-EDIT'|translate" (onsubmit)="editAdmin($event)" [userId]="userEdit.id" [typeUser]="'Admin'"></app-modal-user>
+    <app-modal-user [title]="'ADMINISTRADORS.TITLE-EDIT'|translate" (onsubmit)="editAdmin($event)"
+                    [userId]="userEdit.id" [typeUser]="'Admin'" (onclose)="cleanUser()"></app-modal-user>
 </haniot-modal>

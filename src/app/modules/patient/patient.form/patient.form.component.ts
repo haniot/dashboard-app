@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
-import * as RandExp from 'randexp';
 
 import { Gender, Patient } from '../models/patient';
 import { PatientService } from '../services/patient.service';

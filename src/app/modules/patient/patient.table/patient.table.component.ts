@@ -1,11 +1,9 @@
-import { AfterViewChecked, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
-
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
 import { Patient } from '../models/patient';
 import { PatientService } from '../services/patient.service';
@@ -20,7 +18,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './patient.table.component.html',
     styleUrls: ['./patient.table.component.scss']
 })
-export class PatientTableComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
+export class PatientTableComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pilotStudyId;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -41,7 +39,6 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
         private modalService: ModalService,
-        private loadinService: LoadingService,
         private selectStudyService: SelectPilotStudyService,
         private localStorageService: LocalStorageService,
         private translateService: TranslateService
@@ -164,10 +161,6 @@ export class PatientTableComponent implements OnInit, AfterViewChecked, OnChange
         if ((this.pilotStudyId && changes.pilotStudyId.currentValue !== changes.pilotStudyId.previousValue)) {
             this.getAllPacients();
         }
-    }
-
-    ngAfterViewChecked() {
-        this.loadinService.close();
     }
 
     ngOnDestroy()

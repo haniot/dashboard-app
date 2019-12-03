@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -9,7 +9,6 @@ import { LocalStorageService } from '../../../shared/shared.services/local.stora
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -18,7 +17,7 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './list.pilotstudies.component.html',
     styleUrls: ['./list.pilotstudies.component.scss']
 })
-export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class ListPilotstudiesComponent implements OnInit, OnDestroy {
     userId: string;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -34,7 +33,6 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
         private pilotStudyService: PilotStudyService,
         private paginatorService: PaginatorIntlService,
         private activeRouter: ActivatedRoute,
-        private loadinService: LoadingService,
         private selectPilotService: SelectPilotStudyService,
         private router: Router,
         private localStorageService: LocalStorageService
@@ -78,7 +76,7 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
                 if (httpResponse.body && httpResponse.body.length) {
                     this.list = httpResponse.body;
                 }
-                this.loadinService.close();
+                // this.loadinService.close();
             })
             .catch();
     }
@@ -118,10 +116,6 @@ export class ListPilotstudiesComponent implements OnInit, AfterViewChecked, OnDe
 
     trackById(index, item) {
         return item.id;
-    }
-
-    ngAfterViewChecked() {
-        this.loadinService.close();
     }
 
     ngOnDestroy(): void {

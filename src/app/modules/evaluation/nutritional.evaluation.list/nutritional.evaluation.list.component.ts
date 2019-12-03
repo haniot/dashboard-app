@@ -1,9 +1,7 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router'
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 
 @Component({
     selector: 'app-evaluation-list',
@@ -13,7 +11,7 @@ import { LoadingService } from '../../../shared/shared.components/loading.compon
         provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
     }]
 })
-export class NutritionalEvaluationListComponent implements OnInit, AfterViewChecked {
+export class NutritionalEvaluationListComponent implements OnInit {
     pilotForm: FormGroup;
     patientForm: FormGroup;
     pilotstudy_id: string;
@@ -21,8 +19,7 @@ export class NutritionalEvaluationListComponent implements OnInit, AfterViewChec
 
     constructor(
         private formBuilder: FormBuilder,
-        private router: Router,
-        private loadingService: LoadingService
+        private router: Router
     ) {
         this.patient_id = '';
         this.pilotstudy_id = '';
@@ -52,9 +49,5 @@ export class NutritionalEvaluationListComponent implements OnInit, AfterViewChec
         this.patientForm.get('patientId').setValue(patient_id);
         this.patient_id = patient_id;
         this.router.navigate(['/app/evaluations/nutritional', patient_id]);
-    }
-
-    ngAfterViewChecked() {
-        this.loadingService.close();
     }
 }

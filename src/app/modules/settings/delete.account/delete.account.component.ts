@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core'
 import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
@@ -34,9 +34,10 @@ export class DeleteAccountComponent {
         this.loadingService.open();
         this.userService.removeUser(this.userId)
             .then(() => {
-                this.loadingService.close();
+                // this.loadingService.close();
                 this.authService.logout();
                 this.router.navigate(['/'])
+                this.loadingService.close();
             })
             .catch(() => {
                 this.loadingService.close();

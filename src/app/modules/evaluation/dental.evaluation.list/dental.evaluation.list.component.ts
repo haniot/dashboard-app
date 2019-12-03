@@ -1,7 +1,5 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
 
@@ -10,14 +8,13 @@ import { PilotStudyService } from '../../pilot.study/services/pilot.study.servic
     templateUrl: './dental.evaluation.list.component.html',
     styleUrls: ['./dental.evaluation.list.component.scss']
 })
-export class DentalEvaluationListComponent implements OnInit, AfterViewChecked {
+export class DentalEvaluationListComponent implements OnInit {
     pilotForm: FormGroup;
     pilotstudy_id: string;
     pilotStudy: PilotStudy;
 
     constructor(
         private formBuilder: FormBuilder,
-        private loadingService: LoadingService,
         private pilotStudyService: PilotStudyService
     ) {
         this.pilotStudy = new PilotStudy();
@@ -47,9 +44,4 @@ export class DentalEvaluationListComponent implements OnInit, AfterViewChecked {
             .catch()
 
     }
-
-    ngAfterViewChecked() {
-        this.loadingService.close();
-    }
-
 }
