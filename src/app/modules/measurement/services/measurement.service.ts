@@ -3,11 +3,11 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 import { Measurement, SearchForPeriod } from '../models/measurement';
 import { BloodPressure } from '../models/blood.pressure';
-import { HeartRate } from '../models/heart.rate';
 import { MeasurementType } from '../models/measurement.types'
 import { Weight } from '../models/weight';
 import { environment } from '../../../../environments/environment'
 import { MeasurementLast } from '../models/measurement.last'
+import { TimeSeries } from '../models/time.series'
 
 @Injectable()
 export class MeasurementService {
@@ -46,7 +46,7 @@ export class MeasurementService {
     // }
 
     getAllByUserAndType(userId: string, typeMeasurement: string, page?: number, limit?: number, search?: SearchForPeriod):
-        Promise<HttpResponse<Array<Measurement | Weight | BloodPressure | HeartRate> | any>> {
+        Promise<HttpResponse<Array<Measurement | Weight | BloodPressure | TimeSeries> | any>> {
 
         let myParams = new HttpParams();
 

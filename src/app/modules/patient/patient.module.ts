@@ -7,13 +7,13 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTabsModule } from '@angular/material';
+import { MatCheckboxModule, MatIconModule, MatTabsModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxGaugeModule } from 'ngx-gauge';
 
 import { PatientFormComponent } from './patient.form/patient.form.component';
 import { PatientTableComponent } from './patient.table/patient.table.component';
 import { PatientComponent } from './patient.component/patient.component';
-
 import { PatientRoutingModule } from './patient.routing/patient.routing.module';
 import { ListPilotstudiesComponent } from './list.pilotstudies/list.pilotstudies.component';
 import { ViewHabitsComponent } from './view.habits/view.habits.component';
@@ -25,6 +25,8 @@ import { PatientConfigComponent } from './configurations/configurations.componen
 import { PatientMypilotstudiesComponent } from './mypilotstudies/mypilotstudies.component'
 import { SettingsModule } from '../settings/settings.module'
 import { PatientMyEvaluationsComponent } from './myevaluations/myevaluations.component'
+import { NgxEchartsModule } from 'ngx-echarts';
+import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +38,8 @@ import { PatientMyEvaluationsComponent } from './myevaluations/myevaluations.com
         PatientComponent,
         ListPilotstudiesComponent,
         ViewHabitsComponent,
-        PatientManagerComponent
+        PatientManagerComponent,
+        ViewMeasurementsComponent
     ],
     imports: [
         CommonModule,
@@ -56,6 +59,10 @@ import { PatientMyEvaluationsComponent } from './myevaluations/myevaluations.com
         HabitsModule,
         MeasurementModule,
         SettingsModule,
+        NgxEchartsModule,
+        NgxGaugeModule,
+        MatCheckboxModule,
+        MatIconModule
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }

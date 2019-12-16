@@ -8,9 +8,8 @@ import { Weight } from '../models/weight';
 import { BloodGlucose } from '../models/blood.glucose';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
-import { HeartRate } from '../models/heart.rate'
 import { Pattern, Sleep, SleepStage } from '../models/sleep'
-import { TimeSeriesType } from '../models/time.series'
+import { TimeSeries, TimeSeriesType } from '../models/time.series'
 
 class ConfigVisibility {
     weight: boolean;
@@ -51,7 +50,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
     listBodyTemperature: Array<Measurement>;
     listBloodGlucose: Array<BloodGlucose>;
     listBloodPressure: Array<BloodPressure>;
-    listHeartRate: Array<GenericMeasurement>;
+    listHeartRate: Array<TimeSeries>;
     listSleep: Array<Sleep>;
     userHealthArea: string;
     filter: SearchForPeriod;
@@ -71,7 +70,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
         this.listBodyTemperature = new Array<Measurement>();
         this.listBloodGlucose = new Array<BloodGlucose>();
         this.listBloodPressure = new Array<BloodPressure>();
-        this.listHeartRate = new Array<HeartRate>();
+        this.listHeartRate = new Array<TimeSeries>();
         this.listSleep = new Array<Sleep>();
         this.configVisibility = new ConfigVisibility();
         this.filter = { start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today' };

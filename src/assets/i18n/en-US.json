@@ -519,6 +519,13 @@
         "RESTLESS": "Restless",
         "ASLEEP": "Asleep"
       },
+      "TIME-SERIES": {
+        "STEPS": "STeps",
+        "DISTANCE": "Distance",
+        "CALORIES": "Calories",
+        "ACTIVE-MINUTES": "Active Minutes",
+        "HEART-RATE": "Heart rate"
+      },
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND"
     },

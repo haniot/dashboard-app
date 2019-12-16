@@ -1,3 +1,77 @@
+export class Sleep {
+    private _id: string
+    private _start_time: string
+    private _end_time: string
+    private _duration: number
+    private _pattern: Pattern
+    private _type: SleepType
+    private _patient_id: string
+
+    constructor() {
+        this._id = '';
+        this._start_time = '';
+        this._end_time = '';
+        this._duration = 0;
+        this._pattern = new Pattern();
+    }
+
+    get id(): string {
+        return this._id
+    }
+
+    set id(value: string) {
+        this._id = value
+    }
+
+    get start_time(): string {
+        return this._start_time
+    }
+
+    set start_time(value: string) {
+        this._start_time = value
+    }
+
+    get end_time(): string {
+        return this._end_time
+    }
+
+    set end_time(value: string) {
+        this._end_time = value
+    }
+
+    get duration(): number {
+        return this._duration
+    }
+
+    set duration(value: number) {
+        this._duration = value
+    }
+
+    get pattern(): Pattern {
+        return this._pattern
+    }
+
+    set pattern(value: Pattern) {
+        this._pattern = value
+    }
+
+    get type(): SleepType {
+        return this._type
+    }
+
+    set type(value: SleepType) {
+        this._type = value
+    }
+
+    get patient_id(): string {
+        return this._patient_id
+    }
+
+    set patient_id(value: string) {
+        this._patient_id = value
+    }
+}
+
 export class SleepStage {
     private _count: number
     private _duration: number
@@ -127,76 +201,3 @@ export enum SleepType {
     stages = 'stages'
 }
 
-export class Sleep {
-    private _id: string
-    private _start_time: string
-    private _end_time: string
-    private _duration: number
-    private _pattern: Pattern
-    private _type: SleepType
-    private _patient_id: string
-
-    constructor() {
-        this._id = '';
-        this._start_time = '';
-        this._end_time = '';
-        this._duration = 0;
-        this._pattern = new Pattern();
-    }
-
-    get id(): string {
-        return this._id
-    }
-
-    set id(value: string) {
-        this._id = value
-    }
-
-    get start_time(): string {
-        return this._start_time
-    }
-
-    set start_time(value: string) {
-        this._start_time = value
-    }
-
-    get end_time(): string {
-        return this._end_time
-    }
-
-    set end_time(value: string) {
-        this._end_time = value
-    }
-
-    get duration(): number {
-        return this._duration
-    }
-
-    set duration(value: number) {
-        this._duration = value
-    }
-
-    get pattern(): Pattern {
-        return this._pattern
-    }
-
-    set pattern(value: Pattern) {
-        this._pattern = value
-    }
-
-    get type(): SleepType {
-        return this._type
-    }
-
-    set type(value: SleepType) {
-        this._type = value
-    }
-
-    get patient_id(): string {
-        return this._patient_id
-    }
-
-    set patient_id(value: string) {
-        this._patient_id = value
-    }
-}

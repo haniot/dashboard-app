@@ -1,0 +1,20 @@
+<div *ngIf="typeOfTimeSeries == TimeSeriesType.steps">
+    <steps [data]="list" [filterVisibility]="true" [patientId]="patientId"></steps>
+</div>
+
+<div *ngIf="typeOfTimeSeries == TimeSeriesType.calories">
+    <calories [data]="list" [filterVisibility]="true" [patientId]="patientId"></calories>
+</div>
+
+<div *ngIf="typeOfTimeSeries == TimeSeriesType.active_minutes">
+    <actives-minutes [data]="list" [filterVisibility]="true" [patientId]="patientId"></actives-minutes>
+</div>
+
+<div *ngIf="typeOfTimeSeries == TimeSeriesType.distance">
+    <distance [data]="list" [filterVisibility]="true" [patientId]="patientId"></distance>
+</div>
+
+<div *ngIf="typeOfTimeSeries == TimeSeriesType.heart_rate">
+    <heart-rate [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                [showSpinner]="!list.length && !listIsEmpty"></heart-rate>
+</div>

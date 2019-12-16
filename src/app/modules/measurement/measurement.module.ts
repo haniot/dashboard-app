@@ -31,6 +31,13 @@ import { SharedModule } from '../../shared/shared.module'
 import { Ng5SliderModule } from 'ng5-slider'
 import { SleepComponent } from './sleep/sleep.component';
 import { SleepPipe } from './pipes/sleep.pipe'
+import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
+import { StepsComponent } from './steps/steps.component';
+import { TimeSeriesPipe } from './pipes/time.series.pipe';
+import { CaloriesComponent } from './calories/calories.component';
+import { ViewTimestampComponent } from './view.timestamp/view.timestamp.component';
+import { ActivesMinutesComponent } from './actives.minutes/actives.minutes.component';
+import { DistanceComponent } from './distance/distance.component'
 
 @NgModule({
     declarations: [
@@ -43,6 +50,7 @@ import { SleepPipe } from './pipes/sleep.pipe'
         BloodPressureComponent,
         HeartRateComponent,
         SleepComponent,
+        ViewMeasurementsComponent,
         MealPipe,
         DeviceTypePipe,
         FatComponent,
@@ -51,7 +59,13 @@ import { SleepPipe } from './pipes/sleep.pipe'
         MeasurementCardComponent,
         MeasurementLogsComponent,
         MeasurementTypePipe,
-        SleepPipe
+        SleepPipe,
+        StepsComponent,
+        TimeSeriesPipe,
+        CaloriesComponent,
+        ViewTimestampComponent,
+        ActivesMinutesComponent,
+        DistanceComponent
     ],
     imports: [
         CommonModule,
@@ -83,9 +97,17 @@ import { SleepPipe } from './pipes/sleep.pipe'
         BloodPressureComponent,
         HeartRateComponent,
         FatComponent,
+        SleepComponent,
+        ViewMeasurementsComponent,
+        StepsComponent,
+        CaloriesComponent,
+        ActivesMinutesComponent,
+        DistanceComponent,
+        ViewTimestampComponent,
         DecimalFormatterPipe,
         MeasurementTypePipe,
-        SleepPipe
+        SleepPipe,
+        TimeSeriesPipe
     ],
     providers: [
         MeasurementService,

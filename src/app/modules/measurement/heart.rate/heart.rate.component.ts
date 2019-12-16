@@ -1,11 +1,15 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { HeartRate } from '../models/heart-rate';
 import { MeasurementService } from '../services/measurement.service';
-import { EnumMeasurementType } from '../models/measurement'
+import { SearchForPeriod } from '../models/measurement'
+import { ConfigurationBasic } from '../../config.matpaginator'
+import { ToastrService } from 'ngx-toastr'
+import { HeartRateZoneItem, TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series'
+
+const PaginatorConfig = ConfigurationBasic;
 
 @Component({
     selector: 'heart-rate',
@@ -13,22 +17,30 @@ import { EnumMeasurementType } from '../models/measurement'
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class HeartRateComponent implements OnInit, OnChanges {
-    @Input() data: Array<HeartRate>;
-    @Input() filter_visibility: boolean;
+    @Input() data: Array<TimeSeries>;
+    @Input() filterVisibility: boolean;
     @Input() patientId: string;
-    lastData: HeartRate;
+    @Input() includeCard: boolean;
+    @Input() showSpinner: boolean;
+    @Output() filterChange: EventEmitter<any>;
+    lastData: TimeSeries;
     options: any;
     optionsLastData: any;
     echartsInstance: any;
-    showSpinner: boolean;
+    listIsEmpty: boolean;
 
     constructor(
         private datePipe: DatePipe,
         private measurementService: MeasurementService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private toastService: ToastrService
     ) {
-        this.data = new Array<HeartRate>();
-        this.filter_visibility = false;
+        this.data = new Array<TimeSeries>();
+        this.filterVisibility = false;
+        this.patientId = '';
+        this.showSpinner = false;
+        this.filterChange = new EventEmitter();
+        this.listIsEmpty = false;
     }
 
     ngOnInit(): void {
@@ -129,12 +141,12 @@ export class HeartRateComponent implements OnInit, OnChanges {
         };
 
         this.data.forEach((heartRate) => {
-            if (heartRate.dataset) {
-                heartRate.dataset.forEach((elementHeartRate: { value: number, timestamp: string }) => {
-                    xAxisOptions.data.push(this.datePipe.transform(elementHeartRate.timestamp, 'shortDate'));
+            if (heartRate.data_set) {
+                heartRate.data_set.forEach((element: TimeSeriesItem) => {
+                    xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     seriesOptions.data.push({
-                        value: elementHeartRate.value,
-                        time: this.datePipe.transform(elementHeartRate.timestamp, 'mediumTime')
+                        value: element.value,
+                        time: this.datePipe.transform(element.date, 'mediumTime')
                     });
                 });
             }
@@ -142,15 +154,15 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
 
         if (this.lastData) {
-            if (this.lastData.dataset) {
-                this.lastData.dataset.forEach((elementHeartRate: { value: number, timestamp: string }) => {
+            if (this.lastData.data_set) {
+                this.lastData.data_set.forEach((elementHeartRate: TimeSeriesItem) => {
 
-                    xAxisOptionsLastDate.data.push(this.datePipe.transform(elementHeartRate.timestamp, 'mediumTime'));
+                    xAxisOptionsLastDate.data.push(this.datePipe.transform(elementHeartRate.date, 'mediumTime'));
 
                     seriesOptionsLastDate.data.push({
                         value: elementHeartRate.value,
-                        time: this.datePipe.transform(elementHeartRate.timestamp, 'mediumTime'),
-                        date: this.datePipe.transform(elementHeartRate.timestamp, 'shortDate')
+                        time: this.datePipe.transform(elementHeartRate.date, 'mediumTime'),
+                        date: this.datePipe.transform(elementHeartRate.date, 'shortDate')
                     });
 
                 });
@@ -186,14 +198,10 @@ export class HeartRateComponent implements OnInit, OnChanges {
                     type: 'slider'
                 }
             ],
-            series: seriesOptions
+            series: seriesOptionsLastDate
         };
 
         this.optionsLastData = {
-            // title: {
-            //     text: last_date_text,
-            //     subtext: last_date_subtext
-            // },
             tooltip: {
                 formatter: function (params) {
                     if (params.data.type === 'max' || params.data.type === 'min') {
@@ -254,29 +262,18 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
     }
 
-    applyFilter(filter: { start_at: string, end_at: string, period: string }) {
-        this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.heart_rate, null, null, filter)
-            .then(httpResponse => {
-                this.data = httpResponse.body;
-                this.showSpinner = false;
-                this.updateGraph(this.data);
-            })
-            .catch();
-    }
-
-    updateGraph(measurements: Array<HeartRate>): void {
+    updateGraph(measurements: Array<TimeSeries>): void {
 
         this.optionsLastData.xAxis.data = [];
         this.optionsLastData.series.data = [];
 
-        measurements.forEach((heartRate: HeartRate) => {
-            if (heartRate.dataset) {
-                heartRate.dataset.forEach((date: { value: number, timestamp: string }) => {
-                    this.optionsLastData.xAxis.data.push(this.datePipe.transform(date.timestamp, 'shortDate'));
+        measurements.forEach((heartRate: TimeSeries) => {
+            if (heartRate.data_set) {
+                heartRate.data_set.forEach((element: TimeSeriesItem) => {
+                    this.optionsLastData.xAxis.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     this.optionsLastData.series.data.push({
-                        value: date.value,
-                        time: this.datePipe.transform(date.timestamp, 'mediumTime')
+                        value: element.value,
+                        time: this.datePipe.transform(element.date, 'mediumTime')
                     });
                 });
             }

@@ -1,24 +1,20 @@
 export class DateRange {
-    begin: any;
-    end: any;
+    private _begin: any;
+    private _end: any;
 
-    constructor() {
-
+    get begin(): any {
+        return this._begin
     }
 
-    getBegin(): any {
-        return this.begin;
+    set begin(value: any) {
+        this._begin = value
     }
 
-    getEnd(): any {
-        return this.end;
+    get end(): any {
+        return this._end
     }
 
-    setBegin(date: any): void {
-        this.begin = date;
-    }
-
-    setEnd(date: any): void {
-        this.end = date;
+    set end(value: any) {
+        this._end = value
     }
 }

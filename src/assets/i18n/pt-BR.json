@@ -482,6 +482,11 @@
       "VIEW-STAGES": "Visualizar estágios",
       "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono."
     },
+    "STEPS": {
+      "TITLE": "Passos",
+      "SUBTITLE": "",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
+    },
     "COMPONENT": {
       "CONFIG-GRAPH": "Configurar gráficos visíveis",
       "EXPAND-COLLAPSE": "Clique para expandir/retrair...",
@@ -518,6 +523,13 @@
         "AWAKE": "Acordado",
         "RESTLESS": "Inquieto",
         "ASLEEP": "Adormecido"
+      },
+      "TIME-SERIES": {
+        "STEPS": "Passos",
+        "DISTANCE": "Distância",
+        "CALORIES": "Calorias",
+        "ACTIVE-MINUTES": "Minutos Ativos",
+        "HEART-RATE": "Frequência Cardíaca"
       },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"
@@ -559,6 +571,9 @@
       },
       "HEART-RATE-TABLE": {
         "DATASET": "Frequências"
+      },
+      "STEPS": {
+
       },
       "MODAL-REMOVE": {
         "SPINNER-MESSAGE": "Removendo medição(es)...",

@@ -1,150 +1,665 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="d-flex flex-row-reverse shared" style="height: 50px;"
-             *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
 
-            <div class="p-2">
-                <i class="material-icons" [title]="'PATIENTS.VIEW-HABITS.TOVIEW-EVALUATIONS'|translate"
-                   [routerLink]="['/app/evaluations/nutritional',patientId]">assignment</i>
-            </div>
-            <div class="p-2">
-                {{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}:
-            </div>
-        </div>
+        <div class="patientDashboard">
 
-        <div class="row">
+            <div class="container-fluid">
 
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="row" style="padding: 0px 7px;">
 
-                <div class="card">
-                    <div class="card-header card-header-tabs card-header-danger">
-                        <div class="nav-tabs-navigation">
-                            <div class="nav-tabs-wrapper">
-                                <span class="nav-tabs-title">
-                                    <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.TITLE'|translate}}</h4>
-                                    <p class="card-category"> {{'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.SUBTITLE'|translate}}</p>
-                                </span>
-                                <ul class="nav nav-tabs right" data-tabs="tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab"
-                                           [routerLink]="['/app/patients',patientId]"
-                                           [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">
-                                            {{'SHARED.TO-EDIT'|translate}}
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                </ul>
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 navigation"
+                         style="padding: 0px 0px; z-index: 1099;">
+                        <i class="material-icons float-left">keyboard_arrow_left</i>
 
-                            </div>
-                        </div>
+                        <i class="material-icons float-left">keyboard_arrow_right</i>
+
+                        <label class="float-left">{{currentDate | date}}</label>
+
                     </div>
-                    <div class="card-body">
 
-                        <form [formGroup]="patientForm">
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 navigation"
+                         style="padding: 0px 0px; z-index: 1099;">
 
-                            <div class="divSpinner" *ngIf="!patientForm.get('id').value">
-                                <spinner></spinner>
-                            </div>
+                        <label class="float-right" style="padding-right:10px;font-weight: normal; font-size: 12px">Última
+                            sincronização: {{currentDate | date}}</label>
+                    </div>
 
-                            <div class="row">
+                </div>
+
+                <div class="row" style="padding-top: 0px">
+                    <!--            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
+
+                    <!--                <div class="card">-->
+                    <!--                    <div class="card-header card-header-tabs card-header-danger">-->
+                    <!--                        <div class="nav-tabs-navigation">-->
+                    <!--                            <div class="nav-tabs-wrapper">-->
+                    <!--                                <span class="nav-tabs-title">-->
+                    <!--                                    <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.TITLE'|translate}}</h4>-->
+                    <!--                                    <p class="card-category"> {{'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.SUBTITLE'|translate}}</p>-->
+                    <!--                                </span>-->
+                    <!--                                <ul class="nav nav-tabs right" data-tabs="tabs">-->
+                    <!--                                    <li class="nav-item">-->
+                    <!--                                        <a class="nav-link active" data-toggle="tab"-->
+                    <!--                                           [routerLink]="['/app/patients',patientId]"-->
+                    <!--                                           [title]="'PATIENTS.PATIENTS-TABLE.EDIT-PATIENT'|translate">-->
+                    <!--                                            {{'SHARED.TO-EDIT'|translate}}-->
+                    <!--                                            <div class="ripple-container"></div>-->
+                    <!--                                        </a>-->
+                    <!--                                    </li>-->
+                    <!--                                </ul>-->
+
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="card-body">-->
+
+                    <!--                        <form [formGroup]="patientForm">-->
+
+                    <!--                            <div class="divSpinner" *ngIf="!patientForm.get('id').value">-->
+                    <!--                                <spinner></spinner>-->
+                    <!--                            </div>-->
+
+                    <!--                            <div class="row">-->
+
+                    <!--                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
+                    <!--                                     *ngIf="patientForm.get('created_at').value"-->
+                    <!--                                     style="position: absolute; top: 0px;">-->
+                    <!--                                    <div class="d-flex justify-content-end">-->
+                    <!--                                        <div class="p-2">-->
+                    <!--                                            <small style="font-size: 12px">{{'SHARED.CREATED-AT'|translate}}-->
+                    <!--                                                : {{patientForm.get('created_at').value|date:'shortDate'}}-->
+                    <!--                                            </small>-->
+                    <!--                                        </div>-->
+                    <!--                                    </div>-->
+                    <!--                                    &lt;!&ndash;                                <div class="d-flex justify-content-end">&ndash;&gt;-->
+                    <!--                                    &lt;!&ndash;                                    <div class="p-2" *ngIf="patientForm.get('last_login').value">&ndash;&gt;-->
+                    <!--                                    &lt;!&ndash;                                        <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}&ndash;&gt;-->
+                    <!--                                    &lt;!&ndash;                                            : {{patientForm.get('last_login').value|date:'fullDate'}}&ndash;&gt;-->
+                    <!--                                    &lt;!&ndash;                                            {{'SHARED.AT'|translate}}&ndash;&gt;-->
+                    <!--                                    &lt;!&ndash;                                            {{patientForm.get('last_login').value|date:'mediumTime'}}</small>&ndash;&gt;-->
+                    <!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
+                    <!--                                    &lt;!&ndash;                                </div>&ndash;&gt;-->
+                    <!--                                </div>-->
+
+                    <!--                                <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">-->
+                    <!--                                    <label for="name">-->
+                    <!--                                        {{'SHARED.NAME'|translate}}:-->
+                    <!--                                    </label>-->
+                    <!--                                    <input class="form-control" type="text" formControlName="name" id="name">-->
+                    <!--                                </div>-->
+
+                    <!--                                <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">-->
+                    <!--                                    <label for="phone_number">-->
+                    <!--                                        {{'SHARED.PHONE'|translate}}:-->
+                    <!--                                    </label>-->
+                    <!--                                    <input class="form-control" type="text" formControlName="phone_number"-->
+                    <!--                                           id="phone_number">-->
+                    <!--                                </div>-->
+
+                    <!--                            </div>-->
+
+                    <!--                            <div class="row">-->
+                    <!--                                <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
+                    <!--                                    <label for="email">-->
+                    <!--                                        {{'SHARED.EMAIL'|translate}}:-->
+                    <!--                                    </label>-->
+                    <!--                                    <input class="form-control" type="text" formControlName="email" id="email">-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+
+                    <!--                            <div class="row">-->
+                    <!--                                <div class="form-group has-feedback col-md">-->
+                    <!--                                    <label for="gender">-->
+                    <!--                                        {{'SHARED.GENDER'|translate}}:-->
+                    <!--                                    </label>-->
+                    <!--                                    <select class="form-control" formControlName="gender" name="gender" id="gender">-->
+                    <!--                                        <option *ngFor="let itemGender of optionsGender"-->
+                    <!--                                                [value]="itemGender">{{itemGender | gender | translate}}</option>-->
+                    <!--                                    </select>-->
+
+                    <!--                                </div>-->
+
+                    <!--                                <div class="form-group has-feedback col-md">-->
+                    <!--                                    <label for="birth_date">-->
+                    <!--                                        {{'SHARED.BIRTH-DATE'|translate}}:-->
+                    <!--                                    </label>-->
+                    <!--                                    <div class="row">-->
+                    <!--                                        <div class="col-md-10">-->
+                    <!--                                            <input matInput class="form-control" [matDatepicker]="pickerBirthDate"-->
+                    <!--                                                   formControlName="birth_date" name="birth_date"-->
+                    <!--                                                   data-date-format="yyyy-MM-dd"-->
+                    <!--                                                   [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate"-->
+                    <!--                                                   id="birth_date">-->
+                    <!--                                            <mat-datepicker #pickerBirthDate></mat-datepicker>-->
+                    <!--                                        </div>-->
+                    <!--                                    </div>-->
+
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+
+                    <!--                            <div class="row">-->
+                    <!--                                <div class="form-group has-feedback col-md" *ngIf="associatedStudies.length">-->
+                    <!--                                    <label>-->
+                    <!--                                        {{'PATIENTS.VIEW-HABITS.ASSOCIATED-STUDIES'|translate}}:-->
+                    <!--                                    </label>-->
+                    <!--                                    <ul class="list-inline ellipsis" style="width: 100%;display: inline-block;">-->
+                    <!--                                        <li class="list-inline-item ellipsis"-->
+                    <!--                                            *ngFor="let pilotStudy of associatedStudies;let i=index">-->
+                    <!--                                            {{pilotStudy.name}}<span-->
+                    <!--                                                *ngIf="i!==associatedStudies.length-1">,</span><span-->
+                    <!--                                                *ngIf="i===associatedStudies.length-1">.</span>-->
+                    <!--                                        </li>-->
+                    <!--                                    </ul>-->
+                    <!--                                </div>-->
+
+                    <!--                            </div>-->
+
+
+                    <!--                        </form>-->
+
+                    <!--                    </div>-->
+                    <!--                </div>-->
+
+                    <!--            </div>-->
+
+                    <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4">
+
+                        <dashboard-card [title]="'Atividades recentes'">
+
+                            <div class="row physicalActivity" [title]="'Visualizar detalhes..'" *ngIf="true">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                                    <label class="float-left"
+                                           style="font-weight: normal;font-size: 20px">Caminhada</label>
+                                    <i class="material-icons float-right">keyboard_arrow_right</i>
+                                    <small class="float-right">22 Set.</small>
+                                </div>
 
                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                     *ngIf="patientForm.get('created_at').value"
-                                     style="position: absolute; top: 0px;">
-                                    <div class="d-flex justify-content-end">
-                                        <div class="p-2">
-                                            <small style="font-size: 12px">{{'SHARED.CREATED-AT'|translate}}
-                                                : {{patientForm.get('created_at').value|date:'shortDate'}}
-                                            </small>
-                                        </div>
-                                    </div>
-                                    <!--                                <div class="d-flex justify-content-end">-->
-                                    <!--                                    <div class="p-2" *ngIf="patientForm.get('last_login').value">-->
-                                    <!--                                        <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}-->
-                                    <!--                                            : {{patientForm.get('last_login').value|date:'fullDate'}}-->
-                                    <!--                                            {{'SHARED.AT'|translate}}-->
-                                    <!--                                            {{patientForm.get('last_login').value|date:'mediumTime'}}</small>-->
-                                    <!--                                    </div>-->
-                                    <!--                                </div>-->
-                                </div>
+                                     style="padding: 0px 0px">
 
-                                <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <label for="name">
-                                        {{'SHARED.NAME'|translate}}:
-                                    </label>
-                                    <input class="form-control" type="text" formControlName="name" id="name">
-                                </div>
+                                    <div class="d-flex justify-content-around">
+                                        <label class="float-left">
+                                            75
+                                            <small>mins</small>
+                                        </label>
 
-                                <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <label for="phone_number">
-                                        {{'SHARED.PHONE'|translate}}:
-                                    </label>
-                                    <input class="form-control" type="text" formControlName="phone_number"
-                                           id="phone_number">
-                                </div>
 
-                            </div>
+                                        <label class="float-right">
+                                            2.640
+                                            <small>calls</small>
+                                        </label>
 
-                            <div class="row">
-                                <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <label for="email">
-                                        {{'SHARED.EMAIL'|translate}}:
-                                    </label>
-                                    <input class="form-control" type="text" formControlName="email" id="email">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group has-feedback col-md">
-                                    <label for="gender">
-                                        {{'SHARED.GENDER'|translate}}:
-                                    </label>
-                                    <select class="form-control" formControlName="gender" name="gender" id="gender">
-                                        <option *ngFor="let itemGender of optionsGender"
-                                                [value]="itemGender">{{itemGender | gender | translate}}</option>
-                                    </select>
-
-                                </div>
-
-                                <div class="form-group has-feedback col-md">
-                                    <label for="birth_date">
-                                        {{'SHARED.BIRTH-DATE'|translate}}:
-                                    </label>
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <input matInput class="form-control" [matDatepicker]="pickerBirthDate"
-                                                   formControlName="birth_date" name="birth_date"
-                                                   data-date-format="yyyy-MM-dd"
-                                                   [placeholder]="'PATIENTS.PATIENTS-FORM.SELECT-BIRTH-DATE'|translate"
-                                                   id="birth_date">
-                                            <mat-datepicker #pickerBirthDate></mat-datepicker>
-                                        </div>
+                                        <label class="float-right">
+                                            120
+                                            <small>avg bpm</small>
+                                        </label>
                                     </div>
 
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="form-group has-feedback col-md" *ngIf="associatedStudies.length">
-                                    <label>
-                                        {{'PATIENTS.VIEW-HABITS.ASSOCIATED-STUDIES'|translate}}:
-                                    </label>
-                                    <ul class="list-inline ellipsis" style="width: 100%;display: inline-block;">
-                                        <li class="list-inline-item ellipsis"
-                                            *ngFor="let pilotStudy of associatedStudies;let i=index">
-                                            {{pilotStudy.name}}<span
-                                                *ngIf="i!==associatedStudies.length-1">,</span><span
-                                                *ngIf="i===associatedStudies.length-1">.</span>
-                                        </li>
-                                    </ul>
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     style="padding: 0px 0px; margin: 0px 0px;">
+                                    <div class="echarts-div-graph" echarts [options]="activityGraph"
+                                         style="padding: 0px 0px; margin: 0px 0px;border: 1px solid #c3c3c3"></div>
                                 </div>
 
                             </div>
 
+                            <div class="row physicalActivity" [title]="'Visualizar detalhes..'" *ngIf="true">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                                    <label class="float-left"
+                                           style="font-weight: normal;font-size: 20px">Caminhada</label>
+                                    <i class="material-icons float-right">keyboard_arrow_right</i>
+                                    <small class="float-right">22 Set.</small>
+                                </div>
 
-                        </form>
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     style="padding: 0px 0px">
+
+                                    <div class="d-flex justify-content-around">
+                                        <label class="float-left">
+                                            75
+                                            <small>mins</small>
+                                        </label>
+
+
+                                        <label class="float-right">
+                                            2.640
+                                            <small>calls</small>
+                                        </label>
+
+                                        <label class="float-right">
+                                            120
+                                            <small>avg bpm</small>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     style="padding: 0px 0px; margin: 0px 0px;">
+                                    <div class="echarts-div-graph" echarts [options]="activityGraph"
+                                         style="padding: 0px 0px; margin: 0px 0px;border: 1px solid #c3c3c3"></div>
+                                </div>
+
+                            </div>
+
+                            <div class="row physicalActivity" [title]="'Visualizar detalhes..'" *ngIf="true">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                                    <label class="float-left"
+                                           style="font-weight: normal;font-size: 20px">Caminhada</label>
+                                    <i class="material-icons float-right">keyboard_arrow_right</i>
+                                    <small class="float-right">22 Set.</small>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     style="padding: 0px 0px">
+
+                                    <div class="d-flex justify-content-around">
+                                        <label class="float-left">
+                                            75
+                                            <small>mins</small>
+                                        </label>
+
+
+                                        <label class="float-right">
+                                            2.640
+                                            <small>calls</small>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     style="padding: 0px 0px; margin: 0px 0px;">
+                                    <div class="echarts-div-graph" echarts [options]="activityCalorieGraph"
+                                         style="padding: 0px 0px; margin: 0px 0px;border: 1px solid #c3c3c3"></div>
+                                </div>
+
+                            </div>
+
+                            <div class="row justify-content-center" *ngIf="false" style="height: 620px;">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center"
+                                     style="margin: 15px 15px; margin-top: 50px;max-width: 150px;max-height: 150px;border: 1px dashed black; border-radius: 70px">
+                                    <img src="../../../../assets/img/time-series/running-man.svg" width="80">
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="height: 300px">
+                                    <h3>Nenhum exercício recente</h3>
+                                    <p class="text-center" style="font-size: 16px">
+                                        Registre exercícios para medir seu desempenho e avaliar suas melhorias ao longo
+                                        do
+                                        tempo!
+                                    </p>
+                                </div>
+
+
+                            </div>
+
+                        </dashboard-card>
 
                     </div>
+
+                    <div class="col patientDashboard" style="padding: 0px 0px; padding-right: 7px">
+
+                        <div class="row" style="padding-top:7px">
+
+                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6" style="padding-top:0px;">
+
+                                <dashboard-card [title]="'Sono'" [urlAction]="['/app/patients/',patientId, 'sleep']"
+                                                (mouseenter)="sleepEnterAndLeave(true)"
+                                                (mouseleave)="sleepEnterAndLeave(false)">
+                                    <!--                                    <small style="position: absolute;right: 10px; top: 10px">12/12/2019</small>-->
+                                    <div class="row justify-content-center">
+
+                                        <div class="col justify-content-center" *ngIf="true"
+                                             style="height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto">
+                                            <ngx-gauge [size]="250"
+                                                       [type]="'semi'"
+                                                       [min]="0"
+                                                       [max]="8"
+                                                       [foregroundColor]="'#2B4A77'"
+                                                       [thick]="15"
+                                                       [value]="sleepHover?7.2:8"
+                                                       [duration]="500"
+                                                       [cap]="'round'">
+                                                <ngx-gauge-label>
+
+                                                </ngx-gauge-label>
+                                                <ngx-gauge-value>
+
+                                                </ngx-gauge-value>
+                                            </ngx-gauge>
+                                            <div style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;">
+                                                <img src="../../../../assets/img/time-series/moon.svg" width="65"
+                                                     style="margin-bottom: 60px">
+                                            </div>
+                                            <div style="position: absolute;bottom:35%;width: 85%">
+                                                <div *ngIf="!sleepHover">
+                                                    <span class="float-left">23:50</span>
+                                                    <span class="float-right">07:33</span>
+                                                </div>
+                                                <div *ngIf="sleepHover">
+                                                    <span class="float-left">0h</span>
+                                                    <span class="float-right">8h</span>
+                                                </div>
+                                            </div>
+                                            <div style="position: absolute;bottom:15%;width: 85%; display: flex; align-items: center; justify-content: center">
+                                                <label style="font-size: 35px">
+                                                    7
+                                                    <small>hs</small>
+                                                    35
+                                                    <small>min</small>
+                                                </label>
+                                            </div>
+                                            <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
+                                                <label style="font-weight: normal; font-size:22px" *ngIf="!sleepHover">35min
+                                                    acordado</label>
+                                                <label style="font-weight: normal; font-size:22px" *ngIf="sleepHover">1h
+                                                    e 15min do objetivo</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row" style="display:block; margin: auto" *ngIf="false">
+                                        <div>
+                                            <img class="text-center"
+                                                 src="../../../../assets/img/time-series/no-sleep.svg">
+                                        </div>
+                                        <div>
+                                            <label class="text-center">Não há registro para o período
+                                                selecionado.</label>
+                                        </div>
+                                    </div>
+
+                                </dashboard-card>
+
+
+                            </div>
+
+                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                                 style="padding: 0px 0px; padding-right: 7px; max-height: 332px"
+                                 (mouseenter)="stepEnterAndLeave(true)"
+                                 (mouseleave)="stepEnterAndLeave(false)">
+
+                                <dashboard-card [title]="'Passos'">
+                                    <div class="row justify-content-center">
+
+                                        <ngx-gauge [size]="200"
+                                                   [type]="'full'"
+                                                   [thick]="10"
+                                                   [min]="0"
+                                                   [max]="6000"
+                                                   [cap]="'round'"
+                                                   [foregroundColor]="'#00a594'"
+                                                   [duration]="500"
+                                                   [value]="stepsValue">
+                                            <ngx-gauge-value>
+                                            </ngx-gauge-value>
+                                        </ngx-gauge>
+
+
+                                        <div class="fadeIn"
+                                             style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;"
+                                             *ngIf="!stepsHover">
+                                            <img src="../../../../assets/img/time-series/steps-black.svg"
+                                                 width="100"
+                                                 style="margin-bottom: 40%">
+                                        </div>
+                                        <div class="fadeIn"
+                                             style="position: absolute;bottom:35%;width: 85%; display: flex;align-items: center;justify-content: center"
+                                             *ngIf="stepsHover">
+                                            <div style="display: block;padding: 0px 0px">
+                                                <div style="padding: 0px 0px">
+                                                    <label class="text-center"
+                                                           style="font-size: 50px; margin: 0px 0px">
+                                                        35%
+                                                    </label>
+                                                </div>
+                                                <div style="padding: 0px 0px;">
+                                                    <label class="text-center"
+                                                           style="font-size: 20px;font-weight: normal;margin: 0px 0px">do
+                                                        objetivo</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
+                                            <label style="font-size: 25px; font-weight: normal;">
+                                                {{stepsValue}} de 6000
+                                                <small>pas</small>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </dashboard-card>
+
+                            </div>
+
+                            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                                 style="padding: 0px 7px;min-height: 350px"
+                                 (mouseenter)="caloriesEnterAndLeave(true)"
+                                 (mouseleave)="caloriesEnterAndLeave(false)">
+
+                                <dashboard-card [title]="'Calorias'">
+                                    <div class="row justify-content-center">
+                                        <ngx-gauge [size]="200"
+                                                   [type]="'full'"
+                                                   [thick]="10"
+                                                   [min]="0"
+                                                   [cap]="'round'"
+                                                   [max]="1550"
+                                                   [foregroundColor]="'#fba53e'"
+                                                   [duration]="200"
+                                                   [value]="caloriesValue">
+                                            <ngx-gauge-value>
+                                            </ngx-gauge-value>
+                                        </ngx-gauge>
+                                        <div class="fadeIn"
+                                             style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;"
+                                             *ngIf="!caloriesHover">
+                                            <img src="../../../../assets/img/time-series/calories-black.svg" width="80"
+                                                 style="margin-bottom: 60%">
+                                        </div>
+                                        <div class="fadeIn"
+                                             style="position: absolute;bottom:38%;width: 85%; display: flex;align-items: center;justify-content: center"
+                                             *ngIf="caloriesHover">
+                                            <div style="display: block;padding: 0px 0px">
+                                                <div style="padding: 0px 0px">
+                                                    <label class="text-center" style="font-size: 50px; margin: 0px 0px">
+                                                        75%
+                                                    </label>
+                                                </div>
+                                                <div style="padding: 0px 0px;">
+                                                    <label class="text-center"
+                                                           style="font-size: 20px;font-weight: normal;margin: 0px 0px">do
+                                                        objetivo</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
+                                            <label style="font-size: 25px; font-weight: normal;" class="text-center">
+                                                {{caloriesValue}} de 1550
+                                                <small>calls</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </dashboard-card>
+
+                            </div>
+
+                            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                                 style="padding:0px 0px; padding-right: 7px;"
+                                 (mouseenter)="activeMinutesEnterAndLeave(true)"
+                                 (mouseleave)="activeMinutesEnterAndLeave(false)">
+
+                                <dashboard-card [title]="'Minutos Ativos'">
+                                    <span style="position: absolute; right: 7px; top: 7px"
+                                          *ngIf="activeMinutesHover && !activeMinutesSettings"
+                                          title="Configurar meta..."
+                                          (click)="changeSettingsActiveMinutes()">
+                                        <i class="material-icons">settings</i>
+                                    </span>
+
+                                    <div class="row justify-content-center fadeIn" *ngIf="!activeMinutesSettings">
+                                        <ngx-gauge [size]="200"
+                                                   [type]="'full'"
+                                                   [thick]="10"
+                                                   [min]="0"
+                                                   [cap]="'round'"
+                                                   [max]="522"
+                                                   [foregroundColor]="'#A6F355'"
+                                                   [duration]="200"
+                                                   [value]="activeMinutesValue">
+                                            <ngx-gauge-value>
+                                            </ngx-gauge-value>
+                                        </ngx-gauge>
+                                        <div class="fadeIn"
+                                             style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;"
+                                             *ngIf="!activeMinutesHover">
+                                            <img src="../../../../assets/img/time-series/active_minutes.svg" width="90"
+                                                 style="margin-bottom: 60%">
+                                        </div>
+                                        <div class="fadeIn"
+                                             style="position: absolute;bottom:38%;width: 85%; display: flex;align-items: center;justify-content: center"
+                                             *ngIf="activeMinutesHover">
+                                            <div style="display: block;padding: 0px 0px">
+                                                <div style="padding: 0px 0px">
+                                                    <label class="text-center" style="font-size: 50px; margin: 0px 0px">
+                                                        81%
+                                                    </label>
+                                                </div>
+                                                <div style="padding: 0px 0px;">
+                                                    <label class="text-center"
+                                                           style="font-size: 20px;font-weight: normal;margin: 0px 0px">do
+                                                        objetivo</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
+                                            <label style="font-size: 25px; font-weight: normal;max-width: 100%;">
+                                                {{activeMinutesValue}} de 522
+                                                <small>min</small>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row justify-content-center fadeIn" *ngIf="activeMinutesSettings">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <h3 style="margin: 10px 0px">Configurar meta</h3>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label for="activeMinutesGoal">Meta:</label>
+                                                    <input type="number" class="form-control text-center"
+                                                           id="activeMinutesGoal" style="margin: 10px 0px"
+                                                           [(ngModel)]="activeMinutesValue">
+                                                </div>
+                                                <button class="btn btn-haniot-primary btn-block"
+                                                        style="margin: 10px 0px"
+                                                        (click)="changeSettingsActiveMinutes()">Salvar
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </dashboard-card>
+
+                            </div>
+
+                            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                                 style="padding:0px 0px; padding-right: 7px;"
+                                 (mouseenter)="distanceEnterAndLeave(true)"
+                                 (mouseleave)="distanceEnterAndLeave(false)">
+
+                                <dashboard-card [title]="'Distância'">
+                                    <div class="row justify-content-center">
+                                        <ngx-gauge [size]="200"
+                                                   [type]="'full'"
+                                                   [thick]="10"
+                                                   [min]="0"
+                                                   [cap]="'round'"
+                                                   [max]="120"
+                                                   [foregroundColor]="'#5FCCCB'"
+                                                   [duration]="200"
+                                                   [value]="distanceValue">
+                                            <ngx-gauge-value>
+                                            </ngx-gauge-value>
+                                        </ngx-gauge>
+                                        <div class="fadeIn"
+                                             style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;"
+                                             *ngIf="!distanceHover">
+                                            <img src="../../../../assets/img/time-series/distance.svg" width="90"
+                                                 style="margin-bottom: 60%">
+                                        </div>
+                                        <div class="fadeIn"
+                                             style="position: absolute;bottom:38%;width: 85%; display: flex;align-items: center;justify-content: center"
+                                             *ngIf="distanceHover">
+                                            <div style="display: block;padding: 0px 0px">
+                                                <div style="padding: 0px 0px">
+                                                    <label class="text-center" style="font-size: 50px; margin: 0px 0px">
+                                                        81%
+                                                    </label>
+                                                </div>
+                                                <div style="padding: 0px 0px;">
+                                                    <label class="text-center"
+                                                           style="font-size: 20px;font-weight: normal;margin: 0px 0px">do
+                                                        objetivo</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
+                                            <label style="font-size: 25px; font-weight: normal;">
+                                                {{activeMinutesValue}} de 522
+                                                <small>km</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </dashboard-card>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding-top:0px;">
+
+                        <dashboard-card [title]="measurementSelected | timeSeries | translate"
+                                        [urlAction]="['/app/patients/', patientId, measurementSelected]">
+
+                            <div class="container-fluid">
+                                <div class="row justify-content-end">
+
+                                    <div class="col" style="max-width: 50px; padding: 0px 0px; margin: 0px 0px">
+                                        <mat-select class="form-control form-control-sm" style="border-radius: 10px"
+                                                    id="selectMeasurement"
+                                                    [(ngModel)]="measurementSelected">
+                                            <mat-select-trigger>
+                                                <mat-icon>
+                                                    <img [src]="'../../../../assets/img/time-series/'+measurementSelected+'.png'">
+                                                </mat-icon>
+                                            </mat-select-trigger>
+                                            <mat-option *ngFor="let type of timeSeriesTypes" [value]="type"
+                                                        [title]="type | timeSeries | translate">
+                                                <img [src]="'../../../../assets/img/time-series/'+type+'.png'">
+                                            </mat-option>
+                                        </mat-select>
+
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                         style="padding: 0px 0px; margin: 0px 0px">
+                                        <view-timestamp [patientId]="patientId"
+                                                        [typeOfTimeSeries]="measurementSelected"></view-timestamp>
+                                    </div>
+                                </div>
+                            </div>
+                        </dashboard-card>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -152,31 +667,38 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">
+    <br>
 
-                <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-NUTRITIONAL-QUESTIONNAIRE'|translate">
-                    <!--Fundo preto do modal-->
-                    <!--                    <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
-                    <!--                         *ngIf="loadingNutritionalQuestionnaire">-->
-                    <!--                    </div>-->
 
-                    <!--  Nutritional Questionnaires -->
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"
-                                 *ngIf="loadingNutritionalQuestionnaire">
-                                <div class="d-flex justify-content-center">
-                                    <div class="p-2">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="container">
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6 text-center">
-                                                                <spinner
-                                                                        [message]="'PATIENTS.VIEW-HABITS.LOADING-QUESTIONNAIRES'|translate"></spinner>
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">
+
+                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-NUTRITIONAL-QUESTIONNAIRE'|translate">
+                        <!--Fundo preto do modal-->
+                        <!--                    <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
+                        <!--                         *ngIf="loadingNutritionalQuestionnaire">-->
+                        <!--                    </div>-->
+
+                        <!--  Nutritional Questionnaires -->
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"
+                                     *ngIf="loadingNutritionalQuestionnaire">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="p-2">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="container">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6 text-center">
+                                                                    <spinner
+                                                                            [message]="'PATIENTS.VIEW-HABITS.LOADING-QUESTIONNAIRES'|translate"></spinner>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -184,129 +706,131 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
 
-                            </div>
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-
-                                <div class="card">
-                                    <div class="card-header card-header-tabs card-header-danger">
-                                        <div class="nav-tabs-navigation">
-                                            <div class="nav-tabs-wrapper">
+                                    <div class="card">
+                                        <div class="card-header card-header-tabs card-header-danger">
+                                            <div class="nav-tabs-navigation">
+                                                <div class="nav-tabs-wrapper">
                                 <span class="nav-tabs-title">
                                     <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.NUTRITIONAL-QUESTIONNAIRE'|translate}}</h4>
                                 </span>
-                                                <ul class="nav nav-tabs shared right" data-tabs="tabs">
-                                                    <li class="nav-item"
-                                                        [ngClass]="nutritionalQuestionnaireOptions.length?'actived':'disabled'">
-                                                        <button type="button"
-                                                                class="borderNone"
-                                                                [title]="'HABITS.DELETE-NUTRITIONAL-QUESTIONNAIRE'|translate"
-                                                                [disabled]="!nutritionalQuestionnaireOptions.length"
-                                                                (click)="openModalConfirmationRemoveNutritionalQuestionnaire()">
-                                                            <i class="material-icons remove-questionnaire disabled">delete</i>
-                                                        </button>
-                                                    </li>
-                                                </ul>
+                                                    <ul class="nav nav-tabs shared right" data-tabs="tabs">
+                                                        <li class="nav-item"
+                                                            [ngClass]="nutritionalQuestionnaireOptions.length?'actived':'disabled'">
+                                                            <button type="button"
+                                                                    class="borderNone"
+                                                                    [title]="'HABITS.DELETE-NUTRITIONAL-QUESTIONNAIRE'|translate"
+                                                                    [disabled]="!nutritionalQuestionnaireOptions.length"
+                                                                    (click)="openModalConfirmationRemoveNutritionalQuestionnaire()">
+                                                                <i class="material-icons remove-questionnaire disabled">delete</i>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="card-body">
+                                        <div class="card-body">
 
-                                        <div class="row justify-content-center">
+                                            <div class="row justify-content-center">
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                                 [ngClass]="fadeInNutritioalQuestionnaire">
-                                                <haniot-subcard [title]="'HABITS.FEEDING.TITLE'|translate">
-                                                    <feeding-habits
-                                                            [feedingHabitsRecord]="nutritionalQuestionnaire.feeding_habits_record"></feeding-habits>
-                                                </haniot-subcard>
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInNutritioalQuestionnaire">
+                                                    <haniot-subcard [title]="'HABITS.FEEDING.TITLE'|translate">
+                                                        <feeding-habits
+                                                                [feedingHabitsRecord]="nutritionalQuestionnaire.feeding_habits_record"></feeding-habits>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInNutritioalQuestionnaire"
+                                                     *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                                                    <haniot-subcard
+                                                            [title]="'HABITS.PHYSICAL-ACTIVITY.TITLE'|translate">
+                                                        <physical-activity-habits
+                                                                [physicalRecord]="nutritionalQuestionnaire.physical_activity_habits"></physical-activity-habits>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                                     [ngClass]="fadeInNutritioalQuestionnaire">
+                                                    <haniot-subcard [title]="'HABITS.SLEEP.TITLE'|translate">
+                                                        <sleep-habits
+                                                                [sleepHabit]="nutritionalQuestionnaire.sleep_habit"></sleep-habits>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                                     [ngClass]="fadeInNutritioalQuestionnaire"
+                                                     *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                                                    <haniot-subcard
+                                                            [title]="'HABITS.MEDICAL-RECORD.TITLE'|translate">
+                                                        <medical-record
+                                                                [medicalRecord]="nutritionalQuestionnaire.medical_record"></medical-record>
+                                                    </haniot-subcard>
+                                                </div>
+
                                             </div>
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                                 [ngClass]="fadeInNutritioalQuestionnaire"
-                                                 *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
-                                                <haniot-subcard [title]="'HABITS.PHYSICAL-ACTIVITY.TITLE'|translate">
-                                                    <physical-activity-habits
-                                                            [physicalRecord]="nutritionalQuestionnaire.physical_activity_habits"></physical-activity-habits>
-                                                </haniot-subcard>
-                                            </div>
-
-                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
-                                                 [ngClass]="fadeInNutritioalQuestionnaire">
-                                                <haniot-subcard [title]="'HABITS.SLEEP.TITLE'|translate">
-                                                    <sleep-habits
-                                                            [sleepHabit]="nutritionalQuestionnaire.sleep_habit"></sleep-habits>
-                                                </haniot-subcard>
-                                            </div>
-
-                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
-                                                 [ngClass]="fadeInNutritioalQuestionnaire"
-                                                 *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
-                                                <haniot-subcard [title]="'HABITS.MEDICAL-RECORD.TITLE'|translate">
-                                                    <medical-record
-                                                            [medicalRecord]="nutritionalQuestionnaire.medical_record"></medical-record>
-                                                </haniot-subcard>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <small class="pull-right"
+                                                       *ngIf="nutritionalQuestionnaire.created_at">
+                                                    {{'HABITS.REGISTER-DATE'|translate}}:
+                                                    {{nutritionalQuestionnaire.created_at | myDate }}</small>
+                                                <small class="pull-right"
+                                                       *ngIf="!nutritionalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                                                    : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
                                             </div>
 
                                         </div>
-
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <small class="pull-right"
-                                                   *ngIf="nutritionalQuestionnaire.created_at">
-                                                {{'HABITS.REGISTER-DATE'|translate}}:
-                                                {{nutritionalQuestionnaire.created_at | myDate }}</small>
-                                            <small class="pull-right"
-                                                   *ngIf="!nutritionalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
-                                                : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
-                                        </div>
-
                                     </div>
                                 </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                                    <mat-paginator [length]="nutritionalQuestionnaireOptions.length"
+                                                   [pageSize]="nutritionalQuestionnaireOptions.limit"
+                                                   [pageSizeOptions]="nutritionalQuestionnaireOptions.pageSizeOptions"
+                                                   (page)="nutritionalQuestionnairePageEvent($event)">
+                                    </mat-paginator>
+
+                                </div>
+
                             </div>
-
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-
-                                <mat-paginator [length]="nutritionalQuestionnaireOptions.length"
-                                               [pageSize]="nutritionalQuestionnaireOptions.limit"
-                                               [pageSizeOptions]="nutritionalQuestionnaireOptions.pageSizeOptions"
-                                               (page)="nutritionalQuestionnairePageEvent($event)">
-                                </mat-paginator>
-
-                            </div>
-
                         </div>
-                    </div>
 
-                </mat-tab>
+                    </mat-tab>
 
-                <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-ODONTOLOGICAL-QUESTIONNAIRE'|translate"
-                         *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
-                    <!--  Odontological Questionnaires -->
-                    <div class="container-fluid">
-                        <div class="row" style="position:relative;">
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 backdropLoadingQuestionnaire">
-                                <!--Fundo preto do modal-->
-                                <!--                                <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
-                                <!--                                     *ngIf="loadingOdontologicalQuestionnaire">-->
-                                <!--                                </div>-->
-                            </div>
+                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-ODONTOLOGICAL-QUESTIONNAIRE'|translate"
+                             *ngIf="userHealthArea === 'dentistry' || userHealthArea === 'admin'">
+                        <!--  Odontological Questionnaires -->
+                        <div class="container-fluid">
+                            <div class="row" style="position:relative;">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 backdropLoadingQuestionnaire">
+                                    <!--Fundo preto do modal-->
+                                    <!--                                <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
+                                    <!--                                     *ngIf="loadingOdontologicalQuestionnaire">-->
+                                    <!--                                </div>-->
+                                </div>
 
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"
-                                 *ngIf="loadingOdontologicalQuestionnaire">
-                                <div class="d-flex justify-content-center">
-                                    <div class="p-2">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="container">
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6 text-center">
-                                                                <spinner
-                                                                        [message]="'PATIENTS.VIEW-HABITS.LOADING-QUESTIONNAIRES'|translate"></spinner>
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"
+                                     *ngIf="loadingOdontologicalQuestionnaire">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="p-2">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="container">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6 text-center">
+                                                                    <spinner
+                                                                            [message]="'PATIENTS.VIEW-HABITS.LOADING-QUESTIONNAIRES'|translate"></spinner>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -315,103 +839,107 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="card">
-                                    <div class="card-header card-header-tabs card-header-danger">
-                                        <div class="nav-tabs-navigation">
-                                            <div class="nav-tabs-wrapper">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header card-header-tabs card-header-danger">
+                                            <div class="nav-tabs-navigation">
+                                                <div class="nav-tabs-wrapper">
                                 <span class="nav-tabs-title">
                                     <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.ODONTOLOGICAL-QUESTIONNAIRE'|translate}}</h4>
                                 </span>
-                                                <ul class="nav nav-tabs shared right" data-tabs="tabs">
-                                                    <li class="nav-item"
-                                                        [ngClass]="odontologicalQuestionnaireOptions.length?'actived':'disabled'">
-                                                        <button type="button"
-                                                                class="borderNone"
-                                                                [title]="'HABITS.DELETE-ODONTOLOGICAL-QUESTIONNAIRE'|translate"
-                                                                [disabled]="!odontologicalQuestionnaireOptions.length"
-                                                                (click)="openModalConfirmationRemoveOdontologicalQuestionnaire()">
-                                                            <i class="material-icons remove-questionnaire disabled">delete</i>
-                                                        </button>
-                                                    </li>
-                                                </ul>
+                                                    <ul class="nav nav-tabs shared right" data-tabs="tabs">
+                                                        <li class="nav-item"
+                                                            [ngClass]="odontologicalQuestionnaireOptions.length?'actived':'disabled'">
+                                                            <button type="button"
+                                                                    class="borderNone"
+                                                                    [title]="'HABITS.DELETE-ODONTOLOGICAL-QUESTIONNAIRE'|translate"
+                                                                    [disabled]="!odontologicalQuestionnaireOptions.length"
+                                                                    (click)="openModalConfirmationRemoveOdontologicalQuestionnaire()">
+                                                                <i class="material-icons remove-questionnaire disabled">delete</i>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row justify-content-center">
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
 
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                                 [ngClass]="fadeInOdontologicalQuestionnaire">
-                                                <haniot-subcard [title]="'HABITS.FAMILY-COHESION.TITLE'|translate">
-                                                    <familycohesion-record
-                                                            [familyCohesionRecord]="odontologicalQuestionnaire.family_cohesion_record"></familycohesion-record>
-                                                </haniot-subcard>
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInOdontologicalQuestionnaire">
+                                                    <haniot-subcard
+                                                            [title]="'HABITS.FAMILY-COHESION.TITLE'|translate">
+                                                        <familycohesion-record
+                                                                [familyCohesionRecord]="odontologicalQuestionnaire.family_cohesion_record"></familycohesion-record>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInOdontologicalQuestionnaire">
+                                                    <haniot-subcard
+                                                            [title]="'HABITS.SOCIO-DEMOGRAPHIC.TITLE'|translate">
+                                                        <sociodemographic-record
+                                                                [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInOdontologicalQuestionnaire">
+                                                    <haniot-subcard [title]="'HABITS.ORAL-HEALTH.TITLE'|translate">
+                                                        <oralhealth-record
+                                                                [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
+                                                    </haniot-subcard>
+                                                </div>
+
                                             </div>
-
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                  [ngClass]="fadeInOdontologicalQuestionnaire">
-                                                <haniot-subcard [title]="'HABITS.SOCIO-DEMOGRAPHIC.TITLE'|translate">
-                                                    <sociodemographic-record
-                                                            [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>
-                                                </haniot-subcard>
-                                            </div>
-
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                                 [ngClass]="fadeInOdontologicalQuestionnaire">
-                                                <haniot-subcard [title]="'HABITS.ORAL-HEALTH.TITLE'|translate">
-                                                    <oralhealth-record
-                                                            [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
-                                                </haniot-subcard>
+                                                <small class="pull-right"
+                                                       *ngIf="odontologicalQuestionnaire.created_at">
+                                                    {{'HABITS.REGISTER-DATE'|translate}}:
+                                                    {{odontologicalQuestionnaire.created_at | myDate }}</small>
+                                                <small class="pull-right"
+                                                       *ngIf="!odontologicalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                                                    : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
                                             </div>
 
                                         </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                             [ngClass]="fadeInOdontologicalQuestionnaire">
-                                            <small class="pull-right"
-                                                   *ngIf="odontologicalQuestionnaire.created_at">
-                                                {{'HABITS.REGISTER-DATE'|translate}}:
-                                                {{odontologicalQuestionnaire.created_at | myDate }}</small>
-                                            <small class="pull-right"
-                                                   *ngIf="!odontologicalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
-                                                : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
-                                        </div>
-
                                     </div>
                                 </div>
+
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <mat-paginator [length]="odontologicalQuestionnaireOptions.length"
+                                                   [pageSize]="odontologicalQuestionnaireOptions.limit"
+                                                   [pageSizeOptions]="odontologicalQuestionnaireOptions.pageSizeOptions"
+                                                   (page)="odontologicalQuestionnairePageEvent($event)">
+                                    </mat-paginator>
+                                </div>
+
                             </div>
-
-
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <mat-paginator [length]="odontologicalQuestionnaireOptions.length"
-                                               [pageSize]="odontologicalQuestionnaireOptions.limit"
-                                               [pageSizeOptions]="odontologicalQuestionnaireOptions.pageSizeOptions"
-                                               (page)="odontologicalQuestionnairePageEvent($event)">
-                                </mat-paginator>
-                            </div>
-
                         </div>
-                    </div>
-                </mat-tab>
+                    </mat-tab>
 
 
-                <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">
-                    <measurement-component [(patientId)]="patientId" [configVisibility]="configVisibility"
-                                           *ngIf="showMeasurements && patientForm.get('id').value"></measurement-component>
-                </mat-tab>
+                    <!--                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">-->
+                    <!--                        <measurement-component [(patientId)]="patientId" [configVisibility]="configVisibility"-->
+                    <!--                                               *ngIf="showMeasurements && patientForm.get('id').value"></measurement-component>-->
+                    <!--                    </mat-tab>-->
 
-                <mat-tab [label]="'PATIENTS.VIEW-HABITS.LOG-MEASUREMENTS'|translate">
-                    <measurement-logs [(patientId)]="patientId"
-                                      *ngIf="showLogMeasurements && patientForm.get('id').value"></measurement-logs>
+                    <!--                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.LOG-MEASUREMENTS'|translate">-->
+                    <!--                        <measurement-logs [(patientId)]="patientId"-->
+                    <!--                                          *ngIf="showLogMeasurements && patientForm.get('id').value"></measurement-logs>-->
+                    <!--                    </mat-tab>-->
 
-                </mat-tab>
-
-            </mat-tab-group>
+                </mat-tab-group>
+            </div>
         </div>
+
+
     </div>
+
 </div>
 
 <modal-confirmation [id]="'confirmationRemoveNutritionalQuestionnaire'"

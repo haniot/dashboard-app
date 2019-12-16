@@ -7,6 +7,7 @@ import { PatientComponent } from '../patient.component/patient.component'
 import { PatientConfigComponent } from '../configurations/configurations.component'
 import { PatientMypilotstudiesComponent } from '../mypilotstudies/mypilotstudies.component'
 import { PatientMyEvaluationsComponent } from '../myevaluations/myevaluations.component'
+import { ViewMeasurementsComponent } from '../view.measurements/view.measurements.component'
 
 const routes = [
 
@@ -55,6 +56,11 @@ const routes = [
         path: ':patientId/details',
         component: ViewHabitsComponent,
         data: { scope: 'patients:read forms:read measurements:read' }
+    },
+    {
+        path: ':patientId/:typeOfMeasurement',
+        component: ViewMeasurementsComponent,
+        data: { scope: 'patients:read measurements:read' }
     },
     { path: '**', redirectTo: '/page-not-found' }
 ];

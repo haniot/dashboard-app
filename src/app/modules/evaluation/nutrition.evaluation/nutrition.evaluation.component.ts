@@ -15,10 +15,10 @@ import { SendEmailService } from '../services/send.email.service';
 import { Patient } from '../../patient/models/patient'
 import { EnumMeasurementType, Measurement } from '../../measurement/models/measurement'
 import { BloodPressure } from '../../measurement/models/blood.pressure'
-import { HeartRate } from '../../measurement/models/heart.rate'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { PatientService } from '../../patient/services/patient.service'
 import { Weight } from '../../measurement/models/weight'
+import { TimeSeries } from '../../measurement/models/time.series'
 
 const zones = [{
     preprandial: {
@@ -81,7 +81,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     listBodyTemperature: Array<Measurement>;
     listBloodGlucose: Array<Measurement>;
     listBloodPressure: Array<BloodPressure>;
-    listHeartRate: Array<HeartRate>;
+    listHeartRate: Array<TimeSeries>;
     newCounseling = '';
     newCounselingType = 'bmi_whr';
     finalingEvaluantion: boolean;
@@ -122,7 +122,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         this.listBodyTemperature = new Array<Measurement>();
         this.listBloodGlucose = new Array<Measurement>();
         this.listBloodPressure = new Array<BloodPressure>();
-        this.listHeartRate = new Array<HeartRate>();
+        this.listHeartRate = new Array<TimeSeries>();
         this.showZonesClassification = false;
         this.typeCousenling = [
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.STATE-NUTRITION'),

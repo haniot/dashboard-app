@@ -1,0 +1,268 @@
+<!--<measurement-card [title]="'MEASUREMENTS.STEPS.TITLE'|translate"-->
+<!--                  [subtitle]="'MEASUREMENTS.STEPS.SUBTITLE'|translate" [filter_visibility]="filterVisibility"-->
+<!--                  (filter_change)="applyFilter($event)" *ngIf="includeCard">-->
+
+<!--    <div class="row justify-content-center">-->
+
+<!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width: 350px">-->
+<!--            <div class="card card-stats">-->
+<!--                <div class="card-header card-header-timer card-header-icon">-->
+<!--                    <div class="card-icon">-->
+<!--                        <div class="bg-heart_rate"></div>-->
+<!--                    </div>-->
+<!--                    <p class="card-category"> {{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>-->
+<!--                    <h3 class="card-title">-->
+<!--                        {{lastData.dataset ? lastData.dataset[lastData.dataset.length - 1].value : 0}} bpm-->
+<!--                    </h3>-->
+<!--                    &lt;!&ndash;                    <h3 class="card-title" *ngIf="lastData && lastData.value">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        {{lastData.value + '' + lastData.unit}}&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </h3>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        {{'MEASUREMENTS.VALUE'|translate}}&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </h3>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="d-flex flex-row-reverse">-->
+<!--                <div class="p-2">-->
+<!--                    <small class="pull-right" *ngIf="lastData && lastData.dataset">-->
+<!--                        {{'MEASUREMENTS.LAST-REGISTER'|translate}}: {{lastData.dataset[0].timestamp | myDate}}</small>-->
+<!--                    <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}-->
+<!--                        : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
+<!--             style="display: flex; justify-content: center;padding-left: 0px">-->
+
+<!--            <div class="align-self-center echarts-div-graph" echarts-->
+<!--                 [options]="options" (chartInit)="onChartInit($event)"></div>-->
+
+<!--            <div class="unavailable-data">-->
+<!--                <spinner *ngIf="showSpinner" style="position: absolute"></spinner>-->
+<!--                <span *ngIf="data.length==0 && !showSpinner"-->
+<!--                      class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.STEPS.UNAVAILABLE-DATA'|translate}}</span>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash;        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center"&ndash;&gt;-->
+<!--        &lt;!&ndash;             style="display: flex; justify-content: center;">&ndash;&gt;-->
+<!--        &lt;!&ndash;            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center echarts-div-graph" echarts&ndash;&gt;-->
+<!--        &lt;!&ndash;                 [options]="options" (chartInit)="onChartInit($event)">&ndash;&gt;-->
+<!--        &lt;!&ndash;            </div>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;            <div class="unavailable-data">&ndash;&gt;-->
+<!--        &lt;!&ndash;                <spinner *ngIf="showSpinner" style="position: absolute"></spinner>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <span *ngIf="data.length==0 && !showSpinner"&ndash;&gt;-->
+<!--        &lt;!&ndash;                      class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.HEART-RATE.UNAVAILABLE-DATA'|translate}}</span>&ndash;&gt;-->
+<!--        &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
+
+<!--            <div class=" text-center"-->
+<!--                 id="removeModalConfirmation"-->
+<!--                 *ngIf="modalConfirmRemoveMeasurement">-->
+
+<!--                <div class="" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">-->
+<!--                    <div class="modal-dialog modal-lg" role="document">-->
+<!--                        <div class="modal-content">-->
+<!--                            <div class="modal-header" *ngIf="!loadingMeasurements">-->
+<!--                                <label>{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.TITLE'|translate}}</label>-->
+<!--                                <button type="button" class="close" aria-label="Close"-->
+<!--                                        (click)="closeModalConfimation()">-->
+<!--                                    <span aria-hidden="true">&times;</span>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <div class="modal-body">-->
+<!--                                <p *ngIf="cacheIdMeasurementRemove !== '' && !loadingMeasurements">-->
+<!--                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate}}-->
+<!--                                </p>-->
+<!--                                <p *ngIf="cacheIdMeasurementRemove === '' && !loadingMeasurements">-->
+<!--                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate}}-->
+<!--                                    {{cacheListIdMeasurementRemove.length}}-->
+<!--                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate}}-->
+<!--                                </p>-->
+<!--                                <spinner-->
+<!--                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.SPINNER-MESSAGE'|translate"-->
+<!--                                        *ngIf="loadingMeasurements"></spinner>-->
+
+<!--                            </div>-->
+<!--                            <div class="modal-footer" *ngIf="!loadingMeasurements">-->
+<!--                                <button type="button" class="btn btn-haniot-secondary btn-sm"-->
+<!--                                        (click)="closeModalConfimation()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.NO'|translate}}</button>-->
+<!--                                <button type="button" class="btn btn-haniot-primary btn-sm"-->
+<!--                                        (click)="removeMeasurement()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.YES'|translate}}</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">-->
+<!--                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
+<!--                    <h3>-->
+<!--                        {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.TITLE'|translate}}-->
+<!--                    </h3>-->
+<!--                </div>-->
+<!--                <div class="col-sm-4">-->
+<!--                    <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllMeasurements()"-->
+<!--                                  [disabled]="!data.length">-->
+<!--                        {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}-->
+<!--                    </mat-checkbox>-->
+<!--                </div>-->
+<!--                <div class="col d-flex flex-row-reverse">-->
+<!--                    <div class="p-2">-->
+<!--                        <button type="button" class="btn btn-haniot-primary btn-sm" (click)="removeSelected()"-->
+<!--                                [disabled]="!stateButtonRemoveSelected">-->
+<!--                            {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.REMOVE-SELECTED'|translate}}-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">-->
+<!--                &lt;!&ndash; Table for type heart_rate&ndash;&gt;-->
+<!--                <table class="table table-hover table-sm">-->
+<!--                    <thead>-->
+<!--                    <th>#</th>-->
+<!--                    <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.HEART-RATE-TABLE.DATASET'|translate}}</th>-->
+<!--                    <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate}}</th>-->
+<!--                    <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                    <tr *ngIf="data.length==0">-->
+<!--                        <td colspan="4" *ngIf="showSpinner">-->
+<!--                            <spinner-->
+<!--                                    [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>-->
+<!--                        </td>-->
+<!--                        <td colspan="4" *ngIf="!showSpinner">-->
+<!--                            <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}-->
+<!--                                <br>-->
+<!--                                <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>-->
+<!--                            </h4>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr *ngFor="let measurement of data;let i= index; trackBy: trackById">-->
+<!--                        <td>-->
+<!--                            <mat-checkbox (change)="changeOnMeasurement()"-->
+<!--                                          [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                                <span class="badge badge-haniot"-->
+<!--                                      *ngFor="let heartRate of measurement.dataset">{{heartRate.value}}-->
+<!--                                    {{measurement.unit}}-->
+<!--                                    </span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                                <span *ngIf="measurement.dataset && measurement.dataset.length">-->
+<!--                                    {{measurement.dataset[0].timestamp | date :"mediumDate" }}-->
+<!--                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}-->
+<!--                                    {{measurement.dataset[0].timestamp | date : "shortTime"}}-->
+<!--                                </span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <a class="nav-link"-->
+<!--                               [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"-->
+<!--                               (click)="openModalConfirmation(measurement.id)">-->
+<!--                                <i class="material-icons">delete</i>-->
+<!--                            </a>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+
+<!--                    </tbody>-->
+<!--                </table>-->
+
+<!--                <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"-->
+<!--                               (page)="clickPagination($event)">-->
+<!--                </mat-paginator>-->
+
+<!--            </div>-->
+
+<!--        </div>-->
+
+<!--    </div>-->
+
+<!--</measurement-card>-->
+
+<div class="row justify-content-center" *ngIf="!includeCard">
+
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card card-stats">
+            <div class="card-header card-header-timer card-header-icon">
+                <div class="card-icon">
+                    <img src="../../../../assets/img/time-series/distance-white.png" width="30">
+                </div>
+                <p class="card-category"> Média dos últimos 7 dias: </p>
+                <h3 class="card-title">
+                    {{lastData.summary ? lastData.summary.total : 0}} Km
+                </h3>
+                <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                <!--                        {{lastData.value + '' + lastData.unit}}-->
+                <!--                    </h3>-->
+                <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                <!--                    </h3>-->
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card card-stats">
+            <div class="card-header card-header-timer card-header-icon">
+                <div class="card-icon">
+                    <img src="../../../../assets/img/time-series/distance-white.png" width="30">
+                </div>
+                <p class="card-category">Executados ontem: </p>
+                <h3 class="card-title">
+                    {{lastData.summary ? lastData.summary.total : 0}} Km
+                </h3>
+                <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                <!--                        {{lastData.value + '' + lastData.unit}}-->
+                <!--                    </h3>-->
+                <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                <!--                    </h3>-->
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card card-stats">
+            <div class="card-header card-header-timer card-header-icon">
+                <div class="card-icon">
+                    <img src="../../../../assets/img/time-series/distance-white.png" width="30">
+                </div>
+                <p class="card-category"> Distância total: </p>
+                <h3 class="card-title">
+                    {{lastData.summary ? lastData.summary.total : 0}} Km
+                </h3>
+                <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                <!--                        {{lastData.value + '' + lastData.unit}}-->
+                <!--                    </h3>-->
+                <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                <!--                    </h3>-->
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+         style="display: flex; justify-content: center;padding-left: 0px">
+
+        <div class="align-self-center echarts-div-graph" echarts
+             [options]="options" (chartInit)="onChartInit($event)"></div>
+
+        <div class="unavailable-data">
+            <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
+            <span *ngIf="data.length==0 && !showSpinner"
+                  class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.HEART-RATE.UNAVAILABLE-DATA'|translate}}</span>
+        </div>
+    </div>
+
+</div>
