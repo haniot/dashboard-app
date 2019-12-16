@@ -11,7 +11,7 @@ import { DentalEvaluationService } from '../services/dental.evaluation.service';
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 

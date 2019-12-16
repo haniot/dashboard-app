@@ -14,7 +14,7 @@ import { PatientService } from '../../patient/services/patient.service'
 import { HealthProfessional } from '../../admin/models/health.professional'
 import { HealthProfessionalService } from '../../admin/services/health.professional.service'
 import { AuthService } from '../../../security/auth/services/auth.service'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service'
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 

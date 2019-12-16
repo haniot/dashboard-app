@@ -8,32 +8,26 @@ export class MeasurementTypePipe implements PipeTransform {
 
     transform(value: any, args?: any): any {
         switch (value) {
-            case EnumMeasurementType.weight:
+            case EnumMeasurementType.WEIGHT:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.WEIGHT';
 
-            case EnumMeasurementType.height:
+            case EnumMeasurementType.HEIGHT:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.HEIGHT';
 
-            case EnumMeasurementType.body_fat:
+            case EnumMeasurementType.BODY_FAT:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.FAT';
 
-            case EnumMeasurementType.waist_circumference:
+            case EnumMeasurementType.WAIST_CIRCUMFERENCE:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.WAIST-CIRCUMFERENCE';
 
-            case EnumMeasurementType.body_temperature:
+            case EnumMeasurementType.BODY_TEMPERATURE:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BODY-TEMPERATURE';
 
-            case EnumMeasurementType.blood_glucose:
+            case EnumMeasurementType.BLOOD_GLUCOSE:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BLOOD-GLUCOSE';
 
-            case EnumMeasurementType.blood_pressure:
+            case EnumMeasurementType.BLOOD_PRESSURE:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BLOOD-PRESSURE';
-
-            case EnumMeasurementType.heart_rate:
-                return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.HEART-RATE';
-
-            case EnumMeasurementType.sleep:
-                return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.SLEEP';
 
             default:
                 return 'MEASUREMENTS.PIPES.NOTFOUND';

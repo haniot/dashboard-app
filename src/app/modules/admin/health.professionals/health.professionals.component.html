@@ -23,10 +23,10 @@
 
 <haniot-modal [modalId]="'modalUser'">
     <app-modal-user [title]="'HEALTHPROFESSIONALS.TITLE-ADD'|translate" (onsubmit)="createHealthProfessinal($event)"
-                    [typeUser]="'HealthProfessional'"></app-modal-user>
+                    [typeUser]="typeUser"></app-modal-user>
 </haniot-modal>
 
 <haniot-modal [modalId]="'modalUserEdit'">
     <app-modal-user [title]="'HEALTHPROFESSIONALS.TITLE-EDIT'|translate" (onsubmit)="editHealthProfessinal($event)"
-                    [typeUser]="'HealthProfessional'" [userId]="userEdit.id" (onclose)="cleanUser()"></app-modal-user>
+                    [typeUser]="typeUser" [userId]="userEdit.id" (onclose)="cleanUser()"></app-modal-user>
 </haniot-modal>

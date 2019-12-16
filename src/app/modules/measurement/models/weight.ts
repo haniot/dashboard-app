@@ -2,10 +2,14 @@ import { Measurement } from './measurement';
 
 
 export class Weight extends Measurement {
-    body_fat: number;
+    /* optional */
+    private _body_fat?: number;
 
-    constructor() {
-        super();
-        this.body_fat = 0;
+    get body_fat(): number {
+        return this._body_fat
+    }
+
+    set body_fat(value: number) {
+        this._body_fat = value
     }
 }

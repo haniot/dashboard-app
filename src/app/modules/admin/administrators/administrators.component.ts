@@ -6,9 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AdminService } from '../services/admin.service';
 import { Admin } from '../models/admin';
 import { TranslateService } from '@ngx-translate/core';
-import { GenericUser } from '../../../shared/shared.models/generic.user';
+import { GenericUser, UserType } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { ActivatedRoute } from '@angular/router'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -19,9 +19,10 @@ const PaginatorConfig = ConfigurationBasic;
     templateUrl: './administrators.component.html',
     styleUrls: ['./administrators.component.scss']
 })
-export class AdministratorsComponent implements OnInit{
-    userEdit: GenericUser = new Admin();
-    admins: Array<GenericUser> = [];
+export class AdministratorsComponent implements OnInit {
+    typeUser: UserType;
+    userEdit: GenericUser;
+    admins: Array<GenericUser>;
     errorCredentials = false;
     page: number;
     limit: number;
@@ -34,9 +35,12 @@ export class AdministratorsComponent implements OnInit{
         private activeRouter: ActivatedRoute,
         private modalService: ModalService,
         private translateService: TranslateService) {
+        this.userEdit = new Admin('');
+        this.admins = [];
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
         this.admins = new Array<GenericUser>();
+        this.typeUser = UserType.ADMIN;
         this.getAllAdministrators();
     }
 
@@ -121,7 +125,7 @@ export class AdministratorsComponent implements OnInit{
 
     openModal() {
         this.modalService.open('modalUser');
-        this.userEdit = new Admin();
+        this.userEdit = new Admin('');
     }
 
     editUser(event) {
@@ -130,8 +134,7 @@ export class AdministratorsComponent implements OnInit{
     }
 
     cleanUser(): void {
-        this.userEdit = new Admin();
-        this.userEdit.id = 'FLAG';
+        this.userEdit = new Admin('FLAG');
     }
 
     paginationEvent(event) {

@@ -4,7 +4,7 @@ import { PageEvent } from '@angular/material';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 import { Patient } from '../../patient/models/patient'
 import { PatientService } from '../../patient/services/patient.service'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 

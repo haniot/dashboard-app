@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
 import { Router } from '@angular/router'
 import { UserService } from '../../admin/services/users.service'

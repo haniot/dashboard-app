@@ -110,7 +110,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             password: [''],
             password_confirm: [''],
             last_login: [patient.last_login],
-            last_sync: [patient.last_sync]
+            // last_sync: [patient.last_sync]
         });
     }
 

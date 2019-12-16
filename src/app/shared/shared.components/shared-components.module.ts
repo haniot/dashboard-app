@@ -7,26 +7,29 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CardTopComponent } from './card.top/card.top.component';
-import { HaniotCardComponent } from './haniot.card/haniot.card.component';
+import { CardComponent } from './card/card.component';
 import { SharedPipesModule } from '../shared.pipes/shared.pipes.module';
-import { HaniotModalComponent } from './haniot.modal/haniot.modal.component';
-import { ModalService } from './haniot.modal/service/modal.service';
+import { ModalComponent } from './modal/modal.component';
+import { ModalService } from './modal/service/modal.service';
 import { LoadingComponent } from './loading.component/loading.component';
 import { ModalConfirmationComponent } from './modal.confirmation/modal.confirmation.component';
 import { SelectPilotstudyComponent } from './select.pilotstudy/select.pilotstudy.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { HaniotSubcardComponent } from './haniot.subcard/haniot.subcard.component';
+import { SubcardComponent } from './subcard/subcard.component';
+import { DashboardCardComponent } from './dashboard.card/dashboard.card.component';
+import { RouterModule } from '@angular/router'
 
 @NgModule({
     declarations: [
         CardTopComponent,
-        HaniotCardComponent,
-        HaniotModalComponent,
+        CardComponent,
+        ModalComponent,
         LoadingComponent,
         ModalConfirmationComponent,
         SelectPilotstudyComponent,
         SpinnerComponent,
-        HaniotSubcardComponent
+        SubcardComponent,
+        DashboardCardComponent
     ],
     imports: [
         CommonModule,
@@ -34,18 +37,20 @@ import { HaniotSubcardComponent } from './haniot.subcard/haniot.subcard.componen
         MatPaginatorModule,
         SharedPipesModule,
         MatStepperModule,
-        TranslateModule
+        TranslateModule,
+        RouterModule
 
     ],
     exports: [
         CardTopComponent,
-        HaniotCardComponent,
-        HaniotModalComponent,
+        CardComponent,
+        ModalComponent,
         LoadingComponent,
         ModalConfirmationComponent,
         SelectPilotstudyComponent,
         SpinnerComponent,
-        HaniotSubcardComponent
+        SubcardComponent,
+        DashboardCardComponent
     ],
     providers: [
         ModalService

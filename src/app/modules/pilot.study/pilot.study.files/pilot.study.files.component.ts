@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { PilotStudy } from '../models/pilot.study';
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service';
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
 import { PilotStudyService } from '../services/pilot.study.service';
 import { DateRange } from '../models/range-date';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';

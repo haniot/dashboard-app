@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'haniot-subcard',
-    templateUrl: './haniot.subcard.component.html',
-    styleUrls: ['./haniot.subcard.component.scss']
+    templateUrl: './subcard.component.html',
+    styleUrls: ['./subcard.component.scss']
 })
-export class HaniotSubcardComponent implements OnInit {
+export class SubcardComponent implements OnInit {
 
     @Input() title: string;
 

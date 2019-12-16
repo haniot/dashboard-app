@@ -21,7 +21,6 @@ export class PatientService {
             .toPromise();
     }
 
-
     getAllByPilotStudy(pilotstudyId: string, page?: number, limit?: number, search?: string): Promise<HttpResponse<Patient[]>> {
         let myParams = new HttpParams();
 

@@ -37,7 +37,7 @@ export class PatientConfigComponent implements OnInit {
         private translateService: TranslateService
     ) {
         this.min_birth_date = new Date();
-        this.user = new Patient();
+        this.user = new Patient('');
         this.max_birth_date = new Date();
     }
 
@@ -75,7 +75,7 @@ export class PatientConfigComponent implements OnInit {
             email: [patient.email],
             phone_number: [patient.phone_number],
             last_login: [patient.last_login],
-            last_sync: [patient.last_sync],
+            // last_sync: [patient.last_sync],
             selected_pilot_study: [patient.selected_pilot_study],
             language: [patient.language],
             password: [''],

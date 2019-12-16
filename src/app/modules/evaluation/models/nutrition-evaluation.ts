@@ -1,8 +1,8 @@
 import { PatientBasic } from '../../patient/models/patient';
 import { SleepHabitsRecord } from '../../habits/models/sleep';
 import { Measurement } from '../../measurement/models/measurement'
-import { BloodGlucose } from '../../measurement/models/blood-glucose'
-import { BloodPressure } from '../../measurement/models/blood-pressure'
+import { BloodGlucose, MealType } from '../../measurement/models/blood.glucose'
+import { BloodPressure } from '../../measurement/models/blood.pressure'
 import { Weight } from '../../measurement/models/weight'
 import { PhysicalActivityHabitsRecord } from '../../habits/models/physical.activity'
 import { FeedingHabitsRecord } from '../../habits/models/feeding'
@@ -90,14 +90,6 @@ export class HeartRateEvaluation {
         this.average = 0;
         this.dataset = new Array<DataSet>();
     }
-}
-
-enum MealType {
-    preprandial = 'preprandial',
-    postprandial = 'postprandial',
-    fasting = 'fasting',
-    casual = 'casual',
-    bedtime = 'bedtime'
 }
 
 export enum BloodGlucoseClassification {

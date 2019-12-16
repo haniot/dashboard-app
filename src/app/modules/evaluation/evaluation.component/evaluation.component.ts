@@ -11,7 +11,7 @@ import { PatientService } from '../../patient/services/patient.service'
 import { PageEvent } from '@angular/material'
 import { NutritionEvaluation } from '../models/nutrition-evaluation'
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { NutritionEvaluationService } from '../services/nutrition.evaluation.service'
 import { DateRange } from '../../pilot.study/models/range-date'
 
@@ -49,7 +49,7 @@ export class EvaluationComponentComponent implements OnInit, OnChanges, OnDestro
         private toastService: ToastrService,
         private translateService: TranslateService
     ) {
-        this.patient = new Patient();
+        this.patient = new Patient('');
         this.search = new DateRange();
         this.maxDate = new Date();
         this.page = PaginatorConfig.page;

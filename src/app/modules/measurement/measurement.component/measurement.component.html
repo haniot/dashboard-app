@@ -125,59 +125,59 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('weight'))"
              *ngIf="configVisibility.weight">
-            <weight [data]="listWeight" [filter_visibility]="true" [patientId]="patientId"></weight>
+            <weight [data]="listWeight" [filterVisibility]="true"></weight>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('fat'))"
              *ngIf="configVisibility.fat && (userHealthArea === 'nutrition' || userHealthArea === 'admin')">
-            <fat [data]="listFat" [filter_visibility]="true" [patientId]="patientId"></fat>
+            <fat [data]="listFat" [filterVisibility]="true" [patientId]="patientId"></fat>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('height'))"
              *ngIf="configVisibility.height">
-            <height [data]="listHeight" [filter_visibility]="true" [patientId]="patientId"></height>
+            <height [data]="listHeight" [filterVisibility]="true" [patientId]="patientId"></height>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('circumference'))"
              *ngIf="configVisibility.circumference">
-            <waist-circunference [data]="listWaistCircumference" [filter_visibility]="true"
+            <waist-circunference [data]="listWaistCircumference" [filterVisibility]="true"
                                  [patientId]="patientId"></waist-circunference>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('temperature'))"
              *ngIf="configVisibility.temperature && (userHealthArea === 'nutrition' || userHealthArea === 'admin')">
-            <body-temperature [data]="listBodyTemperature" [filter_visibility]="true"
+            <body-temperature [data]="listBodyTemperature" [filterVisibility]="true"
                               [patientId]="patientId"></body-temperature>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('glucose'))"
              *ngIf="configVisibility.glucose">
-            <blood-glucose [data]="listBloodGlucose" [filter_visibility]="true" [patientId]="patientId"></blood-glucose>
+            <blood-glucose [data]="listBloodGlucose" [filterVisibility]="true" [patientId]="patientId"></blood-glucose>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('pressure'))"
              *ngIf="configVisibility.pressure && (userHealthArea === 'nutrition' || userHealthArea === 'admin')">
-            <blood-pressure [data]="listBloodPressure" [filter_visibility]="true"
+            <blood-pressure [data]="listBloodPressure" [filterVisibility]="true"
                             [patientId]="patientId"></blood-pressure>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('sleep'))"
              *ngIf="configVisibility.sleep">
-            <sleep [data]="listSleep" [filter_visibility]="true"
+            <sleep [data]="listSleep" [filterVisibility]="true"
                    [patientId]="patientId"></sleep>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('heartRate'))"
              *ngIf="configVisibility.heartRate">
-            <heart-rate [data]="listHeartRate" [filter_visibility]="true" [patientId]="patientId"></heart-rate>
+            <heart-rate [data]="listHeartRate" [filterVisibility]="true" [patientId]="patientId"></heart-rate>
         </div>
 
     </div>

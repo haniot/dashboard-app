@@ -5,9 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { HealthProfessionalService } from '../services/health.professional.service';
 import { HealthProfessional } from '../models/health.professional';
-import { GenericUser } from '../../../shared/shared.models/generic.user';
+import { GenericUser, UserType } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { ActivatedRoute } from '@angular/router'
 
 const PaginatorConfig = ConfigurationBasic;
@@ -18,8 +18,9 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./health.professionals.component.scss']
 })
 export class HealthProfessionalComponent implements OnInit {
-    userEdit: GenericUser = new HealthProfessional();
-    healthProfessionals: Array<GenericUser> = [];
+    typeUser = UserType.HEALTH_PROFESSIONAL;
+    userEdit: GenericUser;
+    healthProfessionals: Array<GenericUser>;
     page: number;
     limit: number;
     length: number;
@@ -31,6 +32,8 @@ export class HealthProfessionalComponent implements OnInit {
         private modalService: ModalService,
         private activeRouter: ActivatedRoute,
         private translateService: TranslateService) {
+        this.userEdit = new HealthProfessional('');
+        this.healthProfessionals = [];
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
         this.healthProfessionals = new Array<GenericUser>();
@@ -119,7 +122,7 @@ export class HealthProfessionalComponent implements OnInit {
 
     openModal() {
         this.modalService.open('modalUser');
-        this.userEdit = new HealthProfessional();
+        this.userEdit = new HealthProfessional('');
     }
 
     editUser(event) {
@@ -128,8 +131,7 @@ export class HealthProfessionalComponent implements OnInit {
     }
 
     cleanUser(): void {
-        this.userEdit = new HealthProfessional();
-        this.userEdit.id = 'FLAG';
+        this.userEdit = new HealthProfessional('FLAG');
     }
 
     paginationEvent(event) {

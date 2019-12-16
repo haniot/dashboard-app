@@ -10,7 +10,7 @@ import { PatientService } from '../services/patient.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 import { HttpResponse } from '@angular/common/http'
 import { AuthService } from '../../../security/auth/services/auth.service'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 
 const PaginatorConfig = ConfigurationBasic;

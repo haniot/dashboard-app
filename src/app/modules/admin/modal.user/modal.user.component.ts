@@ -5,13 +5,14 @@ import { ISubscription } from 'rxjs-compat/Subscription';
 
 import { AdminService } from '../services/admin.service';
 import { HealthProfessionalService } from '../services/health.professional.service';
-import { HealtArea, HealthProfessional } from '../models/health.professional';
+import { HealtAreaType, HealthProfessional } from '../models/health.professional';
 import { LanguagesConfiguration } from '../../../../assets/i18n/config'
 import { TranslateService } from '@ngx-translate/core'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
-import { GenericUser } from '../../../shared/shared.models/generic.user'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { GenericUser, UserType } from '../../../shared/shared.models/generic.user'
 import { ToastrService } from 'ngx-toastr'
 import { AuthService } from '../../../security/auth/services/auth.service'
+import { Admin } from '../models/admin'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -25,14 +26,14 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     @Input() subtitle: string;
     @Output() onsubmit: EventEmitter<any>;
     @Output() onclose: EventEmitter<any>;
-    @Input() typeUser: string;
+    @Input() typeUser: UserType;
     @Input() userId: string;
     userForm: FormGroup;
     name: string;
     email: string;
     password: string;
-    health_area: HealtArea;
-    healthAreaOptions = Object.keys(HealtArea);
+    health_area: HealtAreaType;
+    healthAreaOptions = Object.keys(HealtAreaType);
     passwordNotMatch: boolean;
     icon_password = 'visibility_off';
     typeInputPassword = 'password';
@@ -44,9 +45,10 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     validateTimer: any;
     matchTimer: any;
     maxBirthDate: Date;
-    user: GenericUser;
+    user: Admin | HealthProfessional | GenericUser;
     passwordGenerated: string;
     errorConflitEmail: boolean;
+    UserType = UserType;
 
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -80,12 +82,12 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         this.subscriptions.push(
             this.modalService.eventActionNotExecuted.subscribe((res) => {
                 switch (this.typeUser) {
-                    case 'Admin':
+                    case UserType.ADMIN:
                         this.loadAdminInForm(res.user);
                         break;
 
-                    case 'HealthProfessional':
-                        this.loadHealthProfessinalInForm(res.user);
+                    case UserType.HEALTH_PROFESSIONAL:
+                        this.loadHealthProfessionalInForm(res.user);
                         break;
                 }
                 if (res && res.error && res.error.code === 409) {
@@ -130,7 +132,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             password: ['', Validators.required],
             password_confirm: ['', Validators.required]
         });
-        if (this.typeUser === 'Admin') {
+        if (this.typeUser === UserType.ADMIN) {
             this.userForm.removeControl('health_area');
         }
         if (this.userId) {
@@ -140,7 +142,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    loadAdminInForm(user: GenericUser) {
+    loadAdminInForm(user: Admin) {
         this.userId = user.id;
         this.userForm = this.fb.group({
             id: [user.id],
@@ -154,7 +156,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    loadHealthProfessinalInForm(user: HealthProfessional) {
+    loadHealthProfessionalInForm(user: HealthProfessional) {
         this.userId = user.id;
         this.userForm = this.fb.group({
             id: [user.id],
@@ -171,8 +173,10 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
 
     loadUserInForm() {
         if (this.userId) {
+            console.log('Carregando usuário com id: ', this.userId)
             switch (this.typeUser) {
-                case 'Admin':
+                case UserType.ADMIN:
+                    console.log('Admin')
                     this.adminService.getById(this.userId)
                         .then(admin => {
                             this.user = admin;
@@ -181,11 +185,12 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                         .catch(() => {
                         });
                     break;
-                case 'HealthProfessional':
+                case UserType.HEALTH_PROFESSIONAL:
+                    console.log('Healthprofessional')
                     this.healthService.getById(this.userId)
                         .then(healthprofessional => {
                             this.user = healthprofessional;
-                            this.loadHealthProfessinalInForm(healthprofessional);
+                            this.loadHealthProfessionalInForm(healthprofessional);
                         })
                         .catch(() => {
                         });
@@ -195,8 +200,9 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     close() {
+        this.typeUser = undefined;
         this.userForm.reset();
-        this.user = new GenericUser();
+        this.user = new GenericUser('');
         this.passwordNotMatch = false;
         this.errorConflitEmail = false;
         this.onclose.emit();

@@ -1,0 +1,39 @@
+<div *ngIf="typeOfMeasurement === allTypesOfMeasurement.weight">
+    <weight [data]="list" [filterVisibility]="true" [patientId]="patientId"
+            [showSpinner]="!list.length && !listIsEmpty"></weight>
+</div>
+
+<div *ngIf="typeOfMeasurement === allTypesOfMeasurement.body_fat">
+    <fat [data]="list" [filterVisibility]="true" [patientId]="patientId"
+         [showSpinner]="!list.length && !listIsEmpty"></fat>
+</div>
+
+<div *ngIf="typeOfMeasurement === allTypesOfMeasurement.height">
+    <height [data]="list" [filterVisibility]="true" [patientId]="patientId"
+            [showSpinner]="!list.length && !listIsEmpty"></height>
+</div>
+
+<div *ngIf="typeOfMeasurement === allTypesOfMeasurement.waist_circumference">
+    <waist-circunference [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                         [showSpinner]="!list.length && !listIsEmpty"></waist-circunference>
+</div>
+
+<div *ngIf="typeOfMeasurement === allTypesOfMeasurement.body_temperature">
+    <body-temperature [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                      [showSpinner]="!list.length && !listIsEmpty"></body-temperature>
+</div>
+
+<div *ngIf="typeOfMeasurement === allTypesOfMeasurement.blood_glucose">
+    <blood-glucose [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                   [showSpinner]="!list.length && !listIsEmpty"></blood-glucose>
+</div>
+
+<div *ngIf="typeOfMeasurement === allTypesOfMeasurement.blood_pressure">
+    <blood-pressure [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    [showSpinner]="!list.length && !listIsEmpty"></blood-pressure>
+</div>
+
+<div *ngIf="typeOfMeasurement === allTypesOfMeasurement.sleep">
+    <sleep [data]="list" [filterVisibility]="true" [patientId]="patientId"
+           [showSpinner]="!list.length && !listIsEmpty"></sleep>
+</div>

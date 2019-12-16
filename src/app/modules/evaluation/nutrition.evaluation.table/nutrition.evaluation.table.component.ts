@@ -8,7 +8,7 @@ import { EvaluationService } from '../services/evaluation.service';
 import { NutritionEvaluation } from '../models/nutrition-evaluation';
 import { NutritionEvaluationService } from '../services/nutrition.evaluation.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 

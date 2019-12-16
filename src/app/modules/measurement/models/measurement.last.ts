@@ -1,5 +1,5 @@
-import { BloodGlucose } from './blood-glucose'
-import { BloodPressure } from './blood-pressure'
+import { BloodGlucose } from './blood.glucose'
+import { BloodPressure } from './blood.pressure'
 import { Weight } from './weight'
 import { Measurement } from './measurement'
 

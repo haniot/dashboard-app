@@ -32,7 +32,7 @@ export class HealthProfessionalConfigComponent implements OnInit {
         private localStorageService: LocalStorageService,
         private translateService: TranslateService
     ) {
-        this.user = new HealthProfessional();
+        this.user = new HealthProfessional('');
         this.maxBirthDate = new Date();
     }
 

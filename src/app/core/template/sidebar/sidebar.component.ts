@@ -81,7 +81,7 @@ export class SidebarComponent implements OnInit {
         private activedRoute: ActivatedRoute,
         private location: Location
     ) {
-        this.userLogged = new GenericUser();
+        this.userLogged = new GenericUser('');
         this.study = new PilotStudy();
     }
 

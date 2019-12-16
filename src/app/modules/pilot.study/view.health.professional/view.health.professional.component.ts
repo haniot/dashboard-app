@@ -2,7 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 
 import { PilotStudyService } from '../services/pilot.study.service';
 import { HealthProfessional } from '../../admin/models/health.professional'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 @Component({
     selector: 'view-health-professional',

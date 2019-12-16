@@ -34,7 +34,7 @@ export class AdminConfigurationsComponent implements OnInit {
         private localStorageService: LocalStorageService,
         private translateService: TranslateService
     ) {
-        this.user = new Admin();
+        this.user = new Admin('');
         this.maxBirthDate = new Date();
     }
 

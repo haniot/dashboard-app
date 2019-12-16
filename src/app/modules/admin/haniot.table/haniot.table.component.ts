@@ -10,7 +10,7 @@ import { AuthService } from '../../../security/auth/services/auth.service'
 import { AdminService } from '../services/admin.service'
 import { HealthProfessionalService } from '../services/health.professional.service'
 import { UserService } from '../services/users.service'
-import { ModalService } from '../../../shared/shared.components/haniot.modal/service/modal.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 

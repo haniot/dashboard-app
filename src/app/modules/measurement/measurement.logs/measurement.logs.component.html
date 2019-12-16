@@ -23,6 +23,7 @@
             </div>
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+
                 <div class="col-sm-4">
                     <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllMeasurements()">
                         {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
@@ -36,13 +37,15 @@
                         </button>
                     </div>
                 </div>
+
             </div>
 
-
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+
                 <div *ngIf="loadingMeasurements">
                     <spinner [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
                 </div>
+
                 <div class="table-responsive" *ngIf="!loadingMeasurements">
                     <!-- Generic table-->
                     <table class="table table-hover table-sm"
@@ -296,7 +299,7 @@
                         </tbody>
                     </table>
 
-                    <!-- Table for type sleep
+                    <!-- Table for type sleep -->
                     <table class="table table-hover table-sm" *ngIf="measurementTypeSelected === 'heart_rate'">
                         <thead>
                         <th></th>
@@ -346,7 +349,6 @@
 
                         </tbody>
                     </table>
-                    -->
 
                 </div>
                 <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"
