@@ -6,11 +6,11 @@ import * as echarts from 'echarts';
 import { PageEvent } from '@angular/material';
 import { ToastrService } from 'ngx-toastr'
 
-import { MeasurementService } from '../services/measurement.service';
+import { MeasurementService } from '../../measurement/services/measurement.service';
 import { SleepPipe } from '../pipes/sleep.pipe';
 import { Sleep } from '../models/sleep';
-import { DecimalFormatterPipe } from '../pipes/decimal.formatter.pipe';
-import { EnumMeasurementType, SearchForPeriod } from '../models/measurement';
+import { DecimalFormatterPipe } from '../../measurement/pipes/decimal.formatter.pipe';
+import { SearchForPeriod } from '../../measurement/models/measurement';
 import { ConfigurationBasic } from '../../config.matpaginator';
 
 const PaginatorConfig = ConfigurationBasic;
@@ -18,7 +18,7 @@ const PaginatorConfig = ConfigurationBasic;
 @Component({
     selector: 'sleep',
     templateUrl: './sleep.component.html',
-    styleUrls: ['../shared.style/shared.styles.scss']
+    styleUrls: ['../../measurement/shared.style/shared.styles.scss']
 })
 export class SleepComponent implements OnInit {
     @Input() data: Array<Sleep>;

@@ -22,6 +22,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
     @Input() includeCard: boolean;
+    @Input() includeLogs: boolean;
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     lastData: BloodPressure;

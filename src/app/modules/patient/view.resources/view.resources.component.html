@@ -1,0 +1,82 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.WEIGHT">
+                    <weight [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                            [includeCard]="true" [showSpinner]="!list.length && !listIsEmpty"
+                            (filterChange)="changeFilter($event)"></weight>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.BODY_FAT">
+                    <fat [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                         [includeCard]="true" [showSpinner]="!list.length && !listIsEmpty"></fat>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.HEIGHT">
+                    <height [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                            [includeCard]="true" [showSpinner]="!list.length && !listIsEmpty"></height>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.WAIST_CIRCUMFERENCE">
+                    <waist-circunference [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                                         [includeCard]="true"
+                                         [showSpinner]="!list.length && !listIsEmpty"></waist-circunference>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.BODY_TEMPERATURE">
+                    <body-temperature [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                                      [includeCard]="true"
+                                      [showSpinner]="!list.length && !listIsEmpty"></body-temperature>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.BLOOD_GLUCOSE">
+                    <blood-glucose [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                                   [includeCard]="true" [showSpinner]="!list.length && !listIsEmpty"></blood-glucose>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.BLOOD_PRESSURE">
+                    <blood-pressure [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                                    [includeCard]="true" [showSpinner]="!list.length && !listIsEmpty"></blood-pressure>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.steps">
+                    <steps [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
+                           [showSpinner]="!list.length && !listIsEmpty"></steps>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.calories">
+                    <calories [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
+                              [showSpinner]="!list.length && !listIsEmpty"></calories>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.distance">
+                    <distance [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
+                              [showSpinner]="!list.length && !listIsEmpty"></distance>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.active_minutes">
+                    <actives-minutes [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                                     [includeCard]="true"
+                                     [showSpinner]="!list.length && !listIsEmpty"></actives-minutes>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.heart_rate">
+                    <heart-rate [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                                [includeCard]="true"
+                                [showSpinner]="!list.length && !listIsEmpty"></heart-rate>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === 'sleep'">
+                    <sleep [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                           [includeCard]="true"></sleep>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

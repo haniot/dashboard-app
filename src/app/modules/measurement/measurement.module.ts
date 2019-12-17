@@ -29,8 +29,8 @@ import { MeasurementLogsComponent } from './measurement.logs/measurement.logs.co
 import { MeasurementTypePipe } from './pipes/measurement.type.pipe';
 import { SharedModule } from '../../shared/shared.module'
 import { Ng5SliderModule } from 'ng5-slider'
-import { SleepComponent } from './sleep/sleep.component';
-import { SleepPipe } from './pipes/sleep.pipe'
+import { SleepComponent } from '../activity/sleep/sleep.component';
+import { SleepPipe } from '../activity/pipes/sleep.pipe'
 import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
 import { StepsComponent } from './steps/steps.component';
 import { TimeSeriesPipe } from './pipes/time.series.pipe';
@@ -59,7 +59,6 @@ import { DistanceComponent } from './distance/distance.component'
         MeasurementCardComponent,
         MeasurementLogsComponent,
         MeasurementTypePipe,
-        SleepPipe,
         StepsComponent,
         TimeSeriesPipe,
         CaloriesComponent,
@@ -106,7 +105,6 @@ import { DistanceComponent } from './distance/distance.component'
         ViewTimestampComponent,
         DecimalFormatterPipe,
         MeasurementTypePipe,
-        SleepPipe,
         TimeSeriesPipe
     ],
     providers: [
@@ -115,8 +113,7 @@ import { DistanceComponent } from './distance/distance.component'
         DatePipe,
         MealPipe,
         DeviceTypePipe,
-        DecimalFormatterPipe,
-        SleepPipe
+        DecimalFormatterPipe
     ]
 })
 export class MeasurementModule {

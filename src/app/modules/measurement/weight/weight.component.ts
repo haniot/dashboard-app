@@ -22,6 +22,7 @@ export class WeightComponent implements OnInit, OnChanges {
     @Input() data: Array<Weight>;
     @Input() filterVisibility: boolean;
     @Input() includeCard: boolean;
+    @Input() includeLogs: boolean;
     @Input() patientId: string;
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;

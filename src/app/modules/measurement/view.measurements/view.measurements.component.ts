@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MeasurementService } from '../services/measurement.service'
 import { EnumMeasurementType, SearchForPeriod } from '../models/measurement'
-import { Pattern, Sleep, SleepStage } from '../models/sleep'
+import { Sleep, SleepPattern, SleepPatternSummaryData, SleepPhases } from '../../activity/models/sleep'
 
 @Component({
     selector: 'view-measurements',
@@ -31,7 +31,7 @@ export class ViewMeasurementsComponent implements OnChanges {
             sleep.start_time = '2018-08-18T01:40:30.00Z';
             sleep.end_time = '2018-08-18T09:36:30.00Z';
             sleep.duration = 29520000;
-            sleep.pattern = new Pattern()
+            sleep.pattern = new SleepPattern()
             sleep.pattern.data_set = [
                 {
                     start_time: '2018-08-18T01:40:30.00Z',
@@ -150,15 +150,15 @@ export class ViewMeasurementsComponent implements OnChanges {
                 }
             ];
 
-            sleep.pattern.summary.asleep = new SleepStage()
+            sleep.pattern.summary.asleep = new SleepPatternSummaryData()
             sleep.pattern.summary.asleep.count = 55;
             sleep.pattern.summary.asleep.duration = 28020000;
 
-            sleep.pattern.summary.awake = new SleepStage()
+            sleep.pattern.summary.awake = new SleepPatternSummaryData()
             sleep.pattern.summary.awake.count = 5;
             sleep.pattern.summary.awake.duration = 28020000;
 
-            sleep.pattern.summary.restless = new SleepStage()
+            sleep.pattern.summary.restless = new SleepPatternSummaryData()
             sleep.pattern.summary.restless.count = 40;
             sleep.pattern.summary.restless.duration = 28020000;
 
@@ -167,7 +167,7 @@ export class ViewMeasurementsComponent implements OnChanges {
             sleep3.start_time = '2018-08-18T01:40:30.00Z';
             sleep3.end_time = '2018-08-18T09:36:30.00Z';
             sleep3.duration = 34420000;
-            sleep3.pattern = new Pattern()
+            sleep3.pattern = new SleepPattern()
             sleep3.pattern.data_set = [
                 {
                     start_time: '2018-08-18T01:40:30.00Z',
@@ -286,15 +286,15 @@ export class ViewMeasurementsComponent implements OnChanges {
                 }
             ];
 
-            sleep3.pattern.summary.asleep = new SleepStage()
+            sleep3.pattern.summary.asleep = new SleepPatternSummaryData()
             sleep3.pattern.summary.asleep.count = 63;
             sleep3.pattern.summary.asleep.duration = 28020000;
 
-            sleep3.pattern.summary.awake = new SleepStage()
+            sleep3.pattern.summary.awake = new SleepPatternSummaryData()
             sleep3.pattern.summary.awake.count = 7;
             sleep3.pattern.summary.awake.duration = 28020000;
 
-            sleep3.pattern.summary.restless = new SleepStage()
+            sleep3.pattern.summary.restless = new SleepPatternSummaryData()
             sleep3.pattern.summary.restless.count = 30;
             sleep3.pattern.summary.restless.duration = 28020000;
 
@@ -303,7 +303,7 @@ export class ViewMeasurementsComponent implements OnChanges {
             sleep2.start_time = '2018-08-18T01:40:30.00Z';
             sleep2.end_time = '2018-08-18T09:36:30.00Z';
             sleep2.duration = 39720000;
-            sleep2.pattern = new Pattern()
+            sleep2.pattern = new SleepPattern()
             sleep2.pattern.data_set = [
                 {
                     start_time: '2018-08-18T01:40:30.00Z',
@@ -387,15 +387,15 @@ export class ViewMeasurementsComponent implements OnChanges {
                 }
             ];
 
-            sleep2.pattern.summary.asleep = new SleepStage()
+            sleep2.pattern.summary.asleep = new SleepPatternSummaryData()
             sleep2.pattern.summary.asleep.count = 45;
             sleep2.pattern.summary.asleep.duration = 28020000;
 
-            sleep2.pattern.summary.awake = new SleepStage()
+            sleep2.pattern.summary.awake = new SleepPatternSummaryData()
             sleep2.pattern.summary.awake.count = 5;
             sleep2.pattern.summary.awake.duration = 28020000;
 
-            sleep2.pattern.summary.restless = new SleepStage()
+            sleep2.pattern.summary.restless = new SleepPatternSummaryData()
             sleep2.pattern.summary.restless.count = 50;
             sleep2.pattern.summary.restless.duration = 28020000;
 

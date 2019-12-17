@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
-import { TimeSeries, TimeSeriesItem } from '../models/time.series';
+import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series';
+import { SearchForPeriod } from '../models/measurement'
 
 @Component({
     selector: 'actives-minutes',
@@ -40,6 +41,22 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
     onChartInit(event) {
         this.echartsInstance = event;
     }
+    applyFilter(filter: SearchForPeriod) {
+        this.showSpinner = true;
+        this.data = [];
+        // this.measurementService
+        //     .getAllByUserAndType(this.patientId, TimeSeriesType.heart_rate, null, null, filter)
+        //     .then(httpResponse => {
+        //         this.data = httpResponse.body;
+        //         this.showSpinner = false;
+        //         this.updateGraph(this.data);
+        //         this.filterChange.emit(this.data);
+        //     })
+        //     .catch(() => {
+        //         this.showSpinner = false;
+        //     });
+    }
+
 
     loadGraph() {
 

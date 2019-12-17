@@ -26,7 +26,8 @@ import { PatientMypilotstudiesComponent } from './mypilotstudies/mypilotstudies.
 import { SettingsModule } from '../settings/settings.module'
 import { PatientMyEvaluationsComponent } from './myevaluations/myevaluations.component'
 import { NgxEchartsModule } from 'ngx-echarts';
-import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
+import { ViewResourcesComponent } from './view.resources/view.resources.component';
+import { ActivityModule } from '../activity/activity.module'
 
 @NgModule({
     declarations: [
@@ -39,7 +40,7 @@ import { ViewMeasurementsComponent } from './view.measurements/view.measurements
         ListPilotstudiesComponent,
         ViewHabitsComponent,
         PatientManagerComponent,
-        ViewMeasurementsComponent
+        ViewResourcesComponent
     ],
     imports: [
         CommonModule,
@@ -54,15 +55,16 @@ import { ViewMeasurementsComponent } from './view.measurements/view.measurements
         MatFormFieldModule,
         MatTabsModule,
         TranslateModule,
+        NgxEchartsModule,
+        NgxGaugeModule,
+        MatCheckboxModule,
+        MatIconModule,
 
         PatientRoutingModule,
         HabitsModule,
         MeasurementModule,
-        SettingsModule,
-        NgxEchartsModule,
-        NgxGaugeModule,
-        MatCheckboxModule,
-        MatIconModule
+        ActivityModule,
+        SettingsModule
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }

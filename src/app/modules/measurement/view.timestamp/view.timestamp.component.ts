@@ -121,10 +121,8 @@ export class ViewTimestampComponent implements OnChanges {
     }
 
     loadMeasurements(typeSelected: TimeSeriesType): any {
-        console.log(typeSelected)
-        this.list = []
-        /* Mocks*/
-        if (typeSelected === TimeSeriesType.heart_rate) {
+        if (this.typeOfTimeSeries === TimeSeriesType.heart_rate) {
+            /* Mocks*/
             const heartRateMock = new TimeSeries();
             heartRateMock.data_set = [
                 { value: 50, date: '2016-10-03T05:59:20' }, {
@@ -185,24 +183,23 @@ export class ViewTimestampComponent implements OnChanges {
                     value: 51,
                     date: '2016-11-30T11:49:40'
                 }]
-            return this.list = [heartRateMock];
+            this.list = [heartRateMock];
         }
-
-        this.measurementService.getAllByUserAndType(this.patientId, typeSelected, null, null, this.filter)
-            .then((httpResponse) => {
-                if (httpResponse.body && httpResponse.body.length) {
-                    this.list = httpResponse.body;
-                    this.listIsEmpty = this.list.length === 0;
-                }
-            })
-            .catch(() => {
-                this.listIsEmpty = true;
-            });
+        // this.measurementService.getAllByUserAndType(this.patientId, typeSelected, null, null, this.filter)
+        //     .then((httpResponse) => {
+        //         if (httpResponse.body && httpResponse.body.length) {
+        //             this.list = httpResponse.body;
+        //             this.listIsEmpty = this.list.length === 0;
+        //         }
+        //     })
+        //     .catch(() => {
+        //         this.listIsEmpty = true;
+        //     });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes && changes.typeOfMeasurement) {
-            this.loadMeasurements(changes.typeOfMeasurement.currentValue);
+        if (changes && changes.typeOfTimeSeries) {
+            this.loadMeasurements(changes.typeOfTimeSeries.currentValue);
         }
     }
 }

@@ -5,11 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { MeasurementService } from '../services/measurement.service';
 import { SearchForPeriod } from '../models/measurement'
-import { ConfigurationBasic } from '../../config.matpaginator'
 import { ToastrService } from 'ngx-toastr'
-import { HeartRateZoneItem, TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series'
-
-const PaginatorConfig = ConfigurationBasic;
+import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series'
 
 @Component({
     selector: 'heart-rate',
@@ -41,6 +38,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
         this.showSpinner = false;
         this.filterChange = new EventEmitter();
         this.listIsEmpty = false;
+        this.lastData = new TimeSeries();
     }
 
     ngOnInit(): void {
@@ -260,6 +258,22 @@ export class HeartRateComponent implements OnInit, OnChanges {
             series: seriesOptionsLastDate
         };
 
+    }
+
+    applyFilter(filter: SearchForPeriod) {
+        this.showSpinner = true;
+        this.data = [];
+        this.measurementService
+            .getAllByUserAndType(this.patientId, TimeSeriesType.heart_rate, null, null, filter)
+            .then(httpResponse => {
+                this.data = httpResponse.body;
+                this.showSpinner = false;
+                this.updateGraph(this.data);
+                this.filterChange.emit(this.data);
+            })
+            .catch(() => {
+                this.showSpinner = false;
+            });
     }
 
     updateGraph(measurements: Array<TimeSeries>): void {

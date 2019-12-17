@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -20,9 +20,9 @@ import { ConfigurationBasic } from '../../config.matpaginator'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
 import { TimeSeriesType } from '../../measurement/models/time.series'
-import { Pattern, Sleep, SleepStage } from '../../measurement/models/sleep'
 import { DatePipe } from '@angular/common'
-import { SleepPipe } from '../../measurement/pipes/sleep.pipe'
+import { SleepPipe } from '../../activity/pipes/sleep.pipe'
+import { Sleep, SleepPattern, SleepPatternSummaryData } from '../../activity/models/sleep'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -131,11 +131,10 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.timeSeriesTypes = Object.keys(TimeSeriesType);
         this.measurementSelected = TimeSeriesType.steps;
         const sleep = new Sleep()
-        sleep.id = 'sadsadsadsadsadas';
         sleep.start_time = '2018-08-18T01:40:30.00Z';
         sleep.end_time = '2018-08-18T09:36:30.00Z';
         sleep.duration = 29520000;
-        sleep.pattern = new Pattern()
+        sleep.pattern = new SleepPattern()
         sleep.pattern.data_set = [
             {
                 start_time: '2018-08-18T01:40:30.00Z',
@@ -254,15 +253,15 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             }
         ];
 
-        sleep.pattern.summary.asleep = new SleepStage()
+        sleep.pattern.summary.asleep = new SleepPatternSummaryData()
         sleep.pattern.summary.asleep.count = 55;
         sleep.pattern.summary.asleep.duration = 28020000;
 
-        sleep.pattern.summary.awake = new SleepStage()
+        sleep.pattern.summary.awake = new SleepPatternSummaryData()
         sleep.pattern.summary.awake.count = 5;
         sleep.pattern.summary.awake.duration = 28020000;
 
-        sleep.pattern.summary.restless = new SleepStage()
+        sleep.pattern.summary.restless = new SleepPatternSummaryData()
         sleep.pattern.summary.restless.count = 40;
         sleep.pattern.summary.restless.duration = 28020000;
 

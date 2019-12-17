@@ -179,3 +179,21 @@ canvas {
   bottom: 0;
   left: 0;
 }
+
+.dataset-timestamp {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 1px 1px;
+}
+
+// overwrite the checkbox background
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: $primary-color !important;
+}
+
+// overwrite the ripple overlay on hover and click
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $primary-color !important;
+}

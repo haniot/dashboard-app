@@ -494,12 +494,12 @@
                                  (mouseleave)="activeMinutesEnterAndLeave(false)">
 
                                 <dashboard-card [title]="'Minutos Ativos'">
-                                    <span style="position: absolute; right: 7px; top: 7px"
-                                          *ngIf="activeMinutesHover && !activeMinutesSettings"
-                                          title="Configurar meta..."
-                                          (click)="changeSettingsActiveMinutes()">
-                                        <i class="material-icons">settings</i>
-                                    </span>
+<!--                                    <span style="position: absolute; right: 7px; top: 7px"-->
+<!--                                          *ngIf="activeMinutesHover && !activeMinutesSettings"-->
+<!--                                          title="Configurar meta..."-->
+<!--                                          (click)="changeSettingsActiveMinutes()">-->
+<!--                                        <i class="material-icons">settings</i>-->
+<!--                                    </span>-->
 
                                     <div class="row justify-content-center fadeIn" *ngIf="!activeMinutesSettings">
                                         <ngx-gauge [size]="200"
@@ -923,10 +923,10 @@
                     </mat-tab>
 
 
-                    <!--                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">-->
-                    <!--                        <measurement-component [(patientId)]="patientId" [configVisibility]="configVisibility"-->
-                    <!--                                               *ngIf="showMeasurements && patientForm.get('id').value"></measurement-component>-->
-                    <!--                    </mat-tab>-->
+                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">
+                        <measurement-component [patientId]="patientId" [configVisibility]="configVisibility"
+                                               *ngIf="showMeasurements && patientForm.get('id').value"></measurement-component>
+                    </mat-tab>
 
                     <!--                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.LOG-MEASUREMENTS'|translate">-->
                     <!--                        <measurement-logs [(patientId)]="patientId"-->

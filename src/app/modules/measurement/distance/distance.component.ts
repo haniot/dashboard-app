@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem } from '../models/time.series';
+import { SearchForPeriod } from '../models/measurement'
 
 @Component({
     selector: 'distance',
@@ -23,7 +24,7 @@ export class DistanceComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
-        private translateService: TranslateService,
+        private translateService: TranslateService
     ) {
         this.data = new Array<TimeSeries>();
         this.filterVisibility = false;
@@ -39,6 +40,10 @@ export class DistanceComponent implements OnInit, OnChanges {
 
     onChartInit(event) {
         this.echartsInstance = event;
+    }
+
+    applyFilter(filter: SearchForPeriod): void {
+
     }
 
     loadGraph() {

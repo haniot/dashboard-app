@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem } from '../models/time.series';
+import { SearchForPeriod } from '../models/measurement'
 
 @Component({
     selector: 'calories',
@@ -38,6 +39,10 @@ export class CaloriesComponent implements OnInit, OnChanges {
 
     onChartInit(event) {
         this.echartsInstance = event;
+    }
+
+    applyFilter(filter: SearchForPeriod): void {
+
     }
 
     loadGraph() {

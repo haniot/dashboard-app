@@ -572,9 +572,6 @@
       "HEART-RATE-TABLE": {
         "DATASET": "Frequências"
       },
-      "STEPS": {
-
-      },
       "MODAL-REMOVE": {
         "SPINNER-MESSAGE": "Removendo medição(es)...",
         "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover definitivamente a medição?",

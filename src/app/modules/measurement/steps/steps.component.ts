@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem } from '../models/time.series'
+import { SearchForPeriod } from '../models/measurement'
 
 @Component({
     selector: 'steps',
@@ -41,6 +42,10 @@ export class StepsComponent implements OnInit, OnChanges {
         this.echartsInstance = event;
     }
 
+    applyFilter(filter: SearchForPeriod): void {
+
+    }
+
     loadGraph() {
 
         const xAxisOptions = {
@@ -53,6 +58,7 @@ export class StepsComponent implements OnInit, OnChanges {
         const seriesOptions = {
             type: 'bar',
             data: [],
+            color: '#E97493',
             barMaxWidth: 30,
             animationDelay: function (idx) {
                 return idx * 10;
