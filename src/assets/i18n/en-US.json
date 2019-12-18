@@ -8,6 +8,31 @@
     "MESSAGE-GO-BACK": "Please return to the main page by clicking on the button below",
     "TITLE": "Access denied"
   },
+  "ACTIVITY": {
+    "RECENT-ACTIVITY": "Recent activity",
+    "VIEW-DETAILS": "View details...",
+    "NO-RECENT-EXERCISES": "No recent exercises",
+    "NO-RECENT-EXERCISES-MESSAGE": "Record exercises to measure your performance and measure your improvements over time!",
+    "SLEEP": {
+      "TITLE": "Sleep Measurements",
+      "SUBTITLE": "",
+      "PERIOD": "Measurement period",
+      "SLEEP": "Sleep",
+      "DURATION": "Duration",
+      "UNAVAILABLE-DATA": "No records within selected period!",
+      "VIEW-STAGES": "View stages",
+      "CLICK-TO-VIEW": "Click on the log to view the stages of sleep."
+    },
+    "PIPES": {
+      "SLEEP": {
+        "AWAKE": "Awake",
+        "RESTLESS": "Restless",
+        "ASLEEP": "Asleep"
+      },
+      "UNDEFINED": "Out of parameters",
+      "NOTFOUND": "NOT FOUND"
+    }
+  },
   "ADMINISTRADORS": {
     "SUBTITLE": "",
     "TITLE": "User list administrators",
@@ -436,23 +461,6 @@
       "FAT": "Fat",
       "UNAVAILABLE-DATA": "No record of body fat recorded!"
     },
-    "HEART-RATE": {
-      "TITLE": "Heart rate",
-      "SUBTITLE": "",
-      "HISTORIC": {
-        "TEXT": "Measurement historic",
-        "SUBTEXT": "The graph below represents all the values captured in all the measurements made"
-      },
-      "LAST-DATE": {
-        "TEXT": "Last measurement performed",
-        "SUBTEXT": "The graph below represents all the values captured in the last measurement performed"
-      },
-      "FREQUENCY": "Frequency",
-      "UNAVAILABLE-DATA": "No registered heart rate record!",
-      "LOW": "Low",
-      "NORMAL": "Normal",
-      "HIGH": "High"
-    },
     "HEIGHT": {
       "TITLE": "Stature",
       "SUBTITLE": "",
@@ -471,16 +479,6 @@
       "BODY-FAT": "Body fat",
       "FAT": "Fat",
       "UNAVAILABLE-DATA": "No record of height registered!"
-    },
-    "SLEEP": {
-      "TITLE": "Sleep Measurements",
-      "SUBTITLE": "",
-      "PERIOD": "Measurement period",
-      "SLEEP": "Sleep",
-      "DURATION": "Duration",
-      "UNAVAILABLE-DATA": "No records within selected period!",
-      "VIEW-STAGES": "View stages",
-      "CLICK-TO-VIEW": "Click on the log to view the stages of sleep."
     },
     "COMPONENT": {
       "CONFIG-GRAPH": "Set up visible graphics",
@@ -510,21 +508,7 @@
         "WAIST-CIRCUMFERENCE": "Waist Circumference",
         "BODY-TEMPERATURE": "Body Temperature",
         "BLOOD-GLUCOSE": "Glucose",
-        "BLOOD-PRESSURE": "Blood Pressure",
-        "HEART-RATE": "Heart Rate",
-        "SLEEP": "Sleep"
-      },
-      "SLEEP": {
-        "AWAKE": "Awake",
-        "RESTLESS": "Restless",
-        "ASLEEP": "Asleep"
-      },
-      "TIME-SERIES": {
-        "STEPS": "STeps",
-        "DISTANCE": "Distance",
-        "CALORIES": "Calories",
-        "ACTIVE-MINUTES": "Active Minutes",
-        "HEART-RATE": "Heart rate"
+        "BLOOD-PRESSURE": "Blood Pressure"
       },
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND"
@@ -772,6 +756,9 @@
     "INVALID-AREA": "Invalid area",
     "HEALTH-AREA-NUTRITION": "Nutrition",
     "HEALTH-AREA-DENTISTRY": "Dentist",
+    "HEALTH-AREA-NURSING": "Nursing",
+    "HEALTH-AREA-ENDOCRINOLOGY": "Endocrinology",
+    "HEALTH-AREA-OTHER": "Other",
     "HEALTH-AREA-UNDEFINED": "Out of parameters",
     "NOT-FOUND": "Not found",
     "SAVE": "Save",
@@ -979,5 +966,65 @@
     "MEASUREMENT-REMOVED": "Measurement successfully removed!",
     "MEASUREMENT-NOT-REMOVED": "Could not remove measurement!",
     "ACCOUNT-NOT-DELETED": "Unable to delete account, please try again!"
+  },
+  "TIME-SERIES": {
+    "ACTIVE-MINUTES": {
+      "TITLE": "Active minutes",
+      "ACTIVE-MINUTES": "active minutes",
+      "SUBTITLE": ""
+    },
+    "BEAT-YESTERDAY": "Beat yesterday",
+    "AVERAGE-WEEK": "Last 7 days average",
+    "CALORIES": {
+      "TITLE": "Calories",
+      "CALORIES": "calorias",
+      "SUBTITLE": ""
+    },
+    "DISTANCE": {
+      "TITLE": "Distance",
+      "TOTAL-DISTANCE": "Total distance",
+      "SUBTITLE": ""
+    },
+    "HEART-RATE": {
+      "TITLE": "Heart rate",
+      "SUBTITLE": "",
+      "HISTORIC": {
+        "TEXT": "Measurement historic",
+        "SUBTEXT": "The graph below represents all the values captured in all the measurements made"
+      },
+      "LAST-DATE": {
+        "TEXT": "Last measurement performed",
+        "SUBTEXT": "The graph below represents all the values captured in the last measurement performed"
+      },
+      "FREQUENCY": "Frequency",
+      "LOW": "Low",
+      "NORMAL": "Normal",
+      "HIGH": "High",
+      "PEAK": "Peak",
+      "CARDIO": "Cardio",
+      "FAT-BURN": "Fat burn"
+    },
+    "LEVELS": {
+      "LIGHT": "Ligth",
+      "MODERATE": "Moderate",
+      "INTENSE": "Intense"
+    },
+    "STEPS": {
+      "TITLE": "Steps",
+      "STEPS": "steps",
+      "SUBTITLE": ""
+    },
+    "PIPES": {
+      "TIME-SERIES": {
+        "STEPS": "Steps",
+        "DISTANCE": "Distance",
+        "CALORIES": "Calories",
+        "ACTIVE-MINUTES": "Active Minutes",
+        "HEART-RATE": "Heart rate"
+      },
+      "UNDEFINED": "Out of parameters",
+      "NOTFOUND": "NOT FOUND"
+    },
+    "UNAVAILABLE-DATA": "No records within selected period!"
   }
 }

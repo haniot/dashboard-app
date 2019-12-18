@@ -1,5 +1,5 @@
-<measurement-card [title]="'MEASUREMENTS.PIPES.TIME-SERIES.DISTANCE'|translate"
-                  [subtitle]="'MEASUREMENTS.STEPS.SUBTITLE'|translate" [filter_visibility]="filterVisibility"
+<measurement-card [title]="'TIME-SERIES.DISTANCE.TITLE'|translate"
+                  [subtitle]="'TIME-SERIES.DISTANCE.SUBTITLE'|translate" [filter_visibility]="filterVisibility"
                   (filter_change)="applyFilter($event)" *ngIf="includeCard">
 
     <div class="row justify-content-center">
@@ -10,9 +10,10 @@
                     <div class="card-icon">
                         <img src="../../../../assets/img/time-series/distance-white.png" width="30">
                     </div>
-                    <p class="card-category"> Média dos últimos 7 dias: </p>
+                    <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData.summary ? lastData.summary.total : 0}} Km
+                        {{lastData.summary ? lastData.summary.total : 0}}
+                        <small>Km</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -31,9 +32,10 @@
                     <div class="card-icon">
                         <img src="../../../../assets/img/time-series/distance-white.png" width="30">
                     </div>
-                    <p class="card-category">Executados ontem: </p>
+                    <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData.summary ? lastData.summary.total : 0}} Km
+                        {{lastData.summary ? lastData.summary.total : 0}}
+                        <small>Km</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -52,9 +54,10 @@
                     <div class="card-icon">
                         <img src="../../../../assets/img/time-series/distance-white.png" width="30">
                     </div>
-                    <p class="card-category"> Distância total: </p>
+                    <p class="card-category">{{'TIME-SERIES.DISTANCE.TOTAL-DISTANCE'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData.summary ? lastData.summary.total : 0}} Km
+                        {{lastData.summary ? lastData.summary.total : 0}}
+                        <small>Km</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -76,7 +79,7 @@
             <div class="unavailable-data">
                 <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
                 <span *ngIf="data.length==0 && !showSpinner"
-                      class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.HEART-RATE.UNAVAILABLE-DATA'|translate}}</span>
+                      class="badge badge-warning badge-12 ellipsis">{{'TIME-SERIES.UNAVAILABLE-DATA'|translate}}</span>
             </div>
         </div>
 
@@ -93,9 +96,10 @@
                 <div class="card-icon">
                     <img src="../../../../assets/img/time-series/distance-white.png" width="30">
                 </div>
-                <p class="card-category"> Média dos últimos 7 dias: </p>
+                <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData.summary ? lastData.summary.total : 0}} Km
+                    {{lastData.summary ? lastData.summary.total : 0}}
+                    <small>Km</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -114,9 +118,10 @@
                 <div class="card-icon">
                     <img src="../../../../assets/img/time-series/distance-white.png" width="30">
                 </div>
-                <p class="card-category">Executados ontem: </p>
+                <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData.summary ? lastData.summary.total : 0}} Km
+                    {{lastData.summary ? lastData.summary.total : 0}}
+                    <small>Km</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -135,9 +140,10 @@
                 <div class="card-icon">
                     <img src="../../../../assets/img/time-series/distance-white.png" width="30">
                 </div>
-                <p class="card-category"> Distância total: </p>
+                <p class="card-category">{{'TIME-SERIES.DISTANCE.TOTAL-DISTANCE'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData.summary ? lastData.summary.total : 0}} Km
+                    {{lastData.summary ? lastData.summary.total : 0}}
+                    <small>Km</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -159,7 +165,7 @@
         <div class="unavailable-data">
             <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
             <span *ngIf="data.length==0 && !showSpinner"
-                  class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.HEART-RATE.UNAVAILABLE-DATA'|translate}}</span>
+                  class="badge badge-warning badge-12 ellipsis">{{'TIME-SERIES.UNAVAILABLE-DATA'|translate}}</span>
         </div>
     </div>
 

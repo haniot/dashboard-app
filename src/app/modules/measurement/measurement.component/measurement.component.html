@@ -23,8 +23,7 @@
                         <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.WEIGHT'|translate}}: </label></div>
                     </div>
 
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config"
-                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
                         <div class="p-2">
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
                                               [(ngModel)]="configVisibility.fat"
@@ -52,8 +51,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config"
-                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
                         <div class="p-2">
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
                                               [(ngModel)]="configVisibility.temperature"
@@ -72,8 +70,7 @@
                         <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.GLUCOSE'|translate}}: </label></div>
                     </div>
 
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config"
-                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
                         <div class="p-2">
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
                                               [(ngModel)]="configVisibility.pressure"
@@ -83,26 +80,25 @@
                         <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.PRESSURE'|translate}}: </label></div>
                     </div>
 
-<!--                    <div class="col-sm-4 col-md-3 col-lg-4 col-xl d-flex flex-row-reverse border-config"-->
-<!--                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">-->
-<!--                        <div class="p-2">-->
-<!--                            <mat-slide-toggle class="paddin55" [color]="'accent'"-->
-<!--                                              [(ngModel)]="configVisibility.heartRate"-->
-<!--                                              (change)="loadHeartRate()">-->
-<!--                            </mat-slide-toggle>-->
-<!--                        </div>-->
-<!--                        <div class="p-2"><label>{{'MEASUREMENTS.HEART-RATE.TITLE'|translate}}: </label></div>-->
-<!--                    </div>-->
+                    <!--                    <div class="col-sm-4 col-md-3 col-lg-4 col-xl d-flex flex-row-reverse border-config"-->
+                    <!--                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">-->
+                    <!--                        <div class="p-2">-->
+                    <!--                            <mat-slide-toggle class="paddin55" [color]="'accent'"-->
+                    <!--                                              [(ngModel)]="configVisibility.heartRate"-->
+                    <!--                                              (change)="loadHeartRate()">-->
+                    <!--                            </mat-slide-toggle>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="p-2"><label>{{'MEASUREMENTS.HEART-RATE.TITLE'|translate}}: </label></div>-->
+                    <!--                    </div>-->
 
-                    <div class="col-sm-4 col-md-3 col-lg-4 col-xl d-flex flex-row-reverse border-config"
-                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">
+                    <div class="col-sm-4 col-md-3 col-lg-4 col-xl d-flex flex-row-reverse border-config">
                         <div class="p-2">
                             <mat-slide-toggle class="paddin55" [color]="'accent'"
                                               [(ngModel)]="configVisibility.sleep"
                                               (change)="loadSleep()">
                             </mat-slide-toggle>
                         </div>
-                        <div class="p-2"><label> {{'MEASUREMENTS.SLEEP.SLEEP'|translate}}: </label></div>
+                        <div class="p-2"><label> {{'ACTIVITY.SLEEP.SLEEP'|translate}}: </label></div>
                     </div>
 
                     <!--                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"-->
@@ -130,7 +126,7 @@
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('fat'))"
-             *ngIf="configVisibility.fat && (userHealthArea === 'nutrition' || userHealthArea === 'admin')">
+             *ngIf="configVisibility.fat">
             <fat [data]="listFat" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></fat>
         </div>
 
@@ -149,7 +145,7 @@
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('temperature'))"
-             *ngIf="configVisibility.temperature && (userHealthArea === 'nutrition' || userHealthArea === 'admin')">
+             *ngIf="configVisibility.temperature">
             <body-temperature [data]="listBodyTemperature" [filterVisibility]="true"
                               [patientId]="patientId" [includeCard]="true"></body-temperature>
         </div>
@@ -163,7 +159,7 @@
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('pressure'))"
-             *ngIf="configVisibility.pressure && (userHealthArea === 'nutrition' || userHealthArea === 'admin')">
+             *ngIf="configVisibility.pressure">
             <blood-pressure [data]="listBloodPressure" [filterVisibility]="true"
                             [patientId]="patientId" [includeCard]="true"></blood-pressure>
         </div>
@@ -175,12 +171,12 @@
                    [patientId]="patientId" [includeCard]="true"></sleep>
         </div>
 
-<!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
-<!--             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('heartRate'))"-->
-<!--             *ngIf="configVisibility.heartRate">-->
-<!--            <heart-rate [data]="listHeartRate" [filterVisibility]="true" [patientId]="patientId"-->
-<!--                        [includeCard]="true"></heart-rate>-->
-<!--        </div>-->
+        <!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
+        <!--             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('heartRate'))"-->
+        <!--             *ngIf="configVisibility.heartRate">-->
+        <!--            <heart-rate [data]="listHeartRate" [filterVisibility]="true" [patientId]="patientId"-->
+        <!--                        [includeCard]="true"></heart-rate>-->
+        <!--        </div>-->
 
     </div>
 </div>

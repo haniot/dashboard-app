@@ -8,6 +8,31 @@
     "MESSAGE-GO-BACK": "Por favor, volte para a página principal clicando no botão abaixo",
     "TITLE": "Acesso negado"
   },
+  "ACTIVITY": {
+    "RECENT-ACTIVITY": "Atividades recentes",
+    "VIEW-DETAILS": "Visualizar detalhes...",
+    "NO-RECENT-EXERCISES": "Nenhum exercício recente",
+    "NO-RECENT-EXERCISES-MESSAGE": "Registre exercícios para medir seu desempenho e avaliar suas melhorias ao longo do tempo!",
+    "SLEEP": {
+      "TITLE": "Medições de Sono",
+      "SUBTITLE": "",
+      "PERIOD": "Período da medição",
+      "SLEEP": "Sono",
+      "DURATION": "Duração",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
+      "VIEW-STAGES": "Visualizar estágios",
+      "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono."
+    },
+    "PIPES": {
+      "SLEEP": {
+        "AWAKE": "Acordado",
+        "RESTLESS": "Inquieto",
+        "ASLEEP": "Adormecido"
+      },
+      "UNDEFINED": "Fora dos parâmetros",
+      "NOTFOUND": "NÃO ENCONTRADO"
+    }
+  },
   "ADMINISTRADORS": {
     "SUBTITLE": "",
     "TITLE": "Lista de usuário administradores",
@@ -436,23 +461,6 @@
       "FAT": "Gordura",
       "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
     },
-    "HEART-RATE": {
-      "TITLE": "Frequência cardíaca",
-      "SUBTITLE": "",
-      "HISTORIC": {
-        "TEXT": "Histório de medições",
-        "SUBTEXT": "O gráfico abaixo representa todos os valores captados em todas as medições realizadas"
-      },
-      "LAST-DATE": {
-        "TEXT": "Última medição realizada",
-        "SUBTEXT": "O gráfico abaixo representa todos os valores captados na última medição realizada"
-      },
-      "FREQUENCY": "Frequência",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
-      "LOW": "Baixa",
-      "NORMAL": "Normal",
-      "HIGH": "Alta"
-    },
     "HEIGHT": {
       "TITLE": "Estatura",
       "SUBTITLE": "",
@@ -470,21 +478,6 @@
       "SUBTITLE": "",
       "BODY-FAT": "Gordura corporal",
       "FAT": "Gordura",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
-    },
-    "SLEEP": {
-      "TITLE": "Medições de Sono",
-      "SUBTITLE": "",
-      "PERIOD": "Período da medição",
-      "SLEEP": "Sono",
-      "DURATION": "Duração",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
-      "VIEW-STAGES": "Visualizar estágios",
-      "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono."
-    },
-    "STEPS": {
-      "TITLE": "Passos",
-      "SUBTITLE": "",
       "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
     },
     "COMPONENT": {
@@ -515,21 +508,7 @@
         "WAIST-CIRCUMFERENCE": "Circunferência da Cintura",
         "BODY-TEMPERATURE": "Temperatura Corporal",
         "BLOOD-GLUCOSE": "Glicose",
-        "BLOOD-PRESSURE": "Pressão Arterial",
-        "HEART-RATE": "Frequência Cardíaca",
-        "SLEEP": "Sono"
-      },
-      "SLEEP": {
-        "AWAKE": "Acordado",
-        "RESTLESS": "Inquieto",
-        "ASLEEP": "Adormecido"
-      },
-      "TIME-SERIES": {
-        "STEPS": "Passos",
-        "DISTANCE": "Distância",
-        "CALORIES": "Calorias",
-        "ACTIVE-MINUTES": "Minutos Ativos",
-        "HEART-RATE": "Frequência Cardíaca"
+        "BLOOD-PRESSURE": "Pressão Arterial"
       },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"
@@ -777,6 +756,9 @@
     "INVALID-AREA": "Área inválida",
     "HEALTH-AREA-NUTRITION": "Nutrição",
     "HEALTH-AREA-DENTISTRY": "Dentista",
+    "HEALTH-AREA-NURSING": "Enfermagem",
+    "HEALTH-AREA-ENDOCRINOLOGY": "Endocrinologia",
+    "HEALTH-AREA-OTHER": "Outras",
     "HEALTH-AREA-UNDEFINED": "Fora dos parâmetros",
     "NOT-FOUND": "Não encontrado",
     "SAVE": "Salvar",
@@ -984,5 +966,66 @@
     "MEASUREMENT-REMOVED": "Medição removida com sucesso!",
     "MEASUREMENT-NOT-REMOVED": "Não foi possível remover medição!",
     "ACCOUNT-NOT-DELETED": "Não foi possível excluir conta, tente novamente!"
+  },
+  "TIME-SERIES": {
+    "ACTIVE-MINUTES": {
+      "TITLE": "Minutos Ativos",
+      "ACTIVE-MINUTES": "minutos ativos",
+      "SUBTITLE": ""
+    },
+    "BEAT-YESTERDAY": "Executados ontem",
+    "AVERAGE-WEEK": "Média dos últimos 7 dias",
+    "CALORIES": {
+      "TITLE": "Calorias",
+      "CALORIES": "calorias",
+      "SUBTITLE": ""
+    },
+    "DISTANCE": {
+      "TITLE": "Distancia",
+      "TOTAL-DISTANCE": "Distância total",
+      "SUBTITLE": ""
+    },
+    "HEART-RATE": {
+      "TITLE": "Frequência cardíaca",
+      "SUBTITLE": "",
+      "HISTORIC": {
+        "TEXT": "Histório de medições",
+        "SUBTEXT": "O gráfico abaixo representa todos os valores captados em todas as medições realizadas"
+      },
+      "LAST-DATE": {
+        "TEXT": "Última medição realizada",
+        "SUBTEXT": "O gráfico abaixo representa todos os valores captados na última medição realizada"
+      },
+      "FREQUENCY": "Frequência",
+      "LOW": "Baixa",
+      "NORMAL": "Normal",
+      "HIGH": "Alta",
+      "PEAK": "Pico",
+      "CARDIO": "Cardio",
+      "FAT-BURN": "Queima de Gordura"
+    },
+    "LEVELS": {
+      "LIGHT": "Leve",
+      "MODERATE": "Moderado",
+      "INTENSE": "Intenso"
+    },
+    "STEPS": {
+      "TITLE": "Passos",
+      "STEPS": "passos",
+      "TOTAL-STEPS": "Total de passos",
+      "SUBTITLE": ""
+    },
+    "PIPES": {
+      "TIME-SERIES": {
+        "STEPS": "Passos",
+        "DISTANCE": "Distância",
+        "CALORIES": "Calorias",
+        "ACTIVE-MINUTES": "Minutos Ativos",
+        "HEART-RATE": "Frequência Cardíaca"
+      },
+      "UNDEFINED": "Fora dos parâmetros",
+      "NOTFOUND": "NÃO ENCONTRADO"
+    },
+    "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!"
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
@@ -40,7 +40,7 @@ class ConfigVisibility {
     templateUrl: './measurement.component.html',
     styleUrls: ['./measurement.component.scss']
 })
-export class MeasurementComponent implements OnInit, OnChanges {
+export class MeasurementComponent implements OnChanges {
     @Input() configVisibility: ConfigVisibility;
     @Input() patientId;
     listWeight: Array<Weight>;
@@ -52,7 +52,6 @@ export class MeasurementComponent implements OnInit, OnChanges {
     listBloodPressure: Array<BloodPressure>;
     listHeartRate: Array<TimeSeries>;
     listSleep: Array<Sleep>;
-    userHealthArea: string;
     filter: SearchForPeriod;
     studySelected: PilotStudy;
     graphOrdem: Array<string>;
@@ -76,14 +75,6 @@ export class MeasurementComponent implements OnInit, OnChanges {
         this.filter = { start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today' };
         this.studySelected = new PilotStudy();
         this.graphOrdem = new Array<string>();
-    }
-
-    ngOnInit() {
-        this.loadUserHealthArea();
-    }
-
-    loadUserHealthArea(): void {
-        this.userHealthArea = this.localStorageService.getItem('health_area');
     }
 
     loadPilotSelected(): Promise<any> {

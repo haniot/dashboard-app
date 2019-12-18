@@ -1,5 +1,5 @@
-<measurement-card [title]="'MEASUREMENTS.SLEEP.TITLE'|translate"
-                  [subtitle]="'MEASUREMENTS.SLEEP.SUBTITLE'|translate" [filter_visibility]="filterVisibility"
+<measurement-card [title]="'ACTIVITY.SLEEP.TITLE'|translate"
+                  [subtitle]="'ACTIVITY.SLEEP.SUBTITLE'|translate" [filter_visibility]="filterVisibility"
                   (filter_change)="applyFilter($event)" *ngIf="includeCard">
 
     <div class="row justify-content-center fadeIn" *ngIf="!showSleepStages">
@@ -69,7 +69,7 @@
                         <div class="card-icon">
                             <div class="bg-height"></div>
                         </div>
-                        <p class="card-category">{{'MEASUREMENTS.PIPES.SLEEP.AWAKE'|translate}}: </p>
+                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}: </p>
                         <h3 class="card-title">
                             {{sleepSelected.pattern.summary.awake.count + '%'}}
                         </h3>
@@ -90,7 +90,7 @@
                         <div class="card-icon">
                             <div class="bg-height"></div>
                         </div>
-                        <p class="card-category">{{'MEASUREMENTS.PIPES.SLEEP.RESTLESS'|translate}}: </p>
+                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.RESTLESS'|translate}}: </p>
                         <h3 class="card-title">
                             {{sleepSelected.pattern.summary.restless.count + '%'}}
                         </h3>
@@ -111,7 +111,7 @@
                         <div class="card-icon">
                             <div class="bg-height"></div>
                         </div>
-                        <p class="card-category">{{'MEASUREMENTS.PIPES.SLEEP.ASLEEP'|translate}}: </p>
+                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.ASLEEP'|translate}}: </p>
                         <h3 class="card-title">
                             {{sleepSelected.pattern.summary.asleep.count + '%'}}
                         </h3>
@@ -210,8 +210,8 @@
             <table class="table table-hover table-sm">
                 <thead>
                 <th>#</th>
-                <th>{{'MEASUREMENTS.SLEEP.PERIOD'|translate}}</th>
-                <th>{{'MEASUREMENTS.SLEEP.DURATION'|translate}}</th>
+                <th>{{'ACTIVITY.SLEEP.PERIOD'|translate}}</th>
+                <th>{{'ACTIVITY.SLEEP.DURATION'|translate}}</th>
                 <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
                 </thead>
                 <tbody>
@@ -332,7 +332,7 @@
                     <div class="card-icon">
                         <div class="bg-height"></div>
                     </div>
-                    <p class="card-category">{{'MEASUREMENTS.PIPES.SLEEP.AWAKE'|translate}}: </p>
+                    <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}: </p>
                     <h3 class="card-title">
                         {{sleepSelected.pattern.summary.awake.count + '%'}}
                     </h3>
@@ -353,7 +353,7 @@
                     <div class="card-icon">
                         <div class="bg-height"></div>
                     </div>
-                    <p class="card-category">{{'MEASUREMENTS.PIPES.SLEEP.RESTLESS'|translate}}: </p>
+                    <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.RESTLESS'|translate}}: </p>
                     <h3 class="card-title">
                         {{sleepSelected.pattern.summary.restless.count + '%'}}
                     </h3>
@@ -374,7 +374,7 @@
                     <div class="card-icon">
                         <div class="bg-height"></div>
                     </div>
-                    <p class="card-category">{{'MEASUREMENTS.PIPES.SLEEP.ASLEEP'|translate}}: </p>
+                    <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.ASLEEP'|translate}}: </p>
                     <h3 class="card-title">
                         {{sleepSelected.pattern.summary.asleep.count + '%'}}
                     </h3>

@@ -8,22 +8,22 @@ export class TimeSeriesPipe implements PipeTransform {
     transform(value: any, ...args: any[]): any {
         switch (value) {
             case 'steps':
-                return 'MEASUREMENTS.PIPES.TIME-SERIES.STEPS';
+                return 'TIME-SERIES.PIPES.TIME-SERIES.STEPS';
 
             case 'distance':
-                return 'MEASUREMENTS.PIPES.TIME-SERIES.DISTANCE';
+                return 'TIME-SERIES.PIPES.TIME-SERIES.DISTANCE';
 
             case 'calories':
-                return 'MEASUREMENTS.PIPES.TIME-SERIES.CALORIES';
+                return 'TIME-SERIES.PIPES.TIME-SERIES.CALORIES';
 
             case 'active_minutes':
-                return 'MEASUREMENTS.PIPES.TIME-SERIES.ACTIVE-MINUTES';
+                return 'TIME-SERIES.PIPES.TIME-SERIES.ACTIVE-MINUTES';
 
             case 'heart_rate':
-                return 'MEASUREMENTS.PIPES.TIME-SERIES.HEART-RATE';
+                return 'TIME-SERIES.PIPES.TIME-SERIES.HEART-RATE';
 
             default:
-                return 'MEASUREMENTS.PIPES.NOTFOUND';
+                return 'TIME-SERIES.PIPES.NOTFOUND';
         }
     }
 

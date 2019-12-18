@@ -1,5 +1,12 @@
 @import "../../../../assets/scss/template-colors";
 
+h3 {
+  small {
+    font-weight: normal;
+    font-size: 14px;
+  }
+}
+
 .echarts-div-graph {
   height: 400px;
 }

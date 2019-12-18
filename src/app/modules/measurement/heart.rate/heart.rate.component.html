@@ -1,5 +1,5 @@
-<measurement-card [title]="'MEASUREMENTS.HEART-RATE.TITLE'|translate"
-                  [subtitle]="'MEASUREMENTS.HEART-RATE.SUBTITLE'|translate" [filter_visibility]="filterVisibility"
+<measurement-card [title]="'TIME-SERIES.HEART-RATE.TITLE'|translate"
+                  [subtitle]="'TIME-SERIES.HEART-RATE.SUBTITLE'|translate" [filter_visibility]="filterVisibility"
                   (filter_change)="applyFilter($event)" *ngIf="includeCard">
 
     <div class="row justify-content-center">
@@ -10,7 +10,7 @@
                     <div class="card-icon">
                         <div class="bg-heart_rate"></div>
                     </div>
-                    <p class="card-category"> Pico: </p>
+                    <p class="card-category">{{'TIME-SERIES.HEART-RATE.PEAK'|translate}}: </p>
                     <h3 class="card-title">
                         13min
                     </h3>
@@ -31,7 +31,7 @@
                     <div class="card-icon">
                         <div class="bg-heart_rate"></div>
                     </div>
-                    <p class="card-category"> Cardio : </p>
+                    <p class="card-category">{{'TIME-SERIES.HEART-RATE.CARDIO'|translate}}: </p>
                     <h3 class="card-title">
                         28min
                     </h3>
@@ -52,7 +52,7 @@
                     <div class="card-icon">
                         <div class="bg-heart_rate"></div>
                     </div>
-                    <p class="card-category"> Queima de Gordura: </p>
+                    <p class="card-category">{{'TIME-SERIES.HEART-RATE.FAT-BURN'|translate}}: </p>
                     <h3 class="card-title">
                         1h e 32min
                     </h3>
@@ -76,20 +76,20 @@
             <div class="unavailable-data">
                 <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
                 <span *ngIf="data.length==0 && !showSpinner"
-                      class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.HEART-RATE.UNAVAILABLE-DATA'|translate}}</span>
+                      class="badge badge-warning badge-12 ellipsis">{{'TIME-SERIES.UNAVAILABLE-DATA'|translate}}</span>
             </div>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
-            <div class="d-flex flex-row-reverse">
-                <div class="p-2">
-                    <small class="pull-right" *ngIf="lastData && lastData.data_set">
-                        {{'MEASUREMENTS.LAST-REGISTER'|translate}}: {{lastData.data_set[0].timestamp | date}}</small>
-                    <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
-                        : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
-                </div>
-            </div>
-        </div>
+<!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">-->
+        <!--            <div class="d-flex flex-row-reverse">-->
+        <!--                <div class="p-2">-->
+        <!--                    <small class="pull-right" *ngIf="lastData && lastData.data_set">-->
+        <!--                        {{'MEASUREMENTS.LAST-REGISTER'|translate}}: {{lastData.data_set[0].timestamp | date}}</small>-->
+        <!--                    <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}-->
+        <!--                        : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
     </div>
 
@@ -104,7 +104,7 @@
                 <div class="card-icon">
                     <div class="bg-heart_rate"></div>
                 </div>
-                <p class="card-category"> Pico: </p>
+                <p class="card-category">{{'TIME-SERIES.HEART-RATE.PEAK'|translate}}: </p>
                 <h3 class="card-title">
                     13min
                 </h3>
@@ -125,7 +125,7 @@
                 <div class="card-icon">
                     <div class="bg-heart_rate"></div>
                 </div>
-                <p class="card-category"> Cardio : </p>
+                <p class="card-category">{{'TIME-SERIES.HEART-RATE.CARDIO'|translate}}: </p>
                 <h3 class="card-title">
                     28min
                 </h3>
@@ -146,7 +146,7 @@
                 <div class="card-icon">
                     <div class="bg-heart_rate"></div>
                 </div>
-                <p class="card-category"> Queima de Gordura: </p>
+                <p class="card-category">{{'TIME-SERIES.HEART-RATE.FAT-BURN'|translate}}: </p>
                 <h3 class="card-title">
                     1h e 32min
                 </h3>
@@ -170,7 +170,7 @@
         <div class="unavailable-data">
             <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
             <span *ngIf="data.length==0 && !showSpinner"
-                  class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.HEART-RATE.UNAVAILABLE-DATA'|translate}}</span>
+                  class="badge badge-warning badge-12 ellipsis">{{'TIME-SERIES.UNAVAILABLE-DATA'|translate}}</span>
         </div>
     </div>
 

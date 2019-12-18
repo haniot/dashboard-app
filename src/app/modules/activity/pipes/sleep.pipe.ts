@@ -8,16 +8,16 @@ export class SleepPipe implements PipeTransform {
   transform(value: any, ...args: any[]): any {
     switch (value) {
       case 'awake':
-        return 'MEASUREMENTS.PIPES.SLEEP.AWAKE';
+        return 'ACTIVITY.PIPES.SLEEP.AWAKE';
 
       case 'restless':
-        return 'MEASUREMENTS.PIPES.SLEEP.RESTLESS';
+        return 'ACTIVITY.PIPES.SLEEP.RESTLESS';
 
       case 'asleep':
-        return 'MEASUREMENTS.PIPES.SLEEP.ASLEEP';
+        return 'ACTIVITY.PIPES.SLEEP.ASLEEP';
 
       default:
-        return 'MEASUREMENTS.PIPES.NOTFOUND';
+        return 'ACTIVITY.PIPES.NOTFOUND';
     }
   }
 

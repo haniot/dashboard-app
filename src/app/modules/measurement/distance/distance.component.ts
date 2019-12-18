@@ -48,6 +48,10 @@ export class DistanceComponent implements OnInit, OnChanges {
 
     loadGraph() {
 
+        const light = this.translateService.instant('TIME-SERIES.LEVELS.LIGHT');
+        const moderate = this.translateService.instant('TIME-SERIES.LEVELS.MODERATE');
+        const intense = this.translateService.instant('TIME-SERIES.LEVELS.INTENSE');
+
         const xAxisOptions = {
             data: [],
             silent: false,
@@ -97,18 +101,18 @@ export class DistanceComponent implements OnInit, OnChanges {
                     gt: 0,
                     lte: 35.7,
                     color: '#FDC133',
-                    label: 'Leve'
+                    label: light
 
                 }, {
                     gt: 35.7,
                     lte: 37.5,
                     color: '#FC7D35',
-                    label: 'Moderado'
+                    label: moderate
 
                 }, {
                     gt: 37.5,
                     color: '#AFE42C',
-                    label: 'Intenso'
+                    label: intense
                 }]
             },
             tooltip: {},

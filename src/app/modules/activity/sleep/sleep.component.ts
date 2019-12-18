@@ -105,9 +105,9 @@ export class SleepComponent implements OnInit {
         const at = this.translateService.instant('SHARED.AT');
         const hours = this.translateService.instant('MYDATEPIPE.HOURS');
         const hours_abbreviation = this.translateService.instant('HABITS.SLEEP.TIME-ABBREVIATION');
-        const duration = this.translateService.instant('MEASUREMENTS.SLEEP.DURATION');
-        const title = this.translateService.instant('MEASUREMENTS.SLEEP.CLICK-TO-VIEW');
-        const viewStages = this.translateService.instant('MEASUREMENTS.SLEEP.VIEW-STAGES');
+        const duration = this.translateService.instant('ACTIVITY.SLEEP.DURATION');
+        const title = this.translateService.instant('ACTIVITY.SLEEP.CLICK-TO-VIEW');
+        const viewStages = this.translateService.instant('ACTIVITY.SLEEP.VIEW-STAGES');
         const and = this.translateService.instant('SHARED.AND');
         const minutes_abbreviation = this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION');
 
@@ -235,13 +235,13 @@ export class SleepComponent implements OnInit {
         this.showSleepStages = true;
 
         const hs = this.translateService.instant('SLEEP.TIME-ABBREVIATION');
-        const awake = this.translateService.instant('MEASUREMENTS.PIPES.SLEEP.AWAKE');
-        const restless = this.translateService.instant('MEASUREMENTS.PIPES.SLEEP.RESTLESS');
-        const asleep = this.translateService.instant('MEASUREMENTS.PIPES.SLEEP.ASLEEP');
+        const awake = this.translateService.instant('ACTIVITY.PIPES.SLEEP.AWAKE');
+        const restless = this.translateService.instant('ACTIVITY.PIPES.SLEEP.RESTLESS');
+        const asleep = this.translateService.instant('ACTIVITY.PIPES.SLEEP.ASLEEP');
 
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
-        const duration = this.translateService.instant('MEASUREMENTS.SLEEP.DURATION');
+        const duration = this.translateService.instant('ACTIVITY.SLEEP.DURATION');
 
         const { pattern: { data_set } } = this.sleepSelected;
 

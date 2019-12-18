@@ -50,9 +50,9 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
-        const historic_text = this.translateService.instant('MEASUREMENTS.HEART-RATE.HISTORIC.TEXT');
-        const historic_subtext = this.translateService.instant('MEASUREMENTS.HEART-RATE.HISTORIC.SUBTEXT');
-        const frequency = this.translateService.instant('MEASUREMENTS.HEART-RATE.FREQUENCY');
+        const historic_text = this.translateService.instant('TIME-SERIES.HEART-RATE.HISTORIC.TEXT');
+        const historic_subtext = this.translateService.instant('TIME-SERIES.HEART-RATE.HISTORIC.SUBTEXT');
+        const frequency = this.translateService.instant('TIME-SERIES.HEART-RATE.FREQUENCY');
 
         const dateAndHour = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
@@ -60,9 +60,9 @@ export class HeartRateComponent implements OnInit, OnChanges {
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
 
-        const low = this.translateService.instant('MEASUREMENTS.HEART-RATE.LOW');
-        const normal = this.translateService.instant('MEASUREMENTS.HEART-RATE.NORMAL');
-        const high = this.translateService.instant('MEASUREMENTS.HEART-RATE.HIGH');
+        const low = this.translateService.instant('TIME-SERIES.HEART-RATE.LOW');
+        const normal = this.translateService.instant('TIME-SERIES.HEART-RATE.NORMAL');
+        const high = this.translateService.instant('TIME-SERIES.HEART-RATE.HIGH');
         const upperLimit = this.translateService.instant('SHARED.UPPER-LIMIT');
         const classification = this.translateService.instant('SHARED.CLASSIFICATION');
 
