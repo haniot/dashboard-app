@@ -5,16 +5,16 @@
 
             <div class="container-fluid">
 
-<!--                <div class="d-flex flex-row-reverse shared" style="height: 50px;">-->
+                <!--                <div class="d-flex flex-row-reverse shared" style="height: 50px;">-->
 
-<!--                    <div class="p-2">-->
-<!--                        <i class="material-icons" [title]="'PATIENTS.VIEW-HABITS.TOVIEW-EVALUATIONS'|translate"-->
-<!--                           [routerLink]="['/app/evaluations/nutritional',patientId]">assignment</i>-->
-<!--                    </div>-->
-<!--                    <div class="p-2">-->
-<!--                        {{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}:-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                    <div class="p-2">-->
+                <!--                        <i class="material-icons" [title]="'PATIENTS.VIEW-HABITS.TOVIEW-EVALUATIONS'|translate"-->
+                <!--                           [routerLink]="['/app/evaluations/nutritional',patientId]">assignment</i>-->
+                <!--                    </div>-->
+                <!--                    <div class="p-2">-->
+                <!--                        {{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}:-->
+                <!--                    </div>-->
+                <!--                </div>-->
 
                 <div class="row" style="padding: 0px 7px;">
 
@@ -181,7 +181,7 @@
                             <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6" style="padding-top:0px;">
 
                                 <dashboard-card [title]="'ACTIVITY.SLEEP.SLEEP'|translate"
-                                                [urlAction]="['/app/patients/',patientId, 'sleep']"
+                                                [urlAction]="['/app/activities/sleep',patientId]"
                                                 (mouseenter)="sleepEnterAndLeave(true)"
                                                 (mouseleave)="sleepEnterAndLeave(false)">
                                     <!--                                    <small style="position: absolute;right: 10px; top: 10px">12/12/2019</small>-->

@@ -6,8 +6,7 @@
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.WEIGHT">
                     <weight [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                            [includeCard]="true" [showSpinner]="!list.length && !listIsEmpty"
-                            (filterChange)="changeFilter($event)"></weight>
+                            [includeCard]="true" [showSpinner]="!list.length && !listIsEmpty"></weight>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.BODY_FAT">
@@ -68,12 +67,6 @@
                                 [includeCard]="true"
                                 [showSpinner]="!list.length && !listIsEmpty"></heart-rate>
                 </div>
-
-                <div *ngIf="typeOfMeasurement.toString() === 'sleep'">
-                    <sleep [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                           [includeCard]="true"></sleep>
-                </div>
-
 
             </div>
 

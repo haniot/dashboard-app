@@ -5,13 +5,13 @@ import { TranslateService } from '@ngx-translate/core';
 import * as echarts from 'echarts';
 import { PageEvent } from '@angular/material';
 import { ToastrService } from 'ngx-toastr'
-
-import { MeasurementService } from '../../measurement/services/measurement.service';
 import { SleepPipe } from '../pipes/sleep.pipe';
-import { Sleep } from '../models/sleep';
+import { Sleep, SleepPattern, SleepPatternSummaryData } from '../models/sleep';
 import { DecimalFormatterPipe } from '../../measurement/pipes/decimal.formatter.pipe';
 import { SearchForPeriod } from '../../measurement/models/measurement';
 import { ConfigurationBasic } from '../../config.matpaginator';
+import { ActivatedRoute } from '@angular/router'
+import { SleepService } from '../services/sleep.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -52,8 +52,9 @@ export class SleepComponent implements OnInit {
     stateButtonRemoveSelected: boolean;
 
     constructor(
+        private activeRouter: ActivatedRoute,
         private datePipe: DatePipe,
-        private measurementService: MeasurementService,
+        private sleepService: SleepService,
         private translateService: TranslateService,
         private sleepPipe: SleepPipe,
         private decimalFormatter: DecimalFormatterPipe,
@@ -80,12 +81,389 @@ export class SleepComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.activeRouter.paramMap.subscribe((params) => {
+            this.patientId = params.get('patientId');
+            this.filterVisibility = true;
+            this.includeCard = true;
+
+            const sleep = new Sleep()
+            sleep.start_time = '2018-08-18T01:40:30.00Z';
+            sleep.end_time = '2018-08-18T09:36:30.00Z';
+            sleep.duration = 29520000;
+            sleep.pattern = new SleepPattern()
+            sleep.pattern.data_set = [
+                {
+                    start_time: '2018-08-18T01:40:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T01:41:30.00Z',
+                    name: 'asleep',
+                    duration: 360000
+                },
+                {
+                    start_time: '2018-08-18T01:47:30.00Z',
+                    name: 'restless',
+                    duration: 240000
+                },
+                {
+                    start_time: '2018-08-18T01:51:30.00Z',
+                    name: 'asleep',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T01:52:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T01:53:30.00Z',
+                    name: 'asleep',
+                    duration: 2100000
+                },
+                {
+                    start_time: '2018-08-18T02:28:30.00Z',
+                    name: 'restless',
+                    duration: 240000
+                },
+                {
+                    start_time: '2018-08-18T02:32:30.00Z',
+                    name: 'awake',
+                    duration: 180000
+                },
+                {
+                    start_time: '2018-08-18T02:35:30.00Z',
+                    name: 'asleep',
+                    duration: 15120000
+                },
+                {
+                    start_time: '2018-08-18T06:47:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T06:48:30.00Z',
+                    name: 'asleep',
+                    duration: 2580000
+                },
+                {
+                    start_time: '2018-08-18T07:31:30.00Z',
+                    name: 'restless',
+                    duration: 120000
+                },
+                {
+                    start_time: '2018-08-18T07:33:30.00Z',
+                    name: 'asleep',
+                    duration: 120000
+                },
+                {
+                    start_time: '2018-08-18T07:35:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T07:36:30.00Z',
+                    name: 'asleep',
+                    duration: 1200000
+                },
+                {
+                    start_time: '2018-08-18T07:56:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T07:57:30.00Z',
+                    name: 'asleep',
+                    duration: 2580000
+                },
+                {
+                    start_time: '2018-08-18T08:40:30.00Z',
+                    name: 'restless',
+                    duration: 180000
+                },
+                {
+                    start_time: '2018-08-18T08:43:30.00Z',
+                    name: 'asleep',
+                    duration: 1200000
+                },
+                {
+                    start_time: '2018-08-18T09:03:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T09:04:30.00Z',
+                    name: 'asleep',
+                    duration: 1740000
+                },
+                {
+                    start_time: '2018-08-18T09:03:30.00Z',
+                    name: 'restless',
+                    duration: 180000
+                },
+                {
+                    start_time: '2018-08-18T09:36:30.00Z',
+                    name: 'asleep',
+                    duration: 960000
+                }
+            ];
+
+            sleep.pattern.summary.asleep = new SleepPatternSummaryData()
+            sleep.pattern.summary.asleep.count = 55;
+            sleep.pattern.summary.asleep.duration = 28020000;
+
+            sleep.pattern.summary.awake = new SleepPatternSummaryData()
+            sleep.pattern.summary.awake.count = 5;
+            sleep.pattern.summary.awake.duration = 28020000;
+
+            sleep.pattern.summary.restless = new SleepPatternSummaryData()
+            sleep.pattern.summary.restless.count = 40;
+            sleep.pattern.summary.restless.duration = 28020000;
+
+            const sleep3 = new Sleep()
+            sleep3.start_time = '2018-08-18T01:40:30.00Z';
+            sleep3.end_time = '2018-08-18T09:36:30.00Z';
+            sleep3.duration = 34420000;
+            sleep3.pattern = new SleepPattern()
+            sleep3.pattern.data_set = [
+                {
+                    start_time: '2018-08-18T01:40:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T01:41:30.00Z',
+                    name: 'asleep',
+                    duration: 360000
+                },
+                {
+                    start_time: '2018-08-18T01:47:30.00Z',
+                    name: 'restless',
+                    duration: 240000
+                },
+                {
+                    start_time: '2018-08-18T01:51:30.00Z',
+                    name: 'asleep',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T01:52:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T01:53:30.00Z',
+                    name: 'asleep',
+                    duration: 2100000
+                },
+                {
+                    start_time: '2018-08-18T02:28:30.00Z',
+                    name: 'restless',
+                    duration: 240000
+                },
+                {
+                    start_time: '2018-08-18T02:32:30.00Z',
+                    name: 'awake',
+                    duration: 180000
+                },
+                {
+                    start_time: '2018-08-18T02:35:30.00Z',
+                    name: 'asleep',
+                    duration: 15120000
+                },
+                {
+                    start_time: '2018-08-18T06:47:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T06:48:30.00Z',
+                    name: 'asleep',
+                    duration: 2580000
+                },
+                {
+                    start_time: '2018-08-18T07:31:30.00Z',
+                    name: 'restless',
+                    duration: 120000
+                },
+                {
+                    start_time: '2018-08-18T07:33:30.00Z',
+                    name: 'asleep',
+                    duration: 120000
+                },
+                {
+                    start_time: '2018-08-18T07:35:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T07:36:30.00Z',
+                    name: 'asleep',
+                    duration: 1200000
+                },
+                {
+                    start_time: '2018-08-18T07:56:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T07:57:30.00Z',
+                    name: 'asleep',
+                    duration: 2580000
+                },
+                {
+                    start_time: '2018-08-18T08:40:30.00Z',
+                    name: 'restless',
+                    duration: 180000
+                },
+                {
+                    start_time: '2018-08-18T08:43:30.00Z',
+                    name: 'asleep',
+                    duration: 1200000
+                },
+                {
+                    start_time: '2018-08-18T09:03:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T09:04:30.00Z',
+                    name: 'asleep',
+                    duration: 1740000
+                },
+                {
+                    start_time: '2018-08-18T09:03:30.00Z',
+                    name: 'restless',
+                    duration: 180000
+                },
+                {
+                    start_time: '2018-08-18T09:36:30.00Z',
+                    name: 'asleep',
+                    duration: 960000
+                }
+            ];
+
+            sleep3.pattern.summary.asleep = new SleepPatternSummaryData()
+            sleep3.pattern.summary.asleep.count = 63;
+            sleep3.pattern.summary.asleep.duration = 28020000;
+
+            sleep3.pattern.summary.awake = new SleepPatternSummaryData()
+            sleep3.pattern.summary.awake.count = 7;
+            sleep3.pattern.summary.awake.duration = 28020000;
+
+            sleep3.pattern.summary.restless = new SleepPatternSummaryData()
+            sleep3.pattern.summary.restless.count = 30;
+            sleep3.pattern.summary.restless.duration = 28020000;
+
+            const sleep2 = new Sleep()
+            sleep2.start_time = '2018-08-18T01:40:30.00Z';
+            sleep2.end_time = '2018-08-18T09:36:30.00Z';
+            sleep2.duration = 39720000;
+            sleep2.pattern = new SleepPattern()
+            sleep2.pattern.data_set = [
+                {
+                    start_time: '2018-08-18T01:40:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T01:41:30.00Z',
+                    name: 'asleep',
+                    duration: 360000
+                },
+                {
+                    start_time: '2018-08-18T01:47:30.00Z',
+                    name: 'restless',
+                    duration: 240000
+                },
+                {
+                    start_time: '2018-08-18T01:51:30.00Z',
+                    name: 'asleep',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T01:52:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T01:53:30.00Z',
+                    name: 'asleep',
+                    duration: 2100000
+                },
+                {
+                    start_time: '2018-08-18T02:28:30.00Z',
+                    name: 'restless',
+                    duration: 240000
+                },
+                {
+                    start_time: '2018-08-18T02:32:30.00Z',
+                    name: 'awake',
+                    duration: 180000
+                },
+                {
+                    start_time: '2018-08-18T02:35:30.00Z',
+                    name: 'asleep',
+                    duration: 15120000
+                },
+                {
+                    start_time: '2018-08-18T06:47:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T06:48:30.00Z',
+                    name: 'asleep',
+                    duration: 2580000
+                },
+                {
+                    start_time: '2018-08-18T07:31:30.00Z',
+                    name: 'restless',
+                    duration: 120000
+                },
+                {
+                    start_time: '2018-08-18T07:33:30.00Z',
+                    name: 'asleep',
+                    duration: 120000
+                },
+                {
+                    start_time: '2018-08-18T07:35:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                },
+                {
+                    start_time: '2018-08-18T07:36:30.00Z',
+                    name: 'asleep',
+                    duration: 1200000
+                },
+                {
+                    start_time: '2018-08-18T07:56:30.00Z',
+                    name: 'restless',
+                    duration: 60000
+                }
+            ];
+
+            sleep2.pattern.summary.asleep = new SleepPatternSummaryData()
+            sleep2.pattern.summary.asleep.count = 45;
+            sleep2.pattern.summary.asleep.duration = 28020000;
+
+            sleep2.pattern.summary.awake = new SleepPatternSummaryData()
+            sleep2.pattern.summary.awake.count = 5;
+            sleep2.pattern.summary.awake.duration = 28020000;
+
+            sleep2.pattern.summary.restless = new SleepPatternSummaryData()
+            sleep2.pattern.summary.restless.count = 50;
+            sleep2.pattern.summary.restless.duration = 28020000;
+
+            this.data = [sleep, sleep2, sleep3];
+        })
         this.loadGraph();
     }
 
     applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, 'sleep', null, null, filter)
+        this.sleepService.getAll(this.patientId, null, null, filter)
             .then(httpResponse => {
                 this.data = httpResponse.body;
                 this.showSpinner = false;
@@ -386,8 +764,8 @@ export class SleepComponent implements OnInit {
     }
 
     loadMeasurements(): any {
-        this.measurementService
-            .getAllByUserAndType(this.patientId, 'sleep', this.page, this.limit, this.filter)
+        this.sleepService
+            .getAll(this.patientId, this.page, this.limit, this.filter)
             .then((httpResponse) => {
                 this.data = httpResponse.body;
                 this.listIsEmpty = this.data.length === 0;
@@ -415,7 +793,7 @@ export class SleepComponent implements OnInit {
     async removeMeasurement(): Promise<any> {
         this.loadingMeasurements = true;
         if (!this.cacheListIdMeasurementRemove || !this.cacheListIdMeasurementRemove.length) {
-            this.measurementService.remove(this.patientId, this.cacheIdMeasurementRemove)
+            this.sleepService.remove(this.patientId, this.cacheIdMeasurementRemove)
                 .then(measurements => {
                     this.applyFilter(this.filter);
                     this.loadingMeasurements = false;
@@ -432,7 +810,7 @@ export class SleepComponent implements OnInit {
             for (let i = 0; i < this.cacheListIdMeasurementRemove.length; i++) {
                 try {
                     const measurementRemove = this.cacheListIdMeasurementRemove[i];
-                    await this.measurementService.remove(this.patientId, measurementRemove.id);
+                    await this.sleepService.remove(this.patientId, measurementRemove.id);
                 } catch (e) {
                     occuredError = true;
                 }

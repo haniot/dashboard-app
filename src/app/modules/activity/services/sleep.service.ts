@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { PhysicalActivity } from '../models/physical.activity'
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '../../../../environments/environment'
 import { Sleep } from '../models/sleep'
+import { SearchForPeriod } from '../../measurement/models/measurement'
 
 @Injectable()
 export class SleepService {
@@ -17,12 +17,39 @@ export class SleepService {
             .toPromise();
     }
 
-    getAll(userId: string): Promise<PhysicalActivity[]> {
-        return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${userId}/sleep`)
+    getAll(userId: string, page?: number, limit?: number, search?: SearchForPeriod): Promise<HttpResponse<Sleep[]>> {
+        let myParams = new HttpParams();
+
+        if (page) {
+            myParams = myParams.append('page', String(page));
+        }
+
+        if (limit) {
+            myParams = myParams.append('limit', String(limit));
+        }
+
+        if (search) {
+            if (search.start_at) {
+                myParams = myParams.append('start_at', search.start_at);
+            }
+            if (search.end_at) {
+                myParams = myParams.append('end_at', search.end_at);
+            }
+            if (search.period) {
+                myParams = myParams.append('period', search.period);
+            }
+
+        }
+
+        myParams = myParams.append('sort', '+timestamp');
+
+        const url = `${environment.api_url}/${this.version}/patients/${userId}/sleep`;
+
+        return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
-    getById(userId: string, sleepId: string): Promise<PhysicalActivity> {
+    getById(userId: string, sleepId: string): Promise<Sleep> {
         return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${userId}/sleep/${sleepId}`)
             .toPromise();
     }
