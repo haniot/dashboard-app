@@ -19,7 +19,7 @@ import { OdontologicalQuestionnairesService } from '../../habits/services/odonto
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
-import { TimeSeriesType } from '../../measurement/models/time.series'
+import { TimeSeriesType } from '../../activity/models/time.series'
 import { DatePipe } from '@angular/common'
 import { SleepPipe } from '../../activity/pipes/sleep.pipe'
 import { Sleep, SleepPattern, SleepPatternSummaryData } from '../../activity/models/sleep'

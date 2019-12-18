@@ -2,15 +2,15 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
-import { TimeSeries, TimeSeriesItem } from '../models/time.series';
-import { SearchForPeriod } from '../models/measurement'
+import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series';
+import { SearchForPeriod } from '../../measurement/models/measurement'
 
 @Component({
-    selector: 'distance',
-    templateUrl: './distance.component.html',
-    styleUrls: ['../shared.style/shared.styles.scss']
+    selector: 'actives-minutes',
+    templateUrl: './actives.minutes.component.html',
+    styleUrls: ['../../measurement/shared.style/shared.styles.scss']
 })
-export class DistanceComponent implements OnInit, OnChanges {
+export class ActivesMinutesComponent implements OnInit, OnChanges {
     @Input() data: Array<TimeSeries>;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
@@ -41,16 +41,24 @@ export class DistanceComponent implements OnInit, OnChanges {
     onChartInit(event) {
         this.echartsInstance = event;
     }
-
-    applyFilter(filter: SearchForPeriod): void {
-
+    applyFilter(filter: SearchForPeriod) {
+        this.showSpinner = true;
+        this.data = [];
+        // this.measurementService
+        //     .getAllByUserAndType(this.patientId, TimeSeriesType.heart_rate, null, null, filter)
+        //     .then(httpResponse => {
+        //         this.data = httpResponse.body;
+        //         this.showSpinner = false;
+        //         this.updateGraph(this.data);
+        //         this.filterChange.emit(this.data);
+        //     })
+        //     .catch(() => {
+        //         this.showSpinner = false;
+        //     });
     }
 
-    loadGraph() {
 
-        const light = this.translateService.instant('TIME-SERIES.LEVELS.LIGHT');
-        const moderate = this.translateService.instant('TIME-SERIES.LEVELS.MODERATE');
-        const intense = this.translateService.instant('TIME-SERIES.LEVELS.INTENSE');
+    loadGraph() {
 
         const xAxisOptions = {
             data: [],
@@ -61,7 +69,7 @@ export class DistanceComponent implements OnInit, OnChanges {
         };
         const seriesOptions = {
             type: 'bar',
-            color: '#ffc04d',
+            color: '#AFE42C',
             data: [],
             barMaxWidth: '30%',
             animationDelay: function (idx) {
@@ -76,9 +84,9 @@ export class DistanceComponent implements OnInit, OnChanges {
             this.lastData = this.data[0];
         }
 
-        this.data.forEach((distance) => {
-            if (distance.data_set) {
-                distance.data_set.forEach((element: TimeSeriesItem) => {
+        this.data.forEach((activesMinutes: TimeSeries) => {
+            if (activesMinutes.data_set) {
+                activesMinutes.data_set.forEach((element: TimeSeriesItem) => {
                     xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     seriesOptions.data.push({
                         value: element.value,
@@ -88,32 +96,11 @@ export class DistanceComponent implements OnInit, OnChanges {
             }
         });
 
+
         this.options = {
             legend: {
                 data: ['bar', 'bar2'],
                 align: 'left'
-            },
-            visualMap: {
-                orient: 'horizontal',
-                top: 20,
-                right: 0,
-                pieces: [{
-                    gt: 0,
-                    lte: 35.7,
-                    color: '#FDC133',
-                    label: light
-
-                }, {
-                    gt: 35.7,
-                    lte: 37.5,
-                    color: '#FC7D35',
-                    label: moderate
-
-                }, {
-                    gt: 37.5,
-                    color: '#AFE42C',
-                    label: intense
-                }]
             },
             tooltip: {},
             xAxis: xAxisOptions,
@@ -132,9 +119,9 @@ export class DistanceComponent implements OnInit, OnChanges {
         this.options.xAxis.data = [];
         this.options.series.data = [];
 
-        measurements.forEach((distance: TimeSeries) => {
-            if (distance.data_set) {
-                distance.data_set.forEach((element: TimeSeriesItem) => {
+        measurements.forEach((activeMinutes: TimeSeries) => {
+            if (activeMinutes.data_set) {
+                activeMinutes.data_set.forEach((element: TimeSeriesItem) => {
                     this.options.xAxis.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     this.options.series.data.push({
                         value: element.value,

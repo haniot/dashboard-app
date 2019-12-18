@@ -91,15 +91,15 @@
                     <!--                        <div class="p-2"><label>{{'MEASUREMENTS.HEART-RATE.TITLE'|translate}}: </label></div>-->
                     <!--                    </div>-->
 
-                    <div class="col-sm-4 col-md-3 col-lg-4 col-xl d-flex flex-row-reverse border-config">
-                        <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="configVisibility.sleep"
-                                              (change)="loadSleep()">
-                            </mat-slide-toggle>
-                        </div>
-                        <div class="p-2"><label> {{'ACTIVITY.SLEEP.SLEEP'|translate}}: </label></div>
-                    </div>
+<!--                    <div class="col-sm-4 col-md-3 col-lg-4 col-xl d-flex flex-row-reverse border-config">-->
+                    <!--                        <div class="p-2">-->
+                    <!--                            <mat-slide-toggle class="paddin55" [color]="'accent'"-->
+                    <!--                                              [(ngModel)]="configVisibility.sleep"-->
+                    <!--                                              (change)="loadSleep()">-->
+                    <!--                            </mat-slide-toggle>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="p-2"><label> {{'ACTIVITY.SLEEP.SLEEP'|translate}}: </label></div>-->
+                    <!--                    </div>-->
 
                     <!--                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"-->
                     <!--                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">-->
@@ -164,12 +164,12 @@
                             [patientId]="patientId" [includeCard]="true"></blood-pressure>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('sleep'))"
-             *ngIf="configVisibility.sleep">
-            <sleep [data]="listSleep" [filterVisibility]="true"
-                   [patientId]="patientId" [includeCard]="true"></sleep>
-        </div>
+<!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
+<!--             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('sleep'))"-->
+<!--             *ngIf="configVisibility.sleep">-->
+<!--            <sleep [data]="listSleep" [filterVisibility]="true"-->
+<!--                   [patientId]="patientId" [includeCard]="true"></sleep>-->
+<!--        </div>-->
 
         <!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
         <!--             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('heartRate'))"-->

@@ -160,3 +160,94 @@ export class HeartRateZoneData {
         this._duration = value
     }
 }
+
+export class TimeSeriesSimpleFilter {
+    private _start_date: string;
+    private _end_date: string;
+
+    get start_date(): string {
+        return this._start_date
+    }
+
+    set start_date(value: string) {
+        this._start_date = value
+    }
+
+    get end_date(): string {
+        return this._end_date
+    }
+
+    set end_date(value: string) {
+        this._end_date = value
+    }
+}
+
+export class TimeSeriesIntervalFilter {
+    private _date: string;
+    private _interval: string;
+
+    get date(): string {
+        return this._date
+    }
+
+    set date(value: string) {
+        this._date = value
+    }
+
+    get interval(): string {
+        return this._interval
+    }
+
+    set interval(value: string) {
+        this._interval = value
+    }
+}
+
+
+export class TimeSeriesFullFilter {
+    private _start_date: string;
+    private _end_date: string;
+    private _start_time: string;
+    private _end_time: string;
+    private _interval: string;
+
+    get start_date(): string {
+        return this._start_date
+    }
+
+    set start_date(value: string) {
+        this._start_date = value
+    }
+
+    get end_date(): string {
+        return this._end_date
+    }
+
+    set end_date(value: string) {
+        this._end_date = value
+    }
+
+    get start_time(): string {
+        return this._start_time
+    }
+
+    set start_time(value: string) {
+        this._start_time = value
+    }
+
+    get end_time(): string {
+        return this._end_time
+    }
+
+    set end_time(value: string) {
+        this._end_time = value
+    }
+
+    get interval(): string {
+        return this._interval
+    }
+
+    set interval(value: string) {
+        this._interval = value
+    }
+}

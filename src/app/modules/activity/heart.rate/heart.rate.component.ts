@@ -3,15 +3,15 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { MeasurementService } from '../services/measurement.service';
-import { SearchForPeriod } from '../models/measurement'
+import { MeasurementService } from '../../measurement/services/measurement.service';
+import { SearchForPeriod } from '../../measurement/models/measurement'
 import { ToastrService } from 'ngx-toastr'
 import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series'
 
 @Component({
     selector: 'heart-rate',
     templateUrl: './heart.rate.component.html',
-    styleUrls: ['../shared.style/shared.styles.scss']
+    styleUrls: ['../../measurement/shared.style/shared.styles.scss']
 })
 export class HeartRateComponent implements OnInit, OnChanges {
     @Input() data: Array<TimeSeries>;

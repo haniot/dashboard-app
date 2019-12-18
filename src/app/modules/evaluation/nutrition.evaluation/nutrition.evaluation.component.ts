@@ -18,7 +18,7 @@ import { BloodPressure } from '../../measurement/models/blood.pressure'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { PatientService } from '../../patient/services/patient.service'
 import { Weight } from '../../measurement/models/weight'
-import { TimeSeries } from '../../measurement/models/time.series'
+import { TimeSeries } from '../../activity/models/time.series'
 
 const zones = [{
     preprandial: {

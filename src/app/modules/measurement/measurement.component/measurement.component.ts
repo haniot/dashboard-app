@@ -8,7 +8,7 @@ import { Weight } from '../models/weight';
 import { BloodGlucose } from '../models/blood.glucose';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
-import { TimeSeries, TimeSeriesType } from '../models/time.series'
+import { TimeSeries, TimeSeriesType } from '../../activity/models/time.series'
 import { Sleep, SleepPattern, SleepPatternSummaryData } from '../../activity/models/sleep'
 
 class ConfigVisibility {

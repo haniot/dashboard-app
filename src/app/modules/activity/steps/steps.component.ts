@@ -3,12 +3,12 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem } from '../models/time.series'
-import { SearchForPeriod } from '../models/measurement'
+import { SearchForPeriod } from '../../measurement/models/measurement'
 
 @Component({
     selector: 'steps',
     templateUrl: './steps.component.html',
-    styleUrls: ['../shared.style/shared.styles.scss']
+    styleUrls: ['../../measurement/shared.style/shared.styles.scss']
 })
 export class StepsComponent implements OnInit, OnChanges {
     @Input() data: Array<TimeSeries>;

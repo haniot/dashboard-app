@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { Sleep, SleepPattern, SleepPatternSummaryData } from '../../activity/models/sleep'
-import { TimeSeries, TimeSeriesType } from '../../measurement/models/time.series'
+import { TimeSeries, TimeSeriesType } from '../../activity/models/time.series'
 
 const PaginatorConfig = ConfigurationBasic;
 

@@ -1,13 +1,13 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { SearchForPeriod } from '../models/measurement'
-import { MeasurementService } from '../services/measurement.service'
+import { SearchForPeriod } from '../../measurement/models/measurement'
+import { MeasurementService } from '../../measurement/services/measurement.service'
 import { TimeSeries, TimeSeriesType } from '../models/time.series'
 
 @Component({
     selector: 'view-timestamp',
     templateUrl: './view.timestamp.component.html',
-    styleUrls: ['../shared.style/shared.styles.scss']
+    styleUrls: ['../../measurement/shared.style/shared.styles.scss']
 })
 export class ViewTimestampComponent implements OnChanges {
     @Input() patientId: string;

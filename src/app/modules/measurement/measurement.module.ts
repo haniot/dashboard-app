@@ -17,7 +17,6 @@ import { WaistCircumferenceComponent } from './waist.circunference/waist.circumf
 import { BodyTemperatureComponent } from './body.temperature/body.temperature.component';
 import { BloodGlucoseComponent } from './blood.glucose/blood.glucose.component';
 import { BloodPressureComponent } from './blood.pressure/blood.pressure.component';
-import { HeartRateComponent } from './heart.rate/heart.rate.component';
 import { MealPipe } from './pipes/meal.pipe';
 import { FatComponent } from './fat/fat.component';
 import { DeviceTypePipe } from './pipes/device.type.pipe';
@@ -29,15 +28,7 @@ import { MeasurementLogsComponent } from './measurement.logs/measurement.logs.co
 import { MeasurementTypePipe } from './pipes/measurement.type.pipe';
 import { SharedModule } from '../../shared/shared.module'
 import { Ng5SliderModule } from 'ng5-slider'
-import { SleepComponent } from '../activity/sleep/sleep.component';
-import { SleepPipe } from '../activity/pipes/sleep.pipe'
 import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
-import { StepsComponent } from './steps/steps.component';
-import { TimeSeriesPipe } from './pipes/time.series.pipe';
-import { CaloriesComponent } from './calories/calories.component';
-import { ViewTimestampComponent } from './view.timestamp/view.timestamp.component';
-import { ActivesMinutesComponent } from './actives.minutes/actives.minutes.component';
-import { DistanceComponent } from './distance/distance.component'
 
 @NgModule({
     declarations: [
@@ -48,8 +39,6 @@ import { DistanceComponent } from './distance/distance.component'
         BodyTemperatureComponent,
         BloodGlucoseComponent,
         BloodPressureComponent,
-        HeartRateComponent,
-        SleepComponent,
         ViewMeasurementsComponent,
         MealPipe,
         DeviceTypePipe,
@@ -58,13 +47,7 @@ import { DistanceComponent } from './distance/distance.component'
         DecimalFormatterPipe,
         MeasurementCardComponent,
         MeasurementLogsComponent,
-        MeasurementTypePipe,
-        StepsComponent,
-        TimeSeriesPipe,
-        CaloriesComponent,
-        ViewTimestampComponent,
-        ActivesMinutesComponent,
-        DistanceComponent
+        MeasurementTypePipe
     ],
     imports: [
         CommonModule,
@@ -94,18 +77,11 @@ import { DistanceComponent } from './distance/distance.component'
         BodyTemperatureComponent,
         BloodGlucoseComponent,
         BloodPressureComponent,
-        HeartRateComponent,
         FatComponent,
-        SleepComponent,
         ViewMeasurementsComponent,
-        StepsComponent,
-        CaloriesComponent,
-        ActivesMinutesComponent,
-        DistanceComponent,
-        ViewTimestampComponent,
         DecimalFormatterPipe,
         MeasurementTypePipe,
-        TimeSeriesPipe
+        MeasurementCardComponent
     ],
     providers: [
         MeasurementService,

@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
+
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem } from '../models/time.series';
-import { SearchForPeriod } from '../models/measurement'
+import { SearchForPeriod } from '../../measurement/models/measurement'
 
 @Component({
-    selector: 'calories',
-    templateUrl: './calories.component.html',
-    styleUrls: ['../shared.style/shared.styles.scss']
+    selector: 'distance',
+    templateUrl: './distance.component.html',
+    styleUrls: ['../../measurement/shared.style/shared.styles.scss']
 })
-export class CaloriesComponent implements OnInit, OnChanges {
+export class DistanceComponent implements OnInit, OnChanges {
     @Input() data: Array<TimeSeries>;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
@@ -75,9 +76,9 @@ export class CaloriesComponent implements OnInit, OnChanges {
             this.lastData = this.data[0];
         }
 
-        this.data.forEach((calories) => {
-            if (calories.data_set) {
-                calories.data_set.forEach((element: TimeSeriesItem) => {
+        this.data.forEach((distance) => {
+            if (distance.data_set) {
+                distance.data_set.forEach((element: TimeSeriesItem) => {
                     xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     seriesOptions.data.push({
                         value: element.value,
@@ -131,9 +132,9 @@ export class CaloriesComponent implements OnInit, OnChanges {
         this.options.xAxis.data = [];
         this.options.series.data = [];
 
-        measurements.forEach((calories: TimeSeries) => {
-            if (calories.data_set) {
-                calories.data_set.forEach((element: TimeSeriesItem) => {
+        measurements.forEach((distance: TimeSeries) => {
+            if (distance.data_set) {
+                distance.data_set.forEach((element: TimeSeriesItem) => {
                     this.options.xAxis.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     this.options.series.data.push({
                         value: element.value,
@@ -154,4 +155,5 @@ export class CaloriesComponent implements OnInit, OnChanges {
             this.loadGraph();
         }
     }
+
 }

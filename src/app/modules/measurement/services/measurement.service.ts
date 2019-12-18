@@ -7,7 +7,7 @@ import { MeasurementType } from '../models/measurement.types'
 import { Weight } from '../models/weight';
 import { environment } from '../../../../environments/environment'
 import { MeasurementLast } from '../models/measurement.last'
-import { TimeSeries } from '../models/time.series'
+import { TimeSeries } from '../../activity/models/time.series'
 
 @Injectable()
 export class MeasurementService {
