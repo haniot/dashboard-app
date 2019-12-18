@@ -45,7 +45,6 @@ export class LocalStorageService {
         localStorage.removeItem(this.encryptKey('username'));
         localStorage.removeItem(this.encryptKey('userLogged'));
         localStorage.removeItem(this.encryptKey('user'));
-        localStorage.removeItem(this.encryptKey('health_area'));
         localStorage.removeItem(this.encryptKey('language'));
     }
 

@@ -107,12 +107,7 @@ export class SidebarComponent implements OnInit {
             return element.title === title;
         });
         const routerScopes = configRouter[0].scopes;
-        const scopes = this.authService.getScopeUser();
-        if (scopes) {
-            const userScopes: Array<String> = scopes.split(' ');
-            return this.verifyScopesService.verifyScopes(routerScopes, userScopes);
-        }
-        return false;
+        return this.verifyScopesService.verifyScopes(routerScopes);
     }
 
     getUserName() {

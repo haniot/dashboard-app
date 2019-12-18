@@ -35,7 +35,6 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
     listOfProfessionalIsEmpty: boolean;
     patientsAssociated: Array<Patient>;
     listOfPatientsIsEmpty: boolean;
-    userHealthArea: string;
     private subscriptions: Array<ISubscription>;
     /* pagging settings*/
     patientPageSizeOptions: number[];
@@ -75,7 +74,6 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.loadUserHealthArea();
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.pilotStudyId = params.get('pilotStudyId');
             if (this.pilotStudyId) {
@@ -88,10 +86,6 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
 
     selectPilotStudy(): void {
         this.selectPilotService.pilotStudyHasUpdated(this.pilotStudyId);
-    }
-
-    loadUserHealthArea(): void {
-        this.userHealthArea = this.localStorageService.getItem('health_area');
     }
 
     getPilotStudy() {

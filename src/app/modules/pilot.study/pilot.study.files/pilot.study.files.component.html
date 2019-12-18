@@ -139,7 +139,8 @@
         </div>
         <div class="row">
             <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                <button type="button" class="btn btn-haniot-primary" (click)="openModalFileConfig()">
+                <button type="button" class="btn btn-haniot-primary" (click)="openModalFileConfig()"
+                        *ngIf="verifyScopes(['evaluations:create'])">
                     {{'PILOT-STUDY.NEW-FILE'|translate}}
                 </button>
             </div>

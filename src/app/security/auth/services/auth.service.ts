@@ -109,7 +109,6 @@ export class AuthService {
                     const health_area = user.health_area ? user.health_area : 'admin';
                     this.localStorageService.setItem('userLogged', JSON.stringify(user));
                     this.localStorageService.setItem('email', user.email);
-                    this.localStorageService.setItem('health_area', health_area);
                 }
             })
             .catch(() => {

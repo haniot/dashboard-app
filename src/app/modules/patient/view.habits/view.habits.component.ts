@@ -33,10 +33,8 @@ const PaginatorConfig = ConfigurationBasic;
 })
 export class ViewHabitsComponent implements OnInit, OnDestroy {
     patientForm: FormGroup;
-    optionsGender: Array<string> = Object.keys(Gender);
     pilotStudy: PilotStudy;
     patientId: string;
-    userHealthArea: string;
     showMeasurements: boolean;
     showLogMeasurements: boolean;
     configVisibility = {
@@ -65,13 +63,7 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     fadeInNutritioalQuestionnaire: string;
     fadeInOdontologicalQuestionnaire: string;
     activityGraph: any
-    activityCalorieGraph: any
-    stepsGraph: any
-    thresholdConfig = {
-        '0': { color: 'green' },
-        '60': { color: 'orange' },
-        '75.5': { color: 'red' }
-    };
+    activityCalorieGraph: any;
     currentDate: Date;
     timeSeriesTypes: any;
     measurementSelected: TimeSeriesType;
@@ -288,10 +280,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                 });
         }));
-        if (!this.patientId) {
-
-        }
-        this.loadUserHealthArea();
         this.createPatientFormInit();
         this.loadActivitiesGraph();
         this.loadSleepGraph();
@@ -325,10 +313,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
             last_login: [{ value: patient.last_login, disabled: true }]
             // last_sync: [{ value: patient.last_sync, disabled: true }]
         });
-    }
-
-    loadUserHealthArea(): void {
-        this.userHealthArea = this.localStorageService.getItem('health_area');
     }
 
     getAssociateStudies() {
@@ -438,32 +422,33 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-DELETED'));
                 this.removingQuestionnaire = false;
             })
-            .catch((errorResponse => {
+            .catch((() => {
                 this.removingQuestionnaire = false;
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.QUESTIONNAIRE-NOT-DELETED'));
             }))
     }
 
     clickOnMatTab(event) {
-        if (this.userHealthArea === 'dentistry' || this.userHealthArea === 'admin') {
-            switch (event.index) {
-                case 2:
-                    this.showMeasurements = true;
-                    break;
-                case 3:
-                    this.showLogMeasurements = true;
-                    break;
-            }
-        } else {
-            switch (event.index) {
-                case 1:
-                    this.showMeasurements = true;
-                    break;
-                case 2:
-                    this.showLogMeasurements = true;
-                    break;
-            }
+        switch (event.index) {
+            case 2:
+                this.showMeasurements = true;
+                break;
+            case 3:
+                this.showLogMeasurements = true;
+                break;
         }
+        // if (this.userHealthArea === 'dentistry' || this.userHealthArea === 'admin') {
+        //
+        // } else {
+        //     switch (event.index) {
+        //         case 1:
+        //             this.showMeasurements = true;
+        //             break;
+        //         case 2:
+        //             this.showLogMeasurements = true;
+        //             break;
+        //     }
+        // }
     }
 
     cleanFadeIn(): void {
@@ -693,13 +678,13 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
 
     loadSleepGraph(): void {
         const hs = this.translateService.instant('SLEEP.TIME-ABBREVIATION');
-        const awake = this.translateService.instant('MEASUREMENTS.PIPES.SLEEP.AWAKE');
-        const restless = this.translateService.instant('MEASUREMENTS.PIPES.SLEEP.RESTLESS');
-        const asleep = this.translateService.instant('MEASUREMENTS.PIPES.SLEEP.ASLEEP');
+        const awake = this.translateService.instant('ACTIVITY.PIPES.SLEEP.AWAKE');
+        const restless = this.translateService.instant('ACTIVITY.PIPES.SLEEP.RESTLESS');
+        const asleep = this.translateService.instant('ACTIVITY.PIPES.SLEEP.ASLEEP');
 
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
-        const duration = this.translateService.instant('MEASUREMENTS.SLEEP.DURATION');
+        const duration = this.translateService.instant('ACTIVITY.SLEEP.DURATION');
 
         const { pattern: { data_set } } = this.sleepSelected;
 
@@ -860,13 +845,9 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.distanceHover = value;
     }
 
-    getQuestionnaires()
-        :
-        void {
+    getQuestionnaires(): void {
         this.getAllNutritionalQuestionnaires();
-        if (this.userHealthArea === 'dentistry' || this.userHealthArea === 'admin') {
-            this.getAllOdontologicalQuestionnaires();
-        }
+        this.getAllOdontologicalQuestionnaires();
     }
 
 }
