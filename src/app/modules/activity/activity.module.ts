@@ -29,7 +29,11 @@ import { FormsModule } from '@angular/forms'
 import { Ng5SliderModule } from 'ng5-slider'
 import { MeasurementModule } from '../measurement/measurement.module';
 import { ActivityDetailsComponent } from './activity.details/activity.details.component'
-import { ActivityRoutingModule } from './activity.routing/activity.routing.module'
+import { ActivityRoutingModule } from './activity.routing/activity.routing.module';
+import { ActivityDashboardComponent } from './activity.dashboard/activity.dashboard.component';
+import { PhysicalActivityPipe } from './pipes/physical.activity.pipe';
+import { ActivityLevelPipe } from './pipes/activity.level.pipe';
+import { MillisecondPipe } from './pipes/millisecond.pipe'
 
 @NgModule({
     declarations: [
@@ -42,7 +46,11 @@ import { ActivityRoutingModule } from './activity.routing/activity.routing.modul
         SleepComponent,
         SleepPipe,
         TimeSeriesPipe,
-        ActivityDetailsComponent
+        ActivityDetailsComponent,
+        ActivityDashboardComponent,
+        PhysicalActivityPipe,
+        ActivityLevelPipe,
+        MillisecondPipe
     ],
     exports: [
         ActivesMinutesComponent,
@@ -53,14 +61,16 @@ import { ActivityRoutingModule } from './activity.routing/activity.routing.modul
         ViewTimestampComponent,
         SleepComponent,
         SleepPipe,
-        TimeSeriesPipe
+        TimeSeriesPipe,
+        ActivityLevelPipe
     ],
     providers: [
         SleepPipe,
         TimeSeriesPipe,
         PhysicalActivitiesService,
         SleepService,
-        TimeSeriesService
+        TimeSeriesService,
+        MillisecondPipe
     ],
     imports: [
         CommonModule,

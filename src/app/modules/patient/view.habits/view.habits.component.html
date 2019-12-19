@@ -39,11 +39,12 @@
 
                 <div class="row" style="padding-top: 0px">
 
-                    <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
 
                         <dashboard-card [title]="'ACTIVITY.RECENT-ACTIVITY'|translate">
 
-                            <div class="row physicalActivity" [title]="'ACTIVITY.VIEW-DETAILS'|translate" *ngIf="true">
+                            <div class="row physicalActivity" [title]="'ACTIVITY.VIEW-DETAILS'|translate" *ngIf="true"
+                                 [routerLink]="['/app/activities/physical_activity', patientId]">
                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                                     <label class="float-left"
                                            style="font-weight: normal;font-size: 20px">Caminhada</label>
@@ -174,7 +175,8 @@
 
                     </div>
 
-                    <div class="col patientDashboard" style="padding: 0px 0px; padding-right: 7px">
+                    <div class="col-sm-12 col-md-8 col-lg col-xl patientDashboard"
+                         style="padding: 0px 0px; padding-right: 7px">
 
                         <div class="row" style="padding-top:7px">
 
@@ -187,9 +189,9 @@
                                     <!--                                    <small style="position: absolute;right: 10px; top: 10px">12/12/2019</small>-->
                                     <div class="row justify-content-center">
 
-                                        <div class="col justify-content-center" *ngIf="true"
-                                             style="height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto">
-                                            <ngx-gauge [size]="250"
+                                        <div class="col justify-content-center" *ngIf="true" #sleepDiv
+                                             style="height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto; margin-top: 0px">
+                                            <ngx-gauge [size]="sleepSize"
                                                        [type]="'semi'"
                                                        [min]="0"
                                                        [max]="8"
@@ -197,7 +199,8 @@
                                                        [thick]="15"
                                                        [value]="sleepHover?7.2:8"
                                                        [duration]="500"
-                                                       [cap]="'round'">
+                                                       [cap]="'round'"
+                                                       id="graphSleep">
                                                 <ngx-gauge-label>
 
                                                 </ngx-gauge-label>
@@ -206,10 +209,10 @@
                                                 </ngx-gauge-value>
                                             </ngx-gauge>
                                             <div style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;">
-                                                <img src="../../../../assets/img/time-series/moon.svg" width="65"
+                                                <img src="../../../../assets/img/time-series/moon.svg" width="25%"
                                                      style="margin-bottom: 60px">
                                             </div>
-                                            <div style="position: absolute;bottom:35%;width: 85%">
+                                            <div style="position: absolute;top:35%;width: 85%">
                                                 <div *ngIf="!sleepHover">
                                                     <span class="float-left">23:50</span>
                                                     <span class="float-right">07:33</span>
@@ -239,10 +242,12 @@
 
                                     </div>
 
-                                    <div class="row justify-content-center" *ngIf="false">
+                                    <div class="row justify-content-center"
+                                         style="height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto"
+                                         *ngIf="false">
                                         <div>
                                             <img class="text-center"
-                                                 src="../../../../assets/img/time-series/no-sleep.svg">
+                                                 src="../../../../assets/img/time-series/no-sleep.svg" width="95%">
                                         </div>
                                         <div>
                                             <label class="text-center">{{'ACTIVITY.SLEEP.UNAVAILABLE-DATA'|translate}}</label>
@@ -279,7 +284,7 @@
                                         <div class="fadeIn"
                                              style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;"
                                              *ngIf="!stepsHover">
-                                            <img src="../../../../assets/img/time-series/steps-black.svg" width="100"
+                                            <img src="../../../../assets/img/time-series/steps-black.svg" width="30%"
                                                  style="margin-bottom: 40%">
                                         </div>
                                         <div class="fadeIn"
@@ -333,7 +338,7 @@
                                         <div class="fadeIn"
                                              style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;"
                                              *ngIf="!caloriesHover">
-                                            <img src="../../../../assets/img/time-series/calories-black.svg" width="80"
+                                            <img src="../../../../assets/img/time-series/calories-black.svg" width="35%"
                                                  style="margin-bottom: 60%">
                                         </div>
                                         <div class="fadeIn"
@@ -392,7 +397,7 @@
                                         <div class="fadeIn"
                                              style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;"
                                              *ngIf="!activeMinutesHover">
-                                            <img src="../../../../assets/img/time-series/active_minutes.svg" width="90"
+                                            <img src="../../../../assets/img/time-series/active_minutes.svg" width="40%"
                                                  style="margin-bottom: 60%">
                                         </div>
                                         <div class="fadeIn"
@@ -445,7 +450,7 @@
                                         <div class="fadeIn"
                                              style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;"
                                              *ngIf="!distanceHover">
-                                            <img src="../../../../assets/img/time-series/distance.svg" width="90"
+                                            <img src="../../../../assets/img/time-series/distance.svg" width="40%"
                                                  style="margin-bottom: 60%">
                                         </div>
                                         <div class="fadeIn"

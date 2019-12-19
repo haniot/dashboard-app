@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -9,7 +9,7 @@ import * as echarts from 'echarts'
 import { PageEvent } from '@angular/material'
 
 import { PatientService } from '../services/patient.service';
-import { Gender, Patient } from '../models/patient';
+import { Patient } from '../models/patient';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { NutritionalQuestionnaire } from '../../habits/models/nutritional.questionnaire'
 import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
@@ -67,11 +67,13 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     currentDate: Date;
     timeSeriesTypes: any;
     measurementSelected: TimeSeriesType;
+    sleepSize: number;
     sleepStages: any;
     sleepSelected: Sleep;
     sleepHover: boolean;
     stepsHover: boolean;
     stepsValue: number;
+    stepSize: number;
     caloriesHover: boolean;
     caloriesValue: number;
     activeMinutesHover: boolean;
@@ -79,6 +81,16 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     activeMinutesSettings: boolean;
     distanceHover: boolean;
     distanceValue: number;
+    public innerWidth: any;
+    @ViewChild('sleepDiv', { static: false }) sleepDivRef: ElementRef;
+
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        this.innerWidth = window.innerWidth;
+        if (this.sleepDivRef) {
+            this.sleepSize = this.sleepDivRef.nativeElement.offsetWidth - (this.sleepDivRef.nativeElement.offsetWidth * 0.27);
+        }
+    }
 
     constructor(
         private fb: FormBuilder,
@@ -276,13 +288,16 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                     this.getQuestionnaires();
                     this.getAssociateStudies();
                 })
-                .catch(errorResponse => {
+                .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                 });
         }));
         this.createPatientFormInit();
         this.loadActivitiesGraph();
         this.loadSleepGraph();
+        this.innerWidth = window.innerWidth;
+        this.sleepSize = 250;
+        this.stepSize = 200;
     }
 
     createPatientFormInit() {

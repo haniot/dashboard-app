@@ -1,0 +1,206 @@
+@import "../../../../assets/scss/template-colors";
+
+h3 {
+  small {
+    font-weight: normal;
+    font-size: 14px;
+  }
+}
+
+.echarts-div-graph {
+  height: 400px;
+}
+
+.material-icons {
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.settings:hover {
+  border-radius: 20px !important;
+  background: rgb(212, 207, 207) !important;
+}
+
+.card .card-header {
+  z-index: 2 !important;
+}
+
+.card-header-timer div {
+  background-color: $primary-color;
+}
+
+.badge-12 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#alarm_on {
+  width: 40px;
+  height: 50px;
+}
+
+#alarm {
+  width: 40px;
+  height: 50px;
+}
+
+.badge-haniot {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: $primary-color;
+}
+
+.badge-warning {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  max-width: 100%;
+  background-color: #FF9800;
+}
+
+canvas {
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.bg-blood_glucose {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -78px -80px;
+}
+
+.bg-blood_pressure {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -150px -10px;
+}
+
+.bg-body_temperature {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -78px -148px;
+}
+
+.bg-devices {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -218px -10px;
+}
+
+.bg-fat {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -218px -146px;
+}
+
+.bg-height {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -214px -216px;
+}
+
+.bg-waist_circunference {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -282px -284px;
+}
+
+.bg-weight {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -354px -10px;
+}
+
+.bg-heart_rate {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -78px -216px;
+}
+
+// We need to use ::ng-deep to overcome view encapsulation
+::ng-deep {
+  .custom-slider .ng5-slider .ng5-slider-bar {
+    background: #ffe4d1;
+    height: 2px;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-selection {
+    background: orange;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-pointer {
+    width: 8px;
+    height: 16px;
+    top: auto; /* to remove the default positioning */
+    bottom: 0;
+    background-color: #333;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-pointer:after {
+    display: none;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-bubble {
+    bottom: 14px;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-limit {
+    font-weight: bold;
+    color: orange;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-tick {
+    width: 1px;
+    height: 10px;
+    margin-left: 4px;
+    border-radius: 0;
+    background: #ffe4d1;
+    top: -1px;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
+    background: orange;
+  }
+}
+
+#removeModalConfirmation {
+  position: absolute;
+  display: flex;
+  margin: auto;
+  z-index: 1025;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.dataset-timestamp {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 1px 1px;
+}
+
+// overwrite the checkbox background
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: $primary-color !important;
+}
+
+// overwrite the ripple overlay on hover and click
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $primary-color !important;
+}

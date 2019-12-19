@@ -95,6 +95,12 @@ export class HeartRateZoneItem {
     private _peak_total: HeartRateZoneData;
     private _out_of_range_total: HeartRateZoneData;
 
+    constructor() {
+        this._fat_burn_total = new HeartRateZoneData()
+        this._cardio_total = new HeartRateZoneData()
+        this._peak_total = new HeartRateZoneData()
+        this._out_of_range_total = new HeartRateZoneData()
+    }
 
     get fat_burn_total(): HeartRateZoneData {
         return this._fat_burn_total
@@ -135,6 +141,12 @@ export class HeartRateZoneData {
     private _max: number
     /* optional */
     private _duration?: number;
+
+    constructor() {
+        this._min = 0;
+        this._max = 500;
+        this._duration = 5602000;
+    }
 
     get min(): number {
         return this._min

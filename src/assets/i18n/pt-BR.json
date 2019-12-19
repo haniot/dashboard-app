@@ -29,6 +29,18 @@
         "RESTLESS": "Inquieto",
         "ASLEEP": "Adormecido"
       },
+      "PHYSICAL-ACTIVITY": {
+        "RUN": "Corrida",
+        "WALK": "Caminhada",
+        "SWIM": "Natação",
+        "BIKE": "Ciclismo"
+      },
+      "ACTIVITY-LEVEL": {
+        "SEDENTARY": "Sedentário",
+        "LIGHT": "Leve",
+        "FAIRLY": "Bastante",
+        "VERY": "Avançadp"
+      },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"
     }

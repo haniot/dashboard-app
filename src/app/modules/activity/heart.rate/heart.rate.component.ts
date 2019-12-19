@@ -11,7 +11,7 @@ import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.serie
 @Component({
     selector: 'heart-rate',
     templateUrl: './heart.rate.component.html',
-    styleUrls: ['../../measurement/shared.style/shared.styles.scss']
+    styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class HeartRateComponent implements OnInit, OnChanges {
     @Input() data: Array<TimeSeries>;
