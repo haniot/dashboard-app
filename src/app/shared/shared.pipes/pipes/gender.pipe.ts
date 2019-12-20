@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
     name: 'gender',
@@ -7,7 +7,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class GenderPipe implements PipeTransform {
 
     transform(value: any, args?: any): any {
-        switch (value) {
+        switch (`${value}`.toLowerCase()) {
             case 'male':
                 return 'SHARED.PIPES.GENDER.MALE';
 

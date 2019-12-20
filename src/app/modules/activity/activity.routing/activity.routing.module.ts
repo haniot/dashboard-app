@@ -4,9 +4,13 @@ import { SleepComponent } from '../sleep/sleep.component'
 import { ActivityDetailsComponent } from '../activity.details/activity.details.component'
 
 const routes = [
-    { path: 'sleep/:patientId', component: SleepComponent },
+    { path: ':patientId/sleep', component: SleepComponent },
 
-    { path: 'physical_activity/:patientId', component: ActivityDetailsComponent },
+    { path: ':patientId/sleep/:sleepId', component: SleepComponent },
+
+    { path: ':patientId/physical_activity', component: ActivityDetailsComponent },
+
+    { path: ':patientId/physical_activity/:activityId', component: ActivityDetailsComponent },
 
     { path: '**', redirectTo: 'page-not-found' }
 

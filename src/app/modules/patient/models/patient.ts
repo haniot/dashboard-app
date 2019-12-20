@@ -2,8 +2,8 @@ import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ExternalService } from './external.service'
 
 export enum Gender {
-    MALE = 'male',
-    FEMALE = 'female'
+    male = 'male',
+    female = 'female'
 }
 
 export class PatientBasic {

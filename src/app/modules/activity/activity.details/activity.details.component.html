@@ -9,6 +9,10 @@
                             <div class="nav-tabs-wrapper">
                                 <span class="nav-tabs-title">
                                     <h4 class="card-title">{{physicalActivity.name | physicalActivity | translate}}</h4>
+                                    <p class="card-category">
+                                            {{physicalActivity.start_time | date}},
+                                            entre {{physicalActivity.start_time | date:'shortTime'}}h
+                                        e {{physicalActivity.end_time | date:'shortTime'}}h</p>
                                 </span>
                             </div>
                         </div>
@@ -19,14 +23,14 @@
                             <span class="nav-tabs-title">
                                         <h4 class="card-title">{{physicalActivity.duration|millisecond}}</h4>
                                     </span>
-                            <span class="nav-tabs-title">
-                                        <h4 class="card-title">{{physicalActivity.calories}} calls</h4>
-                                    </span>
+                            <!--                            <span class="nav-tabs-title">-->
+                            <!--                                        <h4 class="card-title">{{physicalActivity.calories}} {{'TIME-SERIES.CALORIES.CALORIES'|translate}}</h4>-->
+                            <!--                                    </span>-->
                             <ul class="nav nav-tabs shared" data-tabs="tabs">
                                 <li class="nav-item">
                                     <button type="button"
                                             class="borderNone"
-                                            [title]="'Remover atividade...'">
+                                            [title]="'ACTIVITY.REMOVE'|translate">
                                         <i class="material-icons remove-activity">delete</i>
                                     </button>
                                 </li>
@@ -39,9 +43,11 @@
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center">
                                 <div class="col-sm-12 col-md-4 row justify-content-center">
-                                    <!--                                    <h2>{{Math.floor(physicalActivity.calories / ((physicalActivity.duration % 3600000) / 60000))}}-->
-                                    <!--                                        <small style="font-size: 14px">calls/min</small>-->
-                                    <!--                                    </h2>-->
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <h4 class="float-left">
+                                            {{'ACTIVITY.CALORIC-EXPENDITURE'|translate}}
+                                        </h4>
+                                    </div>
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                          style="padding: 0px 0px;margin-top: auto; margin-bottom: auto">
                                         <div class="card card-stats">
@@ -50,7 +56,8 @@
                                                     <img src="../../../../assets/img/time-series/calories-white.png"
                                                          width="30">
                                                 </div>
-                                                <p class="card-category">Total de Calorias Queimadas: </p>
+                                                <p class="card-category">{{'ACTIVITY.TOTAL-CALORIES-BURNED'|translate}}
+                                                    : </p>
                                                 <h3 class="card-title">
                                                     {{physicalActivity.calories}}
                                                     <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
@@ -73,7 +80,8 @@
                                                     <img src="../../../../assets/img/time-series/calories-white.png"
                                                          width="30">
                                                 </div>
-                                                <p class="card-category">Calorias Queimadas por Minuto: </p>
+                                                <p class="card-category">{{'ACTIVITY.CALORIES-BURNED-PER-MINUTES'|translate}}
+                                                    : </p>
                                                 <h3 class="card-title">
                                                     {{Math.floor(physicalActivity.calories / ((physicalActivity.duration % 3600000) / 60000))}}
                                                     <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}/min</small>
@@ -89,12 +97,25 @@
                                     </div>
 
                                 </div>
-                                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                    <div style="height: 350px" echarts [options]="activityCalorieGraph"></div>
+                                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 row justify-content-center">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <h4 class="float-left">
+                                            {{'ACTIVITY.INTENSITY-LEVELS'|translate}}
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 justify-content-center">
+                                        <div style="height: 350px" echarts [options]="intensityLevelsGraph"></div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center"
+                                 *ngIf="physicalActivity.heart_rate_link">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <h4 class="float-left">
+                                        {{'TIME-SERIES.PIPES.TIME-SERIES.HEART-RATE'|translate}}
+                                    </h4>
+                                </div>
                                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
                                      style="margin-top: auto; margin-bottom: auto">
                                     <!--                                    <div class="p-2"-->
@@ -113,7 +134,7 @@
                                             <div class="card-icon">
                                                 <div class="bg-heart_rate"></div>
                                             </div>
-                                            <p class="card-category">Frequência Cardíaca Média: </p>
+                                            <p class="card-category">{{'ACTIVITY.HEART-RATE-AVG'|translate}}: </p>
                                             <h3 class="card-title">
                                                 {{physicalActivity.heart_rate_average}}
                                                 <small>bpm</small>
@@ -140,7 +161,7 @@
                                     </div>
 
                                     <label class="p-2" style="font-weight: normal;">
-                                        IMPACTO
+                                        {{'ACTIVITY.IMPACT'|translate}}
                                     </label>
 
                                 </div>
@@ -195,7 +216,7 @@
                                     </div>
                                     <h2 class="p-2">+{{physicalActivity.steps}}</h2>
                                     <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
-                                        de 300 passos dados
+                                        {{'PAGINATOR.OF'|translate}} 300 {{'ACTIVITY.STEPS-TAKEN'|translate}}
                                     </small>
                                 </div>
                             </div>
@@ -210,7 +231,7 @@
                                     </div>
                                     <h2 class="p-2">+{{physicalActivity.calories}}</h2>
                                     <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
-                                        de 1500 calorias queimadas
+                                        {{'PAGINATOR.OF'|translate}} 1500 {{'ACTIVITY.CALORIES-BURNED'|translate}}
                                     </small>
                                 </div>
                             </div>
@@ -223,9 +244,9 @@
                                         <img src="../../../../assets/img/time-series/active_minutes.svg" width="50%"
                                              style="position: absolute;">
                                     </div>
-                                    <h2 class="p-2">+{{physicalActivity.duration}}</h2>
+                                    <h2 class="p-2">+{{Math.floor(physicalActivity.duration / 60000)}}</h2>
                                     <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
-                                        de 450 minutos ativos
+                                        {{'PAGINATOR.OF'|translate}} 450 {{'ACTIVITY.ACTIVE-MINUTES'|translate}}
                                     </small>
                                 </div>
                             </div>

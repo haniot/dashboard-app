@@ -1,61 +1,59 @@
 @import "../../../../assets/scss/template-colors.scss";
 
 #dropdownPilotSelected {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 #dropdownSelectPilot {
-    max-width: 300px;
-    max-height: 250px;
-    overflow-y: scroll;
+  max-width: 300px;
+  max-height: 250px;
+  overflow-y: scroll;
 }
 
 .dropdown-menu a:hover {
-    color: white;
+  color: white;
 }
 
 .background-green:hover {
-    background-color: $primary-color;
-    cursor: pointer;
+  background-color: $primary-color;
+  cursor: pointer;
 }
 
 #navbarDropdownMenuLink i {
-    padding: 20px 5px;
+  padding: 20px 5px;
 }
 
 #userName {
-    font-size: 14px;
-    font-style: italic;
+  font-size: 14px;
+  font-style: italic;
 }
 
 #userName:hover {
-    text-decoration-line: underline;
-    text-decoration-style: solid;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
 }
 
 #config-graph {
-    padding: 5px 5px;
+  padding: 5px 5px;
 }
 
 .nav-link {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #navbarDropdownMenuLink i:hover {
-    cursor: pointer;
-    color: $primary-color;
+  cursor: pointer;
+  color: $primary-color;
 }
 
 label {
-    color: black;
-    font-size: 14px;
-    font-weight: bold;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 #dropdownPilotSelected {
-    z-index: 1040;
-    cursor: pointer;
-    max-width: 300px;
+  z-index: 1040;
+  cursor: pointer;
+  max-width: 300px;
 }
-
-

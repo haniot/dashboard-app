@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard.component/dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing/dashboard.routing.module';
 import { SharedModule } from '../../shared/shared.module'
 import { EvaluationModule } from '../evaluation/evaluation.module'
+import { ActivityModule } from '../activity/activity.module'
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { EvaluationModule } from '../evaluation/evaluation.module'
         MatSelectModule,
         MatPaginatorModule,
         TranslateModule,
-        EvaluationModule
+        EvaluationModule,
+        ActivityModule
     ],
     declarations: [
         DashboardComponent

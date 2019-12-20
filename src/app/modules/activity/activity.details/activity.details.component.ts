@@ -4,6 +4,7 @@ import { TimeSeries, TimeSeriesItem } from '../models/time.series'
 import { TranslateService } from '@ngx-translate/core'
 import { DatePipe } from '@angular/common'
 import { ActivityLevel, Levels } from '../models/activity'
+import { MillisecondPipe } from '../pipes/millisecond.pipe'
 
 @Component({
     selector: 'activity.details',
@@ -12,69 +13,80 @@ import { ActivityLevel, Levels } from '../models/activity'
 })
 export class ActivityDetailsComponent implements OnInit {
     physicalActivity: PhysicalActivity
-    activityCalorieGraph: any;
+    intensityLevelsGraph: any;
     heartRateGraph: any;
     Math = Math;
 
-    constructor(private datePipe: DatePipe, private translateService: TranslateService) {
+    constructor(
+        private datePipe: DatePipe,
+        private millisecondPipe: MillisecondPipe,
+        private translateService: TranslateService) {
         this.physicalActivity = new PhysicalActivity()
     }
 
     ngOnInit() {
-        this.loadActivitiesGraph();
+        this.loadIntensityLevelsGraph();
         this.loadHeartRateGraph();
     }
 
-    loadActivitiesGraph(): void {
+    loadIntensityLevelsGraph(): void {
+
+        const level = this.translateService.instant('ACTIVITY.LEVEL');
+        const percent = this.translateService.instant('ACTIVITY.PERCENT');
+        const duration = this.translateService.instant('ACTIVITY.SLEEP.DURATION');
+
+        const sedentary = this.translateService.instant('ACTIVITY.PIPES.ACTIVITY-LEVEL.SEDENTARY');
+        const light = this.translateService.instant('ACTIVITY.PIPES.ACTIVITY-LEVEL.LIGHT');
+        const fairly = this.translateService.instant('ACTIVITY.PIPES.ACTIVITY-LEVEL.FAIRLY');
+        const very = this.translateService.instant('ACTIVITY.PIPES.ACTIVITY-LEVEL.VERY');
+
         const startTimes = this.datePipe.transform(this.physicalActivity.start_time, 'shortTime').split(':')
         const endTimes = this.datePipe.transform(this.physicalActivity.end_time, 'shortTime').split(':')
-        const xAxis = {
-            min: parseInt('' + startTimes[0] + startTimes[1], 10),
-            max: parseInt('' + endTimes[0] + endTimes[1], 10),
-            axisLabel: {
-                formatter: function (params) {
-                    console.log(params)
-                    return '';
-                }
-            }
-        };
 
-        const sedentary = this.physicalActivity.levels.filter((element: ActivityLevel) => {
+        const sedentaryData = this.physicalActivity.levels.filter((element: ActivityLevel) => {
             return element.name === Levels.SEDENTARY
         })
 
-        const light = this.physicalActivity.levels.filter((element: ActivityLevel) => {
+        const lightData = this.physicalActivity.levels.filter((element: ActivityLevel) => {
             return element.name === Levels.LIGHT
         })
 
-        const fairly = this.physicalActivity.levels.filter((element: ActivityLevel) => {
+        const fairlyData = this.physicalActivity.levels.filter((element: ActivityLevel) => {
             return element.name === Levels.FAIRLY
         })
 
-        const very = this.physicalActivity.levels.filter((element: ActivityLevel) => {
+        const veryData = this.physicalActivity.levels.filter((element: ActivityLevel) => {
             return element.name === Levels.VERY
         })
 
-        this.activityCalorieGraph = {
+        this.intensityLevelsGraph = {
             tooltip: {
                 trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)'
+                formatter: function (params) {
+                    return `${params.marker}<br>` +
+                        `${level}: ${params.data.name}<br>` +
+                        `${duration}: ${params.data.duration}<br>${percent}: ${params.percent}%`
+                }
             },
             // grid: [
             //     { x: '7%', y: '7%', width: '90%', height: '90%' }
             // ],
             legend: {
                 orient: 'horizontal',
-                data: ['Sedentary', 'Light', 'Fairly', 'Very']
+                data: [sedentary, light, fairly, very]
             },
             series: {
                 type: 'pie',
                 radius: '55%',
                 data: [
-                    { value: sedentary[0].duration, name: 'Sedentary' },
-                    { value: light[0].duration, name: 'Light' },
-                    { value: fairly[0].duration, name: 'Fairly' },
-                    { value: very[0].duration, name: 'Very' }],
+                    {
+                        value: sedentaryData[0].duration,
+                        name: sedentary,
+                        duration: this.millisecondPipe.transform(sedentaryData[0].duration)
+                    },
+                    { value: lightData[0].duration, name: light, duration: this.millisecondPipe.transform(lightData[0].duration) },
+                    { value: fairlyData[0].duration, name: fairly, duration: this.millisecondPipe.transform(fairlyData[0].duration) },
+                    { value: veryData[0].duration, name: very, duration: this.millisecondPipe.transform(veryData[0].duration) }],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -229,7 +241,8 @@ export class ActivityDetailsComponent implements OnInit {
                     xAxisOptionsLastDate.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     seriesOptionsLastDate.data.push({
                         value: element.value,
-                        time: this.datePipe.transform(element.date, 'mediumTime')
+                        time: this.datePipe.transform(element.date, 'mediumTime'),
+                        date: this.datePipe.transform(element.date, 'shortDate')
                     });
                 });
             }

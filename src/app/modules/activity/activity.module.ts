@@ -20,9 +20,13 @@ import {
     MatDatepickerModule,
     MatExpansionModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
+    MatNativeDateModule,
     MatPaginatorModule,
-    MatSlideToggleModule
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatTabsModule
 } from '@angular/material'
 import { SatDatepickerModule } from 'saturn-datepicker'
 import { FormsModule } from '@angular/forms'
@@ -34,6 +38,7 @@ import { ActivityDashboardComponent } from './activity.dashboard/activity.dashbo
 import { PhysicalActivityPipe } from './pipes/physical.activity.pipe';
 import { ActivityLevelPipe } from './pipes/activity.level.pipe';
 import { MillisecondPipe } from './pipes/millisecond.pipe'
+import { NgxGaugeModule } from 'ngx-gauge'
 
 @NgModule({
     declarations: [
@@ -53,6 +58,7 @@ import { MillisecondPipe } from './pipes/millisecond.pipe'
         MillisecondPipe
     ],
     exports: [
+        ActivityDashboardComponent,
         ActivesMinutesComponent,
         CaloriesComponent,
         DistanceComponent,
@@ -80,17 +86,21 @@ import { MillisecondPipe } from './pipes/millisecond.pipe'
         SharedModule,
         MeasurementModule,
 
-        MatExpansionModule,
-        MatSlideToggleModule,
+
         NgxEchartsModule,
         TranslateModule,
-        MatDatepickerModule,
         SatDatepickerModule,
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
         MatPaginatorModule,
-        Ng5SliderModule
+        Ng5SliderModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatTabsModule,
+        MatIconModule,
+        NgxGaugeModule
     ]
 })
 export class ActivityModule {

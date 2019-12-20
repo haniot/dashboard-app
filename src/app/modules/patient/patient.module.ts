@@ -9,7 +9,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule, MatIconModule, MatTabsModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgxGaugeModule } from 'ngx-gauge';
 
 import { PatientFormComponent } from './patient.form/patient.form.component';
 import { PatientTableComponent } from './patient.table/patient.table.component';
@@ -56,7 +55,6 @@ import { ActivityModule } from '../activity/activity.module'
         MatTabsModule,
         TranslateModule,
         NgxEchartsModule,
-        NgxGaugeModule,
         MatCheckboxModule,
         MatIconModule,
 

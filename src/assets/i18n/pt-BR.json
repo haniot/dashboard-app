@@ -9,6 +9,18 @@
     "TITLE": "Acesso negado"
   },
   "ACTIVITY": {
+    "LAST-SYNC": "Última sincronização",
+    "CALORIC-EXPENDITURE": "Gasto Calórico",
+    "TOTAL-CALORIES-BURNED": "Total de Calorias Queimadas",
+    "CALORIES-BURNED-PER-MINUTES": "Calorias Queimadas por Minuto",
+    "INTENSITY-LEVELS": "Nìveis de Intensidade",
+    "HEART-RATE-AVG": "Frequência Cardíaca Média",
+    "IMPACT": "IMPACTO",
+    "STEPS-TAKEN": "passos dados",
+    "CALORIES-BURNED": "calorias queimadas",
+    "ACTIVE-MINUTES": "minutos ativos",
+    "REMOVE": "Remover atividade...",
+    "LEVEL": "Nível",
     "RECENT-ACTIVITY": "Atividades recentes",
     "VIEW-DETAILS": "Visualizar detalhes...",
     "NO-RECENT-EXERCISES": "Nenhum exercício recente",
@@ -39,11 +51,12 @@
         "SEDENTARY": "Sedentário",
         "LIGHT": "Leve",
         "FAIRLY": "Bastante",
-        "VERY": "Avançadp"
+        "VERY": "Avançado"
       },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"
-    }
+    },
+    "PERCENT": "Porcentagem"
   },
   "ADMINISTRADORS": {
     "SUBTITLE": "",
