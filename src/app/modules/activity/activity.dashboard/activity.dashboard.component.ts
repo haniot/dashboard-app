@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,14 +17,18 @@ import { NutritionalQuestionnairesService } from '../../habits/services/nutritio
 import { OdontologicalQuestionnairesService } from '../../habits/services/odontological.questionnaires.service';
 import { SleepPipe } from '../pipes/sleep.pipe';
 import { PhysicalActivity } from '../models/physical.activity'
+import { Goal } from '../../patient/models/goal'
+import { Patient } from '../../patient/models/patient'
+import { PhysicalActivitiesService } from '../services/physical.activities.service'
 
 @Component({
     selector: 'activity-dashboard',
     templateUrl: './activity.dashboard.component.html',
     styleUrls: ['./activity.dashboard.component.scss']
 })
-export class ActivityDashboardComponent implements OnInit {
+export class ActivityDashboardComponent implements OnInit, OnChanges {
     @Input() patientId: string;
+    patient: Patient;
     activityGraph: any
     activityCalorieGraph: any;
     currentDate: Date;
@@ -33,6 +37,9 @@ export class ActivityDashboardComponent implements OnInit {
     sleepSize: number;
     sleepStages: any;
     sleepSelected: Sleep;
+    loadingDashboard: boolean;
+    sleepValue: number;
+    sleepMax: number;
     sleepHover: boolean;
     stepsHover: boolean;
     stepsValue: number;
@@ -44,11 +51,13 @@ export class ActivityDashboardComponent implements OnInit {
     activeMinutesSettings: boolean;
     distanceHover: boolean;
     distanceValue: number;
+    goal: Goal;
     innerWidth: any;
     listActivities: PhysicalActivity[];
     listActivitiesIsEmpty: boolean;
     Math = Math;
     @ViewChild('sleepDiv', { static: false }) sleepDivRef: ElementRef;
+    @ViewChild('stepDiv', { static: false }) stepDivRef: ElementRef;
 
     @HostListener('window:resize', ['$event'])
     onResize() {
@@ -56,9 +65,15 @@ export class ActivityDashboardComponent implements OnInit {
         if (this.sleepDivRef) {
             this.sleepSize = this.sleepDivRef.nativeElement.offsetWidth - (this.sleepDivRef.nativeElement.offsetWidth * 0.27);
         }
+
+        if (this.stepDivRef) {
+            this.stepSize = Math.min(this.stepDivRef.nativeElement.offsetWidth, this.stepDivRef.nativeElement.offsetHeight)
+                - (Math.min(this.stepDivRef.nativeElement.offsetWidth, this.stepDivRef.nativeElement.offsetHeight) * 0.3);
+        }
     }
 
     constructor(
+        private activityService: PhysicalActivitiesService,
         private fb: FormBuilder,
         private patientService: PatientService,
         private pilotStudiesService: PilotStudyService,
@@ -66,20 +81,16 @@ export class ActivityDashboardComponent implements OnInit {
         private router: Router,
         private activeRouter: ActivatedRoute,
         private localStorageService: LocalStorageService,
-        private translateService: TranslateService,
-        private modalService: ModalService,
-        private nutritionalQuestionnaireService: NutritionalQuestionnairesService,
-        private odontologicalQuestionnaireService: OdontologicalQuestionnairesService,
-        private datePipe: DatePipe,
-        private sleepPipe: SleepPipe
+        private translateService: TranslateService
     ) {
         this.currentDate = new Date();
         this.timeSeriesTypes = Object.keys(TimeSeriesType);
         this.measurementSelected = TimeSeriesType.steps;
+        this.goal = new Goal();
         const sleep = new Sleep()
         sleep.start_time = '2018-08-18T01:40:30.00Z';
         sleep.end_time = '2018-08-18T09:36:30.00Z';
-        sleep.duration = 29520000;
+        sleep.duration = 25520000;
         sleep.pattern = new SleepPattern()
         sleep.pattern.data_set = [
             {
@@ -205,39 +216,56 @@ export class ActivityDashboardComponent implements OnInit {
 
         sleep.pattern.summary.awake = new SleepPatternSummaryData()
         sleep.pattern.summary.awake.count = 5;
-        sleep.pattern.summary.awake.duration = 28020000;
+        sleep.pattern.summary.awake.duration = 1020000;
 
         sleep.pattern.summary.restless = new SleepPatternSummaryData()
         sleep.pattern.summary.restless.count = 40;
         sleep.pattern.summary.restless.duration = 28020000;
 
         this.sleepSelected = sleep;
-
         this.caloriesValue = 956;
-        this.stepsValue = 1553;
-        this.activeMinutesValue = 352;
+        this.stepsValue = 1000;
+        this.activeMinutesValue = 50;
         this.activeMinutesSettings = false;
         this.distanceValue = 22;
-        this.listActivities = [new PhysicalActivity('Run'), new PhysicalActivity('Walk'), new PhysicalActivity('Swim')];
-        this.listActivitiesIsEmpty = false;
+        this.sleepValue = Math.floor((sleep.duration / 3600000));
+        this.listActivities = [];
     }
 
     ngOnInit() {
         this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
             this.patientService.getById(this.patientId)
-                .then(patient => {
-
-                })
+                .then(patient => this.patient = patient)
                 .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                 });
         });
-        this.loadActivitiesGraph();
-        this.loadSleepGraph();
         this.innerWidth = window.innerWidth;
         this.sleepSize = 250;
         this.stepSize = 200;
+    }
+
+    loadGoals(): void {
+        this.patientService.getGoals(this.patientId)
+            .then(goal => {
+                this.goal = goal;
+                this.sleepMax = Math.floor(this.goal.sleep / 60);
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    loadActivities(): void {
+        this.activityService.getAll(this.patientId)
+            .then(activities => {
+                this.listActivities = activities
+                this.listActivitiesIsEmpty = this.listActivities.length === 0;
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     loadActivitiesGraph(): void {
@@ -396,151 +424,6 @@ export class ActivityDashboardComponent implements OnInit {
         }
     }
 
-    loadSleepGraph(): void {
-        const hs = this.translateService.instant('SLEEP.TIME-ABBREVIATION');
-        const awake = this.translateService.instant('ACTIVITY.PIPES.SLEEP.AWAKE');
-        const restless = this.translateService.instant('ACTIVITY.PIPES.SLEEP.RESTLESS');
-        const asleep = this.translateService.instant('ACTIVITY.PIPES.SLEEP.ASLEEP');
-
-        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
-        const at = this.translateService.instant('SHARED.AT');
-        const duration = this.translateService.instant('ACTIVITY.SLEEP.DURATION');
-
-        const { pattern: { data_set } } = this.sleepSelected;
-
-        const sleepStageXAxisData = [];
-        const sleepStageData = [];
-
-        data_set.forEach(elemento => {
-            const newElement = {
-                time: this.datePipe.transform(elemento.start_time, 'mediumTime'),
-                date_and_hour: this.datePipe.transform(elemento.start_time, 'shortDate') + ' ' + at
-                    + ' ' + this.datePipe.transform(elemento.start_time, 'mediumTime'),
-                stage: this.translateService.instant(this.sleepPipe.transform(elemento.name)),
-                duration: (elemento.duration / 60000) + ' ' + this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION')
-            }
-            switch (elemento.name) {
-                case 'restless':
-                    sleepStageData.push({ ...newElement, value: 1 });
-                    break;
-
-                case 'asleep':
-                    sleepStageData.push({ ...newElement, value: 2 });
-                    break;
-
-                case 'awake':
-                    sleepStageData.push({ ...newElement, value: 3 });
-                    break;
-            }
-            sleepStageXAxisData.push(this.datePipe.transform(elemento.start_time, 'mediumTime'))
-
-        })
-
-
-        this.sleepStages = {
-            tooltip: {
-                formatter: function (params) {
-                    const stage = params.data.stage
-                    const time_duration = params.data.duration;
-
-                    return `${stage} <br> ${duration}: ${time_duration} <br> ${date}: <br> ${params.data.date_and_hour}`;
-                }
-            },
-            xAxis: {
-                data: sleepStageXAxisData
-            },
-            yAxis: {
-                axisLabel: {
-                    formatter: function (params) {
-                        switch (params) {
-                            case 3:
-                                return awake
-
-                            case 2:
-                                return asleep
-
-                            case 1:
-                                return restless
-
-                        }
-
-                    }
-                }
-            },
-            visualMap: {
-                show: false,
-                type: 'continuous',
-                min: 0,
-                max: 3,
-                color: ['#ff1012', '#25c5b5', '#0402EC']
-            },
-            series: [
-                {
-                    type: 'line',
-                    step: 'middle',
-                    lineStyle: {
-                        normal: {
-                            width: 6
-                        }
-                    },
-                    color: '#25c5b5',
-                    data: sleepStageData
-                },
-                {
-                    type: 'gauge',
-                    min: 0,
-                    max: 8,
-                    center: ['85%', '25%'],
-                    radius: '25%',
-                    startAngle: 180,
-                    endAngle: 0,
-                    splitNumber: 1,
-                    axisLabel: {
-                        color: '#000000',
-                        padding: [30, -30, 0, -30],
-                        fontSize: 16
-                    },
-                    axisLine: {
-                        lineStyle: {
-                            color: [
-                                [0.2, '#228b22'],
-                                [0.8, '#48b'],
-                                [1, '#ff4500']
-                            ],
-                            width: 8
-                        }
-                    },
-                    axisTick: {            // 坐标轴小标记
-                        splitNumber: 5,
-                        length: 10,        // 属性length控制线长
-                        lineStyle: {        // 属性lineStyle控制线条样式
-                            color: '#FFFFFF'
-                        }
-                    },
-                    splitLine: {           // 分隔线
-                        length: 25,         // 属性length控制线长
-                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-                            color: 'auto'
-                        }
-                    },
-                    pointer: {
-                        width: 4,
-                        length: '90%'
-                    },
-                    title: {
-                        show: false
-                    },
-                    detail: {
-                        show: true
-                    },
-                    data: [7.5]
-                }
-            ]
-        };
-
-
-    }
-
     sleepEnterAndLeave(value: boolean): void {
         this.sleepHover = value;
     }
@@ -553,10 +436,6 @@ export class ActivityDashboardComponent implements OnInit {
         this.activeMinutesHover = value;
     }
 
-    changeSettingsActiveMinutes(): void {
-        this.activeMinutesSettings = !this.activeMinutesSettings;
-    }
-
     caloriesEnterAndLeave(value: boolean): void {
         this.caloriesHover = value;
     }
@@ -565,7 +444,39 @@ export class ActivityDashboardComponent implements OnInit {
         this.distanceHover = value;
     }
 
+    isToday(date: Date): boolean {
+        const today = new Date();
+        return date.toISOString().split('T')[0] === today.toISOString().split('T')[0];
+    }
+
     trackById(index, item: PhysicalActivity) {
         return item.id
+    }
+
+    previosDay(): void {
+        this.loadingDashboard = true;
+        setTimeout(() => {
+            this.loadingDashboard = false;
+        }, 2000)
+        this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
+    }
+
+    nextDay(): void {
+        if (!this.isToday(this.currentDate)) {
+            this.loadingDashboard = true;
+            setTimeout(() => {
+                this.loadingDashboard = false;
+            }, 2000)
+            this.currentDate = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.patientId.currentValue && (changes.patientId.currentValue !== changes.patientId.previousValue)) {
+            this.loadGoals();
+            this.loadActivitiesGraph();
+            this.loadActivities();
+            // this.loadSleepGraph();
+        }
     }
 }

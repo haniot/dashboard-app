@@ -121,6 +121,15 @@ navigation {
   }
 }
 
+.disabled {
+  color: lightgray;
+
+  &:hover {
+    border-radius: unset;
+    background: none;
+  }
+}
+
 .echarts-div-graph {
   width: 100%;
   height: 100px;

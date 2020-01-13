@@ -9,6 +9,20 @@
     "TITLE": "Access denied"
   },
   "ACTIVITY": {
+    "BETWEEN": "between",
+    "SPINNER": "Loading activities ...",
+    "LAST-SYNC": "Last Sync",
+    "CALORIC-EXPENDITURE": "Caloric expenditure",
+    "TOTAL-CALORIES-BURNED": "Total Calories Burned",
+    "CALORIES-BURNED-PER-MINUTES": "Calories Burned Per Minute",
+    "INTENSITY-LEVELS": "Intensity Levels",
+    "HEART-RATE-AVG": "Average Heart Rate",
+    "IMPACT": "IMPACT",
+    "STEPS-TAKEN": "steps taken",
+    "CALORIES-BURNED": "calories burned",
+    "ACTIVE-MINUTES": "active minutes",
+    "REMOVE": "Remove activity...",
+    "LEVEL": "Level",
     "RECENT-ACTIVITY": "Recent activity",
     "VIEW-DETAILS": "View details...",
     "NO-RECENT-EXERCISES": "No recent exercises",
@@ -29,9 +43,22 @@
         "RESTLESS": "Restless",
         "ASLEEP": "Asleep"
       },
+      "PHYSICAL-ACTIVITY": {
+        "RUN": "Run",
+        "WALK": "Walk",
+        "SWIM": "Swim",
+        "BIKE": "Bike"
+      },
+      "ACTIVITY-LEVEL": {
+        "SEDENTARY": "Sedentary",
+        "LIGHT": "Light",
+        "FAIRLY": "Fairly",
+        "VERY": "Very"
+      },
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND"
-    }
+    },
+    "PERCENT": "Percentage"
   },
   "ADMINISTRADORS": {
     "SUBTITLE": "",
@@ -1012,8 +1039,10 @@
     "STEPS": {
       "TITLE": "Steps",
       "STEPS": "steps",
+      "TOTAL-STEPS": "Total steps",
       "SUBTITLE": ""
     },
+    "OF-THE-GOAL": "of the goal",
     "PIPES": {
       "TIME-SERIES": {
         "STEPS": "Steps",

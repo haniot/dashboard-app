@@ -11,23 +11,31 @@ export class PhysicalActivitiesService {
         this.version = 'v1';
     }
 
-    create(userId: string, activity: PhysicalActivity): Promise<PhysicalActivity> {
-        return this.http.post<any>(`${environment.api_url}/${this.version}/patients/${userId}/physicalactivities`, activity)
+    create(patientId: string, activity: PhysicalActivity): Promise<PhysicalActivity> {
+        return this.http.post<any>(`${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities`, activity)
             .toPromise();
     }
 
-    getAll(userId: string): Promise<PhysicalActivity[]> {
-        return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${userId}/physicalactivities`)
+    getAll(patientId: string): Promise<PhysicalActivity[]> {
+        const listActivities: PhysicalActivity[] = [
+            new PhysicalActivity('Run'),
+            new PhysicalActivity('Walk'),
+            new PhysicalActivity('Swim')
+        ];
+
+        return Promise.resolve(listActivities);
+
+        return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities`)
             .toPromise();
     }
 
-    getById(userId: string, activityId: string): Promise<PhysicalActivity> {
-        return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${userId}/physicalactivities/${activityId}`)
+    getById(patientId: string, activityId: string): Promise<PhysicalActivity> {
+        return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities/${activityId}`)
             .toPromise();
     }
 
-    remove(userId: string, activityId: string): Promise<any> {
-        return this.http.delete<any>(`${environment.api_url}/${this.version}/patients/${userId}/physicalactivities/${activityId}`)
+    remove(patientId: string, activityId: string): Promise<any> {
+        return this.http.delete<any>(`${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities/${activityId}`)
             .toPromise();
     }
 

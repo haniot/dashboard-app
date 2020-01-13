@@ -12,12 +12,12 @@ export class SleepService {
         this.version = 'v1';
     }
 
-    create(userId: string, sleep: Sleep): Promise<Sleep> {
-        return this.http.post<any>(`${environment.api_url}/${this.version}/patients/${userId}/sleep`, sleep)
+    create(patientId: string, sleep: Sleep): Promise<Sleep> {
+        return this.http.post<any>(`${environment.api_url}/${this.version}/patients/${patientId}/sleep`, sleep)
             .toPromise();
     }
 
-    getAll(userId: string, page?: number, limit?: number, search?: SearchForPeriod): Promise<HttpResponse<Sleep[]>> {
+    getAll(patientId: string, page?: number, limit?: number, search?: SearchForPeriod): Promise<HttpResponse<Sleep[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -38,24 +38,23 @@ export class SleepService {
             if (search.period) {
                 myParams = myParams.append('period', search.period);
             }
-
         }
 
         myParams = myParams.append('sort', '+timestamp');
 
-        const url = `${environment.api_url}/${this.version}/patients/${userId}/sleep`;
-
+        const url = `${environment.api_url}/${this.version}/patients/${patientId}/sleep`;
+        
         return this.http.get<any>(url, { observe: 'response', params: myParams })
             .toPromise();
     }
 
-    getById(userId: string, sleepId: string): Promise<Sleep> {
-        return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${userId}/sleep/${sleepId}`)
+    getById(patientId: string, sleepId: string): Promise<Sleep> {
+        return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/sleep/${sleepId}`)
             .toPromise();
     }
 
-    remove(userId: string, sleepId: string): Promise<any> {
-        return this.http.delete<any>(`${environment.api_url}/${this.version}/patients/${userId}/sleep/${sleepId}`)
+    remove(patientId: string, sleepId: string): Promise<any> {
+        return this.http.delete<any>(`${environment.api_url}/${this.version}/patients/${patientId}/sleep/${sleepId}`)
             .toPromise();
     }
 

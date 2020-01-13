@@ -9,6 +9,8 @@
     "TITLE": "Acesso negado"
   },
   "ACTIVITY": {
+    "BETWEEN": "entre",
+    "SPINNER": "Carregando atividades...",
     "LAST-SYNC": "Última sincronização",
     "CALORIC-EXPENDITURE": "Gasto Calórico",
     "TOTAL-CALORIES-BURNED": "Total de Calorias Queimadas",
@@ -1040,6 +1042,7 @@
       "TOTAL-STEPS": "Total de passos",
       "SUBTITLE": ""
     },
+    "OF-THE-GOAL": "do objetivo",
     "PIPES": {
       "TIME-SERIES": {
         "STEPS": "Passos",
