@@ -9,7 +9,13 @@ import { BloodGlucose } from '../models/blood.glucose';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
 import { TimeSeries, TimeSeriesType } from '../../activity/models/time.series'
-import { Sleep, SleepPattern, SleepPatternSummaryData } from '../../activity/models/sleep'
+import {
+    Sleep,
+    SleepPattern,
+    SleepPatternPhaseSummary, SleepPatternStageSummary,
+    SleepPatternSummaryData,
+    SleepType
+} from '../../activity/models/sleep'
 
 class ConfigVisibility {
     weight: boolean;
@@ -231,6 +237,7 @@ export class MeasurementComponent implements OnChanges {
             /* Mocks*/
 
             const sleep = new Sleep()
+            sleep.type = SleepType.CLASSIC;
             sleep.start_time = '2018-08-18T01:40:30.00Z';
             sleep.end_time = '2018-08-18T09:36:30.00Z';
             sleep.duration = 29520000;
@@ -353,6 +360,7 @@ export class MeasurementComponent implements OnChanges {
                 }
             ];
 
+            sleep.pattern.summary = new SleepPatternPhaseSummary();
             sleep.pattern.summary.asleep = new SleepPatternSummaryData()
             sleep.pattern.summary.asleep.count = 55;
             sleep.pattern.summary.asleep.duration = 28020000;
@@ -366,6 +374,7 @@ export class MeasurementComponent implements OnChanges {
             sleep.pattern.summary.restless.duration = 28020000;
 
             const sleep3 = new Sleep()
+            sleep3.type = SleepType.CLASSIC;
             sleep3.start_time = '2018-08-18T01:40:30.00Z';
             sleep3.end_time = '2018-08-18T09:36:30.00Z';
             sleep3.duration = 34420000;
@@ -488,6 +497,7 @@ export class MeasurementComponent implements OnChanges {
                 }
             ];
 
+            sleep3.pattern.summary = new SleepPatternPhaseSummary();
             sleep3.pattern.summary.asleep = new SleepPatternSummaryData()
             sleep3.pattern.summary.asleep.count = 63;
             sleep3.pattern.summary.asleep.duration = 28020000;
@@ -501,6 +511,7 @@ export class MeasurementComponent implements OnChanges {
             sleep3.pattern.summary.restless.duration = 28020000;
 
             const sleep2 = new Sleep()
+            sleep2.type = SleepType.STAGES;
             sleep2.start_time = '2018-08-18T01:40:30.00Z';
             sleep2.end_time = '2018-08-18T09:36:30.00Z';
             sleep2.duration = 39720000;
@@ -588,17 +599,22 @@ export class MeasurementComponent implements OnChanges {
                 }
             ];
 
-            sleep2.pattern.summary.asleep = new SleepPatternSummaryData()
-            sleep2.pattern.summary.asleep.count = 45;
-            sleep2.pattern.summary.asleep.duration = 28020000;
+            sleep2.pattern.summary = new SleepPatternStageSummary();
+            sleep2.pattern.summary.deep = new SleepPatternSummaryData()
+            sleep2.pattern.summary.deep.count = 45;
+            sleep2.pattern.summary.deep.duration = 28020000;
+
+            sleep2.pattern.summary.light = new SleepPatternSummaryData()
+            sleep2.pattern.summary.light.count = 50;
+            sleep2.pattern.summary.light.duration = 28020000;
+
+            sleep2.pattern.summary.rem = new SleepPatternSummaryData()
+            sleep2.pattern.summary.rem.count = 50;
+            sleep2.pattern.summary.rem.duration = 28020000;
 
             sleep2.pattern.summary.awake = new SleepPatternSummaryData()
             sleep2.pattern.summary.awake.count = 5;
             sleep2.pattern.summary.awake.duration = 28020000;
-
-            sleep2.pattern.summary.restless = new SleepPatternSummaryData()
-            sleep2.pattern.summary.restless.count = 50;
-            sleep2.pattern.summary.restless.duration = 28020000;
 
             return this.listSleep = [sleep, sleep2, sleep3];
 

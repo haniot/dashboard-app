@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as echarts from 'echarts'
 
 import { TimeSeriesType } from '../models/time.series';
-import { Sleep, SleepPattern, SleepPatternSummaryData } from '../models/sleep';
+import { Sleep, SleepPattern, SleepPatternPhaseSummary, SleepPatternSummaryData } from '../models/sleep';
 import { PatientService } from '../../patient/services/patient.service';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
@@ -210,6 +210,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             }
         ];
 
+        sleep.pattern.summary = new SleepPatternPhaseSummary();
         sleep.pattern.summary.asleep = new SleepPatternSummaryData()
         sleep.pattern.summary.asleep.count = 55;
         sleep.pattern.summary.asleep.duration = 28020000;

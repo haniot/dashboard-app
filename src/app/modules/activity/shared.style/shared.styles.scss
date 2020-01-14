@@ -70,58 +70,16 @@ canvas {
   margin-right: 0px;
 }
 
-.bg-blood_glucose {
-  width: 48px;
-  height: 48px;
-  background: url('assets/img/questionnaires.png') -78px -80px;
-}
-
-.bg-blood_pressure {
-  width: 48px;
-  height: 48px;
-  background: url('assets/img/questionnaires.png') -150px -10px;
-}
-
-.bg-body_temperature {
-  width: 48px;
-  height: 48px;
-  background: url('assets/img/questionnaires.png') -78px -148px;
-}
-
-.bg-devices {
-  width: 48px;
-  height: 48px;
-  background: url('assets/img/questionnaires.png') -218px -10px;
-}
-
-.bg-fat {
-  width: 48px;
-  height: 48px;
-  background: url('assets/img/questionnaires.png') -218px -146px;
-}
-
 .bg-height {
   width: 48px;
   height: 48px;
   background: url('assets/img/questionnaires.png') -214px -216px;
 }
 
-.bg-waist_circunference {
+.bg-sleep {
   width: 48px;
   height: 48px;
-  background: url('assets/img/questionnaires.png') -282px -284px;
-}
-
-.bg-weight {
-  width: 48px;
-  height: 48px;
-  background: url('assets/img/questionnaires.png') -354px -10px;
-}
-
-.bg-heart_rate {
-  width: 48px;
-  height: 48px;
-  background: url('assets/img/questionnaires.png') -78px -216px;
+  background: url('assets/img/time-series/sleep-white.svg') no-repeat;
 }
 
 // We need to use ::ng-deep to overcome view encapsulation

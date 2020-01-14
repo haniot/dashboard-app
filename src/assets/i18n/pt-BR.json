@@ -41,7 +41,10 @@
       "SLEEP": {
         "AWAKE": "Acordado",
         "RESTLESS": "Inquieto",
-        "ASLEEP": "Adormecido"
+        "ASLEEP": "Adormecido",
+        "DEEP": "Profundo",
+        "LIGHT": "Leve",
+        "REM": "REM"
       },
       "PHYSICAL-ACTIVITY": {
         "RUN": "Corrida",

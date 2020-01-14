@@ -41,7 +41,10 @@
       "SLEEP": {
         "AWAKE": "Awake",
         "RESTLESS": "Restless",
-        "ASLEEP": "Asleep"
+        "ASLEEP": "Asleep",
+        "DEEP": "Deep",
+        "LIGHT": "Light",
+        "REM": "REM"
       },
       "PHYSICAL-ACTIVITY": {
         "RUN": "Run",

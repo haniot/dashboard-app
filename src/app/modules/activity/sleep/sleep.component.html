@@ -14,7 +14,8 @@
                             <div class="card card-stats">
                                 <div class="card-header card-header-timer card-header-icon">
                                     <div class="card-icon">
-                                        <div class="bg-height"></div>
+                                        <!-- <div class="bg-sleep"></div>-->
+                                        <img src="../../../../assets/img/time-series/sleep-white-v2.svg" width="48" height="48">
                                     </div>
                                     <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>
                                     <h3 class="card-title" *ngIf="lastData && lastData.duration">
@@ -70,8 +71,8 @@
                     </div>
 
                     <div class="row fadeIn" *ngIf="showSleepStages">
-                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 row justify-content-center">
-
+                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 row justify-content-center" *ngIf="sleepSelected.type===sleepTypes.CLASSIC">
+                            <!-- AWAKE -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-timer card-header-icon">
@@ -92,7 +93,7 @@
                                 </div>
 
                             </div>
-
+                            <!-- RESTLESS -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-timer card-header-icon">
@@ -113,7 +114,7 @@
                                 </div>
 
                             </div>
-
+                            <!-- ASLEEP -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-timer card-header-icon">
@@ -134,7 +135,93 @@
                                 </div>
 
                             </div>
+                        </div>
 
+                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 row justify-content-center" *ngIf="sleepSelected.type===sleepTypes.STAGES">
+                            <!-- DEEP -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-timer card-header-icon">
+                                        <div class="card-icon">
+                                            <div class="bg-height"></div>
+                                        </div>
+                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.DEEP'|translate}}: </p>
+                                        <h3 class="card-title">
+                                            {{sleepSelected.pattern.summary.deep.count + '%'}}
+                                        </h3>
+                                        <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                                        <!--                        {{lastData.value + '' + lastData.unit}}-->
+                                        <!--                    </h3>-->
+                                        <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                                        <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                                        <!--                    </h3>-->
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- LIGHT -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-timer card-header-icon">
+                                        <div class="card-icon">
+                                            <div class="bg-height"></div>
+                                        </div>
+                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.LIGHT'|translate}}: </p>
+                                        <h3 class="card-title">
+                                            {{sleepSelected.pattern.summary.light.count + '%'}}
+                                        </h3>
+                                        <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                                        <!--                        {{lastData.value + '' + lastData.unit}}-->
+                                        <!--                    </h3>-->
+                                        <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                                        <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                                        <!--                    </h3>-->
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- REM -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-timer card-header-icon">
+                                        <div class="card-icon">
+                                            <div class="bg-height"></div>
+                                        </div>
+                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.REM'|translate}}: </p>
+                                        <h3 class="card-title">
+                                            {{sleepSelected.pattern.summary.rem.count + '%'}}
+                                        </h3>
+                                        <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                                        <!--                        {{lastData.value + '' + lastData.unit}}-->
+                                        <!--                    </h3>-->
+                                        <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                                        <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                                        <!--                    </h3>-->
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- AWAKE -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-timer card-header-icon">
+                                        <div class="card-icon">
+                                            <div class="bg-height"></div>
+                                        </div>
+                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}: </p>
+                                        <h3 class="card-title">
+                                            {{sleepSelected.pattern.summary.awake.count + '%'}}
+                                        </h3>
+                                        <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                                        <!--                        {{lastData.value + '' + lastData.unit}}-->
+                                        <!--                    </h3>-->
+                                        <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                                        <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                                        <!--                    </h3>-->
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
 
                         <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 align-self-center echarts-div-graph"

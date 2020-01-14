@@ -6,7 +6,14 @@ import * as echarts from 'echarts';
 import { PageEvent } from '@angular/material';
 import { ToastrService } from 'ngx-toastr'
 import { SleepPipe } from '../pipes/sleep.pipe';
-import { Sleep, SleepPattern, SleepPatternSummaryData } from '../models/sleep';
+import {
+    Sleep,
+    SleepPattern,
+    SleepPatternPhaseSummary,
+    SleepPatternStageSummary,
+    SleepPatternSummaryData,
+    SleepType
+} from '../models/sleep';
 import { DecimalFormatterPipe } from '../../measurement/pipes/decimal.formatter.pipe';
 import { SearchForPeriod } from '../../measurement/models/measurement';
 import { ConfigurationBasic } from '../../config.matpaginator';
@@ -18,7 +25,7 @@ const PaginatorConfig = ConfigurationBasic;
 @Component({
     selector: 'sleep',
     templateUrl: './sleep.component.html',
-    styleUrls: ['../../measurement/shared.style/shared.styles.scss']
+    styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class SleepComponent implements OnInit {
     @Input() data: Array<Sleep>;
@@ -35,7 +42,7 @@ export class SleepComponent implements OnInit {
     echartStagesInstance: any;
     showSleepStages: boolean;
     Math: any;
-
+    sleepTypes = SleepType
     listIsEmpty: boolean;
     filter: SearchForPeriod;
     pageSizeOptions: number[];
@@ -87,6 +94,7 @@ export class SleepComponent implements OnInit {
             this.includeCard = true;
 
             const sleep = new Sleep()
+            sleep.type = SleepType.CLASSIC;
             sleep.start_time = '2018-08-18T01:40:30.00Z';
             sleep.end_time = '2018-08-18T09:36:30.00Z';
             sleep.duration = 29520000;
@@ -209,6 +217,7 @@ export class SleepComponent implements OnInit {
                 }
             ];
 
+            sleep.pattern.summary = new SleepPatternPhaseSummary();
             sleep.pattern.summary.asleep = new SleepPatternSummaryData()
             sleep.pattern.summary.asleep.count = 55;
             sleep.pattern.summary.asleep.duration = 28020000;
@@ -222,6 +231,7 @@ export class SleepComponent implements OnInit {
             sleep.pattern.summary.restless.duration = 28020000;
 
             const sleep3 = new Sleep()
+            sleep3.type = SleepType.CLASSIC;
             sleep3.start_time = '2018-08-18T01:40:30.00Z';
             sleep3.end_time = '2018-08-18T09:36:30.00Z';
             sleep3.duration = 34420000;
@@ -344,6 +354,7 @@ export class SleepComponent implements OnInit {
                 }
             ];
 
+            sleep3.pattern.summary = new SleepPatternPhaseSummary();
             sleep3.pattern.summary.asleep = new SleepPatternSummaryData()
             sleep3.pattern.summary.asleep.count = 63;
             sleep3.pattern.summary.asleep.duration = 28020000;
@@ -357,6 +368,7 @@ export class SleepComponent implements OnInit {
             sleep3.pattern.summary.restless.duration = 28020000;
 
             const sleep2 = new Sleep()
+            sleep2.type = SleepType.STAGES;
             sleep2.start_time = '2018-08-18T01:40:30.00Z';
             sleep2.end_time = '2018-08-18T09:36:30.00Z';
             sleep2.duration = 39720000;
@@ -444,17 +456,22 @@ export class SleepComponent implements OnInit {
                 }
             ];
 
-            sleep2.pattern.summary.asleep = new SleepPatternSummaryData()
-            sleep2.pattern.summary.asleep.count = 45;
-            sleep2.pattern.summary.asleep.duration = 28020000;
+            sleep2.pattern.summary = new SleepPatternStageSummary();
+            sleep2.pattern.summary.deep = new SleepPatternSummaryData()
+            sleep2.pattern.summary.deep.count = 45;
+            sleep2.pattern.summary.deep.duration = 28020000;
+
+            sleep2.pattern.summary.light = new SleepPatternSummaryData()
+            sleep2.pattern.summary.light.count = 50;
+            sleep2.pattern.summary.light.duration = 28020000;
+
+            sleep2.pattern.summary.rem = new SleepPatternSummaryData()
+            sleep2.pattern.summary.rem.count = 50;
+            sleep2.pattern.summary.rem.duration = 28020000;
 
             sleep2.pattern.summary.awake = new SleepPatternSummaryData()
             sleep2.pattern.summary.awake.count = 5;
             sleep2.pattern.summary.awake.duration = 28020000;
-
-            sleep2.pattern.summary.restless = new SleepPatternSummaryData()
-            sleep2.pattern.summary.restless.count = 50;
-            sleep2.pattern.summary.restless.duration = 28020000;
 
             this.data = [sleep, sleep2, sleep3];
         })
@@ -611,7 +628,20 @@ export class SleepComponent implements OnInit {
     loadSleepGraph(selected: any): void {
         this.sleepSelected = this.data[selected.dataIndex]
         this.showSleepStages = true;
+        if (this.sleepSelected) {
+            switch (this.sleepSelected.type) {
+                case SleepType.CLASSIC:
+                    this.loadSleepGraphClassic(selected);
+                    break;
 
+                case SleepType.STAGES:
+                    this.loadSleepGraphStages(selected)
+                    break
+            }
+        }
+    }
+
+    loadSleepGraphClassic(selected: any): void {
         const hs = this.translateService.instant('SLEEP.TIME-ABBREVIATION');
         const awake = this.translateService.instant('ACTIVITY.PIPES.SLEEP.AWAKE');
         const restless = this.translateService.instant('ACTIVITY.PIPES.SLEEP.RESTLESS');
@@ -650,7 +680,6 @@ export class SleepComponent implements OnInit {
             sleepStageXAxisData.push(this.datePipe.transform(elemento.start_time, 'mediumTime'))
 
         })
-
 
         this.sleepStages = {
             tooltip: {
@@ -710,6 +739,113 @@ export class SleepComponent implements OnInit {
                 }
         };
 
+    }
+
+    loadSleepGraphStages(selected: any): void {
+        const hs = this.translateService.instant('SLEEP.TIME-ABBREVIATION');
+        const deep = this.translateService.instant('ACTIVITY.PIPES.SLEEP.DEEP');
+        const light = this.translateService.instant('ACTIVITY.PIPES.SLEEP.LIGHT');
+        const rem = this.translateService.instant('ACTIVITY.PIPES.SLEEP.REM');
+        const awake = this.translateService.instant('ACTIVITY.PIPES.SLEEP.AWAKE');
+
+        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
+        const at = this.translateService.instant('SHARED.AT');
+        const duration = this.translateService.instant('ACTIVITY.SLEEP.DURATION');
+
+        const { pattern: { data_set } } = this.sleepSelected;
+
+        const sleepStageXAxisData = [];
+        const sleepStageData = [];
+
+        data_set.forEach(elemento => {
+            const newElement = {
+                time: this.datePipe.transform(elemento.start_time, 'mediumTime'),
+                date_and_hour: this.datePipe.transform(elemento.start_time, 'shortDate') + ' ' + at
+                    + ' ' + this.datePipe.transform(elemento.start_time, 'mediumTime'),
+                stage: this.translateService.instant(this.sleepPipe.transform(elemento.name)),
+                duration: (elemento.duration / 60000) + ' ' + this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION')
+            }
+            switch (elemento.name) {
+                case 'deep':
+                    sleepStageData.push({ ...newElement, value: 1 });
+                    break;
+
+                case 'light':
+                    sleepStageData.push({ ...newElement, value: 2 });
+                    break;
+
+                case 'rem':
+                    sleepStageData.push({ ...newElement, value: 3 });
+                    break;
+
+                case 'awake':
+                    sleepStageData.push({ ...newElement, value: 4 });
+                    break;
+            }
+            sleepStageXAxisData.push(this.datePipe.transform(elemento.start_time, 'mediumTime'))
+
+        })
+
+        this.sleepStages = {
+            tooltip: {
+                formatter: function (params) {
+                    const stage = params.data.stage
+                    const time_duration = params.data.duration;
+
+                    return `${stage} <br> ${duration}: ${time_duration} <br> ${date}: <br> ${params.data.date_and_hour}`;
+                }
+            },
+            xAxis: {
+                data: sleepStageXAxisData
+            },
+            yAxis: {
+                axisLabel: {
+                    formatter: function (params) {
+                        switch (params) {
+                            case 4:
+                                return awake
+
+                            case 3:
+                                return rem
+
+                            case 2:
+                                return light
+
+                            case 1:
+                                return deep
+
+                        }
+
+                    }
+                }
+            },
+            dataZoom: [
+                {
+                    type: 'slider'
+                }
+            ],
+
+            visualMap: {
+                show: false,
+                type: 'continuous',
+                min: 0,
+                max: 4,
+                color: ['#ff1012', '#7EC4FF', '#25c5b5', '#0402EC']
+            },
+
+            series:
+                {
+                    type: 'line',
+                    step: 'middle',
+                    lineStyle: {
+                        normal: {
+                            width: 6
+                        }
+                    },
+                    color: '#25c5b5',
+                    data: sleepStageData
+                }
+        };
 
     }
 

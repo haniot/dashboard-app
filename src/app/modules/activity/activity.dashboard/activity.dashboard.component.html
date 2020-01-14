@@ -277,7 +277,7 @@
                          (mouseleave)="caloriesEnterAndLeave(false)">
 
                         <dashboard-card [title]="'TIME-SERIES.CALORIES.TITLE'|translate">
-                            <div class="row justify-content-center" *ngIf="!loadingDashboard" style="display: grid">
+                            <div class="row justify-content-center" *ngIf="!loadingDashboard">
                                 <ngx-gauge [type]="'full'"
                                            [thick]="10"
                                            [min]="0"
