@@ -35,7 +35,8 @@
       "DURATION": "Duration",
       "UNAVAILABLE-DATA": "No records within selected period!",
       "VIEW-STAGES": "View stages",
-      "CLICK-TO-VIEW": "Click on the log to view the stages of sleep."
+      "CLICK-TO-VIEW": "Click on the log to view the stages of sleep.",
+      "REACHED-THE-IDEAL": "Reached the ideal"
     },
     "PIPES": {
       "SLEEP": {

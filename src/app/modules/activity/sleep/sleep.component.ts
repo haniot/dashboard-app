@@ -57,6 +57,8 @@ export class SleepComponent implements OnInit {
     selectAll: boolean;
     listCheckMeasurements: Array<boolean>;
     stateButtonRemoveSelected: boolean;
+    /*In hours*/
+    IDEAL_SLEEP_VALUE = 8;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -376,37 +378,37 @@ export class SleepComponent implements OnInit {
             sleep2.pattern.data_set = [
                 {
                     start_time: '2018-08-18T01:40:30.00Z',
-                    name: 'restless',
+                    name: 'deep',
                     duration: 60000
                 },
                 {
                     start_time: '2018-08-18T01:41:30.00Z',
-                    name: 'asleep',
+                    name: 'rem',
                     duration: 360000
                 },
                 {
                     start_time: '2018-08-18T01:47:30.00Z',
-                    name: 'restless',
+                    name: 'rem',
                     duration: 240000
                 },
                 {
                     start_time: '2018-08-18T01:51:30.00Z',
-                    name: 'asleep',
+                    name: 'deep',
                     duration: 60000
                 },
                 {
                     start_time: '2018-08-18T01:52:30.00Z',
-                    name: 'restless',
+                    name: 'light',
                     duration: 60000
                 },
                 {
                     start_time: '2018-08-18T01:53:30.00Z',
-                    name: 'asleep',
+                    name: 'rem',
                     duration: 2100000
                 },
                 {
                     start_time: '2018-08-18T02:28:30.00Z',
-                    name: 'restless',
+                    name: 'deep',
                     duration: 240000
                 },
                 {
@@ -416,42 +418,42 @@ export class SleepComponent implements OnInit {
                 },
                 {
                     start_time: '2018-08-18T02:35:30.00Z',
-                    name: 'asleep',
+                    name: 'rem',
                     duration: 15120000
                 },
                 {
                     start_time: '2018-08-18T06:47:30.00Z',
-                    name: 'restless',
+                    name: 'light',
                     duration: 60000
                 },
                 {
                     start_time: '2018-08-18T06:48:30.00Z',
-                    name: 'asleep',
+                    name: 'rem',
                     duration: 2580000
                 },
                 {
                     start_time: '2018-08-18T07:31:30.00Z',
-                    name: 'restless',
+                    name: 'deep',
                     duration: 120000
                 },
                 {
                     start_time: '2018-08-18T07:33:30.00Z',
-                    name: 'asleep',
+                    name: 'light',
                     duration: 120000
                 },
                 {
                     start_time: '2018-08-18T07:35:30.00Z',
-                    name: 'restless',
+                    name: 'rem',
                     duration: 60000
                 },
                 {
                     start_time: '2018-08-18T07:36:30.00Z',
-                    name: 'asleep',
+                    name: 'light',
                     duration: 1200000
                 },
                 {
                     start_time: '2018-08-18T07:56:30.00Z',
-                    name: 'restless',
+                    name: 'deep',
                     duration: 60000
                 }
             ];
@@ -494,8 +496,6 @@ export class SleepComponent implements OnInit {
 
     loadGraph() {
         const MAX_SLEEP_VALUE = 12;
-        const IDEAL_SLEEP_VALUE = 8;
-
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
         const hours = this.translateService.instant('MYDATEPIPE.HOURS');
@@ -570,7 +570,7 @@ export class SleepComponent implements OnInit {
                         label: {
                             formatter: ''
                         },
-                        yAxis: IDEAL_SLEEP_VALUE
+                        yAxis: this.IDEAL_SLEEP_VALUE
                     }]
                 }
             }
@@ -631,18 +631,17 @@ export class SleepComponent implements OnInit {
         if (this.sleepSelected) {
             switch (this.sleepSelected.type) {
                 case SleepType.CLASSIC:
-                    this.loadSleepGraphClassic(selected);
+                    this.loadSleepGraphClassic();
                     break;
 
                 case SleepType.STAGES:
-                    this.loadSleepGraphStages(selected)
+                    this.loadSleepGraphStages()
                     break
             }
         }
     }
 
-    loadSleepGraphClassic(selected: any): void {
-        const hs = this.translateService.instant('SLEEP.TIME-ABBREVIATION');
+    loadSleepGraphClassic(): void {
         const awake = this.translateService.instant('ACTIVITY.PIPES.SLEEP.AWAKE');
         const restless = this.translateService.instant('ACTIVITY.PIPES.SLEEP.RESTLESS');
         const asleep = this.translateService.instant('ACTIVITY.PIPES.SLEEP.ASLEEP');
@@ -741,8 +740,7 @@ export class SleepComponent implements OnInit {
 
     }
 
-    loadSleepGraphStages(selected: any): void {
-        const hs = this.translateService.instant('SLEEP.TIME-ABBREVIATION');
+    loadSleepGraphStages(): void {
         const deep = this.translateService.instant('ACTIVITY.PIPES.SLEEP.DEEP');
         const light = this.translateService.instant('ACTIVITY.PIPES.SLEEP.LIGHT');
         const rem = this.translateService.instant('ACTIVITY.PIPES.SLEEP.REM');
@@ -751,6 +749,8 @@ export class SleepComponent implements OnInit {
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
         const duration = this.translateService.instant('ACTIVITY.SLEEP.DURATION');
+
+        console.log('Sleep Selected: ', this.sleepSelected)
 
         const { pattern: { data_set } } = this.sleepSelected;
 
@@ -815,7 +815,6 @@ export class SleepComponent implements OnInit {
                                 return deep
 
                         }
-
                     }
                 }
             },

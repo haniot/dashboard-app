@@ -35,7 +35,8 @@
       "DURATION": "Duração",
       "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
       "VIEW-STAGES": "Visualizar estágios",
-      "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono."
+      "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono.",
+      "REACHED-THE-IDEAL": "Atingiu o ideal"
     },
     "PIPES": {
       "SLEEP": {

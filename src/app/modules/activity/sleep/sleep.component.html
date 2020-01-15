@@ -14,8 +14,8 @@
                             <div class="card card-stats">
                                 <div class="card-header card-header-timer card-header-icon">
                                     <div class="card-icon">
-                                        <!-- <div class="bg-sleep"></div>-->
-                                        <img src="../../../../assets/img/time-series/sleep-white-v2.svg" width="48" height="48">
+                                        <img src="../../../../assets/img/time-series/sleep-white.svg" width="48"
+                                             height="48">
                                     </div>
                                     <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>
                                     <h3 class="card-title" *ngIf="lastData && lastData.duration">
@@ -71,13 +71,16 @@
                     </div>
 
                     <div class="row fadeIn" *ngIf="showSleepStages">
-                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 row justify-content-center" *ngIf="sleepSelected.type===sleepTypes.CLASSIC">
+                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 row justify-content-center"
+                             *ngIf="sleepSelected.type===sleepTypes.CLASSIC">
                             <!-- AWAKE -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-timer card-header-icon">
                                         <div class="card-icon">
-                                            <div class="bg-height"></div>
+                                            <!--                                            <div class="bg-height"></div>-->
+                                            <img src="../../../../assets/img/time-series/awake-white.svg" width="40"
+                                                 height="40">
                                         </div>
                                         <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}: </p>
                                         <h3 class="card-title">
@@ -98,7 +101,9 @@
                                 <div class="card card-stats">
                                     <div class="card-header card-header-timer card-header-icon">
                                         <div class="card-icon">
-                                            <div class="bg-height"></div>
+                                            <!--                                            <div class="bg-height"></div>-->
+                                            <img src="../../../../assets/img/time-series/restless-white.svg" width="40"
+                                                 height="40">
                                         </div>
                                         <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.RESTLESS'|translate}}: </p>
                                         <h3 class="card-title">
@@ -119,7 +124,9 @@
                                 <div class="card card-stats">
                                     <div class="card-header card-header-timer card-header-icon">
                                         <div class="card-icon">
-                                            <div class="bg-height"></div>
+                                            <!--                                            <div class="bg-height"></div>-->
+                                            <img src="../../../../assets/img/time-series/asleep-white.svg" width="40"
+                                                 height="40">
                                         </div>
                                         <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.ASLEEP'|translate}}: </p>
                                         <h3 class="card-title">
@@ -137,38 +144,20 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 row justify-content-center" *ngIf="sleepSelected.type===sleepTypes.STAGES">
-                            <!-- DEEP -->
+                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 row justify-content-center"
+                             *ngIf="sleepSelected.type===sleepTypes.STAGES">
+                            <!-- AWAKE -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-timer card-header-icon">
                                         <div class="card-icon">
-                                            <div class="bg-height"></div>
+                                            <!--                                            <div class="bg-height"></div>-->
+                                            <img src="../../../../assets/img/time-series/awake-white.svg" width="40"
+                                                 height="40">
                                         </div>
-                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.DEEP'|translate}}: </p>
+                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}: </p>
                                         <h3 class="card-title">
-                                            {{sleepSelected.pattern.summary.deep.count + '%'}}
-                                        </h3>
-                                        <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                                        <!--                        {{lastData.value + '' + lastData.unit}}-->
-                                        <!--                    </h3>-->
-                                        <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                                        <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                                        <!--                    </h3>-->
-                                    </div>
-                                </div>
-
-                            </div>
-                            <!-- LIGHT -->
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="card card-stats">
-                                    <div class="card-header card-header-timer card-header-icon">
-                                        <div class="card-icon">
-                                            <div class="bg-height"></div>
-                                        </div>
-                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.LIGHT'|translate}}: </p>
-                                        <h3 class="card-title">
-                                            {{sleepSelected.pattern.summary.light.count + '%'}}
+                                            {{sleepSelected.pattern.summary.awake.count + '%'}}
                                         </h3>
                                         <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                                         <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -185,7 +174,9 @@
                                 <div class="card card-stats">
                                     <div class="card-header card-header-timer card-header-icon">
                                         <div class="card-icon">
-                                            <div class="bg-height"></div>
+                                            <!--                                            <div class="bg-height"></div>-->
+                                            <img src="../../../../assets/img/time-series/rem-white.svg" width="40"
+                                                 height="40">
                                         </div>
                                         <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.REM'|translate}}: </p>
                                         <h3 class="card-title">
@@ -201,16 +192,41 @@
                                 </div>
 
                             </div>
-                            <!-- AWAKE -->
+                            <!-- LIGHT -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-timer card-header-icon">
                                         <div class="card-icon">
-                                            <div class="bg-height"></div>
+                                            <!--                                            <div class="bg-height"></div>-->
+                                            <img src="../../../../assets/img/time-series/light-white.svg" width="40"
+                                                 height="40">
                                         </div>
-                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}: </p>
+                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.LIGHT'|translate}}: </p>
                                         <h3 class="card-title">
-                                            {{sleepSelected.pattern.summary.awake.count + '%'}}
+                                            {{sleepSelected.pattern.summary.light.count + '%'}}
+                                        </h3>
+                                        <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                                        <!--                        {{lastData.value + '' + lastData.unit}}-->
+                                        <!--                    </h3>-->
+                                        <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                                        <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                                        <!--                    </h3>-->
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- DEEP -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-timer card-header-icon">
+                                        <div class="card-icon">
+                                            <!--                                            <div class="bg-height"></div>-->
+                                            <img src="../../../../assets/img/time-series/deep-white.svg" width="40"
+                                                 height="40">
+                                        </div>
+                                        <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.DEEP'|translate}}: </p>
+                                        <h3 class="card-title">
+                                            {{sleepSelected.pattern.summary.deep.count + '%'}}
                                         </h3>
                                         <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                                         <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -324,26 +340,31 @@
                                         </h4>
                                     </td>
                                 </tr>
-                                <tr *ngFor="let measurement of data;let i= index; trackBy: trackById">
+                                <tr *ngFor="let sleep of data;let i= index; trackBy: trackById">
                                     <td>
                                         <mat-checkbox (change)="changeOnMeasurement()"
                                                       [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                                     </td>
                                     <td>
-                                        {{measurement.start_time | date:'short'}} -
-                                        {{measurement.end_time | date:'short'}}
+                                        {{sleep.start_time | date:'short'}} -
+                                        {{sleep.end_time | date:'short'}}
                                     </td>
                                     <td>
-                                        {{Math.floor((measurement.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
-                                        {{(measurement.duration % 3600000) ?
-                                        ('SHARED.AND'|translate) + ' ' + Math.floor((measurement.duration % 3600000) / 60000) +
+                                        {{Math.floor((sleep.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
+                                        {{(sleep.duration % 3600000) ?
+                                        ('SHARED.AND'|translate) + ' ' + Math.floor((sleep.duration % 3600000) / 60000) +
                                         ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                         }}
+                                        <div class="float-left"
+                                             *ngIf="(sleep.duration / 3600000)>=IDEAL_SLEEP_VALUE">
+                                            <i class="material-icons"
+                                               [title]="'ACTIVITY.SLEEP.REACHED-THE-IDEAL'|translate">star</i>
+                                        </div>
                                     </td>
                                     <td>
                                         <a class="nav-link"
                                            [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
-                                           (click)="openModalConfirmation(measurement.id)">
+                                           (click)="openModalConfirmation(sleep.id)">
                                             <i class="material-icons">delete</i>
                                         </a>
                                     </td>
