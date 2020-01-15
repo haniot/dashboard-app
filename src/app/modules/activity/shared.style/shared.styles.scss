@@ -82,6 +82,12 @@ canvas {
   background: url('assets/img/time-series/sleep-white.svg') no-repeat;
 }
 
+.bg-heart_rate {
+  width: 48px;
+  height: 48px;
+  background: url('assets/img/questionnaires.png') -78px -216px;
+}
+
 // We need to use ::ng-deep to overcome view encapsulation
 ::ng-deep {
   .custom-slider .ng5-slider .ng5-slider-bar {
@@ -161,4 +167,15 @@ canvas {
 // overwrite the ripple overlay on hover and click
 ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
   background-color: $primary-color !important;
+}
+
+table tr {
+  cursor: pointer;
+}
+
+.card-legend {
+  border-radius: 3px;
+  padding: 10px 10px;
+  width: 10px;
+  height: 10px;
 }

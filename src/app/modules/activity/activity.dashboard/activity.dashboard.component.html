@@ -26,14 +26,13 @@
         </div>
 
         <div class="row" style="padding-top: 0px;padding-left: 0px">
-
+            <!-- Activities -->
             <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-
-                <dashboard-card [title]="'ACTIVITY.RECENT-ACTIVITY'|translate">
-
+                <dashboard-card [title]="'ACTIVITY.RECENT-ACTIVITY'|translate"
+                                [urlAction]="['/app/activities',patientId,'physical_activity']">
                     <div class="row physicalActivity" [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                          *ngFor="let activity of listActivities;index as i;trackBy: trackById"
-                         [routerLink]="['/app/activities',patientId,'physical_activity', patientId]">
+                         [routerLink]="['/app/activities',patientId,'physical_activity', activity.id]">
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding-left: 0px">
                             <label class="float-left"
                                    style="font-weight: normal;font-size: 20px">{{activity.name|physicalActivity|translate}}</label>
@@ -105,11 +104,10 @@
                  style="padding: 0px 0px; padding-right: 7px">
 
                 <div class="row" style="padding-top:7px">
-
+                    <!-- Sleep -->
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6" style="padding-top:0px;">
-
                         <dashboard-card [title]="'ACTIVITY.SLEEP.SLEEP'|translate"
-                                        [urlAction]="['/app/activities',patientId,'sleep',patientId]"
+                                        [urlAction]="['/app/activities',patientId,'sleep']"
                                         (mouseenter)="sleepEnterAndLeave(true)"
                                         (mouseleave)="sleepEnterAndLeave(false)">
                             <!--                                    <small style="position: absolute;right: 10px; top: 10px">12/12/2019</small>-->
@@ -205,10 +203,8 @@
                             </div>
 
                         </dashboard-card>
-
-
                     </div>
-
+                    <!-- Steps -->
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6"
                          style="padding: 0px 0px; padding-right: 7px; max-height: 332px"
                          (mouseenter)="stepEnterAndLeave(true)"
@@ -270,7 +266,7 @@
                         </dashboard-card>
 
                     </div>
-
+                    <!-- Calories -->
                     <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
                          style="padding: 0px 7px;min-height: 350px"
                          (mouseenter)="caloriesEnterAndLeave(true)"
@@ -329,7 +325,7 @@
                         </dashboard-card>
 
                     </div>
-
+                    <!-- Active Minutes -->
                     <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
                          style="padding:0px 0px; padding-right: 7px;"
                          (mouseenter)="activeMinutesEnterAndLeave(true)"
@@ -394,7 +390,7 @@
                         </dashboard-card>
 
                     </div>
-
+                    <!-- Distance -->
                     <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
                          style="padding:0px 0px; padding-right: 7px;"
                          (mouseenter)="distanceEnterAndLeave(true)"

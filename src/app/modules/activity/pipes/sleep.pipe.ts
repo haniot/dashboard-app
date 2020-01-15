@@ -16,6 +16,15 @@ export class SleepPipe implements PipeTransform {
       case 'asleep':
         return 'ACTIVITY.PIPES.SLEEP.ASLEEP';
 
+      case 'rem':
+        return 'ACTIVITY.PIPES.SLEEP.REM';
+
+      case 'light':
+        return 'ACTIVITY.PIPES.SLEEP.LIGHT';
+
+      case 'deep':
+        return 'ACTIVITY.PIPES.SLEEP.DEEP';
+
       default:
         return 'ACTIVITY.PIPES.NOTFOUND';
     }

@@ -32,8 +32,9 @@
                                 <li class="nav-item">
                                     <button type="button"
                                             class="borderNone"
-                                            [title]="'ACTIVITY.REMOVE'|translate">
-                                        <i class="material-icons remove-activity">delete</i>
+                                            [title]="'ACTIVITY.REMOVE'|translate"
+                                            (click)="openModalConfirmation(physicalActivity.id)">
+                                        <i class="material-icons remove-register">delete</i>
                                     </button>
                                 </li>
                             </ul>
@@ -260,3 +261,7 @@
         </div>
     </div>
 </div>
+
+<modal-confirmation [message]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION'|translate"
+                    [observation]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION-OBS'|translate"
+                    (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

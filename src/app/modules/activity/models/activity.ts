@@ -3,8 +3,9 @@ export abstract class Activity {
     private _start_time: string;
     private _end_time: string;
     private _duration: number;
-    /* readonly */
-    private readonly _id: string
+    /* TODO: Adicionar o readonly ao id
+    readonly */
+    private _id: string
     private readonly _patient_id: string
 
     constructor() {
@@ -15,6 +16,10 @@ export abstract class Activity {
 
     get id(): string {
         return this._id
+    }
+
+    set id(id: string) {
+        this._id = id;
     }
 
     get patient_id(): string {

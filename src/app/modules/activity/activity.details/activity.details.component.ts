@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { DatePipe } from '@angular/common'
 import { ActivityLevel, Levels } from '../models/activity'
 import { MillisecondPipe } from '../pipes/millisecond.pipe'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 @Component({
     selector: 'activity.details',
@@ -13,6 +14,7 @@ import { MillisecondPipe } from '../pipes/millisecond.pipe'
 })
 export class ActivityDetailsComponent implements OnInit {
     physicalActivity: PhysicalActivity
+    cacheIdForRemove
     intensityLevelsGraph: any;
     heartRateGraph: any;
     Math = Math;
@@ -20,7 +22,8 @@ export class ActivityDetailsComponent implements OnInit {
     constructor(
         private datePipe: DatePipe,
         private millisecondPipe: MillisecondPipe,
-        private translateService: TranslateService) {
+        private translateService: TranslateService,
+        private modalService: ModalService) {
         this.physicalActivity = new PhysicalActivity()
     }
 
@@ -84,9 +87,21 @@ export class ActivityDetailsComponent implements OnInit {
                         name: sedentary,
                         duration: this.millisecondPipe.transform(sedentaryData[0].duration)
                     },
-                    { value: lightData[0].duration, name: light, duration: this.millisecondPipe.transform(lightData[0].duration) },
-                    { value: fairlyData[0].duration, name: fairly, duration: this.millisecondPipe.transform(fairlyData[0].duration) },
-                    { value: veryData[0].duration, name: very, duration: this.millisecondPipe.transform(veryData[0].duration) }],
+                    {
+                        value: lightData[0].duration,
+                        name: light,
+                        duration: this.millisecondPipe.transform(lightData[0].duration)
+                    },
+                    {
+                        value: fairlyData[0].duration,
+                        name: fairly,
+                        duration: this.millisecondPipe.transform(fairlyData[0].duration)
+                    },
+                    {
+                        value: veryData[0].duration,
+                        name: very,
+                        duration: this.millisecondPipe.transform(veryData[0].duration)
+                    }],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -302,5 +317,15 @@ export class ActivityDetailsComponent implements OnInit {
             series: seriesOptionsLastDate
         };
 
+    }
+
+    openModalConfirmation(measurementId: string) {
+        this.modalService.open('modalConfirmation');
+        this.cacheIdForRemove = measurementId;
+    }
+
+    closeModalConfirmation() {
+        this.cacheIdForRemove = '';
+        this.modalService.close('modalConfirmation');
     }
 }

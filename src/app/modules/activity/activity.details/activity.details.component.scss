@@ -41,19 +41,19 @@ label {
   display: none;
 }
 
-.remove-activity {
+.remove-register {
   color: white;
   cursor: pointer;
 }
 
-.disabled .remove-activity {
+.disabled .remove-register {
   color: gray;
   cursor: pointer;
   border-radius: 10px;
   font-size: 30px;
 }
 
-.disabled .remove-activity:hover {
+.disabled .remove-register:hover {
   box-shadow: none;
   font-size: 30px;
 }

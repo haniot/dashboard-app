@@ -38,7 +38,9 @@ import { ActivityDashboardComponent } from './activity.dashboard/activity.dashbo
 import { PhysicalActivityPipe } from './pipes/physical.activity.pipe';
 import { ActivityLevelPipe } from './pipes/activity.level.pipe';
 import { MillisecondPipe } from './pipes/millisecond.pipe'
-import { NgxGaugeModule } from 'ngx-gauge'
+import { NgxGaugeModule } from 'ngx-gauge';
+import { ActivityListComponent } from './activity.list/activity.list.component';
+import { SleepListComponent } from './sleep.list/sleep.list.component'
 
 @NgModule({
     declarations: [
@@ -55,7 +57,9 @@ import { NgxGaugeModule } from 'ngx-gauge'
         ActivityDashboardComponent,
         PhysicalActivityPipe,
         ActivityLevelPipe,
-        MillisecondPipe
+        MillisecondPipe,
+        ActivityListComponent,
+        SleepListComponent
     ],
     exports: [
         ActivityDashboardComponent,
