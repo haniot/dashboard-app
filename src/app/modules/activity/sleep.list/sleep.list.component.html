@@ -159,15 +159,18 @@
                                     </td>
                                 </tr>
                                 <tr *ngFor="let sleep of data;let i= index; trackBy: trackById">
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate" (click)="viewSleepDetails(sleep.id)">
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        (click)="viewSleepDetails(sleep.id)">
                                         <mat-checkbox (change)="changeOnMeasurement()"
                                                       [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                                     </td>
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate" (click)="viewSleepDetails(sleep.id)">
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        (click)="viewSleepDetails(sleep.id)">
                                         {{sleep.start_time | date:'short'}} -
                                         {{sleep.end_time | date:'short'}}
                                     </td>
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate" (click)="viewSleepDetails(sleep.id)">
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        (click)="viewSleepDetails(sleep.id)">
                                         {{Math.floor((sleep.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
                                         {{(sleep.duration % 3600000) ?
                                         ('SHARED.AND'|translate) + ' ' + Math.floor((sleep.duration % 3600000) / 60000) +
@@ -266,6 +269,6 @@
     </div>
 </div>
 
-<modal-confirmation [message]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION'|translate"
-                    [observation]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION-OBS'|translate"
+<modal-confirmation [message]="'ACTIVITY.SLEEP.DELETE-CONFIRMATION'|translate"
+                    (confirmation)="removeMeasurement()"
                     (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

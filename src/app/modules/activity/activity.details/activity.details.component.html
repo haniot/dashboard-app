@@ -262,6 +262,6 @@
     </div>
 </div>
 
-<modal-confirmation [message]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION'|translate"
-                    [observation]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION-OBS'|translate"
+<modal-confirmation [message]="'ACTIVITY.PHYSICAL-ACTIVITY.DELETE-CONFIRMATION'|translate"
+                    (confirmation)="removeActivity()"
                     (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

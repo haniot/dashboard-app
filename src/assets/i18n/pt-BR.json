@@ -36,7 +36,12 @@
       "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
       "VIEW-STAGES": "Visualizar estágios",
       "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono.",
-      "REACHED-THE-IDEAL": "Atingiu o ideal"
+      "REACHED-THE-IDEAL": "Atingiu o ideal",
+      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente o registro de sono?"
+    },
+    "PHYSICAL-ACTIVITY": {
+      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente a atividade?"
+
     },
     "PIPES": {
       "SLEEP": {

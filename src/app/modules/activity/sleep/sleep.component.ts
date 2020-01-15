@@ -6,6 +6,7 @@ import { SleepPipe } from '../pipes/sleep.pipe';
 import { Sleep, SleepType } from '../models/sleep';
 import { ActivatedRoute } from '@angular/router'
 import { SleepService } from '../services/sleep.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 @Component({
     selector: 'sleep',
@@ -38,7 +39,8 @@ export class SleepComponent implements OnInit {
         private datePipe: DatePipe,
         private sleepService: SleepService,
         private translateService: TranslateService,
-        private sleepPipe: SleepPipe
+        private sleepPipe: SleepPipe,
+        private modalService: ModalService
     ) {
         this.Math = Math;
         this.data = new Array<Sleep>();
@@ -286,6 +288,19 @@ export class SleepComponent implements OnInit {
         };
 
     }
+
+    openModalConfirmation() {
+        this.modalService.open('modalConfirmation');
+    }
+
+    closeModalConfirmation() {
+        this.modalService.close('modalConfirmation');
+    }
+
+    removeSleep(): void {
+
+    }
+
 
     onStagesChartInit(event) {
         this.echartStagesInstance = event;

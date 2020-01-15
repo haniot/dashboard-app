@@ -391,3 +391,7 @@
         </div>
     </div>
 </div>
+
+<modal-confirmation [message]="'ACTIVITY.SLEEP.DELETE-CONFIRMATION'|translate"
+                    (confirmation)="removeSleep()"
+                    (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

@@ -328,4 +328,8 @@ export class ActivityDetailsComponent implements OnInit {
         this.cacheIdForRemove = '';
         this.modalService.close('modalConfirmation');
     }
+
+    removeActivity(): void {
+
+    }
 }
