@@ -6,10 +6,10 @@
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 navigation"
                  style="padding: 0px 0px; z-index: 1099;">
-                <i class="material-icons float-left" (click)="previosDay()" [title]="'dia anterior...'">keyboard_arrow_left</i>
+                <i class="material-icons float-left" (click)="previosDay()" [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
 
                 <i class="material-icons float-left" [ngClass]="isToday(currentDate)?'disabled':''" (click)="nextDay()"
-                   [title]="'proximo dia...'">keyboard_arrow_right</i>
+                   [title]="'ACTIVITY.NEXT-DAY'|translate">keyboard_arrow_right</i>
 
                 <label class="float-left">{{currentDate | date}}</label>
 

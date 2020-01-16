@@ -55,6 +55,10 @@ label {
   display: none;
 }
 
+::ng-deep .mat-select-panel {
+  min-width: unset !important;
+}
+
 .loadingQuestionnaire {
   z-index: 2000;
   margin: 0;
@@ -112,7 +116,7 @@ i:hover {
 
 }
 
-navigation {
+.navigation {
   z-index: 1099;
 
   i:hover {

@@ -69,7 +69,9 @@
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"
     },
-    "PERCENT": "Porcentagem"
+    "PERCENT": "Porcentagem",
+    "NEXT-DAY": "proximo dia...",
+    "PREVIOUS-DAY": "dia anterior..."
   },
   "ADMINISTRADORS": {
     "SUBTITLE": "",

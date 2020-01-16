@@ -1,1 +1,209 @@
-<p>activity.list works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-danger">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                <span class="nav-tabs-title">
+                    <h4 class="card-title">Histórico de Atividades Física</h4>
+                    <p class="card-category"></p>
+                </span>
+
+                                <ul class="nav nav-tabs right navigation" data-tabs="tabs">
+                                    <li class="nav-item" (click)="previosDay()">
+                                        <i class="material-icons float-left" style="margin: 10px 0px"
+                                           [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
+                                    </li>
+                                    <li class="nav-item text-center">
+                                        <label style="color:white">{{isToday(currentDate) ? ('MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate) : currentDate | date:'EEEE'}}</label><br>
+                                        <label style="color:white">{{currentDate | date}}</label>
+                                    </li>
+                                    <li class="nav-item" (click)="nextDay()">
+                                        <i class="material-icons float-left" style="margin: 10px 0px"
+                                           [ngClass]="isToday(currentDate)?'disabled':''"
+                                           [title]="isToday(currentDate)?'':'ACTIVITY.NEXT-DAY'|translate">keyboard_arrow_right</i>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="container-fluid">
+                            <div class="row justify-content-end">
+
+                                <div class="col" style="max-width: 50px; padding: 0px 0px; margin: 0px 0px">
+                                    <mat-select class="form-control form-control-sm" style="border-radius: 10px"
+                                                id="selectMeasurement"
+                                                [(ngModel)]="measurementSelected">
+                                        <mat-select-trigger>
+                                            <mat-icon>
+                                                <img [src]="'../../../../assets/img/time-series/'+measurementSelected+'.png'">
+                                            </mat-icon>
+                                        </mat-select-trigger>
+                                        <mat-option *ngFor="let type of timeSeriesTypes" [value]="type"
+                                                    [title]="type | timeSeries | translate">
+                                            <img [src]="'../../../../assets/img/time-series/'+type+'.png'">
+                                        </mat-option>
+                                    </mat-select>
+
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     style="padding: 0px 0px; margin: 0px 0px">
+                                    <view-timestamp [patientId]="patientId"
+                                                    [typeOfTimeSeries]="measurementSelected"></view-timestamp>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                     style="padding: 0px 0px; margin: 0px 0px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="p-2">
+                                            <h4>Total diario:</h4>
+                                        </div>
+                                        <div class="p-2">
+                                            <h4>0 <small>Steps</small></h4>
+                                        </div>
+                                        <div class="p-2">
+                                            <h4>0 <small>Km</small></h4>
+                                        </div>
+                                        <div class="p-2">
+                                            <h4>0 <small>Calories Burned</small></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <h3>
+                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.TITLE'|translate}}
+                                </h3>
+                            </div>
+                            <div class="col-sm-4">
+                                <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllActivities()"
+                                              [disabled]="!data.length">
+                                    {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
+                                </mat-checkbox>
+                            </div>
+                            <div class="col d-flex flex-row-reverse">
+                                <div class="p-2">
+                                    <button type="button" class="btn btn-haniot-primary btn-sm"
+                                            (click)="removeSelected()"
+                                            [disabled]="!stateButtonRemoveSelected">
+                                        {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.REMOVE-SELECTED'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
+                            <!-- Table for type sleep -->
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                <th>#</th>
+                                <th>{{'ACTIVITY.SLEEP.PERIOD'|translate}}</th>
+                                <th>{{'ACTIVITY.SLEEP.DURATION'|translate}}</th>
+                                <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                                </thead>
+                                <tbody>
+                                <tr *ngIf="data.length==0">
+                                    <td colspan="4" *ngIf="showSpinner">
+                                        <spinner
+                                                [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                                    </td>
+                                    <td colspan="4" *ngIf="!showSpinner">
+                                        <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                            <br>
+                                            <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <!--                                <tr *ngFor="let sleep of data;let i= index; trackBy: trackById">-->
+                                <!--                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"-->
+                                <!--                                        (click)="viewSleepDetails(sleep.id)">-->
+                                <!--                                        <mat-checkbox (change)="changeOnMeasurement()"-->
+                                <!--                                                      [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"-->
+                                <!--                                        (click)="viewSleepDetails(sleep.id)">-->
+                                <!--                                        {{sleep.start_time | date:'short'}} - -->
+                                <!--                                        {{sleep.end_time | date:'short'}}-->
+                                <!--                                    </td>-->
+                                <!--                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"-->
+                                <!--                                        (click)="viewSleepDetails(sleep.id)">-->
+                                <!--                                        {{Math.floor((sleep.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}-->
+                                <!--                                        {{(sleep.duration % 3600000) ?-->
+                                <!--                                        ('SHARED.AND'|translate) + ' ' + Math.floor((sleep.duration % 3600000) / 60000) +-->
+                                <!--                                        ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined-->
+                                <!--                                        }}-->
+                                <!--                                        <div class="float-left"-->
+                                <!--                                             *ngIf="(sleep.duration / 3600000)>=IDEAL_SLEEP_VALUE">-->
+                                <!--                                            <i class="material-icons"-->
+                                <!--                                               [title]="'ACTIVITY.SLEEP.REACHED-THE-IDEAL'|translate">star</i>-->
+                                <!--                                        </div>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <a class="nav-link"-->
+                                <!--                                           [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"-->
+                                <!--                                           (click)="openModalConfirmation(sleep.id)">-->
+                                <!--                                            <i class="material-icons">delete</i>-->
+                                <!--                                        </a>-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
+
+                                </tbody>
+                            </table>
+
+                            <!--                            <mat-paginator [length]="length" [pageSize]="limit" [pageSizeOptions]="pageSizeOptions"-->
+                            <!--                                           (page)="clickPagination($event)">-->
+                            <!--                            </mat-paginator>-->
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="false">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<!--<modal-confirmation-->
+<!--        [message]="!cacheIdMeasurementRemove || cacheIdMeasurementRemove === ''?('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate) +-->
+<!--        ' '+cacheListIdMeasurementRemove.length+' ' + ('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)-->
+<!--        :'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"-->
+<!--        (confirmation)="removeMeasurement()"-->
+<!--        (noconfirmation)="closeModalConfirmation()"></modal-confirmation>-->
