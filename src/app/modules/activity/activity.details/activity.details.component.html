@@ -1,29 +1,29 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
                     <div class="card-header card-header-tabs card-header-danger">
                         <div class="nav-tabs-navigation">
                             <div class="nav-tabs-wrapper">
                                 <span class="nav-tabs-title">
-                                    <h4 class="card-title">{{physicalActivity.name | physicalActivity | translate}}</h4>
+                                    <h4 class="card-title">{{physicalActivity ? (physicalActivity.name | physicalActivity | translate) : ''}}</h4>
                                     <p class="card-category">
-                                            {{physicalActivity.start_time | date}},
-                                        {{'ACTIVITY.BETWEEN'|translate}} {{(physicalActivity.start_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate)}}
+                                            {{physicalActivity ? (physicalActivity.start_time | date) : ''}},
+                                        {{'ACTIVITY.BETWEEN'|translate}} {{physicalActivity ? ((physicalActivity.start_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate)) : ''}}
                                         {{'SHARED.AND'|translate}}
-                                        {{(physicalActivity.end_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate)}}
+                                        {{physicalActivity ? ((physicalActivity.end_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate)) : ''}}
                                     </p>
                                 </span>
                             </div>
                         </div>
                         <div class="nav-tabs-navigation" style="float:right">
                                     <span class="nav-tabs-title">
-                                        <h4 class="card-title">{{physicalActivity.distance}} Km</h4>
+                                        <h4 class="card-title">{{physicalActivity ? physicalActivity.distance : ''}}
+                                            Km</h4>
                                     </span>
                             <span class="nav-tabs-title">
-                                        <h4 class="card-title">{{physicalActivity.duration|millisecond}}</h4>
+                                        <h4 class="card-title">{{physicalActivity ? (physicalActivity.duration|millisecond) : ''}}</h4>
                                     </span>
                             <!--                            <span class="nav-tabs-title">-->
                             <!--                                        <h4 class="card-title">{{physicalActivity.calories}} {{'TIME-SERIES.CALORIES.CALORIES'|translate}}</h4>-->
@@ -44,6 +44,10 @@
                     <div class="card-body">
                         <div class="row justify-content-center">
 
+                            <div class="divSpinner" *ngIf="loadingPhysicalActivity">
+                                <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.LOADING'|translate"></spinner>
+                            </div>
+
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center">
                                 <div class="col-sm-12 col-md-4 row justify-content-center">
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -62,7 +66,7 @@
                                                 <p class="card-category">{{'ACTIVITY.TOTAL-CALORIES-BURNED'|translate}}
                                                     : </p>
                                                 <h3 class="card-title">
-                                                    {{physicalActivity.calories}}
+                                                    {{physicalActivity ? physicalActivity.calories : ''}}
                                                     <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                                 </h3>
                                                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
@@ -86,7 +90,7 @@
                                                 <p class="card-category">{{'ACTIVITY.CALORIES-BURNED-PER-MINUTES'|translate}}
                                                     : </p>
                                                 <h3 class="card-title">
-                                                    {{Math.floor(physicalActivity.calories / ((physicalActivity.duration % 3600000) / 60000))}}
+                                                    {{physicalActivity ? (Math.floor(physicalActivity.calories / ((physicalActivity.duration % 3600000) / 60000))) : ''}}
                                                     <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}/min</small>
                                                 </h3>
                                                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
@@ -113,7 +117,7 @@
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center"
-                                 *ngIf="physicalActivity.heart_rate_link">
+                                 *ngIf="physicalActivity && physicalActivity.heart_rate_link">
                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <h4 class="float-left">
                                         {{'TIME-SERIES.PIPES.TIME-SERIES.HEART-RATE'|translate}}
@@ -169,45 +173,6 @@
 
                                 </div>
                             </div>
-                            <!--                                <div class="d-flex justify-content-between">-->
-                            <!--                                    <div class="p-2"-->
-                            <!--                                         style="display: flex; align-content: center; justify-content: center;">-->
-                            <!--                                        <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">-->
-                            <!--                                            <div style="width: 77%;height: 77%; display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"></div>-->
-                            <!--                                            <img src="../../../../assets/img/time-series/steps-black.svg" width="50%"-->
-                            <!--                                                 style="position: absolute;">-->
-                            <!--                                        </div>-->
-                            <!--                                        <h2 class="p-2">+{{physicalActivity.steps}}</h2>-->
-                            <!--                                        <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">-->
-                            <!--                                            de 250 passos dados-->
-                            <!--                                        </small>-->
-                            <!--                                    </div>-->
-                            <!--                                    <div class="p-2"-->
-                            <!--                                         style="display: flex; align-content: center; justify-content: center;">-->
-                            <!--                                        <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">-->
-                            <!--                                            <div style="width: 77%;height: 77%; display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"></div>-->
-                            <!--                                            <img src="../../../../assets/img/time-series/calories-black.svg" width="50%"-->
-                            <!--                                                 style="position: absolute;">-->
-                            <!--                                        </div>-->
-                            <!--                                        <h2 class="p-2">+{{physicalActivity.calories}}</h2>-->
-                            <!--                                        <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">-->
-                            <!--                                            de 1500 calorias queimadas-->
-                            <!--                                        </small>-->
-                            <!--                                    </div>-->
-                            <!--                                    <div class="p-2"-->
-                            <!--                                         style="display: flex; align-content: center; justify-content: center;">-->
-                            <!--                                        <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">-->
-                            <!--                                            <div style="width: 60%;height: 60%; display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"></div>-->
-                            <!--                                            <img src="../../../../assets/img/time-series/active_minutes.svg" width="50%"-->
-                            <!--                                                 style="position: absolute;">-->
-                            <!--                                        </div>-->
-                            <!--                                        <h2 class="p-2">+{{physicalActivity.duration}}</h2>-->
-                            <!--                                        <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">-->
-                            <!--                                            de 450 minutos ativos-->
-                            <!--                                        </small>-->
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
 
                             <div class="col">
                                 <div class="p-2"
@@ -217,7 +182,7 @@
                                         <img src="../../../../assets/img/time-series/steps-black.svg" width="50%"
                                              style="position: absolute;">
                                     </div>
-                                    <h2 class="p-2">+{{physicalActivity.steps}}</h2>
+                                    <h2 class="p-2">+{{physicalActivity ? physicalActivity.steps : ''}}</h2>
                                     <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
                                         {{'PAGINATOR.OF'|translate}} 300 {{'ACTIVITY.STEPS-TAKEN'|translate}}
                                     </small>
@@ -232,7 +197,7 @@
                                         <img src="../../../../assets/img/time-series/calories-black.svg" width="45%"
                                              style="position: absolute;">
                                     </div>
-                                    <h2 class="p-2">+{{physicalActivity.calories}}</h2>
+                                    <h2 class="p-2">+{{physicalActivity ? physicalActivity.calories : ''}}</h2>
                                     <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
                                         {{'PAGINATOR.OF'|translate}} 1500 {{'ACTIVITY.CALORIES-BURNED'|translate}}
                                     </small>
@@ -247,7 +212,8 @@
                                         <img src="../../../../assets/img/time-series/active_minutes.svg" width="50%"
                                              style="position: absolute;">
                                     </div>
-                                    <h2 class="p-2">+{{Math.floor(physicalActivity.duration / 60000)}}</h2>
+                                    <h2 class="p-2">
+                                        +{{physicalActivity ? (Math.floor(physicalActivity.duration / 60000)) : ''}}</h2>
                                     <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
                                         {{'PAGINATOR.OF'|translate}} 450 {{'ACTIVITY.ACTIVE-MINUTES'|translate}}
                                     </small>
@@ -259,6 +225,27 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div *ngIf="removingActivity">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
     </div>
 </div>
 

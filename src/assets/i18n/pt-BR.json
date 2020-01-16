@@ -37,11 +37,13 @@
       "VIEW-STAGES": "Visualizar estágios",
       "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono.",
       "REACHED-THE-IDEAL": "Atingiu o ideal",
-      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente o registro de sono?"
+      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente o registro de sono?",
+      "SPINNER-MESSAGE": "Removendo registro de sono..."
     },
     "PHYSICAL-ACTIVITY": {
-      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente a atividade?"
-
+      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente a atividade?",
+      "SPINNER-MESSAGE": "Removendo atividade física...",
+      "LOADING": "Carregando atividade física..."
     },
     "PIPES": {
       "SLEEP": {
@@ -1001,7 +1003,13 @@
     "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!",
     "MEASUREMENT-REMOVED": "Medição removida com sucesso!",
     "MEASUREMENT-NOT-REMOVED": "Não foi possível remover medição!",
-    "ACCOUNT-NOT-DELETED": "Não foi possível excluir conta, tente novamente!"
+    "ACCOUNT-NOT-DELETED": "Não foi possível excluir conta, tente novamente!",
+    "SLEEP-REMOVED": "Registro de sono removido com sucesso!",
+    "SLEEP-NOT-REMOVED": "Não foi possível remover o registro de sono!",
+    "SLEEP-NOT-LOADED": "Não foi possível carregar o registro de sono!",
+    "PHYSICAL-ACTIVITY-REMOVED": "Atividade removida com sucesso!",
+    "PHYSICAL-ACTIVITY-NOT-REMOVED": "Não foi possível remover a atividade física!",
+    "PHYSICAL-ACTIVITY-NOT-LOADED": "Não foi possível carregar a atividade selecionada!"
   },
   "TIME-SERIES": {
     "ACTIVE-MINUTES": {

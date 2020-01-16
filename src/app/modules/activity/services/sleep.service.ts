@@ -10,6 +10,7 @@ import {
     SleepType
 } from '../models/sleep'
 import { SearchForPeriod } from '../../measurement/models/measurement'
+import { PhysicalActivity } from '../models/physical.activity'
 
 @Injectable()
 export class SleepService {
@@ -836,16 +837,32 @@ export class SleepService {
 
         switch (sleepId) {
             case sleep.id:
-                return Promise.resolve(sleep)
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        reject(sleep)
+                    }, 3000);
+                })
 
             case sleep2.id:
-                return Promise.resolve(sleep2)
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        reject(sleep2)
+                    }, 3000);
+                })
 
             case sleep3.id:
-                return Promise.resolve(sleep3)
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        reject(sleep3)
+                    }, 3000);
+                })
 
             default:
-                return Promise.resolve(sleep)
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        reject(sleep)
+                    }, 3000);
+                })
         }
 
         return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/sleep/${sleepId}`)

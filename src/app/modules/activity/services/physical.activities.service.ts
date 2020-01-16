@@ -30,6 +30,11 @@ export class PhysicalActivitiesService {
     }
 
     getById(patientId: string, activityId: string): Promise<PhysicalActivity> {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(new PhysicalActivity())
+            }, 3000);
+        })
         return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities/${activityId}`)
             .toPromise();
     }

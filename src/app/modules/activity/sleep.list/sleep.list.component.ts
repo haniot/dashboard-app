@@ -47,6 +47,7 @@ export class SleepListComponent implements OnInit {
     stateButtonRemoveSelected: boolean;
     /*In hours*/
     IDEAL_SLEEP_VALUE = 8;
+    removingSleep: boolean;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -327,19 +328,22 @@ export class SleepListComponent implements OnInit {
     }
 
     async removeMeasurement(): Promise<any> {
+        this.modalService.close('modalConfirmation');
         this.loadingMeasurements = true;
-        if (!this.cacheListIdMeasurementRemove || !this.cacheListIdMeasurementRemove.length) {
+        this.removingSleep = true;
+        if (this.cacheIdMeasurementRemove) {
             this.sleepService.remove(this.patientId, this.cacheIdMeasurementRemove)
                 .then(measurements => {
                     this.applyFilter(this.filter);
                     this.loadingMeasurements = false;
                     this.modalConfirmRemoveMeasurement = false;
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
+                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.SLEEP-REMOVED'));
                 })
                 .catch(() => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'));
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.SLEEP-NOT-REMOVED'));
                     this.loadingMeasurements = false;
                     this.modalConfirmRemoveMeasurement = false;
+                    this.removingSleep = false;
                 })
         } else {
             let occuredError = false;
@@ -352,11 +356,12 @@ export class SleepListComponent implements OnInit {
                 }
             }
             occuredError ? this.toastService
-                    .error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'))
-                : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
+                    .error(this.translateService.instant('TOAST-MESSAGES.SLEEP-NOT-REMOVED'))
+                : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.SLEEP-REMOVED'));
 
             this.applyFilter(this.filter);
             this.loadingMeasurements = false;
+            this.removingSleep = false;
             this.modalConfirmRemoveMeasurement = false;
         }
     }
@@ -369,7 +374,8 @@ export class SleepListComponent implements OnInit {
             }
         })
         this.cacheListIdMeasurementRemove = measurementsIdSelected;
-        this.modalConfirmRemoveMeasurement = true;
+        // this.modalConfirmRemoveMeasurement = true;
+        this.openModalConfirmation('')
     }
 
     selectAllMeasurements(): void {

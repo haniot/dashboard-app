@@ -136,21 +136,6 @@ canvas {
   }
 }
 
-#removeModalConfirmation {
-  position: absolute;
-  display: flex;
-  margin: auto;
-  z-index: 1025;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
 .dataset-timestamp {
   color: black;
   font-size: 14px;
@@ -178,4 +163,18 @@ table tr {
   padding: 10px 10px;
   width: 10px;
   height: 10px;
+}
+
+.externa {
+  position: fixed;
+  z-index: 2000;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
 }

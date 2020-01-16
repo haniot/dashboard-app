@@ -36,7 +36,14 @@
       "UNAVAILABLE-DATA": "No records within selected period!",
       "VIEW-STAGES": "View stages",
       "CLICK-TO-VIEW": "Click on the log to view the stages of sleep.",
-      "REACHED-THE-IDEAL": "Reached the ideal"
+      "REACHED-THE-IDEAL": "Reached the ideal",
+      "DELETE-CONFIRMATION": "Are you sure you want to permanently remove the sleep log?",
+      "SPINNER-MESSAGE": "Removing sleep log..."
+    },
+    "PHYSICAL-ACTIVITY": {
+      "DELETE-CONFIRMATION": "Are you sure you want to permanently remove the activity?",
+      "SPINNER-MESSAGE": "Removing physical activity ...",
+      "LOADING": "Loading physical activity ..."
     },
     "PIPES": {
       "SLEEP": {
@@ -996,7 +1003,13 @@
     "QUESTIONNAIRE-NOT-DELETED": "Unable to remove questionnaire!",
     "MEASUREMENT-REMOVED": "Measurement successfully removed!",
     "MEASUREMENT-NOT-REMOVED": "Could not remove measurement!",
-    "ACCOUNT-NOT-DELETED": "Unable to delete account, please try again!"
+    "ACCOUNT-NOT-DELETED": "Unable to delete account, please try again!",
+    "SLEEP-REMOVED": "Sleep log successfully removed!",
+    "SLEEP-NOT-REMOVED": "Unable to remove sleep log!",
+    "SLEEP-NOT-LOADED": "Unable to load sleep log!",
+    "PHYSICAL-ACTIVITY-REMOVED": "Activity successfully removed!",
+    "PHYSICAL-ACTIVITY-NOT-REMOVED": "Unable to remove physical activity!",
+    "PHYSICAL-ACTIVITY-NOT-LOADED": "Unable to load selected activity!"
   },
   "TIME-SERIES": {
     "ACTIVE-MINUTES": {

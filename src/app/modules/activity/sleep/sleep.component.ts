@@ -4,9 +4,10 @@ import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { SleepPipe } from '../pipes/sleep.pipe';
 import { Sleep, SleepType } from '../models/sleep';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { SleepService } from '../services/sleep.service'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
     selector: 'sleep',
@@ -33,6 +34,8 @@ export class SleepComponent implements OnInit {
     remColor: string;
     /*In hours*/
     IDEAL_SLEEP_VALUE = 8;
+    loadingSleep: boolean;
+    removingSleep: boolean;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -40,7 +43,9 @@ export class SleepComponent implements OnInit {
         private sleepService: SleepService,
         private translateService: TranslateService,
         private sleepPipe: SleepPipe,
-        private modalService: ModalService
+        private modalService: ModalService,
+        private router: Router,
+        private toastService: ToastrService
     ) {
         this.Math = Math;
         this.data = new Array<Sleep>();
@@ -53,6 +58,7 @@ export class SleepComponent implements OnInit {
         this.deepColor = '#0402EC';
         this.lightColor = '#25c5b5';
         this.remColor = '#7EC4FF';
+        this.removingSleep = false;
     }
 
     ngOnInit() {
@@ -65,6 +71,7 @@ export class SleepComponent implements OnInit {
     }
 
     loadSleepGraph(sleepId: string): void {
+        this.loadingSleep = true;
         this.sleepService.getById(this.patientId, sleepId)
             .then(sleep => {
                 this.sleepSelected = sleep
@@ -77,9 +84,12 @@ export class SleepComponent implements OnInit {
                         this.loadSleepGraphStages()
                         break
                 }
+                this.loadingSleep = false;
             })
             .catch(err => {
-                console.log(err)
+                this.router.navigate(['/app/activities', this.patientId, 'sleep']);
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.SLEEP-NOT-LOADED'));
+                this.loadingSleep = false;
             })
     }
 
@@ -298,6 +308,18 @@ export class SleepComponent implements OnInit {
     }
 
     removeSleep(): void {
+        this.modalService.close('modalConfirmation');
+        this.removingSleep = true;
+        this.sleepService.remove(this.patientId, this.sleepSelected.id)
+            .then(() => {
+                this.router.navigate(['/app/activities', this.patientId, 'sleep']);
+                this.removingSleep = false;
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.SLEEP-REMOVED'));
+            })
+            .catch(err => {
+                this.removingSleep = false;
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.SLEEP-NOT-REMOVED'));
+            })
 
     }
 

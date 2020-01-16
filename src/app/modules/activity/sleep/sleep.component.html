@@ -11,18 +11,19 @@
                                 <span class="nav-tabs-title">
                                     <h4 class="card-title">{{'ACTIVITY.SLEEP.TITLE'|translate}}</h4>
                                     <p class="card-category">
-                                            {{sleepSelected.start_time | date}},
-                                        {{'ACTIVITY.BETWEEN'|translate}} {{(sleepSelected.start_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate)}}
+                                            {{sleepSelected ? (sleepSelected.start_time | date) : ''}},
+                                        {{'ACTIVITY.BETWEEN'|translate}} {{sleepSelected ? (sleepSelected.start_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) : ''}}
                                         {{'SHARED.AND'|translate}}
-                                        {{(sleepSelected.end_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate)}}
+                                        {{sleepSelected ? (sleepSelected.end_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) : ''}}
                                     </p>
                                 </span>
                             </div>
                         </div>
                         <div class="nav-tabs-navigation" style="float:right">
                             <span class="nav-tabs-title">
-                                        <h4 class="card-title text-center">{{sleepSelected.duration|millisecond}}</h4>
-                                <span *ngIf="(sleepSelected.duration / 3600000)>=IDEAL_SLEEP_VALUE" class="text-center">
+                                        <h4 class="card-title text-center">{{sleepSelected ? (sleepSelected.duration|millisecond) : '- -'}}</h4>
+                                <span *ngIf="sleepSelected && (sleepSelected.duration / 3600000)>=IDEAL_SLEEP_VALUE"
+                                      class="text-center">
                                         <p class="card-category">
                                             <i class="material-icons"
                                                [title]="'ACTIVITY.SLEEP.REACHED-THE-IDEAL'|translate"
@@ -33,7 +34,7 @@
                                 <li class="nav-item">
                                     <button type="button"
                                             class="borderNone"
-                                            [title]="'ACTIVITY.REMOVE'|translate">
+                                            [title]="'ACTIVITY.REMOVE'|translate" (click)="openModalConfirmation()">
                                         <i class="material-icons remove-register">delete</i>
                                     </button>
                                 </li>
@@ -43,6 +44,11 @@
 
                     <div class="container-fluid">
                         <div class="row fadeIn">
+
+                            <div class="divSpinner" *ngIf="loadingSleep">
+                                <spinner [message]="'Carregando registro de sono...'"></spinner>
+                            </div>
+
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center"
                                  *ngIf="sleepSelected && sleepSelected.type===sleepTypes.CLASSIC">
                                 <!-- AWAKE -->
@@ -57,20 +63,15 @@
                                             <h4 class="card-title">
                                                 {{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}
                                             </h4>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
-                                                {{sleepSelected.pattern.summary.awake.count + '%'}} -
                                                 {{Math.floor((sleepSelected.pattern.summary.awake.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
                                                 {{(sleepSelected.pattern.summary.awake.duration.duration % 3600000) ?
                                                 ('SHARED.AND'|translate) + ' ' + Math.floor((sleepSelected.pattern.summary.awake.duration.duration % 3600000) / 60000) +
                                                 ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                                 }}
                                             </h3>
-                                            <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                                            <!--                        {{lastData.value + '' + lastData.unit}}-->
-                                            <!--                    </h3>-->
-                                            <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                                            <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                                            <!--                    </h3>-->
                                         </div>
                                     </div>
 
@@ -85,16 +86,18 @@
                                                      width="40"
                                                      height="40">
                                             </div>
-                                            <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.RESTLESS'|translate}}: </p>
+                                            <h4 class="card-title">
+                                                {{'ACTIVITY.PIPES.SLEEP.RESTLESS'|translate}}
+                                            </h4>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
-                                                {{sleepSelected.pattern.summary.restless.count + '%'}}
+                                                {{Math.floor((sleepSelected.pattern.summary.restless.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
+                                                {{(sleepSelected.pattern.summary.restless.duration.duration % 3600000) ?
+                                                ('SHARED.AND'|translate) + ' ' + Math.floor((sleepSelected.pattern.summary.restless.duration.duration % 3600000) / 60000) +
+                                                ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
+                                                }}
                                             </h3>
-                                            <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                                            <!--                        {{lastData.value + '' + lastData.unit}}-->
-                                            <!--                    </h3>-->
-                                            <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                                            <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                                            <!--                    </h3>-->
                                         </div>
                                     </div>
 
@@ -109,16 +112,18 @@
                                                      width="40"
                                                      height="40">
                                             </div>
-                                            <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.ASLEEP'|translate}}: </p>
+                                            <h4 class="card-title">
+                                                {{'ACTIVITY.PIPES.SLEEP.ASLEEP'|translate}}
+                                            </h4>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
-                                                {{sleepSelected.pattern.summary.asleep.count + '%'}}
+                                                {{Math.floor((sleepSelected.pattern.summary.asleep.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
+                                                {{(sleepSelected.pattern.summary.asleep.duration.duration % 3600000) ?
+                                                ('SHARED.AND'|translate) + ' ' + Math.floor((sleepSelected.pattern.summary.asleep.duration.duration % 3600000) / 60000) +
+                                                ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
+                                                }}
                                             </h3>
-                                            <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                                            <!--                        {{lastData.value + '' + lastData.unit}}-->
-                                            <!--                    </h3>-->
-                                            <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                                            <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                                            <!--                    </h3>-->
                                         </div>
                                     </div>
 
@@ -137,7 +142,11 @@
                                                 <img src="../../../../assets/img/time-series/awake-white.svg" width="40"
                                                      height="40">
                                             </div>
-                                            <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}: </p>
+                                            <h4 class="card-title">
+                                                {{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}
+                                            </h4>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
                                                 {{Math.floor((sleepSelected.pattern.summary.awake.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
                                                 {{(sleepSelected.pattern.summary.awake.duration % 3600000) ?
@@ -145,12 +154,6 @@
                                                 ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                                 }}
                                             </h3>
-                                            <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                                            <!--                        {{lastData.value + '' + lastData.unit}}-->
-                                            <!--                    </h3>-->
-                                            <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                                            <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                                            <!--                    </h3>-->
                                         </div>
                                     </div>
 
@@ -164,7 +167,11 @@
                                                 <img src="../../../../assets/img/time-series/rem-white.svg" width="40"
                                                      height="40">
                                             </div>
-                                            <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.REM'|translate}}: </p>
+                                            <h4 class="card-title">
+                                                {{'ACTIVITY.PIPES.SLEEP.REM'|translate}}
+                                            </h4>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
                                                 {{Math.floor((sleepSelected.pattern.summary.rem.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
                                                 {{(sleepSelected.pattern.summary.rem.duration % 3600000) ?
@@ -172,12 +179,6 @@
                                                 ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                                 }}
                                             </h3>
-                                            <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                                            <!--                        {{lastData.value + '' + lastData.unit}}-->
-                                            <!--                    </h3>-->
-                                            <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                                            <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                                            <!--                    </h3>-->
                                         </div>
                                     </div>
 
@@ -191,7 +192,11 @@
                                                 <img src="../../../../assets/img/time-series/light-white.svg" width="40"
                                                      height="40">
                                             </div>
-                                            <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.LIGHT'|translate}}: </p>
+                                            <h4 class="card-title">
+                                                {{'ACTIVITY.PIPES.SLEEP.LIGHT'|translate}}
+                                            </h4>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
                                                 {{Math.floor((sleepSelected.pattern.summary.light.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
                                                 {{(sleepSelected.pattern.summary.light.duration % 3600000) ?
@@ -199,12 +204,6 @@
                                                 ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                                 }}
                                             </h3>
-                                            <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                                            <!--                        {{lastData.value + '' + lastData.unit}}-->
-                                            <!--                    </h3>-->
-                                            <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                                            <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                                            <!--                    </h3>-->
                                         </div>
                                     </div>
 
@@ -218,7 +217,11 @@
                                                 <img src="../../../../assets/img/time-series/deep-white.svg" width="40"
                                                      height="40">
                                             </div>
-                                            <p class="card-category">{{'ACTIVITY.PIPES.SLEEP.DEEP'|translate}}: </p>
+                                            <h4 class="card-title">
+                                                {{'ACTIVITY.PIPES.SLEEP.DEEP'|translate}}
+                                            </h4>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
                                                 {{Math.floor((sleepSelected.pattern.summary.deep.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
                                                 {{(sleepSelected.pattern.summary.deep.duration % 3600000) ?
@@ -226,12 +229,6 @@
                                                 ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                                 }}
                                             </h3>
-                                            <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                                            <!--                        {{lastData.value + '' + lastData.unit}}-->
-                                            <!--                    </h3>-->
-                                            <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                                            <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                                            <!--                    </h3>-->
                                         </div>
                                     </div>
 
@@ -313,7 +310,6 @@
 
                 </div>
 
-
                 <div class="row fadeIn" *ngIf="!includeCard">
                     <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 row justify-content-center">
 
@@ -389,6 +385,27 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div *ngIf="removingSleep">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'ACTIVITY.SLEEP.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
     </div>
 </div>
 

@@ -6,6 +6,9 @@ import { DatePipe } from '@angular/common'
 import { ActivityLevel, Levels } from '../models/activity'
 import { MillisecondPipe } from '../pipes/millisecond.pipe'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { PhysicalActivitiesService } from '../services/physical.activities.service'
+import { ActivatedRoute, Router } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
     selector: 'activity.details',
@@ -13,23 +16,48 @@ import { ModalService } from '../../../shared/shared.components/modal/service/mo
     styleUrls: ['../shared.style/shared.styles.scss', './activity.details.component.scss']
 })
 export class ActivityDetailsComponent implements OnInit {
-    physicalActivity: PhysicalActivity
-    cacheIdForRemove
+    patientId: string;
+    physicalActivity: PhysicalActivity;
+    cacheIdForRemove: string;
     intensityLevelsGraph: any;
     heartRateGraph: any;
     Math = Math;
+    removingActivity: boolean;
+    loadingPhysicalActivity: boolean;
 
     constructor(
+        private activeRouter: ActivatedRoute,
         private datePipe: DatePipe,
         private millisecondPipe: MillisecondPipe,
         private translateService: TranslateService,
-        private modalService: ModalService) {
-        this.physicalActivity = new PhysicalActivity()
+        private modalService: ModalService,
+        private physicalActivitiesService: PhysicalActivitiesService,
+        private router: Router,
+        private toastService: ToastrService) {
     }
 
     ngOnInit() {
-        this.loadIntensityLevelsGraph();
-        this.loadHeartRateGraph();
+        this.activeRouter.paramMap.subscribe((params) => {
+            this.patientId = params.get('patientId');
+            const activityId = params.get('activityId');
+            this.loadActivity(activityId);
+        })
+    }
+
+    loadActivity(activityId: string): void {
+        this.loadingPhysicalActivity = true;
+        this.physicalActivitiesService.getById(this.patientId, activityId)
+            .then(physicalActivity => {
+                this.loadingPhysicalActivity = false;
+                this.physicalActivity = physicalActivity;
+                this.loadIntensityLevelsGraph();
+                this.loadHeartRateGraph();
+            })
+            .catch(err => {
+                this.router.navigate(['/app/activities', this.patientId, 'physical_activity']);
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-NOT-LOADED'))
+                this.loadingPhysicalActivity = false;
+            })
     }
 
     loadIntensityLevelsGraph(): void {
@@ -330,6 +358,17 @@ export class ActivityDetailsComponent implements OnInit {
     }
 
     removeActivity(): void {
-
+        this.modalService.close('modalConfirmation');
+        this.removingActivity = true;
+        this.physicalActivitiesService.remove(this.patientId, this.physicalActivity.id)
+            .then(() => {
+                this.router.navigate(['/app/activities', this.patientId, 'physical_activity']);
+                this.removingActivity = false;
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-REMOVED'));
+            })
+            .catch(err => {
+                this.removingActivity = false;
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-NOT-REMOVED'));
+            })
     }
 }

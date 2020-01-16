@@ -269,6 +269,30 @@
     </div>
 </div>
 
-<modal-confirmation [message]="'ACTIVITY.SLEEP.DELETE-CONFIRMATION'|translate"
-                    (confirmation)="removeMeasurement()"
-                    (noconfirmation)="closeModalConfirmation()"></modal-confirmation>
+<div *ngIf="removingSleep">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'ACTIVITY.SLEEP.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<modal-confirmation
+        [message]="!cacheIdMeasurementRemove || cacheIdMeasurementRemove === ''?('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate) +
+        ' '+cacheListIdMeasurementRemove.length+' ' + ('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
+        :'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
+        (confirmation)="removeMeasurement()"
+        (noconfirmation)="closeModalConfirmation()"></modal-confirmation>
