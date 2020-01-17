@@ -78,7 +78,7 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
         };
 
 
-        if (this.data.length > 1) {
+        if (this.data && this.data.length > 1) {
             this.lastData = this.data[this.data.length - 1];
         } else {
             this.lastData = this.data[0];

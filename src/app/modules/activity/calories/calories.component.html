@@ -12,7 +12,7 @@
                     </div>
                     <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                        {{lastData && lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -33,7 +33,7 @@
                     </div>
                     <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                        {{lastData && lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -73,7 +73,7 @@
                 </div>
                 <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                    {{lastData && lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -94,7 +94,7 @@
                 </div>
                 <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                    {{lastData && lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->

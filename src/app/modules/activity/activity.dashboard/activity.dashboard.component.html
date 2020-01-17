@@ -114,7 +114,7 @@
                             <div class="row justify-content-center" *ngIf="sleepSelected && !loadingDashboard">
 
                                 <div class="col justify-content-center" #sleepDiv
-                                     style="height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto; margin-top: 0px; border: 1px solid black">
+                                     style="height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto; margin-top: 0px;">
                                     <ngx-gauge
                                             [size]="sleepSize"
                                             [type]="'semi'"
@@ -216,8 +216,8 @@
                                 <ngx-gauge
                                         [type]="'full'"
                                         [thick]="10"
-                                        [min]="0"
-                                        [max]="goal.steps"
+                                        [min]="goal && goal.steps?0:-1"
+                                        [max]="goal && goal.steps?goal.steps:0"
                                         [cap]="'round'"
                                         [foregroundColor]="'#00a594'"
                                         [duration]="500"
@@ -239,7 +239,8 @@
                                     <div style="display: block;padding: 0px 0px">
                                         <div class="text-center" style="padding: 0px 0px">
                                             <label style="font-size: 50px; margin: 0px 0px">
-                                                {{Math.round((stepsValue * 100) / goal.steps)}}%
+                                                {{goal && goal.steps ? (Math.round((stepsValue * 100) / goal.steps)) : 100}}
+                                                %
                                             </label>
                                         </div>
                                         <div class="text-center" style="padding: 0px 0px;">
@@ -251,7 +252,7 @@
                                 </div>
                                 <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
                                     <label style="font-size: 25px; font-weight: normal;">
-                                        {{stepsValue}} de {{goal.steps ? goal.steps : 0}}
+                                        {{stepsValue}} de {{goal && goal.steps ? goal.steps : 0}}
                                         <small>pas</small>
                                     </label>
                                 </div>
@@ -276,9 +277,9 @@
                             <div class="row justify-content-center" *ngIf="!loadingDashboard">
                                 <ngx-gauge [type]="'full'"
                                            [thick]="10"
-                                           [min]="0"
+                                           [min]="goal && goal.calories?0:-1"
                                            [cap]="'round'"
-                                           [max]="goal.calories"
+                                           [max]="goal && goal.calories?goal.calories:0"
                                            [foregroundColor]="'#fba53e'"
                                            [duration]="200"
                                            [value]="caloriesValue"
@@ -298,7 +299,8 @@
                                     <div style="display: block;padding: 0px 0px">
                                         <div class="text-center" style="padding: 0px 0px">
                                             <label style="font-size: 50px; margin: 0px 0px">
-                                                {{Math.round((caloriesValue * 100) / goal.calories)}}%
+                                                {{goal && goal.calories ? (Math.round((caloriesValue * 100) / goal.calories)) : 100}}
+                                                %
                                             </label>
                                         </div>
                                         <div class="text-center" style="padding: 0px 0px;">
@@ -311,7 +313,7 @@
                                 <div class="text-center"
                                      style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
                                     <label style="font-size: 25px; font-weight: normal;">
-                                        {{caloriesValue}} de {{goal.calories ? goal.calories : 0}}
+                                        {{caloriesValue}} de {{goal && goal.calories ? goal.calories : 0}}
                                         <small>calls</small>
                                     </label>
                                 </div>
@@ -342,9 +344,9 @@
                             <div class="row justify-content-center" *ngIf="!loadingDashboard">
                                 <ngx-gauge [type]="'full'"
                                            [thick]="10"
-                                           [min]="0"
+                                           [min]="goal && goal.active_minutes?0:-1"
                                            [cap]="'round'"
-                                           [max]="goal.active_minutes"
+                                           [max]="goal && goal.active_minutes?goal.active_minutes:0"
                                            [foregroundColor]="'#A6F355'"
                                            [duration]="200"
                                            [value]="activeMinutesValue">
@@ -363,7 +365,8 @@
                                     <div style="display: block;padding: 0px 0px">
                                         <div class="text-center" style="padding: 0px 0px">
                                             <label style="font-size: 50px; margin: 0px 0px">
-                                                {{Math.round((activeMinutesValue * 100) / goal.active_minutes)}}%
+                                                {{goal && goal.active_minutes ? (Math.round((activeMinutesValue * 100) / goal.active_minutes)) : 100}}
+                                                %
                                             </label>
                                         </div>
                                         <div class="text-center" style="padding: 0px 0px;">
@@ -375,7 +378,8 @@
                                 </div>
                                 <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
                                     <label style="font-size: 25px; font-weight: normal;max-width: 100%;">
-                                        {{activeMinutesValue}} de {{goal.active_minutes ? goal.active_minutes : 0}}
+                                        {{activeMinutesValue}}
+                                        de {{goal && goal.active_minutes ? goal.active_minutes : 0}}
                                         <small>min</small>
                                     </label>
                                 </div>
@@ -401,9 +405,9 @@
                                 <ngx-gauge
                                         [type]="'full'"
                                         [thick]="10"
-                                        [min]="0"
+                                        [min]="goal && goal.distance?0:-1"
                                         [cap]="'round'"
-                                        [max]="goal.distance"
+                                        [max]="goal && goal.distance?goal.distance:0"
                                         [foregroundColor]="'#5FCCCB'"
                                         [duration]="200"
                                         [value]="distanceValue">
@@ -422,7 +426,8 @@
                                     <div style="display: block;padding: 0px 0px">
                                         <div class="text-center" style="padding: 0px 0px">
                                             <label style="font-size: 50px; margin: 0px 0px">
-                                                {{Math.round((distanceValue * 100) / goal.distance)}}%
+                                                {{goal && goal.distance ? (Math.round((distanceValue * 100) / goal.distance)) : 100}}
+                                                %
                                             </label>
                                         </div>
                                         <div class="text-center" style="padding: 0px 0px;">
@@ -434,7 +439,7 @@
                                 </div>
                                 <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
                                     <label style="font-size: 25px; font-weight: normal;">
-                                        {{distanceValue}} de {{goal.distance ? goal.distance : 0}}
+                                        {{distanceValue}} de {{goal && goal.distance ? goal.distance : 0}}
                                         <small>m</small>
                                     </label>
                                 </div>
@@ -481,7 +486,8 @@
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                  style="padding: 0px 0px; margin: 0px 0px">
                                 <view-timestamp [patientId]="patientId"
-                                                [typeOfTimeSeries]="measurementSelected"></view-timestamp>
+                                                [typeOfTimeSeries]="measurementSelected"
+                                                [filter]="currentFilter"></view-timestamp>
                             </div>
                         </div>
 

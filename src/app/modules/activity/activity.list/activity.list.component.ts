@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageEvent } from '@angular/material/paginator';
+import * as moment from 'moment';
 
 import { PhysicalActivity } from '../models/physical.activity';
 import { SearchForPeriod } from '../../measurement/models/measurement';
@@ -11,6 +12,9 @@ import { ModalService } from '../../../shared/shared.components/modal/service/mo
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
 import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
+import * as $ from 'jquery'
+import { DateRange } from '../../pilot.study/models/range-date'
+import { FilterOptions } from '../../measurement/measurement.card/measurement.card.component'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -39,6 +43,13 @@ export class ActivityListComponent implements OnInit {
     cacheIdForRemove: string;
     cacheListIdForRemove: Array<any>;
     removingActivity: boolean;
+    search: DateRange;
+    filterOptions = FilterOptions;
+    /*mobile view*/
+    filterSelected: string;
+    minDate: Date;
+    startOfWeek: Date;
+    endOfWeek: Date;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -56,7 +67,15 @@ export class ActivityListComponent implements OnInit {
         this.timeSeriesTypes = [TimeSeriesType.steps, TimeSeriesType.calories, TimeSeriesType.distance];
         this.timeSerieSelected = TimeSeriesType.steps;
         this.currentDate = new Date();
-        this.data = [new PhysicalActivity(), new PhysicalActivity(), new PhysicalActivity()];
+        this.data = [];
+        this.minDate = new Date((this.currentDate.getFullYear() - 1) + '/' +
+            (this.currentDate.getMonth() + 1) + '/' + this.currentDate.getDate());
+        this.filterSelected = 'today';
+        this.startOfWeek = moment().startOf('week').toDate();
+        this.endOfWeek = moment().endOf('week').toDate();
+
+        console.log('StartWeek: ', this.startOfWeek)
+        console.log('EndWeek: ', this.endOfWeek)
     }
 
     ngOnInit() {
@@ -104,12 +123,14 @@ export class ActivityListComponent implements OnInit {
         this.updateStateButtonRemoveSelected();
     }
 
-    previousDay(): void {
-        this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
+    previous(): void {
+        if (this.filterSelected === 'today') {
+            this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
+        }
     }
 
-    nextDay(): void {
-        if (!this.isToday(this.currentDate)) {
+    next(): void {
+        if (!this.isToday(this.currentDate) && this.filterSelected === 'today') {
             this.currentDate = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
         }
     }
@@ -175,6 +196,28 @@ export class ActivityListComponent implements OnInit {
     updateStateButtonRemoveSelected(): void {
         const activitiesSelected = this.listCheckActivities.filter(element => element === true);
         this.stateButtonRemoveSelected = !!activitiesSelected.length;
+    }
+
+    isMobile(): boolean {
+        return $(window).width() < 1080;
+    }
+
+    filterChange(event: any): void {
+        let filter: { start_at: string, end_at: string, period: string } = {
+            start_at: null,
+            end_at: new Date().toISOString().split('T')[0],
+            period: event
+        };
+        if (event === 'period') {
+            const start_at = this.search.begin.toISOString().split('T')[0];
+            const end_at = this.search.end.toISOString().split('T')[0];
+            filter = { start_at, end_at, period: null };
+        } else {
+            this.search = null;
+        }
+        this.filterSelected = filter.period;
+        // this.filter_change.emit(filter);
+        // this.updateViewFilters(event)
     }
 
     trackById(index, item: PhysicalActivity) {

@@ -12,9 +12,127 @@
                     <h4 class="card-title">{{'ACTIVITY.PHYSICAL-ACTIVITY.TITLE'|translate}}</h4>
                     <p class="card-category"></p>
                 </span>
+<!--                                <ul class="nav nav-tabs right" data-tabs="tabs"-->
+<!--                                    *ngIf="!isMobile()">-->
+<!--                                    <li class="nav-item">-->
+<!--                                        <a class="nav-link" data-toggle="tab"-->
+<!--                                           (click)="filterChange(filterOptions.today)">-->
+<!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}-->
+<!--                                            <div class="ripple-container"></div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="nav-item">-->
+<!--                                        <a class="nav-link" data-toggle="tab"-->
+<!--                                           (click)="filterChange(filterOptions.week)">-->
+<!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}-->
+<!--                                            <div class="ripple-container"></div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="nav-item">-->
+<!--                                        <a class="nav-link" data-toggle="tab"-->
+<!--                                           (click)="filterChange(filterOptions.month)">-->
+<!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}-->
+<!--                                            <div class="ripple-container"></div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="nav-item">-->
+<!--                                        <a class="nav-link" data-toggle="tab"-->
+<!--                                           (click)="filterChange(filterOptions.year)">-->
+<!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}-->
+<!--                                            <div class="ripple-container"></div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="nav-item">-->
+<!--                                        <mat-form-field>-->
+<!--                                            <input matInput-->
+<!--                                                   [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"-->
+<!--                                                   [satDatepicker]="picker"-->
+<!--                                                   [(ngModel)]="search"-->
+<!--                                                   (ngModelChange)="filterChange('period')"-->
+<!--                                                   [min]="minDate"-->
+<!--                                                   [max]="currentDate">-->
 
-                                <ul class="nav nav-tabs right navigation" data-tabs="tabs">
-                                    <li class="nav-item" (click)="previousDay()">
+<!--                                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>-->
+<!--                                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
+<!--                                        </mat-form-field>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+
+                                <ul class="nav nav-tabs right" data-tabs="tabs" *ngIf="isMobile()">
+                                    <li class="nav-item">
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle nav-link active" id="dropdownMenuButton"
+                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{filterSelected|translate}}
+                                                <div class="ripple-container"></div>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item"
+                                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.TODAY'?'active':''"
+                                                   (click)="filterChange(filterOptions.today)">{{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}</a>
+                                                <a class="dropdown-item"
+                                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.WEEK'?'active':''"
+                                                   (click)="filterChange(filterOptions.week)">{{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}</a>
+                                                <a class="dropdown-item"
+                                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.MONTH'?'active':''"
+                                                   (click)="filterChange(filterOptions.month)">{{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}</a>
+                                                <a class="dropdown-item "
+                                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.YEAR'?'active':''"
+                                                   (click)="filterChange(filterOptions.year)">{{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <mat-form-field [ngClass]="isMobile()?'hidden':''">
+                                            <input matInput
+                                                   [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
+                                                   [satDatepicker]="picker"
+                                                   [(ngModel)]="search"
+                                                   (ngModelChange)="filterChange('period')"
+                                                   [min]="minDate"
+                                                   [max]="currentDate">
+
+                                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                                        </mat-form-field>
+                                        <a class="nav-link nav-link-mobile" *ngIf="isMobile()" (click)="picker.open()"
+                                           [title]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate">
+                                            <i class="material-icons">date_range</i>
+                                        </a>
+
+                                    </li>
+                                </ul>
+
+                                <ul class="nav nav-tabs right navigation" data-tabs="tabs" *ngIf="!isMobile()">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab"
+                                           (click)="filterChange(filterOptions.today)">
+                                            {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab"
+                                           (click)="filterChange(filterOptions.week)">
+                                            {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab"
+                                           (click)="filterChange(filterOptions.month)">
+                                            {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab"
+                                           (click)="filterChange(filterOptions.year)">
+                                            {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" (click)="previous()">
                                         <i class="material-icons float-left" style="margin: 10px 0px;"
                                            [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
                                     </li>
@@ -24,7 +142,7 @@
                                         </label><br>
                                         <label style="color:white">{{currentDate | date}}</label>
                                     </li>
-                                    <li class="nav-item" (click)="nextDay()">
+                                    <li class="nav-item" (click)="next()">
                                         <i class="material-icons float-left" style="margin: 10px 0px"
                                            [ngClass]="isToday(currentDate)?'disabled':''"
                                            [title]="isToday(currentDate)?'':'ACTIVITY.NEXT-DAY'|translate">keyboard_arrow_right</i>

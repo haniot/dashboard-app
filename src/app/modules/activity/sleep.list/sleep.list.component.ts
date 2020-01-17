@@ -99,6 +99,7 @@ export class SleepListComponent implements OnInit {
             })
             .catch(err => {
                 console.log(err);
+                this.showSpinner = false;
             })
     }
 

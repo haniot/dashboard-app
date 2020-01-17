@@ -1,5 +1,4 @@
 import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -7,19 +6,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import * as echarts from 'echarts'
 
-import { TimeSeriesType } from '../models/time.series';
-import { Sleep, SleepPattern, SleepPatternPhaseSummary, SleepPatternSummaryData } from '../models/sleep';
+import { TimeSeriesSimpleFilter, TimeSeriesType } from '../models/time.series';
+import { Sleep } from '../models/sleep';
 import { PatientService } from '../../patient/services/patient.service';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
-import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service';
-import { OdontologicalQuestionnairesService } from '../../habits/services/odontological.questionnaires.service';
-import { SleepPipe } from '../pipes/sleep.pipe';
 import { PhysicalActivity } from '../models/physical.activity'
 import { Goal } from '../../patient/models/goal'
 import { Patient } from '../../patient/models/patient'
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
+import { TimeSeriesService } from '../services/time.series.service'
 
 @Component({
     selector: 'activity-dashboard',
@@ -56,6 +52,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     listActivities: PhysicalActivity[];
     listActivitiesIsEmpty: boolean;
     Math = Math;
+    currentFilter: TimeSeriesSimpleFilter;
     @ViewChild('sleepDiv', { static: false }) sleepDivRef: ElementRef;
     @ViewChild('stepDiv', { static: false }) stepDivRef: ElementRef;
 
@@ -81,163 +78,34 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         private router: Router,
         private activeRouter: ActivatedRoute,
         private localStorageService: LocalStorageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private timeSeriesService: TimeSeriesService
     ) {
         this.currentDate = new Date();
         this.timeSeriesTypes = Object.keys(TimeSeriesType);
         this.measurementSelected = TimeSeriesType.steps;
-        this.goal = new Goal();
-        const sleep = new Sleep()
-        sleep.start_time = '2018-08-18T01:40:30.00Z';
-        sleep.end_time = '2018-08-18T09:36:30.00Z';
-        sleep.duration = 25520000;
-        sleep.pattern = new SleepPattern()
-        sleep.pattern.data_set = [
-            {
-                start_time: '2018-08-18T01:40:30.00Z',
-                name: 'restless',
-                duration: 60000
-            },
-            {
-                start_time: '2018-08-18T01:41:30.00Z',
-                name: 'asleep',
-                duration: 360000
-            },
-            {
-                start_time: '2018-08-18T01:47:30.00Z',
-                name: 'restless',
-                duration: 240000
-            },
-            {
-                start_time: '2018-08-18T01:51:30.00Z',
-                name: 'asleep',
-                duration: 60000
-            },
-            {
-                start_time: '2018-08-18T01:52:30.00Z',
-                name: 'restless',
-                duration: 60000
-            },
-            {
-                start_time: '2018-08-18T01:53:30.00Z',
-                name: 'asleep',
-                duration: 2100000
-            },
-            {
-                start_time: '2018-08-18T02:28:30.00Z',
-                name: 'restless',
-                duration: 240000
-            },
-            {
-                start_time: '2018-08-18T02:32:30.00Z',
-                name: 'awake',
-                duration: 180000
-            },
-            {
-                start_time: '2018-08-18T02:35:30.00Z',
-                name: 'asleep',
-                duration: 15120000
-            },
-            {
-                start_time: '2018-08-18T06:47:30.00Z',
-                name: 'restless',
-                duration: 60000
-            },
-            {
-                start_time: '2018-08-18T06:48:30.00Z',
-                name: 'asleep',
-                duration: 2580000
-            },
-            {
-                start_time: '2018-08-18T07:31:30.00Z',
-                name: 'restless',
-                duration: 120000
-            },
-            {
-                start_time: '2018-08-18T07:33:30.00Z',
-                name: 'asleep',
-                duration: 120000
-            },
-            {
-                start_time: '2018-08-18T07:35:30.00Z',
-                name: 'restless',
-                duration: 60000
-            },
-            {
-                start_time: '2018-08-18T07:36:30.00Z',
-                name: 'asleep',
-                duration: 1200000
-            },
-            {
-                start_time: '2018-08-18T07:56:30.00Z',
-                name: 'restless',
-                duration: 60000
-            },
-            {
-                start_time: '2018-08-18T07:57:30.00Z',
-                name: 'asleep',
-                duration: 2580000
-            },
-            {
-                start_time: '2018-08-18T08:40:30.00Z',
-                name: 'restless',
-                duration: 180000
-            },
-            {
-                start_time: '2018-08-18T08:43:30.00Z',
-                name: 'asleep',
-                duration: 1200000
-            },
-            {
-                start_time: '2018-08-18T09:03:30.00Z',
-                name: 'restless',
-                duration: 60000
-            },
-            {
-                start_time: '2018-08-18T09:04:30.00Z',
-                name: 'asleep',
-                duration: 1740000
-            },
-            {
-                start_time: '2018-08-18T09:03:30.00Z',
-                name: 'restless',
-                duration: 180000
-            },
-            {
-                start_time: '2018-08-18T09:36:30.00Z',
-                name: 'asleep',
-                duration: 960000
-            }
-        ];
-
-        sleep.pattern.summary = new SleepPatternPhaseSummary();
-        sleep.pattern.summary.asleep = new SleepPatternSummaryData()
-        sleep.pattern.summary.asleep.count = 55;
-        sleep.pattern.summary.asleep.duration = 28020000;
-
-        sleep.pattern.summary.awake = new SleepPatternSummaryData()
-        sleep.pattern.summary.awake.count = 5;
-        sleep.pattern.summary.awake.duration = 1020000;
-
-        sleep.pattern.summary.restless = new SleepPatternSummaryData()
-        sleep.pattern.summary.restless.count = 40;
-        sleep.pattern.summary.restless.duration = 28020000;
-
-        this.sleepSelected = sleep;
-        this.caloriesValue = 956;
-        this.stepsValue = 1000;
-        this.activeMinutesValue = 50;
-        this.activeMinutesSettings = false;
-        this.distanceValue = 22;
-        this.sleepValue = Math.floor((sleep.duration / 3600000));
+        this.loadingDashboard = true;
+        // this.caloriesValue = 956;
+        // this.stepsValue = 1000;
+        // this.activeMinutesValue = 50;
+        // this.activeMinutesSettings = false;
+        // this.distanceValue = 22;
+        // this.sleepValue = Math.floor((sleep.duration / 3600000));
         this.listActivities = [];
+        this.currentFilter = new TimeSeriesSimpleFilter();
+        this.currentFilter.start_date = this.currentDate.toISOString();
+        this.currentFilter.end_date = this.currentDate.toISOString();
     }
 
     ngOnInit() {
         this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
             this.patientService.getById(this.patientId)
-                .then(patient => this.patient = patient)
+                .then(patient => {
+                    this.patient = patient;
+                    this.loadActivities();
+                    this.loadTimeSeries();
+                })
                 .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                 });
@@ -254,18 +122,42 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                 this.sleepMax = Math.floor(this.goal.sleep / 60);
             })
             .catch((err) => {
+                this.goal = new Goal();
                 console.log(err)
             })
     }
 
     loadActivities(): void {
+        this.listActivitiesIsEmpty = false;
         this.activityService.getAll(this.patientId)
             .then(activities => {
                 this.listActivities = activities
                 this.listActivitiesIsEmpty = this.listActivities.length === 0;
             })
             .catch(err => {
-                console.log(err)
+                this.listActivitiesIsEmpty = this.listActivities.length === 0;
+            })
+    }
+
+    loadTimeSeries(): void {
+        this.loadingDashboard = true;
+        const filter: TimeSeriesSimpleFilter = new TimeSeriesSimpleFilter();
+        filter.start_date = this.currentDate.toISOString();
+        filter.start_date = this.currentDate.toISOString();
+        this.timeSeriesService.getAll(this.patientId, filter)
+            .then((timeSeries: any) => {
+                this.stepsValue = timeSeries.steps.summary.total;
+                this.caloriesValue = timeSeries.calories.summary.total;
+                this.activeMinutesValue = timeSeries.active_minutes.summary.total;
+                this.distanceValue = timeSeries.distance.summary.total;
+                this.loadingDashboard = false;
+            })
+            .catch(err => {
+                this.stepsValue = 0;
+                this.caloriesValue = 0;
+                this.activeMinutesValue = 0;
+                this.distanceValue = 0;
+                this.loadingDashboard = false;
             })
     }
 
@@ -455,20 +347,20 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     }
 
     previosDay(): void {
-        this.loadingDashboard = true;
-        setTimeout(() => {
-            this.loadingDashboard = false;
-        }, 2000)
         this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
+        this.currentFilter.start_date = this.currentDate.toISOString();
+        this.currentFilter.end_date = this.currentDate.toISOString();
+        this.loadTimeSeries();
+        this.loadActivities();
     }
 
     nextDay(): void {
         if (!this.isToday(this.currentDate)) {
-            this.loadingDashboard = true;
-            setTimeout(() => {
-                this.loadingDashboard = false;
-            }, 2000)
             this.currentDate = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
+            this.currentFilter.start_date = this.currentDate.toISOString();
+            this.currentFilter.end_date = this.currentDate.toISOString();
+            this.loadTimeSeries();
+            this.loadActivities();
         }
     }
 

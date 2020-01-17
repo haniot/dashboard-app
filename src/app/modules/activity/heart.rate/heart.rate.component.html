@@ -11,8 +11,17 @@
                         <div class="bg-heart_rate"></div>
                     </div>
                     <p class="card-category">{{'TIME-SERIES.HEART-RATE.PEAK'|translate}}: </p>
-                    <h3 class="card-title">
-                        13min
+                    <h3 class="card-title" *ngIf="lastData && lastData.summary">
+                        {{Math.floor((lastData.summary.peak_total / 3600000))}}
+                        <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                        {{Math.floor((lastData.summary.peak_total % 3600000) / 60000)}}
+                        <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
+                    </h3>
+                    <h3 class="card-title" *ngIf="!lastData || !lastData.summary">
+                        0
+                        <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                        0
+                        <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -32,8 +41,17 @@
                         <div class="bg-heart_rate"></div>
                     </div>
                     <p class="card-category">{{'TIME-SERIES.HEART-RATE.CARDIO'|translate}}: </p>
-                    <h3 class="card-title">
-                        28min
+                    <h3 class="card-title" *ngIf="lastData && lastData.summary">
+                        {{Math.floor((lastData.summary.cardio_total / 3600000))}}
+                        <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                        {{Math.floor((lastData.summary.cardio_total % 3600000) / 60000)}}
+                        <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
+                    </h3>
+                    <h3 class="card-title" *ngIf="!lastData || !lastData.summary">
+                        0
+                        <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                        0
+                        <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -53,8 +71,17 @@
                         <div class="bg-heart_rate"></div>
                     </div>
                     <p class="card-category">{{'TIME-SERIES.HEART-RATE.FAT-BURN'|translate}}: </p>
-                    <h3 class="card-title">
-                        1h e 32min
+                    <h3 class="card-title" *ngIf="lastData && lastData.summary">
+                        {{Math.floor((lastData.summary.fat_burn_total / 3600000))}}
+                        <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                        {{Math.floor((lastData.summary.fat_burn_total % 3600000) / 60000)}}
+                        <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
+                    </h3>
+                    <h3 class="card-title" *ngIf="!lastData || !lastData.summary">
+                        0
+                        <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                        0
+                        <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -80,7 +107,7 @@
             </div>
         </div>
 
-<!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">-->
+        <!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">-->
         <!--            <div class="d-flex flex-row-reverse">-->
         <!--                <div class="p-2">-->
         <!--                    <small class="pull-right" *ngIf="lastData && lastData.data_set">-->
@@ -105,8 +132,17 @@
                     <div class="bg-heart_rate"></div>
                 </div>
                 <p class="card-category">{{'TIME-SERIES.HEART-RATE.PEAK'|translate}}: </p>
-                <h3 class="card-title">
-                    13min
+                <h3 class="card-title" *ngIf="lastData && lastData.summary">
+                    {{Math.floor((lastData.summary.peak_total / 3600000))}}
+                    <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                    {{Math.floor((lastData.summary.peak_total % 3600000) / 60000)}}
+                    <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
+                </h3>
+                <h3 class="card-title" *ngIf="!lastData || !lastData.summary">
+                    0
+                    <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                    0
+                    <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -126,8 +162,17 @@
                     <div class="bg-heart_rate"></div>
                 </div>
                 <p class="card-category">{{'TIME-SERIES.HEART-RATE.CARDIO'|translate}}: </p>
-                <h3 class="card-title">
-                    28min
+                <h3 class="card-title" *ngIf="lastData && lastData.summary">
+                    {{Math.floor((lastData.summary.cardio_total / 3600000))}}
+                    <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                    {{Math.floor((lastData.summary.cardio_total % 3600000) / 60000)}}
+                    <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
+                </h3>
+                <h3 class="card-title" *ngIf="!lastData || !lastData.summary">
+                    0
+                    <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                    0
+                    <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -147,8 +192,17 @@
                     <div class="bg-heart_rate"></div>
                 </div>
                 <p class="card-category">{{'TIME-SERIES.HEART-RATE.FAT-BURN'|translate}}: </p>
-                <h3 class="card-title">
-                    1h e 32min
+                <h3 class="card-title" *ngIf="lastData && lastData.summary">
+                    {{Math.floor((lastData.summary.fat_burn_total / 3600000))}}
+                    <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                    {{Math.floor((lastData.summary.fat_burn_total % 3600000) / 60000)}}
+                    <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
+                </h3>
+                <h3 class="card-title" *ngIf="!lastData || !lastData.summary">
+                    0
+                    <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
+                    0
+                    <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->

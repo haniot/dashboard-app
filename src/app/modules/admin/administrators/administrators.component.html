@@ -5,7 +5,8 @@
                 <haniot-card [title]="'ADMINISTRADORS.TITLE' | translate"
                              [subtitle]="'ADMINISTRADORS.SUBTITLE' | translate">
                     <haniot-table [(list)]="admins" (onremove)="getAllAdministrators()" (onedit)="editUser($event)"
-                                  [userType]="'Admin'" (pagination)="paginationEvent($event)" [(length)]="length"
+                                  [userType]="'Admin'" [listOfUserIsEmpty]="listIsEmpty"
+                                  (pagination)="paginationEvent($event)" [(length)]="length"
                                   [pageSize]="limit">
                     </haniot-table>
                 </haniot-card>

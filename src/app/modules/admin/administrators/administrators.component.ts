@@ -28,6 +28,7 @@ export class AdministratorsComponent implements OnInit {
     limit: number;
     length: number;
     search: string;
+    listIsEmpty: boolean;
 
     constructor(
         private adminService: AdminService,
@@ -67,6 +68,7 @@ export class AdministratorsComponent implements OnInit {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.admins = httpResponse.body;
                 }
+                this.listIsEmpty = this.admins.length === 0;
                 // this.loadinService.close();
             })
             .catch((errorResponse: HttpErrorResponse) => {

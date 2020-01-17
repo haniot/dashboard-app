@@ -17,24 +17,11 @@ export class PhysicalActivitiesService {
     }
 
     getAll(patientId: string): Promise<PhysicalActivity[]> {
-        const listActivities: PhysicalActivity[] = [
-            new PhysicalActivity('Run'),
-            new PhysicalActivity('Walk'),
-            new PhysicalActivity('Swim')
-        ];
-
-        return Promise.resolve(listActivities);
-
         return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities`)
             .toPromise();
     }
 
     getById(patientId: string, activityId: string): Promise<PhysicalActivity> {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(new PhysicalActivity())
-            }, 3000);
-        })
         return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities/${activityId}`)
             .toPromise();
     }

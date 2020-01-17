@@ -32,7 +32,7 @@ export class HaniotTableComponent {
     search: string;
     searchTime;
     cacheIdRemove: string;
-    listOfUserIsEmpty: boolean;
+    @Input() listOfUserIsEmpty: boolean;
 
     constructor(
         private authService: AuthService,
@@ -77,10 +77,10 @@ export class HaniotTableComponent {
 
     editUser(id: string) {
         const not_find_user = this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER');
-        this.modalService.open('modalUserEdit');
         const userSelected = this.list.find((user) => {
-                return user.id === id
+            return user.id === id
         })
+        this.modalService.open('modalUserEdit');
         this.onedit.emit(userSelected);
         // switch (this.userType) {
         //     case 'Admin':

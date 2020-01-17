@@ -25,6 +25,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
     optionsLastData: any;
     echartsInstance: any;
     listIsEmpty: boolean;
+    Math = Math;
 
     constructor(
         private datePipe: DatePipe,

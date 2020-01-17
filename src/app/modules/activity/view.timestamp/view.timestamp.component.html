@@ -16,5 +16,5 @@
 
 <div *ngIf="typeOfTimeSeries == TimeSeriesType.heart_rate">
     <heart-rate [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                [showSpinner]="!list.length && !listIsEmpty"></heart-rate>
+                ></heart-rate>
 </div>

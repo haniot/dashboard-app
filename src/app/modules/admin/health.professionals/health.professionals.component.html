@@ -8,7 +8,7 @@
                     <haniot-table [(list)]="healthProfessionals" (onremove)="getAllHealthProfessionals()"
                                   (onedit)="editUser($event)" [userType]="'HealthProfessional'"
                                   (pagination)="paginationEvent($event)"
-                                  [(length)]="length" [pageSize]="limit"></haniot-table>
+                                  [length]="length" [listOfUserIsEmpty]="listIsEmpty" [pageSize]="limit"></haniot-table>
                 </haniot-card>
             </div>
             <div class="col-md">

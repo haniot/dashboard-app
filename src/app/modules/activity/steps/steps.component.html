@@ -12,7 +12,7 @@
                     </div>
                     <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
+                        {{lastData && lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
                         <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
@@ -33,7 +33,7 @@
                     </div>
                     <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
+                        {{lastData && lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
                         <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
@@ -54,7 +54,7 @@
                     </div>
                     <p class="card-category">{{'TIME-SERIES.STEPS.TOTAL-STEPS'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
+                        {{lastData && lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
                         <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
@@ -94,7 +94,7 @@
                 </div>
                 <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
+                    {{lastData && lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
                     <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
@@ -115,7 +115,7 @@
                 </div>
                 <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
+                    {{lastData && lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
                     <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
@@ -136,7 +136,7 @@
                 </div>
                 <p class="card-category">{{'TIME-SERIES.STEPS.TOTAL-STEPS'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
+                    {{lastData && lastData.data_set ? lastData.data_set[lastData.data_set.length - 1].value : 0}}
                     <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->

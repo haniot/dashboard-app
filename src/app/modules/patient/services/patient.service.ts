@@ -86,13 +86,6 @@ export class PatientService {
     }
 
     getGoals(patientId: string): Promise<Goal> {
-        const fakeGoal = new Goal();
-        fakeGoal.steps = 1500;
-        fakeGoal.calories = 3200;
-        fakeGoal.distance = 1500;
-        fakeGoal.active_minutes = 150;
-        fakeGoal.sleep = 480;
-        return Promise.resolve(fakeGoal);
         return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/goals`)
             .toPromise();
     }

@@ -1,8 +1,6 @@
 export class TimeSeries {
     /* required */
-    // TODO: Remover juntos com os mocks
-    // private _data_set: Array<TimeSeriesItem | HeartRateZoneItem>;
-    private _data_set: Array<any>;
+    private _data_set: Array<TimeSeriesItem | HeartRateZoneItem>;
     /* readonly */
     private readonly _summary: Summary | HeartRateSummary;
     private readonly _type: TimeSeriesType;
