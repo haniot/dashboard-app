@@ -9,6 +9,8 @@ export abstract class Activity {
     private readonly _patient_id: string
 
     constructor() {
+        /* TODO: Remover */
+        this.id = Math.random() + 'a';
         this._start_time = '2019-12-19T19:51:45.888Z';
         this._end_time = '2019-12-19T20:51:45.888Z';
         this._duration = 5602000;

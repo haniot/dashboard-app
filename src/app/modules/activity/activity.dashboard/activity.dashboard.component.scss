@@ -47,14 +47,6 @@ label {
   bottom: 0;
 }
 
-::ng-deep .mat-paginator-page-size .ng-star-inserted {
-  display: none;
-}
-
-::ng-deep .mat-paginator-page-size-label {
-  display: none;
-}
-
 ::ng-deep .mat-select-panel {
   min-width: unset !important;
 }

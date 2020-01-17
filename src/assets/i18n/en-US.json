@@ -41,9 +41,21 @@
       "SPINNER-MESSAGE": "Removing sleep log..."
     },
     "PHYSICAL-ACTIVITY": {
+      "TITLE": "Physical Activity",
       "DELETE-CONFIRMATION": "Are you sure you want to permanently remove the activity?",
       "SPINNER-MESSAGE": "Removing physical activity ...",
-      "LOADING": "Loading physical activity ..."
+      "LOADING": "Loading physical activity ...",
+      "HISTORY-TABLE": {
+        "TITLE": "Physical Activity History",
+        "SELECT-ALL": "Select all",
+        "ACTIVITY-NAME": "Activity",
+        "RESUME": "Resume"
+      },
+      "DAILY-TOTAL": "Daily Total",
+      "DURATION": "Activity duration",
+      "STEPS": "Steps taken",
+      "DISTANCE": "Travelled distance",
+      "CALORIES-BURNED": "Calories burned"
     },
     "PIPES": {
       "SLEEP": {
@@ -69,7 +81,9 @@
       "UNDEFINED": "Out of parameters",
       "NOTFOUND": "NOT FOUND"
     },
-    "PERCENT": "Percentage"
+    "PERCENT": "Percentage",
+    "NEXT-DAY": "next day...",
+    "PREVIOUS-DAY": "previous day..."
   },
   "ADMINISTRADORS": {
     "SUBTITLE": "",
@@ -1021,7 +1035,7 @@
     "AVERAGE-WEEK": "Last 7 days average",
     "CALORIES": {
       "TITLE": "Calories",
-      "CALORIES": "calorias",
+      "CALORIES": "calories",
       "SUBTITLE": ""
     },
     "DISTANCE": {

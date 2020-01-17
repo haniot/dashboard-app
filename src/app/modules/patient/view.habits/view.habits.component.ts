@@ -78,14 +78,14 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.odontologicalQuestionnaire = new OdontologicalQuestionnaire();
         this.nutritionalQuestionnaireOptions = {
             page: PaginatorConfig.page,
-            pageSizeOptions: PaginatorConfig.pageSizeOptions,
+            pageSizeOptions: [1],
             limit: 1,
             length: 0,
             pageEvent: undefined
         };
         this.odontologicalQuestionnaireOptions = {
             page: PaginatorConfig.page,
-            pageSizeOptions: PaginatorConfig.pageSizeOptions,
+            pageSizeOptions: [1],
             limit: 1,
             length: 0,
             pageEvent: undefined

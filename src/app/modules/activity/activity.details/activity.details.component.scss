@@ -33,14 +33,6 @@ label {
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
 }
 
-::ng-deep .mat-paginator-page-size .ng-star-inserted {
-  display: none;
-}
-
-::ng-deep .mat-paginator-page-size-label {
-  display: none;
-}
-
 .remove-register {
   color: white;
   cursor: pointer;

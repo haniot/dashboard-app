@@ -41,9 +41,21 @@
       "SPINNER-MESSAGE": "Removendo registro de sono..."
     },
     "PHYSICAL-ACTIVITY": {
+      "TITLE": "Atividade Física",
       "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente a atividade?",
       "SPINNER-MESSAGE": "Removendo atividade física...",
-      "LOADING": "Carregando atividade física..."
+      "LOADING": "Carregando atividade física...",
+      "HISTORY-TABLE": {
+        "TITLE": "Histórico de atividades física",
+        "SELECT-ALL": "Selecionar todas",
+        "ACTIVITY-NAME": "Atividade",
+        "RESUME": "Resumo"
+      },
+      "DAILY-TOTAL": "Total diário",
+      "DURATION": "Duração da atividade",
+      "STEPS": "Passos executados",
+      "DISTANCE": "Distância percorrida",
+      "CALORIES-BURNED": "Calorias queimadas"
     },
     "PIPES": {
       "SLEEP": {
@@ -70,7 +82,7 @@
       "NOTFOUND": "NÃO ENCONTRADO"
     },
     "PERCENT": "Porcentagem",
-    "NEXT-DAY": "proximo dia...",
+    "NEXT-DAY": "próximo dia...",
     "PREVIOUS-DAY": "dia anterior..."
   },
   "ADMINISTRADORS": {

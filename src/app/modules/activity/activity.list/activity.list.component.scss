@@ -79,6 +79,10 @@ i:hover {
 .navigation {
   z-index: 1099;
 
+  .material-icons {
+    color: white;
+  }
+
   i:hover {
     border-radius: 20px;
     color: $primary-color;

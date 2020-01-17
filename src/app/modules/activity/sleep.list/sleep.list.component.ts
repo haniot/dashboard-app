@@ -244,7 +244,7 @@ export class SleepListComponent implements OnInit {
             series
         };
 
-        this.initializeListCheckMeasurements();
+        this.initializeListChecks();
     }
 
     loadSleepGraph(selected: any): void {
@@ -305,7 +305,7 @@ export class SleepListComponent implements OnInit {
             .then((httpResponse) => {
                 this.data = httpResponse.body;
                 this.listIsEmpty = this.data.length === 0;
-                this.initializeListCheckMeasurements();
+                this.initializeListChecks();
             })
             .catch(() => {
                 this.listIsEmpty = true;
@@ -318,7 +318,7 @@ export class SleepListComponent implements OnInit {
         // this.modalConfirmRemoveMeasurement = true;
     }
 
-    initializeListCheckMeasurements(): void {
+    initializeListChecks(): void {
         this.selectAll = false;
         this.listCheckMeasurements = new Array<boolean>(this.data.length);
         for (let i = 0; i < this.listCheckMeasurements.length; i++) {
@@ -350,7 +350,7 @@ export class SleepListComponent implements OnInit {
             for (let i = 0; i < this.cacheListIdMeasurementRemove.length; i++) {
                 try {
                     const measurementRemove = this.cacheListIdMeasurementRemove[i];
-                    await this.sleepService.remove(this.patientId, measurementRemove.id);
+                    await this.sleepService.remove(this.patientId, measurementRemove);
                 } catch (e) {
                     occuredError = true;
                 }
