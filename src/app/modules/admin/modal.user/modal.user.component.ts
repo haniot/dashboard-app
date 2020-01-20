@@ -82,11 +82,11 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         this.subscriptions.push(
             this.modalService.eventActionNotExecuted.subscribe((res) => {
                 switch (this.typeUser) {
-                    case UserType.ADMIN:
+                    case UserType.admin:
                         this.loadAdminInForm(res.user);
                         break;
 
-                    case UserType.HEALTH_PROFESSIONAL:
+                    case UserType.health_professional:
                         this.loadHealthProfessionalInForm(res.user);
                         break;
                 }
@@ -132,7 +132,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             password: ['', Validators.required],
             password_confirm: ['', Validators.required]
         });
-        if (this.typeUser === UserType.ADMIN) {
+        if (this.typeUser === UserType.admin) {
             this.userForm.removeControl('health_area');
         }
         if (this.userId) {
@@ -175,7 +175,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         if (this.userId) {
             console.log('Carregando usuário com id: ', this.userId)
             switch (this.typeUser) {
-                case UserType.ADMIN:
+                case UserType.admin:
                     console.log('Admin')
                     this.adminService.getById(this.userId)
                         .then(admin => {
@@ -185,7 +185,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                         .catch(() => {
                         });
                     break;
-                case UserType.HEALTH_PROFESSIONAL:
+                case UserType.health_professional:
                     console.log('Healthprofessional')
                     this.healthService.getById(this.userId)
                         .then(healthprofessional => {

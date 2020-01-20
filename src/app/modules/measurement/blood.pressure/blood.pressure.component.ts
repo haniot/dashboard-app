@@ -316,7 +316,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.BLOOD_PRESSURE, null, null, filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, null, null, filter)
             .then(httpResponse => {
                 this.data = httpResponse.body;
                 this.showSpinner = false;
@@ -397,7 +397,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     loadMeasurements(): any {
         this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.BLOOD_PRESSURE, this.page, this.limit, this.filter)
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, this.page, this.limit, this.filter)
             .then((httpResponse) => {
                 this.data = httpResponse.body;
                 this.listIsEmpty = this.data.length === 0;

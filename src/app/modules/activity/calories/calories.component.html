@@ -12,7 +12,8 @@
                     </div>
                     <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData && lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                        {{data && data.summary ? data.summary.total : 0}}
+                        <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -33,7 +34,8 @@
                     </div>
                     <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
                     <h3 class="card-title">
-                        {{lastData && lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                        {{data && data.summary ? data.summary.total : 0}}
+                        <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                     </h3>
                     <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                     <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -54,7 +56,7 @@
 
             <div class="unavailable-data">
                 <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-                <span *ngIf="data.length==0 && !showSpinner"
+                <span *ngIf="!data && !showSpinner"
                       class="badge badge-warning badge-12 ellipsis">{{'TIME-SERIES.UNAVAILABLE-DATA'|translate}}</span>
             </div>
         </div>
@@ -73,7 +75,8 @@
                 </div>
                 <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData && lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                    {{data && data.summary ? data.summary.total : 0}}
+                    <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -94,7 +97,8 @@
                 </div>
                 <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
                 <h3 class="card-title">
-                    {{lastData && lastData.summary ? lastData.summary.total : 0}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                    {{data && data.summary ? data.summary.total : 0}}
+                    <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                 </h3>
                 <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
                 <!--                        {{lastData.value + '' + lastData.unit}}-->
@@ -115,7 +119,7 @@
 
         <div class="unavailable-data">
             <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-            <span *ngIf="data.length==0 && !showSpinner"
+            <span *ngIf="!data && !showSpinner"
                   class="badge badge-warning badge-12 ellipsis">{{'TIME-SERIES.UNAVAILABLE-DATA'|translate}}</span>
         </div>
     </div>

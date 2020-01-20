@@ -8,25 +8,25 @@ export class MeasurementTypePipe implements PipeTransform {
 
     transform(value: any, args?: any): any {
         switch (value) {
-            case EnumMeasurementType.WEIGHT:
+            case EnumMeasurementType.weight:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.WEIGHT';
 
-            case EnumMeasurementType.HEIGHT:
+            case EnumMeasurementType.height:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.HEIGHT';
 
-            case EnumMeasurementType.BODY_FAT:
+            case EnumMeasurementType.body_fat:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.FAT';
 
-            case EnumMeasurementType.WAIST_CIRCUMFERENCE:
+            case EnumMeasurementType.waist_circumference:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.WAIST-CIRCUMFERENCE';
 
-            case EnumMeasurementType.BODY_TEMPERATURE:
+            case EnumMeasurementType.body_temperature:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BODY-TEMPERATURE';
 
-            case EnumMeasurementType.BLOOD_GLUCOSE:
+            case EnumMeasurementType.blood_glucose:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BLOOD-GLUCOSE';
 
-            case EnumMeasurementType.BLOOD_PRESSURE:
+            case EnumMeasurementType.blood_pressure:
                 return 'MEASUREMENTS.PIPES.MEASUREMENT-TYPE.BLOOD-PRESSURE';
 
             default:

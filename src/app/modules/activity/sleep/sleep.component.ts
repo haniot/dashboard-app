@@ -76,11 +76,11 @@ export class SleepComponent implements OnInit {
             .then(sleep => {
                 this.sleepSelected = sleep
                 switch (this.sleepSelected.type) {
-                    case SleepType.CLASSIC:
+                    case SleepType.classic:
                         this.loadSleepGraphClassic();
                         break;
 
-                    case SleepType.STAGES:
+                    case SleepType.stages:
                         this.loadSleepGraphStages()
                         break
                 }

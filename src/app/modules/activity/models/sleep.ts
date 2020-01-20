@@ -149,16 +149,16 @@ export class SleepPatternDataSet {
 }
 
 export enum SleepPhases {
-    AWAKE = 'awake',
-    ASLEEP = 'asleep',
-    RESTLESS = 'restless'
+    awake = 'awake',
+    asleep = 'asleep',
+    restless = 'restless'
 }
 
 export enum SleepStages {
-    DEEP = 'deep',
-    LIGHT = 'light',
-    REM = 'rem',
-    WAKE = 'wake'
+    deep = 'deep',
+    light = 'light',
+    rem = 'rem',
+    wake = 'wake'
 }
 
 export class SleepPattern {
@@ -190,7 +190,7 @@ export class SleepPattern {
 }
 
 export enum SleepType {
-    CLASSIC = 'classic',
-    STAGES = 'stages'
+    classic = 'classic',
+    stages = 'stages'
 }
 

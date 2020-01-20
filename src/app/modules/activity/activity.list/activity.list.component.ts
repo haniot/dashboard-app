@@ -6,7 +6,7 @@ import * as moment from 'moment';
 
 import { PhysicalActivity } from '../models/physical.activity';
 import { SearchForPeriod } from '../../measurement/models/measurement';
-import { TimeSeriesType } from '../models/time.series';
+import { TimeSeriesSimpleFilter, TimeSeriesType } from '../models/time.series';
 import { ConfigurationBasic } from '../../config.matpaginator';
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
@@ -50,6 +50,7 @@ export class ActivityListComponent implements OnInit {
     minDate: Date;
     startOfWeek: Date;
     endOfWeek: Date;
+    currentFilter: TimeSeriesSimpleFilter;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -71,6 +72,9 @@ export class ActivityListComponent implements OnInit {
         this.minDate = new Date((this.currentDate.getFullYear() - 1) + '/' +
             (this.currentDate.getMonth() + 1) + '/' + this.currentDate.getDate());
         this.filterSelected = 'today';
+        this.currentFilter = new TimeSeriesSimpleFilter();
+        this.currentFilter.start_date = this.currentDate.toISOString();
+        this.currentFilter.end_date = this.currentDate.toISOString();
         this.startOfWeek = moment().startOf('week').toDate();
         this.endOfWeek = moment().endOf('week').toDate();
 
@@ -82,7 +86,6 @@ export class ActivityListComponent implements OnInit {
         this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
         })
-        this.initializeListChecks();
     }
 
     applyFilter($event): void {

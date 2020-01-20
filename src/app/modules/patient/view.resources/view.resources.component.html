@@ -4,41 +4,45 @@
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
-                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.WEIGHT">
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.weight">
                     <weight [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                            [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"></weight>
+                            [includeCard]="true" [includeLogs]="true"
+                            [showSpinner]="!list.length && !listIsEmpty"></weight>
                 </div>
 
-                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.BODY_FAT">
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_fat">
                     <fat [data]="list" [filterVisibility]="true" [patientId]="patientId"
                          [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"></fat>
                 </div>
 
-                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.HEIGHT">
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.height">
                     <height [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                            [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"></height>
+                            [includeCard]="true" [includeLogs]="true"
+                            [showSpinner]="!list.length && !listIsEmpty"></height>
                 </div>
 
-                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.WAIST_CIRCUMFERENCE">
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.waist_circumference">
                     <waist-circunference [data]="list" [filterVisibility]="true" [patientId]="patientId"
                                          [includeCard]="true" [includeLogs]="true"
                                          [showSpinner]="!list.length && !listIsEmpty"></waist-circunference>
                 </div>
 
-                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.BODY_TEMPERATURE">
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_temperature">
                     <body-temperature [data]="list" [filterVisibility]="true" [patientId]="patientId"
                                       [includeCard]="true" [includeLogs]="true"
                                       [showSpinner]="!list.length && !listIsEmpty"></body-temperature>
                 </div>
 
-                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.BLOOD_GLUCOSE">
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.blood_glucose">
                     <blood-glucose [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                                   [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"></blood-glucose>
+                                   [includeCard]="true" [includeLogs]="true"
+                                   [showSpinner]="!list.length && !listIsEmpty"></blood-glucose>
                 </div>
 
-                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.BLOOD_PRESSURE">
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.blood_pressure">
                     <blood-pressure [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                                    [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"></blood-pressure>
+                                    [includeCard]="true" [includeLogs]="true"
+                                    [showSpinner]="!list.length && !listIsEmpty"></blood-pressure>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.steps">

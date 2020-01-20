@@ -11,13 +11,13 @@ export class SearchForPeriod {
 }
 
 export enum EnumMeasurementType {
-    WEIGHT = 'weight',
-    BLOOD_GLUCOSE = 'blood_glucose',
-    BODY_FAT = 'body_fat',
-    BLOOD_PRESSURE = 'blood_pressure',
-    HEIGHT = 'height',
-    WAIST_CIRCUMFERENCE = 'waist_circumference',
-    BODY_TEMPERATURE = 'body_temperature'
+    weight = 'weight',
+    blood_glucose = 'blood_glucose',
+    body_fat = 'body_fat',
+    blood_pressure = 'blood_pressure',
+    height = 'height',
+    waist_circumference = 'waist_circumference',
+    body_temperature = 'body_temperature'
 }
 
 export class GenericMeasurement {

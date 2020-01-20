@@ -206,7 +206,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
     applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.BODY_TEMPERATURE, null, null, filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, null, null, filter)
             .then(httpResponse => {
                 this.data = httpResponse.body;
                 this.updateGraph(this.data);
@@ -261,7 +261,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
     loadMeasurements(): any {
         this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.BODY_TEMPERATURE, this.page, this.limit, this.filter)
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, this.page, this.limit, this.filter)
             .then((httpResponse) => {
                 this.data = httpResponse.body;
                 this.listIsEmpty = this.data.length === 0;

@@ -74,7 +74,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
     applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.WAIST_CIRCUMFERENCE, null, null, filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, filter)
             .then(httpResponse => {
                 this.data = httpResponse.body;
                 this.showSpinner = false;
@@ -217,7 +217,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
     loadMeasurements(): any {
         this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.WAIST_CIRCUMFERENCE, this.page, this.limit, this.filter)
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, this.page, this.limit, this.filter)
             .then((httpResponse) => {
                 this.data = httpResponse.body;
                 this.listIsEmpty = this.data.length === 0;

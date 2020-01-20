@@ -278,31 +278,31 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             }
 
             switch (element.meal) {
-                case MealType.PREPRANDIAL:
+                case MealType.preprandial:
                     series[0].data[index] = {
                         value: element.value,
                         time: mediumTime
                     };
                     break;
-                case MealType.POSTPRANDIAL:
+                case MealType.postprandial:
                     series[1].data[index] = {
                         value: element.value,
                         time: mediumTime
                     };
                     break;
-                case MealType.FASTING:
+                case MealType.fasting:
                     series[2].data[index] = {
                         value: element.value,
                         time: mediumTime
                     };
                     break;
-                case MealType.CASUAL:
+                case MealType.casual:
                     series[3].data[index] = {
                         value: element.value,
                         time: mediumTime
                     };
                     break;
-                case MealType.BEDTIME:
+                case MealType.bedtime:
                     series[4].data[index] = {
                         value: element.value,
                         time: mediumTime
@@ -353,7 +353,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.BLOOD_GLUCOSE, null, null, filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, filter)
             .then(httpResponse => {
                 this.data = httpResponse.body;
                 this.showSpinner = false;
@@ -367,19 +367,19 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     updateGraph(measurements: Array<any>): void {
         const preprandials = measurements.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.PREPRANDIAL;
+            return measurement.meal === MealType.preprandial;
         });
         const postprandials = measurements.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.POSTPRANDIAL;
+            return measurement.meal === MealType.postprandial;
         });
         const fastings = measurements.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.FASTING;
+            return measurement.meal === MealType.fasting;
         });
         const casuals = measurements.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.CASUAL;
+            return measurement.meal === MealType.casual;
         });
         const bedtimes = measurements.filter((measurement: BloodGlucose) => {
-            return measurement.meal === MealType.BEDTIME;
+            return measurement.meal === MealType.bedtime;
         });
 
         // clean
@@ -404,31 +404,31 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             }
 
             switch (element.meal) {
-                case MealType.PREPRANDIAL:
+                case MealType.preprandial:
                     this.options.series[0].data[index] = {
                         value: element.value,
                         time: mediumTime
                     };
                     break;
-                case MealType.POSTPRANDIAL:
+                case MealType.postprandial:
                     this.options.series[1].data[index] = {
                         value: element.value,
                         time: mediumTime
                     };
                     break;
-                case MealType.FASTING:
+                case MealType.fasting:
                     this.options.series[2].data[index] = {
                         value: element.value,
                         time: mediumTime
                     };
                     break;
-                case MealType.CASUAL:
+                case MealType.casual:
                     this.options.series[3].data[index] = {
                         value: element.value,
                         time: mediumTime
                     };
                     break;
-                case MealType.BEDTIME:
+                case MealType.bedtime:
                     this.options.series[4].data[index] = {
                         value: element.value,
                         time: mediumTime
@@ -467,7 +467,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     loadMeasurements(): any {
         this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.BLOOD_GLUCOSE, this.page, this.limit, this.filter)
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, this.page, this.limit, this.filter)
             .then((httpResponse) => {
                 this.data = httpResponse.body;
                 this.listIsEmpty = this.data.length === 0;

@@ -79,7 +79,7 @@ export class WeightComponent implements OnInit, OnChanges {
         this.showSpinner = true;
         this.data = [];
         this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.WEIGHT, null, null, filter)
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.weight, null, null, filter)
             .then(httpResponse => {
                 this.data = httpResponse.body;
                 this.showSpinner = false;
@@ -225,7 +225,7 @@ export class WeightComponent implements OnInit, OnChanges {
     }
 
     loadMeasurements(): any {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.WEIGHT, this.page, this.limit, this.filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, this.page, this.limit, this.filter)
             .then((httpResponse) => {
                 this.data = httpResponse.body;
                 this.listIsEmpty = this.data.length === 0;

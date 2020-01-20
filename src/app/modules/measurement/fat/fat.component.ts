@@ -172,7 +172,7 @@ export class FatComponent implements OnInit, OnChanges {
 
     applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.BODY_FAT, null, null, filter)
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, filter)
             .then(httpResponse => {
                 this.data = httpResponse.body;
                 this.showSpinner = false;
@@ -228,7 +228,7 @@ export class FatComponent implements OnInit, OnChanges {
 
     loadMeasurements(): any {
         this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.BODY_FAT, this.page, this.limit, this.filter)
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, this.page, this.limit, this.filter)
             .then((httpResponse) => {
                 this.data = httpResponse.body;
                 this.listIsEmpty = this.data.length === 0;

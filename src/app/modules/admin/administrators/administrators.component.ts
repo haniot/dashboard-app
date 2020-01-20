@@ -41,7 +41,7 @@ export class AdministratorsComponent implements OnInit {
         this.page = PaginatorConfig.page;
         this.limit = PaginatorConfig.limit;
         this.admins = new Array<GenericUser>();
-        this.typeUser = UserType.ADMIN;
+        this.typeUser = UserType.admin;
         this.getAllAdministrators();
     }
 

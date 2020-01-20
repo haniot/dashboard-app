@@ -75,19 +75,19 @@ export class ActivityDetailsComponent implements OnInit {
         const endTimes = this.datePipe.transform(this.physicalActivity.end_time, 'shortTime').split(':')
 
         const sedentaryData = this.physicalActivity.levels.filter((element: ActivityLevel) => {
-            return element.name === Levels.SEDENTARY
+            return element.name === Levels.sedentary
         })
 
         const lightData = this.physicalActivity.levels.filter((element: ActivityLevel) => {
-            return element.name === Levels.LIGHT
+            return element.name === Levels.light
         })
 
         const fairlyData = this.physicalActivity.levels.filter((element: ActivityLevel) => {
-            return element.name === Levels.FAIRLY
+            return element.name === Levels.fairly
         })
 
         const veryData = this.physicalActivity.levels.filter((element: ActivityLevel) => {
-            return element.name === Levels.VERY
+            return element.name === Levels.very
         })
 
         this.intensityLevelsGraph = {

@@ -18,7 +18,7 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./health.professionals.component.scss']
 })
 export class HealthProfessionalComponent implements OnInit {
-    typeUser = UserType.HEALTH_PROFESSIONAL;
+    typeUser = UserType.health_professional;
     userEdit: GenericUser;
     healthProfessionals: Array<GenericUser>;
     page: number;

@@ -143,7 +143,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.loadingDashboard = true;
         const filter: TimeSeriesSimpleFilter = new TimeSeriesSimpleFilter();
         filter.start_date = this.currentDate.toISOString();
-        filter.start_date = this.currentDate.toISOString();
+        filter.end_date = this.currentDate.toISOString();
         this.timeSeriesService.getAll(this.patientId, filter)
             .then((timeSeries: any) => {
                 this.stepsValue = timeSeries.steps.summary.total;

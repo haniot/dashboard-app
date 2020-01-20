@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment'
-import { TimeSeries, TimeSeriesFullFilter, TimeSeriesIntervalFilter, TimeSeriesSimpleFilter, TimeSeriesType } from '../models/time.series'
+import {
+    TimeSeries,
+    TimeSeriesFullFilter,
+    TimeSeriesIntervalFilter,
+    TimeSeriesSimpleFilter,
+    TimeSeriesType
+} from '../models/time.series'
 
 @Injectable()
 export class TimeSeriesService {
@@ -12,13 +18,25 @@ export class TimeSeriesService {
     }
 
     getAll(patientId: string, filter: TimeSeriesSimpleFilter): Promise<TimeSeries[]> {
+        if (filter.start_date && filter.start_date.length > 10) {
+            filter.start_date = filter.start_date.split('T')[0];
+        }
+        if (filter.end_date && filter.end_date.length > 10) {
+            filter.end_date = filter.end_date.split('T')[0];
+        }
         return this.http
             .get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/date/` +
                 `${filter.start_date}/${filter.end_date}/timeseries`)
             .toPromise();
     }
 
-    getWithResource(patientId: string, resource: TimeSeriesType, filter: TimeSeriesSimpleFilter): Promise<TimeSeries[]> {
+    getWithResource(patientId: string, resource: TimeSeriesType, filter: TimeSeriesSimpleFilter): Promise<TimeSeries> {
+        if (filter.start_date && filter.start_date.length > 10) {
+            filter.start_date = filter.start_date.split('T')[0];
+        }
+        if (filter.end_date && filter.end_date.length > 10) {
+            filter.end_date = filter.end_date.split('T')[0];
+        }
         return this.http
             .get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/${resource}/date/` +
                 `${filter.start_date}/${filter.end_date}/timeseries`)

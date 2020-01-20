@@ -1,7 +1,7 @@
 export enum UserType {
-    ADMIN = 'admin',
-    HEALTH_PROFESSIONAL = 'health_professional',
-    PATIENT = 'patient'
+    admin = 'admin',
+    health_professional = 'health_professional',
+    patient = 'patient'
 }
 
 export enum LanguageType {
@@ -13,6 +13,7 @@ export class GenericUser {
     /* required */
     private _birth_date: string;
     private _name: string;
+    private _email: string;
     /* optional */
     private _phone_number?: string;
     private _language?: LanguageType;
@@ -52,6 +53,14 @@ export class GenericUser {
 
     set name(value: string) {
         this._name = value
+    }
+
+    get email(): string {
+        return this._email
+    }
+
+    set email(value: string) {
+        this._email = value
     }
 
     get phone_number(): string {

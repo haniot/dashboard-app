@@ -24,7 +24,7 @@
                 <div class="col-sm-6 col-md-8 col-lg-8 col-xl-8 form-group has-feedback"
                      [ngClass]="{'has-success': userForm.controls.email.valid,
             'has-error': userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)}"
-                     *ngIf="typeUser == UserType.ADMIN">
+                     *ngIf="typeUser == UserType.admin">
                     <label>{{'SHARED.EMAIL'|translate}}:</label>
                     <input type="email" class="form-control" formControlName="email" (focus)="cleanEmailConflit()">
                     <span *ngIf="userForm.controls.email.valid" class="glyphicon glyphicon-ok form-control-feedback"
@@ -38,7 +38,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 form-group has-feedback"
                      [ngClass]="{'has-success': userForm.controls.phone_number.valid,
             'has-error': userForm.controls.phone_number.invalid && (userForm.controls.phone_number.touched || userForm.controls.phone_number.dirty)}"
-                     *ngIf="typeUser == UserType.ADMIN">
+                     *ngIf="typeUser == UserType.admin">
                     <label>{{'SHARED.PHONE-NUMBER'|translate}}:
                         <small>({{'SHARED.ONLY-NUMBERS'|translate}})</small>
                     </label>
@@ -56,7 +56,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group has-feedback"
                      [ngClass]="{'has-success': userForm.controls.birth_date.valid,
             'has-error': userForm.controls.birth_date.invalid && (userForm.controls.birth_date.touched || userForm.controls.birth_date.dirty)}"
-                     *ngIf="typeUser == UserType.ADMIN">
+                     *ngIf="typeUser == UserType.admin">
                     <label>
                         {{'SHARED.BIRTH-DATE'|translate}}:
                     </label>
@@ -87,7 +87,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group has-feedback"
                      [ngClass]="{'has-success': userForm.controls.language.valid,
             'has-error': userForm.controls.language.invalid && (userForm.controls.language.touched || userForm.controls.language.dirty)}"
-                     *ngIf="typeUser == UserType.ADMIN">
+                     *ngIf="typeUser == UserType.admin">
                     <label>{{'SHARED.LANGUAGE'|translate}}: </label>
 
                     <select class="form-control" formControlName="language">
@@ -107,7 +107,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group has-feedback"
                      [ngClass]="{'has-success': userForm.controls.email.valid,
             'has-error': userForm.controls.email.invalid && (userForm.controls.email.touched || userForm.controls.email.dirty)}"
-                     *ngIf="typeUser == UserType.HEALTH_PROFESSIONAL">
+                     *ngIf="typeUser == UserType.health_professional">
                     <label>{{'SHARED.EMAIL'|translate}}:</label>
                     <input type="email" class="form-control" formControlName="email" (focus)="cleanEmailConflit()">
                     <span *ngIf="userForm.controls.email.valid" class="glyphicon glyphicon-ok form-control-feedback"
@@ -127,7 +127,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group has-feedback"
                      [ngClass]="{'has-success': userForm.controls.phone_number.valid,
             'has-error': userForm.controls.phone_number.invalid && (userForm.controls.phone_number.touched || userForm.controls.phone_number.dirty)}"
-                     *ngIf="typeUser == UserType.HEALTH_PROFESSIONAL">
+                     *ngIf="typeUser == UserType.health_professional">
                     <label>{{'SHARED.PHONE-NUMBER'|translate}}:
                         <small>({{'SHARED.ONLY-NUMBERS'|translate}})</small>
                     </label>
@@ -145,7 +145,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group has-feedback"
                      [ngClass]="{'has-success': userForm.controls.birth_date.valid,
             'has-error': userForm.controls.birth_date.invalid && (userForm.controls.birth_date.touched || userForm.controls.birth_date.dirty)}"
-                     *ngIf="typeUser == UserType.HEALTH_PROFESSIONAL">
+                     *ngIf="typeUser == UserType.health_professional">
                     <label>
                         {{'SHARED.BIRTH-DATE'|translate}}:
                     </label>
@@ -176,7 +176,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group has-feedback"
                      [ngClass]="{'has-success': userForm.controls.health_area.valid,
             'has-error': userForm.controls.health_area.invalid && (userForm.controls.health_area.touched || userForm.controls.health_area.dirty)}"
-                     *ngIf="typeUser == UserType.HEALTH_PROFESSIONAL">
+                     *ngIf="typeUser == UserType.health_professional">
                     <label>{{'SHARED.AREA'|translate}}: </label>
                     <select class="form-control" formControlName="health_area">
                         <option *ngFor="let area of healthAreaOptions; index as i;trackBy: trackById" [value]="area">
@@ -194,7 +194,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group has-feedback"
                      [ngClass]="{'has-success': userForm.controls.language.valid,
             'has-error': userForm.controls.language.invalid && (userForm.controls.language.touched || userForm.controls.language.dirty)}"
-                     *ngIf="typeUser == UserType.HEALTH_PROFESSIONAL">
+                     *ngIf="typeUser == UserType.health_professional">
                     <label>{{'SHARED.LANGUAGE'|translate}}: </label>
 
                     <select class="form-control" formControlName="language">

@@ -10,13 +10,12 @@ import { SearchForPeriod } from '../../measurement/models/measurement'
     styleUrls: ['../../measurement/shared.style/shared.styles.scss']
 })
 export class CaloriesComponent implements OnInit, OnChanges {
-    @Input() data: Array<TimeSeries>;
+    @Input() data: TimeSeries;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
     @Input() includeCard: boolean;
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
-    lastData: TimeSeries;
     options: any;
     echartsInstance: any;
     listIsEmpty: boolean;
@@ -25,7 +24,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
         private datePipe: DatePipe,
         private translateService: TranslateService
     ) {
-        this.data = new Array<TimeSeries>();
+        this.data = new TimeSeries();
         this.filterVisibility = false;
         this.patientId = '';
         this.showSpinner = false;
@@ -68,24 +67,15 @@ export class CaloriesComponent implements OnInit, OnChanges {
             }
         };
 
-
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
-        } else {
-            this.lastData = this.data[0];
-        }
-
-        this.data.forEach((calories) => {
-            if (calories.data_set) {
-                calories.data_set.forEach((element: TimeSeriesItem) => {
-                    xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
-                    seriesOptions.data.push({
-                        value: element.value,
-                        time: this.datePipe.transform(element.date, 'mediumTime')
-                    });
+        if (this.data) {
+            this.data.data_set.forEach((element: TimeSeriesItem) => {
+                xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
+                seriesOptions.data.push({
+                    value: element.value,
+                    time: this.datePipe.transform(element.date, 'mediumTime')
                 });
-            }
-        });
+            });
+        }
 
         this.options = {
             legend: {
@@ -148,9 +138,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if ((changes.data.currentValue && changes.data.previousValue
-            && changes.data.currentValue.length !== changes.data.previousValue.length) ||
-            (changes.data.currentValue.length && !changes.data.previousValue)) {
+        if (changes.data.currentValue !== changes.data.previousValue) {
             this.loadGraph();
         }
     }

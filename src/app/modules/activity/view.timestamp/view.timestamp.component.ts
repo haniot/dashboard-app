@@ -14,23 +14,20 @@ export class ViewTimestampComponent implements OnChanges {
     @Input() patientId: string;
     @Input() typeOfTimeSeries: TimeSeriesType;
     @Input() filter: TimeSeriesSimpleFilter;
-    list: Array<any>;
+    data: TimeSeries;
     listIsEmpty: boolean;
     TimeSeriesType = TimeSeriesType;
 
     constructor(private timeSeriesService: TimeSeriesService) {
-        this.list = [];
         this.listIsEmpty = false;
-        // this.filter = { start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today' };
     }
 
-    loadMeasurements(typeSelected: TimeSeriesType): any {
+    loadResource(typeSelected: TimeSeriesType): any {
+        this.data = undefined;
         this.timeSeriesService.getWithResource(this.patientId, typeSelected, this.filter)
             .then((httpResponse) => {
-                // if (httpResponse.body && httpResponse.body.length) {
-                //     this.list = httpResponse.body;
-                //     this.listIsEmpty = this.list.length === 0;
-                // }
+                this.data = httpResponse;
+                this.listIsEmpty = false;
             })
             .catch(() => {
                 this.listIsEmpty = true;
@@ -39,7 +36,7 @@ export class ViewTimestampComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes && changes.typeOfTimeSeries) {
-            this.loadMeasurements(changes.typeOfTimeSeries.currentValue);
+            this.loadResource(changes.typeOfTimeSeries.currentValue);
         }
     }
 }

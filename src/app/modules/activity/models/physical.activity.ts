@@ -14,19 +14,15 @@ export class PhysicalActivity extends Activity {
     private _heart_rate_average: number;
     private _heart_rate_zones: HeartRateZoneItem;
 
-    constructor(name?: string) {
+    constructor() {
         super();
-        this._name = name ? name : 'Run';
-        this._calories = 2500;
-        this._steps = 254;
-        this._distance = 1.5;
-        this._levels = [
-            new ActivityLevel(Levels.SEDENTARY, 1400500),
-            new ActivityLevel(Levels.LIGHT, 1400500),
-            new ActivityLevel(Levels.FAIRLY, 1400500),
-            new ActivityLevel(Levels.VERY, 1400500)];
-        this._heart_rate_link = '/v1/patients';
-        this._heart_rate_average = 1250;
+        this._name = '';
+        this._calories = 0;
+        this._steps = 0;
+        this._distance = 0;
+        this._levels = [];
+        this._heart_rate_link = '';
+        this._heart_rate_average = 0;
         this._heart_rate_zones = new HeartRateZoneItem();
     }
 

@@ -14,13 +14,12 @@ import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.serie
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class HeartRateComponent implements OnInit, OnChanges {
-    @Input() data: Array<TimeSeries>;
+    @Input() data: TimeSeries;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
     @Input() includeCard: boolean;
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
-    lastData: TimeSeries;
     options: any;
     optionsLastData: any;
     echartsInstance: any;
@@ -33,13 +32,12 @@ export class HeartRateComponent implements OnInit, OnChanges {
         private translateService: TranslateService,
         private toastService: ToastrService
     ) {
-        this.data = new Array<TimeSeries>();
+        this.data = new TimeSeries();
         this.filterVisibility = false;
         this.patientId = '';
         this.showSpinner = false;
         this.filterChange = new EventEmitter();
         this.listIsEmpty = false;
-        this.lastData = new TimeSeries();
     }
 
     ngOnInit(): void {
@@ -66,12 +64,6 @@ export class HeartRateComponent implements OnInit, OnChanges {
         const high = this.translateService.instant('TIME-SERIES.HEART-RATE.HIGH');
         const upperLimit = this.translateService.instant('SHARED.UPPER-LIMIT');
         const classification = this.translateService.instant('SHARED.CLASSIFICATION');
-
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
-        } else {
-            this.lastData = this.data[0];
-        }
 
         const xAxisOptions = { data: [] };
         const seriesOptions = {
@@ -139,33 +131,14 @@ export class HeartRateComponent implements OnInit, OnChanges {
             }
         };
 
-        this.data.forEach((heartRate) => {
-            if (heartRate.data_set) {
-                heartRate.data_set.forEach((element: TimeSeriesItem) => {
-                    xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
-                    seriesOptions.data.push({
-                        value: element.value,
-                        time: this.datePipe.transform(element.date, 'mediumTime')
-                    });
+        if (this.data) {
+            this.data.data_set.forEach((element: TimeSeriesItem) => {
+                xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
+                seriesOptions.data.push({
+                    value: element.value,
+                    time: this.datePipe.transform(element.date, 'mediumTime')
                 });
-            }
-        });
-
-
-        if (this.lastData) {
-            if (this.lastData.data_set) {
-                this.lastData.data_set.forEach((elementHeartRate: TimeSeriesItem) => {
-
-                    xAxisOptionsLastDate.data.push(this.datePipe.transform(elementHeartRate.date, 'mediumTime'));
-
-                    seriesOptionsLastDate.data.push({
-                        value: elementHeartRate.value,
-                        time: this.datePipe.transform(elementHeartRate.date, 'mediumTime'),
-                        date: this.datePipe.transform(elementHeartRate.date, 'shortDate')
-                    });
-
-                });
-            }
+            });
         }
 
         this.options = {
@@ -262,19 +235,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     applyFilter(filter: SearchForPeriod) {
-        this.showSpinner = true;
-        this.data = [];
-        this.measurementService
-            .getAllByUserAndType(this.patientId, TimeSeriesType.heart_rate, null, null, filter)
-            .then(httpResponse => {
-                this.data = httpResponse.body;
-                this.showSpinner = false;
-                this.updateGraph(this.data);
-                this.filterChange.emit(this.data);
-            })
-            .catch(() => {
-                this.showSpinner = false;
-            });
+
     }
 
     updateGraph(measurements: Array<TimeSeries>): void {
@@ -299,9 +260,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if ((changes.data.currentValue && changes.data.previousValue
-            && changes.data.currentValue.length !== changes.data.previousValue.length) ||
-            (changes.data.currentValue.length && !changes.data.previousValue)) {
+        if (changes.data.currentValue !== changes.data.previousValue) {
             this.loadGraph();
         }
     }
