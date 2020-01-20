@@ -40,7 +40,9 @@ import { ActivityLevelPipe } from './pipes/activity.level.pipe';
 import { MillisecondPipe } from './pipes/millisecond.pipe'
 import { NgxGaugeModule } from 'ngx-gauge';
 import { ActivityListComponent } from './activity.list/activity.list.component';
-import { SleepListComponent } from './sleep.list/sleep.list.component'
+import { SleepListComponent } from './sleep.list/sleep.list.component';
+import { DistancePipe } from './pipes/distance.pipe';
+import { ActiveMinutesPipe } from './pipes/active.minutes.pipe'
 
 @NgModule({
     declarations: [
@@ -59,7 +61,9 @@ import { SleepListComponent } from './sleep.list/sleep.list.component'
         ActivityLevelPipe,
         MillisecondPipe,
         ActivityListComponent,
-        SleepListComponent
+        SleepListComponent,
+        DistancePipe,
+        ActiveMinutesPipe
     ],
     exports: [
         ActivityDashboardComponent,
@@ -72,7 +76,9 @@ import { SleepListComponent } from './sleep.list/sleep.list.component'
         SleepComponent,
         SleepPipe,
         TimeSeriesPipe,
-        ActivityLevelPipe
+        ActivityLevelPipe,
+        DistancePipe,
+        ActiveMinutesPipe
     ],
     providers: [
         SleepPipe,
@@ -80,7 +86,9 @@ import { SleepListComponent } from './sleep.list/sleep.list.component'
         PhysicalActivitiesService,
         SleepService,
         TimeSeriesService,
-        MillisecondPipe
+        MillisecondPipe,
+        DistancePipe,
+        ActiveMinutesPipe
     ],
     imports: [
         CommonModule,

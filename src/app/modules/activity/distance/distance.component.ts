@@ -68,7 +68,7 @@ export class DistanceComponent implements OnInit, OnChanges {
             }
         };
 
-        if (this.data) {
+        if (this.data && this.data.data_set) {
             this.data.data_set.forEach((element: TimeSeriesItem) => {
                 xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
                 seriesOptions.data.push({

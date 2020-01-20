@@ -378,9 +378,8 @@
                                 </div>
                                 <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
                                     <label style="font-size: 25px; font-weight: normal;max-width: 100%;">
-                                        {{activeMinutesValue}}
-                                        de {{goal && goal.active_minutes ? goal.active_minutes : 0}}
-                                        <small>min</small>
+                                        {{activeMinutesValue|activeMinutes}}
+                                        de {{goal && goal.active_minutes ? (goal.active_minutes|activeMinutes) : 0}}
                                     </label>
                                 </div>
                             </div>
@@ -439,8 +438,8 @@
                                 </div>
                                 <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
                                     <label style="font-size: 25px; font-weight: normal;">
-                                        {{distanceValue}} de {{goal && goal.distance ? goal.distance : 0}}
-                                        <small>m</small>
+                                        {{distanceValue | distance}}
+                                        de {{goal && goal.distance ? (goal.distance|distance) : '0m'}}
                                     </label>
                                 </div>
                             </div>

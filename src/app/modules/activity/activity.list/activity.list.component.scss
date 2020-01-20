@@ -91,11 +91,10 @@ i:hover {
 }
 
 .disabled {
-  color: lightgray;
+  color: #9e9e9e !important;
 
   &:hover {
     border-radius: 20px !important;
-    color: lightgray !important;
     background: $primary-color !important;
   }
 }

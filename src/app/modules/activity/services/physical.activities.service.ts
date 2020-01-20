@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PhysicalActivity } from '../models/physical.activity'
 import { environment } from '../../../../environments/environment'
+import { TimeSeries } from '../models/time.series'
 
 @Injectable()
 export class PhysicalActivitiesService {
@@ -18,6 +19,11 @@ export class PhysicalActivitiesService {
 
     getAll(patientId: string): Promise<PhysicalActivity[]> {
         return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities`)
+            .toPromise();
+    }
+
+    getByLink(link: string): Promise<TimeSeries> {
+        return this.http.get<any>(`${environment.api_url}${link}`)
             .toPromise();
     }
 

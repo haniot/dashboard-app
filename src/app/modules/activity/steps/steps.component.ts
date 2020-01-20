@@ -64,7 +64,7 @@ export class StepsComponent implements OnInit, OnChanges {
             }
         };
 
-        if (this.data) {
+        if (this.data && this.data.data_set) {
             this.data.data_set.forEach((elementStep: TimeSeriesItem) => {
                 xAxisOptions.data.push(this.datePipe.transform(elementStep.date, 'shortDate'));
                 seriesOptions.data.push({

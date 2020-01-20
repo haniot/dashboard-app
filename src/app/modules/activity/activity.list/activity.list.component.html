@@ -12,51 +12,51 @@
                     <h4 class="card-title">{{'ACTIVITY.PHYSICAL-ACTIVITY.TITLE'|translate}}</h4>
                     <p class="card-category"></p>
                 </span>
-<!--                                <ul class="nav nav-tabs right" data-tabs="tabs"-->
-<!--                                    *ngIf="!isMobile()">-->
-<!--                                    <li class="nav-item">-->
-<!--                                        <a class="nav-link" data-toggle="tab"-->
-<!--                                           (click)="filterChange(filterOptions.today)">-->
-<!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}-->
-<!--                                            <div class="ripple-container"></div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="nav-item">-->
-<!--                                        <a class="nav-link" data-toggle="tab"-->
-<!--                                           (click)="filterChange(filterOptions.week)">-->
-<!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}-->
-<!--                                            <div class="ripple-container"></div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="nav-item">-->
-<!--                                        <a class="nav-link" data-toggle="tab"-->
-<!--                                           (click)="filterChange(filterOptions.month)">-->
-<!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}-->
-<!--                                            <div class="ripple-container"></div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="nav-item">-->
-<!--                                        <a class="nav-link" data-toggle="tab"-->
-<!--                                           (click)="filterChange(filterOptions.year)">-->
-<!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}-->
-<!--                                            <div class="ripple-container"></div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="nav-item">-->
-<!--                                        <mat-form-field>-->
-<!--                                            <input matInput-->
-<!--                                                   [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"-->
-<!--                                                   [satDatepicker]="picker"-->
-<!--                                                   [(ngModel)]="search"-->
-<!--                                                   (ngModelChange)="filterChange('period')"-->
-<!--                                                   [min]="minDate"-->
-<!--                                                   [max]="currentDate">-->
+                                <!--                                <ul class="nav nav-tabs right" data-tabs="tabs"-->
+                                <!--                                    *ngIf="!isMobile()">-->
+                                <!--                                    <li class="nav-item">-->
+                                <!--                                        <a class="nav-link" data-toggle="tab"-->
+                                <!--                                           (click)="filterChange(filterOptions.today)">-->
+                                <!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}-->
+                                <!--                                            <div class="ripple-container"></div>-->
+                                <!--                                        </a>-->
+                                <!--                                    </li>-->
+                                <!--                                    <li class="nav-item">-->
+                                <!--                                        <a class="nav-link" data-toggle="tab"-->
+                                <!--                                           (click)="filterChange(filterOptions.week)">-->
+                                <!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}-->
+                                <!--                                            <div class="ripple-container"></div>-->
+                                <!--                                        </a>-->
+                                <!--                                    </li>-->
+                                <!--                                    <li class="nav-item">-->
+                                <!--                                        <a class="nav-link" data-toggle="tab"-->
+                                <!--                                           (click)="filterChange(filterOptions.month)">-->
+                                <!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}-->
+                                <!--                                            <div class="ripple-container"></div>-->
+                                <!--                                        </a>-->
+                                <!--                                    </li>-->
+                                <!--                                    <li class="nav-item">-->
+                                <!--                                        <a class="nav-link" data-toggle="tab"-->
+                                <!--                                           (click)="filterChange(filterOptions.year)">-->
+                                <!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}-->
+                                <!--                                            <div class="ripple-container"></div>-->
+                                <!--                                        </a>-->
+                                <!--                                    </li>-->
+                                <!--                                    <li class="nav-item">-->
+                                <!--                                        <mat-form-field>-->
+                                <!--                                            <input matInput-->
+                                <!--                                                   [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"-->
+                                <!--                                                   [satDatepicker]="picker"-->
+                                <!--                                                   [(ngModel)]="search"-->
+                                <!--                                                   (ngModelChange)="filterChange('period')"-->
+                                <!--                                                   [min]="minDate"-->
+                                <!--                                                   [max]="currentDate">-->
 
-<!--                                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>-->
-<!--                                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
-<!--                                        </mat-form-field>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
+                                <!--                                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>-->
+                                <!--                                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
+                                <!--                                        </mat-form-field>-->
+                                <!--                                    </li>-->
+                                <!--                                </ul>-->
 
                                 <ul class="nav nav-tabs right" data-tabs="tabs" *ngIf="isMobile()">
                                     <li class="nav-item">
@@ -136,11 +136,19 @@
                                         <i class="material-icons float-left" style="margin: 10px 0px;"
                                            [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
                                     </li>
-                                    <li class="nav-item text-center">
+                                    <li class="nav-item text-center" *ngIf="filterSelected === 'today'">
                                         <label style="color:white">
                                             {{isToday(currentDate) ? ('MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate) : currentDate | date:'EEEE'}}
                                         </label><br>
                                         <label style="color:white">{{currentDate | date}}</label>
+                                    </li>
+                                    <li class="nav-item text-center" *ngIf="filterSelected !== 'today'"
+                                        style="display: grid">
+                                        <label style="color:white; margin-bottom: 0">
+                                            {{startOfDate | date}}
+                                        </label>
+                                        <label style="color:white;margin-bottom: 0"> - </label>
+                                        <label style="color:white;margin-bottom: 0">{{endOfDate | date}}</label>
                                     </li>
                                     <li class="nav-item" (click)="next()">
                                         <i class="material-icons float-left" style="margin: 10px 0px"
@@ -180,7 +188,8 @@
                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                      style="padding: 0px 0px; margin: 0px 0px">
                                     <view-timestamp [patientId]="patientId"
-                                                    [typeOfTimeSeries]="timeSerieSelected" [filter]="currentFilter"></view-timestamp>
+                                                    [typeOfTimeSeries]="timeSerieSelected"
+                                                    [filter]="currentFilter"></view-timestamp>
                                 </div>
 
                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
@@ -303,8 +312,7 @@
                                                         <!--                                                    <img src="../../../../assets/img/time-series/distance.png"-->
                                                         <!--                                                         class="float-left">-->
                                                         <p class="float-right" style="margin: 0px 4px">
-                                                            {{activity.distance}}
-                                                            <small>Km</small>
+                                                            {{activity.distance |distance}}
                                                         </p>
                                                     </div>
                                                     <div class="col"

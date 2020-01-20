@@ -55,7 +55,7 @@ export abstract class Activity {
 
 export enum Levels {
     sedentary = 'sedentary',
-    light = 'light',
+    lightly = 'lightly',
     fairly = 'fairly',
     very = 'very'
 }

@@ -351,7 +351,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.currentFilter.start_date = this.currentDate.toISOString();
         this.currentFilter.end_date = this.currentDate.toISOString();
         this.loadTimeSeries();
-        this.loadActivities();
+        // this.loadActivities();
     }
 
     nextDay(): void {
@@ -360,7 +360,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             this.currentFilter.start_date = this.currentDate.toISOString();
             this.currentFilter.end_date = this.currentDate.toISOString();
             this.loadTimeSeries();
-            this.loadActivities();
+            // this.loadActivities();
         }
     }
 

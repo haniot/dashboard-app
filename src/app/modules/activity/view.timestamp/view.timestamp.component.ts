@@ -1,7 +1,4 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-
-import { SearchForPeriod } from '../../measurement/models/measurement'
-import { MeasurementService } from '../../measurement/services/measurement.service'
 import { TimeSeries, TimeSeriesSimpleFilter, TimeSeriesType } from '../models/time.series'
 import { TimeSeriesService } from '../services/time.series.service'
 
@@ -30,6 +27,7 @@ export class ViewTimestampComponent implements OnChanges {
                 this.listIsEmpty = false;
             })
             .catch(() => {
+                this.data = new TimeSeries();
                 this.listIsEmpty = true;
             });
     }

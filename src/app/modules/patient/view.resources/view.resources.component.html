@@ -47,29 +47,29 @@
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.steps">
                     <steps [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
-                           [showSpinner]="!list.length && !listIsEmpty"></steps>
+                           [showSpinner]="!list && !listIsEmpty"></steps>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.calories">
                     <calories [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
-                              [showSpinner]="!list.length && !listIsEmpty"></calories>
+                              [showSpinner]="!list && !listIsEmpty"></calories>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.distance">
                     <distance [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
-                              [showSpinner]="!list.length && !listIsEmpty"></distance>
+                              [showSpinner]="!list && !listIsEmpty"></distance>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.active_minutes">
                     <actives-minutes [data]="list" [filterVisibility]="true" [patientId]="patientId"
                                      [includeCard]="true"
-                                     [showSpinner]="!list.length && !listIsEmpty"></actives-minutes>
+                                     [showSpinner]="!list && !listIsEmpty"></actives-minutes>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.heart_rate">
                     <heart-rate [data]="list" [filterVisibility]="true" [patientId]="patientId"
                                 [includeCard]="true"
-                                [showSpinner]="!list.length && !listIsEmpty"></heart-rate>
+                                [showSpinner]="!list && !listIsEmpty"></heart-rate>
                 </div>
 
             </div>

@@ -48,8 +48,8 @@ export class ActivityListComponent implements OnInit {
     /*mobile view*/
     filterSelected: string;
     minDate: Date;
-    startOfWeek: Date;
-    endOfWeek: Date;
+    startOfDate: Date;
+    endOfDate: Date;
     currentFilter: TimeSeriesSimpleFilter;
 
     constructor(
@@ -75,11 +75,6 @@ export class ActivityListComponent implements OnInit {
         this.currentFilter = new TimeSeriesSimpleFilter();
         this.currentFilter.start_date = this.currentDate.toISOString();
         this.currentFilter.end_date = this.currentDate.toISOString();
-        this.startOfWeek = moment().startOf('week').toDate();
-        this.endOfWeek = moment().endOf('week').toDate();
-
-        console.log('StartWeek: ', this.startOfWeek)
-        console.log('EndWeek: ', this.endOfWeek)
     }
 
     ngOnInit() {
@@ -90,6 +85,27 @@ export class ActivityListComponent implements OnInit {
 
     applyFilter($event): void {
 
+
+    }
+
+    updateRangeDate(): void {
+        switch (this.filterSelected) {
+            case '1m':
+                this.startOfDate = moment().startOf('month').toDate();
+                this.endOfDate = moment().endOf('month').toDate();
+                break;
+
+            case '1y':
+                this.startOfDate = moment().startOf('year').toDate();
+                this.endOfDate = moment().endOf('year').toDate();
+                break;
+
+            default:
+                this.startOfDate = moment().startOf('week').toDate();
+                this.endOfDate = moment().endOf('week').toDate();
+                break;
+
+        }
     }
 
     changeOnActivity(): void {
@@ -127,14 +143,50 @@ export class ActivityListComponent implements OnInit {
     }
 
     previous(): void {
-        if (this.filterSelected === 'today') {
-            this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
+        switch (this.filterSelected) {
+            case 'today':
+                this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
+                break;
+
+            case '1w':
+                this.startOfDate = moment(this.startOfDate).subtract(1, 'w').toDate();
+                this.endOfDate = moment(this.endOfDate).subtract(1, 'w').toDate();
+                break;
+
+            case '1m':
+                this.startOfDate = moment(this.startOfDate).subtract(1, 'M').toDate();
+                this.endOfDate = moment(this.endOfDate).subtract(1, 'M').toDate();
+                break;
+
+            case '1y':
+                this.startOfDate = moment(this.startOfDate).subtract(1, 'y').toDate();
+                this.endOfDate = moment(this.endOfDate).subtract(1, 'y').toDate();
+                break;
         }
     }
 
     next(): void {
-        if (!this.isToday(this.currentDate) && this.filterSelected === 'today') {
-            this.currentDate = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
+        switch (this.filterSelected) {
+            case 'today':
+                if (!this.isToday(this.currentDate)) {
+                    this.currentDate = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
+                }
+                break;
+
+            case '1w':
+                this.startOfDate = moment(this.startOfDate).add(1, 'w').toDate();
+                this.endOfDate = moment(this.endOfDate).add(1, 'w').toDate();
+                break;
+
+            case '1m':
+                this.startOfDate = moment(this.startOfDate).add(1, 'M').toDate();
+                this.endOfDate = moment(this.endOfDate).add(1, 'M').toDate();
+                break;
+
+            case '1y':
+                this.startOfDate = moment(this.startOfDate).add(1, 'y').toDate();
+                this.endOfDate = moment(this.endOfDate).add(1, 'y').toDate();
+                break;
         }
     }
 
@@ -219,6 +271,7 @@ export class ActivityListComponent implements OnInit {
             this.search = null;
         }
         this.filterSelected = filter.period;
+        this.updateRangeDate();
         // this.filter_change.emit(filter);
         // this.updateViewFilters(event)
     }
