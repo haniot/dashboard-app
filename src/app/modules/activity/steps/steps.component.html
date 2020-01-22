@@ -1,5 +1,5 @@
-<measurement-card [title]="'TIME-SERIES.STEPS.TITLE'|translate"
-                  [subtitle]="'TIME-SERIES.STEPS.SUBTITLE'|translate" [filter_visibility]="filterVisibility"
+<time-series-card [title]="'TIME-SERIES.STEPS.TITLE'|translate"
+                  [subtitle]="'TIME-SERIES.STEPS.SUBTITLE'|translate"
                   (filter_change)="applyFilter($event)" *ngIf="includeCard">
 
     <div class="row justify-content-center">
@@ -10,59 +10,11 @@
                     <div class="card-icon">
                         <img src="../../../../assets/img/time-series/steps-white.png" width="30">
                     </div>
-                    <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
-                    <h3 class="card-title">
-                        {{data && data.summary ? data.summary.total : 0}}
-                        <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
-                    </h3>
-                    <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                    <!--                        {{lastData.value + '' + lastData.unit}}-->
-                    <!--                    </h3>-->
-                    <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                    <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                    <!--                    </h3>-->
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="padding-bottom: 0px">
-            <div class="card card-stats">
-                <div class="card-header card-header-timer card-header-icon">
-                    <div class="card-icon">
-                        <img src="../../../../assets/img/time-series/steps-white.png" width="30">
-                    </div>
-                    <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
-                    <h3 class="card-title">
-                        {{data && data.summary ? data.summary.total : 0}}
-                        <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
-                    </h3>
-                    <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                    <!--                        {{lastData.value + '' + lastData.unit}}-->
-                    <!--                    </h3>-->
-                    <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                    <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                    <!--                    </h3>-->
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="padding-bottom: 0px">
-            <div class="card card-stats">
-                <div class="card-header card-header-timer card-header-icon">
-                    <div class="card-icon">
-                        <img src="../../../../assets/img/time-series/steps-white.png" width="30">
-                    </div>
                     <p class="card-category">{{'TIME-SERIES.STEPS.TOTAL-STEPS'|translate}}: </p>
                     <h3 class="card-title">
-                        {{data && data.summary ? data.summary.total : 0}}
+                        {{data && data.summary ? (data.summary.total| number:'1.0-0') : 0}}
                         <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                     </h3>
-                    <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                    <!--                        {{lastData.value + '' + lastData.unit}}-->
-                    <!--                    </h3>-->
-                    <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                    <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                    <!--                    </h3>-->
                 </div>
             </div>
         </div>
@@ -74,15 +26,15 @@
                  [options]="options" (chartInit)="onChartInit($event)"></div>
 
             <div class="unavailable-data">
-                <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-                <span *ngIf="!data && !showSpinner"
+                <spinner *ngIf="showSpinner" style="position: absolute; left: 0; right: 0; margin: auto"></spinner>
+                <span *ngIf="(!data && !showSpinner) || listIsEmpty"
                       class="badge badge-warning badge-12 ellipsis">{{'TIME-SERIES.UNAVAILABLE-DATA'|translate}}</span>
             </div>
         </div>
 
     </div>
 
-</measurement-card>
+</time-series-card>
 
 <div class="row justify-content-center" *ngIf="!includeCard">
 
@@ -92,59 +44,11 @@
                 <div class="card-icon">
                     <img src="../../../../assets/img/time-series/steps-white.png" width="30">
                 </div>
-                <p class="card-category">{{'TIME-SERIES.AVERAGE-WEEK'|translate}}: </p>
-                <h3 class="card-title">
-                    {{data && data.summary ? data.summary.total : 0}}
-                    <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
-                </h3>
-                <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                <!--                        {{lastData.value + '' + lastData.unit}}-->
-                <!--                    </h3>-->
-                <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                <!--                    </h3>-->
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="padding-bottom: 0px">
-        <div class="card card-stats">
-            <div class="card-header card-header-timer card-header-icon">
-                <div class="card-icon">
-                    <img src="../../../../assets/img/time-series/steps-white.png" width="30">
-                </div>
-                <p class="card-category">{{'TIME-SERIES.BEAT-YESTERDAY'|translate}}: </p>
-                <h3 class="card-title">
-                    {{data && data.summary ? data.summary.total : 0}}
-                    <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
-                </h3>
-                <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                <!--                        {{lastData.value + '' + lastData.unit}}-->
-                <!--                    </h3>-->
-                <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                <!--                    </h3>-->
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="padding-bottom: 0px">
-        <div class="card card-stats">
-            <div class="card-header card-header-timer card-header-icon">
-                <div class="card-icon">
-                    <img src="../../../../assets/img/time-series/steps-white.png" width="30">
-                </div>
                 <p class="card-category">{{'TIME-SERIES.STEPS.TOTAL-STEPS'|translate}}: </p>
                 <h3 class="card-title">
-                    {{data && data.summary ? data.summary.total : 0}}
+                    {{data && data.summary ? (data.summary.total| number:'1.0-0') : 0}}
                     <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                 </h3>
-                <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
-                <!--                        {{lastData.value + '' + lastData.unit}}-->
-                <!--                    </h3>-->
-                <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
-                <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
-                <!--                    </h3>-->
             </div>
         </div>
     </div>
@@ -156,8 +60,8 @@
              [options]="options" (chartInit)="onChartInit($event)"></div>
 
         <div class="unavailable-data">
-            <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-            <span *ngIf="!data && !showSpinner"
+            <spinner *ngIf="showSpinner" style="position: absolute; left: 0; right: 0; margin: auto"></spinner>
+            <span *ngIf="(!data && !showSpinner) || listIsEmpty"
                   class="badge badge-warning badge-12 ellipsis">{{'TIME-SERIES.UNAVAILABLE-DATA'|translate}}</span>
         </div>
     </div>

@@ -6,9 +6,9 @@
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 navigation"
                  style="padding: 0px 0px; z-index: 1099;">
-                <i class="material-icons float-left" (click)="previosDay()" [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
+                <i class="material-icons float-left" (click)="previosDate()" [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
 
-                <i class="material-icons float-left" [ngClass]="isToday(currentDate)?'disabled':''" (click)="nextDay()"
+                <i class="material-icons float-left" [ngClass]="isToday(currentDate)?'disabled':''" (click)="nextDate()"
                    [title]="'ACTIVITY.NEXT-DAY'|translate">keyboard_arrow_right</i>
 
                 <label class="float-left">{{currentDate | date}}</label>
@@ -114,7 +114,7 @@
                             <div class="row justify-content-center" *ngIf="sleepSelected && !loadingDashboard">
 
                                 <div class="col justify-content-center" #sleepDiv
-                                     style="height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto; margin-top: 0px;">
+                                     style="min-height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto; margin-top: 0px;">
                                     <ngx-gauge
                                             [size]="sleepSize"
                                             [type]="'semi'"
@@ -185,7 +185,7 @@
                             </div>
 
                             <div class="row justify-content-center"
-                                 style="height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto"
+                                 style="min-height: 263px; padding: 0px 0px; display: flex; align-items: center; margin: auto"
                                  *ngIf="!sleepSelected && !loadingDashboard">
                                 <div>
                                     <img class="text-center"
@@ -484,9 +484,9 @@
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                  style="padding: 0px 0px; margin: 0px 0px">
-                                <view-timestamp [patientId]="patientId"
+                                <view-time-series [patientId]="patientId"
                                                 [typeOfTimeSeries]="measurementSelected"
-                                                [filter]="currentFilter"></view-timestamp>
+                                                [filter]="currentFilter"></view-time-series>
                             </div>
                         </div>
 

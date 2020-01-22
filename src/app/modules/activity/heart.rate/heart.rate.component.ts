@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr'
 
 import { MeasurementService } from '../../measurement/services/measurement.service';
-import { SearchForPeriod } from '../../measurement/models/measurement'
-import { ToastrService } from 'ngx-toastr'
 import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series'
+import { TimeSeriesService } from '../services/time.series.service'
 
 @Component({
     selector: 'heart-rate',
@@ -14,29 +14,29 @@ import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.serie
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class HeartRateComponent implements OnInit, OnChanges {
-    @Input() data: TimeSeries;
+    @Input() data: TimeSeries | any;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
     @Input() includeCard: boolean;
     @Input() showSpinner: boolean;
-    @Output() filterChange: EventEmitter<any>;
+    @Input() intraday: boolean;
+    @Input() listIsEmpty: boolean;
     options: any;
     optionsLastData: any;
     echartsInstance: any;
-    listIsEmpty: boolean;
     Math = Math;
 
     constructor(
         private datePipe: DatePipe,
         private measurementService: MeasurementService,
         private translateService: TranslateService,
-        private toastService: ToastrService
+        private toastService: ToastrService,
+        private timeSeriesService: TimeSeriesService
     ) {
         this.data = new TimeSeries();
         this.filterVisibility = false;
         this.patientId = '';
         this.showSpinner = false;
-        this.filterChange = new EventEmitter();
         this.listIsEmpty = false;
     }
 
@@ -132,13 +132,23 @@ export class HeartRateComponent implements OnInit, OnChanges {
         };
 
         if (this.data && this.data.data_set) {
-            this.data.data_set.forEach((element: TimeSeriesItem) => {
-                xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
-                seriesOptions.data.push({
-                    value: element.value,
-                    time: this.datePipe.transform(element.date, 'mediumTime')
+            if (this.intraday) {
+                this.data.data_set.forEach((element: { time: string, value: number }) => {
+                    xAxisOptions.data.push(element.time);
+                    seriesOptions.data.push({
+                        value: element.value,
+                        time: element.time
+                    });
                 });
-            });
+            } else {
+                this.data.data_set.forEach((element: TimeSeriesItem) => {
+                    xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
+                    seriesOptions.data.push({
+                        value: element.value,
+                        time: this.datePipe.transform(element.date, 'mediumTime')
+                    });
+                });
+            }
         }
 
         this.options = {
@@ -234,8 +244,31 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
     }
 
-    applyFilter(filter: SearchForPeriod) {
-
+    applyFilter(event: any) {
+        this.data = undefined;
+        this.showSpinner = true;
+        this.intraday = event.type === 'today';
+        let service = 'getWithResource';
+        if (event.type === 'today') {
+            service = 'getWithResourceAndInterval';
+        }
+        this.timeSeriesService[service](this.patientId, TimeSeriesType.heart_rate, event.filter)
+            .then((heartRate: TimeSeries) => {
+                if (heartRate && heartRate.data_set) {
+                    this.data = heartRate;
+                    this.loadGraph();
+                }
+                this.listIsEmpty = !(this.data) || (!this.data.summary || (!this.data.summary._fat_burn_total &&
+                    !this.data.summary._cardio_total &&
+                    !this.data.summary._peak_total &&
+                    !this.data.summary._out_of_range_total));
+                this.showSpinner = false;
+            })
+            .catch(() => {
+                this.data = new TimeSeries();
+                this.listIsEmpty = true;
+                this.showSpinner = false;
+            });
     }
 
     updateGraph(measurements: Array<TimeSeries>): void {
@@ -260,7 +293,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.data.currentValue !== changes.data.previousValue) {
+        if (changes.data && changes.data.currentValue !== changes.data.previousValue) {
             this.loadGraph();
         }
     }

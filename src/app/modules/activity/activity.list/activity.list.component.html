@@ -4,357 +4,199 @@
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
-                <div class="card">
-                    <div class="card-header card-header-tabs card-header-danger">
-                        <div class="nav-tabs-navigation">
-                            <div class="nav-tabs-wrapper">
-                <span class="nav-tabs-title">
-                    <h4 class="card-title">{{'ACTIVITY.PHYSICAL-ACTIVITY.TITLE'|translate}}</h4>
-                    <p class="card-category"></p>
-                </span>
-                                <!--                                <ul class="nav nav-tabs right" data-tabs="tabs"-->
-                                <!--                                    *ngIf="!isMobile()">-->
-                                <!--                                    <li class="nav-item">-->
-                                <!--                                        <a class="nav-link" data-toggle="tab"-->
-                                <!--                                           (click)="filterChange(filterOptions.today)">-->
-                                <!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}-->
-                                <!--                                            <div class="ripple-container"></div>-->
-                                <!--                                        </a>-->
-                                <!--                                    </li>-->
-                                <!--                                    <li class="nav-item">-->
-                                <!--                                        <a class="nav-link" data-toggle="tab"-->
-                                <!--                                           (click)="filterChange(filterOptions.week)">-->
-                                <!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}-->
-                                <!--                                            <div class="ripple-container"></div>-->
-                                <!--                                        </a>-->
-                                <!--                                    </li>-->
-                                <!--                                    <li class="nav-item">-->
-                                <!--                                        <a class="nav-link" data-toggle="tab"-->
-                                <!--                                           (click)="filterChange(filterOptions.month)">-->
-                                <!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}-->
-                                <!--                                            <div class="ripple-container"></div>-->
-                                <!--                                        </a>-->
-                                <!--                                    </li>-->
-                                <!--                                    <li class="nav-item">-->
-                                <!--                                        <a class="nav-link" data-toggle="tab"-->
-                                <!--                                           (click)="filterChange(filterOptions.year)">-->
-                                <!--                                            {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}-->
-                                <!--                                            <div class="ripple-container"></div>-->
-                                <!--                                        </a>-->
-                                <!--                                    </li>-->
-                                <!--                                    <li class="nav-item">-->
-                                <!--                                        <mat-form-field>-->
-                                <!--                                            <input matInput-->
-                                <!--                                                   [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"-->
-                                <!--                                                   [satDatepicker]="picker"-->
-                                <!--                                                   [(ngModel)]="search"-->
-                                <!--                                                   (ngModelChange)="filterChange('period')"-->
-                                <!--                                                   [min]="minDate"-->
-                                <!--                                                   [max]="currentDate">-->
+                <time-series-card [title]="'ACTIVITY.PHYSICAL-ACTIVITY.TITLE'|translate"
+                                  (filter_change)="applyFilter($event)">
 
-                                <!--                                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>-->
-                                <!--                                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
-                                <!--                                        </mat-form-field>-->
-                                <!--                                    </li>-->
-                                <!--                                </ul>-->
+                    <div class="container-fluid">
 
-                                <ul class="nav nav-tabs right" data-tabs="tabs" *ngIf="isMobile()">
-                                    <li class="nav-item">
-                                        <div class="dropdown">
-                                            <a class="dropdown-toggle nav-link active" id="dropdownMenuButton"
-                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{filterSelected|translate}}
-                                                <div class="ripple-container"></div>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item"
-                                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.TODAY'?'active':''"
-                                                   (click)="filterChange(filterOptions.today)">{{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}</a>
-                                                <a class="dropdown-item"
-                                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.WEEK'?'active':''"
-                                                   (click)="filterChange(filterOptions.week)">{{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}</a>
-                                                <a class="dropdown-item"
-                                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.MONTH'?'active':''"
-                                                   (click)="filterChange(filterOptions.month)">{{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}</a>
-                                                <a class="dropdown-item "
-                                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.YEAR'?'active':''"
-                                                   (click)="filterChange(filterOptions.year)">{{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav-item">
-                                        <mat-form-field [ngClass]="isMobile()?'hidden':''">
-                                            <input matInput
-                                                   [placeholder]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate"
-                                                   [satDatepicker]="picker"
-                                                   [(ngModel)]="search"
-                                                   (ngModelChange)="filterChange('period')"
-                                                   [min]="minDate"
-                                                   [max]="currentDate">
+                        <div class="row justify-content-end">
 
-                                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
-                                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-                                        </mat-form-field>
-                                        <a class="nav-link nav-link-mobile" *ngIf="isMobile()" (click)="picker.open()"
-                                           [title]="'PILOT-STUDY.PLACEHOLDER-PERIOD'|translate">
-                                            <i class="material-icons">date_range</i>
-                                        </a>
-
-                                    </li>
-                                </ul>
-
-                                <ul class="nav nav-tabs right navigation" data-tabs="tabs" *ngIf="!isMobile()">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab"
-                                           (click)="filterChange(filterOptions.today)">
-                                            {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab"
-                                           (click)="filterChange(filterOptions.week)">
-                                            {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab"
-                                           (click)="filterChange(filterOptions.month)">
-                                            {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab"
-                                           (click)="filterChange(filterOptions.year)">
-                                            {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" (click)="previous()">
-                                        <i class="material-icons float-left" style="margin: 10px 0px;"
-                                           [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
-                                    </li>
-                                    <li class="nav-item text-center" *ngIf="filterSelected === 'today'">
-                                        <label style="color:white">
-                                            {{isToday(currentDate) ? ('MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate) : currentDate | date:'EEEE'}}
-                                        </label><br>
-                                        <label style="color:white">{{currentDate | date}}</label>
-                                    </li>
-                                    <li class="nav-item text-center" *ngIf="filterSelected !== 'today'"
-                                        style="display: grid">
-                                        <label style="color:white; margin-bottom: 0">
-                                            {{startOfDate | date}}
-                                        </label>
-                                        <label style="color:white;margin-bottom: 0"> - </label>
-                                        <label style="color:white;margin-bottom: 0">{{endOfDate | date}}</label>
-                                    </li>
-                                    <li class="nav-item" (click)="next()">
-                                        <i class="material-icons float-left" style="margin: 10px 0px"
-                                           [ngClass]="isToday(currentDate)?'disabled':''"
-                                           [title]="isToday(currentDate)?'':'ACTIVITY.NEXT-DAY'|translate">keyboard_arrow_right</i>
-                                    </li>
-
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-
-                        <div class="container-fluid">
-
-                            <div class="row justify-content-end">
-
-                                <div class="col" style="max-width: 50px; padding: 0px 0px; margin: 0px 0px">
-                                    <mat-select class="form-control form-control-sm" style="border-radius: 10px"
-                                                id="selectMeasurement"
-                                                [(ngModel)]="timeSerieSelected">
-                                        <mat-select-trigger>
-                                            <mat-icon>
-                                                <img [src]="'../../../../assets/img/time-series/'+timeSerieSelected+'.png'">
-                                            </mat-icon>
-                                        </mat-select-trigger>
-                                        <mat-option *ngFor="let type of timeSeriesTypes" [value]="type"
-                                                    [title]="type | timeSeries | translate">
-                                            <img [src]="'../../../../assets/img/time-series/'+type+'.png'">
-                                        </mat-option>
-                                    </mat-select>
-
-                                </div>
-
-                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                     style="padding: 0px 0px; margin: 0px 0px">
-                                    <view-timestamp [patientId]="patientId"
-                                                    [typeOfTimeSeries]="timeSerieSelected"
-                                                    [filter]="currentFilter"></view-timestamp>
-                                </div>
-
-                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-                                     style="padding: 0px 0px; margin: 0px 0px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="p-2">
-                                            <h4>{{'ACTIVITY.PHYSICAL-ACTIVITY.DAILY-TOTAL'|translate}}:</h4>
-                                        </div>
-                                        <div class="p-2">
-                                            <h4>0 <small>{{'TIME-SERIES.PIPES.TIME-SERIES.STEPS'|translate}}</small>
-                                            </h4>
-                                        </div>
-                                        <div class="p-2">
-                                            <h4>0 <small>Km</small></h4>
-                                        </div>
-                                        <div class="p-2">
-                                            <h4>0
-                                                <small>{{'TIME-SERIES.PIPES.TIME-SERIES.CALORIES'|translate}}</small>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col" style="max-width: 50px; padding: 0px 0px; margin: 0px 0px">
+                                <mat-select class="form-control form-control-sm" style="border-radius: 10px"
+                                            id="selectMeasurement"
+                                            [(ngModel)]="timeSerieSelected">
+                                    <mat-select-trigger>
+                                        <mat-icon>
+                                            <img [src]="'../../../../assets/img/time-series/'+timeSerieSelected+'.png'">
+                                        </mat-icon>
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let type of timeSeriesTypes" [value]="type"
+                                                [title]="type | timeSeries | translate">
+                                        <img [src]="'../../../../assets/img/time-series/'+type+'.png'">
+                                    </mat-option>
+                                </mat-select>
 
                             </div>
 
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <h3>
-                                        {{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.TITLE'|translate}}
-                                    </h3>
-                                </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                 style="padding: 0px 0px; margin: 0px 0px">
+                                <view-time-series
+                                        [patientId]="patientId"
+                                        [typeOfTimeSeries]="timeSerieSelected"
+                                        [filter]="currentFilter" [intraday]="this.isIntraday"></view-time-series>
+                            </div>
 
-                                <div class="col-sm-4">
-                                    <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllActivities()"
-                                                  [disabled]="!data.length">
-                                        {{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.SELECT-ALL'|translate}}
-                                    </mat-checkbox>
-                                </div>
-
-                                <div class="col d-flex flex-row-reverse">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                 style="padding: 0px 0px; margin: 0px 0px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray">
+                                <div class="d-flex justify-content-between">
                                     <div class="p-2">
-                                        <button type="button" class="btn btn-haniot-primary btn-sm"
-                                                (click)="removeSelected()"
-                                                [disabled]="!stateButtonRemoveSelected">
-                                            {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.REMOVE-SELECTED'|translate}}
-                                        </button>
+                                        <h4>{{'ACTIVITY.PHYSICAL-ACTIVITY.DAILY-TOTAL'|translate}}:</h4>
+                                    </div>
+                                    <div class="p-2">
+                                        <h4>0 <small>{{'TIME-SERIES.PIPES.TIME-SERIES.STEPS'|translate}}</small>
+                                        </h4>
+                                    </div>
+                                    <div class="p-2">
+                                        <h4>0 <small>Km</small></h4>
+                                    </div>
+                                    <div class="p-2">
+                                        <h4>0
+                                            <small>{{'TIME-SERIES.PIPES.TIME-SERIES.CALORIES'|translate}}</small>
+                                        </h4>
                                     </div>
                                 </div>
-
-
                             </div>
 
-                            <div class="row">
+                        </div>
 
-                                <!-- Table for type sleep -->
-                                <table class="table table-hover table-sm">
-                                    <thead>
-                                    <th>#</th>
-                                    <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.ACTIVITY-NAME'|translate}}</th>
-                                    <th>{{'SHARED.DATE'|translate}}</th>
-                                    <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.RESUME'|translate}}</th>
-                                    <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
-                                    </thead>
-                                    <tbody>
-                                    <tr *ngIf="data.length==0">
-                                        <td colspan="5" *ngIf="showSpinner">
-                                            <spinner
-                                                    [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
-                                        </td>
-                                        <td colspan="5" *ngIf="!showSpinner">
-                                            <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
-                                                <br>
-                                                <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
-                                            </h4>
-                                        </td>
-                                    </tr>
-                                    <tr *ngFor="let activity of data;let i= index; trackBy: trackById">
-                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
-                                            (click)="viewActivityDetails(activity.id)">
-                                            <mat-checkbox (change)="changeOnActivity()"
-                                                          [(ngModel)]="listCheckActivities[i]"></mat-checkbox>
-                                        </td>
-                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
-                                            (click)="viewActivityDetails(activity.id)">
-                                            {{activity.name | physicalActivity | translate}}
-                                        </td>
-                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
-                                            (click)="viewActivityDetails(activity.id)">
-                                            {{activity.start_time | date}}
-                                        </td>
-                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
-                                            (click)="viewActivityDetails(activity.id)">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col"
-                                                         style="padding: 0px 0px; margin: 0px 0px; display: flex"
-                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DURATION'|translate">
-                                                        <!--                                                    <img src="../../../../assets/img/time-series/duration.png"-->
-                                                        <!--                                                         style="position: absolute; top:-15px;margin-left: auto; margin-right: auto; left: 0; right: 0; width: 20%">-->
-                                                        <p
-                                                                style="margin: 0px 4px">{{Math.floor((activity.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
-                                                            {{(activity.duration % 3600000) ?
-                                                                ('SHARED.AND'|translate) + ' ' + Math.floor((activity.duration % 3600000) / 60000) +
-                                                                ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
-                                                            }}</p>
-                                                    </div>
-                                                    <div class="col"
-                                                         style="padding: 0px 0px; margin: 0px 0px; display: flex"
-                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.STEPS'|translate">
-                                                        <!--                                                    <img src="../../../../assets/img/time-series/steps.png"-->
-                                                        <!--                                                         class="float-left">-->
-                                                        <p class="float-right" style="margin: 0px 4px">
-                                                            {{activity.steps}}
-                                                            <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col"
-                                                         style="padding: 0px 0px; margin: 0px 0px; display: flex"
-                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DISTANCE'|translate">
-                                                        <!--                                                    <img src="../../../../assets/img/time-series/distance.png"-->
-                                                        <!--                                                         class="float-left">-->
-                                                        <p class="float-right" style="margin: 0px 4px">
-                                                            {{activity.distance |distance}}
-                                                        </p>
-                                                    </div>
-                                                    <div class="col"
-                                                         style="padding: 0px 0px; margin: 0px 0px; display: flex"
-                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.CALORIES-BURNED'|translate">
-                                                        <!--                                                    <img src="../../../../assets/img/time-series/calories.png"-->
-                                                        <!--                                                         class="float-left">-->
-                                                        <p class="float-right" style="margin: 0px 4px">
-                                                            {{activity.calories}}
-                                                            <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
-                                                        </p>
-                                                    </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <h3>
+                                    {{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.TITLE'|translate}}
+                                </h3>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllActivities()"
+                                              [disabled]="!data.length">
+                                    {{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.SELECT-ALL'|translate}}
+                                </mat-checkbox>
+                            </div>
+
+                            <div class="col d-flex flex-row-reverse">
+                                <div class="p-2">
+                                    <button type="button" class="btn btn-haniot-primary btn-sm"
+                                            (click)="removeSelected()"
+                                            [disabled]="!stateButtonRemoveSelected">
+                                        {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.REMOVE-SELECTED'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Table for type sleep -->
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                <th>#</th>
+                                <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.ACTIVITY-NAME'|translate}}</th>
+                                <th>{{'SHARED.DATE'|translate}}</th>
+                                <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.RESUME'|translate}}</th>
+                                <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                                </thead>
+                                <tbody>
+                                <tr *ngIf="data.length==0">
+                                    <td colspan="5" *ngIf="showSpinner">
+                                        <spinner
+                                                [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                                    </td>
+                                    <td colspan="5" *ngIf="!showSpinner">
+                                        <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                            <br>
+                                            <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let activity of data;let i= index; trackBy: trackById">
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        (click)="viewActivityDetails(activity.id)">
+                                        <mat-checkbox (change)="changeOnActivity()"
+                                                      [(ngModel)]="listCheckActivities[i]"></mat-checkbox>
+                                    </td>
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        (click)="viewActivityDetails(activity.id)">
+                                        {{activity.name | physicalActivity | translate}}
+                                    </td>
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        (click)="viewActivityDetails(activity.id)">
+                                        {{activity.start_time | date}}
+                                    </td>
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        (click)="viewActivityDetails(activity.id)">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col"
+                                                     style="padding: 0px 0px; margin: 0px 0px; display: flex"
+                                                     [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DURATION'|translate">
+                                                    <!--                                                    <img src="../../../../assets/img/time-series/duration.png"-->
+                                                    <!--                                                         style="position: absolute; top:-15px;margin-left: auto; margin-right: auto; left: 0; right: 0; width: 20%">-->
+                                                    <p
+                                                            style="margin: 0px 4px">{{Math.floor((activity.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
+                                                        {{(activity.duration % 3600000) ?
+                                                            ('SHARED.AND'|translate) + ' ' + Math.floor((activity.duration % 3600000) / 60000) +
+                                                            ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
+                                                        }}</p>
+                                                </div>
+                                                <div class="col"
+                                                     style="padding: 0px 0px; margin: 0px 0px; display: flex"
+                                                     [title]="'ACTIVITY.PHYSICAL-ACTIVITY.STEPS'|translate">
+                                                    <!--                                                    <img src="../../../../assets/img/time-series/steps.png"-->
+                                                    <!--                                                         class="float-left">-->
+                                                    <p class="float-right" style="margin: 0px 4px">
+                                                        {{activity.steps}}
+                                                        <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
+                                                    </p>
+                                                </div>
+                                                <div class="col"
+                                                     style="padding: 0px 0px; margin: 0px 0px; display: flex"
+                                                     [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DISTANCE'|translate">
+                                                    <!--                                                    <img src="../../../../assets/img/time-series/distance.png"-->
+                                                    <!--                                                         class="float-left">-->
+                                                    <p class="float-right" style="margin: 0px 4px">
+                                                        {{activity.distance |distance}}
+                                                    </p>
+                                                </div>
+                                                <div class="col"
+                                                     style="padding: 0px 0px; margin: 0px 0px; display: flex"
+                                                     [title]="'ACTIVITY.PHYSICAL-ACTIVITY.CALORIES-BURNED'|translate">
+                                                    <!--                                                    <img src="../../../../assets/img/time-series/calories.png"-->
+                                                    <!--                                                         class="float-left">-->
+                                                    <p class="float-right" style="margin: 0px 4px">
+                                                        {{activity.calories}}
+                                                        <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                                    </p>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a class="nav-link"
-                                               [title]="'ACTIVITY.REMOVE'|translate"
-                                               (click)="openModalConfirmation(activity.id)">
-                                                <i class="material-icons">delete</i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a class="nav-link"
+                                           [title]="'ACTIVITY.REMOVE'|translate"
+                                           (click)="openModalConfirmation(activity.id)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
 
-                                    </tbody>
-                                </table>
+                                </tbody>
+                            </table>
 
-                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
-                                    <mat-paginator [length]="length" [pageSize]="limit"
-                                                   [pageSizeOptions]="pageSizeOptions"
-                                                   (page)="clickPagination($event)">
-                                    </mat-paginator>
-                                </div>
-
-
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
+                                <mat-paginator [length]="length" [pageSize]="limit"
+                                               [pageSizeOptions]="pageSizeOptions"
+                                               (page)="clickPagination($event)">
+                                </mat-paginator>
                             </div>
 
+
                         </div>
+
                     </div>
 
-
-                </div>
+                </time-series-card>
             </div>
 
         </div>

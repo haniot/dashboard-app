@@ -6,7 +6,7 @@ import { SleepService } from './services/sleep.service'
 import { StepsComponent } from './steps/steps.component'
 import { TimeSeriesPipe } from './pipes/time.series.pipe'
 import { CaloriesComponent } from './calories/calories.component'
-import { ViewTimestampComponent } from './view.timestamp/view.timestamp.component'
+import { ViewTimeSeriesComponent } from './view.time.series/view.time.series.component'
 import { ActivesMinutesComponent } from './actives.minutes/actives.minutes.component'
 import { DistanceComponent } from './distance/distance.component'
 import { HeartRateComponent } from './heart.rate/heart.rate.component'
@@ -42,7 +42,9 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { ActivityListComponent } from './activity.list/activity.list.component';
 import { SleepListComponent } from './sleep.list/sleep.list.component';
 import { DistancePipe } from './pipes/distance.pipe';
-import { ActiveMinutesPipe } from './pipes/active.minutes.pipe'
+import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
+import { FilterTypePipe } from './pipes/filter.type.pipe'
+import { TimeSeriesCardComponent } from './time.series.card/time.series.card.component'
 
 @NgModule({
     declarations: [
@@ -51,7 +53,7 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe'
         DistanceComponent,
         HeartRateComponent,
         StepsComponent,
-        ViewTimestampComponent,
+        ViewTimeSeriesComponent,
         SleepComponent,
         SleepPipe,
         TimeSeriesPipe,
@@ -63,7 +65,9 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe'
         ActivityListComponent,
         SleepListComponent,
         DistancePipe,
-        ActiveMinutesPipe
+        ActiveMinutesPipe,
+        FilterTypePipe,
+        TimeSeriesCardComponent
     ],
     exports: [
         ActivityDashboardComponent,
@@ -72,13 +76,15 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe'
         DistanceComponent,
         HeartRateComponent,
         StepsComponent,
-        ViewTimestampComponent,
+        ViewTimeSeriesComponent,
         SleepComponent,
         SleepPipe,
         TimeSeriesPipe,
         ActivityLevelPipe,
         DistancePipe,
-        ActiveMinutesPipe
+        ActiveMinutesPipe,
+        FilterTypePipe,
+        TimeSeriesCardComponent
     ],
     providers: [
         SleepPipe,
@@ -88,7 +94,8 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe'
         TimeSeriesService,
         MillisecondPipe,
         DistancePipe,
-        ActiveMinutesPipe
+        ActiveMinutesPipe,
+        FilterTypePipe
     ],
     imports: [
         CommonModule,

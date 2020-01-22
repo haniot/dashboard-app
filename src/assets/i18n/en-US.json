@@ -570,7 +570,8 @@
       "TODAY": "Today",
       "WEEK": "Week",
       "MONTH": "Month",
-      "YEAR": "Year"
+      "YEAR": "Year",
+      "PERIOD": "Period"
     },
     "LOG-MEASUREMENTS-CARD": {
       "TITLE": "Measurement log history",
@@ -874,6 +875,7 @@
     "POSITION": "Position",
     "UPPER-LIMIT": "Upper limit",
     "CLASSIFICATION": "Classification",
+    "VIEW-MORE": "View more...",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",
@@ -1029,6 +1031,7 @@
     "ACTIVE-MINUTES": {
       "TITLE": "Active minutes",
       "ACTIVE-MINUTES": "active minutes",
+      "TOTAL-ACTIVE-MINUTES": "Total active minutes",
       "SUBTITLE": ""
     },
     "BEAT-YESTERDAY": "Beat yesterday",
@@ -1036,6 +1039,7 @@
     "CALORIES": {
       "TITLE": "Calories",
       "CALORIES": "calories",
+      "TOTAL-CALORIES": "Total of calories",
       "SUBTITLE": ""
     },
     "DISTANCE": {
@@ -1060,7 +1064,8 @@
       "HIGH": "High",
       "PEAK": "Peak",
       "CARDIO": "Cardio",
-      "FAT-BURN": "Fat burn"
+      "FAT-BURN": "Fat burn",
+      "OUT-OF-RANGE": "Out of range"
     },
     "LEVELS": {
       "LIGHT": "Ligth",

@@ -570,7 +570,8 @@
       "TODAY": "Hoje",
       "WEEK": "Semana",
       "MONTH": "Mês",
-      "YEAR": "Ano"
+      "YEAR": "Ano",
+      "PERIOD": "Periodo"
     },
     "LOG-MEASUREMENTS-CARD": {
       "TITLE": "Histórico dos registro de medições",
@@ -874,6 +875,7 @@
     "POSITION": "Posição",
     "UPPER-LIMIT": "Limite superior",
     "CLASSIFICATION": "Classificação",
+    "VIEW-MORE": "Visualizar mais...",
     "PIPES": {
       "GENDER": {
         "MALE": "Masculino",
@@ -1029,6 +1031,7 @@
     "ACTIVE-MINUTES": {
       "TITLE": "Minutos Ativos",
       "ACTIVE-MINUTES": "minutos ativos",
+      "TOTAL-ACTIVE-MINUTES": "Total de minutos ativos",
       "SUBTITLE": ""
     },
     "BEAT-YESTERDAY": "Executados ontem",
@@ -1036,6 +1039,7 @@
     "CALORIES": {
       "TITLE": "Calorias",
       "CALORIES": "calorias",
+      "TOTAL-CALORIES": "Total de calorias",
       "SUBTITLE": ""
     },
     "DISTANCE": {
@@ -1060,7 +1064,8 @@
       "HIGH": "Alta",
       "PEAK": "Pico",
       "CARDIO": "Cardio",
-      "FAT-BURN": "Queima de Gordura"
+      "FAT-BURN": "Queima de Gordura",
+      "OUT-OF-RANGE": "Fora das zonas"
     },
     "LEVELS": {
       "LIGHT": "Leve",

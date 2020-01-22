@@ -4,8 +4,14 @@ import { EnumMeasurementType, SearchForPeriod } from '../../measurement/models/m
 import { MeasurementService } from '../../measurement/services/measurement.service'
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
-import { TimeSeries, TimeSeriesSimpleFilter, TimeSeriesType } from '../../activity/models/time.series'
+import {
+    TimeSeries,
+    TimeSeriesIntervalFilter,
+    TimeSeriesSimpleFilter,
+    TimeSeriesType
+} from '../../activity/models/time.series'
 import { TimeSeriesService } from '../../activity/services/time.series.service'
+import * as moment from 'moment'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -84,9 +90,11 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
             this.filter = { start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today' };
         }
         if (Object.keys(TimeSeriesType).includes(this.typeOfMeasurement)) {
-            this.filter = new TimeSeriesSimpleFilter();
-            this.filter.start_date = new Date().toISOString();
-            this.filter.end_date = new Date().toISOString();
+            this.filter = new TimeSeriesIntervalFilter();
+            const dateFormatted: string = moment(new Date()).format();
+            this.filter = new TimeSeriesIntervalFilter()
+            this.filter.date = dateFormatted.split('T')[0];
+            this.filter.interval = '1m';
         }
     }
 
@@ -104,10 +112,19 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
         }
         if (Object.keys(TimeSeriesType).includes(resource)) {
             this.list = undefined;
-            this.timeSeriesService.getWithResource(this.patientId, resource, this.filter)
+            this.timeSeriesService.getWithResourceAndInterval(this.patientId, resource, this.filter)
                 .then(httpResponse => {
-                    this.list = httpResponse;
-                    this.listIsEmpty = !httpResponse.data_set || httpResponse.data_set.length === 0;
+                    if (httpResponse && httpResponse.data_set) {
+                        this.list = httpResponse;
+                    }
+                    this.listIsEmpty = !(this.list);
+                    this.listIsEmpty = !(this.list) || (!this.list.summary || !this.list.summary.total);
+                    if (resource === TimeSeriesType.heart_rate) {
+                        this.listIsEmpty = !(this.list) || (!this.list.summary || (!this.list.summary._fat_burn_total &&
+                            !this.list.summary._cardio_total &&
+                            !this.list.summary._peak_total &&
+                            !this.list.summary._out_of_range_total));
+                    }
                 })
                 .catch(() => {
                     this.listIsEmpty = true;
@@ -120,105 +137,5 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
             this.loadResource(changes.typeOfMeasurement.currentValue);
         }
     }
-
-    // initializeListCheckMeasurements(): void {
-    //     this.selectAll = false;
-    //     this.listCheckMeasurements = new Array<boolean>(this.list.length);
-    //     for (let i = 0; i < this.listCheckMeasurements.length; i++) {
-    //         this.listCheckMeasurements[i] = false;
-    //     }
-    //     this.updateStateButtonRemoveSelected();
-    // }
-    //
-    // selectAllMeasurements(): void {
-    //     const attribSelectAll = (element: any) => {
-    //         return !this.selectAll;
-    //     }
-    //     this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
-    //     this.updateStateButtonRemoveSelected();
-    // }
-    //
-    // clickPagination(event) {
-    //     this.pageEvent = event;
-    //     this.page = event.pageIndex + 1;
-    //     this.limit = event.pageSize;
-    //     this.loadResource(this.typeOfMeasurement);
-    // }
-    //
-    // openModalConfirmation(measurementId: string) {
-    //     this.cacheIdMeasurementRemove = measurementId;
-    //     this.modalConfirmRemoveMeasurement = true;
-    // }
-    //
-    // closeModalComfimation() {
-    //     this.cacheIdMeasurementRemove = '';
-    //     this.modalConfirmRemoveMeasurement = false;
-    // }
-    //
-    // async removeMeasurement(): Promise<any> {
-    //     this.loadingMeasurements = true;
-    //     if (!this.cacheListIdMeasurementRemove || !this.cacheListIdMeasurementRemove.length) {
-    //         this.measurementService.remove(this.patientId, this.cacheIdMeasurementRemove)
-    //             .then(measurements => {
-    //                 this.loadResource(this.typeOfMeasurement);
-    //                 this.loadingMeasurements = false;
-    //                 this.modalConfirmRemoveMeasurement = false;
-    //                 this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
-    //             })
-    //             .catch(() => {
-    //                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'));
-    //                 this.loadingMeasurements = false;
-    //                 this.modalConfirmRemoveMeasurement = false;
-    //             })
-    //     } else {
-    //         let occuredError = false;
-    //         for (let i = 0; i < this.cacheListIdMeasurementRemove.length; i++) {
-    //             try {
-    //                 const measurementRemove = this.cacheListIdMeasurementRemove[i];
-    //                 await this.measurementService.remove(this.patientId, measurementRemove.id);
-    //             } catch (e) {
-    //                 occuredError = true;
-    //             }
-    //         }
-    //         occuredError ? this.toastService
-    //                 .error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'))
-    //             : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
-    //
-    //         this.loadResource(this.typeOfMeasurement);
-    //         this.loadingMeasurements = false;
-    //         this.modalConfirmRemoveMeasurement = false;
-    //     }
-    // }
-    //
-    // changeOnMeasurement(): void {
-    //     const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
-    //     this.selectAll = this.list.length === measurementsSelected.length;
-    //     this.updateStateButtonRemoveSelected();
-    // }
-    //
-    // removeSelected() {
-    //     const measurementsIdSelected: Array<string> = new Array<string>();
-    //     this.listCheckMeasurements.forEach((element, index) => {
-    //         if (element) {
-    //             measurementsIdSelected.push(this.list[index]);
-    //         }
-    //     })
-    //     this.cacheListIdMeasurementRemove = measurementsIdSelected;
-    //     this.modalConfirmRemoveMeasurement = true;
-    // }
-    //
-    // updateStateButtonRemoveSelected(): void {
-    //     const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
-    //     this.stateButtonRemoveSelected = !!measurementsSelected.length;
-    // }
-    //
-    // changeFilter(event): void {
-    //     this.list = event;
-    //     this.listIsEmpty = this.list.length === 0;
-    // }
-    //
-    // trackById(index, item) {
-    //     return item.id;
-    // }
 
 }

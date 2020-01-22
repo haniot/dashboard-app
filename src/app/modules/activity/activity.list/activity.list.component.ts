@@ -6,7 +6,12 @@ import * as moment from 'moment';
 
 import { PhysicalActivity } from '../models/physical.activity';
 import { SearchForPeriod } from '../../measurement/models/measurement';
-import { TimeSeriesSimpleFilter, TimeSeriesType } from '../models/time.series';
+import {
+    TimeSeriesFullFilter,
+    TimeSeriesIntervalFilter,
+    TimeSeriesSimpleFilter,
+    TimeSeriesType
+} from '../models/time.series';
 import { ConfigurationBasic } from '../../config.matpaginator';
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
@@ -43,14 +48,8 @@ export class ActivityListComponent implements OnInit {
     cacheIdForRemove: string;
     cacheListIdForRemove: Array<any>;
     removingActivity: boolean;
-    search: DateRange;
-    filterOptions = FilterOptions;
-    /*mobile view*/
-    filterSelected: string;
-    minDate: Date;
-    startOfDate: Date;
-    endOfDate: Date;
-    currentFilter: TimeSeriesSimpleFilter;
+    currentFilter: TimeSeriesSimpleFilter | TimeSeriesIntervalFilter | TimeSeriesFullFilter;
+    isIntraday: boolean;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -63,18 +62,15 @@ export class ActivityListComponent implements OnInit {
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
         this.filter = new SearchForPeriod();
-        this.data = [];
         this.cacheListIdForRemove = new Array<string>();
         this.timeSeriesTypes = [TimeSeriesType.steps, TimeSeriesType.calories, TimeSeriesType.distance];
         this.timeSerieSelected = TimeSeriesType.steps;
-        this.currentDate = new Date();
         this.data = [];
-        this.minDate = new Date((this.currentDate.getFullYear() - 1) + '/' +
-            (this.currentDate.getMonth() + 1) + '/' + this.currentDate.getDate());
-        this.filterSelected = 'today';
-        this.currentFilter = new TimeSeriesSimpleFilter();
-        this.currentFilter.start_date = this.currentDate.toISOString();
-        this.currentFilter.end_date = this.currentDate.toISOString();
+        this.currentDate = new Date();
+        this.currentFilter = new TimeSeriesIntervalFilter();
+        this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
+        this.currentFilter.interval = '1m';
+        this.isIntraday = true;
     }
 
     ngOnInit() {
@@ -83,29 +79,9 @@ export class ActivityListComponent implements OnInit {
         })
     }
 
-    applyFilter($event): void {
-
-
-    }
-
-    updateRangeDate(): void {
-        switch (this.filterSelected) {
-            case '1m':
-                this.startOfDate = moment().startOf('month').toDate();
-                this.endOfDate = moment().endOf('month').toDate();
-                break;
-
-            case '1y':
-                this.startOfDate = moment().startOf('year').toDate();
-                this.endOfDate = moment().endOf('year').toDate();
-                break;
-
-            default:
-                this.startOfDate = moment().startOf('week').toDate();
-                this.endOfDate = moment().endOf('week').toDate();
-                break;
-
-        }
+    applyFilter(event): void {
+        this.currentFilter = event.filter;
+        this.isIntraday = (event && event.type && event.type === 'today');
     }
 
     changeOnActivity(): void {
@@ -140,59 +116,6 @@ export class ActivityListComponent implements OnInit {
         }
         this.listCheckActivities = this.listCheckActivities.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
-    }
-
-    previous(): void {
-        switch (this.filterSelected) {
-            case 'today':
-                this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
-                break;
-
-            case '1w':
-                this.startOfDate = moment(this.startOfDate).subtract(1, 'w').toDate();
-                this.endOfDate = moment(this.endOfDate).subtract(1, 'w').toDate();
-                break;
-
-            case '1m':
-                this.startOfDate = moment(this.startOfDate).subtract(1, 'M').toDate();
-                this.endOfDate = moment(this.endOfDate).subtract(1, 'M').toDate();
-                break;
-
-            case '1y':
-                this.startOfDate = moment(this.startOfDate).subtract(1, 'y').toDate();
-                this.endOfDate = moment(this.endOfDate).subtract(1, 'y').toDate();
-                break;
-        }
-    }
-
-    next(): void {
-        switch (this.filterSelected) {
-            case 'today':
-                if (!this.isToday(this.currentDate)) {
-                    this.currentDate = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
-                }
-                break;
-
-            case '1w':
-                this.startOfDate = moment(this.startOfDate).add(1, 'w').toDate();
-                this.endOfDate = moment(this.endOfDate).add(1, 'w').toDate();
-                break;
-
-            case '1m':
-                this.startOfDate = moment(this.startOfDate).add(1, 'M').toDate();
-                this.endOfDate = moment(this.endOfDate).add(1, 'M').toDate();
-                break;
-
-            case '1y':
-                this.startOfDate = moment(this.startOfDate).add(1, 'y').toDate();
-                this.endOfDate = moment(this.endOfDate).add(1, 'y').toDate();
-                break;
-        }
-    }
-
-    isToday(date: Date): boolean {
-        const today = new Date();
-        return date.toISOString().split('T')[0] === today.toISOString().split('T')[0];
     }
 
     async remove(): Promise<any> {
@@ -251,29 +174,6 @@ export class ActivityListComponent implements OnInit {
     updateStateButtonRemoveSelected(): void {
         const activitiesSelected = this.listCheckActivities.filter(element => element === true);
         this.stateButtonRemoveSelected = !!activitiesSelected.length;
-    }
-
-    isMobile(): boolean {
-        return $(window).width() < 1080;
-    }
-
-    filterChange(event: any): void {
-        let filter: { start_at: string, end_at: string, period: string } = {
-            start_at: null,
-            end_at: new Date().toISOString().split('T')[0],
-            period: event
-        };
-        if (event === 'period') {
-            const start_at = this.search.begin.toISOString().split('T')[0];
-            const end_at = this.search.end.toISOString().split('T')[0];
-            filter = { start_at, end_at, period: null };
-        } else {
-            this.search = null;
-        }
-        this.filterSelected = filter.period;
-        this.updateRangeDate();
-        // this.filter_change.emit(filter);
-        // this.updateViewFilters(event)
     }
 
     trackById(index, item: PhysicalActivity) {

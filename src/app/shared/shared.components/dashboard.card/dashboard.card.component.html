@@ -2,11 +2,12 @@
     <span class="card__link" [ngClass]="urlAction?'cursorPointer':'cursorNormal'">
 
         <!-- Header -->
-        <div class="card__header">
+        <div class="card__header" [routerLink]="urlAction">
             <h3 class="card__header-title">{{title}}</h3>
             <p class="card__header-meta">{{subtitle}}</p>
 
-            <div class="card__header-icon" [routerLink]="urlAction" *ngIf="urlAction" [title]="'Visualizar mais...'">
+            <div class="card__header-icon" *ngIf="urlAction"
+                 [title]="'SHARED.VIEW-MORE'|translate">
                 <svg viewbox="0 0 28 25">
                     <path fill="#000000"
                           d="M13.145 2.13l1.94-1.867 12.178 12-12.178 12-1.94-1.867 8.931-8.8H.737V10.93h21.339z"/>
@@ -15,7 +16,7 @@
         </div>
 
         <!-- Icon -->
-        <div class="card__icon" *ngIf="icon && iconTitle">
+        <div class="card__icon" *ngIf="icon && iconTitle" [routerLink]="urlAction">
             <i class="material-icons" style="font-size: 50px" [title]="iconTitle">{{icon}}</i>
         </div>
 

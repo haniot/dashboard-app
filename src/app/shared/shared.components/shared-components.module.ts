@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { MatStepperModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CardTopComponent } from './card.top/card.top.component';
@@ -17,7 +18,6 @@ import { SelectPilotstudyComponent } from './select.pilotstudy/select.pilotstudy
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SubcardComponent } from './subcard/subcard.component';
 import { DashboardCardComponent } from './dashboard.card/dashboard.card.component';
-import { RouterModule } from '@angular/router'
 
 @NgModule({
     declarations: [

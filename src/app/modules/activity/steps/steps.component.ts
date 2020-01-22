@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
-import { TimeSeries, TimeSeriesItem } from '../models/time.series'
-import { SearchForPeriod } from '../../measurement/models/measurement'
+import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series'
+import { TimeSeriesService } from '../services/time.series.service'
 
 @Component({
     selector: 'steps',
@@ -11,25 +11,25 @@ import { SearchForPeriod } from '../../measurement/models/measurement'
     styleUrls: ['../../measurement/shared.style/shared.styles.scss']
 })
 export class StepsComponent implements OnInit, OnChanges {
-    @Input() data: TimeSeries;
+    @Input() data: TimeSeries | any;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
     @Input() includeCard: boolean;
     @Input() showSpinner: boolean;
-    @Output() filterChange: EventEmitter<any>;
+    @Input() intraday: boolean;
     options: any;
     echartsInstance: any;
-    listIsEmpty: boolean;
+    @Input() listIsEmpty: boolean;
 
     constructor(
         private datePipe: DatePipe,
+        private timeSeriesService: TimeSeriesService,
         private translateService: TranslateService
     ) {
         this.data = new TimeSeries();
         this.filterVisibility = false;
         this.patientId = '';
         this.showSpinner = false;
-        this.filterChange = new EventEmitter();
         this.listIsEmpty = false;
     }
 
@@ -41,8 +41,28 @@ export class StepsComponent implements OnInit, OnChanges {
         this.echartsInstance = event;
     }
 
-    applyFilter(filter: SearchForPeriod): void {
-
+    applyFilter(event: any): void {
+        this.data = undefined;
+        this.showSpinner = true;
+        this.intraday = event.type === 'today';
+        let service = 'getWithResource';
+        if (event.type === 'today') {
+            service = 'getWithResourceAndInterval';
+        }
+        this.timeSeriesService[service](this.patientId, TimeSeriesType.steps, event.filter)
+            .then((step: TimeSeries) => {
+                if (step && step.data_set) {
+                    this.data = step;
+                    this.loadGraph();
+                }
+                this.listIsEmpty = !(this.data) || (!this.data.summary || !this.data.summary.total);
+                this.showSpinner = false;
+            })
+            .catch(() => {
+                this.data = new TimeSeries();
+                this.listIsEmpty = true;
+                this.showSpinner = false;
+            });
     }
 
     loadGraph() {
@@ -54,6 +74,7 @@ export class StepsComponent implements OnInit, OnChanges {
                 show: false
             }
         };
+
         const seriesOptions = {
             type: 'bar',
             data: [],
@@ -65,13 +86,23 @@ export class StepsComponent implements OnInit, OnChanges {
         };
 
         if (this.data && this.data.data_set) {
-            this.data.data_set.forEach((elementStep: TimeSeriesItem) => {
-                xAxisOptions.data.push(this.datePipe.transform(elementStep.date, 'shortDate'));
-                seriesOptions.data.push({
-                    value: elementStep.value,
-                    time: this.datePipe.transform(elementStep.date, 'mediumTime')
+            if (this.intraday) {
+                this.data.data_set.forEach((elementStep: { time: string, value: string }) => {
+                    xAxisOptions.data.push(elementStep.time);
+                    seriesOptions.data.push({
+                        value: elementStep.value,
+                        time: elementStep.time
+                    });
                 });
-            });
+            } else {
+                this.data.data_set.forEach((elementStep: TimeSeriesItem) => {
+                    xAxisOptions.data.push(this.datePipe.transform(elementStep.date, 'shortDate'));
+                    seriesOptions.data.push({
+                        value: elementStep.value,
+                        time: this.datePipe.transform(elementStep.date, 'mediumTime')
+                    });
+                });
+            }
         }
 
         this.options = {
@@ -80,13 +111,12 @@ export class StepsComponent implements OnInit, OnChanges {
                 align: 'left'
             },
             tooltip: {},
+            dataZoom: {
+                show: true
+            },
             xAxis: xAxisOptions,
             yAxis: {},
-            series: seriesOptions,
-            animationEasing: 'elasticOut',
-            animationDelayUpdate: function (idx) {
-                return idx * 5;
-            }
+            series: seriesOptions
         };
 
     }
@@ -113,7 +143,7 @@ export class StepsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.data.currentValue !== changes.data.previousValue) {
+        if (changes.data && changes.data.currentValue !== changes.data.previousValue) {
             this.loadGraph();
         }
     }

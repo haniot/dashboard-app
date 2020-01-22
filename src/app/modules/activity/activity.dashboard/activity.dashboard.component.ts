@@ -346,7 +346,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         return item.id
     }
 
-    previosDay(): void {
+    previosDate(): void {
         this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
         this.currentFilter.start_date = this.currentDate.toISOString();
         this.currentFilter.end_date = this.currentDate.toISOString();
@@ -354,7 +354,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         // this.loadActivities();
     }
 
-    nextDay(): void {
+    nextDate(): void {
         if (!this.isToday(this.currentDate)) {
             this.currentDate = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
             this.currentFilter.start_date = this.currentDate.toISOString();
