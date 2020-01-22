@@ -1,5 +1,5 @@
-import { Activity, ActivityLevel, Levels } from './activity'
-import { HeartRateZoneItem } from './time.series'
+import { Activity, ActivityLevel } from './activity'
+import { HeartRateZone } from './time.series'
 
 export class PhysicalActivity extends Activity {
     /* requied */
@@ -12,20 +12,7 @@ export class PhysicalActivity extends Activity {
     private _calories_link: string;
     private _heart_rate_link: string;
     private _heart_rate_average: number;
-    private _heart_rate_zones: HeartRateZoneItem;
-
-    constructor() {
-        super();
-        this._name = '';
-        this._calories = 0;
-        this._steps = 0;
-        this._distance = 0;
-        this._levels = [];
-        this._heart_rate_link = '';
-        this._heart_rate_average = 0;
-        this._heart_rate_zones = new HeartRateZoneItem();
-    }
-
+    private _heart_rate_zones: HeartRateZone;
 
     get name(): string {
         return this._name
@@ -91,11 +78,11 @@ export class PhysicalActivity extends Activity {
         this._heart_rate_average = value
     }
 
-    get heart_rate_zones(): HeartRateZoneItem {
+    get heart_rate_zones(): HeartRateZone {
         return this._heart_rate_zones
     }
 
-    set heart_rate_zones(value: HeartRateZoneItem) {
+    set heart_rate_zones(value: HeartRateZone) {
         this._heart_rate_zones = value
     }
 }

@@ -1059,6 +1059,9 @@
         "SUBTEXT": "O gráfico abaixo representa todos os valores captados na última medição realizada"
       },
       "FREQUENCY": "Frequência",
+      "MIN": "Frequência minima",
+      "MAX": "Frequência máxima",
+      "AVERAGE": "Frequência média",
       "LOW": "Baixa",
       "NORMAL": "Normal",
       "HIGH": "Alta",

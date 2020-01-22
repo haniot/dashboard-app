@@ -1,6 +1,6 @@
 export class TimeSeries {
     /* required */
-    private _data_set: Array<TimeSeriesItem | HeartRateZoneItem>;
+    private _data_set: Array<TimeSeriesItem | HeartRateItem>;
     /* readonly */
     private readonly _summary: Summary | HeartRateSummary;
     private readonly _type: TimeSeriesType;
@@ -86,50 +86,71 @@ export class HeartRateSummary {
     }
 }
 
-export class HeartRateZoneItem {
+export class HeartRateItem {
     /* required */
-    private _fat_burn_total: HeartRateZoneData;
-    private _cardio_total: HeartRateZoneData;
-    private _peak_total: HeartRateZoneData;
-    private _out_of_range_total: HeartRateZoneData;
+    private _date: string;
+    private _zones: HeartRateZone;
+
+    get date(): string {
+        return this._date
+    }
+
+    set date(value: string) {
+        this._date = value
+    }
+
+    get zones(): HeartRateZone {
+        return this._zones
+    }
+
+    set zones(value: HeartRateZone) {
+        this._zones = value
+    }
+}
+
+export class HeartRateZone {
+    private _fat_burn: HeartRateZoneData;
+    private _cardio: HeartRateZoneData;
+    private _peak: HeartRateZoneData;
+    private _out_of_range: HeartRateZoneData;
 
     constructor() {
-        this._fat_burn_total = new HeartRateZoneData()
-        this._cardio_total = new HeartRateZoneData()
-        this._peak_total = new HeartRateZoneData()
-        this._out_of_range_total = new HeartRateZoneData()
+        this.fat_burn = new HeartRateZoneData()
+        this.cardio = new HeartRateZoneData()
+        this.peak = new HeartRateZoneData()
+        this.out_of_range = new HeartRateZoneData()
     }
 
-    get fat_burn_total(): HeartRateZoneData {
-        return this._fat_burn_total
+    get fat_burn(): HeartRateZoneData {
+        return this._fat_burn
     }
 
-    set fat_burn_total(value: HeartRateZoneData) {
-        this._fat_burn_total = value
+    set fat_burn(value: HeartRateZoneData) {
+        this._fat_burn = value
     }
 
-    get cardio_total(): HeartRateZoneData {
-        return this._cardio_total
+    get cardio(): HeartRateZoneData {
+        return this._cardio
     }
 
-    set cardio_total(value: HeartRateZoneData) {
-        this._cardio_total = value
+    set cardio(value: HeartRateZoneData) {
+        this._cardio = value
     }
 
-    get peak_total(): HeartRateZoneData {
-        return this._peak_total
+    get peak(): HeartRateZoneData {
+        return this._peak
     }
 
-    set peak_total(value: HeartRateZoneData) {
-        this._peak_total = value
+    set peak(value: HeartRateZoneData) {
+        this._peak = value
     }
 
-    get out_of_range_total(): HeartRateZoneData {
-        return this._out_of_range_total
+    get out_of_range(): HeartRateZoneData {
+        return this._out_of_range
     }
 
-    set out_of_range_total(value: HeartRateZoneData) {
-        this._out_of_range_total = value
+    set out_of_range(value: HeartRateZoneData) {
+        this._out_of_range = value
     }
 }
 
@@ -139,11 +160,13 @@ export class HeartRateZoneData {
     private _max: number
     /* optional */
     private _duration?: number;
+    private _calories?: number;
 
     constructor() {
-        this._min = 0;
-        this._max = 500;
-        this._duration = 5602000;
+        this.min = 0;
+        this.max = 0;
+        this.duration = 0;
+        this.calories = 0;
     }
 
     get min(): number {
@@ -168,6 +191,14 @@ export class HeartRateZoneData {
 
     set duration(value: number) {
         this._duration = value
+    }
+
+    get calories(): number {
+        return this._calories
+    }
+
+    set calories(value: number) {
+        this._calories = value
     }
 }
 

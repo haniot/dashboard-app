@@ -33,10 +33,14 @@ export class ViewTimeSeriesComponent implements OnChanges {
                 }
                 this.listIsEmpty = !(this.data) || (!this.data.summary || !this.data.summary.total);
                 if (typeSelected === TimeSeriesType.heart_rate) {
-                    this.listIsEmpty = !(this.data) || (!this.data.summary || (!this.data.summary._fat_burn_total &&
-                        !this.data.summary._cardio_total &&
-                        !this.data.summary._peak_total &&
-                        !this.data.summary._out_of_range_total));
+                    if (this.intraday) {
+                        this.listIsEmpty = !(this.data) || (!this.data.summary) ||
+                            (!this.data.summary.min && !this.data.summary.max && !this.data.summary.average);
+                    } else {
+                        this.listIsEmpty = !(this.data) || (!this.data.summary) ||
+                            (!this.data.summary.fat_burn_total && !this.data.summary.cardio_total &&
+                                !this.data.summary.peak_total && !this.data.summary.out_of_range_total);
+                    }
                 }
             })
             .catch(() => {

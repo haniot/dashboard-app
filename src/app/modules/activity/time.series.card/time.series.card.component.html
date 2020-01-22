@@ -11,35 +11,40 @@
 
                 <ul class="nav nav-tabs right navigation" data-tabs="tabs">
                     <li class="nav-item">
-                        <a class="nav-link" [ngClass]="filterSelected==='today'?'active':''" data-toggle="tab"
+                        <a class="nav-link" [ngClass]="filterSelected===filterOptions.today?'active':''"
+                           data-toggle="tab"
                            (click)="filterChange(filterOptions.today)">
                             {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}
                             <div class="ripple-container"></div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [ngClass]="filterSelected==='week'?'active':''" data-toggle="tab"
+                        <a class="nav-link" [ngClass]="filterSelected===filterOptions.week?'active':''"
+                           data-toggle="tab"
                            (click)="filterChange(filterOptions.week)">
                             {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}
                             <div class="ripple-container"></div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" [ngClass]="filterSelected==='month'?'active':''"
+                        <a class="nav-link" data-toggle="tab"
+                           [ngClass]="filterSelected===filterOptions.month?'active':''"
                            (click)="filterChange(filterOptions.month)">
                             {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}
                             <div class="ripple-container"></div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" [ngClass]="filterSelected==='year'?'active':''"
+                        <a class="nav-link" data-toggle="tab"
+                           [ngClass]="filterSelected===filterOptions.year?'active':''"
                            (click)="filterChange(filterOptions.year)">
                             {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}
                             <div class="ripple-container"></div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" [ngClass]="filterSelected==='period'?'active':''"
+                        <a class="nav-link" data-toggle="tab"
+                           [ngClass]="filterSelected===filterOptions.period?'active':''"
                            (click)="picker.open()">
                             {{'MEASUREMENTS.MEASUREMENT-CARD.PERIOD'|translate}}
                             <div class="ripple-container"></div>

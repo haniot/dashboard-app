@@ -47,29 +47,31 @@
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.steps">
                     <steps [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
-                           [showSpinner]="!list && !listIsEmpty"></steps>
+                           [showSpinner]="!list && !listIsEmpty" [intraday]="true" [listIsEmpty]="listIsEmpty"></steps>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.calories">
                     <calories [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
-                              [showSpinner]="!list && !listIsEmpty"></calories>
+                              [showSpinner]="!list && !listIsEmpty" [intraday]="true"
+                              [listIsEmpty]="listIsEmpty"></calories>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.distance">
                     <distance [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
-                              [showSpinner]="!list && !listIsEmpty"></distance>
+                              [showSpinner]="!list && !listIsEmpty" [intraday]="true"
+                              [listIsEmpty]="listIsEmpty"></distance>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.active_minutes">
                     <actives-minutes [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                                     [includeCard]="true"
+                                     [includeCard]="true" [intraday]="true" [listIsEmpty]="listIsEmpty"
                                      [showSpinner]="!list && !listIsEmpty"></actives-minutes>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.heart_rate">
                     <heart-rate [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                                [includeCard]="true"
-                                [showSpinner]="!list && !listIsEmpty"></heart-rate>
+                                [includeCard]="true" [listIsEmpty]="listIsEmpty"
+                                [showSpinner]="!list && !listIsEmpty" [intraday]="true"></heart-rate>
                 </div>
 
             </div>
