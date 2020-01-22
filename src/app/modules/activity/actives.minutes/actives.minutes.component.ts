@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -24,6 +24,7 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
+        private numberPipe: DecimalPipe,
         private translateService: TranslateService,
         private timeSeriesService: TimeSeriesService
     ) {
@@ -69,6 +70,8 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
 
     loadGraph() {
 
+        const activeMinutes = this.translateService.instant('TIME-SERIES.ACTIVE-MINUTES.ACTIVE-MINUTES');
+
         const xAxisOptions = {
             data: [],
             silent: false,
@@ -91,7 +94,8 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
                 this.data.data_set.forEach((element: { time: string, value: number }) => {
                     xAxisOptions.data.push(element.time);
                     seriesOptions.data.push({
-                        value: element.value,
+                        value: element.value / 60000,
+                        formatted: this.numberPipe.transform(element.value / 60000, '1.0-0'),
                         time: element.time
                     });
                 });
@@ -99,7 +103,8 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
                 this.data.data_set.forEach((element: TimeSeriesItem) => {
                     xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     seriesOptions.data.push({
-                        value: element.value,
+                        value: element.value / 60000,
+                        formatted: this.numberPipe.transform(element.value / 60000, '1.0-0'),
                         time: this.datePipe.transform(element.date, 'mediumTime')
                     });
                 });
@@ -112,7 +117,12 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
                 data: ['bar', 'bar2'],
                 align: 'left'
             },
-            tooltip: {},
+            tooltip: {
+                formatter: function (params) {
+                    return `${params.name}<br>` +
+                        `${params.marker} ${params.data.formatted} ${activeMinutes}`;
+                }
+            },
             dataZoom: {
                 show: true
             },

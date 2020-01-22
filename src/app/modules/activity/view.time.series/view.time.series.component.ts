@@ -18,6 +18,7 @@ export class ViewTimeSeriesComponent implements OnChanges {
 
     constructor(private timeSeriesService: TimeSeriesService) {
         this.listIsEmpty = false;
+        this.intraday = true;
     }
 
     loadResource(typeSelected: TimeSeriesType): any {

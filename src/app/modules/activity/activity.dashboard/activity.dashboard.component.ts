@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import * as echarts from 'echarts'
 
-import { TimeSeriesSimpleFilter, TimeSeriesType } from '../models/time.series';
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter, TimeSeriesType } from '../models/time.series';
 import { Sleep } from '../models/sleep';
 import { PatientService } from '../../patient/services/patient.service';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
@@ -52,7 +52,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     listActivities: PhysicalActivity[];
     listActivitiesIsEmpty: boolean;
     Math = Math;
-    currentFilter: TimeSeriesSimpleFilter;
+    currentFilter: TimeSeriesIntervalFilter;
     @ViewChild('sleepDiv', { static: false }) sleepDivRef: ElementRef;
     @ViewChild('stepDiv', { static: false }) stepDivRef: ElementRef;
 
@@ -85,16 +85,10 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.timeSeriesTypes = Object.keys(TimeSeriesType);
         this.measurementSelected = TimeSeriesType.steps;
         this.loadingDashboard = true;
-        // this.caloriesValue = 956;
-        // this.stepsValue = 1000;
-        // this.activeMinutesValue = 50;
-        // this.activeMinutesSettings = false;
-        // this.distanceValue = 22;
-        // this.sleepValue = Math.floor((sleep.duration / 3600000));
         this.listActivities = [];
-        this.currentFilter = new TimeSeriesSimpleFilter();
-        this.currentFilter.start_date = this.currentDate.toISOString();
-        this.currentFilter.end_date = this.currentDate.toISOString();
+        this.currentFilter = new TimeSeriesIntervalFilter();
+        this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
+        this.currentFilter.interval = '1m';
     }
 
     ngOnInit() {
@@ -142,8 +136,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     loadTimeSeries(): void {
         this.loadingDashboard = true;
         const filter: TimeSeriesSimpleFilter = new TimeSeriesSimpleFilter();
-        filter.start_date = this.currentDate.toISOString();
-        filter.end_date = this.currentDate.toISOString();
+        filter.start_date = this.currentDate.toISOString().split('T')[0];
+        filter.end_date = this.currentDate.toISOString().split('T')[0];
         this.timeSeriesService.getAll(this.patientId, filter)
             .then((timeSeries: any) => {
                 this.stepsValue = timeSeries.steps.summary.total;
@@ -348,8 +342,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
 
     previosDate(): void {
         this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
-        this.currentFilter.start_date = this.currentDate.toISOString();
-        this.currentFilter.end_date = this.currentDate.toISOString();
+        this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
         this.loadTimeSeries();
         // this.loadActivities();
     }
@@ -357,8 +350,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     nextDate(): void {
         if (!this.isToday(this.currentDate)) {
             this.currentDate = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
-            this.currentFilter.start_date = this.currentDate.toISOString();
-            this.currentFilter.end_date = this.currentDate.toISOString();
+            this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
             this.loadTimeSeries();
             // this.loadActivities();
         }

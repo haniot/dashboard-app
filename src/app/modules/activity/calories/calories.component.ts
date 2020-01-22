@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series';
 import { TimeSeriesService } from '../services/time.series.service'
@@ -23,6 +23,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
+        private numberPipe: DecimalPipe,
         private translateService: TranslateService,
         private timeSeriesService: TimeSeriesService
     ) {
@@ -66,10 +67,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
-
-        const light = this.translateService.instant('TIME-SERIES.LEVELS.LIGHT');
-        const moderate = this.translateService.instant('TIME-SERIES.LEVELS.MODERATE');
-        const intense = this.translateService.instant('TIME-SERIES.LEVELS.INTENSE');
+        const calories = this.translateService.instant('TIME-SERIES.CALORIES.CALORIES')
 
         const xAxisOptions = {
             data: [],
@@ -94,6 +92,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
                     xAxisOptions.data.push(element.time);
                     seriesOptions.data.push({
                         value: Math.floor(element.value),
+                        formatted: this.numberPipe.transform(element.value, '1.0-0'),
                         time: element.time
                     });
                 });
@@ -102,6 +101,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
                     xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     seriesOptions.data.push({
                         value: Math.floor(element.value),
+                        formatted: this.numberPipe.transform(element.value, '1.0-0'),
                         time: this.datePipe.transform(element.date, 'mediumTime')
                     });
                 });
@@ -113,29 +113,12 @@ export class CaloriesComponent implements OnInit, OnChanges {
                 data: ['bar', 'bar2'],
                 align: 'left'
             },
-            // visualMap: {
-            //     orient: 'horizontal',
-            //     top: 20,
-            //     right: 0,
-            //     pieces: [{
-            //         gt: 0,
-            //         lte: 35.7,
-            //         color: '#FDC133',
-            //         label: light
-            //
-            //     }, {
-            //         gt: 35.7,
-            //         lte: 37.5,
-            //         color: '#FC7D35',
-            //         label: moderate
-            //
-            //     }, {
-            //         gt: 37.5,
-            //         color: '#AFE42C',
-            //         label: intense
-            //     }]
-            // },
-            tooltip: {},
+            tooltip: {
+                formatter: function (params) {
+                    return `${params.name}<br>` +
+                        `${params.marker} ${params.data.formatted} ${calories}`;
+                }
+            },
             dataZoom: {
                 show: true
             },

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series'
@@ -23,6 +23,7 @@ export class StepsComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
+        private numberPipe: DecimalPipe,
         private timeSeriesService: TimeSeriesService,
         private translateService: TranslateService
     ) {
@@ -67,6 +68,8 @@ export class StepsComponent implements OnInit, OnChanges {
 
     loadGraph() {
 
+        const steps = this.translateService.instant('TIME-SERIES.STEPS.STEPS');
+
         const xAxisOptions = {
             data: [],
             silent: false,
@@ -91,6 +94,7 @@ export class StepsComponent implements OnInit, OnChanges {
                     xAxisOptions.data.push(elementStep.time);
                     seriesOptions.data.push({
                         value: elementStep.value,
+                        formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
                         time: elementStep.time
                     });
                 });
@@ -99,6 +103,7 @@ export class StepsComponent implements OnInit, OnChanges {
                     xAxisOptions.data.push(this.datePipe.transform(elementStep.date, 'shortDate'));
                     seriesOptions.data.push({
                         value: elementStep.value,
+                        formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
                         time: this.datePipe.transform(elementStep.date, 'mediumTime')
                     });
                 });
@@ -110,7 +115,12 @@ export class StepsComponent implements OnInit, OnChanges {
                 data: ['bar', 'bar2'],
                 align: 'left'
             },
-            tooltip: {},
+            tooltip: {
+                formatter: function (params) {
+                    return `${params.name}<br>` +
+                        `${params.marker} ${params.data.formatted} ${steps}`;
+                }
+            },
             dataZoom: {
                 show: true
             },

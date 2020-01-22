@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series';
 import { TimeSeriesService } from '../services/time.series.service'
+import { DistancePipe } from '../pipes/distance.pipe'
 
 @Component({
     selector: 'distance',
@@ -24,6 +25,7 @@ export class DistanceComponent implements OnInit, OnChanges {
     constructor(
         private datePipe: DatePipe,
         private translateService: TranslateService,
+        private  distancePipe: DistancePipe,
         private timeSeriesService: TimeSeriesService
     ) {
         this.data = new TimeSeries();
@@ -66,9 +68,6 @@ export class DistanceComponent implements OnInit, OnChanges {
     }
 
     loadGraph() {
-        const light = this.translateService.instant('TIME-SERIES.LEVELS.LIGHT');
-        const moderate = this.translateService.instant('TIME-SERIES.LEVELS.MODERATE');
-        const intense = this.translateService.instant('TIME-SERIES.LEVELS.INTENSE');
 
         const xAxisOptions = {
             data: [],
@@ -94,6 +93,7 @@ export class DistanceComponent implements OnInit, OnChanges {
                     xAxisOptions.data.push(element.time);
                     seriesOptions.data.push({
                         value: element.value,
+                        formatted: this.distancePipe.transform(element.value),
                         time: element.time
                     });
                 });
@@ -102,6 +102,7 @@ export class DistanceComponent implements OnInit, OnChanges {
                     xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
                     seriesOptions.data.push({
                         value: element.value,
+                        formatted: this.distancePipe.transform(element.value),
                         time: this.datePipe.transform(element.date, 'mediumTime')
                     });
                 });
@@ -113,29 +114,12 @@ export class DistanceComponent implements OnInit, OnChanges {
                 data: ['bar', 'bar2'],
                 align: 'left'
             },
-            // visualMap: {
-            //     orient: 'horizontal',
-            //     top: 20,
-            //     right: 0,
-            //     pieces: [{
-            //         gt: 0,
-            //         lte: 35.7,
-            //         color: '#FDC133',
-            //         label: light
-            //
-            //     }, {
-            //         gt: 35.7,
-            //         lte: 37.5,
-            //         color: '#FC7D35',
-            //         label: moderate
-            //
-            //     }, {
-            //         gt: 37.5,
-            //         color: '#AFE42C',
-            //         label: intense
-            //     }]
-            // },
-            tooltip: {},
+            tooltip: {
+                formatter: function (params) {
+                    return `${params.name}<br>` +
+                        `${params.marker} ${params.data.formatted}`;
+                }
+            },
             dataZoom: {
                 show: true
             },

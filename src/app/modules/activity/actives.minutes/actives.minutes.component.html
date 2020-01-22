@@ -12,7 +12,7 @@
                     </div>
                     <p class="card-category">{{'TIME-SERIES.ACTIVE-MINUTES.TOTAL-ACTIVE-MINUTES'|translate}}: </p>
                     <h3 class="card-title">
-                        {{data && data.summary ? (data.summary.total|number:'1.0-0') : 0}}
+                        {{data && data.summary ? ((data.summary.total / 60000)|number:'1.0-0') : 0}}
                         <small>{{'TIME-SERIES.ACTIVE-MINUTES.ACTIVE-MINUTES'|translate}}</small>
                     </h3>
                 </div>
@@ -47,7 +47,7 @@
                 </div>
                 <p class="card-category">{{'TIME-SERIES.ACTIVE-MINUTES.TOTAL-ACTIVE-MINUTES'|translate}}: </p>
                 <h3 class="card-title">
-                    {{data && data.summary ? (data.summary.total|number:'1.0-0') : 0}}
+                    {{data && data.summary ? ((data.summary.total / 60000)|number:'1.0-0') : 0}}
                     <small>{{'TIME-SERIES.ACTIVE-MINUTES.ACTIVE-MINUTES'|translate}}</small>
                 </h3>
             </div>
