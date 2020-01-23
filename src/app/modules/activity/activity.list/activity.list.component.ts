@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageEvent } from '@angular/material/paginator';
-import * as moment from 'moment';
 
 import { PhysicalActivity } from '../models/physical.activity';
 import { SearchForPeriod } from '../../measurement/models/measurement';
@@ -17,9 +16,6 @@ import { ModalService } from '../../../shared/shared.components/modal/service/mo
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
 import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
-import * as $ from 'jquery'
-import { DateRange } from '../../pilot.study/models/range-date'
-import { FilterOptions } from '../../measurement/measurement.card/measurement.card.component'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -76,12 +72,28 @@ export class ActivityListComponent implements OnInit {
     ngOnInit() {
         this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
+            this.loadAllActivities();
         })
     }
 
     applyFilter(event): void {
         this.currentFilter = event.filter;
         this.isIntraday = (event && event.type && event.type === 'today');
+    }
+
+    loadAllActivities(): void {
+        this.data = [];
+        this.showSpinner = true;
+        this.activityService.getAll(this.patientId, this.page, this.limit)
+            .then(httpResponse => {
+                this.data = httpResponse && httpResponse.body ? httpResponse.body : [];
+                this.length = httpResponse && httpResponse.headers ? parseInt(httpResponse.headers.get('x-total-count'), 10) : 0;
+                this.initializeListChecks();
+                this.showSpinner = false;
+            })
+            .catch(err => {
+                this.showSpinner = false;
+            })
     }
 
     changeOnActivity(): void {
@@ -94,6 +106,7 @@ export class ActivityListComponent implements OnInit {
         this.pageEvent = event;
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
+        this.loadAllActivities();
     }
 
     closeModalConfirmation() {

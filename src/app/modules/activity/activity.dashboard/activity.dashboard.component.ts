@@ -16,6 +16,7 @@ import { Goal } from '../../patient/models/goal'
 import { Patient } from '../../patient/models/patient'
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
 import { TimeSeriesService } from '../services/time.series.service'
+import { SleepService } from '../services/sleep.service'
 
 @Component({
     selector: 'activity-dashboard',
@@ -33,7 +34,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     sleepSize: number;
     sleepStages: any;
     sleepSelected: Sleep;
-    loadingDashboard: boolean;
+    loadingTimeSeries: boolean;
+    loadingSleep: boolean;
     sleepValue: number;
     sleepMax: number;
     sleepHover: boolean;
@@ -71,6 +73,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
 
     constructor(
         private activityService: PhysicalActivitiesService,
+        private sleepService: SleepService,
         private fb: FormBuilder,
         private patientService: PatientService,
         private pilotStudiesService: PilotStudyService,
@@ -84,7 +87,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.currentDate = new Date();
         this.timeSeriesTypes = Object.keys(TimeSeriesType);
         this.measurementSelected = TimeSeriesType.steps;
-        this.loadingDashboard = true;
+        this.loadingTimeSeries = true;
         this.listActivities = [];
         this.currentFilter = new TimeSeriesIntervalFilter();
         this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
@@ -99,6 +102,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                     this.patient = patient;
                     this.loadActivities();
                     this.loadTimeSeries();
+                    this.loadSleep();
                 })
                 .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
@@ -123,9 +127,9 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
 
     loadActivities(): void {
         this.listActivitiesIsEmpty = false;
-        this.activityService.getAll(this.patientId)
-            .then(activities => {
-                this.listActivities = activities
+        this.activityService.getAll(this.patientId, 1, 3)
+            .then(httpResponse => {
+                this.listActivities = httpResponse.body
                 this.listActivitiesIsEmpty = this.listActivities.length === 0;
             })
             .catch(err => {
@@ -133,8 +137,23 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             })
     }
 
+    loadSleep(): void {
+        this.loadingSleep = true;
+        const start_time = this.currentDate.toISOString().split('T')[0] + 'T03:00:00.000Z';
+        const nextday: Date = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
+        const end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+        this.sleepService.getAll(this.patientId, 1, 1, { start_time, end_time })
+            .then(httpResponse => {
+                this.sleepSelected = httpResponse && httpResponse.body ? httpResponse.body[0] : undefined;
+                this.loadingSleep = false;
+            })
+            .catch(err => {
+                this.loadingSleep = false;
+            })
+    }
+
     loadTimeSeries(): void {
-        this.loadingDashboard = true;
+        this.loadingTimeSeries = true;
         const filter: TimeSeriesSimpleFilter = new TimeSeriesSimpleFilter();
         filter.start_date = this.currentDate.toISOString().split('T')[0];
         filter.end_date = this.currentDate.toISOString().split('T')[0];
@@ -144,14 +163,14 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                 this.caloriesValue = timeSeries.calories.summary.total;
                 this.activeMinutesValue = timeSeries.active_minutes.summary.total;
                 this.distanceValue = timeSeries.distance.summary.total;
-                this.loadingDashboard = false;
+                this.loadingTimeSeries = false;
             })
             .catch(err => {
                 this.stepsValue = 0;
                 this.caloriesValue = 0;
                 this.activeMinutesValue = 0;
                 this.distanceValue = 0;
-                this.loadingDashboard = false;
+                this.loadingTimeSeries = false;
             })
     }
 
@@ -344,6 +363,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
         this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
         this.loadTimeSeries();
+        this.loadSleep();
         // this.loadActivities();
     }
 
@@ -352,6 +372,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             this.currentDate = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
             this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
             this.loadTimeSeries();
+            this.loadSleep();
             // this.loadActivities();
         }
     }

@@ -38,7 +38,9 @@
       "CLICK-TO-VIEW": "Click on the log to view the stages of sleep.",
       "REACHED-THE-IDEAL": "Reached the ideal",
       "DELETE-CONFIRMATION": "Are you sure you want to permanently remove the sleep log?",
-      "SPINNER-MESSAGE": "Removing sleep log..."
+      "SPINNER-MESSAGE": "Removing sleep log...",
+      "LOADING": "Loading sleep record ...",
+      "GOAL-ACHIEVED": "Goal achieved"
     },
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Physical Activity",
@@ -876,6 +878,10 @@
     "UPPER-LIMIT": "Upper limit",
     "CLASSIFICATION": "Classification",
     "VIEW-MORE": "View more...",
+    "OF": "of",
+    "ONLY": "Only",
+    "TIMES": "times",
+    "TURN": "turn",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",
@@ -1059,6 +1065,9 @@
         "SUBTEXT": "The graph below represents all the values captured in the last measurement performed"
       },
       "FREQUENCY": "Frequency",
+      "MIN": "Minimum frequency",
+      "MAX": "Maximum frequency",
+      "AVERAGE": "Average frequency",
       "LOW": "Low",
       "NORMAL": "Normal",
       "HIGH": "High",

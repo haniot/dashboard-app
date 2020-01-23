@@ -17,7 +17,8 @@ export class SleepService {
             .toPromise();
     }
 
-    getAll(patientId: string, page?: number, limit?: number, search?: SearchForPeriod): Promise<HttpResponse<Sleep[]>> {
+    getAll(patientId: string, page?: number, limit?: number, search?: { start_time: string, end_time: string }):
+        Promise<HttpResponse<Sleep[]>> {
         let myParams = new HttpParams();
 
         if (page) {
@@ -29,18 +30,13 @@ export class SleepService {
         }
 
         if (search) {
-            if (search.start_at) {
-                myParams = myParams.append('start_at', search.start_at);
-            }
-            if (search.end_at) {
-                myParams = myParams.append('end_at', search.end_at);
-            }
-            if (search.period) {
-                myParams = myParams.append('period', search.period);
+            if (search.start_time && search.end_time) {
+                myParams = myParams.append('start_time', 'gte:' + search.start_time);
+                myParams = myParams.append('start_time', 'lt:' + search.end_time);
             }
         }
 
-        myParams = myParams.append('sort', '+timestamp');
+        myParams = myParams.append('sort', '-start_time');
 
         const url = `${environment.api_url}/${this.version}/patients/${patientId}/sleep`;
 

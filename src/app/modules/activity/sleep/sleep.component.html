@@ -27,7 +27,7 @@
                                         <p class="card-category">
                                             <i class="material-icons"
                                                [title]="'ACTIVITY.SLEEP.REACHED-THE-IDEAL'|translate"
-                                               style="color: white">star</i> Meta Alcançada</p>
+                                               style="color: white">star</i> {{'ACTIVITY.SLEEP.GOAL-ACHIEVED'|translate}}</p>
                                     </span>
                                     </span>
                             <ul class="nav nav-tabs shared" data-tabs="tabs">
@@ -46,7 +46,7 @@
                         <div class="row fadeIn">
 
                             <div class="divSpinner" *ngIf="loadingSleep">
-                                <spinner [message]="'Carregando registro de sono...'"></spinner>
+                                <spinner [message]="'ACTIVITY.SLEEP.LOADING'|translate"></spinner>
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center"
@@ -67,8 +67,8 @@
                                         <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
                                                 {{Math.floor((sleepSelected.pattern.summary.awake.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
-                                                {{(sleepSelected.pattern.summary.awake.duration.duration % 3600000) ?
-                                                ('SHARED.AND'|translate) + ' ' + Math.floor((sleepSelected.pattern.summary.awake.duration.duration % 3600000) / 60000) +
+                                                {{(sleepSelected.pattern.summary.awake.duration % 3600000) ?
+                                                ('SHARED.AND'|translate) + ' ' + Math.floor((sleepSelected.pattern.summary.awake.duration % 3600000) / 60000) +
                                                 ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                                 }}
                                             </h3>
@@ -93,8 +93,8 @@
                                         <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
                                                 {{Math.floor((sleepSelected.pattern.summary.restless.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
-                                                {{(sleepSelected.pattern.summary.restless.duration.duration % 3600000) ?
-                                                ('SHARED.AND'|translate) + ' ' + Math.floor((sleepSelected.pattern.summary.restless.duration.duration % 3600000) / 60000) +
+                                                {{(sleepSelected.pattern.summary.restless.duration % 3600000) ?
+                                                ('SHARED.AND'|translate) + ' ' + Math.floor((sleepSelected.pattern.summary.restless.duration % 3600000) / 60000) +
                                                 ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                                 }}
                                             </h3>
@@ -119,8 +119,8 @@
                                         <div class="card-footer justify-content-center">
                                             <h3 class="card-title">
                                                 {{Math.floor((sleepSelected.pattern.summary.asleep.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
-                                                {{(sleepSelected.pattern.summary.asleep.duration.duration % 3600000) ?
-                                                ('SHARED.AND'|translate) + ' ' + Math.floor((sleepSelected.pattern.summary.asleep.duration.duration % 3600000) / 60000) +
+                                                {{(sleepSelected.pattern.summary.asleep.duration % 3600000) ?
+                                                ('SHARED.AND'|translate) + ' ' + Math.floor((sleepSelected.pattern.summary.asleep.duration % 3600000) / 60000) +
                                                 ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                                 }}
                                             </h3>
@@ -244,26 +244,67 @@
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                  *ngIf="sleepSelected && sleepSelected.type===sleepTypes.classic">
                                 <div class="d-flex justify-content-around">
-                                    <div class="p-2" style="display: flex">
-                                        <div class="card-legend" [ngStyle]="{'background-color':'#FF1114'}"></div>
-                                        <h4 style="padding-left: 5px">
-                                            {{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}
-                                            - {{sleepSelected.pattern.summary.awake.count + '%'}}
-                                        </h4>
+                                    <div class="p-2">
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="display: flex;">
+                                                <div class="card-legend"
+                                                     [ngStyle]="{'background-color':'#FF1114'}"></div>
+                                                <h4 style="padding-left: 5px">
+                                                    {{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}
+                                                    - {{(((sleepSelected.pattern.summary.awake.duration * 100) / sleepSelected.duration)|number:'1.0-0') + '%'}}
+                                                </h4>
+                                            </div>
+                                            <label class="text-center" style="font-weight: normal; color:unset">
+                                                {{
+                                                sleepSelected.pattern.summary.awake.count > 1 ?
+                                                    sleepSelected.pattern.summary.awake.count + ' ' + ('SHARED.TIMES'|translate)
+                                                    :
+                                                    ('SHARED.ONLY'|translate) + ' ' + sleepSelected.pattern.summary.awake.count + ' ' + ('SHARED.TURN'|translate)
+                                                }}
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="p-2" style="display: flex">
-                                        <div class="card-legend" [ngStyle]="{'background-color':'#1982C8'}"></div>
-                                        <h4 style="padding-left: 5px">
-                                            {{'ACTIVITY.PIPES.SLEEP.RESTLESS'|translate}}
-                                            - {{sleepSelected.pattern.summary.restless.count + '%'}}
-                                        </h4>
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="display: flex;">
+                                                <div class="card-legend"
+                                                     [ngStyle]="{'background-color':'#1982C8'}"></div>
+                                                <h4 style="padding-left: 5px">
+                                                    {{'ACTIVITY.PIPES.SLEEP.RESTLESS'|translate}}
+                                                    - {{(((sleepSelected.pattern.summary.restless.duration * 100) / sleepSelected.duration)|number:'1.0-0') + '%'}}
+                                                </h4>
+                                            </div>
+                                            <label class="text-center"
+                                                   style="font-weight: normal; color:unset">
+                                                {{
+                                                sleepSelected.pattern.summary.restless.count > 1 ?
+                                                    sleepSelected.pattern.summary.restless.count + ' ' + ('SHARED.TIMES'|translate)
+                                                    :
+                                                    ('SHARED.ONLY'|translate) + ' ' + sleepSelected.pattern.summary.restless.count + ' ' + ('SHARED.TURN'|translate)
+                                                }}
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="p-2" style="display: flex">
-                                        <div class="card-legend" [ngStyle]="{'background-color':'#6C8A80'}"></div>
-                                        <h4 style="padding-left: 5px">
-                                            {{'ACTIVITY.PIPES.SLEEP.ASLEEP'|translate}}
-                                            - {{sleepSelected.pattern.summary.asleep.count + '%'}}
-                                        </h4>
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="display: flex;">
+                                                <div class="card-legend"
+                                                     [ngStyle]="{'background-color':'#6C8A80'}"></div>
+                                                <h4 style="padding-left: 5px">
+                                                    {{'ACTIVITY.PIPES.SLEEP.ASLEEP'|translate}}
+                                                    - {{(((sleepSelected.pattern.summary.asleep.duration * 100) / sleepSelected.duration)|number:'1.0-0') + '%'}}
+                                                </h4>
+                                            </div>
+                                            <label class="text-center"
+                                                   style="font-weight: normal; color:unset">
+                                                {{
+                                                sleepSelected.pattern.summary.asleep.count > 1 ?
+                                                    sleepSelected.pattern.summary.asleep.count + ' ' + ('SHARED.TIMES'|translate)
+                                                    :
+                                                    ('SHARED.ONLY'|translate) + ' ' + sleepSelected.pattern.summary.asleep.count + ' ' + ('SHARED.TURN'|translate)
+                                                }}
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -273,33 +314,85 @@
                                  *ngIf="sleepSelected && sleepSelected.type===sleepTypes.stages">
                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="d-flex justify-content-around">
-                                        <div class="p-2" style="display: flex">
-                                            <div class="card-legend" [ngStyle]="{'background-color':'#FF1114'}"></div>
-                                            <h4 style="padding-left: 5px">
-                                                {{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}
-                                                - {{sleepSelected.pattern.summary.awake.count + '%'}}
-                                            </h4>
+                                        <div class="p-2">
+                                            <div style="display: flex;flex-direction: column">
+                                                <div style="display: flex;">
+                                                    <div class="card-legend"
+                                                         [ngStyle]="{'background-color':'#FF1114'}"></div>
+                                                    <h4 style="padding-left: 5px">
+                                                        {{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}
+                                                        - {{(((sleepSelected.pattern.summary.awake.duration * 100) / sleepSelected.duration)|number:'1.0-0') + '%'}}
+                                                    </h4>
+                                                </div>
+                                                <label class="text-center" style="font-weight: normal; color:unset">
+                                                    {{
+                                                    sleepSelected.pattern.summary.awake.count > 1 ?
+                                                        sleepSelected.pattern.summary.awake.count + ' ' + ('SHARED.TIMES'|translate)
+                                                        :
+                                                        ('SHARED.ONLY'|translate) + ' ' + sleepSelected.pattern.summary.awake.count + ' ' + ('SHARED.TURN'|translate)
+                                                    }}
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="p-2" style="display: flex">
-                                            <div class="card-legend" [ngStyle]="{'background-color':'#9F95C1'}"></div>
-                                            <h4 style="padding-left: 5px">
-                                                {{'ACTIVITY.PIPES.SLEEP.REM'|translate}}
-                                                - {{sleepSelected.pattern.summary.rem.count + '%'}}
-                                            </h4>
+                                        <div class="p-2">
+                                            <div style="display: flex;flex-direction: column">
+                                                <div style="display: flex;">
+                                                    <div class="card-legend"
+                                                         [ngStyle]="{'background-color':'#9F95C1'}"></div>
+                                                    <h4 style="padding-left: 5px">
+                                                        {{'ACTIVITY.PIPES.SLEEP.REM'|translate}}
+                                                        - {{(((sleepSelected.pattern.summary.rem.duration * 100) / sleepSelected.duration)|number:'1.0-0') + '%'}}
+                                                    </h4>
+                                                </div>
+                                                <label class="text-center" style="font-weight: normal; color:unset">
+                                                    {{
+                                                    sleepSelected.pattern.summary.rem.count > 1 ?
+                                                        sleepSelected.pattern.summary.rem.count + ' ' + ('SHARED.TIMES'|translate)
+                                                        :
+                                                        ('SHARED.ONLY'|translate) + ' ' + sleepSelected.pattern.summary.rem.count + ' ' + ('SHARED.TURN'|translate)
+                                                    }}
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="p-2" style="display: flex">
-                                            <div class="card-legend" [ngStyle]="{'background-color':'#51C5D9'}"></div>
-                                            <h4 style="padding-left: 5px">
-                                                {{'ACTIVITY.PIPES.SLEEP.LIGHT'|translate}}
-                                                - {{sleepSelected.pattern.summary.light.count + '%'}}
-                                            </h4>
+                                        <div class="p-2">
+                                            <div style="display: flex;flex-direction: column">
+                                                <div style="display: flex;">
+                                                    <div class="card-legend"
+                                                         [ngStyle]="{'background-color':'#51C5D9'}"></div>
+                                                    <h4 style="padding-left: 5px">
+                                                        {{'ACTIVITY.PIPES.SLEEP.LIGHT'|translate}}
+                                                        - {{(((sleepSelected.pattern.summary.light.duration * 100) / sleepSelected.duration)|number:'1.0-0') + '%'}}
+                                                    </h4>
+                                                </div>
+                                                <label class="text-center" style="font-weight: normal; color:unset">
+                                                    {{
+                                                    sleepSelected.pattern.summary.light.count > 1 ?
+                                                        sleepSelected.pattern.summary.light.count + ' ' + ('SHARED.TIMES'|translate)
+                                                        :
+                                                        ('SHARED.ONLY'|translate) + ' ' + sleepSelected.pattern.summary.light.count + ' ' + ('SHARED.TURN'|translate)
+                                                    }}
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="p-2" style="display: flex">
-                                            <div class="card-legend" [ngStyle]="{'background-color':'#1C91C4'}"></div>
-                                            <h4 style="padding-left: 5px">
-                                                {{'ACTIVITY.PIPES.SLEEP.DEEP'|translate}}
-                                                - {{sleepSelected.pattern.summary.deep.count + '%'}}
-                                            </h4>
+                                        <div class="p-2">
+                                            <div style="display: flex;flex-direction: column">
+                                                <div style="display: flex;">
+                                                    <div class="card-legend"
+                                                         [ngStyle]="{'background-color':'#1C91C4'}"></div>
+                                                    <h4 style="padding-left: 5px">
+                                                        {{'ACTIVITY.PIPES.SLEEP.DEEP'|translate}}
+                                                        - {{(((sleepSelected.pattern.summary.deep.duration * 100) / sleepSelected.duration)|number:'1.0-0') + '%'}}
+                                                    </h4>
+                                                </div>
+                                                <label class="text-center" style="font-weight: normal; color:unset">
+                                                    {{
+                                                    sleepSelected.pattern.summary.deep.count > 1 ?
+                                                        sleepSelected.pattern.summary.deep.count + ' ' + ('SHARED.TIMES'|translate)
+                                                        :
+                                                        ('SHARED.ONLY'|translate) + ' ' + sleepSelected.pattern.summary.deep.count + ' ' + ('SHARED.TURN'|translate)
+                                                    }}
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

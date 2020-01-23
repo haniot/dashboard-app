@@ -17,7 +17,7 @@ export class DistancePipe implements PipeTransform {
             const rest = Math.floor((value % 1000));
             return `${distance_trucate ? distance_trucate + 'Km ' : ''}${rest ? ' ' + and + ' ' + rest + 'm' : ''}`;
         }
-        return `${value + 'm'}`;
+        return `${Math.floor(value) + 'm'}`;
     }
 
 }
