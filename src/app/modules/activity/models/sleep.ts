@@ -162,15 +162,8 @@ export enum SleepStages {
 }
 
 export class SleepPattern {
-    /* TODO: remover any ao remover os mocks*/
-    private _data_set: SleepPatternDataSet[] | any[]
-    private _summary: SleepPatternPhaseSummary | SleepPatternStageSummary | any;
-
-    /* TODO: remover construtor ao remover os mocks*/
-    constructor() {
-        this._data_set = [];
-        this._summary = new SleepPatternPhaseSummary();
-    }
+    private _data_set: SleepPatternDataSet[];
+    private _summary: SleepPatternPhaseSummary | SleepPatternStageSummary;
 
     get data_set(): SleepPatternDataSet[] | any[] {
         return this._data_set

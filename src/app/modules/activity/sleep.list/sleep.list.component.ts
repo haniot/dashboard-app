@@ -105,6 +105,7 @@ export class SleepListComponent implements OnInit {
             .then(httpResponse => {
                 this.listForGraph = httpResponse.body;
                 this.showSpinner = false;
+                this.listForGraph.reverse();
                 this.loadGraph();
             })
             .catch(err => {
@@ -146,6 +147,7 @@ export class SleepListComponent implements OnInit {
         this.sleepService.getAll(this.patientId, null, null, filter)
             .then(httpResponse => {
                 this.listForGraph = httpResponse.body;
+                this.listForGraph.reverse();
                 this.showSpinner = false;
                 this.updateGraph(this.listForGraph);
                 this.filterChange.emit(this.listForGraph);
@@ -166,14 +168,16 @@ export class SleepListComponent implements OnInit {
         const viewStages = this.translateService.instant('ACTIVITY.SLEEP.VIEW-STAGES');
         const and = this.translateService.instant('SHARED.AND');
         const minutes_abbreviation = this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION');
+        const period = this.translateService.instant('MEASUREMENTS.MEASUREMENT-CARD.PERIOD');
 
-        if (this.listForGraph.length > 1) {
-            this.lastData = this.listForGraph[this.listForGraph.length - 1];
+        if (this.listForLogs.length > 1) {
+            this.lastData = this.listForLogs[this.listForLogs.length - 1];
         } else {
-            this.lastData = this.listForGraph[0];
+            this.lastData = this.listForLogs[0];
         }
 
         const xAxis = { data: [] };
+
         const series = [
             {
                 type: 'bar',
@@ -198,7 +202,8 @@ export class SleepListComponent implements OnInit {
                     rotate: 0,
                     formatter: function (params) {
                         const { data: { value } } = params;
-                        return `${value.toFixed(1)}\n${hours_abbreviation}`
+                        // return `${value.toFixed(1)}\n${hours_abbreviation}`
+                        return '';
                     },
                     fontSize: 16
                 },
@@ -242,7 +247,8 @@ export class SleepListComponent implements OnInit {
             series[0].data.push(MAX_SLEEP_VALUE);
             series[1].data.push({
                 value: element.duration / 3600000,
-                time: this.datePipe.transform(element.start_time, 'mediumTime')
+                start_time: this.datePipe.transform(element.start_time, 'mediumTime'),
+                end_time: this.datePipe.transform(element.end_time, 'mediumTime')
             });
         });
 
@@ -268,9 +274,9 @@ export class SleepListComponent implements OnInit {
                 formatter: function (params) {
                     const hours_trucate = Math.floor(params.data.value);
                     const minutes = Math.floor(((params.data.value * 3600000) % 3600000) / 60000);
-                    return `${duration}: ${hours_trucate + hours_abbreviation} ${minutes ? and + ' '
+                    return `${params.name}<br>${duration}: ${hours_trucate + hours_abbreviation} ${minutes ? and + ' '
                         + minutes + minutes_abbreviation : ''}  <br>` +
-                        `${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                        `${period}: ${params.data.start_time} - ${params.data.end_time}`;
                 }
             },
             xAxis,
@@ -308,7 +314,8 @@ export class SleepListComponent implements OnInit {
             this.options.series[0].data.push(MAX_SLEEP_VALUE);
             this.options.series[1].data.push({
                 value: parseFloat(this.decimalFormatter.transform(element.duration / 3600000)),
-                time: this.datePipe.transform(element.start_time, 'mediumTime')
+                start_time: this.datePipe.transform(element.start_time, 'mediumTime'),
+                end_time: this.datePipe.transform(element.end_time, 'mediumTime')
             });
         });
 
