@@ -128,7 +128,7 @@
                                         (click)="viewActivityDetails(activity.id)">
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col"
+                                                <div class="col text-center"
                                                      style="padding: 0px 0px; margin: 0px 0px; display: flex"
                                                      [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DURATION'|translate">
                                                     <!--                                                    <img src="../../../../assets/img/time-series/duration.png"-->
@@ -140,33 +140,31 @@
                                                             ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
                                                         }}</p>
                                                 </div>
-                                                <div class="col"
+                                                <div class="col text-center"
                                                      style="padding: 0px 0px; margin: 0px 0px; display: flex"
                                                      [title]="'ACTIVITY.PHYSICAL-ACTIVITY.STEPS'|translate">
                                                     <!--                                                    <img src="../../../../assets/img/time-series/steps.png"-->
                                                     <!--                                                         class="float-left">-->
                                                     <p class="float-right" style="margin: 0px 4px">
-                                                        {{activity.steps}}
-                                                        <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
+                                                        {{activity && activity.steps ? (activity.steps|number:'1.0-0') : 0}}<small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                                                     </p>
                                                 </div>
-                                                <div class="col"
+                                                <div class="col text-center"
                                                      style="padding: 0px 0px; margin: 0px 0px; display: flex"
                                                      [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DISTANCE'|translate">
                                                     <!--                                                    <img src="../../../../assets/img/time-series/distance.png"-->
                                                     <!--                                                         class="float-left">-->
                                                     <p class="float-right" style="margin: 0px 4px">
-                                                        {{activity.distance |distance}}
+                                                        {{activity && activity.distance ? (activity.distance |distance) : '0m'}}
                                                     </p>
                                                 </div>
-                                                <div class="col"
+                                                <div class="col text-center"
                                                      style="padding: 0px 0px; margin: 0px 0px; display: flex"
                                                      [title]="'ACTIVITY.PHYSICAL-ACTIVITY.CALORIES-BURNED'|translate">
                                                     <!--                                                    <img src="../../../../assets/img/time-series/calories.png"-->
                                                     <!--                                                         class="float-left">-->
                                                     <p class="float-right" style="margin: 0px 4px">
-                                                        {{activity.calories}}
-                                                        <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                                        {{activity && activity.calories ?(activity.calories|number:'1.0-0'):0}}<small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                                     </p>
                                                 </div>
                                             </div>

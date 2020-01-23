@@ -95,19 +95,6 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.activeRouter.paramMap.subscribe((params) => {
-            this.patientId = params.get('patientId');
-            this.patientService.getById(this.patientId)
-                .then(patient => {
-                    this.patient = patient;
-                    this.loadActivities();
-                    this.loadTimeSeries();
-                    this.loadSleep();
-                })
-                .catch(() => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
-                });
-        });
         this.innerWidth = window.innerWidth;
         this.sleepSize = 250;
         this.stepSize = 200;
@@ -173,168 +160,176 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                 this.activeMinutesValue = 0;
                 this.distanceValue = 0;
                 this.loadingTimeSeries = false;
-            })
+            });
     }
 
     loadActivitiesGraph(): void {
+        this.listActivities.forEach(activity => {
+            if (activity.heart_rate_average) {
+                this.timeSeriesService.getByLink(activity.heart_rate_link)
+                    .then(heartRate => {
 
-        const xAxis = {
-            show: false,
-            data: []
-        };
+                        const series = {
+                            type: 'line',
+                            smooth: true,
+                            symbol: 'none',
+                            sampling: 'average',
+                            itemStyle: {
+                                color: '#FF7373'
+                            },
+                            areaStyle: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: '#FFF2F2'
+                                }, {
+                                    offset: 1,
+                                    color: '#FF7373'
+                                }])
+                            },
+                            data: heartRate.data_set.map((elementHeart) => {
+                                return elementHeart.value;
+                            })
+                        };
 
-        const series = {
-            type: 'line',
-            smooth: true,
-            symbol: 'none',
-            sampling: 'average',
-            itemStyle: {
-                color: '#FF7373'
-            },
-            areaStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                    offset: 0,
-                    color: '#FFF2F2'
-                }, {
-                    offset: 1,
-                    color: '#FF7373'
-                }])
-            },
-            data: [1, 2, 3, 3, 5, 4, 6, 8, 5, 6, 8, 1, 2, 5, 3, 5, 4, 9, 7, 8, 6, 6, 4, 6, 6]
-        };
+                        const activityHearRateGraph = {
+                            tooltip: {
+                                trigger: 'axis',
+                                position: function (pt) {
+                                    return [pt[0], '10%'];
+                                }
+                            },
+                            graphic: {
+                                type: 'image',
+                                id: 'logo',
+                                left: 5,
+                                top: 2,
+                                z: -10,
+                                bounding: 'raw',
+                                origin: [0, 0],
+                                style: {
+                                    image: 'https://image.flaticon.com/icons/png/512/226/226986.png',
+                                    width: 25,
+                                    height: 25,
+                                    opacity: 0.4
+                                }
+                            },
+                            grid: [
+                                { x: '0', y: '7%', width: '100%', height: '95%' }
+                            ],
+                            xAxis: {
+                                show: false,
+                                type: 'category',
+                                boundaryGap: false,
+                                data: []
+                            },
+                            yAxis: {
+                                type: 'value',
+                                axisLine: {
+                                    show: false
+                                },
+                                axisLabel: {
+                                    formatter: ''
+                                },
+                                axisTick: {
+                                    show: false
+                                },
+                                splitLine: {
+                                    show: false
+                                },
+                                boundaryGap: [0, '100%']
+                            },
+                            series
+                        };
 
-        const yAxis = {
-            show: false,
-            min: 0,
-            max: 100,
-            axisLabel: {
-                formatter: function () {
-                    return ''
-                }
+                        this.activityGraph.push(activityHearRateGraph);
+
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            } else {
+                this.timeSeriesService.getByLink(activity.calories_link)
+                    .then(calories => {
+                        const series = {
+                            type: 'line',
+                            symbol: 'none',
+                            sampling: 'average',
+                            itemStyle: {
+                                color: '#FBA53E'
+                            },
+                            areaStyle: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: '#FFF2F2'
+                                }, {
+                                    offset: 1,
+                                    color: '#FBA53E'
+                                }])
+                            },
+                            data: calories.data_set.map((elementCalorie) => {
+                                return elementCalorie.value;
+                            })
+                        };
+
+                        const activityCalorieGraph = {
+                            tooltip: {
+                                trigger: 'axis',
+                                position: function (pt) {
+                                    return [pt[0], '10%'];
+                                }
+                            },
+                            graphic: {
+                                type: 'image',
+                                id: 'logo',
+                                left: 5,
+                                top: 2,
+                                z: -10,
+                                bounding: 'raw',
+                                origin: [0, 0],
+                                style: {
+                                    image: 'https://image.flaticon.com/icons/png/512/2117/premium/2117139.png',
+                                    width: 25,
+                                    height: 25,
+                                    opacity: 0.7
+                                }
+                            },
+                            grid: [
+                                { x: '0', y: '7%', width: '100%', height: '95%' }
+                            ],
+                            xAxis: {
+                                show: false,
+                                type: 'category',
+                                boundaryGap: false,
+                                data: []
+                            },
+                            yAxis: {
+                                type: 'value',
+                                axisLine: {
+                                    show: false
+                                },
+                                axisLabel: {
+                                    formatter: ''
+                                },
+                                axisTick: {
+                                    show: false
+                                },
+                                splitLine: {
+                                    show: false
+                                },
+                                max: 200,
+                                boundaryGap: [0, '100%']
+                            },
+                            series
+                        }
+
+                        this.activityGraph.push(activityCalorieGraph);
+
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             }
-        }
-
-        const activityHearRateGraph = {
-            tooltip: {
-                trigger: 'axis',
-                position: function (pt) {
-                    return [pt[0], '10%'];
-                }
-            },
-            graphic: {
-                type: 'image',
-                id: 'logo',
-                left: 5,
-                top: 2,
-                z: -10,
-                bounding: 'raw',
-                origin: [0, 0],
-                style: {
-                    image: 'https://image.flaticon.com/icons/png/512/226/226986.png',
-                    width: 25,
-                    height: 25,
-                    opacity: 0.4
-                }
-            },
-            grid: [
-                { x: '0', y: '7%', width: '100%', height: '95%' }
-            ],
-            xAxis: {
-                show: false,
-                type: 'category',
-                boundaryGap: false,
-                data: []
-            },
-            yAxis: {
-                type: 'value',
-                axisLine: {
-                    show: false
-                },
-                axisLabel: {
-                    formatter: ''
-                },
-                axisTick: {
-                    show: false
-                },
-                splitLine: {
-                    show: false
-                },
-                boundaryGap: [0, '100%']
-            },
-            series
-        };
-
-        const activityCalorieGraph = {
-            tooltip: {
-                trigger: 'axis',
-                position: function (pt) {
-                    return [pt[0], '10%'];
-                }
-            },
-            graphic: {
-                type: 'image',
-                id: 'logo',
-                left: 5,
-                top: 2,
-                z: -10,
-                bounding: 'raw',
-                origin: [0, 0],
-                style: {
-                    image: 'https://image.flaticon.com/icons/png/512/2117/premium/2117139.png',
-                    width: 25,
-                    height: 25,
-                    opacity: 0.7
-                }
-            },
-            grid: [
-                { x: '0', y: '7%', width: '100%', height: '95%' }
-            ],
-            xAxis: {
-                show: false,
-                type: 'category',
-                boundaryGap: false,
-                data: []
-            },
-            yAxis: {
-                type: 'value',
-                axisLine: {
-                    show: false
-                },
-                axisLabel: {
-                    formatter: ''
-                },
-                axisTick: {
-                    show: false
-                },
-                splitLine: {
-                    show: false
-                },
-                max: 200,
-                boundaryGap: [0, '100%']
-            },
-            series: {
-                type: 'line',
-                symbol: 'none',
-                sampling: 'average',
-                itemStyle: {
-                    color: '#FBA53E'
-                },
-                areaStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: '#FFF2F2'
-                    }, {
-                        offset: 1,
-                        color: '#FBA53E'
-                    }])
-                },
-                data: [75, 100, 75]
-            }
-        }
-
-        this.activityGraph.push(activityCalorieGraph);
-        this.activityGraph.push(activityHearRateGraph);
-        this.activityGraph.push(activityCalorieGraph);
+        })
     }
 
     sleepEnterAndLeave(value: boolean): void {
@@ -388,7 +383,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         if (changes.patientId.currentValue && (changes.patientId.currentValue !== changes.patientId.previousValue)) {
             this.loadGoals();
             this.loadActivities();
-            // this.loadSleepGraph();
+            this.loadTimeSeries();
+            this.loadSleep();
         }
     }
 }

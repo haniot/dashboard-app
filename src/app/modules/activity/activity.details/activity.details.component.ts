@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PhysicalActivity } from '../models/physical.activity'
-import { TimeSeries, TimeSeriesItem } from '../models/time.series'
+import { TimeSeries, TimeSeriesItem, TimeSeriesSimpleFilter } from '../models/time.series'
 import { TranslateService } from '@ngx-translate/core'
 import { DatePipe } from '@angular/common'
 import { ActivityLevel, Levels } from '../models/activity'
@@ -25,6 +25,10 @@ export class ActivityDetailsComponent implements OnInit {
     Math = Math;
     removingActivity: boolean;
     loadingPhysicalActivity: boolean;
+    stepsValue: number;
+    caloriesValue: number;
+    activeMinutesValue: number;
+    distanceValue: number;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -52,6 +56,7 @@ export class ActivityDetailsComponent implements OnInit {
             .then(physicalActivity => {
                 this.loadingPhysicalActivity = false;
                 this.physicalActivity = physicalActivity;
+                this.loadTimeSeries();
                 this.loadIntensityLevelsGraph();
                 this.loadHeartRate();
             })
@@ -107,7 +112,13 @@ export class ActivityDetailsComponent implements OnInit {
             // ],
             legend: {
                 orient: 'horizontal',
-                data: [sedentary, light, fairly, very]
+                selected: {
+                    [sedentary]: !!sedentaryData[0].duration,
+                    [light]: !!lightData[0].duration,
+                    [fairly]: !!fairlyData[0].duration,
+                    [very]: !!veryData[0].duration
+                },
+                data: [{ name: sedentary }, { name: light }, { name: fairly }, { name: very }]
             },
             series: {
                 type: 'pie',
@@ -142,6 +153,7 @@ export class ActivityDetailsComponent implements OnInit {
                 }
             }
         }
+
     }
 
     loadHeartRate(): void {
@@ -297,6 +309,27 @@ export class ActivityDetailsComponent implements OnInit {
             series: seriesOptionsLastDate
         };
 
+    }
+
+    loadTimeSeries(): void {
+        const currentDate = new Date(this.physicalActivity.start_time);
+        const filter: TimeSeriesSimpleFilter = new TimeSeriesSimpleFilter();
+        filter.start_date = currentDate.toISOString().split('T')[0];
+        filter.end_date = currentDate.toISOString().split('T')[0];
+        this.timeSeriesService.getAll(this.patientId, filter)
+            .then((timeSeries: any) => {
+                console.log(timeSeries)
+                this.stepsValue = timeSeries.steps.summary.total;
+                this.caloriesValue = timeSeries.calories.summary.total;
+                this.activeMinutesValue = timeSeries.active_minutes.summary.total;
+                this.distanceValue = timeSeries.distance.summary.total;
+            })
+            .catch(err => {
+                this.stepsValue = 0;
+                this.caloriesValue = 0;
+                this.activeMinutesValue = 0;
+                this.distanceValue = 0;
+            });
     }
 
     openModalConfirmation(measurementId: string) {
