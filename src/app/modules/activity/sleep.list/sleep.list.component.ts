@@ -3,7 +3,7 @@ import { Sleep } from '../models/sleep'
 import { SearchForPeriod } from '../../measurement/models/measurement'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DatePipe } from '@angular/common'
-import { SleepService } from '../services/sleep.service'
+import { SleepFilter, SleepService } from '../services/sleep.service'
 import { TranslateService } from '@ngx-translate/core'
 import { SleepPipe } from '../pipes/sleep.pipe'
 import { DecimalFormatterPipe } from '../../measurement/pipes/decimal.formatter.pipe'
@@ -21,17 +21,19 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class SleepListComponent implements OnInit {
-    @Input() data: Array<Sleep>;
+    @Input() listForGraph: Array<Sleep>;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
     @Input() includeCard: boolean;
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
+    listForLogs: Array<Sleep>;
     lastData: Sleep;
     options: any;
     echartSleepInstance: any;
     Math: any;
-    listIsEmpty: boolean;
+    listGraphIsEmpty: boolean;
+    listLogsIsEmpty: boolean;
     filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -48,6 +50,7 @@ export class SleepListComponent implements OnInit {
     /*In hours*/
     IDEAL_SLEEP_VALUE = 8;
     removingSleep: boolean;
+    showSpinnerLogs: boolean;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -61,7 +64,8 @@ export class SleepListComponent implements OnInit {
         private modalService: ModalService
     ) {
         this.Math = Math;
-        this.data = new Array<Sleep>();
+        this.listForGraph = new Array<Sleep>();
+        this.listForLogs = new Array<Sleep>();
         this.filterVisibility = false;
         this.patientId = '';
         this.showSpinner = false;
@@ -77,7 +81,7 @@ export class SleepListComponent implements OnInit {
         this.loadingMeasurements = false;
         this.modalConfirmRemoveMeasurement = false;
         this.selectAll = false;
-        this.listIsEmpty = false;
+        this.listGraphIsEmpty = false;
     }
 
     ngOnInit() {
@@ -86,14 +90,20 @@ export class SleepListComponent implements OnInit {
             this.filterVisibility = true;
             this.includeCard = true;
             this.getAllSleeps();
+            this.getAllSleepsForLogs();
         })
     }
 
     getAllSleeps(): void {
         this.showSpinner = true;
-        this.sleepService.getAll(this.patientId)
+        const currentDate = new Date();
+        const start_time = currentDate.toISOString().split('T')[0] + 'T03:00:00.000Z';
+        const nextday: Date = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
+        const end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+        const filter = new SleepFilter('today', start_time, end_time);
+        this.sleepService.getAll(this.patientId, null, null, filter)
             .then(httpResponse => {
-                this.data = httpResponse.body;
+                this.listForGraph = httpResponse.body;
                 this.showSpinner = false;
                 this.loadGraph();
             })
@@ -103,14 +113,42 @@ export class SleepListComponent implements OnInit {
             })
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    getAllSleepsForLogs(): void {
+        this.showSpinnerLogs = true;
+        this.listForLogs = [];
+        this.sleepService.getAll(this.patientId, this.page, this.limit)
+            .then(httpResponse => {
+                this.listForLogs = httpResponse && httpResponse.body ? httpResponse.body : [];
+                this.length = httpResponse && httpResponse.headers ? parseInt(httpResponse.headers.get('x-total-count'), 10) : 0;
+                this.showSpinnerLogs = false;
+            })
+            .catch(err => {
+                this.showSpinnerLogs = false;
+            })
+    }
+
+    applyFilter(event: any) {
         this.showSpinner = true;
+        let filter: SleepFilter;
+        let start_time: string;
+        let nextday: Date;
+        let end_time: string;
+        if (event.type === 'today') {
+            start_time = event.filter.date + 'T03:00:00.000Z';
+            nextday = new Date(new Date(event.filter.date).getTime() + (24 * 60 * 60 * 1000));
+            end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+        } else {
+            start_time = event.filter.start_date + 'T03:00:00.000Z';
+            nextday = new Date(new Date(event.filter.end_date).getTime() + (24 * 60 * 60 * 1000));
+            end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+        }
+        filter = new SleepFilter(event.type, start_time, end_time)
         this.sleepService.getAll(this.patientId, null, null, filter)
             .then(httpResponse => {
-                this.data = httpResponse.body;
+                this.listForGraph = httpResponse.body;
                 this.showSpinner = false;
-                this.updateGraph(this.data);
-                this.filterChange.emit(this.data);
+                this.updateGraph(this.listForGraph);
+                this.filterChange.emit(this.listForGraph);
             })
             .catch(() => {
                 this.showSpinner = false;
@@ -129,10 +167,10 @@ export class SleepListComponent implements OnInit {
         const and = this.translateService.instant('SHARED.AND');
         const minutes_abbreviation = this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION');
 
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
+        if (this.listForGraph.length > 1) {
+            this.lastData = this.listForGraph[this.listForGraph.length - 1];
         } else {
-            this.lastData = this.data[0];
+            this.lastData = this.listForGraph[0];
         }
 
         const xAxis = { data: [] };
@@ -199,7 +237,7 @@ export class SleepListComponent implements OnInit {
             }
         ];
 
-        this.data.forEach((element: Sleep) => {
+        this.listForGraph.forEach((element: Sleep) => {
             xAxis.data.push(this.datePipe.transform(element.start_time, 'shortDate'));
             series[0].data.push(MAX_SLEEP_VALUE);
             series[1].data.push({
@@ -249,7 +287,7 @@ export class SleepListComponent implements OnInit {
     }
 
     loadSleepGraph(selected: any): void {
-        const sleepSelected: Sleep = this.data[selected.dataIndex];
+        const sleepSelected: Sleep = this.listForGraph[selected.dataIndex];
         this.viewSleepDetails(sleepSelected.id);
     }
 
@@ -285,12 +323,12 @@ export class SleepListComponent implements OnInit {
         this.pageEvent = event;
         this.page = event.pageIndex + 1;
         this.limit = event.pageSize;
-        this.loadMeasurements();
+        this.getAllSleepsForLogs();
     }
 
     changeOnMeasurement(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
-        this.selectAll = this.data.length === measurementsSelected.length;
+        this.selectAll = this.listForGraph.length === measurementsSelected.length;
         this.updateStateButtonRemoveSelected();
     }
 
@@ -298,19 +336,6 @@ export class SleepListComponent implements OnInit {
         this.cacheIdMeasurementRemove = '';
         this.modalConfirmRemoveMeasurement = false;
         this.modalService.close('modalConfirmation');
-    }
-
-    loadMeasurements(): any {
-        this.sleepService
-            .getAll(this.patientId, this.page, this.limit, this.filter)
-            .then((httpResponse) => {
-                this.data = httpResponse.body;
-                this.listIsEmpty = this.data.length === 0;
-                this.initializeListChecks();
-            })
-            .catch(() => {
-                this.listIsEmpty = true;
-            });
     }
 
     openModalConfirmation(measurementId: string) {
@@ -321,7 +346,7 @@ export class SleepListComponent implements OnInit {
 
     initializeListChecks(): void {
         this.selectAll = false;
-        this.listCheckMeasurements = new Array<boolean>(this.data.length);
+        this.listCheckMeasurements = new Array<boolean>(this.listForGraph.length);
         for (let i = 0; i < this.listCheckMeasurements.length; i++) {
             this.listCheckMeasurements[i] = false;
         }
@@ -371,7 +396,7 @@ export class SleepListComponent implements OnInit {
         const measurementsIdSelected: Array<string> = new Array<string>();
         this.listCheckMeasurements.forEach((element, index) => {
             if (element) {
-                measurementsIdSelected.push(this.data[index].id);
+                measurementsIdSelected.push(this.listForGraph[index].id);
             }
         })
         this.cacheListIdMeasurementRemove = measurementsIdSelected;

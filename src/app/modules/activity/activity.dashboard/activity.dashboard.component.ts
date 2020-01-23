@@ -16,7 +16,7 @@ import { Goal } from '../../patient/models/goal'
 import { Patient } from '../../patient/models/patient'
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
 import { TimeSeriesService } from '../services/time.series.service'
-import { SleepService } from '../services/sleep.service'
+import { SleepFilter, SleepService } from '../services/sleep.service'
 
 @Component({
     selector: 'activity-dashboard',
@@ -26,8 +26,7 @@ import { SleepService } from '../services/sleep.service'
 export class ActivityDashboardComponent implements OnInit, OnChanges {
     @Input() patientId: string;
     patient: Patient;
-    activityGraph: any
-    activityCalorieGraph: any;
+    activityGraph: any[];
     currentDate: Date;
     timeSeriesTypes: any;
     measurementSelected: TimeSeriesType;
@@ -85,6 +84,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         private timeSeriesService: TimeSeriesService
     ) {
         this.currentDate = new Date();
+        this.activityGraph = [];
         this.timeSeriesTypes = Object.keys(TimeSeriesType);
         this.measurementSelected = TimeSeriesType.steps;
         this.loadingTimeSeries = true;
@@ -131,6 +131,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             .then(httpResponse => {
                 this.listActivities = httpResponse.body
                 this.listActivitiesIsEmpty = this.listActivities.length === 0;
+                this.loadActivitiesGraph();
             })
             .catch(err => {
                 this.listActivitiesIsEmpty = this.listActivities.length === 0;
@@ -142,7 +143,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         const start_time = this.currentDate.toISOString().split('T')[0] + 'T03:00:00.000Z';
         const nextday: Date = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
         const end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
-        this.sleepService.getAll(this.patientId, 1, 1, { start_time, end_time })
+        const filter = new SleepFilter('today', start_time, end_time)
+        this.sleepService.getAll(this.patientId, 1, 1, filter)
             .then(httpResponse => {
                 this.sleepSelected = httpResponse && httpResponse.body ? httpResponse.body[0] : undefined;
                 this.loadingSleep = false;
@@ -211,7 +213,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                 }
             }
         }
-        this.activityGraph = {
+
+        const activityHearRateGraph = {
             tooltip: {
                 trigger: 'axis',
                 position: function (pt) {
@@ -259,9 +262,9 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                 boundaryGap: [0, '100%']
             },
             series
-        }
+        };
 
-        this.activityCalorieGraph = {
+        const activityCalorieGraph = {
             tooltip: {
                 trigger: 'axis',
                 position: function (pt) {
@@ -306,11 +309,11 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                 splitLine: {
                     show: false
                 },
+                max: 200,
                 boundaryGap: [0, '100%']
             },
             series: {
                 type: 'line',
-                smooth: true,
                 symbol: 'none',
                 sampling: 'average',
                 itemStyle: {
@@ -325,9 +328,13 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                         color: '#FBA53E'
                     }])
                 },
-                data: [72, 72]
+                data: [75, 100, 75]
             }
         }
+
+        this.activityGraph.push(activityCalorieGraph);
+        this.activityGraph.push(activityHearRateGraph);
+        this.activityGraph.push(activityCalorieGraph);
     }
 
     sleepEnterAndLeave(value: boolean): void {
@@ -359,7 +366,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         return item.id
     }
 
-    previosDate(): void {
+    previousDate(): void {
         this.currentDate = new Date(this.currentDate.getTime() - (24 * 60 * 60 * 1000));
         this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
         this.loadTimeSeries();
@@ -380,7 +387,6 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.patientId.currentValue && (changes.patientId.currentValue !== changes.patientId.previousValue)) {
             this.loadGoals();
-            this.loadActivitiesGraph();
             this.loadActivities();
             // this.loadSleepGraph();
         }

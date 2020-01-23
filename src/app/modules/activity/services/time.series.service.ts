@@ -17,6 +17,11 @@ export class TimeSeriesService {
         this.version = 'v1';
     }
 
+    getByLink(link: string): Promise<TimeSeries> {
+        return this.http.get<any>(`${environment.api_url}${link}`)
+            .toPromise();
+    }
+
     getAll(patientId: string, filter: TimeSeriesSimpleFilter): Promise<TimeSeries[]> {
         if (filter.start_date && filter.start_date.length > 10) {
             filter.start_date = filter.start_date.split('T')[0];

@@ -2,7 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '../../../../environments/environment'
 import { Sleep } from '../models/sleep'
-import { SearchForPeriod } from '../../measurement/models/measurement'
+
+export class SleepFilter {
+    type: string;
+    start_time: string;
+    end_time: string
+
+    constructor(type: string, start_time: string, end_time: string) {
+        this.type = type;
+        this.start_time = start_time;
+        this.end_time = end_time;
+    }
+}
 
 @Injectable()
 export class SleepService {
@@ -17,8 +28,9 @@ export class SleepService {
             .toPromise();
     }
 
-    getAll(patientId: string, page?: number, limit?: number, search?: { start_time: string, end_time: string }):
+    getAll(patientId: string, page?: number, limit?: number, search?: SleepFilter):
         Promise<HttpResponse<Sleep[]>> {
+
         let myParams = new HttpParams();
 
         if (page) {
@@ -29,14 +41,12 @@ export class SleepService {
             myParams = myParams.append('limit', String(limit));
         }
 
-        if (search) {
-            if (search.start_time && search.end_time) {
-                myParams = myParams.append('start_time', 'gte:' + search.start_time);
-                myParams = myParams.append('start_time', 'lt:' + search.end_time);
-            }
+        if (search && search.start_time && search.end_time) {
+            myParams = myParams.append('start_time', 'gte:' + search.start_time);
+            myParams = myParams.append('start_time', 'lt:' + search.end_time);
         }
 
-        myParams = myParams.append('sort', '-start_time');
+        myParams = myParams.append('sort', '+start_time');
 
         const url = `${environment.api_url}/${this.version}/patients/${patientId}/sleep`;
 

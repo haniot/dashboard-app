@@ -9,6 +9,7 @@ import { ModalService } from '../../../shared/shared.components/modal/service/mo
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
+import { TimeSeriesService } from '../services/time.series.service'
 
 @Component({
     selector: 'activity.details',
@@ -32,6 +33,7 @@ export class ActivityDetailsComponent implements OnInit {
         private translateService: TranslateService,
         private modalService: ModalService,
         private physicalActivitiesService: PhysicalActivitiesService,
+        private timeSeriesService: TimeSeriesService,
         private router: Router,
         private toastService: ToastrService) {
     }
@@ -144,7 +146,7 @@ export class ActivityDetailsComponent implements OnInit {
 
     loadHeartRate(): void {
         if (this.physicalActivity && this.physicalActivity.heart_rate_link) {
-            this.physicalActivitiesService.getByLink(this.physicalActivity.heart_rate_link)
+            this.timeSeriesService.getByLink(this.physicalActivity.heart_rate_link)
                 .then(resource => {
                     this.loadHeartRateGraph(resource);
                 })

@@ -36,11 +36,6 @@ export class PhysicalActivitiesService {
             .toPromise();
     }
 
-    getByLink(link: string): Promise<TimeSeries> {
-        return this.http.get<any>(`${environment.api_url}${link}`)
-            .toPromise();
-    }
-
     getById(patientId: string, activityId: string): Promise<PhysicalActivity> {
         return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities/${activityId}`)
             .toPromise();

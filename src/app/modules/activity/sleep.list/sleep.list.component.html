@@ -3,9 +3,8 @@
         <div class="row">
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <measurement-card [title]="'ACTIVITY.SLEEP.TITLE'|translate"
+                <time-series-card [title]="'ACTIVITY.SLEEP.TITLE'|translate"
                                   [subtitle]="'ACTIVITY.SLEEP.SUBTITLE'|translate"
-                                  [filter_visibility]="filterVisibility"
                                   (filter_change)="applyFilter($event)" *ngIf="includeCard">
 
                     <div class="row justify-content-center fadeIn">
@@ -52,7 +51,7 @@
 
                             <div class="unavailable-data">
                                 <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-                                <span *ngIf="data.length==0 && !showSpinner"
+                                <span *ngIf="listForGraph.length==0 && !showSpinner"
                                       class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.WEIGHT.UNAVAILABLE-DATA'|translate}}</span>
                             </div>
                         </div>
@@ -120,7 +119,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllMeasurements()"
-                                              [disabled]="!data.length">
+                                              [disabled]="!listForGraph.length">
                                     {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
                                 </mat-checkbox>
                             </div>
@@ -146,19 +145,19 @@
                                 <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
                                 </thead>
                                 <tbody>
-                                <tr *ngIf="data.length==0">
-                                    <td colspan="4" *ngIf="showSpinner">
+                                <tr *ngIf="listForLogs.length==0">
+                                    <td colspan="4" *ngIf="showSpinnerLogs">
                                         <spinner
                                                 [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
                                     </td>
-                                    <td colspan="4" *ngIf="!showSpinner">
+                                    <td colspan="4" *ngIf="!showSpinnerLogs && listLogsIsEmpty">
                                         <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
                                             <br>
                                             <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
                                         </h4>
                                     </td>
                                 </tr>
-                                <tr *ngFor="let sleep of data;let i= index; trackBy: trackById">
+                                <tr *ngFor="let sleep of listForLogs;let i= index; trackBy: trackById">
                                     <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                         (click)="viewSleepDetails(sleep.id)">
                                         <mat-checkbox (change)="changeOnMeasurement()"
@@ -202,7 +201,7 @@
 
                     </div>
 
-                </measurement-card>
+                </time-series-card>
 
                 <div class="row fadeIn" *ngIf="!includeCard">
 
@@ -246,7 +245,7 @@
 
                         <div class="unavailable-data">
                             <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-                            <span *ngIf="data.length==0 && !showSpinner"
+                            <span *ngIf="listForGraph.length==0 && !showSpinner"
                                   class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.WEIGHT.UNAVAILABLE-DATA'|translate}}</span>
                         </div>
                     </div>
