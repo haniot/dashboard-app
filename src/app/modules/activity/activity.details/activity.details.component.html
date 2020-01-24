@@ -19,7 +19,8 @@
                         </div>
                         <div class="nav-tabs-navigation" style="float:right">
                                     <span class="nav-tabs-title">
-                                        <h4 class="card-title">{{physicalActivity && physicalActivity.distance ? (physicalActivity.distance|distance) : ''}}</h4>
+                                        <h4 class="card-title" [innerHTML]="physicalActivity && physicalActivity.distance ? (physicalActivity.distance|distance) : '0<small>m</small>'">
+                                        </h4>
                                     </span>
                             <span class="nav-tabs-title">
                                         <h4 class="card-title">{{physicalActivity && physicalActivity.duration ? (physicalActivity.duration|millisecond) : ''}}</h4>

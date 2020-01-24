@@ -54,6 +54,10 @@
         "RESUME": "Resumo"
       },
       "DAILY-TOTAL": "Total diário",
+      "WEEKLY-TOTAL": "Total semanal",
+      "MONTHLY-TOTAL": "Total mensal",
+      "TOTAL-ANNUAL": "Total anual",
+      "TOTAL-PERIOD": "Total do período",
       "DURATION": "Duração da atividade",
       "STEPS": "Passos executados",
       "DISTANCE": "Distância percorrida",
@@ -573,7 +577,7 @@
       "WEEK": "Semana",
       "MONTH": "Mês",
       "YEAR": "Ano",
-      "PERIOD": "Periodo"
+      "PERIOD": "Período"
     },
     "LOG-MEASUREMENTS-CARD": {
       "TITLE": "Histórico dos registro de medições",
@@ -882,6 +886,8 @@
     "ONLY": "Apenas",
     "TIMES": "vezes",
     "TURN": "vez",
+    "DAY": "dia",
+    "DAYS": "dias",
     "PIPES": {
       "GENDER": {
         "MALE": "Masculino",
@@ -1049,7 +1055,7 @@
       "SUBTITLE": ""
     },
     "DISTANCE": {
-      "TITLE": "Distancia",
+      "TITLE": "Distância",
       "TOTAL-DISTANCE": "Distância total",
       "SUBTITLE": ""
     },

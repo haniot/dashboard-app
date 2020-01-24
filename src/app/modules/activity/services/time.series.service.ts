@@ -6,6 +6,7 @@ import {
     TimeSeriesFullFilter,
     TimeSeriesIntervalFilter,
     TimeSeriesSimpleFilter,
+    TimeSeriesTotals,
     TimeSeriesType
 } from '../models/time.series'
 
@@ -22,7 +23,7 @@ export class TimeSeriesService {
             .toPromise();
     }
 
-    getAll(patientId: string, filter: TimeSeriesSimpleFilter): Promise<TimeSeries[]> {
+    getAll(patientId: string, filter: TimeSeriesSimpleFilter): Promise<TimeSeriesTotals> {
         if (filter.start_date && filter.start_date.length > 10) {
             filter.start_date = filter.start_date.split('T')[0];
         }

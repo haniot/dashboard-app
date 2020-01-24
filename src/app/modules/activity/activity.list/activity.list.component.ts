@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageEvent } from '@angular/material/paginator';
@@ -6,9 +6,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { PhysicalActivity } from '../models/physical.activity';
 import { SearchForPeriod } from '../../measurement/models/measurement';
 import {
+    TimeSeries,
     TimeSeriesFullFilter,
     TimeSeriesIntervalFilter,
-    TimeSeriesSimpleFilter,
+    TimeSeriesSimpleFilter, TimeSeriesTotals,
     TimeSeriesType
 } from '../models/time.series';
 import { ConfigurationBasic } from '../../config.matpaginator';
@@ -16,6 +17,7 @@ import { ModalService } from '../../../shared/shared.components/modal/service/mo
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
 import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
+import { TimeSeriesService } from '../services/time.series.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -44,12 +46,15 @@ export class ActivityListComponent implements OnInit {
     cacheIdForRemove: string;
     cacheListIdForRemove: Array<any>;
     removingActivity: boolean;
-    currentFilter: TimeSeriesSimpleFilter | TimeSeriesIntervalFilter | TimeSeriesFullFilter;
+    currentFilter: TimeSeriesSimpleFilter | TimeSeriesIntervalFilter | TimeSeriesFullFilter | any;
+    currentFilterType: string;
     isIntraday: boolean;
+    totals: TimeSeriesTotals;
 
     constructor(
         private activeRouter: ActivatedRoute,
         private activityService: PhysicalActivitiesService,
+        private timeSeriesService: TimeSeriesService,
         private router: Router,
         private modalService: ModalService,
         private toastService: ToastrService,
@@ -66,19 +71,24 @@ export class ActivityListComponent implements OnInit {
         this.currentFilter = new TimeSeriesIntervalFilter();
         this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
         this.currentFilter.interval = '1m';
+        this.currentFilterType = 'today';
         this.isIntraday = true;
+        this.totals = new TimeSeriesTotals();
     }
 
     ngOnInit() {
         this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
             this.loadAllActivities();
+            this.loadTotals();
         })
     }
 
     applyFilter(event): void {
         this.currentFilter = event.filter;
+        this.currentFilterType = event.type;
         this.isIntraday = (event && event.type && event.type === 'today');
+        this.loadTotals();
     }
 
     loadAllActivities(): void {
@@ -93,6 +103,24 @@ export class ActivityListComponent implements OnInit {
             })
             .catch(err => {
                 this.showSpinner = false;
+            })
+    }
+
+    loadTotals(): void {
+        const filter: TimeSeriesSimpleFilter = new TimeSeriesSimpleFilter();
+        if (this.currentFilterType === 'today') {
+            filter.start_date = this.currentFilter.date;
+            filter.end_date = this.currentFilter.date;
+        } else {
+            filter.start_date = this.currentFilter.start_date;
+            filter.end_date = this.currentFilter.end_date;
+        }
+        this.timeSeriesService.getAll(this.patientId, filter)
+            .then(totals => {
+                this.totals = totals;
+            })
+            .catch(err => {
+                console.log(err)
             })
     }
 

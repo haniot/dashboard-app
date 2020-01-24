@@ -40,18 +40,24 @@
                                  style="padding: 0px 0px; margin: 0px 0px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray">
                                 <div class="d-flex justify-content-between">
                                     <div class="p-2">
-                                        <h4>{{'ACTIVITY.PHYSICAL-ACTIVITY.DAILY-TOTAL'|translate}}:</h4>
+                                        <h4 *ngIf="currentFilterType==='today'">{{'ACTIVITY.PHYSICAL-ACTIVITY.DAILY-TOTAL'|translate}}:</h4>
+                                        <h4 *ngIf="currentFilterType==='1w'">{{'ACTIVITY.PHYSICAL-ACTIVITY.WEEKLY-TOTAL'|translate}}:</h4>
+                                        <h4 *ngIf="currentFilterType==='1m'">{{'ACTIVITY.PHYSICAL-ACTIVITY.MONTHLY-TOTAL'|translate}}:</h4>
+                                        <h4 *ngIf="currentFilterType==='1y'">{{'ACTIVITY.PHYSICAL-ACTIVITY.TOTAL-ANNUAL'|translate}}:</h4>
+                                        <h4 *ngIf="currentFilterType==='period'">{{'ACTIVITY.PHYSICAL-ACTIVITY.TOTAL-PERIOD'|translate}}:</h4>
                                     </div>
                                     <div class="p-2">
-                                        <h4>0 <small>{{'TIME-SERIES.PIPES.TIME-SERIES.STEPS'|translate}}</small>
+                                        <h4>
+                                            {{totals && totals.steps && totals.steps.summary && totals.steps.summary.total ? (totals.steps.summary.total|number:'1.0-0') : 0}}<small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                                         </h4>
                                     </div>
                                     <div class="p-2">
-                                        <h4>0 <small>Km</small></h4>
+                                        <h4 [innerHTML]="totals && totals.distance && totals.distance.summary && totals.distance.summary.total ? (totals.distance.summary.total|distance) : '0<small>m</small>'">
+                                        </h4>
                                     </div>
                                     <div class="p-2">
-                                        <h4>0
-                                            <small>{{'TIME-SERIES.PIPES.TIME-SERIES.CALORIES'|translate}}</small>
+                                        <h4>
+                                            {{totals && totals.calories && totals.calories.summary && totals.calories.summary.total ? (totals.calories.summary.total|number:'1.0-0') : 0}}<small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                         </h4>
                                     </div>
                                 </div>
@@ -146,7 +152,8 @@
                                                     <!--                                                    <img src="../../../../assets/img/time-series/steps.png"-->
                                                     <!--                                                         class="float-left">-->
                                                     <p class="float-right" style="margin: 0px 4px">
-                                                        {{activity && activity.steps ? (activity.steps|number:'1.0-0') : 0}}<small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
+                                                        {{activity && activity.steps ? (activity.steps|number:'1.0-0') : 0}}
+                                                        <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                                                     </p>
                                                 </div>
                                                 <div class="col text-center"
@@ -154,8 +161,8 @@
                                                      [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DISTANCE'|translate">
                                                     <!--                                                    <img src="../../../../assets/img/time-series/distance.png"-->
                                                     <!--                                                         class="float-left">-->
-                                                    <p class="float-right" style="margin: 0px 4px">
-                                                        {{activity && activity.distance ? (activity.distance |distance) : '0m'}}
+                                                    <p class="float-right" style="margin: 0px 4px"
+                                                       [innerHTML]="activity && activity.distance ? (activity.distance|distance) : '0<small>m</small>'">
                                                     </p>
                                                 </div>
                                                 <div class="col text-center"
@@ -164,7 +171,8 @@
                                                     <!--                                                    <img src="../../../../assets/img/time-series/calories.png"-->
                                                     <!--                                                         class="float-left">-->
                                                     <p class="float-right" style="margin: 0px 4px">
-                                                        {{activity && activity.calories ?(activity.calories|number:'1.0-0'):0}}<small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                                        {{activity && activity.calories ? (activity.calories|number:'1.0-0') : 0}}
+                                                        <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                                     </p>
                                                 </div>
                                             </div>

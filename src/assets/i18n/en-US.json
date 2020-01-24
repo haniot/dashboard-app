@@ -54,6 +54,10 @@
         "RESUME": "Resume"
       },
       "DAILY-TOTAL": "Daily Total",
+      "WEEKLY-TOTAL": "Weekly total",
+      "MONTHLY-TOTAL": "Monthly total",
+      "TOTAL-ANNUAL": "Total annual",
+      "TOTAL-PERIOD": "Total for the period",
       "DURATION": "Activity duration",
       "STEPS": "Steps taken",
       "DISTANCE": "Travelled distance",
@@ -882,6 +886,8 @@
     "ONLY": "Only",
     "TIMES": "times",
     "TURN": "turn",
+    "DAY": "day",
+    "DAYS": "days",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",

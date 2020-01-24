@@ -31,7 +31,6 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     timeSeriesTypes: any;
     measurementSelected: TimeSeriesType;
     sleepSize: number;
-    sleepStages: any;
     sleepSelected: Sleep;
     loadingTimeSeries: boolean;
     loadingSleep: boolean;
@@ -43,31 +42,101 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     stepSize: number;
     caloriesHover: boolean;
     caloriesValue: number;
+    caloriesSize: number;
     activeMinutesHover: boolean;
     activeMinutesValue: number;
-    activeMinutesSettings: boolean;
+    activeMinutesSize: number;
     distanceHover: boolean;
     distanceValue: number;
+    distanceSize: number;
     goal: Goal;
     innerWidth: any;
     listActivities: PhysicalActivity[];
     listActivitiesIsEmpty: boolean;
     Math = Math;
     currentFilter: TimeSeriesIntervalFilter;
-    @ViewChild('sleepDiv', { static: false }) sleepDivRef: ElementRef;
-    @ViewChild('stepDiv', { static: false }) stepDivRef: ElementRef;
+    sleepDivRef: ElementRef;
+
+    @ViewChild('sleepDiv', { static: false })
+    set sleepDiv(element: ElementRef) {
+        if (element) {
+            setTimeout(() => {
+                this.sleepDivRef = element;
+                this.sleepSize = this.sleepDivRef ? Math.min(this.sleepDivRef.nativeElement.offsetWidth * 0.9, 250) : 250;
+            })
+        }
+    };
+
+    stepDivRef: ElementRef;
+
+    @ViewChild('stepsDiv', { static: false })
+    set stepsDiv(element: ElementRef) {
+        if (element) {
+            setTimeout(() => {
+                this.stepDivRef = element;
+                this.stepSize = this.stepDivRef ? Math.min(this.stepDivRef.nativeElement.offsetWidth * 0.9, 200) : 200;
+            })
+        }
+    };
+
+    caloriesCardRef: ElementRef;
+
+    @ViewChild('caloriesDiv', { static: false })
+    set caloriesDiv(element: ElementRef) {
+        if (element) {
+            setTimeout(() => {
+                this.caloriesCardRef = element;
+                this.caloriesSize = this.caloriesCardRef ? Math.min(this.caloriesCardRef.nativeElement.offsetWidth * 0.9, 200) : 200;
+            })
+        }
+    };
+
+    distanceCardRef: ElementRef;
+
+    @ViewChild('distanceDiv', { static: false })
+    set distanceDiv(element: ElementRef) {
+        setTimeout(() => {
+            this.distanceCardRef = element;
+            this.distanceSize = this.distanceCardRef ? Math.min(this.distanceCardRef.nativeElement.offsetWidth * 0.9, 200) : 200;
+        })
+    };
+
+    activeMinutesCardRef: ElementRef;
+
+    @ViewChild('activeMinutesDiv', { static: false })
+    set activeMinutesDiv(element: ElementRef) {
+        if (element) {
+            setTimeout(() => {
+                this.activeMinutesCardRef = element;
+                this.activeMinutesSize =
+                    this.activeMinutesCardRef ? Math.min(this.activeMinutesCardRef.nativeElement.offsetWidth * 0.9, 200) : 200;
+            })
+        }
+    };
 
     @HostListener('window:resize', ['$event'])
     onResize() {
         this.innerWidth = window.innerWidth;
         if (this.sleepDivRef) {
-            this.sleepSize = this.sleepDivRef.nativeElement.offsetWidth - (this.sleepDivRef.nativeElement.offsetWidth * 0.27);
+            this.sleepSize = Math.min(this.sleepDivRef.nativeElement.offsetWidth * 0.9, 250);
         }
 
         if (this.stepDivRef) {
-            this.stepSize = Math.min(this.stepDivRef.nativeElement.offsetWidth, this.stepDivRef.nativeElement.offsetHeight)
-                - (Math.min(this.stepDivRef.nativeElement.offsetWidth, this.stepDivRef.nativeElement.offsetHeight) * 0.3);
+            this.stepSize = Math.min(this.stepDivRef.nativeElement.offsetWidth * 0.9, 200);
         }
+
+        if (this.caloriesCardRef) {
+            this.caloriesSize = Math.min(this.caloriesCardRef.nativeElement.offsetWidth * 0.9, 200);
+        }
+
+        if (this.activeMinutesCardRef) {
+            this.activeMinutesSize = Math.min(this.activeMinutesCardRef.nativeElement.offsetWidth * 0.9, 200);
+        }
+
+        if (this.distanceCardRef) {
+            this.distanceSize = Math.min(this.distanceCardRef.nativeElement.offsetWidth * 0.9, 200);
+        }
+
     }
 
     constructor(
@@ -92,12 +161,15 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.currentFilter = new TimeSeriesIntervalFilter();
         this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
         this.currentFilter.interval = '1m';
+        this.sleepSize = 250;
+        this.stepSize = 200;
+        this.caloriesSize = 200;
+        this.distanceSize = 200;
+        this.activeMinutesSize = 200;
     }
 
     ngOnInit() {
         this.innerWidth = window.innerWidth;
-        this.sleepSize = 250;
-        this.stepSize = 200;
     }
 
     loadGoals(): void {
