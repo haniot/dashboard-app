@@ -7,7 +7,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { TranslateModule } from '@ngx-translate/core';
 import { SatDatepickerModule } from 'saturn-datepicker';
-import { MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatPaginatorModule } from '@angular/material';
+import {
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule
+} from '@angular/material';
 
 import { MeasurementComponent } from './measurement.component/measurement.component';
 import { MeasurementService } from './services/measurement.service';
@@ -29,6 +35,7 @@ import { MeasurementTypePipe } from './pipes/measurement.type.pipe';
 import { SharedModule } from '../../shared/shared.module'
 import { Ng5SliderModule } from 'ng5-slider'
 import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
+import { MeasurementDashboardComponent } from './measurement.dashboard/measurement.dashboard.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +54,8 @@ import { ViewMeasurementsComponent } from './view.measurements/view.measurements
         DecimalFormatterPipe,
         MeasurementCardComponent,
         MeasurementLogsComponent,
-        MeasurementTypePipe
+        MeasurementTypePipe,
+        MeasurementDashboardComponent
     ],
     imports: [
         CommonModule,
@@ -81,7 +89,8 @@ import { ViewMeasurementsComponent } from './view.measurements/view.measurements
         ViewMeasurementsComponent,
         DecimalFormatterPipe,
         MeasurementTypePipe,
-        MeasurementCardComponent
+        MeasurementCardComponent,
+        MeasurementDashboardComponent
     ],
     providers: [
         MeasurementService,

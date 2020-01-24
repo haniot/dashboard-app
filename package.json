@@ -49,6 +49,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "mustache": "^3.2.1",
+    "muuri": "^0.8.0",
     "ng-recaptcha": "^5.0.0",
     "ng5-slider": "^1.2.4",
     "ngx-echarts": "^4.2.2",

@@ -75,7 +75,7 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
                 const { params: { patientId, resource } } = paramsAsMap
                 this.typeOfMeasurement = resource
                 if (
-                    !Object.keys(EnumMeasurementType).includes(resource.toUpperCase()) &&
+                    !Object.keys(EnumMeasurementType).includes(resource) &&
                     !Object.keys(TimeSeriesType).includes(resource)) {
                     this.router.navigate(['/page-not-found'])
                 }
