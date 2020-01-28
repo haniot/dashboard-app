@@ -92,8 +92,9 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="#patientSubmenu" data-toggle="collapse" aria-expanded="false"
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link"
+               [routerLink]="['/app/patients']"
                (click)="onClickMenuPatient($event)"
                *ngIf="verifyScopes('Patients')">
                 <p>

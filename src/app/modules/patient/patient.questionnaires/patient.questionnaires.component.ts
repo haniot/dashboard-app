@@ -138,11 +138,14 @@ export class PatientQuestionnairesComponent implements OnInit, OnDestroy {
             this.patientService.getById(this.patientId)
                 .then(patient => {
                     this.localStorageService.selectedPatient(patient);
+                    this.createPatientForm(patient);
+                    this.getQuestionnaires();
                 })
                 .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                 });
         } else {
+            this.localStorageService.selectedPatient(patientLocal);
             this.createPatientForm(patientLocal);
             this.getQuestionnaires();
         }

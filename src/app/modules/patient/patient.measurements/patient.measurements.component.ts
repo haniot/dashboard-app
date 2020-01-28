@@ -40,6 +40,8 @@ export class PatientMeasurementsComponent implements OnInit {
                 .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
                 });
+        } else {
+            this.localStorageService.selectedPatient(patientLocal);
         }
     }
 

@@ -71,6 +71,7 @@ export class SidebarComponent implements OnInit {
     iconCollapse = 'keyboard_arrow_down';
     userLogged: GenericUser;
     loadUserTime: any
+    patientMenu: string;
 
     constructor(
         private authService: AuthService,
