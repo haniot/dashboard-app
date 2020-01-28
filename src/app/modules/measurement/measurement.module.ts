@@ -36,6 +36,7 @@ import { SharedModule } from '../../shared/shared.module'
 import { Ng5SliderModule } from 'ng5-slider'
 import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
 import { MeasurementDashboardComponent } from './measurement.dashboard/measurement.dashboard.component';
+import { NgxGaugeModule } from 'ngx-gauge'
 
 @NgModule({
     declarations: [
@@ -72,7 +73,8 @@ import { MeasurementDashboardComponent } from './measurement.dashboard/measureme
         MatInputModule,
         MatCheckboxModule,
         MatPaginatorModule,
-        Ng5SliderModule
+        Ng5SliderModule,
+        NgxGaugeModule
     ],
     exports: [
         MeasurementComponent,

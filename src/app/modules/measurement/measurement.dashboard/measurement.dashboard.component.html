@@ -1,77 +1,281 @@
 <div class="container-fluid">
-    <div class="grid grid-1">
-        <div class="item">
-            <div class="item-content" style="width: 300px;height: 400px;">
 
-                <dashboard-card [title]="'Peso'"
-                                [urlAction]="['/app/patients','5e29e657f02abb00190fb9a6',EnumMeasurementType.weight]">
+    <h4>Últimas medições coletadas</h4>
 
+    <div class="grid grid-1" #gridDiv>
+        <div class="item" style="width: 32.5%;height: 406px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+            <div class="item-content">
+
+                <dashboard-card [title]="'MEASUREMENTS.WEIGHT.TITLE'|translate"
+                                [urlAction]="['/app/patients',patientId,EnumMeasurementType.weight]">
+                    <div class="card-content" style="flex-direction: column"
+                         *ngIf="measurementLast && measurementLast.weight">
+                        <div class="d-flex justify-content-between">
+                            <div class="p-2" style="display: flex; align-items: baseline">
+                                <img src="../../../../assets/img/weight.svg">
+                                <h2 class="p-2">
+                                    {{measurementLast.weight.value ? (measurementLast.weight.value|number:'1.0-0') : ' - - '}}<small>{{this.measurementLast.weight.unit}}</small>
+                                </h2>
+                            </div>
+                            <div class="p-2" style="display: flex; align-items: baseline">
+                                <img src="../../../../assets/img/fat.svg">
+                                <h2 class="p-2">
+                                    {{measurementLast.weight.body_fat ? (measurementLast.weight.body_fat|number:'1.0-0') : ' - - '}}<small *ngIf="this.measurementLast.weight.body_fat">%</small>
+                                </h2>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center">
+                            <h2 class="p-2">BMI</h2>
+                            <ngx-gauge
+                                    [size]="150"
+                                    [type]="'semi'"
+                                    [min]="0"
+                                    [max]="100"
+                                    [thick]="15"
+                                    [value]="bmi"
+                                    [duration]="500"
+                                    [cap]="'round'"
+                                    [thresholds]="fatThreshold">
+                                <ngx-gauge-value>
+                                    {{bmi|number:'2.1-2'}}
+                                </ngx-gauge-value>
+                            </ngx-gauge>
+                        </div>
+                        <!--
+                        <div class="card card-stats">
+                            <div class="card-header card-header-timer card-header-icon">
+                                <div class="card-icon">
+                                    <div class="bg-weight"></div>
+                                </div>
+                                <p class="card-category">{{'MEASUREMENTS.COMPONENT.WEIGHT'|translate}}: </p>
+                                <h3 class="card-title" *ngIf="measurementLast.weight && measurementLast.weight.value">
+                                    {{(measurementLast.weight.value|decimalFormatter) + '' + measurementLast.weight.unit}}
+                                </h3>
+                                <h3 class="card-title" *ngIf="!measurementLast.weight || !measurementLast.weight.value">
+                                    {{'MEASUREMENTS.VALUE'|translate}}
+                                </h3>
+                            </div>
+
+                        </div>
+
+                        <div class="card card-stats">
+                            <div class="card-header card-header-timer card-header-icon">
+                                <div class="card-icon">
+                                    <div class="bg-fat"></div>
+                                </div>
+                                <p class="card-category">{{'MEASUREMENTS.COMPONENT.FAT'|translate}}: </p>
+                                <h3 class="card-title" *ngIf="measurementLast.weight && measurementLast.weight.body_fat">
+                                    {{measurementLast.weight.body_fat + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}
+                                </h3>
+                                <h3 class="card-title" *ngIf="!measurementLast.weight || !measurementLast.weight.body_fat">
+                                    {{'MEASUREMENTS.VALUE'|translate}}
+                                </h3>
+                            </div>
+
+                        </div>
+                        -->
+                    </div>
+
+
+                    <div class="card-content" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;" *ngIf="loading">
+                        <spinner [message]="'SHARED.LOADING'|translate"></spinner>
+                    </div>
+                    <div style="position: absolute; bottom: 10px">
+                        <small class="pull-right" *ngIf="measurementLast && measurementLast.weight && measurementLast.weight.timestamp">
+                            {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:{{measurementLast.weight.timestamp | myDate}}</small>
+                        <small class="pull-right"
+                               *ngIf="!measurementLast || !measurementLast.weight || !measurementLast.weight.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            :{{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                    </div>
+<!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.weight && measurementLast.weight.timestamp) ? (measurementLast.weight.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
 
             </div>
         </div>
 
-        <div class="item">
-            <div class="item-content" style="width: 300px;height: 200px;">
+        <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+            <div class="item-content">
 
-                <dashboard-card [title]="'Altura'"
-                                [urlAction]="['/app/patients','5e29e657f02abb00190fb9a6',EnumMeasurementType.height]">
+                <dashboard-card [title]="'MEASUREMENTS.HEIGHT.TITLE'|translate"
+                                [urlAction]="['/app/patients',patientId,EnumMeasurementType.height]">
+                    <div class="echarts-div-graph" echarts [options]="heightGraph"
+                         (chartInit)="onChartInit($event)"
+                         style="height: 100px;padding: 0px 0px; margin: 0px 0px"
+                         *ngIf="measurementLast && measurementLast.height && measurementLast.height.value">
 
+                    </div>
+                    <div class="card-content" *ngIf="measurementLast && measurementLast.height">
+                        <h2>
+                            {{measurementLast.height.value ? measurementLast.height.value : ' - - '}}<small>{{this.measurementLast.height.unit}}</small>
+                        </h2>
+                    </div>
+                    <div class="card-content" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;" *ngIf="loading">
+                        <spinner [message]="'SHARED.LOADING'|translate"></spinner>
+                    </div>
+                    <div style="position: absolute; bottom: 10px">
+                        <small class="pull-right" *ngIf="measurementLast && measurementLast.height.timestamp">
+                            {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:{{measurementLast.height.timestamp | myDate}}</small>
+                        <small class="pull-right"
+                               *ngIf="!measurementLast || !measurementLast.height || !measurementLast.height.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            :{{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                    </div>
+<!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.height && measurementLast.height.timestamp) ? (measurementLast.height.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
 
             </div>
         </div>
 
-        <div class="item">
-            <div class="item-content" style="width: 300px;height: 200px;">
+        <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+            <div class="item-content">
 
-                <dashboard-card [title]="'C. da Cintura'"
-                                [urlAction]="['/app/patients','5e29e657f02abb00190fb9a6',EnumMeasurementType.waist_circumference]">
-
+                <dashboard-card [title]="'MEASUREMENTS.WAIST-CIRCUMFERENCE.TITLE'|translate"
+                                [urlAction]="['/app/patients',patientId,EnumMeasurementType.waist_circumference]">
+                    <div class="card-content" *ngIf="measurementLast && measurementLast.waist_circumference">
+                        <h2>
+                            {{measurementLast.waist_circumference.value ? measurementLast.waist_circumference.value : ' - - '}}<small>{{measurementLast.waist_circumference.unit}}</small>
+                        </h2>
+<!--                        <div class="card-content" *ngIf="!measurementLast.waist_circumference.value">-->
+<!--                            <span class="badge badge-warning badge-12 ellipsis">Medição não coletada!</span>-->
+<!--                        </div>-->
+                    </div>
+                    <div class="card-content" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;" *ngIf="loading">
+                        <spinner [message]="'SHARED.LOADING'|translate"></spinner>
+                    </div>
+                    <div style="position: absolute; bottom: 10px">
+                        <small class="pull-right" *ngIf="measurementLast && measurementLast.waist_circumference.timestamp">
+                            {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:{{measurementLast.waist_circumference.timestamp | myDate}}</small>
+                        <small class="pull-right"
+                               *ngIf="!measurementLast || !measurementLast.waist_circumference || !measurementLast.waist_circumference.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            :{{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                    </div>
+<!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.waist_circumference && measurementLast.waist_circumference.timestamp) ? (measurementLast.waist_circumference.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
 
             </div>
         </div>
 
-        <div class="item">
-            <div class="item-content" style="width: 300px;height: 200px;">
+        <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+            <div class="item-content">
+                <dashboard-card [title]="'MEASUREMENTS.FAT.TITLE'|translate"
+                                [urlAction]="['/app/patients',patientId,EnumMeasurementType.body_fat]">
+                    <div class="card-content" *ngIf="measurementLast && measurementLast.body_fat">
+                        <h2>
+                            {{measurementLast.body_fat.value ? (measurementLast.body_fat.value|number:'1.0-0') : 0}}<small>{{measurementLast.body_fat.unit}}</small>
+                        </h2>
+                    </div>
+                    <div class="card-content" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;" *ngIf="loading">
+                        <spinner [message]="'SHARED.LOADING'|translate"></spinner>
+                    </div>
+                    <div style="position: absolute; bottom: 10px">
+                        <small class="pull-right" *ngIf="measurementLast && measurementLast.body_fat.timestamp">
+                            {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:{{measurementLast.body_fat.timestamp | myDate}}</small>
+                        <small class="pull-right"
+                               *ngIf="!measurementLast ||!measurementLast.body_fat || !measurementLast.body_fat.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            :{{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                    </div>
+<!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.body_fat && measurementLast.body_fat.timestamp) ? (measurementLast.body_fat.timestamp|date:'fullDate') : ' - -'}}</small>-->
+                </dashboard-card>
+            </div>
+        </div>
 
-                <dashboard-card [title]="'Gordura Corporal'"
-                                [urlAction]="['/app/patients','5e29e657f02abb00190fb9a6',EnumMeasurementType.body_fat]">
+        <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+            <div class="item-content">
+                <dashboard-card [title]="'MEASUREMENTS.BODY-TEMPERATURE.TITLE'|translate"
+                                [urlAction]="['/app/patients',patientId,EnumMeasurementType.body_temperature]">
+                    <div class="card-content" style="height: inherit" *ngIf="measurementLast && measurementLast.body_temperature">
+                        <span class="badge badge-haniot" *ngIf="measurementLast.body_temperature.value>=37.5"
+                              style="position: absolute; top: 50px;right: 10px; z-index: 1099; background-color:red">
+                            {{'MEASUREMENTS.BODY-TEMPERATURE.FEVER'|translate}}
+                        </span>
+                        <ngx-gauge
+                                [size]="200"
+                                [type]="'semi'"
+                                [min]="0"
+                                [max]="40"
+                                [foregroundColor]="'#2B4A77'"
+                                [thick]="15"
+                                [value]="measurementLast.body_temperature.value"
+                                [duration]="500"
+                                [cap]="'round'"
+                                [thresholds]="temperatureThreshold">
+                            <ngx-gauge-value>
+                                <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto; display: flex; flex-direction: column;align-items: center;justify-content: center;text-align: center;">
+                                    <h2>
+                                        {{measurementLast.body_temperature.value ? (measurementLast.body_temperature.value|number:'2.1-1') : ' - - '}}<small>{{measurementLast.body_temperature.unit}}</small>
+                                    </h2>
+                                </div>
+                            </ngx-gauge-value>
+                        </ngx-gauge>
+                    </div>
+                    <div class="card-content" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;" *ngIf="loading">
+                        <spinner [message]="'SHARED.LOADING'|translate"></spinner>
+                    </div>
+                    <div style="position: absolute; bottom: 10px">
+                        <small class="pull-right" *ngIf="measurementLast && measurementLast.body_temperature.timestamp">
+                            {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:{{measurementLast.body_temperature.timestamp | myDate}}</small>
+                        <small class="pull-right"
+                               *ngIf="!measurementLast ||!measurementLast.body_temperature || !measurementLast.body_temperature.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            :{{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                    </div>
+<!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.body_temperature && measurementLast.body_temperature.timestamp) ? (measurementLast.body_temperature.timestamp|date:'fullDate') : ' - -'}}</small>-->
+                </dashboard-card>
+            </div>
+        </div>
 
+        <div class="item" style="width: 49%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.49)+'px'}">
+            <div class="item-content">
+
+                <dashboard-card [title]="'MEASUREMENTS.BLOOD-PRESSURE.TITLE'|translate"
+                                [urlAction]="['/app/patients',patientId,EnumMeasurementType.blood_pressure]">
+                    <div class="card-content" *ngIf="measurementLast && measurementLast.blood_pressure">
+                        <h2 class="p-2" *ngIf="measurementLast.blood_pressure.systolic">
+                            {{(measurementLast.blood_pressure.systolic|number:'1.0-0')}}/{{(measurementLast.blood_pressure.diastolic|number:'1.0-0')}}<small>{{measurementLast.blood_pressure.unit}}</small>
+                        </h2>
+                        <h2 class="p-2" *ngIf="!measurementLast.blood_pressure.systolic">
+                            - -
+                        </h2>
+                        <h2 class="p-2">
+                            {{measurementLast.blood_pressure.pulse ? (measurementLast.blood_pressure.pulse|number:'1.0-0') : ' - - '}}<small *ngIf="measurementLast.blood_pressure.pulse">bpm</small>
+                        </h2>
+                    </div>
+                    <div class="card-content" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;" *ngIf="loading">
+                        <spinner [message]="'SHARED.LOADING'|translate"></spinner>
+                    </div>
+                    <div style="position: absolute; bottom: 10px">
+                        <small class="pull-right" *ngIf="measurementLast && measurementLast.blood_pressure.timestamp">
+                            {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:{{measurementLast.blood_pressure.timestamp | myDate}}</small>
+                        <small class="pull-right"
+                               *ngIf="!measurementLast ||!measurementLast.blood_pressure || !measurementLast.blood_pressure.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            :{{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                    </div>
+<!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.blood_pressure && measurementLast.blood_pressure.timestamp) ? (measurementLast.blood_pressure.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
 
             </div>
         </div>
 
-        <div class="item">
-            <div class="item-content" style="width: 300px;height: 200px;">
+        <div class="item" style="width: 49%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.49)+'px'}">
+            <div class="item-content">
 
-                <dashboard-card [title]="'Temperatura'"
-                                [urlAction]="['/app/patients','5e29e657f02abb00190fb9a6',EnumMeasurementType.body_temperature]">
-
-                </dashboard-card>
-
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="item-content" style="width: 600px;height: 200px;">
-
-                <dashboard-card [title]="'Pressão Sanguinea'"
-                                [urlAction]="['/app/patients','5e29e657f02abb00190fb9a6',EnumMeasurementType.blood_pressure]">
-
-                </dashboard-card>
-
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="item-content" style="width: 300px;height: 200px;">
-
-                <dashboard-card [title]="'Glicemia'"
-                                [urlAction]="['/app/patients','5e29e657f02abb00190fb9a6',EnumMeasurementType.blood_glucose]">
-
+                <dashboard-card [title]="'MEASUREMENTS.BLOOD-GLUCOSE.TITLE'|translate"
+                                [urlAction]="['/app/patients',patientId,EnumMeasurementType.blood_glucose]">
+                    <div class="card-content" *ngIf="measurementLast && measurementLast.blood_glucose">
+                        <span class="badge badge-haniot" *ngIf="measurementLast.blood_glucose.meal">{{measurementLast.blood_glucose.meal | meal | translate}}</span>
+                        <h2 class="p-2">
+                            {{measurementLast.blood_glucose.value?(measurementLast.blood_glucose.value|number:'1.0-0'):' - - '}}<small>{{measurementLast.blood_glucose.unit}}</small>
+                        </h2>
+                    </div>
+                    <div class="card-content" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;" *ngIf="loading">
+                        <spinner [message]="'SHARED.LOADING'|translate"></spinner>
+                    </div>
+                    <div style="position: absolute; bottom: 10px">
+                        <small class="pull-right" *ngIf="measurementLast && measurementLast.blood_glucose.timestamp">
+                            {{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}:{{measurementLast.blood_glucose.timestamp | myDate}}</small>
+                        <small class="pull-right"
+                               *ngIf="!measurementLast ||!measurementLast.blood_glucose || !measurementLast.blood_glucose.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                            :{{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                    </div>
+<!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.blood_pressure && measurementLast.blood_pressure.timestamp) ? (measurementLast.blood_pressure.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
 
             </div>
