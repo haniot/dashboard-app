@@ -22,22 +22,30 @@ export declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: '^/app/dashboard$', title: 'SHARED.HOME-PAGE' },
-    { path: '^/app/admin/administrators$', title: 'NAVBAR.ADMINS-USERS' },
-    { path: '^/app/admin/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS' },
-    { path: '^/app/pilotstudies$', title: 'SHARED.PILOTSTUDIES' },
-    { path: '^/app/patients$', title: 'SHARED.PATIENTS' },
+    { path: '^/app/dashboard$', title: 'SHARED.HOME-PAGE', titleComplement: '' },
+    { path: '^/app/admin/administrators$', title: 'NAVBAR.ADMINS-USERS', titleComplement: '' },
+    { path: '^/app/admin/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS', titleComplement: '' },
+    { path: '^/app/pilotstudies$', title: 'SHARED.PILOTSTUDIES', titleComplement: '' },
+    { path: '^/app/patients$', title: 'SHARED.PATIENTS', titleComplement: '' },
     { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS', titleComplement: '' },
     { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/dashboard$', title: 'SHARED.PATIENTS' },
     { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/measurements$', title: 'SHARED.PATIENTS' },
     { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/questionnaires$', title: 'SHARED.PATIENTS' },
-    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-PATIENT' },
-    { path: '^/app/healthprofessional/mystudies$', title: 'SHARED.MY-STUDIES' },
-    { path: '^(\\/app/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-STUDY' },
-    { path: '^/app/admin/configurations$', title: 'SHARED.CONFIG' },
-    { path: '^/app/healthprofessional/configurations$', title: 'SHARED.CONFIG' },
-    { path: '^/app/healthprofessional/myevaluations$', title: 'SHARED.MY-EVALUATIONS' },
-    { path: '^(\\/app/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional', title: 'NAVBAR.NUTRITION-EVALUATIONS' }
+    {
+        path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$',
+        title: 'NAVBAR.DETAILS-PATIENT',
+        titleComplement: ''
+    },
+    { path: '^/app/healthprofessional/mystudies$', title: 'SHARED.MY-STUDIES', titleComplement: '' },
+    { path: '^(\\/app/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-STUDY', titleComplement: '' },
+    { path: '^/app/admin/configurations$', title: 'SHARED.CONFIG', titleComplement: '' },
+    { path: '^/app/healthprofessional/configurations$', title: 'SHARED.CONFIG', titleComplement: '' },
+    { path: '^/app/healthprofessional/myevaluations$', title: 'SHARED.MY-EVALUATIONS', titleComplement: '' },
+    {
+        path: '^(\\/app/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional',
+        title: 'NAVBAR.NUTRITION-EVALUATIONS',
+        titleComplement: ''
+    }
 ];
 
 @Component({

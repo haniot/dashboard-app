@@ -22,12 +22,12 @@
 </div>
 
 <haniot-modal [modalId]="'modalUser'">
-    <app-modal-user [title]="'ADMINISTRADORS.TITLE-ADD'|translate" (onsubmit)="createAdmin($event)"
+    <modal-user [title]="'ADMINISTRADORS.TITLE-ADD'|translate" (onsubmit)="createAdmin($event)"
                     [typeUser]="typeUser">
-    </app-modal-user>
+    </modal-user>
 </haniot-modal>
 
 <haniot-modal [modalId]="'modalUserEdit'">
-    <app-modal-user [title]="'ADMINISTRADORS.TITLE-EDIT'|translate" (onsubmit)="editAdmin($event)"
-                    [userId]="userEdit.id" [typeUser]="typeUser" (onclose)="cleanUser()"></app-modal-user>
+    <modal-user [title]="'ADMINISTRADORS.TITLE-EDIT'|translate" (onsubmit)="editAdmin($event)"
+                    [userId]="userEdit.id" [typeUser]="typeUser" (onclose)="cleanUser()"></modal-user>
 </haniot-modal>

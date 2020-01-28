@@ -82,27 +82,6 @@ export class HaniotTableComponent {
         })
         this.modalService.open('modalUserEdit');
         this.onedit.emit(userSelected);
-        // switch (this.userType) {
-        //     case 'Admin':
-        //         this.adminService.getById(id)
-        //             .then((user) => {
-        //                 this.onedit.emit(user);
-        //             })
-        //             .catch(() => {
-        //                 this.toastr.error(not_find_user);
-        //             });
-        //         break;
-        //
-        //     case 'HealthProfessional':
-        //         this.healthService.getById(id)
-        //             .then((user) => {
-        //                 this.onedit.emit(user);
-        //             })
-        //             .catch(() => {
-        //                 this.toastr.error(not_find_user);
-        //             });
-        //         break;
-        // }
     }
 
     searchOnSubmit() {
