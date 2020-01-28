@@ -8,6 +8,9 @@ import { PatientConfigComponent } from '../configurations/configurations.compone
 import { PatientMypilotstudiesComponent } from '../mypilotstudies/mypilotstudies.component'
 import { PatientMyEvaluationsComponent } from '../myevaluations/myevaluations.component'
 import { ViewResourcesComponent } from '../view.resources/view.resources.component'
+import { PatientQuestionnairesComponent } from '../patient.questionnaires/patient.questionnaires.component'
+import { PatientMeasurementsComponent } from '../patient.measurements/patient.measurements.component'
+import { PatientDashboardComponent } from '../patient.dashboard/patient.dashboard.component'
 
 const routes = [
 
@@ -51,6 +54,21 @@ const routes = [
         path: ':pilotstudy_id/new',
         component: PatientFormComponent,
         data: { scope: 'patients:create' }
+    },
+    {
+        path: ':patientId/dashboard',
+        component: PatientDashboardComponent,
+        data: { scope: 'patients:read patients:delete' }
+    },
+    {
+        path: ':patientId/measurements',
+        component: PatientMeasurementsComponent,
+        data: { scope: 'patients:read measurements:read' }
+    },
+    {
+        path: ':patientId/questionnaires',
+        component: PatientQuestionnairesComponent,
+        data: { scope: 'patients:read forms:read' }
     },
     {
         path: ':patientId/details',

@@ -57,9 +57,11 @@ export const configSideBar = [
 })
 export class SidebarComponent implements OnInit {
     userId: string;
+    patientSelected: string;
     configSideBar: { title: string, scopes: any[] }[];
     userName: String = '';
     iconUserMenu = 'keyboard_arrow_right';
+    iconPatientMenu = 'face';
     activeMyPilots: string;
     activeMyEvaluations: string;
     activeDashboard: string;
@@ -86,6 +88,7 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getPatientSelected();
         this.configSideBar = configSideBar;
         this.getUserName();
         this.router.events.subscribe(event => this.updateMenu());
@@ -93,6 +96,14 @@ export class SidebarComponent implements OnInit {
         this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.getPilotSelected();
         });
+        this.localStorageService.patientSelected.subscribe(() => {
+            this.getPatientSelected();
+        });
+    }
+
+    getPatientSelected(): void {
+        const patientSelectedLocal = JSON.parse(this.localStorageService.getItem('patientSelected'));
+        this.patientSelected = patientSelectedLocal && patientSelectedLocal.id ? patientSelectedLocal.id : '';
     }
 
     isMobileMenu() {
@@ -221,8 +232,14 @@ export class SidebarComponent implements OnInit {
         this.authService.logout();
     }
 
-    onclickMenuUser(): void {
+    onClickMenuUser(): void {
         this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
+    }
+
+    onClickMenuPatient(event): void {
+        event.preventDefault();
+        event.stopPropagation();
+        this.router.navigate(['/app/patients']);
     }
 
     isNotAdmin(): boolean {

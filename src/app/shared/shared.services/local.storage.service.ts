@@ -1,13 +1,22 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 import * as CryptoJS from 'crypto-js'
 import { environment } from '../../../environments/environment'
+import { Patient } from '../../modules/patient/models/patient'
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class LocalStorageService {
+    patientSelected: EventEmitter<any>;
+
+    constructor() {
+        this.patientSelected = new EventEmitter();
+    }
+
+    selectedPatient(patient: Patient): void {
+        this.setItem('patientSelected', JSON.stringify(patient));
+        this.patientSelected.emit(patient);
+    }
 
     getItem(key: string): string {
 

@@ -39,18 +39,18 @@
             </td>
         </tr>
         <tr *ngFor="let patient of listOfPatients; index as i;trackBy: trackById">
-            <td [routerLink]="['/app/patients',patient.id, 'details']"
+            <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                 class="max-width-60"
                 [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
-            <td [routerLink]="['/app/patients',patient.id, 'details']"
+            <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                 [attr.data-th]="'SHARED.NAME-OF-PATIENT'|translate">{{patient.name}}</td>
-            <td [routerLink]="['/app/patients',patient.id, 'details']"
+            <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                 class="max-width-150"
                 [attr.data-th]="'SHARED.GENDER'|translate">{{patient.gender | gender | translate}}</td>
-            <td [routerLink]="['/app/patients',patient.id, 'details']"
+            <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                 class="max-width-150"
                 [attr.data-th]="'SHARED.AGE'|translate">{{patient.birth_date | convertInAge }}</td>
-            <td [routerLink]="['/app/patients',patient.id, 'details']"
+            <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                 class="max-width-180"
                 [attr.data-th]="'SHARED.BIRTH-DATE'|translate">{{patient.birth_date | date}}</td>
             <td class="max-width-200" [attr.data-th]="'SHARED.ACTIONS'|translate">

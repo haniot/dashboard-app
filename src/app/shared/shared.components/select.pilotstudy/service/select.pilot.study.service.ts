@@ -8,12 +8,12 @@ declare var $: any;
 @Injectable()
 export class SelectPilotStudyService {
 
-    pilotStudyUpdated = new EventEmitter();
+    pilotStudyUpdated: EventEmitter<any>;
 
     constructor(
         private userService: UserService,
         private localStorageService: LocalStorageService) {
-
+        this.pilotStudyUpdated = new EventEmitter();
     }
 
     open() {

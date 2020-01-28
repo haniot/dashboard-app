@@ -4,7 +4,11 @@
 
 
         <div class="col navbar-wrapper">
-            <a class="navbar-brand">{{title | translate}}</a>
+            <a class="navbar-brand">
+                {{
+                titleComplement ? ((title | translate) + ' - ' + titleComplement) : (title | translate)
+                }}
+            </a>
         </div>
 
 

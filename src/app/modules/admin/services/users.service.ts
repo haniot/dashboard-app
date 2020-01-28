@@ -81,21 +81,18 @@ export class UserService {
         let service;
         switch (this.getTypeUser()) {
             case 'admin':
-                user = new Admin('');
-                user.id = userId;
+                user = new Admin(userId);
                 user.selected_pilot_study = pilotStudyId;
                 service = this.adminService;
                 break;
 
             case 'health_professional':
-                user = new HealthProfessional('');
-                user.id = userId;
+                user = new HealthProfessional(userId);
                 user.selected_pilot_study = pilotStudyId;
                 service = this.healthService;
                 break;
             case 'patient':
-                user = new Patient('');
-                user.id = userId;
+                user = new Patient(userId);
                 user.selected_pilot_study = pilotStudyId;
                 service = this.patientService;
                 break;

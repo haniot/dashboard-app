@@ -1,34 +1,6 @@
 <div class="main-content">
+    <div class="container-fluid">
 
-    <div class="container-fluid" *ngIf="dashboard">
-
-        <div class="d-flex flex-row-reverse shared" style="height: 50px;">
-            <div class="p-2">
-                <i class="material-icons" [title]="'PATIENTS.VIEW-HABITS.TOVIEW-EVALUATIONS'|translate"
-                   [routerLink]="['/app/evaluations/nutritional',patientId]">assignment</i>
-            </div>
-            <div class="p-2">
-                {{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}:
-            </div>
-        </div>
-
-        <activity-dashboard [patientId]="patientId"></activity-dashboard>
-
-    </div>
-
-
-
-    <div class="container-fluid" *ngIf="measurements">
-
-        <div class="row">
-
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <measurement-dashboard [patientId]="this.patientId"></measurement-dashboard>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid" *ngIf="questionnaires">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">
@@ -88,6 +60,15 @@
                                         </div>
 
                                         <div class="card-body">
+                                            <div class="d-flex flex-row-reverse shared" style="height: 50px;">
+                                                <div class="p-2">
+                                                    <i class="material-icons" [title]="'PATIENTS.VIEW-HABITS.TOVIEW-EVALUATIONS'|translate"
+                                                       [routerLink]="['/app/evaluations/nutritional',patientId]">assignment</i>
+                                                </div>
+                                                <div class="p-2">
+                                                    {{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}:
+                                                </div>
+                                            </div>
 
                                             <div class="row justify-content-center">
 
@@ -270,17 +251,6 @@
                             </div>
                         </div>
                     </mat-tab>
-
-
-                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">
-                        <measurement-component [patientId]="patientId" [configVisibility]="configVisibility"
-                                               *ngIf="showMeasurements && patientForm.get('id').value"></measurement-component>
-                    </mat-tab>
-
-                    <!--                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.LOG-MEASUREMENTS'|translate">-->
-                    <!--                        <measurement-logs [(patientId)]="patientId"-->
-                    <!--                                          *ngIf="showLogMeasurements && patientForm.get('id').value"></measurement-logs>-->
-                    <!--                    </mat-tab>-->
 
                 </mat-tab-group>
             </div>

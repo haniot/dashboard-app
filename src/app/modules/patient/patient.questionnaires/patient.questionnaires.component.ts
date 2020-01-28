@@ -1,32 +1,31 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-
-import { ToastrService } from 'ngx-toastr';
-import { ISubscription } from 'rxjs/Subscription';
-import { TranslateService } from '@ngx-translate/core';
-import { PageEvent } from '@angular/material'
-
-import { PatientService } from '../services/patient.service';
-import { Patient } from '../models/patient';
-import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { NutritionalQuestionnaire } from '../../habits/models/nutritional.questionnaire'
-import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
-import { OdontologicalQuestionnaire } from '../../habits/models/odontological.questionnaire'
-import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
-import { OdontologicalQuestionnairesService } from '../../habits/services/odontological.questionnaires.service'
-import { ConfigurationBasic } from '../../config.matpaginator'
+import { FormBuilder, FormGroup } from '@angular/forms'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
+import { ISubscription } from 'rxjs/Subscription'
+import { NutritionalQuestionnaire } from '../../habits/models/nutritional.questionnaire'
+import { OdontologicalQuestionnaire } from '../../habits/models/odontological.questionnaire'
+import { PatientService } from '../services/patient.service'
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
+import { ToastrService } from 'ngx-toastr'
+import { ActivatedRoute, Router } from '@angular/router'
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
+import { TranslateService } from '@ngx-translate/core'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { NutritionalQuestionnairesService } from '../../habits/services/nutritional.questionnaires.service'
+import { OdontologicalQuestionnairesService } from '../../habits/services/odontological.questionnaires.service'
+import { Patient } from '../models/patient'
+import { PageEvent } from '@angular/material/paginator'
+import { ConfigurationBasic } from '../../config.matpaginator'
 
 const PaginatorConfig = ConfigurationBasic;
 
 @Component({
-    selector: 'app-view-habits',
-    templateUrl: './view.habits.component.html',
-    styleUrls: ['./view.habits.component.scss']
+    selector: 'patient-questionnaires',
+    templateUrl: './patient.questionnaires.component.html',
+    styleUrls: ['../view.habits/view.habits.component.scss']
 })
-export class ViewHabitsComponent implements OnInit, OnDestroy {
+export class PatientQuestionnairesComponent implements OnInit, OnDestroy {
+
     patientForm: FormGroup;
     pilotStudy: PilotStudy;
     patientId: string;
@@ -54,12 +53,8 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
     removingQuestionnaire: boolean;
     loadingNutritionalQuestionnaire: boolean;
     loadingOdontologicalQuestionnaire: boolean;
-    associatedStudies: Array<PilotStudy>;
     fadeInNutritioalQuestionnaire: string;
     fadeInOdontologicalQuestionnaire: string;
-    dashboard: boolean;
-    measurements: boolean;
-    questionnaires: boolean;
 
     constructor(
         private fb: FormBuilder,
@@ -96,23 +91,13 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         this.removingQuestionnaire = false;
         this.loadingNutritionalQuestionnaire = true;
         this.loadingOdontologicalQuestionnaire = true;
-        this.pilotStudy = new PilotStudy();
-        this.associatedStudies = new Array<PilotStudy>();
     }
 
 
     ngOnInit() {
         this.subscriptions.push(this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
-            this.patientService.getById(this.patientId)
-                .then(patient => {
-                    this.createPatientForm(patient);
-                    this.getQuestionnaires();
-                    this.getAssociateStudies();
-                })
-                .catch(() => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
-                });
+            this.getPatient();
         }));
         this.createPatientFormInit();
     }
@@ -147,14 +132,20 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
         });
     }
 
-    getAssociateStudies() {
-        const patientId = this.patientForm.get('id').value;
-        this.patientService.getAllByPatientId(patientId)
-            .then(httpResponse => {
-                this.associatedStudies = httpResponse.body;
-            })
-            .catch(() => {
-            });
+    getPatient(): void {
+        const patientLocal = JSON.parse(this.localStorageService.getItem('patientSelected'));
+        if (this.patientId !== patientLocal.id) {
+            this.patientService.getById(this.patientId)
+                .then(patient => {
+                    this.localStorageService.selectedPatient(patient);
+                })
+                .catch(() => {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
+                });
+        } else {
+            this.createPatientForm(patientLocal);
+            this.getQuestionnaires();
+        }
     }
 
     openModalConfirmationRemoveNutritionalQuestionnaire(): void {
@@ -269,18 +260,6 @@ export class ViewHabitsComponent implements OnInit, OnDestroy {
                 this.showLogMeasurements = true;
                 break;
         }
-        // if (this.userHealthArea === 'dentistry' || this.userHealthArea === 'admin') {
-        //
-        // } else {
-        //     switch (event.index) {
-        //         case 1:
-        //             this.showMeasurements = true;
-        //             break;
-        //         case 2:
-        //             this.showLogMeasurements = true;
-        //             break;
-        //     }
-        // }
     }
 
     cleanFadeIn(): void {

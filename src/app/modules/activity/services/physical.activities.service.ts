@@ -28,7 +28,7 @@ export class PhysicalActivitiesService {
             myParams = myParams.append('limit', String(limit));
         }
 
-        myParams = myParams.append('sort', '+created_at');
+        myParams = myParams.append('sort', '-start_time');
 
         const url = `${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities`;
 

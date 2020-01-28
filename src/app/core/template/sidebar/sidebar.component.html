@@ -50,7 +50,7 @@
 
         <li routerLinkActive="active" class="nav-item" *ngIf="verifyScopes('Users')">
             <a class="nav-link" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-               (click)="onclickMenuUser()">
+               (click)="onClickMenuUser()">
                 <p>
                     {{'SIDEBAR.USERS' | translate}}
                     <i class="material-icons">{{iconUserMenu}}</i>
@@ -92,11 +92,37 @@
             </a>
         </li>
 
-        <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" [routerLink]="['/app/patients']" *ngIf="verifyScopes('Patients')">
-                <i class="material-icons">face</i>
-                <p>{{'SHARED.PATIENTS' | translate}}</p>
+        <li class="nav-item">
+            <a class="nav-link" href="#patientSubmenu" data-toggle="collapse" aria-expanded="false"
+               (click)="onClickMenuPatient($event)"
+               *ngIf="verifyScopes('Patients')">
+                <p>
+                    {{'SHARED.PATIENTS' | translate}}
+                    <i class="material-icons">{{iconPatientMenu}}</i>
+                </p>
+
             </a>
+            <ul class="collapse list-unstyled submenu" [ngClass]="patientSelected?'show':''"
+                id="patientSubmenu">
+                <li routerLinkActive="active" class="nav-subitem">
+                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'dashboard']">
+                        <i class="material-icons">dashboard</i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li routerLinkActive="active" class="nav-subitem">
+                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'measurements']">
+                        <i class="material-icons">dashboard</i>
+                        <p>Medições</p>
+                    </a>
+                </li>
+                <li routerLinkActive="active" class="nav-subitem">
+                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'questionnaires']">
+                        <i class="material-icons">dashboard</i>
+                        <p>Questionairios</p>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li routerLinkActive="active" class="nav-item" *ngIf="isNotAdmin()" [ngClass]="activeMyEvaluations">

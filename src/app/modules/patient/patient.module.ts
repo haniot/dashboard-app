@@ -26,7 +26,10 @@ import { SettingsModule } from '../settings/settings.module'
 import { PatientMyEvaluationsComponent } from './myevaluations/myevaluations.component'
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ViewResourcesComponent } from './view.resources/view.resources.component';
-import { ActivityModule } from '../activity/activity.module'
+import { ActivityModule } from '../activity/activity.module';
+import { PatientQuestionnairesComponent } from './patient.questionnaires/patient.questionnaires.component';
+import { PatientDashboardComponent } from './patient.dashboard/patient.dashboard.component';
+import { PatientMeasurementsComponent } from './patient.measurements/patient.measurements.component'
 
 @NgModule({
     declarations: [
@@ -39,7 +42,10 @@ import { ActivityModule } from '../activity/activity.module'
         ListPilotstudiesComponent,
         ViewHabitsComponent,
         PatientManagerComponent,
-        ViewResourcesComponent
+        ViewResourcesComponent,
+        PatientQuestionnairesComponent,
+        PatientDashboardComponent,
+        PatientMeasurementsComponent
     ],
     imports: [
         CommonModule,

@@ -1,7 +1,5 @@
 <div class="container-fluid">
 
-    <h4>Últimas medições coletadas</h4>
-
     <div class="grid grid-1" #gridDiv>
         <div class="item" style="width: 32.5%;height: 406px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
@@ -30,7 +28,7 @@
                                     [size]="150"
                                     [type]="'semi'"
                                     [min]="0"
-                                    [max]="100"
+                                    [max]="50"
                                     [thick]="15"
                                     [value]="bmi"
                                     [duration]="500"
@@ -99,9 +97,9 @@
                 <dashboard-card [title]="'MEASUREMENTS.HEIGHT.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.height]">
                     <div class="echarts-div-graph" echarts [options]="heightGraph"
-                         (chartInit)="onChartInit($event)"
+                         (chartInit)="onHeightChartInit($event)"
                          style="height: 100px;padding: 0px 0px; margin: 0px 0px"
-                         *ngIf="measurementLast && measurementLast.height && measurementLast.height.value">
+                    *ngIf="measurementLast && measurementLast.height && measurementLast.height.value">
 
                     </div>
                     <div class="card-content" *ngIf="measurementLast && measurementLast.height">
@@ -160,7 +158,7 @@
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.body_fat]">
                     <div class="card-content" *ngIf="measurementLast && measurementLast.body_fat">
                         <h2>
-                            {{measurementLast.body_fat.value ? (measurementLast.body_fat.value|number:'1.0-0') : 0}}<small>{{measurementLast.body_fat.unit}}</small>
+                            {{measurementLast.body_fat.value ? (measurementLast.body_fat.value|number:'1.0-0') : ' - - '}}<small>{{measurementLast.body_fat.unit}}</small>
                         </h2>
                     </div>
                     <div class="card-content" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;" *ngIf="loading">
@@ -183,7 +181,7 @@
                 <dashboard-card [title]="'MEASUREMENTS.BODY-TEMPERATURE.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.body_temperature]">
                     <div class="card-content" style="height: inherit" *ngIf="measurementLast && measurementLast.body_temperature">
-                        <span class="badge badge-haniot" *ngIf="measurementLast.body_temperature.value>=37.5"
+                        <span class="badge badge-haniot" *ngIf="measurementLast.body_temperature.value>=30.5"
                               style="position: absolute; top: 50px;right: 10px; z-index: 1099; background-color:red">
                             {{'MEASUREMENTS.BODY-TEMPERATURE.FEVER'|translate}}
                         </span>

@@ -3,9 +3,6 @@ import * as Muuri from 'muuri';
 import { EnumMeasurementType } from '../models/measurement'
 import { MeasurementService } from '../services/measurement.service'
 import { MeasurementLast } from '../models/measurement.last'
-import * as echarts from 'echarts'
-import { Weight } from '../models/weight'
-import { DecimalPipe } from '@angular/common'
 
 @Component({
     selector: 'measurement-dashboard',
@@ -77,7 +74,7 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
                 this.measurementLast = measurements;
                 this.loading = false;
                 this.bmi = (this.measurementLast.weight.value * 10000) / Math.pow(this.measurementLast.height.value, 2);
-                this.updateGraph();
+                this.updateHeightGraph();
             })
             .catch(err => {
                 this.loading = false;
@@ -85,74 +82,71 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
             })
     }
 
-    onChartInit(event) {
+    onHeightChartInit(event) {
         this.heightGraphInstance = event;
     }
 
-    updateGraph(): void {
-        const series = {
-            type: 'bar',
-            symbol: 'none',
-            sampling: 'average',
-            barWidth: '100%',
-            itemStyle: {
-                color: 'rgba(251,165,62,0.7)'
-            },
-            label: {
-                show: true,
-                color: 'black',
-                fontSize: 18,
-                position: 'inside',
-                formatter: `{c}cm`,
-                rich: {
-                    name: {
-                        textBorderColor: '#000000'
-                    }
-                }
-            },
-            data: []
-        };
 
-        this.heightGraph = {
-            tooltip: {
-                show: false
-            },
-            grid: [
-                { x: '0%', y: '0%', width: '100%', height: '87%' }
-            ],
-            xAxis: {
-                show: false,
-                type: 'category',
-                boundaryGap: false,
-                data: []
-            },
-            yAxis: {
-                // type: 'value',
-                // position: '',
-                // min: 0,
-                // max: 300,
-                // boundaryGap: [0, '100%']
-                type: 'value',
-                axisTick: {
-                    inside: true
+    updateHeightGraph(): void {
+        if (this.measurementLast.weight && this.measurementLast.weight.value) {
+            const series = {
+                type: 'bar',
+                symbol: 'none',
+                sampling: 'average',
+                barWidth: '100%',
+                itemStyle: {
+                    color: 'rgba(251,165,62,0.7)'
                 },
-                splitLine: {
+                label: {
+                    show: true,
+                    color: 'black',
+                    fontSize: 18,
+                    position: 'inside',
+                    formatter: `{c}cm`,
+                    rich: {
+                        name: {
+                            textBorderColor: '#000000'
+                        }
+                    }
+                },
+                data: [this.measurementLast.height.value]
+            };
+
+            this.heightGraph = {
+                tooltip: {
                     show: false
                 },
-                axisLabel: {
-                    inside: true,
-                    formatter: '{value}\n'
+                grid: [
+                    { x: '0%', y: '0%', width: '100%', height: '87%' }
+                ],
+                xAxis: {
+                    show: false,
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [this.measurementLast.height.timestamp]
                 },
-                z: 10
-            },
-            series
+                yAxis: {
+                    // type: 'value',
+                    // position: '',
+                    // min: 0,
+                    // max: 300,
+                    // boundaryGap: [0, '100%']
+                    type: 'value',
+                    axisTick: {
+                        inside: true
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        inside: true,
+                        formatter: '{value}\n'
+                    },
+                    z: 10
+                },
+                series
+            };
         }
-
-        // clean weightGraph
-        this.heightGraph.xAxis.data = [this.measurementLast.height.timestamp];
-        this.heightGraph.series.data = [this.measurementLast.height.value];
-
-        this.heightGraphInstance.setOption(this.heightGraph);
     }
 
     ngOnChanges(changes: SimpleChanges): void {

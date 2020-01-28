@@ -18,6 +18,7 @@ import { LoadingService } from '../../../shared/shared.components/loading.compon
 export declare interface RouteInfo {
     path: string;
     title: string;
+    titleComplement?: string;
 }
 
 export const ROUTES: RouteInfo[] = [
@@ -26,7 +27,10 @@ export const ROUTES: RouteInfo[] = [
     { path: '^/app/admin/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS' },
     { path: '^/app/pilotstudies$', title: 'SHARED.PILOTSTUDIES' },
     { path: '^/app/patients$', title: 'SHARED.PATIENTS' },
-    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS' },
+    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS', titleComplement: '' },
+    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/dashboard$', title: 'SHARED.PATIENTS' },
+    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/measurements$', title: 'SHARED.PATIENTS' },
+    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/questionnaires$', title: 'SHARED.PATIENTS' },
     { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-PATIENT' },
     { path: '^/app/healthprofessional/mystudies$', title: 'SHARED.MY-STUDIES' },
     { path: '^(\\/app/pilotstudies\\/)[a-fA-F0-9]{24}\\/details$', title: 'NAVBAR.DETAILS-STUDY' },
@@ -57,6 +61,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private subscriptions: Array<ISubscription>;
     userName: string;
     loadUserTime: any;
+    titleComplement: string;
 
     constructor(
         location: Location,
@@ -78,15 +83,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions.push(this.router.events.subscribe((event) => {
-            this.sidebarClose();
-            const $layer: any = document.getElementsByClassName('close-layer')[0];
-            if ($layer) {
-                $layer.remove();
-                this.mobile_menu_visible = 0;
-            }
-            this.getTitle();
-        }));
+        this.subscriptions.push(
+            this.router.events.subscribe((event) => {
+                this.sidebarClose();
+                const $layer: any = document.getElementsByClassName('close-layer')[0];
+                if ($layer) {
+                    $layer.remove();
+                    this.mobile_menu_visible = 0;
+                }
+                this.getTitle();
+            }),
+            this.localStorageService.patientSelected.subscribe(event => {
+                this.titleComplement = event.name;
+            })
+        );
         this.pilotStudyId = this.localStorageService.getItem('pilotstudy_id');
         this.listTitles = ROUTES;
         const navbar: HTMLElement = this.element.nativeElement;
@@ -171,6 +181,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         const path_current = this.location.path();
         this.listTitles.forEach(element => {
             if (RegExp(element.path).test(path_current)) {
+                if (element.titleComplement === '') {
+                    this.titleComplement = element.titleComplement
+                }
                 this.title = element.title;
                 this.titleService.setTitle(this.translateService.instant(this.title));
             }
