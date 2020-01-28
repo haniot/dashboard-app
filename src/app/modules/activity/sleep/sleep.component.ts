@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 import { SleepPipe } from '../pipes/sleep.pipe';
-import { Sleep, SleepType } from '../models/sleep';
+import { Sleep, SleepPatternPhaseSummary, SleepType } from '../models/sleep';
 import { ActivatedRoute, Router } from '@angular/router'
 import { SleepService } from '../services/sleep.service'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
@@ -36,6 +36,7 @@ export class SleepComponent implements OnInit {
     IDEAL_SLEEP_VALUE = 8;
     loadingSleep: boolean;
     removingSleep: boolean;
+    sleepEfficiency: number
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -84,6 +85,7 @@ export class SleepComponent implements OnInit {
                         this.loadSleepGraphStages()
                         break
                 }
+                this.calcEfficiency();
                 this.loadingSleep = false;
             })
             .catch(err => {
@@ -91,6 +93,17 @@ export class SleepComponent implements OnInit {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.SLEEP-NOT-LOADED'));
                 this.loadingSleep = false;
             })
+    }
+
+    calcEfficiency(): void {
+        const { duration } = this.sleepSelected;
+        if (this.sleepSelected.type === SleepType.classic) {
+            const summary: any = this.sleepSelected.pattern.summary;
+            this.sleepEfficiency = (summary.asleep.duration / duration) * 100;
+        } else {
+            const summary: any = this.sleepSelected.pattern.summary;
+            this.sleepEfficiency = ((summary.deep.duration + summary.light.duration + summary.rem.duration) / duration) * 100;
+        }
     }
 
     loadSleepGraphClassic(): void {

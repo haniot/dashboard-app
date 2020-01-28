@@ -21,7 +21,9 @@
                         </div>
                         <div class="nav-tabs-navigation" style="float:right">
                             <span class="nav-tabs-title">
-                                        <h4 class="card-title text-center">{{sleepSelected ? (sleepSelected.duration|millisecond) : '- -'}}</h4>
+                                        <h4 class="card-title text-center" title="Duração e eficiência do sono...">
+                                            {{sleepSelected ? (sleepSelected.duration|millisecond) : '- -'}} - {{(sleepEfficiency| number:'1.0-0') + '%'}}
+                                        </h4>
                                 <span *ngIf="sleepSelected && (sleepSelected.duration / 3600000)>=IDEAL_SLEEP_VALUE"
                                       class="text-center">
                                         <p class="card-category">

@@ -11,19 +11,22 @@
             </div>
         </div>
 
-<!--        <activity-dashboard [patientId]="patientId"></activity-dashboard>-->
-        <measurement-dashboard [patientId]="this.patientId"></measurement-dashboard>
+        <activity-dashboard [patientId]="patientId"></activity-dashboard>
 
     </div>
-<!--    -->
-<!--        <br>-->
+
+        <br>
 
 
-<!--        <div class="container-fluid">-->
+        <div class="container-fluid">
 
-<!--            <div class="row">-->
+            <div class="row">
 
-<!--                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <measurement-dashboard [patientId]="this.patientId"></measurement-dashboard>
+                </div>
+            </div>
+        </div>
 <!--                    <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">-->
 
 <!--                        <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-NUTRITIONAL-QUESTIONNAIRE'|translate">-->
