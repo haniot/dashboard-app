@@ -181,7 +181,7 @@
                 <dashboard-card [title]="'MEASUREMENTS.BODY-TEMPERATURE.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.body_temperature]">
                     <div class="card-content" style="height: inherit" *ngIf="measurementLast && measurementLast.body_temperature">
-                        <span class="badge badge-haniot" *ngIf="measurementLast.body_temperature.value>=30.5"
+                        <span class="badge badge-haniot" *ngIf="measurementLast.body_temperature.value>=37.5"
                               style="position: absolute; top: 50px;right: 10px; z-index: 1099; background-color:red">
                             {{'MEASUREMENTS.BODY-TEMPERATURE.FEVER'|translate}}
                         </span>

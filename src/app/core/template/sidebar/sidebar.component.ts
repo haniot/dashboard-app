@@ -61,7 +61,6 @@ export class SidebarComponent implements OnInit {
     configSideBar: { title: string, scopes: any[] }[];
     userName: String = '';
     iconUserMenu = 'keyboard_arrow_right';
-    iconPatientMenu = 'face';
     activeMyPilots: string;
     activeMyEvaluations: string;
     activeDashboard: string;
@@ -71,7 +70,8 @@ export class SidebarComponent implements OnInit {
     iconCollapse = 'keyboard_arrow_down';
     userLogged: GenericUser;
     loadUserTime: any
-    patientMenu: string;
+    iconPatientMenu = 'keyboard_arrow_right';
+    statePatientMenu: string;
 
     constructor(
         private authService: AuthService,
@@ -105,6 +105,7 @@ export class SidebarComponent implements OnInit {
     getPatientSelected(): void {
         const patientSelectedLocal = JSON.parse(this.localStorageService.getItem('patientSelected'));
         this.patientSelected = patientSelectedLocal && patientSelectedLocal.id ? patientSelectedLocal.id : '';
+        this.statePatientMenu = 'show';
     }
 
     isMobileMenu() {
@@ -235,6 +236,11 @@ export class SidebarComponent implements OnInit {
 
     onClickMenuUser(): void {
         this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
+    }
+
+    changeIconMenuPatient(): void {
+        this.iconPatientMenu = this.iconPatientMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
+        this.statePatientMenu = this.iconPatientMenu === 'keyboard_arrow_right' ? 'show' : '';
     }
 
     onClickMenuPatient(event): void {

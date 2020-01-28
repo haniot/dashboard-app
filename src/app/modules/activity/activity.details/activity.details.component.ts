@@ -318,7 +318,6 @@ export class ActivityDetailsComponent implements OnInit {
         filter.end_date = currentDate.toISOString().split('T')[0];
         this.timeSeriesService.getAll(this.patientId, filter)
             .then((timeSeries: any) => {
-                console.log(timeSeries)
                 this.stepsValue = timeSeries.steps.summary.total;
                 this.caloriesValue = timeSeries.calories.summary.total;
                 this.activeMinutesValue = timeSeries.active_minutes.summary.total;

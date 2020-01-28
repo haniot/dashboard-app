@@ -128,7 +128,7 @@
                 </div>
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
                    *ngFor="let patient of listPatients;trackBy: trackById"
-                   [routerLink]="['/app/patients',patient.id, 'details']"
+                   [routerLink]="['/app/patients',patient.id, 'dashboard']"
                    [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate"
                    (click)="openLoading()">
                     <div class="card card-stats">
@@ -154,7 +154,7 @@
     </div>
 
     <div class="container-fluid" *ngIf="getUserType()==='patient'">
-        <activity-dashboard [patientId]="patie"></activity-dashboard>
+        <activity-dashboard [patientId]="userId"></activity-dashboard>
 
         <haniot-card [title]="'DASHBOARD.CARD-EVALUATIONS.TITLE'|translate"
                      [subtitle]="'DASHBOARD.CARD-EVALUATIONS.SUBTITLE'|translate">
