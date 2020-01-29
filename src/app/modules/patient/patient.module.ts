@@ -15,7 +15,6 @@ import { PatientTableComponent } from './patient.table/patient.table.component';
 import { PatientComponent } from './patient.component/patient.component';
 import { PatientRoutingModule } from './patient.routing/patient.routing.module';
 import { ListPilotstudiesComponent } from './list.pilotstudies/list.pilotstudies.component';
-import { ViewHabitsComponent } from './view.habits/view.habits.component';
 import { HabitsModule } from '../habits/habits.module';
 import { MeasurementModule } from '../measurement/measurement.module';
 import { PatientManagerComponent } from './patient.manager/patient.manager.component';
@@ -40,7 +39,6 @@ import { PatientMeasurementsComponent } from './patient.measurements/patient.mea
         PatientTableComponent,
         PatientComponent,
         ListPilotstudiesComponent,
-        ViewHabitsComponent,
         PatientManagerComponent,
         ViewResourcesComponent,
         PatientQuestionnairesComponent,

@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core'
 @Component({
     selector: 'patient-measurements',
     templateUrl: './patient.measurements.component.html',
-    styleUrls: ['../view.habits/view.habits.component.scss']
+    styleUrls: ['../shared.style/shared.style.scss']
 })
 export class PatientMeasurementsComponent implements OnInit {
     patientId: string;
@@ -32,7 +32,7 @@ export class PatientMeasurementsComponent implements OnInit {
 
     getPatient(): void {
         const patientLocal = JSON.parse(this.localStorageService.getItem('patientSelected'));
-        if (this.patientId !== patientLocal.id) {
+        if (!patientLocal || this.patientId !== patientLocal.id) {
             this.patientService.getById(this.patientId)
                 .then(patient => {
                     this.localStorageService.selectedPatient(patient);

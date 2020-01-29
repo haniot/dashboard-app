@@ -163,6 +163,9 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
                 },
                 trigger: 'item'
             },
+            grid: [
+                { x: '5%', y: '10%', width: '100%'}
+            ],
             xAxis: xAxis,
             yAxis: {
                 type: 'value',

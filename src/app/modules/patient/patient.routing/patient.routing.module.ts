@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PatientFormComponent } from '../patient.form/patient.form.component';
-import { ViewHabitsComponent } from '../view.habits/view.habits.component';
 import { PatientManagerComponent } from '../patient.manager/patient.manager.component';
 import { PatientComponent } from '../patient.component/patient.component'
 import { PatientConfigComponent } from '../configurations/configurations.component'
@@ -69,11 +68,6 @@ const routes = [
         path: ':patientId/questionnaires',
         component: PatientQuestionnairesComponent,
         data: { scope: 'patients:read forms:read' }
-    },
-    {
-        path: ':patientId/details',
-        component: ViewHabitsComponent,
-        data: { scope: 'patients:read forms:read measurements:read' }
     },
     {
         path: ':patientId/:resource',

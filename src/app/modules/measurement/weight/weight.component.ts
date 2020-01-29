@@ -200,6 +200,9 @@ export class WeightComponent implements OnInit, OnChanges {
                         `: ${params.data.value}% <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
+            grid: [
+                { x: '3%', y: '7%', width: '100%'}
+            ],
             xAxis: xAxisWeight,
             yAxis: {
                 type: 'value',

@@ -141,6 +141,9 @@ export class HeightComponent implements OnInit, OnChanges {
                     return `${height}: ${params.data.value}cm <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
+            grid: [
+                { x: '5%', y: '7%', width: '100%'}
+            ],
             xAxis: xAxis,
             yAxis: {
                 type: 'value',

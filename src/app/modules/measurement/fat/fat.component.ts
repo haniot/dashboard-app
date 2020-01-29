@@ -150,6 +150,9 @@ export class FatComponent implements OnInit, OnChanges {
                     return `${fat}: ${params.data.value}%<br> ${date}: <br> ${params.name} ${at} ${params.data.time}`
                 }
             },
+            grid: [
+                { x: '5%', y: '7%', width: '100%'}
+            ],
             xAxis: xAxis,
             yAxis: [
                 {

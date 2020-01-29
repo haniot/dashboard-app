@@ -171,6 +171,9 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
                     type: 'shadow'
                 }
             },
+            grid: [
+                { x: '5%', y: '7%', width: '100%'}
+            ],
             xAxis: xAxis,
             yAxis: [
                 {

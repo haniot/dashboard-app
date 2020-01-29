@@ -22,7 +22,7 @@ const PaginatorConfig = ConfigurationBasic;
 @Component({
     selector: 'patient-questionnaires',
     templateUrl: './patient.questionnaires.component.html',
-    styleUrls: ['../view.habits/view.habits.component.scss']
+    styleUrls: ['../shared.style/shared.style.scss']
 })
 export class PatientQuestionnairesComponent implements OnInit, OnDestroy {
 

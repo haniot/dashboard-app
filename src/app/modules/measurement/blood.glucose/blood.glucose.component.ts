@@ -331,6 +331,9 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             legend: {
                 data: [preprandial, postprandial, fasting, casual, bedtime]
             },
+            grid: [
+                { x: '5%', y: '7%', width: '100%' }
+            ],
             xAxis: xAxis,
             yAxis: [
                 {

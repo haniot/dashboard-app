@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core'
 @Component({
     selector: 'patient-dashboard',
     templateUrl: './patient.dashboard.component.html',
-    styleUrls: ['../view.habits/view.habits.component.scss']
+    styleUrls: ['../shared.style/shared.style.scss']
 })
 export class PatientDashboardComponent implements OnInit {
     patientId: string;
