@@ -19,7 +19,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class BodyTemperatureComponent implements OnInit, OnChanges {
-    @Input() data: Array<Measurement>;
+    @Input() dataForGraph: Array<Measurement>;
+    @Input() dataForLogs: Array<Measurement>;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
     @Input() includeCard: boolean;
@@ -29,8 +30,8 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
     lastData: Measurement;
     options: any;
     echartsInstance: any;
-
-    listIsEmpty: boolean;
+    logsIsEmpty: boolean;
+    logsLoading: boolean;
     filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -52,7 +53,8 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         private translateService: TranslateService,
         private toastService: ToastrService
     ) {
-        this.data = new Array<Measurement>();
+        this.dataForGraph = new Array<Measurement>();
+        this.dataForLogs = new Array<Measurement>();
         this.lastData = new Measurement();
         this.filterVisibility = false;
         this.patientId = '';
@@ -69,12 +71,11 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.loadingMeasurements = false;
         this.modalConfirmRemoveMeasurement = false;
         this.selectAll = false;
-        this.listIsEmpty = false;
     }
 
     ngOnInit(): void {
         this.loadGraph();
-        this.getLastData();
+        this.loadMeasurements();
     }
 
     onChartInit(event) {
@@ -109,10 +110,10 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
                     color: '#FFFFFF',
                     fontSize: 10,
                     formatter: function (params) {
-                        if (params.data.type === 'max') {
+                        if (params.dataForGraph.type === 'max') {
                             return max;
                         }
-                        if (params.data.type === 'min') {
+                        if (params.dataForGraph.type === 'min') {
                             return min;
                         }
                     }
@@ -132,7 +133,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
             // }
         };
 
-        this.data.forEach((element: Measurement) => {
+        this.dataForGraph.forEach((element: Measurement) => {
             xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             series.data.push({
                 value: this.decimalPipe.transform(element.value),
@@ -144,17 +145,17 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.options = {
             tooltip: {
                 formatter: function (params) {
-                    if (!params.data || !params.data.time) {
+                    if (!params.dataForGraph || !params.dataForGraph.time) {
                         const t = series.data.find(currentHeight => {
                             return currentHeight.value.match(params.value);
                         });
                         if (t) {
-                            params.data.value = t.value;
-                            params.data.time = t.time;
+                            params.dataForGraph.value = t.value;
+                            params.dataForGraph.time = t.time;
                         }
 
                     }
-                    return `${temperature}: ${params.data.value}°C<br>${date}:<br>${params.name} ${at} ${params.data.time}`
+                    return `${temperature}: ${params.dataForGraph.value}°C<br>${date}:<br>${params.name} ${at} ${params.dataForGraph.time}`
                 },
                 trigger: 'item'
             },
@@ -206,10 +207,10 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, null, null, filter)
             .then(httpResponse => {
-                this.data = httpResponse.body;
-                this.updateGraph(this.data);
+                this.dataForGraph = httpResponse.body;
+                this.updateGraph(this.dataForGraph);
                 this.showSpinner = false;
-                this.filterChange.emit(this.data);
+                this.filterChange.emit(this.dataForGraph);
             })
             .catch(() => {
                 this.showSpinner = false;
@@ -231,14 +232,6 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.echartsInstance.setOption(this.options);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if ((changes.data.currentValue && changes.data.previousValue
-            && changes.data.currentValue.length !== changes.data.previousValue.length) ||
-            (changes.data.currentValue.length && !changes.data.previousValue)) {
-            this.loadGraph();
-        }
-    }
-
     clickPagination(event) {
         this.pageEvent = event;
         this.page = event.pageIndex + 1;
@@ -248,7 +241,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
     changeOnMeasurement(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
-        this.selectAll = this.data.length === measurementsSelected.length;
+        this.selectAll = this.dataForGraph.length === measurementsSelected.length;
         this.updateStateButtonRemoveSelected();
     }
 
@@ -258,15 +251,22 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
     }
 
     loadMeasurements(): any {
+        this.logsLoading = true;
+        this.dataForLogs = [];
         this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, this.page, this.limit, this.filter)
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, this.page, this.limit)
             .then((httpResponse) => {
-                this.data = httpResponse.body;
-                this.listIsEmpty = this.data.length === 0;
+                this.dataForLogs = httpResponse.body;
+                this.logsIsEmpty = this.dataForLogs.length === 0;
+                this.lastData = httpResponse.body[0];
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
+                this.logsLoading = false;
             })
             .catch(() => {
-                this.listIsEmpty = true;
+                this.logsLoading = false;
+                this.logsIsEmpty = true;
+                this.lastData = new Measurement();
             });
     }
 
@@ -277,7 +277,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
-        this.listCheckMeasurements = new Array<boolean>(this.data.length);
+        this.listCheckMeasurements = new Array<boolean>(this.dataForGraph.length);
         for (let i = 0; i < this.listCheckMeasurements.length; i++) {
             this.listCheckMeasurements[i] = false;
         }
@@ -323,7 +323,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         const measurementsIdSelected: Array<string> = new Array<string>();
         this.listCheckMeasurements.forEach((element, index) => {
             if (element) {
-                measurementsIdSelected.push(this.data[index].id);
+                measurementsIdSelected.push(this.dataForGraph[index].id);
             }
         })
         this.cacheListIdMeasurementRemove = measurementsIdSelected;
@@ -338,15 +338,12 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.updateStateButtonRemoveSelected();
     }
 
-    getLastData(): void {
-        this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, 1, 1)
-            .then((httpResponse) => {
-                this.lastData = httpResponse.body[0];
-            })
-            .catch(() => {
-                this.lastData = new Measurement();
-            });
+    ngOnChanges(changes: SimpleChanges) {
+        if ((changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
+            && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
+            (changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
+            this.loadGraph();
+        }
     }
 
     updateStateButtonRemoveSelected(): void {

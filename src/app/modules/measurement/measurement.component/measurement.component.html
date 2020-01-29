@@ -121,46 +121,46 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('weight'))"
              *ngIf="configVisibility.weight">
-            <weight [data]="listWeight" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></weight>
+            <weight [dataForGraph]="listWeight" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></weight>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('fat'))"
              *ngIf="configVisibility.fat">
-            <fat [data]="listFat" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></fat>
+            <fat [dataForGraph]="listFat" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></fat>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('height'))"
              *ngIf="configVisibility.height">
-            <height [data]="listHeight" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></height>
+            <height [dataForGraph]="listHeight" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></height>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('circumference'))"
              *ngIf="configVisibility.circumference">
-            <waist-circunference [data]="listWaistCircumference" [filterVisibility]="true"
+            <waist-circunference [dataForGraph]="listWaistCircumference" [filterVisibility]="true"
                                  [patientId]="patientId" [includeCard]="true"></waist-circunference>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('temperature'))"
              *ngIf="configVisibility.temperature">
-            <body-temperature [data]="listBodyTemperature" [filterVisibility]="true"
+            <body-temperature [dataForGraph]="listBodyTemperature" [filterVisibility]="true"
                               [patientId]="patientId" [includeCard]="true"></body-temperature>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('glucose'))"
              *ngIf="configVisibility.glucose">
-            <blood-glucose [data]="listBloodGlucose" [filterVisibility]="true" [patientId]="patientId"
+            <blood-glucose [dataForGraph]="listBloodGlucose" [filterVisibility]="true" [patientId]="patientId"
                            [includeCard]="true"></blood-glucose>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
              [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('pressure'))"
              *ngIf="configVisibility.pressure">
-            <blood-pressure [data]="listBloodPressure" [filterVisibility]="true"
+            <blood-pressure [dataForGraph]="listBloodPressure" [filterVisibility]="true"
                             [patientId]="patientId" [includeCard]="true"></blood-pressure>
         </div>
 

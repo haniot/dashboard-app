@@ -19,7 +19,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class WeightComponent implements OnInit, OnChanges {
-    @Input() data: Array<Weight>;
+    @Input() dataForGraph: Array<Weight>;
+    @Input() dataForLogs: Array<Weight>;
     @Input() filterVisibility: boolean;
     @Input() includeCard: boolean;
     @Input() includeLogs: boolean;
@@ -27,10 +28,10 @@ export class WeightComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     lastData: Weight;
-    lastIndex: number;
     weightGraph: any;
     echartsInstance: any;
-    listIsEmpty: boolean;
+    logsIsEmpty: boolean;
+    logsLoading: boolean;
     filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -52,7 +53,8 @@ export class WeightComponent implements OnInit, OnChanges {
         private translateService: TranslateService,
         private toastService: ToastrService
     ) {
-        this.data = new Array<Weight>();
+        this.dataForGraph = new Array<Weight>();
+        this.dataForLogs = new Array<Weight>();
         this.filterVisibility = false;
         this.patientId = '';
         this.showSpinner = false;
@@ -63,29 +65,28 @@ export class WeightComponent implements OnInit, OnChanges {
         this.stateButtonRemoveSelected = false;
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
-        this.limit = PaginatorConfig.limit;
+        this.limit = 1;
         this.filter = new SearchForPeriod();
         this.loadingMeasurements = false;
         this.modalConfirmRemoveMeasurement = false;
         this.selectAll = false;
-        this.listIsEmpty = false;
     }
 
     ngOnInit(): void {
         this.loadGraph();
-        this.getLastData();
+        this.loadMeasurements();
     }
 
     applyFilter(filter: SearchForPeriod) {
         this.showSpinner = true;
-        this.data = [];
+        this.dataForGraph = [];
         this.measurementService
             .getAllByUserAndType(this.patientId, EnumMeasurementType.weight, null, null, filter)
             .then(httpResponse => {
-                this.data = httpResponse.body;
+                this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
-                this.updateGraph(this.data);
-                this.filterChange.emit(this.data);
+                this.updateGraph(this.dataForGraph);
+                this.filterChange.emit(this.dataForGraph);
             })
             .catch(() => {
                 this.showSpinner = false;
@@ -101,7 +102,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
     changeOnMeasurement(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
-        this.selectAll = this.data.length === measurementsSelected.length;
+        this.selectAll = this.dataForGraph.length === measurementsSelected.length;
         this.updateStateButtonRemoveSelected();
     }
 
@@ -167,7 +168,7 @@ export class WeightComponent implements OnInit, OnChanges {
             }
         };
 
-        this.data.forEach((element: Weight) => {
+        this.dataForGraph.forEach((element: Weight) => {
             xAxisWeight.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             seriesWeight.data.push({
                 value: this.decimalPipe.transform(element.value),
@@ -187,10 +188,10 @@ export class WeightComponent implements OnInit, OnChanges {
                 formatter: function (params) {
                     if (params.seriesName === weigth) {
                         return weigth +
-                            `: ${params.data.value}Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                            `: ${params.dataForGraph.value}Kg <br> ${date}: <br> ${params.name} ${at} ${params.dataForGraph.time}`;
                     }
                     return body_fat +
-                        `: ${params.data.value}% <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                        `: ${params.dataForGraph.value}% <br> ${date}: <br> ${params.name} ${at} ${params.dataForGraph.time}`;
                 }
             },
             grid: [
@@ -221,14 +222,21 @@ export class WeightComponent implements OnInit, OnChanges {
     }
 
     loadMeasurements(): any {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, this.page, this.limit, this.filter)
+        this.logsLoading = true;
+        this.dataForLogs = [];
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, this.page, this.limit)
             .then((httpResponse) => {
-                this.data = httpResponse.body;
-                this.listIsEmpty = this.data.length === 0;
+                this.dataForLogs = httpResponse.body;
+                this.logsIsEmpty = this.dataForLogs.length === 0;
+                this.lastData = this.dataForLogs[0];
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
+                this.logsLoading = false;
             })
             .catch(() => {
-                this.listIsEmpty = true;
+                this.logsLoading = false;
+                this.logsIsEmpty = true;
+                this.lastData = new Weight();
             });
     }
 
@@ -243,7 +251,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
-        this.listCheckMeasurements = new Array<boolean>(this.data.length);
+        this.listCheckMeasurements = new Array<boolean>(this.dataForLogs.length);
         for (let i = 0; i < this.listCheckMeasurements.length; i++) {
             this.listCheckMeasurements[i] = false;
         }
@@ -289,7 +297,7 @@ export class WeightComponent implements OnInit, OnChanges {
         const measurementsIdSelected: Array<string> = new Array<string>();
         this.listCheckMeasurements.forEach((element, index) => {
             if (element) {
-                measurementsIdSelected.push(this.data[index].id);
+                measurementsIdSelected.push(this.dataForGraph[index].id);
             }
         })
         this.cacheListIdMeasurementRemove = measurementsIdSelected;
@@ -333,24 +341,14 @@ export class WeightComponent implements OnInit, OnChanges {
         this.stateButtonRemoveSelected = !!measurementsSelected.length;
     }
 
-    getLastData(): void {
-        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, 1, 1)
-            .then((httpResponse) => {
-                this.lastData = httpResponse.body[0];
-            })
-            .catch(() => {
-                this.lastData = new Weight();
-            });
-    }
-
     trackById(index, item) {
         return item.id;
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if ((changes.data.currentValue && changes.data.previousValue
-            && changes.data.currentValue.length !== changes.data.previousValue.length) ||
-            (changes.data.currentValue.length && !changes.data.previousValue)) {
+        if ((changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
+            && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
+            (changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
         }
     }

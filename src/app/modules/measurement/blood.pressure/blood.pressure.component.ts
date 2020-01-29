@@ -18,7 +18,8 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['../shared.style/shared.styles.scss', './blood.pressure.component.scss']
 })
 export class BloodPressureComponent implements OnInit, OnChanges {
-    @Input() data: Array<BloodPressure>;
+    @Input() dataForGraph: Array<BloodPressure>;
+    @Input() dataForLogs: Array<BloodPressure>;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
     @Input() includeCard: boolean;
@@ -28,8 +29,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     lastData: BloodPressure;
     options: any;
     echartsInstance: any;
-
-    listIsEmpty: boolean;
+    logsIsEmpty: boolean;
+    logsLoading: boolean;
     filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -50,7 +51,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         private translateService: TranslateService,
         private toastService: ToastrService
     ) {
-        this.data = new Array<BloodPressure>();
+        this.dataForGraph = new Array<BloodPressure>();
+        this.dataForLogs = new Array<BloodPressure>();
         this.filterVisibility = false;
         this.patientId = '';
         this.showSpinner = false;
@@ -66,12 +68,11 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.loadingMeasurements = false;
         this.modalConfirmRemoveMeasurement = false;
         this.selectAll = false;
-        this.listIsEmpty = false;
     }
 
     ngOnInit(): void {
         this.loadGraph();
-        this.getLastData();
+        this.loadMeasurements();
     }
 
     onChartInit(event) {
@@ -313,7 +314,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
             }
         ]
 
-        this.data.forEach((element: BloodPressure) => {
+        this.dataForGraph.forEach((element: BloodPressure) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
 
             xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
@@ -369,8 +370,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                     return `${params[0].seriesName}: ${params[0].value}${params[0].seriesName !== pulse ? 'mmHg' : 'bpm'}<br>` +
                         `${params[1].seriesName}: ${params[1].value}${params[1].seriesName !== pulse ? 'mmHg' : 'bpm'}<br>` +
                         `${params[2].seriesName}: ${params[1].value}${params[2].seriesName !== pulse ? 'mmHg' : 'bpm'}<br>` +
-                        `${classification}: ${params[0].data.classification}<br>` +
-                        `${date}:<br>${params[0].axisValue} ${at} ${params[0].data.time}`;
+                        `${classification}: ${params[0].dataForGraph.classification}<br>` +
+                        `${date}:<br>${params[0].axisValue} ${at} ${params[0].dataForGraph.time}`;
                 }
             },
             legend: {
@@ -401,10 +402,10 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, null, null, filter)
             .then(httpResponse => {
-                this.data = httpResponse.body;
+                this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
-                this.updateGraph(this.data);
-                this.filterChange.emit(this.data);
+                this.updateGraph(this.dataForGraph);
+                this.filterChange.emit(this.dataForGraph);
             })
             .catch(() => {
                 this.showSpinner = false;
@@ -414,7 +415,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     updateGraph(measurements: Array<any>): void {
         // clean
         this.options.xAxis.data = [];
-        this.options.series.data = [];
+        this.options.series.dataForGraph = [];
 
         measurements.forEach((element: BloodPressure) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
@@ -505,14 +506,6 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if ((changes.data.currentValue && changes.data.previousValue
-            && changes.data.currentValue.length !== changes.data.previousValue.length) ||
-            (changes.data.currentValue.length && !changes.data.previousValue)) {
-            this.loadGraph();
-        }
-    }
-
     clickPagination(event) {
         this.pageEvent = event;
         this.page = event.pageIndex + 1;
@@ -522,7 +515,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     changeOnMeasurement(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
-        this.selectAll = this.data.length === measurementsSelected.length;
+        this.selectAll = this.dataForGraph.length === measurementsSelected.length;
         this.updateStateButtonRemoveSelected();
     }
 
@@ -532,15 +525,22 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     }
 
     loadMeasurements(): any {
+        this.logsLoading = true;
+        this.dataForLogs = [];
         this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, this.page, this.limit, this.filter)
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, this.page, this.limit)
             .then((httpResponse) => {
-                this.data = httpResponse.body;
-                this.listIsEmpty = this.data.length === 0;
+                this.dataForLogs = httpResponse.body;
+                this.logsIsEmpty = this.dataForLogs.length === 0;
+                this.lastData = httpResponse.body[0];
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
+                this.logsLoading = false;
             })
             .catch(() => {
-                this.listIsEmpty = true;
+                this.logsLoading = false;
+                this.logsIsEmpty = true;
+                this.lastData = new BloodPressure();
             });
     }
 
@@ -551,7 +551,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
-        this.listCheckMeasurements = new Array<boolean>(this.data.length);
+        this.listCheckMeasurements = new Array<boolean>(this.dataForGraph.length);
         for (let i = 0; i < this.listCheckMeasurements.length; i++) {
             this.listCheckMeasurements[i] = false;
         }
@@ -597,7 +597,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         const measurementsIdSelected: Array<string> = new Array<string>();
         this.listCheckMeasurements.forEach((element, index) => {
             if (element) {
-                measurementsIdSelected.push(this.data[index].id);
+                measurementsIdSelected.push(this.dataForGraph[index].id);
             }
         })
         this.cacheListIdMeasurementRemove = measurementsIdSelected;
@@ -612,17 +612,6 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.updateStateButtonRemoveSelected();
     }
 
-    getLastData(): void {
-        this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, 1, 1)
-            .then((httpResponse) => {
-                this.lastData = httpResponse.body[0];
-            })
-            .catch(() => {
-                this.lastData = new BloodPressure();
-            });
-    }
-
     updateStateButtonRemoveSelected(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
         this.stateButtonRemoveSelected = !!measurementsSelected.length;
@@ -630,6 +619,14 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     trackById(index, item) {
         return item.id;
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if ((changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
+            && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
+            (changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
+            this.loadGraph();
+        }
     }
 
 }

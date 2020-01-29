@@ -5,42 +5,42 @@
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.weight">
-                    <weight [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <weight [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                             [includeCard]="true" [includeLogs]="true"
                             [showSpinner]="!list.length && !listIsEmpty"></weight>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_fat">
-                    <fat [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <fat [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                          [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"></fat>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.height">
-                    <height [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <height [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                             [includeCard]="true" [includeLogs]="true"
                             [showSpinner]="!list.length && !listIsEmpty"></height>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.waist_circumference">
-                    <waist-circunference [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <waist-circunference [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                                          [includeCard]="true" [includeLogs]="true"
                                          [showSpinner]="!list.length && !listIsEmpty"></waist-circunference>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_temperature">
-                    <body-temperature [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <body-temperature [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                                       [includeCard]="true" [includeLogs]="true"
                                       [showSpinner]="!list.length && !listIsEmpty"></body-temperature>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.blood_glucose">
-                    <blood-glucose [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <blood-glucose [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                                    [includeCard]="true" [includeLogs]="true"
                                    [showSpinner]="!list.length && !listIsEmpty"></blood-glucose>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.blood_pressure">
-                    <blood-pressure [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <blood-pressure [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                                     [includeCard]="true" [includeLogs]="true"
                                     [showSpinner]="!list.length && !listIsEmpty"></blood-pressure>
                 </div>

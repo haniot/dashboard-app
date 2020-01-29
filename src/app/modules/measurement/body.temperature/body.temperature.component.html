@@ -38,7 +38,7 @@
 
             <div class="unavailable-data">
                 <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-                <span *ngIf="data.length==0 && !showSpinner"
+                <span *ngIf="dataForGraph.length==0 && !showSpinner"
                       class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.BODY-TEMPERATURE.UNAVAILABLE-DATA'|translate}}</span>
             </div>
         </div>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllMeasurements()"
-                                  [disabled]="!data.length">
+                                  [disabled]="!dataForGraph.length">
                         {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
                     </mat-checkbox>
                 </div>
@@ -118,19 +118,19 @@
                     <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
                     </thead>
                     <tbody>
-                    <tr *ngIf="data.length==0">
-                        <td colspan="4" *ngIf="showSpinner">
+                    <tr *ngIf="dataForLogs.length==0">
+                        <td colspan="4" *ngIf="logsLoading && !logsIsEmpty">
                             <spinner
                                     [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
                         </td>
-                        <td colspan="4" *ngIf="!showSpinner">
+                        <td colspan="4" *ngIf="!logsLoading && logsIsEmpty">
                             <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
                                 <br>
                                 <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
                             </h4>
                         </td>
                     </tr>
-                    <tr *ngFor="let measurement of data; let i= index; trackBy: trackById">
+                    <tr *ngFor="let measurement of dataForLogs; let i= index; trackBy: trackById">
                         <td>
                             <mat-checkbox (change)="changeOnMeasurement()"
                                           [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
@@ -206,7 +206,7 @@
 
         <div class="unavailable-data">
             <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-            <span *ngIf="data.length==0 && !showSpinner"
+            <span *ngIf="dataForGraph.length==0 && !showSpinner"
                   class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.BODY-TEMPERATURE.UNAVAILABLE-DATA'|translate}}</span>
         </div>
     </div>
