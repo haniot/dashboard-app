@@ -63,8 +63,11 @@ export class SidebarComponent implements OnInit {
     iconUserMenu = 'keyboard_arrow_right';
     activeMyPilots: string;
     activeMyEvaluations: string;
-    activeDashboard: string;
+    activeHome: string;
     activePatients: string;
+    activeDashboardPatients: string;
+    activeMeasurementsPatients: string;
+    activeQuestionnairesPatients: string;
     activeEvaluations: string;
     study: PilotStudy;
     iconCollapse = 'keyboard_arrow_down';
@@ -105,7 +108,7 @@ export class SidebarComponent implements OnInit {
     getPatientSelected(): void {
         const patientSelectedLocal = JSON.parse(this.localStorageService.getItem('patientSelected'));
         this.patientSelected = patientSelectedLocal && patientSelectedLocal.id ? patientSelectedLocal.id : '';
-        this.statePatientMenu = 'show';
+        this.statePatientMenu = this.patientSelected ? 'show' : '';
     }
 
     isMobileMenu() {
@@ -155,44 +158,15 @@ export class SidebarComponent implements OnInit {
 
     updateMenu() {
         const path_current = this.location.path();
+        this.activeHome = path_current.match('/app/dashboard\$') ? 'active' : '';
+        this.activeMyPilots = (path_current.match('mystudies\$') || path_current.match('pilotstudies')) ? 'active' : '';
+        this.activeMyEvaluations = (path_current.match('myevaluations\$')) ? 'active' : '';
+        this.activePatients = (path_current.match('patients\$')) ? 'active' : '';
+        this.activeEvaluations = (path_current.match('evaluations/nutritional\$')) ? 'active' : '';
 
-        if (path_current.match('dashboard')) {
-            this.activeDashboard = 'active'
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = '';
-            this.activePatients = '';
-            this.activeEvaluations = '';
-        } else if (path_current.match('mystudies') || path_current.match('pilotstudies')) {
-            this.activeDashboard = ''
-            this.activeMyPilots = 'active';
-            this.activeMyEvaluations = '';
-            this.activePatients = '';
-            this.activeEvaluations = '';
-        } else if (path_current.match('myevaluations')) {
-            this.activeDashboard = ''
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = 'active';
-            this.activePatients = '';
-            this.activeEvaluations = '';
-        } else if (path_current.match('patients')) {
-            this.activeDashboard = ''
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = '';
-            this.activePatients = 'active';
-            this.activeEvaluations = '';
-        } else if (path_current.match('evaluations/nutritional')) {
-            this.activeDashboard = ''
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = '';
-            this.activePatients = '';
-            this.activeEvaluations = 'active';
-        } else {
-            this.activeDashboard = ''
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = '';
-            this.activePatients = '';
-            this.activeEvaluations = '';
-        }
+        this.activeDashboardPatients = (path_current.match('patients') && path_current.match('dashboard\$')) ? 'active' : '';
+        this.activeMeasurementsPatients = (path_current.match('patients') && path_current.match('measurements\$')) ? 'active' : '';
+        this.activeQuestionnairesPatients = (path_current.match('patients') && path_current.match('questionnaires\$')) ? 'active' : '';
     }
 
     myPilotStudies(): void {

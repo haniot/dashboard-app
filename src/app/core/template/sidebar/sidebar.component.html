@@ -41,10 +41,24 @@
 
     <ul class="nav">
 
-        <li routerLinkActive="active" class="nav-item">
+        <li routerLinkActive="active" class="nav-item" [ngClass]="activeHome">
             <a class="nav-link" [routerLink]="['/app/dashboard']" *ngIf="verifyScopes('Dashboard')">
                 <i class="material-icons">dashboard</i>
                 <p>{{'SHARED.HOME-PAGE' | translate}}</p>
+            </a>
+        </li>
+
+        <li routerLinkActive="active" class="nav-item" [ngClass]="activeMeasurementsPatients" *ngIf="getTypeUser()==='patient'">
+            <a class="nav-link" [routerLink]="['/app/patients',userId,'measurements']">
+                <i class="material-icons">equalizer</i>
+                <p>{{'SIDEBAR.MY-MEASUREMENTS'|translate}}</p>
+            </a>
+        </li>
+
+        <li routerLinkActive="active" class="nav-item" [ngClass]="activeQuestionnairesPatients" *ngIf="getTypeUser()==='patient'">
+            <a class="nav-link" [routerLink]="['/app/patients',userId,'questionnaires']">
+                <i class="material-icons">receipt</i>
+                <p>{{'SIDEBAR.MY-QUESTIONNAIRES'|translate}}</p>
             </a>
         </li>
 
@@ -92,37 +106,36 @@
             </a>
         </li>
 
-        <li class="nav-item" routerLinkActive="active">
+        <li class="nav-item" routerLinkActive="active" *ngIf="verifyScopes('Patients')">
             <a class="nav-link"
                [routerLink]="['/app/patients']"
-               (click)="onClickMenuPatient($event)"
-               *ngIf="verifyScopes('Patients')">
+               (click)="onClickMenuPatient($event)">
                 <p>
                     {{'SHARED.PATIENTS' | translate}}
                     <i class="material-icons">face</i>
                     <i id="arrowMenuPatient" class="material-icons float-right" (click)="changeIconMenuPatient()"
-                       [title]="iconPatientMenu==='keyboard_arrow_down'?'Expandir menu...':'Encolher menu...'">{{iconPatientMenu}}</i>
+                       [title]="iconPatientMenu==='keyboard_arrow_down'?('SIDEBAR.EXPAND-MENU'|translate):('SIDEBAR.SHRINK-MENU'|translate)" *ngIf="patientSelected">{{iconPatientMenu}}</i>
                 </p>
 
             </a>
             <ul class="collapse list-unstyled submenu" [ngClass]="statePatientMenu"
                 id="patientSubmenu">
-                <li routerLinkActive="active" class="nav-subitem">
+                <li routerLinkActive="active" class="nav-subitem" [ngClass]="activeDashboardPatients">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'dashboard']">
-                        <i class="material-icons">dashboard</i>
-                        <p>Dashboard</p>
+                        <i class="material-icons">view_quilt</i>
+                        <p>{{'SIDEBAR.DASHBOARD'|translate}}</p>
                     </a>
                 </li>
                 <li routerLinkActive="active" class="nav-subitem">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'measurements']">
                         <i class="material-icons">equalizer</i>
-                        <p>Medições</p>
+                        <p>{{'SIDEBAR.MEASUREMENTS'|translate}}</p>
                     </a>
                 </li>
                 <li routerLinkActive="active" class="nav-subitem">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'questionnaires']">
                         <i class="material-icons">receipt</i>
-                        <p>Questionairios</p>
+                        <p>{{'SIDEBAR.QUESTIONNAIRES'|translate}}</p>
                     </a>
                 </li>
             </ul>

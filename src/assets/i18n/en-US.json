@@ -625,7 +625,8 @@
     "MIN": "MIN",
     "MAX": "MAX",
     "AVERAGE": "Average",
-    "AVERAGE-VALUE": "Average value"
+    "AVERAGE-VALUE": "Average value",
+    "BMI": "BMI"
   },
   "MYDATEPIPE": {
     "AT": "at",
@@ -804,7 +805,14 @@
     "HEALTHPROFESSIONALS": "Health professionals",
     "SELECTED-STUDY": "Selected study",
     "TOTAL-OF-PROFESSIONALS": "Total Professionals",
-    "TOTAL-OF-PATIENTS": "Total Patients"
+    "TOTAL-OF-PATIENTS": "Total Patients",
+    "DASHBOARD": "Dashboard",
+    "MEASUREMENTS": "Measurements",
+    "QUESTIONNAIRES": "Questionnaires",
+    "MY-MEASUREMENTS": "My Measurements",
+    "MY-QUESTIONNAIRES": "My Questionnaires",
+    "EXPAND-MENU": "Expand menu...",
+    "SHRINK-MENU": "Shrink menu..."
   },
   "SHARED": {
     "NAME": "Name",
