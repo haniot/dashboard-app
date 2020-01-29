@@ -72,6 +72,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
+        this.getLastData();
     }
 
     onChartInit(event) {
@@ -95,12 +96,6 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const target = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.TARGET');
         const upperLimit = this.translateService.instant('SHARED.UPPER-LIMIT');
         const classification = this.translateService.instant('SHARED.CLASSIFICATION');
-
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
-        } else {
-            this.lastData = this.data[0];
-        }
 
         const xAxis = {
             type: 'category',
@@ -547,6 +542,17 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         }
         this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
+    }
+
+    getLastData(): void {
+        this.measurementService
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, 1, 1)
+            .then((httpResponse) => {
+                this.lastData = httpResponse.body[0];
+            })
+            .catch(() => {
+                this.lastData = new BloodGlucose();
+            });
     }
 
     updateStateButtonRemoveSelected(): void {

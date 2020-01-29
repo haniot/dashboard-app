@@ -71,6 +71,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
+        this.getLastData();
     }
 
     onChartInit(event) {
@@ -89,12 +90,6 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         const color_systolic = '#3F51B5';
         const color_diastolic = '#009688';
         const color_pulse = '#827717';
-
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
-        } else {
-            this.lastData = this.data[0];
-        }
 
         const xAxis = {
             type: 'category',
@@ -382,7 +377,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 data: [systolic, diastolic, pulse]
             },
             grid: [
-                { x: '3%', y: '7%', width: '100%'}
+                { x: '3%', y: '7%', width: '100%' }
             ],
             xAxis: xAxis,
             yAxis: {
@@ -615,6 +610,17 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         }
         this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
+    }
+
+    getLastData(): void {
+        this.measurementService
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, 1, 1)
+            .then((httpResponse) => {
+                this.lastData = httpResponse.body[0];
+            })
+            .catch(() => {
+                this.lastData = new BloodPressure();
+            });
     }
 
     updateStateButtonRemoveSelected(): void {

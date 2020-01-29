@@ -74,6 +74,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
+        this.getLastData();
     }
 
     onChartInit(event) {
@@ -91,12 +92,6 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         const hypothermia = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.HYPOTHERMIA');
         const normal = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.NORMAL');
         const fever = this.translateService.instant('MEASUREMENTS.BODY-TEMPERATURE.FEVER');
-
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
-        } else {
-            this.lastData = this.data[0];
-        }
 
         const xAxis = {
             type: 'category',
@@ -164,7 +159,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
                 trigger: 'item'
             },
             grid: [
-                { x: '5%', y: '10%', width: '100%'}
+                { x: '5%', y: '10%', width: '100%' }
             ],
             xAxis: xAxis,
             yAxis: {
@@ -341,6 +336,17 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         }
         this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
+    }
+
+    getLastData(): void {
+        this.measurementService
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, 1, 1)
+            .then((httpResponse) => {
+                this.lastData = httpResponse.body[0];
+            })
+            .catch(() => {
+                this.lastData = new Measurement();
+            });
     }
 
     updateStateButtonRemoveSelected(): void {

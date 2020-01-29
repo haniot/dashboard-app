@@ -73,6 +73,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
+        this.getLastData();
     }
 
     applyFilter(filter: SearchForPeriod) {
@@ -114,14 +115,6 @@ export class WeightComponent implements OnInit, OnChanges {
         const body_fat = this.translateService.instant('MEASUREMENTS.WEIGHT.BODY-FAT');
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
-
-        this.lastIndex = 0;
-
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
-        } else {
-            this.lastData = this.data[0];
-        }
 
         const xAxisWeight = {
             type: 'category',
@@ -201,7 +194,7 @@ export class WeightComponent implements OnInit, OnChanges {
                 }
             },
             grid: [
-                { x: '3%', y: '7%', width: '100%'}
+                { x: '3%', y: '7%', width: '100%' }
             ],
             xAxis: xAxisWeight,
             yAxis: {
@@ -338,6 +331,16 @@ export class WeightComponent implements OnInit, OnChanges {
     updateStateButtonRemoveSelected(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
         this.stateButtonRemoveSelected = !!measurementsSelected.length;
+    }
+
+    getLastData(): void {
+        this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, 1, 1)
+            .then((httpResponse) => {
+                this.lastData = httpResponse.body[0];
+            })
+            .catch(() => {
+                this.lastData = new Weight();
+            });
     }
 
     trackById(index, item) {

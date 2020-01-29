@@ -64,12 +64,7 @@
 
                 <dashboard-card [title]="'MEASUREMENTS.HEIGHT.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.height]">
-<!--                    <div class="echarts-div-graph" echarts [options]="heightGraph"-->
-<!--                         (chartInit)="onHeightChartInit($event)"-->
-<!--                         style="height: 100px;padding: 0px 0px; margin: 0px 0px"-->
-<!--                         *ngIf="measurementLast && measurementLast.height && measurementLast.height.value">-->
-<!--                    </div>-->
-                    <div class="card-content" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;" *ngIf="measurementLast && measurementLast.height">
+                    <div class="card-content" *ngIf="measurementLast && measurementLast.height">
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/height.svg">
                             <h2 class="p-2">
@@ -166,7 +161,7 @@
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/temperature.svg">
                             <h2 class="p-2">
-                                {{measurementLast.body_temperature.value ? (measurementLast.body_temperature.value|number:'1.0-0') : ' - - '}}<small>{{measurementLast.body_temperature.unit}}</small>
+                                {{measurementLast.body_temperature.value ? (measurementLast.body_temperature.value|number:'2.1-1') : ' - - '}}<small>{{measurementLast.body_temperature.unit}}</small>
                             </h2>
                         </div>
 <!--                        <ngx-gauge-->

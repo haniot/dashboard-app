@@ -71,6 +71,7 @@ export class FatComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
+        this.getLastData();
     }
 
     onChartInit(event) {
@@ -84,12 +85,6 @@ export class FatComponent implements OnInit, OnChanges {
         const fat = this.translateService.instant('MEASUREMENTS.FAT.FAT');
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
-
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
-        } else {
-            this.lastData = this.data[0];
-        }
 
         const xAxis = {
             type: 'category',
@@ -151,7 +146,7 @@ export class FatComponent implements OnInit, OnChanges {
                 }
             },
             grid: [
-                { x: '5%', y: '7%', width: '100%'}
+                { x: '5%', y: '7%', width: '100%' }
             ],
             xAxis: xAxis,
             yAxis: [
@@ -308,6 +303,17 @@ export class FatComponent implements OnInit, OnChanges {
         }
         this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
+    }
+
+    getLastData(): void {
+        this.measurementService
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, 1, 1)
+            .then((httpResponse) => {
+                this.lastData = httpResponse.body[0];
+            })
+            .catch(() => {
+                this.lastData = new Measurement();
+            });
     }
 
     updateStateButtonRemoveSelected(): void {
