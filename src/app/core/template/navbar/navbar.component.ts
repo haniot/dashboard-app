@@ -197,7 +197,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 this.titleComplement = element.titleComplement
                 if (!element.titleComplement && element.titleComplement !== '') {
                     const patientLocal = JSON.parse(this.localStorageService.getItem('patientSelected'));
-                    this.titleComplement = patientLocal.name
+                    this.titleComplement = patientLocal ? patientLocal.name : ''
                 }
                 this.title = element.title;
                 this.titleService.setTitle(this.translateService.instant(this.title));

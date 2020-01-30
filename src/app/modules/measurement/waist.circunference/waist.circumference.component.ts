@@ -71,7 +71,9 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
-        this.loadMeasurements();
+        if (this.includeCard) {
+            this.loadMeasurements();
+        }
     }
 
     applyFilter(filter: SearchForPeriod) {
@@ -118,6 +120,11 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
 
+        if (!this.includeCard) {
+            const length = this.dataForGraph ? this.dataForGraph.length : 0;
+            this.lastData = length ? this.dataForGraph[length - 1] : new Measurement()
+        }
+
         const xAxis = {
             type: 'category',
             data: [],
@@ -160,7 +167,8 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
             color: ['#3398DB'],
             tooltip: {
                 formatter: function (params) {
-                    return `${circumference}: ${params[0].dataForGraph.value}cm <br> ${date}: <br> ${params[0].name} ${at} ${params[0].dataForGraph.time}`
+                    return `${circumference}: ${params[0].data.value}cm` +
+                        `<br ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
                 },
                 trigger: 'axis',
                 axisPointer: {

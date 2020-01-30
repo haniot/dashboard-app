@@ -73,7 +73,9 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
-        this.loadMeasurements();
+        if (this.includeCard) {
+            this.loadMeasurements();
+        }
     }
 
     onChartInit(event) {
@@ -92,11 +94,13 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const glucose = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.GLUCOSE');
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
-        const hypoglycemia = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.HYPOGLYCEMIA');
-        const normal = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.NORMAL');
-        const target = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.TARGET');
         const upperLimit = this.translateService.instant('SHARED.UPPER-LIMIT');
         const classification = this.translateService.instant('SHARED.CLASSIFICATION');
+
+        if (!this.includeCard) {
+            const length = this.dataForGraph ? this.dataForGraph.length : 0;
+            this.lastData = length ? this.dataForGraph[length - 1] : new BloodGlucose();
+        }
 
         const xAxis = {
             type: 'category',
@@ -112,10 +116,10 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             label: {
                 fontSize: 10,
                 formatter: function (params) {
-                    if (params.dataForGraph.type === 'max') {
+                    if (params.data.type === 'max') {
                         return max;
                     }
-                    if (params.dataForGraph.type === 'min') {
+                    if (params.data.type === 'min') {
                         return min;
                     }
                 }
@@ -155,7 +159,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 barMaxWidth: 100,
                 color: '#e57373',
                 markPoint: markPoint,
-                markLine: {
+                markArea: {
                     silent: false,
                     tooltip: {
                         trigger: 'item',
@@ -168,22 +172,55 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                         }
                     },
                     data: [
-                        {
-                            label: {
-                                formatter: hypoglycemia
+                        // {
+                        //     label: {
+                        //         formatter: hypoglycemia,
+                        //         position: 'start'
+                        //     },
+                        //     yAxis: 70
+                        // }, {
+                        //     label: {
+                        //         formatter: normal,
+                        //         position: 'start'
+                        //     },
+                        //     yAxis: 140
+                        // }, {
+                        //     label: {
+                        //         formatter: target,
+                        //         position: 'start'
+                        //     },
+                        //     yAxis: 180
+                        // }
+                        [
+                            {
+                                yAxis: 0,
+                                itemStyle: {
+                                    color: 'rgba(0,128,255,0.1)'
+                                }
                             },
-                            yAxis: 70
-                        }, {
-                            label: {
-                                formatter: normal
+                            {
+                                yAxis: 70
+                            }
+                        ],
+                        [
+                            {
+                                yAxis: 70,
+                                itemStyle: { color: 'rgba(25,142,125,0.1)' }
                             },
-                            yAxis: 140
-                        }, {
-                            label: {
-                                formatter: target
+                            {
+                                yAxis: 140
+                            }
+                        ],
+                        [
+                            {
+                                yAxis: 140,
+                                itemStyle: { color: 'rgba(252,204,0,0.1)' }
                             },
-                            yAxis: 250
-                        }]
+                            {
+
+                            }
+                        ]
+                    ]
                 }
             },
             {
@@ -311,24 +348,24 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             tooltip: {
                 trigger: 'item',
                 formatter: function (params) {
-                    if (!params.dataForGraph || !params.dataForGraph.time) {
+                    if (!params.data || !params.data.time) {
                         const t = series[params.seriesIndex].data.find(currentHeight => {
                             if (currentHeight) {
-                                return currentHeight.value === params.dataForGraph.value;
+                                return currentHeight.value === params.data.value;
                             }
                         });
-                        params.dataForGraph.time = t.time;
+                        params.data.time = t.time;
 
                     }
-                    return `${glucose}: ${params.dataForGraph.value}mg/dl<br>` +
-                        `${date}: <br>${params.name.split(/,|\s/)[0]} ${at} ${params.dataForGraph.time}`
+                    return `${glucose}: ${params.data.value}mg/dl<br>` +
+                        `${date}: <br>${params.name.split(/,|\s/)[0]} ${at} ${params.data.time}`
                 }
             },
             legend: {
                 data: [preprandial, postprandial, fasting, casual, bedtime]
             },
             grid: [
-                { x: '5%', y: '7%', width: '100%' }
+                { x: '8%', y: '9%', width: '100%' }
             ],
             xAxis: xAxis,
             yAxis: [

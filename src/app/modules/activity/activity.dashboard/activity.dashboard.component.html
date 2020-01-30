@@ -128,7 +128,7 @@
                                             [max]="sleepMax"
                                             [foregroundColor]="'#2B4A77'"
                                             [thick]="15"
-                                            [value]="sleepHover?sleepValue:sleepMax"
+                                            [value]="sleepHover?Math.max(0,sleepValue):sleepMax"
                                             [duration]="500"
                                             [cap]="'round'"
                                             id="graphSleep">
@@ -228,7 +228,7 @@
                                         [cap]="'round'"
                                         [foregroundColor]="'#00a594'"
                                         [duration]="500"
-                                        [value]="stepsValue">
+                                        [value]="Math.max(0,stepsValue)">
                                     <ngx-gauge-append *ngIf="!stepsHover">
                                         <img class="fadeIn" src="../../../../assets/img/time-series/steps-black.svg"
                                              width="30%"
@@ -284,7 +284,7 @@
                                         [max]="goal && goal.calories?goal.calories:0"
                                         [foregroundColor]="'#fba53e'"
                                         [duration]="200"
-                                        [value]="caloriesValue"
+                                        [value]="Math.max(0,caloriesValue)"
                                         style="width: 100px; height: 100px">
                                     <ngx-gauge-append *ngIf="!caloriesHover">
                                         <img class="fadeIn" src="../../../../assets/img/time-series/calories-black.svg"
@@ -341,7 +341,7 @@
                                         [max]="goal && goal.active_minutes?goal.active_minutes:0"
                                         [foregroundColor]="'#A6F355'"
                                         [duration]="200"
-                                        [value]="activeMinutesValue">
+                                        [value]="Math.max(0,activeMinutesValue)">
                                     <ngx-gauge-append *ngIf="!activeMinutesHover">
                                         <img class="fadeIn" src="../../../../assets/img/time-series/active_minutes.svg"
                                              width="30%"
@@ -400,7 +400,7 @@
                                         [max]="goal && goal.distance?goal.distance:0"
                                         [foregroundColor]="'#5FCCCB'"
                                         [duration]="200"
-                                        [value]="distanceValue">
+                                        [value]="Math.max(0,distanceValue)">
                                     <ngx-gauge-append *ngIf="!distanceHover">
                                         <img class="fadeIn" src="../../../../assets/img/time-series/distance.svg"
                                              width="30%"

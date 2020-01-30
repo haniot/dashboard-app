@@ -48,6 +48,45 @@
             </div>
         </div>
 
+        <!-- LEGEND -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="d-flex justify-content-around">
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'rgba(0,128,255,0.3)'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-GLUCOSE.HYPOGLYCEMIA'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'rgba(25,142,125,0.3)'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-GLUCOSE.NORMAL'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'#FFF6C0'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-GLUCOSE.TARGET'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="includeLogs">
 
             <div class=" text-center"

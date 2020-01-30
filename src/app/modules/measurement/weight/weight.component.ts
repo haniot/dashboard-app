@@ -65,7 +65,7 @@ export class WeightComponent implements OnInit, OnChanges {
         this.stateButtonRemoveSelected = false;
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
-        this.limit = 1;
+        this.limit = PaginatorConfig.limit;
         this.filter = new SearchForPeriod();
         this.loadingMeasurements = false;
         this.modalConfirmRemoveMeasurement = false;
@@ -74,7 +74,9 @@ export class WeightComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
-        this.loadMeasurements();
+        if (this.includeCard) {
+            this.loadMeasurements();
+        }
     }
 
     applyFilter(filter: SearchForPeriod) {
@@ -116,6 +118,11 @@ export class WeightComponent implements OnInit, OnChanges {
         const body_fat = this.translateService.instant('MEASUREMENTS.WEIGHT.BODY-FAT');
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
+
+        if (!this.includeCard) {
+            const length = this.dataForGraph ? this.dataForGraph.length : 0;
+            this.lastData = length ? this.dataForGraph[length - 1] : new Weight()
+        }
 
         const xAxisWeight = {
             type: 'category',
@@ -188,10 +195,10 @@ export class WeightComponent implements OnInit, OnChanges {
                 formatter: function (params) {
                     if (params.seriesName === weigth) {
                         return weigth +
-                            `: ${params.dataForGraph.value}Kg <br> ${date}: <br> ${params.name} ${at} ${params.dataForGraph.time}`;
+                            `: ${params.data.value}Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                     }
                     return body_fat +
-                        `: ${params.dataForGraph.value}% <br> ${date}: <br> ${params.name} ${at} ${params.dataForGraph.time}`;
+                        `: ${params.data.value}% <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
             grid: [

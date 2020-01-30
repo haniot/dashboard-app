@@ -73,7 +73,9 @@ export class HeightComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
-        this.loadMeasurements();
+        if (this.includeCard) {
+            this.loadMeasurements();
+        }
     }
 
     onChartInit(event) {
@@ -87,6 +89,11 @@ export class HeightComponent implements OnInit, OnChanges {
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
         const at = this.translateService.instant('SHARED.AT');
+
+        if (!this.includeCard) {
+            const length = this.dataForGraph ? this.dataForGraph.length : 0;
+            this.lastData = length ? this.dataForGraph[length - 1] : new Measurement()
+        }
 
         const xAxis = {
             type: 'category',
@@ -103,10 +110,10 @@ export class HeightComponent implements OnInit, OnChanges {
                 label: {
                     fontSize: 10,
                     formatter: function (params) {
-                        if (params.dataForGraph.type === 'max') {
+                        if (params.data.type === 'max') {
                             return max;
                         }
-                        if (params.dataForGraph.type === 'min') {
+                        if (params.data.type === 'min') {
                             return min;
                         }
                     }
@@ -128,14 +135,14 @@ export class HeightComponent implements OnInit, OnChanges {
             tooltip: {
                 trigger: 'item',
                 formatter: function (params) {
-                    if (!params.dataForGraph || !params.dataForGraph.time) {
+                    if (!params.data || !params.data.time) {
                         const t = series.data.find(currentHeight => {
-                            return currentHeight.value === params.dataForGraph.value;
+                            return currentHeight.value === params.data.value;
                         });
-                        params.dataForGraph.time = t.time;
+                        params.data.time = t.time;
 
                     }
-                    return `${height}: ${params.dataForGraph.value}cm <br> ${date}: <br> ${params.name} ${at} ${params.dataForGraph.time}`;
+                    return `${height}: ${params.data.value}cm <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
             grid: [

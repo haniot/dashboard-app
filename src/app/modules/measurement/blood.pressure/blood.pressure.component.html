@@ -84,6 +84,78 @@
             </div>
         </div>
 
+        <!-- LEGEND -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="d-flex justify-content-around">
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'rgba(0,128,255,0.3)'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.HYPOTENSION'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'rgba(25,142,125,0.3)'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.NORMAL'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'#FFF6C0'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.HIGH'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'#FFE1BC'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.STAGE1'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'#FFCEB9'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.STAGE2'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'#FF6B65'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.HYPERTENSIVE-URGENCY'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="includeLogs">
 
             <div class=" text-center"

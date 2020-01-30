@@ -8,6 +8,7 @@ import { MeasurementService } from '../services/measurement.service';
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ToastrService } from 'ngx-toastr'
+import { Weight } from '../models/weight'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -72,7 +73,9 @@ export class FatComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
-        this.loadMeasurements();
+        if (this.includeCard) {
+            this.loadMeasurements();
+        }
     }
 
     onChartInit(event) {
@@ -86,6 +89,11 @@ export class FatComponent implements OnInit, OnChanges {
         const fat = this.translateService.instant('MEASUREMENTS.FAT.FAT');
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
+
+        if (!this.includeCard) {
+            const length = this.dataForGraph ? this.dataForGraph.length : 0;
+            this.lastData = length ? this.dataForGraph[length - 1] : new Measurement()
+        }
 
         const xAxis = {
             type: 'category',
@@ -143,11 +151,11 @@ export class FatComponent implements OnInit, OnChanges {
             tooltip: {
                 trigger: 'item',
                 formatter: function (params) {
-                    return `${fat}: ${params.dataForGraph.value}%<br> ${date}: <br> ${params.name} ${at} ${params.dataForGraph.time}`
+                    return `${fat}: ${params.data.value}%<br> ${date}: <br> ${params.name} ${at} ${params.data.time}`
                 }
             },
             grid: [
-                { x: '5%', y: '7%', width: '100%' }
+                { x: '5%', y: '12%', width: '100%' }
             ],
             xAxis: xAxis,
             yAxis: [

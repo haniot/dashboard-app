@@ -72,7 +72,9 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGraph();
-        this.loadMeasurements();
+        if (this.includeCard) {
+            this.loadMeasurements();
+        }
     }
 
     onChartInit(event) {
@@ -87,6 +89,11 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
         const classification = this.translateService.instant('SHARED.CLASSIFICATION');
+
+        if (!this.includeCard) {
+            const length = this.dataForGraph ? this.dataForGraph.length : 0;
+            this.lastData = length ? this.dataForGraph[length - 1] : new BloodPressure()
+        }
 
         const color_systolic = '#3F51B5';
         const color_diastolic = '#009688';
@@ -250,7 +257,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 type: 'bar',
                 barMaxWidth: '50px',
                 itemStyle: {
-                    color: 'rgba(180,7,0,0.3)'
+                    color: 'rgba(25,142,125,0.3)'
                 },
                 barGap: '-100%',
                 barCategoryGap: '40%',
@@ -261,7 +268,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 type: 'bar',
                 barMaxWidth: '50px',
                 itemStyle: {
-                    color: 'rgba(180,7,0,0.3)'
+                    color: 'rgba(252,204,0,0.3)'
                 },
                 barGap: '-100%',
                 barCategoryGap: '40%',
@@ -272,7 +279,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 type: 'bar',
                 barMaxWidth: '50px',
                 itemStyle: {
-                    color: 'rgba(180,7,0,0.3)'
+                    color: 'rgba(254,143,2,0.3)'
                 },
                 barGap: '-100%',
                 barCategoryGap: '40%',
@@ -283,7 +290,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 type: 'bar',
                 barMaxWidth: '50px',
                 itemStyle: {
-                    color: 'rgba(180,7,0,0.3)'
+                    color: 'rgba(249,82,1,0.3)'
                 },
                 barGap: '-100%',
                 barCategoryGap: '40%',
@@ -294,7 +301,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 type: 'bar',
                 barMaxWidth: '50px',
                 itemStyle: {
-                    color: 'rgba(180,7,0,0.3)'
+                    color: 'rgba(255,1,0,0.5)'
                 },
                 barGap: '-100%',
                 barCategoryGap: '40%',
@@ -313,6 +320,15 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 animation: true
             }
         ]
+        const values = this.dataForGraph.map(element => {
+            return element.value
+        })
+        let max = 0;
+        if (values && values.length) {
+            max = values.reduce((a, b) => {
+                return Math.max(a, b)
+            })
+        }
 
         this.dataForGraph.forEach((element: BloodPressure) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
@@ -334,33 +350,29 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 value: element.pulse,
                 time: mediumTime
             });
-            let index: number;
             switch (result.classification) {
                 case 'hypotension':
-                    index = 3;
+                    this.setMax(3, max);
                     break;
                 case 'normal':
-                    index = 4;
+                    this.setMax(4, max);
                     break;
                 case 'high':
-                    index = 5;
+                    this.setMax(5, max);
                     break;
                 case 'stage1':
-                    index = 6;
+                    this.setMax(6, max);
                     break;
                 case 'stage2':
-                    index = 7;
+                    this.setMax(7, max);
                     break;
                 case 'urgency':
-                    index = 8;
+                    this.setMax(8, max);
                     break;
                 default: /* Out of Range*/
-                    index = 9;
+                    this.setMax(9, max);
                     break;
             }
-            this.options.series[index].data.push({
-                value: 200
-            });
         });
 
         this.options = {
@@ -370,8 +382,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                     return `${params[0].seriesName}: ${params[0].value}${params[0].seriesName !== pulse ? 'mmHg' : 'bpm'}<br>` +
                         `${params[1].seriesName}: ${params[1].value}${params[1].seriesName !== pulse ? 'mmHg' : 'bpm'}<br>` +
                         `${params[2].seriesName}: ${params[1].value}${params[2].seriesName !== pulse ? 'mmHg' : 'bpm'}<br>` +
-                        `${classification}: ${params[0].dataForGraph.classification}<br>` +
-                        `${date}:<br>${params[0].axisValue} ${at} ${params[0].dataForGraph.time}`;
+                        `${classification}: ${params[0].data.classification}<br>` +
+                        `${date}:<br>${params[0].axisValue} ${at} ${params[0].data.time}`;
                 }
             },
             legend: {
@@ -417,7 +429,17 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.options.xAxis.data = [];
         this.options.series.dataForGraph = [];
 
-        measurements.forEach((element: BloodPressure) => {
+        const values = this.dataForGraph.map(element => {
+            return Math.max(Math.max(element.systolic, element.diastolic), element.pulse)
+        })
+        let max = 0;
+        if (values && values.length) {
+            max = values.reduce((a, b) => {
+                return Math.max(a, b)
+            })
+        }
+
+        measurements.forEach((element: BloodPressure, i) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
             this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
             const result = this.classificate(element);
@@ -435,35 +457,42 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 value: element.pulse,
                 time: mediumTime
             });
-            let index: number;
             switch (result.classification) {
                 case 'hypotension':
-                    index = 3;
+                    this.setMax(3, max);
                     break;
                 case 'normal':
-                    index = 4;
+                    this.setMax(4, max);
                     break;
                 case 'high':
-                    index = 5;
+                    this.setMax(5, max);
                     break;
                 case 'stage1':
-                    index = 6;
+                    this.setMax(6, max);
                     break;
                 case 'stage2':
-                    index = 7;
+                    this.setMax(7, max);
                     break;
                 case 'urgency':
-                    index = 8;
+                    this.setMax(8, max);
                     break;
                 default: /* Out of Range*/
-                    index = 9;
+                    this.setMax(9, max);
                     break;
             }
-            this.options.series[index].data.push({
-                value: 200
-            });
         });
         this.echartsInstance.setOption(this.options);
+    }
+
+    setMax(index, max): void {
+        for (let i = 3; i <= 9; i++) {
+            if (i === index) {
+                this.options.series[i].data.push({ value: max });
+            } else {
+                this.options.series[i].data.push({ value: 0 });
+            }
+
+        }
     }
 
     classificate(measurement: BloodPressure): { classification: string, translate: string } {

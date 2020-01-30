@@ -180,7 +180,6 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             })
             .catch((err) => {
                 this.goal = new Goal();
-                console.log(err)
             })
     }
 

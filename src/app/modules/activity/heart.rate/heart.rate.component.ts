@@ -81,7 +81,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
         const xAxisOptions = [{ type: 'category', boundaryGap: false, data: [] }];
 
         const seriesOptions = [
-            { name: name_out_of_range, stack: 'stack', type: 'bar', data: [], barMaxWidth: '20%', color: '#999' },
+            { name: name_out_of_range, stack: 'stack', type: 'bar', data: [], barMaxWidth: '20%', color: '#4EC5C5' },
             { name: name_fat_burn, stack: 'stack', type: 'bar', data: [], barMaxWidth: '30%', color: '#FFC023' },
             { name: name_cardio, stack: 'stack', type: 'bar', data: [], barMaxWidth: '30%', color: '#FD8518' },
             { name: name_peak, stack: 'stack', type: 'bar', data: [], barMaxWidth: '30%', color: '#E60013' }
@@ -148,6 +148,9 @@ export class HeartRateComponent implements OnInit, OnChanges {
         };
 
         if (this.data && this.data.data_set) {
+
+            this.zones = this.data.summary && this.data.summary.zones ? this.data.summary.zones : new HeartRateZone();
+
             if (this.intraday) {
                 this.data.data_set.forEach((element: { time: string, value: number }) => {
                     xAxisOptionsLastDate.data.push(element.time);
@@ -211,9 +214,16 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 data: [name_fat_burn, name_cardio, name_peak, name_out_of_range]
             },
             xAxis: xAxisOptions,
-            yAxis: [
-                { type: 'value' }
-            ],
+            yAxis: {
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    formatter: function (value) {
+                        return Math.floor(value / 60000) + 'min';
+                    }
+                }
+            },
             dataZoom: [
                 {
                     type: 'slider'
@@ -247,9 +257,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 },
                 axisLabel: {
                     formatter: '{value} bpm'
-                },
-                min: 0,
-                max: 200
+                }
             },
             dataZoom: [
                 {
@@ -279,7 +287,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
                     gt: this.zones.out_of_range.min,
                     lte: this.zones.out_of_range.max,
                     label: name_out_of_range,
-                    color: '#999'
+                    color: '#4EC5C5'
                 }
                 ]
             },
