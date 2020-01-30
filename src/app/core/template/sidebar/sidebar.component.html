@@ -41,21 +41,21 @@
 
     <ul class="nav">
 
-        <li routerLinkActive="active" class="nav-item" [ngClass]="activeHome">
+        <li class="nav-item" [ngClass]="activeHome">
             <a class="nav-link" [routerLink]="['/app/dashboard']" *ngIf="verifyScopes('Dashboard')">
                 <i class="material-icons">dashboard</i>
                 <p>{{'SHARED.HOME-PAGE' | translate}}</p>
             </a>
         </li>
 
-        <li routerLinkActive="active" class="nav-item" [ngClass]="activeMeasurementsPatients" *ngIf="getTypeUser()==='patient'">
+        <li class="nav-item" [ngClass]="activeMeasurementsPatients" *ngIf="getTypeUser()==='patient'">
             <a class="nav-link" [routerLink]="['/app/patients',userId,'measurements']">
                 <i class="material-icons">equalizer</i>
                 <p>{{'SIDEBAR.MY-MEASUREMENTS'|translate}}</p>
             </a>
         </li>
 
-        <li routerLinkActive="active" class="nav-item" [ngClass]="activeQuestionnairesPatients" *ngIf="getTypeUser()==='patient'">
+        <li class="nav-item" [ngClass]="activeQuestionnairesPatients" *ngIf="getTypeUser()==='patient'">
             <a class="nav-link" [routerLink]="['/app/patients',userId,'questionnaires']">
                 <i class="material-icons">receipt</i>
                 <p>{{'SIDEBAR.MY-QUESTIONNAIRES'|translate}}</p>
@@ -106,7 +106,7 @@
             </a>
         </li>
 
-        <li class="nav-item" routerLinkActive="active" *ngIf="verifyScopes('Patients')">
+        <li class="nav-item" [ngClass]="activePatients" *ngIf="verifyScopes('Patients')">
             <a class="nav-link"
                [routerLink]="['/app/patients']"
                (click)="onClickMenuPatient($event)">
@@ -120,19 +120,19 @@
             </a>
             <ul class="collapse list-unstyled submenu" [ngClass]="statePatientMenu"
                 id="patientSubmenu">
-                <li routerLinkActive="active" class="nav-subitem" [ngClass]="activeDashboardPatients">
+                <li class="nav-subitem" [ngClass]="activeDashboardPatients" [ngClass]="activeDashboardPatients">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'dashboard']">
                         <i class="material-icons">view_quilt</i>
                         <p>{{'SIDEBAR.DASHBOARD'|translate}}</p>
                     </a>
                 </li>
-                <li routerLinkActive="active" class="nav-subitem">
+                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'measurements']">
                         <i class="material-icons">equalizer</i>
                         <p>{{'SIDEBAR.MEASUREMENTS'|translate}}</p>
                     </a>
                 </li>
-                <li routerLinkActive="active" class="nav-subitem">
+                <li class="nav-subitem" [ngClass]="activeQuestionnairesPatients">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'questionnaires']">
                         <i class="material-icons">receipt</i>
                         <p>{{'SIDEBAR.QUESTIONNAIRES'|translate}}</p>

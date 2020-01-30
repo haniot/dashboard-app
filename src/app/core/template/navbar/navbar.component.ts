@@ -27,10 +27,10 @@ export const ROUTES: RouteInfo[] = [
     { path: '^/app/admin/healthprofessionals$', title: 'NAVBAR.HEALTH-PRO-USERS', titleComplement: '' },
     { path: '^/app/pilotstudies$', title: 'SHARED.PILOTSTUDIES', titleComplement: '' },
     { path: '^/app/patients$', title: 'SHARED.PATIENTS', titleComplement: '' },
+    { path: '^/app/patients/new$', title: 'SHARED.PATIENTS', titleComplement: '' },
     { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}$', title: 'SHARED.PATIENTS', titleComplement: '' },
-    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/dashboard$', title: 'SHARED.PATIENTS' },
-    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/measurements$', title: 'SHARED.PATIENTS' },
-    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/questionnaires$', title: 'SHARED.PATIENTS' },
+    { path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}/(\\D)*', title: 'SHARED.PATIENTS' },
+    { path: '^(\\/app/activities\\/)[a-fA-F0-9]{24}/(\\D)*', title: 'ACTIVITY.PHYSICAL-ACTIVITY.TITLE' },
     {
         path: '^(\\/app/patients\\/)[a-fA-F0-9]{24}\\/[a-fA-F0-9]{24}\\/details$',
         title: 'NAVBAR.DETAILS-PATIENT',
@@ -43,6 +43,11 @@ export const ROUTES: RouteInfo[] = [
     { path: '^/app/healthprofessional/myevaluations$', title: 'SHARED.MY-EVALUATIONS', titleComplement: '' },
     {
         path: '^(\\/app/evaluations\\/)[a-fA-F0-9]{24}\\/nutritional',
+        title: 'NAVBAR.NUTRITION-EVALUATIONS',
+        titleComplement: ''
+    },
+    {
+        path: '^/app/evaluations/nutritional',
         title: 'NAVBAR.NUTRITION-EVALUATIONS',
         titleComplement: ''
     }
@@ -189,8 +194,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         const path_current = this.location.path();
         this.listTitles.forEach(element => {
             if (RegExp(element.path).test(path_current)) {
-                if (element.titleComplement === '') {
-                    this.titleComplement = element.titleComplement
+                this.titleComplement = element.titleComplement
+                if (!element.titleComplement && element.titleComplement !== '') {
+                    const patientLocal = JSON.parse(this.localStorageService.getItem('patientSelected'));
+                    this.titleComplement = patientLocal.name
                 }
                 this.title = element.title;
                 this.titleService.setTitle(this.translateService.instant(this.title));

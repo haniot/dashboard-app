@@ -6,7 +6,7 @@
         <div class="col navbar-wrapper">
             <a class="navbar-brand">
                 {{
-                titleComplement ? ((title | translate) + ' - ' + titleComplement) : (title | translate)
+                title && titleComplement ? ((title | translate) + ' - ' + titleComplement) : (title | translate)
                 }}
             </a>
         </div>
