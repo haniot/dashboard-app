@@ -67,10 +67,10 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
         this.patientsAssociated = new Array<Patient>();
         this.patientPage = PaginatorConfig.page;
         this.patientPageSizeOptions = PaginatorConfig.pageSizeOptions;
-        this.patientLimit = PaginatorConfig.limit;
+        this.patientLimit = 5;
         this.professionalPage = PaginatorConfig.page;
         this.professionalPageSizeOptions = PaginatorConfig.pageSizeOptions;
-        this.professionalLimit = PaginatorConfig.limit;
+        this.professionalLimit = 5;
     }
 
     ngOnInit() {
