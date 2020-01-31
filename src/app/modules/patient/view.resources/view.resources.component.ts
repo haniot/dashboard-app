@@ -12,6 +12,7 @@ import {
 } from '../../activity/models/time.series'
 import { TimeSeriesService } from '../../activity/services/time.series.service'
 import * as moment from 'moment'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -40,11 +41,13 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
     selectAll: boolean;
     listCheckMeasurements: Array<boolean>;
     stateButtonRemoveSelected: boolean;
+    removingResource: boolean;
 
     constructor(
         private activeRouter: ActivatedRoute,
         private router: Router,
         private measurementService: MeasurementService,
+        private modalService: ModalService,
         private timeSeriesService: TimeSeriesService) {
         this.list = new Array<any>();
         this.listIsEmpty = false;
@@ -130,6 +133,18 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
                     this.listIsEmpty = true;
                 })
         }
+    }
+
+    openModalConfirmation(event): void {
+        this.modalService.open('modalConfirmation');
+    }
+
+    closeModalConfirmation(): void {
+        this.modalService.close('modalConfirmation');
+    }
+
+    removeResources(): void {
+
     }
 
     ngOnChanges(changes: SimpleChanges): void {

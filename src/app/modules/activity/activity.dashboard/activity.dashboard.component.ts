@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -170,6 +170,19 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.innerWidth = window.innerWidth;
+        this.activeRouter.params.subscribe((params) => {
+            this.getQueryParams();
+        });
+    }
+
+    getQueryParams(): void {
+        const { date } = this.activeRouter.snapshot.queryParams;
+        if (date) {
+            const timeZoneOffset = new Date().getTimezoneOffset();
+            this.currentDate = timeZoneOffset ? new Date(`${date}T0${timeZoneOffset / 60}:00:00Z`) : new Date(`${date}T00:00:00Z`);
+            this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
+            this.currentFilter.interval = '1m';
+        }
     }
 
     loadGoals(): void {
@@ -201,10 +214,13 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         const start_time = this.currentDate.toISOString().split('T')[0] + 'T03:00:00.000Z';
         const nextday: Date = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
         const end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
-        const filter = new SleepFilter('today', start_time, end_time)
+        const filter = new SleepFilter('today', start_time, end_time);
         this.sleepService.getAll(this.patientId, 1, 1, filter)
             .then(httpResponse => {
                 this.sleepSelected = httpResponse && httpResponse.body ? httpResponse.body[0] : undefined;
+                if (this.sleepSelected) {
+                    this.sleepValue = (this.sleepSelected.duration / 3600000)
+                }
                 this.loadingSleep = false;
             })
             .catch(err => {
@@ -437,6 +453,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
         this.loadTimeSeries();
         this.loadSleep();
+        this.updateQueryParams();
         // this.loadActivities();
     }
 
@@ -446,12 +463,24 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
             this.loadTimeSeries();
             this.loadSleep();
-            // this.loadActivities();
+            this.updateQueryParams();
         }
+    }
+
+    updateQueryParams(): void {
+        const date = this.currentDate.toISOString().split('T')[0];
+        const queryParams: Params = { date };
+        this.router.navigate(
+            [],
+            {
+                relativeTo: this.activeRouter,
+                queryParams: queryParams
+            });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.patientId.currentValue && (changes.patientId.currentValue !== changes.patientId.previousValue)) {
+            this.getQueryParams();
             this.loadGoals();
             this.loadActivities();
             this.loadTimeSeries();

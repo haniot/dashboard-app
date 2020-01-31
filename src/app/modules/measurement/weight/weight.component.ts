@@ -27,6 +27,7 @@ export class WeightComponent implements OnInit, OnChanges {
     @Input() patientId: string;
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
+    @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     lastData: Weight;
     weightGraph: any;
     echartsInstance: any;
@@ -70,6 +71,7 @@ export class WeightComponent implements OnInit, OnChanges {
         this.loadingMeasurements = false;
         this.modalConfirmRemoveMeasurement = false;
         this.selectAll = false;
+        this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string }>();
     }
 
     ngOnInit(): void {
@@ -252,8 +254,10 @@ export class WeightComponent implements OnInit, OnChanges {
     }
 
     openModalConfirmation(measurementId: string) {
-        this.cacheIdMeasurementRemove = measurementId;
-        this.modalConfirmRemoveMeasurement = true;
+        // this.cacheIdMeasurementRemove = measurementId;
+        // this.modalConfirmRemoveMeasurement = true;
+        const event = { type: EnumMeasurementType.weight, resourceId: measurementId };
+        this.remove.emit(event)
     }
 
     initializeListCheckMeasurements(): void {

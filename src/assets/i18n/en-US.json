@@ -40,7 +40,7 @@
       "DELETE-CONFIRMATION": "Are you sure you want to permanently remove the sleep log?",
       "SPINNER-MESSAGE": "Removing sleep log...",
       "LOADING": "Loading sleep record ...",
-      "GOAL-ACHIEVED": "Goal achieved"
+      "GOAL-ACHIEVED": "Goal achieved!"
     },
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Physical Activity",

@@ -7,7 +7,7 @@
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.weight">
                     <weight [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                             [includeCard]="true" [includeLogs]="true"
-                            [showSpinner]="!list.length && !listIsEmpty"></weight>
+                            [showSpinner]="!list.length && !listIsEmpty" (remove)="openModalConfirmation($event)"></weight>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_fat">
@@ -79,3 +79,28 @@
         </div>
     </div>
 </div>
+
+<div *ngIf="removingResource">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'ACTIVITY.SLEEP.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<modal-confirmation [message]="'ACTIVITY.SLEEP.DELETE-CONFIRMATION'|translate"
+                    (confirmation)="removeResource()"
+                    (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

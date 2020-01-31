@@ -71,6 +71,7 @@ export class StepsComponent implements OnInit, OnChanges {
         const steps = this.translateService.instant('TIME-SERIES.STEPS.STEPS');
 
         const xAxisOptions = {
+            show: !this.intraday,
             data: [],
             silent: false,
             splitLine: {
@@ -82,7 +83,7 @@ export class StepsComponent implements OnInit, OnChanges {
             type: 'bar',
             data: [],
             color: '#E97493',
-            barMaxWidth: 30,
+            barMaxWidth: '50px',
             animationDelay: function (idx) {
                 return idx * 10;
             }
@@ -91,24 +92,31 @@ export class StepsComponent implements OnInit, OnChanges {
         if (this.data && this.data.data_set) {
             if (this.intraday) {
                 this.data.data_set.forEach((elementStep: { time: string, value: string }) => {
-                    xAxisOptions.data.push(elementStep.time);
-                    seriesOptions.data.push({
-                        value: elementStep.value,
-                        formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
-                        time: elementStep.time
-                    });
+                    if (elementStep.value) {
+                        xAxisOptions.data.push(elementStep.time);
+                        seriesOptions.data.push({
+                            value: elementStep.value,
+                            formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
+                            time: elementStep.time
+                        });
+                    }
                 });
             } else {
                 this.data.data_set.forEach((elementStep: TimeSeriesItem) => {
-                    xAxisOptions.data.push(this.datePipe.transform(elementStep.date, 'shortDate'));
-                    seriesOptions.data.push({
-                        value: elementStep.value,
-                        formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
-                        time: this.datePipe.transform(elementStep.date, 'mediumTime')
-                    });
+                    if (elementStep.value) {
+                        xAxisOptions.data.push(this.datePipe.transform(elementStep.date, 'shortDate'));
+                        seriesOptions.data.push({
+                            value: elementStep.value,
+                            formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
+                            time: this.datePipe.transform(elementStep.date, 'mediumTime')
+                        });
+                    }
                 });
             }
         }
+
+        const grid = this.intraday ? [{ x: '5%', y: '7%', width: '100%', height: '90%' }] :
+            [{ x: '5%', y: '5%', width: '100%', height: '88%' }]
 
         this.options = {
             legend: {
@@ -116,13 +124,16 @@ export class StepsComponent implements OnInit, OnChanges {
                 align: 'left'
             },
             tooltip: {
+                trigger: 'axis',
                 formatter: function (params) {
-                    return `${params.name}<br>` +
-                        `${params.marker} ${params.data.formatted} ${steps}`;
+                    return `${params[0].name}<br>` +
+                        `${params[0].marker} ${params[0].data.formatted} ${steps}`;
                 }
             },
+            grid,
             dataZoom: {
-                show: true
+                show: true,
+                type: 'inside'
             },
             xAxis: xAxisOptions,
             yAxis: {},

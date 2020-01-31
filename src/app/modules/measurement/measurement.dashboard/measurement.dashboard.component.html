@@ -1,6 +1,7 @@
 <div class="container-fluid">
 
     <div class="grid grid-1" #gridDiv>
+        <!-- Weight -->
         <div class="item" style="width: 32.5%;height: 406px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
 
@@ -58,7 +59,7 @@
 
             </div>
         </div>
-
+        <!-- Height -->
         <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
 
@@ -86,7 +87,7 @@
 
             </div>
         </div>
-
+        <!-- Waist Circumference -->
         <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
 
@@ -119,7 +120,7 @@
 
             </div>
         </div>
-
+        <!-- Body Fat -->
         <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
                 <dashboard-card [title]="'MEASUREMENTS.FAT.TITLE'|translate"
@@ -147,7 +148,7 @@
                 </dashboard-card>
             </div>
         </div>
-
+        <!-- Body Temperature -->
         <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
                 <dashboard-card [title]="'MEASUREMENTS.BODY-TEMPERATURE.TITLE'|translate"
@@ -199,20 +200,17 @@
                 </dashboard-card>
             </div>
         </div>
-
+        <!-- Blood Pressure -->
         <div class="item" style="width: 49%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.49)+'px'}">
             <div class="item-content">
 
                 <dashboard-card [title]="'MEASUREMENTS.BLOOD-PRESSURE.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.blood_pressure]">
                     <div class="card-content" *ngIf="measurementLast && measurementLast.blood_pressure">
-                        <h2 class="p-2" *ngIf="!measurementLast.blood_pressure.systolic">
-                            - -
-                        </h2>
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/blood-pressure.svg">
-                            <h2 class="p-2" *ngIf="measurementLast.blood_pressure.systolic">
-                                {{(measurementLast.blood_pressure.systolic|number:'1.0-0')}}/{{(measurementLast.blood_pressure.diastolic|number:'1.0-0')}}<small>{{measurementLast.blood_pressure.unit}}</small>
+                            <h2 class="p-2" *ngIf="measurementLast.blood_pressure">
+                                {{measurementLast.blood_pressure.systolic?(measurementLast.blood_pressure.systolic|number:'1.0-0'):' - - '}}/{{measurementLast.blood_pressure.diastolic?(measurementLast.blood_pressure.diastolic|number:'1.0-0'):' - - '}}<small>{{measurementLast.blood_pressure.unit}}</small>
                             </h2>
                         </div>
                         <div class="p-2" style="display: flex; align-items: baseline">
@@ -237,7 +235,7 @@
 
             </div>
         </div>
-
+        <!-- Blood Glucose -->
         <div class="item" style="width: 49%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.49)+'px'}">
             <div class="item-content">
 
@@ -247,7 +245,7 @@
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/blood-glucose.svg">
                             <h2 class="p-2">
-                                {{measurementLast.blood_glucose.value ? (measurementLast.blood_glucose.value|number:'1.0-0') : ' - - '}}<small>{{measurementLast.blood_glucose.unit}}</small>
+                                {{measurementLast.blood_glucose.value ? (measurementLast.blood_glucose.value|number:'1.0-0') : ' - - '}}<small *ngIf="measurementLast.blood_glucose.value">{{measurementLast.blood_glucose.unit}}</small>
                             </h2>
                         </div>
                         <span class="badge badge-haniot"

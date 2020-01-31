@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series';
@@ -26,6 +26,7 @@ export class DistanceComponent implements OnInit, OnChanges {
         private datePipe: DatePipe,
         private translateService: TranslateService,
         private  distancePipe: DistancePipe,
+        private decimalPipe: DecimalPipe,
         private timeSeriesService: TimeSeriesService
     ) {
         this.data = new TimeSeries();
@@ -70,6 +71,7 @@ export class DistanceComponent implements OnInit, OnChanges {
     loadGraph() {
 
         const xAxisOptions = {
+            show: !this.intraday,
             data: [],
             silent: false,
             splitLine: {
@@ -81,7 +83,7 @@ export class DistanceComponent implements OnInit, OnChanges {
             type: 'bar',
             color: '#ffc04d',
             data: [],
-            barMaxWidth: '30%',
+            barMaxWidth: '50px',
             animationDelay: function (idx) {
                 return idx * 10;
             }
@@ -90,24 +92,31 @@ export class DistanceComponent implements OnInit, OnChanges {
         if (this.data && this.data.data_set) {
             if (this.intraday) {
                 this.data.data_set.forEach((element: { time: string, value: string }) => {
-                    xAxisOptions.data.push(element.time);
-                    seriesOptions.data.push({
-                        value: element.value,
-                        formatted: this.distancePipe.transform(element.value),
-                        time: element.time
-                    });
+                    if (element.value) {
+                        xAxisOptions.data.push(element.time);
+                        seriesOptions.data.push({
+                            value: element.value,
+                            formatted: this.decimalPipe.transform(element.value, '1.1-3') + 'm',
+                            time: element.time
+                        });
+                    }
                 });
             } else {
                 this.data.data_set.forEach((element: TimeSeriesItem) => {
-                    xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
-                    seriesOptions.data.push({
-                        value: element.value,
-                        formatted: this.distancePipe.transform(element.value),
-                        time: this.datePipe.transform(element.date, 'mediumTime')
-                    });
+                    if (element.value) {
+                        xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
+                        seriesOptions.data.push({
+                            value: element.value,
+                            formatted: this.distancePipe.transform(element.value),
+                            time: this.datePipe.transform(element.date, 'mediumTime')
+                        });
+                    }
                 });
             }
         }
+
+        const grid = this.intraday ? [{ x: '5%', y: '7%', width: '100%', height: '90%' }] :
+            [{ x: '5%', y: '5%', width: '100%', height: '88%' }]
 
         this.options = {
             legend: {
@@ -115,13 +124,22 @@ export class DistanceComponent implements OnInit, OnChanges {
                 align: 'left'
             },
             tooltip: {
+                trigger: 'axis',
                 formatter: function (params) {
-                    return `${params.name}<br>` +
-                        `${params.marker} ${params.data.formatted}`;
+                    const { changingThisBreaksApplicationSecurity } = params[0].data.formatted;
+                    if (changingThisBreaksApplicationSecurity) {
+                        return `${params[0].name}<br>` +
+                            `${params[0].marker}` +
+                            `${params[0].data.value > 1 ? changingThisBreaksApplicationSecurity : params[0].data.value + 'm'}`;
+                    }
+                    return `${params[0].name}<br>` +
+                        `${params[0].marker} ${params[0].data.formatted}`;
                 }
             },
+            grid,
             dataZoom: {
-                show: true
+                show: true,
+                type: 'inside'
             },
             xAxis: xAxisOptions,
             yAxis: {},

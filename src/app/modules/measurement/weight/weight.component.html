@@ -29,7 +29,7 @@
                     </div>
                     <p class="card-category">{{'MEASUREMENTS.COMPONENT.FAT'|translate}}: </p>
                     <h3 class="card-title" *ngIf="lastData && lastData.body_fat">
-                        {{lastData.body_fat + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}
+                        {{(lastData.body_fat|decimalFormatter) + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}
                     </h3>
                     <h3 class="card-title" *ngIf="!lastData || !lastData.body_fat">
                         {{'MEASUREMENTS.VALUE'|translate}}
@@ -229,7 +229,7 @@
                     </div>
                     <p class="card-category">{{'MEASUREMENTS.COMPONENT.FAT'|translate}}: </p>
                     <h3 class="card-title" *ngIf="lastData && lastData.body_fat">
-                        {{lastData.body_fat + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}
+                        {{(lastData.body_fat|decimalFormatter) + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}
                     </h3>
                     <h3 class="card-title" *ngIf="!lastData || !lastData.body_fat">
                         {{'MEASUREMENTS.VALUE'|translate}}

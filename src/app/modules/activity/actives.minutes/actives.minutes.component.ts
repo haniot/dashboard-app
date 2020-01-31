@@ -73,6 +73,7 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
         const activeMinutes = this.translateService.instant('TIME-SERIES.ACTIVE-MINUTES.ACTIVE-MINUTES');
 
         const xAxisOptions = {
+            show: !this.intraday,
             data: [],
             silent: false,
             splitLine: {
@@ -92,25 +93,31 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
         if (this.data && this.data.data_set) {
             if (this.intraday) {
                 this.data.data_set.forEach((element: { time: string, value: number }) => {
-                    xAxisOptions.data.push(element.time);
-                    seriesOptions.data.push({
-                        value: element.value / 60000,
-                        formatted: this.numberPipe.transform(element.value / 60000, '1.0-0'),
-                        time: element.time
-                    });
+                    if (element.value) {
+                        xAxisOptions.data.push(element.time);
+                        seriesOptions.data.push({
+                            value: element.value,
+                            formatted: element.value,
+                            time: element.time
+                        });
+                    }
                 });
             } else {
                 this.data.data_set.forEach((element: TimeSeriesItem) => {
-                    xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
-                    seriesOptions.data.push({
-                        value: element.value / 60000,
-                        formatted: this.numberPipe.transform(element.value / 60000, '1.0-0'),
-                        time: this.datePipe.transform(element.date, 'mediumTime')
-                    });
+                    if (element.value) {
+                        xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
+                        seriesOptions.data.push({
+                            value: element.value,
+                            formatted: element.value,
+                            time: this.datePipe.transform(element.date, 'mediumTime')
+                        });
+                    }
                 });
             }
         }
 
+        const grid = this.intraday ? [{ x: '5%', y: '7%', width: '100%', height: '90%' }] :
+            [{ x: '5%', y: '5%', width: '100%', height: '88%' }]
 
         this.options = {
             legend: {
@@ -118,13 +125,16 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
                 align: 'left'
             },
             tooltip: {
+                trigger: 'axis',
                 formatter: function (params) {
-                    return `${params.name}<br>` +
-                        `${params.marker} ${params.data.formatted} ${activeMinutes}`;
+                    return `${params[0].name}<br>` +
+                        `${params[0].marker} ${params[0].data.formatted} ${activeMinutes}`;
                 }
             },
+            grid,
             dataZoom: {
-                show: true
+                show: true,
+                type: 'inside'
             },
             xAxis: xAxisOptions,
             yAxis: {},
