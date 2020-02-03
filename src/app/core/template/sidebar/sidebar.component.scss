@@ -6,6 +6,10 @@
   width: 95%;
 }
 
+.nav-subitem {
+  margin-right: 2px;
+}
+
 #haniotTitle {
   color: $app-title-color;
   text-align: center;
@@ -85,4 +89,9 @@ label {
 
 .card-title {
   margin-bottom: 0px;
+}
+
+#arrowMenuPatient:hover {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5);
 }

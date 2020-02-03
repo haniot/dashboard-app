@@ -1,35 +1,11 @@
 <div class="main-content">
     <div class="container-fluid">
 
-        <div class="d-flex flex-row-reverse shared" style="height: 50px;">
-            <div class="p-2">
-                <i class="material-icons" [title]="'PATIENTS.VIEW-HABITS.TOVIEW-EVALUATIONS'|translate"
-                   [routerLink]="['/app/evaluations/nutritional',patientId]">assignment</i>
-            </div>
-            <div class="p-2">
-                {{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}:
-            </div>
-        </div>
-
-        <activity-dashboard [patientId]="patientId"></activity-dashboard>
-
-    </div>
-
-    <br>
-
-
-    <div class="container-fluid">
-
         <div class="row">
-
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">
 
                     <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-NUTRITIONAL-QUESTIONNAIRE'|translate">
-                        <!--Fundo preto do modal-->
-                        <!--                    <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
-                        <!--                         *ngIf="loadingNutritionalQuestionnaire">-->
-                        <!--                    </div>-->
 
                         <!--  Nutritional Questionnaires -->
                         <div class="container-fluid">
@@ -63,9 +39,9 @@
                                         <div class="card-header card-header-tabs card-header-danger">
                                             <div class="nav-tabs-navigation">
                                                 <div class="nav-tabs-wrapper">
-                                <span class="nav-tabs-title">
-                                    <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.NUTRITIONAL-QUESTIONNAIRE'|translate}}</h4>
-                                </span>
+                                        <span class="nav-tabs-title">
+                                            <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.NUTRITIONAL-QUESTIONNAIRE'|translate}}</h4>
+                                        </span>
                                                     <ul class="nav nav-tabs shared right" data-tabs="tabs">
                                                         <li class="nav-item"
                                                             [ngClass]="nutritionalQuestionnaireOptions.length?'actived':'disabled'">
@@ -84,6 +60,15 @@
                                         </div>
 
                                         <div class="card-body">
+                                            <div class="d-flex flex-row-reverse shared" style="height: 50px;">
+                                                <div class="p-2">
+                                                    <i class="material-icons" [title]="'PATIENTS.VIEW-HABITS.TOVIEW-EVALUATIONS'|translate"
+                                                       [routerLink]="['/app/evaluations/nutritional',patientId]">assignment</i>
+                                                </div>
+                                                <div class="p-2">
+                                                    {{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}:
+                                                </div>
+                                            </div>
 
                                             <div class="row justify-content-center">
 
@@ -190,9 +175,9 @@
                                         <div class="card-header card-header-tabs card-header-danger">
                                             <div class="nav-tabs-navigation">
                                                 <div class="nav-tabs-wrapper">
-                                <span class="nav-tabs-title">
-                                    <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.ODONTOLOGICAL-QUESTIONNAIRE'|translate}}</h4>
-                                </span>
+                                        <span class="nav-tabs-title">
+                                            <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.ODONTOLOGICAL-QUESTIONNAIRE'|translate}}</h4>
+                                        </span>
                                                     <ul class="nav nav-tabs shared right" data-tabs="tabs">
                                                         <li class="nav-item"
                                                             [ngClass]="odontologicalQuestionnaireOptions.length?'actived':'disabled'">
@@ -267,23 +252,11 @@
                         </div>
                     </mat-tab>
 
-
-                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.MEASUREMENTS'|translate">
-                        <measurement-component [patientId]="patientId" [configVisibility]="configVisibility"
-                                               *ngIf="showMeasurements && patientForm.get('id').value"></measurement-component>
-                    </mat-tab>
-
-                    <!--                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.LOG-MEASUREMENTS'|translate">-->
-                    <!--                        <measurement-logs [(patientId)]="patientId"-->
-                    <!--                                          *ngIf="showLogMeasurements && patientForm.get('id').value"></measurement-logs>-->
-                    <!--                    </mat-tab>-->
-
                 </mat-tab-group>
             </div>
         </div>
-
-
     </div>
+
 
 </div>
 

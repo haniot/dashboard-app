@@ -40,12 +40,10 @@ export class SleepListComponent implements OnInit {
     page: number;
     limit: number;
     length: number;
-    loadingMeasurements: boolean;
-    modalConfirmRemoveMeasurement: boolean;
-    cacheIdMeasurementRemove: string;
-    cacheListIdMeasurementRemove: Array<any>;
+    loadingSleeps: boolean;
+    cacheListIdSleepRemove: Array<any>;
     selectAll: boolean;
-    listCheckMeasurements: Array<boolean>;
+    listCheckSleeps: Array<boolean>;
     stateButtonRemoveSelected: boolean;
     /*In hours*/
     IDEAL_SLEEP_VALUE = 8;
@@ -70,16 +68,14 @@ export class SleepListComponent implements OnInit {
         this.patientId = '';
         this.showSpinner = false;
         this.filterChange = new EventEmitter();
-        this.listCheckMeasurements = new Array<boolean>();
-        this.cacheListIdMeasurementRemove = new Array<string>();
-        this.cacheIdMeasurementRemove = '';
+        this.listCheckSleeps = new Array<boolean>();
+        this.cacheListIdSleepRemove = new Array<string>();
         this.stateButtonRemoveSelected = false;
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
         this.filter = new SearchForPeriod();
-        this.loadingMeasurements = false;
-        this.modalConfirmRemoveMeasurement = false;
+        this.loadingSleeps = false;
         this.selectAll = false;
         this.listGraphIsEmpty = false;
     }
@@ -122,6 +118,7 @@ export class SleepListComponent implements OnInit {
                 this.listForLogs = httpResponse && httpResponse.body ? httpResponse.body : [];
                 this.length = httpResponse && httpResponse.headers ? parseInt(httpResponse.headers.get('x-total-count'), 10) : 0;
                 this.showSpinnerLogs = false;
+                this.initializeListChecks();
             })
             .catch(err => {
                 this.showSpinnerLogs = false;
@@ -288,8 +285,6 @@ export class SleepListComponent implements OnInit {
             ],
             series
         };
-
-        this.initializeListChecks();
     }
 
     loadSleepGraph(selected: any): void {
@@ -333,94 +328,76 @@ export class SleepListComponent implements OnInit {
         this.getAllSleepsForLogs();
     }
 
-    changeOnMeasurement(): void {
-        const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
-        this.selectAll = this.listForGraph.length === measurementsSelected.length;
+    changeOnSleep(): void {
+        const sleepsSelected = this.listCheckSleeps.filter(element => element === true);
+        this.selectAll = this.listForLogs.length === sleepsSelected.length;
         this.updateStateButtonRemoveSelected();
     }
 
     closeModalConfirmation() {
-        this.cacheIdMeasurementRemove = '';
-        this.modalConfirmRemoveMeasurement = false;
         this.modalService.close('modalConfirmation');
     }
 
     openModalConfirmation(measurementId: string) {
         this.modalService.open('modalConfirmation');
-        this.cacheIdMeasurementRemove = measurementId;
-        // this.modalConfirmRemoveMeasurement = true;
+        if (measurementId && measurementId !== '') {
+            this.cacheListIdSleepRemove = [measurementId]
+        }
     }
 
     initializeListChecks(): void {
         this.selectAll = false;
-        this.listCheckMeasurements = new Array<boolean>(this.listForGraph.length);
-        for (let i = 0; i < this.listCheckMeasurements.length; i++) {
-            this.listCheckMeasurements[i] = false;
+        this.listCheckSleeps = new Array<boolean>(this.listForLogs.length);
+        for (let i = 0; i < this.listCheckSleeps.length; i++) {
+            this.listCheckSleeps[i] = false;
         }
         this.updateStateButtonRemoveSelected();
     }
 
-    async removeMeasurement(): Promise<any> {
+    async removeSleep(): Promise<any> {
         this.modalService.close('modalConfirmation');
-        this.loadingMeasurements = true;
+        this.loadingSleeps = true;
         this.removingSleep = true;
-        if (this.cacheIdMeasurementRemove) {
-            this.sleepService.remove(this.patientId, this.cacheIdMeasurementRemove)
-                .then(measurements => {
-                    this.applyFilter(this.filter);
-                    this.loadingMeasurements = false;
-                    this.modalConfirmRemoveMeasurement = false;
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.SLEEP-REMOVED'));
-                })
-                .catch(() => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.SLEEP-NOT-REMOVED'));
-                    this.loadingMeasurements = false;
-                    this.modalConfirmRemoveMeasurement = false;
-                    this.removingSleep = false;
-                })
-        } else {
-            let occuredError = false;
-            for (let i = 0; i < this.cacheListIdMeasurementRemove.length; i++) {
-                try {
-                    const measurementRemove = this.cacheListIdMeasurementRemove[i];
-                    await this.sleepService.remove(this.patientId, measurementRemove);
-                } catch (e) {
-                    occuredError = true;
-                }
+        let occurredError = false;
+        for (let i = 0; i < this.cacheListIdSleepRemove.length; i++) {
+            try {
+                const measurementRemove = this.cacheListIdSleepRemove[i];
+                await this.sleepService.remove(this.patientId, measurementRemove);
+            } catch (e) {
+                occurredError = true;
             }
-            occuredError ? this.toastService
-                    .error(this.translateService.instant('TOAST-MESSAGES.SLEEP-NOT-REMOVED'))
-                : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.SLEEP-REMOVED'));
-
-            this.applyFilter(this.filter);
-            this.loadingMeasurements = false;
-            this.removingSleep = false;
-            this.modalConfirmRemoveMeasurement = false;
         }
+        occurredError ? this.toastService
+                .error(this.translateService.instant('TOAST-MESSAGES.SLEEP-NOT-REMOVED'))
+            : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.SLEEP-REMOVED'));
+
+        this.getAllSleepsForLogs();
+        this.loadingSleeps = false;
+        this.removingSleep = false;
     }
 
     removeSelected() {
-        const measurementsIdSelected: Array<string> = new Array<string>();
-        this.listCheckMeasurements.forEach((element, index) => {
+        const sleepsIdSelected: Array<string> = new Array<string>();
+        this.listCheckSleeps.forEach((element, index) => {
             if (element) {
-                measurementsIdSelected.push(this.listForGraph[index].id);
+                sleepsIdSelected.push(this.listForLogs[index].id);
             }
         })
-        this.cacheListIdMeasurementRemove = measurementsIdSelected;
+        this.cacheListIdSleepRemove = sleepsIdSelected;
         // this.modalConfirmRemoveMeasurement = true;
         this.openModalConfirmation('')
     }
 
-    selectAllMeasurements(): void {
+    selectAllSleeps(): void {
         const attribSelectAll = (element: any) => {
             return !this.selectAll;
         }
-        this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
+        this.listCheckSleeps = this.listCheckSleeps.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
     }
 
     updateStateButtonRemoveSelected(): void {
-        const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
+        const measurementsSelected = this.listCheckSleeps.filter(element => element === true);
         this.stateButtonRemoveSelected = !!measurementsSelected.length;
     }
 

@@ -41,16 +41,30 @@
 
     <ul class="nav">
 
-        <li routerLinkActive="active" class="nav-item">
+        <li class="nav-item" [ngClass]="activeHome">
             <a class="nav-link" [routerLink]="['/app/dashboard']" *ngIf="verifyScopes('Dashboard')">
                 <i class="material-icons">dashboard</i>
                 <p>{{'SHARED.HOME-PAGE' | translate}}</p>
             </a>
         </li>
 
+        <li class="nav-item" [ngClass]="activeMeasurementsPatients" *ngIf="getTypeUser()==='patient'">
+            <a class="nav-link" [routerLink]="['/app/patients',userId,'measurements']">
+                <i class="material-icons">equalizer</i>
+                <p>{{'SIDEBAR.MY-MEASUREMENTS'|translate}}</p>
+            </a>
+        </li>
+
+        <li class="nav-item" [ngClass]="activeQuestionnairesPatients" *ngIf="getTypeUser()==='patient'">
+            <a class="nav-link" [routerLink]="['/app/patients',userId,'questionnaires']">
+                <i class="material-icons">receipt</i>
+                <p>{{'SIDEBAR.MY-QUESTIONNAIRES'|translate}}</p>
+            </a>
+        </li>
+
         <li routerLinkActive="active" class="nav-item" *ngIf="verifyScopes('Users')">
             <a class="nav-link" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-               (click)="onclickMenuUser()">
+               (click)="onClickMenuUser()">
                 <p>
                     {{'SIDEBAR.USERS' | translate}}
                     <i class="material-icons">{{iconUserMenu}}</i>
@@ -92,11 +106,39 @@
             </a>
         </li>
 
-        <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" [routerLink]="['/app/patients']" *ngIf="verifyScopes('Patients')">
-                <i class="material-icons">face</i>
-                <p>{{'SHARED.PATIENTS' | translate}}</p>
+        <li class="nav-item" [ngClass]="activePatients" *ngIf="verifyScopes('Patients')">
+            <a class="nav-link"
+               [routerLink]="['/app/patients']"
+               (click)="onClickMenuPatient($event)">
+                <p>
+                    {{'SHARED.PATIENTS' | translate}}
+                    <i class="material-icons">face</i>
+                    <i id="arrowMenuPatient" class="material-icons float-right" (click)="changeIconMenuPatient()"
+                       [title]="iconPatientMenu==='keyboard_arrow_down'?('SIDEBAR.EXPAND-MENU'|translate):('SIDEBAR.SHRINK-MENU'|translate)" *ngIf="patientSelected">{{iconPatientMenu}}</i>
+                </p>
+
             </a>
+            <ul class="collapse list-unstyled submenu" [ngClass]="statePatientMenu"
+                id="patientSubmenu">
+                <li class="nav-subitem" [ngClass]="activeDashboardPatients" [ngClass]="activeDashboardPatients">
+                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'dashboard']">
+                        <i class="material-icons">view_quilt</i>
+                        <p>{{'SIDEBAR.DASHBOARD'|translate}}</p>
+                    </a>
+                </li>
+                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients">
+                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'measurements']">
+                        <i class="material-icons">equalizer</i>
+                        <p>{{'SIDEBAR.MEASUREMENTS'|translate}}</p>
+                    </a>
+                </li>
+                <li class="nav-subitem" [ngClass]="activeQuestionnairesPatients">
+                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'questionnaires']">
+                        <i class="material-icons">receipt</i>
+                        <p>{{'SIDEBAR.QUESTIONNAIRES'|translate}}</p>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li routerLinkActive="active" class="nav-item" *ngIf="isNotAdmin()" [ngClass]="activeMyEvaluations">

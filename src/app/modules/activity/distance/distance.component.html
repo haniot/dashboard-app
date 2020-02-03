@@ -11,8 +11,7 @@
                         <img src="../../../../assets/img/time-series/distance-white.png" width="30">
                     </div>
                     <p class="card-category">{{'TIME-SERIES.DISTANCE.TOTAL-DISTANCE'|translate}}: </p>
-                    <h3 class="card-title">
-                        {{data && data.summary ? (data.summary.total|distance) : 0}}
+                    <h3 class="card-title" [innerHTML]="data && data.summary ? (data.summary.total|distance) : '0<small>m</small>'">
                     </h3>
                 </div>
             </div>
@@ -46,8 +45,7 @@
                     <img src="../../../../assets/img/time-series/distance-white.png" width="30">
                 </div>
                 <p class="card-category">{{'TIME-SERIES.DISTANCE.TOTAL-DISTANCE'|translate}}: </p>
-                <h3 class="card-title">
-                    {{data && data.summary ? (data.summary.total|distance) : 0}}
+                <h3 class="card-title" [innerHTML]="data && data.summary ? (data.summary.total|distance) : '0<small>m</small>'">
                 </h3>
             </div>
         </div>

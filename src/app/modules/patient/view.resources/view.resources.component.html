@@ -5,44 +5,55 @@
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.weight">
-                    <weight [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <weight [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                             [includeCard]="true" [includeLogs]="true"
-                            [showSpinner]="!list.length && !listIsEmpty"></weight>
+                            [showSpinner]="!list.length && !listIsEmpty"
+                            [dataForLogs]="listForLogs"
+                            (remove)="openModalConfirmation($event)"></weight>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_fat">
-                    <fat [data]="list" [filterVisibility]="true" [patientId]="patientId"
-                         [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"></fat>
+                    <fat [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
+                         [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"
+                         [dataForLogs]="listForLogs" (remove)="openModalConfirmation($event)"></fat>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.height">
-                    <height [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <height [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                             [includeCard]="true" [includeLogs]="true"
-                            [showSpinner]="!list.length && !listIsEmpty"></height>
+                            [showSpinner]="!list.length && !listIsEmpty"
+                            [dataForLogs]="listForLogs" (remove)="openModalConfirmation($event)"></height>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.waist_circumference">
-                    <waist-circunference [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <waist-circunference [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                                          [includeCard]="true" [includeLogs]="true"
-                                         [showSpinner]="!list.length && !listIsEmpty"></waist-circunference>
+                                         [showSpinner]="!list.length && !listIsEmpty"
+                                         [dataForLogs]="listForLogs"
+                                         (remove)="openModalConfirmation($event)"></waist-circunference>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_temperature">
-                    <body-temperature [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <body-temperature [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                                       [includeCard]="true" [includeLogs]="true"
-                                      [showSpinner]="!list.length && !listIsEmpty"></body-temperature>
+                                      [showSpinner]="!list.length && !listIsEmpty"
+                                      [dataForLogs]="listForLogs"
+                                      (remove)="openModalConfirmation($event)"></body-temperature>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.blood_glucose">
-                    <blood-glucose [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <blood-glucose [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                                    [includeCard]="true" [includeLogs]="true"
-                                   [showSpinner]="!list.length && !listIsEmpty"></blood-glucose>
+                                   [showSpinner]="!list.length && !listIsEmpty"
+                                   [dataForLogs]="listForLogs" (remove)="openModalConfirmation($event)"></blood-glucose>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.blood_pressure">
-                    <blood-pressure [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                    <blood-pressure [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                                     [includeCard]="true" [includeLogs]="true"
-                                    [showSpinner]="!list.length && !listIsEmpty"></blood-pressure>
+                                    [showSpinner]="!list.length && !listIsEmpty"
+                                    [dataForLogs]="listForLogs"
+                                    (remove)="openModalConfirmation($event)"></blood-pressure>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.steps">
@@ -79,3 +90,32 @@
         </div>
     </div>
 </div>
+
+<div *ngIf="removingResource">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner
+                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<modal-confirmation
+        [message]="(cacheListIdMeasurementRemove && cacheListIdMeasurementRemove.length && cacheListIdMeasurementRemove.length>1)?('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate) +
+        ' '+cacheListIdMeasurementRemove.length+' ' + ('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
+        :'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
+        (confirmation)="removeResources()"
+        (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

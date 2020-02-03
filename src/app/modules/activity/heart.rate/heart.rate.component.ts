@@ -78,16 +78,16 @@ export class HeartRateComponent implements OnInit, OnChanges {
         const name_peak = this.translateService.instant('TIME-SERIES.HEART-RATE.PEAK');
         const name_out_of_range = this.translateService.instant('TIME-SERIES.HEART-RATE.OUT-OF-RANGE');
 
-        const xAxisOptions = [{ type: 'category', boundaryGap: false, data: [] }];
+        const xAxisOptions = [{ type: 'category', show: true, boundaryGap: false, data: [] }];
 
         const seriesOptions = [
-            { name: name_out_of_range, stack: 'stack', type: 'bar', data: [], barMaxWidth: '20%', color: '#999' },
+            { name: name_out_of_range, stack: 'stack', type: 'bar', data: [], barMaxWidth: '20%', color: '#4EC5C5' },
             { name: name_fat_burn, stack: 'stack', type: 'bar', data: [], barMaxWidth: '30%', color: '#FFC023' },
             { name: name_cardio, stack: 'stack', type: 'bar', data: [], barMaxWidth: '30%', color: '#FD8518' },
             { name: name_peak, stack: 'stack', type: 'bar', data: [], barMaxWidth: '30%', color: '#E60013' }
         ];
 
-        const xAxisOptionsLastDate = { data: [] };
+        const xAxisOptionsLastDate = { show: false, data: [] };
 
         const seriesOptionsLastDate = {
             type: 'line',
@@ -112,33 +112,29 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 },
                 data: [{
                     label: {
-                        formatter: low
+                        formatter: low,
+                        position: 'middle'
                     },
                     yAxis: 50
                 }, {
                     label: {
-                        formatter: normal
+                        formatter: normal,
+                        position: 'middle'
                     },
                     yAxis: 100
                 }, {
                     label: {
-                        formatter: high
+                        formatter: high,
+                        position: 'middle'
                     },
                     yAxis: 200
                 }]
             },
             markPoint: {
+                silent: false,
                 label: {
                     color: '#FFFFFF',
-                    fontSize: 10,
-                    formatter: function (params) {
-                        if (params.data.type === 'max') {
-                            return max;
-                        }
-                        if (params.data.type === 'min') {
-                            return min;
-                        }
-                    }
+                    fontSize: 12
                 },
                 data: [
                     { type: 'max' },
@@ -147,46 +143,57 @@ export class HeartRateComponent implements OnInit, OnChanges {
             }
         };
 
+        let min_value = Number.MAX_SAFE_INTEGER;
+
         if (this.data && this.data.data_set) {
+
+            this.zones = this.data.summary && this.data.summary.zones ? this.data.summary.zones : new HeartRateZone();
+
             if (this.intraday) {
                 this.data.data_set.forEach((element: { time: string, value: number }) => {
-                    xAxisOptionsLastDate.data.push(element.time);
-                    seriesOptionsLastDate.data.push({
-                        value: element.value,
-                        time: element.time
-                    });
+                    min_value = element.value < min_value ? element.value : min_value;
+                    if (element.value) {
+                        xAxisOptionsLastDate.data.push(element.time);
+                        seriesOptionsLastDate.data.push({
+                            value: element.value,
+                            time: element.time
+                        });
+                    }
                 });
             } else {
                 this.data.data_set.forEach((element: HeartRateItem) => {
                     const { zones: { fat_burn, cardio, out_of_range, peak } } = element;
-                    if (xAxisOptions[0].data.length === 0) {
-                        xAxisOptions[0].data.push('');
-                        seriesOptions[0].data.push({ value: 0, formatted: '', time: '' });
-                        seriesOptions[1].data.push({ value: 0, formatted: '', time: '' });
-                        seriesOptions[2].data.push({ value: 0, formatted: '', time: '' });
-                        seriesOptions[3].data.push({ value: 0, formatted: '', time: '' });
+                    if ((fat_burn && fat_burn.duration) || (cardio && cardio.duration) ||
+                        (out_of_range && out_of_range.duration) || (peak && peak.duration)) {
+                        if (xAxisOptions[0].data.length === 0) {
+                            xAxisOptions[0].data.push('');
+                            seriesOptions[0].data.push({ value: 0, formatted: '', time: '' });
+                            seriesOptions[1].data.push({ value: 0, formatted: '', time: '' });
+                            seriesOptions[2].data.push({ value: 0, formatted: '', time: '' });
+                            seriesOptions[3].data.push({ value: 0, formatted: '', time: '' });
+                        }
+                        xAxisOptions[0].data.push(this.datePipe.transform(element.date, 'shortDate'));
+                        seriesOptions[0].data.push({
+                            value: out_of_range.duration,
+                            formatted: this.millisecondPipe.transform(out_of_range.duration),
+                            time: this.datePipe.transform(element.date, 'mediumTime')
+                        });
+                        seriesOptions[1].data.push({
+                            value: fat_burn.duration,
+                            formatted: this.millisecondPipe.transform(fat_burn.duration),
+                            time: this.datePipe.transform(element.date, 'mediumTime')
+                        });
+                        seriesOptions[2].data.push({
+                            value: cardio.duration,
+                            formatted: this.millisecondPipe.transform(cardio.duration),
+                            time: this.datePipe.transform(element.date, 'mediumTime')
+                        });
+                        seriesOptions[3].data.push({
+                            value: peak.duration,
+                            formatted: this.millisecondPipe.transform(peak.duration),
+                            time: this.datePipe.transform(element.date, 'mediumTime')
+                        });
                     }
-                    xAxisOptions[0].data.push(this.datePipe.transform(element.date, 'shortDate'));
-                    seriesOptions[0].data.push({
-                        value: out_of_range.duration,
-                        formatted: this.millisecondPipe.transform(out_of_range.duration),
-                        time: this.datePipe.transform(element.date, 'mediumTime')
-                    });
-                    seriesOptions[1].data.push({
-                        value: fat_burn.duration,
-                        formatted: this.millisecondPipe.transform(fat_burn.duration),
-                        time: this.datePipe.transform(element.date, 'mediumTime')
-                    });
-                    seriesOptions[2].data.push({
-                        value: cardio.duration,
-                        formatted: this.millisecondPipe.transform(cardio.duration),
-                        time: this.datePipe.transform(element.date, 'mediumTime')
-                    });
-                    seriesOptions[3].data.push({
-                        value: peak.duration,
-                        formatted: this.millisecondPipe.transform(peak.duration),
-                        time: this.datePipe.transform(element.date, 'mediumTime')
-                    });
                 });
                 xAxisOptions[0].data.push('');
                 seriesOptions[0].data.push({ value: 0, formatted: '', time: '' });
@@ -211,14 +218,21 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 data: [name_fat_burn, name_cardio, name_peak, name_out_of_range]
             },
             xAxis: xAxisOptions,
-            yAxis: [
-                { type: 'value' }
-            ],
-            dataZoom: [
-                {
-                    type: 'slider'
+            yAxis: {
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    formatter: function (value) {
+                        return Math.floor(value / 60000) + 'min';
+                    }
                 }
-            ],
+            },
+            grid: [{ x: '6%', y: '5%', width: '93%', height: '88%' }],
+            dataZoom: {
+                show: true,
+                type: 'inside'
+            },
             series: seriesOptions
         };
 
@@ -248,18 +262,18 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 axisLabel: {
                     formatter: '{value} bpm'
                 },
-                min: 0,
-                max: 200
+                min: (min_value - 5)
             },
-            dataZoom: [
-                {
-                    type: 'slider'
-                }
-            ],
+            grid: [{ x: '7%', y: '8%', width: '93%', height: '86%' }],
+            dataZoom: {
+                show: true,
+                type: 'inside'
+            },
             visualMap: {
                 orient: 'horizontal',
                 top: 20,
-                right: 0,
+                left: '30%',
+                right: '30%',
                 pieces: [{
                     gt: this.zones.fat_burn.min,
                     lte: this.zones.fat_burn.max,
@@ -279,7 +293,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
                     gt: this.zones.out_of_range.min,
                     lte: this.zones.out_of_range.max,
                     label: name_out_of_range,
-                    color: '#999'
+                    color: '#4EC5C5'
                 }
                 ]
             },

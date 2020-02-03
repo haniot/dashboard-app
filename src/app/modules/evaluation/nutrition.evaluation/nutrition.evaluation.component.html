@@ -376,71 +376,6 @@
 
                                                 </div>
 
-                                                <!-- Frequência cardiaca -->
-                                                <!--                                            <div class="container">-->
-
-                                                <!--                                                <div class="row">-->
-
-                                                <!--                                                    <div class="card card-stats">-->
-                                                <!--                                                        <div class="card-header card-header-timer card-header-icon">-->
-                                                <!--                                                            <div class="card-icon">-->
-                                                <!--                                                                <img src="../../../../assets/img/haniot/heart-rate.png"-->
-                                                <!--                                                                     alt="">-->
-                                                <!--                                                            </div>-->
-                                                <!--                                                            <span class="badge badge-haniot category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE'|translate}}</span>-->
-                                                <!--                                                        </div>-->
-                                                <!--                                                        <div class="card-footer">-->
-                                                <!--                                                            <div class="container">-->
-
-                                                <!--                                                                <div class="row justify-content-center">-->
-
-                                                <!--                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">-->
-                                                <!--                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-MIN'|translate}}</span>-->
-                                                <!--                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}-->
-                                                <!--                                                                            : </p>-->
-                                                <!--                                                                        <h3 class="card-title">-->
-                                                <!--                                                                            {{nutritionalEvaluation.heart_rate.min}}-->
-                                                <!--                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>-->
-                                                <!--                                                                        </h3>-->
-                                                <!--                                                                    </div>-->
-
-                                                <!--                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">-->
-                                                <!--                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-AVERAGE'|translate}}</span>-->
-                                                <!--                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}-->
-                                                <!--                                                                            : </p>-->
-                                                <!--                                                                        <h3 class="card-title">-->
-                                                <!--                                                                            {{nutritionalEvaluation.heart_rate.average}}-->
-                                                <!--                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>-->
-                                                <!--                                                                        </h3>-->
-                                                <!--                                                                    </div>-->
-
-                                                <!--                                                                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">-->
-                                                <!--                                                                        <span class="badge badge-haniot">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-MAX'|translate}}</span>-->
-                                                <!--                                                                        <p class="card-category">{{'MEASUREMENTS.VALUE'|translate}}-->
-                                                <!--                                                                            : </p>-->
-                                                <!--                                                                        <h3 class="card-title">-->
-                                                <!--                                                                            {{nutritionalEvaluation.heart_rate.max}}-->
-                                                <!--                                                                            <small>{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.HEART-RATE-UNIT'|translate}}</small>-->
-                                                <!--                                                                        </h3>-->
-                                                <!--                                                                    </div>-->
-
-                                                <!--                                                                </div>-->
-
-                                                <!--                                                                <div class="row">-->
-                                                <!--                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">-->
-                                                <!--                                                                        <hr>-->
-                                                <!--                                                                    </div>-->
-                                                <!--                                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center echarts-div-graph"-->
-                                                <!--                                                                         echarts [options]="optionsHeartRate"></div>-->
-                                                <!--                                                                </div>-->
-                                                <!--                                                            </div>-->
-                                                <!--                                                        </div>-->
-
-                                                <!--                                                    </div>-->
-
-                                                <!--                                                </div>-->
-                                                <!--                                            </div>-->
-
                                             </div>
 
 
@@ -461,7 +396,7 @@
                                                     <haniot-card [title]="'HABITS.PHYSICAL-ACTIVITY.TITLE'|translate"
                                                                  [subtitle]="'HABITS.PHYSICAL-ACTIVITY.SUBTITLE'|translate">
                                                         <physical-activity-habits
-                                                                [(physicalRecord)]="nutritionalEvaluation.physical_activity_habits">
+                                                                [physicalRecord]="nutritionalEvaluation.physical_activity_habits">
                                                         </physical-activity-habits>
                                                     </haniot-card>
                                                 </div>
@@ -470,7 +405,7 @@
                                                     <haniot-card [title]="'HABITS.FEEDING.TITLE'|translate"
                                                                  [subtitle]="'HABITS.FEEDING.SUBTITLE'|translate">
                                                         <feeding-habits
-                                                                [(feedingHabitsRecord)]="nutritionalEvaluation.feeding_habits_record">
+                                                                [feedingHabitsRecord]="nutritionalEvaluation.feeding_habits_record">
                                                         </feeding-habits>
                                                     </haniot-card>
                                                 </div>
@@ -479,7 +414,7 @@
                                                     <haniot-card [title]="'HABITS.MEDICAL-RECORD.TITLE'|translate"
                                                                  [subtitle]="'HABITS.MEDICAL-RECORD.SUBTITLE'|translate">
                                                         <medical-record
-                                                                [(medicalRecord)]="nutritionalEvaluation.medical_record"></medical-record>
+                                                                [medicalRecord]="nutritionalEvaluation.medical_record"></medical-record>
                                                     </haniot-card>
                                                 </div>
 
@@ -487,7 +422,7 @@
                                                     <haniot-card [title]="'HABITS.SLEEP.TITLE'|translate"
                                                                  [subtitle]="'HABITS.SLEEP.SUBTITLE'|translate">
                                                         <sleep-habits
-                                                                [(sleepHabit)]="nutritionalEvaluation.sleep_habit"></sleep-habits>
+                                                                [sleepHabit]="nutritionalEvaluation.sleep_habit"></sleep-habits>
                                                     </haniot-card>
                                                 </div>
 
@@ -507,38 +442,38 @@
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                      *ngIf="listWeight.length">
-                                                    <weight [(data)]="listWeight" [filterVisibility]="false"></weight>
+                                                    <weight [dataForGraph]="listWeight" [filterVisibility]="false"></weight>
                                                 </div>
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                      *ngIf="listFat.length">
-                                                    <fat [data]="listFat"></fat>
+                                                    <fat [dataForGraph]="listFat"></fat>
                                                 </div>
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                      *ngIf="listHeight.length">
-                                                    <height [data]="listHeight"></height>
+                                                    <height [dataForGraph]="listHeight"></height>
                                                 </div>
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                      *ngIf="listWaistCircunference.length">
                                                     <waist-circunference
-                                                            [data]="listWaistCircunference"></waist-circunference>
+                                                            [dataForGraph]="listWaistCircunference"></waist-circunference>
                                                 </div>
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                      *ngIf="listBodyTemperature.length">
-                                                    <body-temperature [data]="listBodyTemperature"></body-temperature>
+                                                    <body-temperature [dataForGraph]="listBodyTemperature"></body-temperature>
                                                 </div>
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                      *ngIf="listBloodGlucose.length">
-                                                    <blood-glucose [data]="listBloodGlucose"></blood-glucose>
+                                                    <blood-glucose [dataForGraph]="listBloodGlucose"></blood-glucose>
                                                 </div>
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                                      *ngIf="listBloodPressure.length">
-                                                    <blood-pressure [data]="listBloodPressure"></blood-pressure>
+                                                    <blood-pressure [dataForGraph]="listBloodPressure"></blood-pressure>
                                                 </div>
 
                                                 <!--                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->

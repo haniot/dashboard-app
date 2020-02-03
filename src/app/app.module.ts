@@ -23,6 +23,7 @@ import { SelectPilotStudyService } from './shared/shared.components/select.pilot
 import { environment } from '../environments/environment';
 import { LanguagesConfiguration } from '../assets/i18n/config.js';
 import { DashboardService } from './modules/dashboard/services/dashboard.service';
+import { LocalStorageService } from './shared/shared.services/local.storage.service'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -83,7 +84,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
         SelectPilotStudyService,
         DashboardService,
-        DecimalPipe
+        DecimalPipe,
+        LocalStorageService
     ],
     bootstrap: [AppComponent]
 })

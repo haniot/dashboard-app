@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { PhysicalActivity } from '../models/physical.activity'
 import { environment } from '../../../../environments/environment'
-import { TimeSeries } from '../models/time.series'
 
 @Injectable()
 export class PhysicalActivitiesService {
@@ -28,7 +27,7 @@ export class PhysicalActivitiesService {
             myParams = myParams.append('limit', String(limit));
         }
 
-        myParams = myParams.append('sort', '+created_at');
+        myParams = myParams.append('sort', '-start_time');
 
         const url = `${environment.api_url}/${this.version}/patients/${patientId}/physicalactivities`;
 

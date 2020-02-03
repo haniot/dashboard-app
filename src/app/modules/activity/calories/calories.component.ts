@@ -70,6 +70,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
         const calories = this.translateService.instant('TIME-SERIES.CALORIES.CALORIES')
 
         const xAxisOptions = {
+            show: !this.intraday,
             data: [],
             silent: false,
             splitLine: {
@@ -80,7 +81,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
             type: 'bar',
             color: '#ffc04d',
             data: [],
-            barMaxWidth: '30%',
+            barMaxWidth: '50px',
             animationDelay: function (idx) {
                 return idx * 10;
             }
@@ -89,24 +90,31 @@ export class CaloriesComponent implements OnInit, OnChanges {
         if (this.data && this.data.data_set) {
             if (this.intraday) {
                 this.data.data_set.forEach((element: { time: string, value: number }) => {
-                    xAxisOptions.data.push(element.time);
-                    seriesOptions.data.push({
-                        value: Math.floor(element.value),
-                        formatted: this.numberPipe.transform(element.value, '1.0-0'),
-                        time: element.time
-                    });
+                    if (element.value) {
+                        xAxisOptions.data.push(element.time);
+                        seriesOptions.data.push({
+                            value: Math.floor(element.value),
+                            formatted: this.numberPipe.transform(element.value, '1.0-0'),
+                            time: element.time
+                        });
+                    }
                 });
             } else {
                 this.data.data_set.forEach((element: TimeSeriesItem) => {
-                    xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
-                    seriesOptions.data.push({
-                        value: Math.floor(element.value),
-                        formatted: this.numberPipe.transform(element.value, '1.0-0'),
-                        time: this.datePipe.transform(element.date, 'mediumTime')
-                    });
+                    if (element.value) {
+                        xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
+                        seriesOptions.data.push({
+                            value: Math.floor(element.value),
+                            formatted: this.numberPipe.transform(element.value, '1.0-0'),
+                            time: this.datePipe.transform(element.date, 'mediumTime')
+                        });
+                    }
                 });
             }
         }
+
+        const grid = this.intraday ? [{ x: '5%', y: '7%', width: '100%', height: '90%' }] :
+            [{ x: '5%', y: '5%', width: '100%', height: '88%' }]
 
         this.options = {
             legend: {
@@ -114,13 +122,16 @@ export class CaloriesComponent implements OnInit, OnChanges {
                 align: 'left'
             },
             tooltip: {
+                trigger: 'axis',
                 formatter: function (params) {
-                    return `${params.name}<br>` +
-                        `${params.marker} ${params.data.formatted} ${calories}`;
+                    return `${params[0].name}<br>` +
+                        `${params[0].marker} ${params[0].data.formatted} ${calories}`;
                 }
             },
+            grid,
             dataZoom: {
-                show: true
+                show: true,
+                type: 'inside'
             },
             xAxis: xAxisOptions,
             yAxis: {},

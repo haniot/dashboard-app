@@ -18,28 +18,27 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['../shared.style/shared.styles.scss']
 })
 export class BloodGlucoseComponent implements OnInit, OnChanges {
-    @Input() data: Array<BloodGlucose>;
+    @Input() dataForGraph: Array<BloodGlucose>;
+    @Input() dataForLogs: Array<BloodGlucose>;
     @Input() filterVisibility: boolean;
     @Input() patientId: string;
     @Input() includeCard: boolean;
     @Input() includeLogs: boolean;
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
+    @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     lastData: BloodGlucose;
     options: any;
     echartsInstance: any;
-
-    listIsEmpty: boolean;
+    logsIsEmpty: boolean;
+    logsLoading: boolean;
     filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
     limit: number;
     length: number;
-    loadingMeasurements: boolean;
-    modalConfirmRemoveMeasurement: boolean;
-    cacheIdMeasurementRemove: string;
-    cacheListIdMeasurementRemove: Array<any>;
+    removingMeasurements: boolean;
     selectAll: boolean;
     listCheckMeasurements: Array<boolean>;
     stateButtonRemoveSelected: boolean;
@@ -50,28 +49,29 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         private translateService: TranslateService,
         private toastService: ToastrService
     ) {
-        this.data = new Array<BloodGlucose>();
+        this.dataForGraph = new Array<BloodGlucose>();
+        this.dataForLogs = new Array<BloodGlucose>();
         this.lastData = new BloodGlucose();
         this.filterVisibility = false;
         this.patientId = '';
         this.showSpinner = false;
         this.filterChange = new EventEmitter();
         this.listCheckMeasurements = new Array<boolean>();
-        this.cacheListIdMeasurementRemove = new Array<string>();
-        this.cacheIdMeasurementRemove = '';
         this.stateButtonRemoveSelected = false;
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
         this.filter = new SearchForPeriod();
-        this.loadingMeasurements = false;
-        this.modalConfirmRemoveMeasurement = false;
+        this.removingMeasurements = false;
         this.selectAll = false;
-        this.listIsEmpty = false;
+        this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>();
     }
 
     ngOnInit(): void {
         this.loadGraph();
+        if (this.includeCard) {
+            this.loadMeasurements();
+        }
     }
 
     onChartInit(event) {
@@ -90,16 +90,12 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const glucose = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.GLUCOSE');
         const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
         const at = this.translateService.instant('SHARED.AT');
-        const hypoglycemia = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.HYPOGLYCEMIA');
-        const normal = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.NORMAL');
-        const target = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.TARGET');
         const upperLimit = this.translateService.instant('SHARED.UPPER-LIMIT');
         const classification = this.translateService.instant('SHARED.CLASSIFICATION');
 
-        if (this.data.length > 1) {
-            this.lastData = this.data[this.data.length - 1];
-        } else {
-            this.lastData = this.data[0];
+        if (!this.includeCard) {
+            const length = this.dataForGraph ? this.dataForGraph.length : 0;
+            this.lastData = length ? this.dataForGraph[length - 1] : new BloodGlucose();
         }
 
         const xAxis = {
@@ -159,7 +155,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 barMaxWidth: 100,
                 color: '#e57373',
                 markPoint: markPoint,
-                markLine: {
+                markArea: {
                     silent: false,
                     tooltip: {
                         trigger: 'item',
@@ -172,22 +168,53 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                         }
                     },
                     data: [
-                        {
-                            label: {
-                                formatter: hypoglycemia
+                        // {
+                        //     label: {
+                        //         formatter: hypoglycemia,
+                        //         position: 'start'
+                        //     },
+                        //     yAxis: 70
+                        // }, {
+                        //     label: {
+                        //         formatter: normal,
+                        //         position: 'start'
+                        //     },
+                        //     yAxis: 140
+                        // }, {
+                        //     label: {
+                        //         formatter: target,
+                        //         position: 'start'
+                        //     },
+                        //     yAxis: 180
+                        // }
+                        [
+                            {
+                                yAxis: 0,
+                                itemStyle: {
+                                    color: 'rgba(0,128,255,0.1)'
+                                }
                             },
-                            yAxis: 70
-                        }, {
-                            label: {
-                                formatter: normal
+                            {
+                                yAxis: 70
+                            }
+                        ],
+                        [
+                            {
+                                yAxis: 70,
+                                itemStyle: { color: 'rgba(25,142,125,0.1)' }
                             },
-                            yAxis: 140
-                        }, {
-                            label: {
-                                formatter: target
+                            {
+                                yAxis: 140
+                            }
+                        ],
+                        [
+                            {
+                                yAxis: 140,
+                                itemStyle: { color: 'rgba(252,204,0,0.1)' }
                             },
-                            yAxis: 250
-                        }]
+                            {}
+                        ]
+                    ]
                 }
             },
             {
@@ -264,7 +291,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         // });
 
 
-        this.data.forEach((element: BloodGlucose, index) => {
+        this.dataForGraph.forEach((element: BloodGlucose, index) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
             const newDate = this.datePipe.transform(element.timestamp, 'short');
             const findDate = xAxis.data.find(currentDate => {
@@ -331,6 +358,9 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             legend: {
                 data: [preprandial, postprandial, fasting, casual, bedtime]
             },
+            grid: [
+                { x: '8%', y: '9%', width: '100%' }
+            ],
             xAxis: xAxis,
             yAxis: [
                 {
@@ -355,10 +385,10 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, filter)
             .then(httpResponse => {
-                this.data = httpResponse.body;
+                this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
-                this.updateGraph(this.data);
-                this.filterChange.emit(this.data);
+                this.updateGraph(this.dataForGraph);
+                this.filterChange.emit(this.dataForGraph);
             })
             .catch(() => {
                 this.showSpinner = false;
@@ -439,14 +469,6 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.echartsInstance.setOption(this.options);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if ((changes.data.currentValue && changes.data.previousValue
-            && changes.data.currentValue.length !== changes.data.previousValue.length) ||
-            (changes.data.currentValue.length && !changes.data.previousValue)) {
-            this.loadGraph();
-        }
-    }
-
     clickPagination(event) {
         this.pageEvent = event;
         this.page = event.pageIndex + 1;
@@ -456,86 +478,51 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     changeOnMeasurement(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
-        this.selectAll = this.data.length === measurementsSelected.length;
+        this.selectAll = this.dataForGraph.length === measurementsSelected.length;
         this.updateStateButtonRemoveSelected();
     }
 
-    closeModalConfimation() {
-        this.cacheIdMeasurementRemove = '';
-        this.modalConfirmRemoveMeasurement = false;
-    }
-
     loadMeasurements(): any {
+        this.logsLoading = true;
+        this.dataForLogs = [];
         this.measurementService
-            .getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, this.page, this.limit, this.filter)
+            .getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, this.page, this.limit)
             .then((httpResponse) => {
-                this.data = httpResponse.body;
-                this.listIsEmpty = this.data.length === 0;
+                this.dataForLogs = httpResponse.body;
+                this.logsIsEmpty = this.dataForLogs.length === 0;
+                this.lastData = httpResponse.body[0];
+                this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
+                this.logsLoading = false;
             })
             .catch(() => {
-                this.listIsEmpty = true;
+                this.logsLoading = false;
+                this.logsIsEmpty = true;
+                this.lastData = new BloodGlucose();
             });
     }
 
     openModalConfirmation(measurementId: string) {
-        this.cacheIdMeasurementRemove = measurementId;
-        this.modalConfirmRemoveMeasurement = true;
+        this.remove.emit({ type: EnumMeasurementType.blood_glucose, resourceId: measurementId })
     }
 
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
-        this.listCheckMeasurements = new Array<boolean>(this.data.length);
+        this.listCheckMeasurements = new Array<boolean>(this.dataForLogs.length);
         for (let i = 0; i < this.listCheckMeasurements.length; i++) {
             this.listCheckMeasurements[i] = false;
         }
         this.updateStateButtonRemoveSelected();
     }
 
-    async removeMeasurement(): Promise<any> {
-        this.loadingMeasurements = true;
-        if (!this.cacheListIdMeasurementRemove || !this.cacheListIdMeasurementRemove.length) {
-            this.measurementService.remove(this.patientId, this.cacheIdMeasurementRemove)
-                .then(measurements => {
-                    this.applyFilter(this.filter);
-                    this.loadingMeasurements = false;
-                    this.modalConfirmRemoveMeasurement = false;
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
-                })
-                .catch(() => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'));
-                    this.loadingMeasurements = false;
-                    this.modalConfirmRemoveMeasurement = false;
-                })
-        } else {
-            let occuredError = false;
-            for (let i = 0; i < this.cacheListIdMeasurementRemove.length; i++) {
-                try {
-                    const measurementRemove = this.cacheListIdMeasurementRemove[i];
-                    await this.measurementService.remove(this.patientId, measurementRemove.id);
-                } catch (e) {
-                    occuredError = true;
-                }
-            }
-            occuredError ? this.toastService
-                    .error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'))
-                : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
-
-            this.applyFilter(this.filter);
-            this.loadingMeasurements = false;
-            this.modalConfirmRemoveMeasurement = false;
-        }
-    }
-
     removeSelected() {
         const measurementsIdSelected: Array<string> = new Array<string>();
         this.listCheckMeasurements.forEach((element, index) => {
             if (element) {
-                measurementsIdSelected.push(this.data[index].id);
+                measurementsIdSelected.push(this.dataForLogs[index].id);
             }
         })
-        this.cacheListIdMeasurementRemove = measurementsIdSelected;
-        this.modalConfirmRemoveMeasurement = true;
+        this.remove.emit({ type: EnumMeasurementType.blood_glucose, resourceId: measurementsIdSelected })
     }
 
     selectAllMeasurements(): void {
@@ -553,6 +540,16 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     trackById(index, item) {
         return item.id;
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if ((changes.dataForGraph && changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
+            && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
+            (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
+            this.loadGraph();
+        }
+        this.logsIsEmpty = this.dataForLogs.length === 0;
+        this.initializeListCheckMeasurements();
     }
 
 }

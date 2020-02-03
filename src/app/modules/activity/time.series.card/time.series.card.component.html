@@ -82,7 +82,10 @@
                     </li>
                     <li class="nav-item" (click)="next()">
                         <i class="material-icons float-left" style="margin: 10px 0px"
-                           [ngClass]="isToday(currentDate)?'disabled':''"
+                           [ngClass]="
+                           (filterSelected === 'today' && isToday(currentDate)) ||
+                           (filterSelected !== 'today' && endOfDate.getTime() > currentDate.getTime())
+                           ?'disabled':''"
                            [title]="isToday(currentDate)?'':'ACTIVITY.NEXT-DAY'|translate">keyboard_arrow_right</i>
                     </li>
 

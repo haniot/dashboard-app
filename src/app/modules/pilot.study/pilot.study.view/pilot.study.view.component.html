@@ -176,9 +176,9 @@
                                                 </td>
                                             </tr>
                                             <tr *ngFor="let patient of patientsAssociated; index as i;trackBy: trackById">
-                                                <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.name}}</td>
-                                                <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.email}}</td>
-                                                <td [routerLink]="['/app/patients',patient.id,'details']">{{patient.gender | gender | translate}}</td>
+                                                <td [routerLink]="['/app/patients',patient.id,'dashboard']">{{patient.name}}</td>
+                                                <td [routerLink]="['/app/patients',patient.id,'dashboard']">{{patient.email}}</td>
+                                                <td [routerLink]="['/app/patients',patient.id,'dashboard']">{{patient.gender | gender | translate}}</td>
                                             </tr>
                                             </tbody>
                                         </table>

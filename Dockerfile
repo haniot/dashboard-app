@@ -1,9 +1,9 @@
 # Download Node image from Docker Hub Repository
-FROM node:10.16.3
+FROM node:12.13.1
 
 # create and set app directory
 RUN mkdir -p /usr/src/db
-WORKDIR /usr/src/db 
+WORKDIR /usr/src/db
 
 # add `/usr/src/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/app/node_modules/.bin:$PATH

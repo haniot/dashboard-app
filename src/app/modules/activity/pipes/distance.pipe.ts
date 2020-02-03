@@ -1,12 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core'
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Pipe({
     name: 'distance'
 })
 export class DistancePipe implements PipeTransform {
 
-    constructor(private translateService: TranslateService) {
+    constructor(
+        private translateService: TranslateService,
+        private sanitizer: DomSanitizer) {
 
     }
 
@@ -15,9 +18,12 @@ export class DistancePipe implements PipeTransform {
             const and = this.translateService.instant('SHARED.AND');
             const distance_trucate = Math.floor(value / 1000);
             const rest = Math.floor((value % 1000));
-            return `${distance_trucate ? distance_trucate + 'Km ' : ''}${rest ? ' ' + and + ' ' + rest + 'm' : ''}`;
+            const result = `${distance_trucate ? distance_trucate + '<small>km</small>' : ''}
+            ${rest ? ' ' + and + ' ' + rest + '<small>m</small>' : ''}`;
+            return this.sanitizer.bypassSecurityTrustHtml(result);
         }
-        return `${Math.floor(value) + 'm'}`;
+
+        return this.sanitizer.bypassSecurityTrustHtml(`${Math.floor(value)}<small>m</small>`);
     }
 
 }

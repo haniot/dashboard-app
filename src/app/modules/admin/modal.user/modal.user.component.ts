@@ -17,7 +17,7 @@ import { Admin } from '../models/admin'
 const languagesConfig = LanguagesConfiguration;
 
 @Component({
-    selector: 'app-modal-user',
+    selector: 'modal-user',
     templateUrl: './modal.user.component.html',
     styleUrls: ['./modal.user.component.scss']
 })
@@ -173,10 +173,8 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
 
     loadUserInForm() {
         if (this.userId) {
-            console.log('Carregando usuário com id: ', this.userId)
             switch (this.typeUser) {
                 case UserType.admin:
-                    console.log('Admin')
                     this.adminService.getById(this.userId)
                         .then(admin => {
                             this.user = admin;
@@ -186,7 +184,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                         });
                     break;
                 case UserType.health_professional:
-                    console.log('Healthprofessional')
                     this.healthService.getById(this.userId)
                         .then(healthprofessional => {
                             this.user = healthprofessional;
@@ -200,7 +197,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     close() {
-        this.typeUser = undefined;
         this.userForm.reset();
         this.user = new GenericUser('');
         this.passwordNotMatch = false;

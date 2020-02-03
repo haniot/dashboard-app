@@ -18,7 +18,7 @@ export class ConvertInAgePipe implements PipeTransform {
             const date_current = new Date();
 
 
-            return this.calculaIdade(birth_date, date_current);
+            return this.calcAge(birth_date, date_current);
         } catch (e) {
             const date_current = new Date();
             return date_current.getFullYear() - value.substring(0, 4) + this.translateService.instant('SHARED.YEARS');
@@ -27,7 +27,7 @@ export class ConvertInAgePipe implements PipeTransform {
 
     }
 
-    private calculaIdade(birth_date: Date, date_current: Date) {
+    private calcAge(birth_date: Date, date_current: Date) {
         return `${date_current.getFullYear() - birth_date.getFullYear()} ${this.translateService.instant('SHARED.YEARS')}`;
     }
 }

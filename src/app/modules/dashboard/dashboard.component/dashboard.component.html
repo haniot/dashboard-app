@@ -128,14 +128,15 @@
                 </div>
                 <a class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
                    *ngFor="let patient of listPatients;trackBy: trackById"
-                   [routerLink]="['/app/patients',patient.id, 'details']"
+                   [routerLink]="['/app/patients',patient.id, 'dashboard']"
                    [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate"
                    (click)="openLoading()">
                     <div class="card card-stats">
                         <div class="card-header card-header-timer card-header-icon">
                             <div class="card-icon" style="padding: 5px 5px">
-                                <div class="bg-x_boy" *ngIf="patient.gender === 'male'"></div>
-                                <div class="bg-x_girl" *ngIf="patient.gender === 'female'"></div>
+                                <div *ngIf="patient.gender === 'male'"
+                                     [ngClass]="calcAge(patient.birth_date)>60?'bg-old-man':'bg-x_boy'"></div>
+                                <div *ngIf="patient.gender === 'female'" [ngClass]="calcAge(patient.birth_date)>60?'bg-elderly ':'bg-x_girl'"></div>
                             </div>
 
                             <h4 class="card-title ellipsis">
@@ -154,165 +155,165 @@
     </div>
 
     <div class="container-fluid" *ngIf="getUserType()==='patient'">
-        <activity-dashboard [patientId]="patie"></activity-dashboard>
+        <activity-dashboard [patientId]="userId"></activity-dashboard>
 
-        <haniot-card [title]="'DASHBOARD.CARD-EVALUATIONS.TITLE'|translate"
-                     [subtitle]="'DASHBOARD.CARD-EVALUATIONS.SUBTITLE'|translate">
-            <div class="row justify-content-center" *ngIf="!listEvaluations.length && !listOfEvaluatioinsIsEmpty">
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patients">
-                    <spinner [message]="'EVALUATION.SPINNER-MESSAGE'|translate"></spinner>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"
-                     *ngIf="listOfEvaluatioinsIsEmpty">
-                    <p class="second-title text-center">
-                        {{'DASHBOARD.CARD-EVALUATIONS.NONE-EVALUATIONS'|translate}}
-                    </p>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center card-evaluations"
-                     *ngFor="let evaluation of listEvaluations;trackBy: trackById">
-                    <a class="card-patient"
-                       [routerLink]="['/app/evaluations',userId,'nutritional',evaluation.id]"
-                       [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate"
-                       (click)="openLoading()">
-                        <div class="card card-stats">
-                            <div class="card-header card-header-timer card-header-icon">
-                                <div class="card-icon" style="padding: 0px 0px">
-                                    <i class="material-icons">assignment</i>
-                                </div>
+        <!--        <haniot-card [title]="'DASHBOARD.CARD-EVALUATIONS.TITLE'|translate"-->
+        <!--                     [subtitle]="'DASHBOARD.CARD-EVALUATIONS.SUBTITLE'|translate">-->
+        <!--            <div class="row justify-content-center" *ngIf="!listEvaluations.length && !listOfEvaluatioinsIsEmpty">-->
+        <!--                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patients">-->
+        <!--                    <spinner [message]="'EVALUATION.SPINNER-MESSAGE'|translate"></spinner>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="row justify-content-center">-->
+        <!--                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient"-->
+        <!--                     *ngIf="listOfEvaluatioinsIsEmpty">-->
+        <!--                    <p class="second-title text-center">-->
+        <!--                        {{'DASHBOARD.CARD-EVALUATIONS.NONE-EVALUATIONS'|translate}}-->
+        <!--                    </p>-->
+        <!--                </div>-->
+        <!--                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center card-evaluations"-->
+        <!--                     *ngFor="let evaluation of listEvaluations;trackBy: trackById">-->
+        <!--                    <a class="card-patient"-->
+        <!--                       [routerLink]="['/app/evaluations',userId,'nutritional',evaluation.id]"-->
+        <!--                       [title]="'DASHBOARD.CARD-PATIENTS.VIEW'|translate"-->
+        <!--                       (click)="openLoading()">-->
+        <!--                        <div class="card card-stats">-->
+        <!--                            <div class="card-header card-header-timer card-header-icon">-->
+        <!--                                <div class="card-icon" style="padding: 0px 0px">-->
+        <!--                                    <i class="material-icons">assignment</i>-->
+        <!--                                </div>-->
 
-                                <span class="badge badge-haniot"
-                                      [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus | translate}}</span><br>
+        <!--                                <span class="badge badge-haniot"-->
+        <!--                                      [class]="'evaluation-'+evaluation.status">{{evaluation.status | evaluationStatus | translate}}</span><br>-->
 
-                                <label>
-                                    Data da Avaliaçao
-                                </label>
-                                <h4 class="card-title ellipsis">
-                                    {{evaluation.created_at|date}}
-                                </h4>
-
-
-                            </div>
-                            <div class="card-footer">
-                                <div class="container">
-                                    <div class="row justify-content-center">
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <p class="card-category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.NUTRITION-STATE'|translate}}
-                                                : </p>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <h4 class="badge badge-haniot classification ellipsis"
-                                                [ngClass]="evaluation.nutritional_status">
-                                                {{evaluation.nutritional_status|nutritionClassification|translate}}
-                                            </h4>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <p class="card-category ellipsis">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.INDICATORS-OVERWEIGHT'|translate}}
-                                                : </p>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <h4 class="badge badge-haniot classification ellipsis"
-                                                [ngClass]="evaluation.overweight_indicator">
-                                                {{evaluation.overweight_indicator|overweigthClassification|translate}}
-                                            </h4>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <p class="card-category ellipsis">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.INDICATORS-OVERWEIGHT'|translate}}
-                                                : </p>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <h4 class="badge badge-haniot classification ellipsis"
-                                                [ngClass]="evaluation.taylor_cut_point">
-                                                {{evaluation.taylor_cut_point|taylorCutClassification|translate}}
-                                            </h4>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <p class="card-category ellipsis">
-                                                {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.BLOOD-PRESSURE'|translate}}
-                                                : </p>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <h4 class="badge badge-haniot classification ellipsis"
-                                                [ngClass]="evaluation.blood_pressure">
-                                                {{evaluation.blood_pressure|bloodpressureClassification|translate}}
-                                            </h4>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <p class="card-category ellipsis">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.GLYCEMIA'|translate}}
-                                                : </p>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-                                            <h4 class="badge badge-haniot classification ellipsis"
-                                                [ngClass]="evaluation.blood_glucose">
-                                                {{evaluation.blood_glucose|bloodglucoseClassification|translate}}
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </a>
-                </div>
-
-            </div>
-
-        </haniot-card>
+        <!--                                <label>-->
+        <!--                                    Data da Avaliaçao-->
+        <!--                                </label>-->
+        <!--                                <h4 class="card-title ellipsis">-->
+        <!--                                    {{evaluation.created_at|date}}-->
+        <!--                                </h4>-->
 
 
-        <haniot-card [title]="'DASHBOARD.CARD-STUDIES.TITLE'|translate"
-                     [subtitle]="'PATIENTS.MY-STUDIES.SUBTITLE'|translate">
-            <div class="row justify-content-center" *ngIf="!listPilots.length && !listOfStudiesIsEmpty">
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 text-center card-studies">
-                    <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>
-                </div>
-            </div>
-            <div class="row justify-content-center">
+        <!--                            </div>-->
+        <!--                            <div class="card-footer">-->
+        <!--                                <div class="container">-->
+        <!--                                    <div class="row justify-content-center">-->
+        <!--                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <p class="card-category">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.NUTRITION-STATE'|translate}}-->
+        <!--                                                : </p>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <h4 class="badge badge-haniot classification ellipsis"-->
+        <!--                                                [ngClass]="evaluation.nutritional_status">-->
+        <!--                                                {{evaluation.nutritional_status|nutritionClassification|translate}}-->
+        <!--                                            </h4>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <p class="card-category ellipsis">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.INDICATORS-OVERWEIGHT'|translate}}-->
+        <!--                                                : </p>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <h4 class="badge badge-haniot classification ellipsis"-->
+        <!--                                                [ngClass]="evaluation.overweight_indicator">-->
+        <!--                                                {{evaluation.overweight_indicator|overweigthClassification|translate}}-->
+        <!--                                            </h4>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <p class="card-category ellipsis">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.INDICATORS-OVERWEIGHT'|translate}}-->
+        <!--                                                : </p>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <h4 class="badge badge-haniot classification ellipsis"-->
+        <!--                                                [ngClass]="evaluation.taylor_cut_point">-->
+        <!--                                                {{evaluation.taylor_cut_point|taylorCutClassification|translate}}-->
+        <!--                                            </h4>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <p class="card-category ellipsis">-->
+        <!--                                                {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.BLOOD-PRESSURE'|translate}}-->
+        <!--                                                : </p>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <h4 class="badge badge-haniot classification ellipsis"-->
+        <!--                                                [ngClass]="evaluation.blood_pressure">-->
+        <!--                                                {{evaluation.blood_pressure|bloodpressureClassification|translate}}-->
+        <!--                                            </h4>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <p class="card-category ellipsis">{{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.GLYCEMIA'|translate}}-->
+        <!--                                                : </p>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                            <h4 class="badge badge-haniot classification ellipsis"-->
+        <!--                                                [ngClass]="evaluation.blood_glucose">-->
+        <!--                                                {{evaluation.blood_glucose|bloodglucoseClassification|translate}}-->
+        <!--                                            </h4>-->
+        <!--                                        </div>-->
+        <!--                                    </div>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
 
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 col text-center card-studies"
-                     *ngFor="let study of listPilots;trackBy: trackById">
-                    <a [title]="'DASHBOARD.CARD-STUDIES.VIEW'|translate">
-                        <div class="card card-stats"
-                             [ngClass]="study.id===pilotStudyId?'pilotSelected':''">
-                            <div class="card-header card-header-timer card-header-icon">
-                                <div class="card-icon" style="padding: 0px 0px">
-                                    <i class="material-icons">library_books</i>
-                                </div>
-                                <span class="badge badge-haniot"
-                                      [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active | pilotStudySituation | translate}}</span>
+        <!--                        </div>-->
+        <!--                    </a>-->
+        <!--                </div>-->
 
-                                <h4 class="card-title ellipsis">
-                                    {{study.name}}
-                                </h4>
-                            </div>
-                            <div class="card-footer" style="margin: 0px 0px; padding: 0px 0px">
-                                <div class="container row justify-content-center">
-                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                        <p class="card-category">{{'SHARED.DATE-START'|translate}}: </p>
-                                        <p class="card-category ellipsis">{{study.start | date}}</p>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                                        <p class="card-category ellipsis">{{'SHARED.DATE-END'|translate}}: </p>
-                                        <p class="card-category ellipsis">{{study.end | date}}</p>
-                                    </div>
-                                </div>
+        <!--            </div>-->
 
-                            </div>
-                        </div>
-                    </a>
+        <!--        </haniot-card>-->
 
-                </div>
 
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfStudiesIsEmpty">
-                    <p class="second-title text-center">
-                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY'|translate}}</p>
-                    <p>
-                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY-MESSAGE'|translate}}
-                    </p>
-                </div>
-            </div>
+        <!--        <haniot-card [title]="'DASHBOARD.CARD-STUDIES.TITLE'|translate"-->
+        <!--                     [subtitle]="'PATIENTS.MY-STUDIES.SUBTITLE'|translate">-->
+        <!--            <div class="row justify-content-center" *ngIf="!listPilots.length && !listOfStudiesIsEmpty">-->
+        <!--                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 text-center card-studies">-->
+        <!--                    <spinner [message]="'DASHBOARD.CARD-STUDIES.SPINNER-MESSAGE'|translate"></spinner>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="row justify-content-center">-->
 
-        </haniot-card>
+        <!--                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 col text-center card-studies"-->
+        <!--                     *ngFor="let study of listPilots;trackBy: trackById">-->
+        <!--                    <a [title]="'DASHBOARD.CARD-STUDIES.VIEW'|translate">-->
+        <!--                        <div class="card card-stats"-->
+        <!--                             [ngClass]="study.id===pilotStudyId?'pilotSelected':''">-->
+        <!--                            <div class="card-header card-header-timer card-header-icon">-->
+        <!--                                <div class="card-icon" style="padding: 0px 0px">-->
+        <!--                                    <i class="material-icons">library_books</i>-->
+        <!--                                </div>-->
+        <!--                                <span class="badge badge-haniot"-->
+        <!--                                      [ngClass]="study.is_active?'study-active':'study-disable'">{{study.is_active | pilotStudySituation | translate}}</span>-->
+
+        <!--                                <h4 class="card-title ellipsis">-->
+        <!--                                    {{study.name}}-->
+        <!--                                </h4>-->
+        <!--                            </div>-->
+        <!--                            <div class="card-footer" style="margin: 0px 0px; padding: 0px 0px">-->
+        <!--                                <div class="container row justify-content-center">-->
+        <!--                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                        <p class="card-category">{{'SHARED.DATE-START'|translate}}: </p>-->
+        <!--                                        <p class="card-category ellipsis">{{study.start | date}}</p>-->
+        <!--                                    </div>-->
+        <!--                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">-->
+        <!--                                        <p class="card-category ellipsis">{{'SHARED.DATE-END'|translate}}: </p>-->
+        <!--                                        <p class="card-category ellipsis">{{study.end | date}}</p>-->
+        <!--                                    </div>-->
+        <!--                                </div>-->
+
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </a>-->
+
+        <!--                </div>-->
+
+        <!--                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 text-center card-patient" *ngIf="listOfStudiesIsEmpty">-->
+        <!--                    <p class="second-title text-center">-->
+        <!--                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY'|translate}}</p>-->
+        <!--                    <p>-->
+        <!--                        {{'DASHBOARD.CARD-STUDIES.STUDIES-EMPTY-MESSAGE'|translate}}-->
+        <!--                    </p>-->
+        <!--                </div>-->
+        <!--            </div>-->
+
+        <!--        </haniot-card>-->
     </div>
 </div>

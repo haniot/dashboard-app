@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageEvent } from '@angular/material/paginator';
@@ -6,9 +6,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { PhysicalActivity } from '../models/physical.activity';
 import { SearchForPeriod } from '../../measurement/models/measurement';
 import {
+    TimeSeries,
     TimeSeriesFullFilter,
     TimeSeriesIntervalFilter,
-    TimeSeriesSimpleFilter,
+    TimeSeriesSimpleFilter, TimeSeriesTotals,
     TimeSeriesType
 } from '../models/time.series';
 import { ConfigurationBasic } from '../../config.matpaginator';
@@ -16,6 +17,9 @@ import { ModalService } from '../../../shared/shared.components/modal/service/mo
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
 import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
+import { TimeSeriesService } from '../services/time.series.service'
+import { DecimalPipe } from '@angular/common'
+import { DistancePipe } from '../pipes/distance.pipe'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -41,16 +45,20 @@ export class ActivityListComponent implements OnInit {
     page: number;
     limit: number;
     length: number;
-    cacheIdForRemove: string;
     cacheListIdForRemove: Array<any>;
     removingActivity: boolean;
-    currentFilter: TimeSeriesSimpleFilter | TimeSeriesIntervalFilter | TimeSeriesFullFilter;
+    currentFilter: TimeSeriesSimpleFilter | TimeSeriesIntervalFilter | TimeSeriesFullFilter | any;
+    currentFilterType: string;
     isIntraday: boolean;
+    totals: TimeSeriesTotals;
 
     constructor(
         private activeRouter: ActivatedRoute,
         private activityService: PhysicalActivitiesService,
+        private timeSeriesService: TimeSeriesService,
         private router: Router,
+        private decimalPipe: DecimalPipe,
+        private distancePipe: DistancePipe,
         private modalService: ModalService,
         private toastService: ToastrService,
         private translateService: TranslateService) {
@@ -66,19 +74,24 @@ export class ActivityListComponent implements OnInit {
         this.currentFilter = new TimeSeriesIntervalFilter();
         this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
         this.currentFilter.interval = '1m';
+        this.currentFilterType = 'today';
         this.isIntraday = true;
+        this.totals = new TimeSeriesTotals();
     }
 
     ngOnInit() {
         this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
             this.loadAllActivities();
+            this.loadTotals();
         })
     }
 
     applyFilter(event): void {
         this.currentFilter = event.filter;
+        this.currentFilterType = event.type;
         this.isIntraday = (event && event.type && event.type === 'today');
+        this.loadTotals();
     }
 
     loadAllActivities(): void {
@@ -96,6 +109,24 @@ export class ActivityListComponent implements OnInit {
             })
     }
 
+    loadTotals(): void {
+        const filter: TimeSeriesSimpleFilter = new TimeSeriesSimpleFilter();
+        if (this.currentFilterType === 'today') {
+            filter.start_date = this.currentFilter.date;
+            filter.end_date = this.currentFilter.date;
+        } else {
+            filter.start_date = this.currentFilter.start_date;
+            filter.end_date = this.currentFilter.end_date;
+        }
+        this.timeSeriesService.getAll(this.patientId, filter)
+            .then(totals => {
+                this.totals = totals;
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     changeOnActivity(): void {
         const activitiesSelected = this.listCheckActivities.filter(element => element === true);
         this.selectAll = this.data.length === activitiesSelected.length;
@@ -110,7 +141,6 @@ export class ActivityListComponent implements OnInit {
     }
 
     closeModalConfirmation() {
-        this.cacheIdForRemove = '';
         this.modalService.close('modalConfirmation');
     }
 
@@ -134,34 +164,21 @@ export class ActivityListComponent implements OnInit {
     async remove(): Promise<any> {
         this.modalService.close('modalConfirmation');
         this.removingActivity = true;
-        if (this.cacheIdForRemove) {
-            this.activityService.remove(this.patientId, this.cacheIdForRemove)
-                .then(measurements => {
-                    this.applyFilter(this.filter);
-                    this.removingActivity = false;
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-REMOVED'));
-                })
-                .catch(() => {
-                    this.removingActivity = false;
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-NOT-REMOVED'));
-                })
-        } else {
-            let occuredError = false;
-            for (let i = 0; i < this.cacheListIdForRemove.length; i++) {
-                try {
-                    const activityRemove = this.cacheListIdForRemove[i];
-                    await this.activityService.remove(this.patientId, activityRemove);
-                } catch (e) {
-                    occuredError = true;
-                }
+        let occurredError = false;
+        for (let i = 0; i < this.cacheListIdForRemove.length; i++) {
+            try {
+                const activityRemove = this.cacheListIdForRemove[i];
+                await this.activityService.remove(this.patientId, activityRemove);
+            } catch (e) {
+                occurredError = true;
             }
-            occuredError ? this.toastService
-                    .error(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-NOT-REMOVED'))
-                : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-REMOVED'));
-
-            this.applyFilter(this.filter);
-            this.removingActivity = false;
         }
+        occurredError ? this.toastService
+                .error(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-NOT-REMOVED'))
+            : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-REMOVED'));
+
+        this.loadAllActivities();
+        this.removingActivity = false;
     }
 
     removeSelected(): void {
@@ -179,9 +196,35 @@ export class ActivityListComponent implements OnInit {
         this.router.navigate(['/app/activities', this.patientId, 'physical_activity', activityId]);
     }
 
+    getStepsTotal(): number | string {
+        if (this.totals && this.totals.steps && this.totals.steps.summary) {
+            const total = this.totals.steps.summary['total'];
+            return this.decimalPipe.transform(total, '1.0-0')
+        }
+        return 0;
+    }
+
+    getDistanceTotal(): string {
+        if (this.totals && this.totals.distance && this.totals.distance.summary) {
+            const total = this.totals.distance.summary['total'];
+            return this.distancePipe.transform(total);
+        }
+        return '0<small>m</small>';
+    }
+
+    getCaloriesTotal(): number | string {
+        if (this.totals && this.totals.calories && this.totals.calories.summary) {
+            const total = this.totals.calories.summary['total'];
+            return this.decimalPipe.transform(total, '1.0-0')
+        }
+        return 0;
+    }
+
     openModalConfirmation(activityId: string): void {
         this.modalService.open('modalConfirmation');
-        this.cacheIdForRemove = activityId;
+        if (activityId && activityId !== '') {
+            this.cacheListIdForRemove = [activityId];
+        }
     }
 
     updateStateButtonRemoveSelected(): void {

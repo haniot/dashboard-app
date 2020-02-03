@@ -5,7 +5,6 @@ export class TimeSeries {
     private readonly _summary: Summary | HeartRateSummary;
     private readonly _type: TimeSeriesType;
 
-
     get data_set(): Array<any> {
         return this._data_set
     }
@@ -244,7 +243,6 @@ export class TimeSeriesIntervalFilter {
     }
 }
 
-
 export class TimeSeriesFullFilter {
     private _start_date: string;
     private _end_date: string;
@@ -290,5 +288,51 @@ export class TimeSeriesFullFilter {
 
     set interval(value: string) {
         this._interval = value
+    }
+}
+
+export class TimeSeriesTotals {
+    private _steps: TimeSeries;
+    private _calories: TimeSeries;
+    private _distance: TimeSeries;
+    private _active_minutes: TimeSeries;
+
+    constructor() {
+        this.steps = new TimeSeries();
+        this.calories = new TimeSeries();
+        this.distance = new TimeSeries();
+        this.active_minutes = new TimeSeries();
+    }
+
+    get steps(): TimeSeries {
+        return this._steps
+    }
+
+    set steps(value: TimeSeries) {
+        this._steps = value
+    }
+
+    get calories(): TimeSeries {
+        return this._calories
+    }
+
+    set calories(value: TimeSeries) {
+        this._calories = value
+    }
+
+    get distance(): TimeSeries {
+        return this._distance
+    }
+
+    set distance(value: TimeSeries) {
+        this._distance = value
+    }
+
+    get active_minutes(): TimeSeries {
+        return this._active_minutes
+    }
+
+    set active_minutes(value: TimeSeries) {
+        this._active_minutes = value
     }
 }

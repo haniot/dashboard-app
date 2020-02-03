@@ -27,9 +27,9 @@
 
         </div>
 
-        <div class="row" style="padding-top: 0px;padding-left: 0px">
+        <div class="row" style="padding-top: 0px;">
             <!-- Activities -->
-            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" id="activitiesDiv">
                 <dashboard-card [title]="'ACTIVITY.RECENT-ACTIVITY'|translate"
                                 [urlAction]="['/app/activities',patientId,'physical_activity']">
                     <div class="row physicalActivity" [title]="'ACTIVITY.VIEW-DETAILS'|translate"
@@ -104,11 +104,10 @@
                     </div>
 
                 </dashboard-card>
-
             </div>
 
             <div class="col-sm-12 col-md-8 col-lg col-xl patientDashboard"
-                 style="padding: 0px 0px; padding-right: 7px">
+                 style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px;padding-right: 7px">
 
                 <div class="row" style="padding-top:7px">
                     <!-- Sleep -->
@@ -117,11 +116,11 @@
                                         [urlAction]="['/app/activities',patientId,'sleep']"
                                         (mouseenter)="sleepEnterAndLeave(true)"
                                         (mouseleave)="sleepEnterAndLeave(false)">
-                            <!--                                    <small style="position: absolute;right: 10px; top: 10px">12/12/2019</small>-->
-                            <div class="row justify-content-center" *ngIf="sleepSelected && !loadingSleep">
 
-                                <div class="col justify-content-center" #sleepDiv
-                                     style="min-height: 250px; padding: 0px 0px; display: flex; align-items: center; margin: auto; margin-top: 0px;">
+                            <div class="row justify-content-center" *ngIf="sleepSelected && !loadingSleep" #sleepDiv>
+
+                                <div class="col justify-content-center container-flex"
+                                     style="min-height: 250px; padding: 0px 0px; margin: auto; margin-top: 0px;">
                                     <ngx-gauge
                                             [size]="sleepSize"
                                             [type]="'semi'"
@@ -129,7 +128,7 @@
                                             [max]="sleepMax"
                                             [foregroundColor]="'#2B4A77'"
                                             [thick]="15"
-                                            [value]="sleepHover?sleepValue:sleepMax"
+                                            [value]="sleepHover?sleepMax:sleepValue"
                                             [duration]="500"
                                             [cap]="'round'"
                                             id="graphSleep">
@@ -140,7 +139,7 @@
 
                                         </ngx-gauge-value>
                                     </ngx-gauge>
-                                    <div style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;">
+                                    <div class="container-flex" style="position: absolute;width:100%; height: 100%;">
                                         <img src="../../../../assets/img/time-series/moon.svg" width="25%"
                                              style="margin-bottom: 60px">
                                     </div>
@@ -154,7 +153,7 @@
                                             <span class="float-right">{{Math.floor(goal.sleep / 60)}}h</span>
                                         </div>
                                     </div>
-                                    <div style="position: absolute;bottom:15%;width: 85%; display: flex; align-items: center; justify-content: center">
+                                    <div class="container-flex" style="position: absolute;bottom:15%;width: 85%;">
                                         <label style="font-size: 35px; color: unset">
                                             {{Math.floor((sleepSelected.duration / 3600000))}}
                                             <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
@@ -162,9 +161,9 @@
                                             <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
                                         </label>
                                     </div>
-                                    <div class="text-center"
-                                         style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
-                                        <label style="font-weight: normal; font-size:22px; color: unset"
+                                    <div class="text-center container-flex"
+                                         style="position: absolute;bottom:0%;width: 85%;">
+                                        <label class="label-time-series"
                                                *ngIf="!sleepHover">
                                             <span *ngIf="Math.floor((sleepSelected.pattern.summary.awake.duration / 3600000))">
                                                 {{Math.floor((sleepSelected.pattern.summary.awake.duration / 3600000))}}
@@ -176,8 +175,8 @@
                                                 {{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}
                                             </span>
                                         </label>
-                                        <label style="font-weight: normal; font-size:22px; color: unset"
-                                               *ngIf="sleepHover">
+                                        <label class="label-time-series"
+                                               *ngIf="sleepHover && goal.sleep > (sleepSelected.duration / 60000)">
                                             {{
                                             Math.floor((goal.sleep - (sleepSelected.duration / 60000)) / 60) ?
                                                 Math.floor((goal.sleep - (sleepSelected.duration / 60000)) / 60)
@@ -186,13 +185,17 @@
                                             }}
                                             {{Math.floor((goal.sleep - (sleepSelected.duration / 60000)) % 60)}}{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}
                                             {{'TIME-SERIES.OF-THE-GOAL'|translate}}</label>
+                                        <label class="label-time-series"
+                                               *ngIf="sleepHover && goal.sleep <= (sleepSelected.duration / 60000)">
+                                            {{'ACTIVITY.SLEEP.GOAL-ACHIEVED'|translate}}
+                                        </label>
                                     </div>
                                 </div>
 
                             </div>
 
-                            <div class="row justify-content-center"
-                                 style="min-height: 263px; padding: 0px 0px; display: flex; align-items: center; margin: auto"
+                            <div class="row justify-content-center container-flex"
+                                 style="min-height: 263px; padding: 0px 0px; margin: auto"
                                  *ngIf="!sleepSelected && !loadingSleep">
                                 <div>
                                     <img class="text-center"
@@ -204,8 +207,8 @@
                                 </div>
                             </div>
 
-                            <div class="row justify-content-center"
-                                 style="height: 264px; padding: 0px 0px; display: flex; align-items: center; margin: auto"
+                            <div class="row justify-content-center container-flex"
+                                 style="height: 264px; padding: 0px 0px; margin: auto"
                                  *ngIf="loadingSleep">
                                 <spinner [message]="'SHARED.LOADING'|translate"></spinner>
                             </div>
@@ -214,14 +217,14 @@
                     </div>
                     <!-- Steps -->
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6"
-                         style="padding: 0px 0px; padding-right: 7px; max-height: 332px"
+                         style="padding: 0px 0px; padding-right: 7px; min-height: 332px;max-height: 332px"
                          (mouseenter)="stepEnterAndLeave(true)"
                          (mouseleave)="stepEnterAndLeave(false)">
 
                         <dashboard-card [title]="'TIME-SERIES.STEPS.TITLE'|translate">
-                            <div class="row justify-content-center" *ngIf="!loadingTimeSeries">
-
+                            <div class="row justify-content-center" *ngIf="!loadingTimeSeries" #stepsDiv>
                                 <ngx-gauge
+                                        [size]="stepSize"
                                         [type]="'full'"
                                         [thick]="10"
                                         [min]="goal && goal.steps?0:-1"
@@ -229,45 +232,35 @@
                                         [cap]="'round'"
                                         [foregroundColor]="'#00a594'"
                                         [duration]="500"
-                                        [value]="stepsValue">
-                                    <ngx-gauge-value>
-                                    </ngx-gauge-value>
-                                </ngx-gauge>
-
-
-                                <div class="fadeIn"
-                                     style="position: absolute;display: flex;align-items: center;width:100%; height: 100%;justify-content: center;"
-                                     *ngIf="!stepsHover">
-                                    <img src="../../../../assets/img/time-series/steps-black.svg" width="20%"
-                                         style="margin-bottom: 40%">
-                                </div>
-                                <div class="fadeIn"
-                                     style="position: absolute;bottom:35%;width: 85%; display: flex;align-items: center;justify-content: center"
-                                     *ngIf="stepsHover">
-                                    <div style="display: block;padding: 0px 0px">
-                                        <div class="text-center" style="padding: 0px 0px">
-                                            <label style="font-size: 50px; margin: 0px 0px; color: unset">
-                                                {{goal && goal.steps ? (Math.round((stepsValue * 100) / goal.steps)) : 100}}
-                                                %
+                                        [value]="Math.max(0,stepsValue)">
+                                    <ngx-gauge-append *ngIf="!stepsHover">
+                                        <img class="fadeIn" src="../../../../assets/img/time-series/steps-black.svg"
+                                             width="30%"
+                                             style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto">
+                                    </ngx-gauge-append>
+                                    <ngx-gauge-append *ngIf="stepsHover">
+                                        <div class="container-flex-columm centralized-container">
+                                            <label class="label-time-series-percent">
+                                                {{goal && goal.steps ? (Math.min(Math.round((stepsValue * 100) / goal.steps), 100)) : 100}}%
                                             </label>
-                                        </div>
-                                        <div class="text-center" style="padding: 0px 0px;">
-                                            <label style="font-size: 20px;font-weight: normal;margin: 0px 0px; color: unset">
+                                            <label class="label-time-series-goal">
                                                 {{'TIME-SERIES.OF-THE-GOAL'|translate}}
                                             </label>
                                         </div>
-                                    </div>
-                                </div>
-                                <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
-                                    <label style="font-size: 25px; font-weight: normal;color: unset">
-                                        {{stepsValue | number:'1.0-0'}} {{'SHARED.OF'|translate}} {{goal && goal.steps ? (goal.steps| number:'1.0-0') : 0}}
-                                        <small>pas</small>
+                                    </ngx-gauge-append>
+                                    <ngx-gauge-value>
+                                    </ngx-gauge-value>
+                                </ngx-gauge>
+                                <div class="text-center container-flex"
+                                     style="position: absolute;bottom:0%;width: 85%;">
+                                    <label class="label-time-series">
+                                        {{stepsValue | number:'1.0-0'}} {{'SHARED.OF'|translate}} {{goal && goal.steps ? (goal.steps| number:'1.0-0') : 0}}<small>pas</small>
                                     </label>
                                 </div>
                             </div>
 
-                            <div class="row justify-content-center"
-                                 style="height: 264px; padding: 0px 0px; display: flex; align-items: center; margin: auto"
+                            <div class="row justify-content-center container-flex"
+                                 style="height: 264px; padding: 0px 0px; margin: auto"
                                  *ngIf="loadingTimeSeries">
                                 <spinner [message]="'SHARED.LOADING'|translate"></spinner>
                             </div>
@@ -282,28 +275,30 @@
                          (mouseleave)="caloriesEnterAndLeave(false)">
 
                         <dashboard-card [title]="'TIME-SERIES.CALORIES.TITLE'|translate">
-                            <div class="row justify-content-center" *ngIf="!loadingTimeSeries">
-                                <ngx-gauge [type]="'full'"
-                                           [thick]="10"
-                                           [min]="goal && goal.calories?0:-1"
-                                           [cap]="'round'"
-                                           [max]="goal && goal.calories?goal.calories:0"
-                                           [foregroundColor]="'#fba53e'"
-                                           [duration]="200"
-                                           [value]="caloriesValue"
-                                           id="graphCalories">
+
+                            <div class="row justify-content-center" *ngIf="!loadingTimeSeries" #caloriesDiv>
+                                <ngx-gauge
+                                        [size]="caloriesSize"
+                                        [type]="'full'"
+                                        [thick]="10"
+                                        [min]="goal && goal.calories?0:-1"
+                                        [cap]="'round'"
+                                        [max]="goal && goal.calories?goal.calories:0"
+                                        [foregroundColor]="'#fba53e'"
+                                        [duration]="200"
+                                        [value]="Math.max(0,caloriesValue)"
+                                        style="width: 100px; height: 100px">
                                     <ngx-gauge-append *ngIf="!caloriesHover">
                                         <img class="fadeIn" src="../../../../assets/img/time-series/calories-black.svg"
                                              width="20%"
                                              style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto">
                                     </ngx-gauge-append>
                                     <ngx-gauge-append *ngIf="caloriesHover">
-                                        <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto; display: flex; flex-direction: column;align-items: center;justify-content: center;text-align: center;">
-                                            <label style="font-size: 50px;color: unset; margin: 0 0; padding: 0 0">
-                                                {{goal && goal.calories ? (Math.round((caloriesValue * 100) / goal.calories)) : 100}}
-                                                %
+                                        <div class="container-flex-columm centralized-container">
+                                            <label class="label-time-series-percent">
+                                                {{goal && goal.calories ? (Math.min(Math.round((caloriesValue * 100) / goal.calories), 100)) : 100}}%
                                             </label>
-                                            <label style="font-size: 20px;font-weight: normal;color: unset;margin: 0 0; padding: 0 0">
+                                            <label class="label-time-series-goal">
                                                 {{'TIME-SERIES.OF-THE-GOAL'|translate}}
                                             </label>
                                         </div>
@@ -311,52 +306,54 @@
                                     <ngx-gauge-value>
                                     </ngx-gauge-value>
                                 </ngx-gauge>
-                                <div class="text-center"
-                                     style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
-                                    <label style="font-size: 25px; font-weight: normal;color: unset">
+                                <div class="text-center container-flex"
+                                     style="position: absolute;bottom:0%;width: 85%;">
+                                    <label class="label-time-series">
                                         {{caloriesValue | number:'1.0-0'}} {{'SHARED.OF'|translate}} {{goal && goal.calories ? (goal.calories|number:'1.0-0') : 0}}
                                         <small>calls</small>
                                     </label>
                                 </div>
                             </div>
 
-                            <div class="row justify-content-center"
-                                 style="height: 264px; padding: 0px 0px; display: flex; align-items: center; margin: auto"
+                            <div class="row justify-content-center container-flex"
+                                 style="height: 264px; padding: 0px 0px; margin: auto"
                                  *ngIf="loadingTimeSeries">
                                 <spinner [message]="'SHARED.LOADING'|translate"></spinner>
                             </div>
+
                         </dashboard-card>
 
                     </div>
                     <!-- Active Minutes -->
                     <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
-                         style="padding:0px 0px; padding-right: 7px;"
+                         style="padding:0px 0px; padding-right: 7px;min-height: 350px"
                          (mouseenter)="activeMinutesEnterAndLeave(true)"
                          (mouseleave)="activeMinutesEnterAndLeave(false)">
 
                         <dashboard-card [title]="'TIME-SERIES.ACTIVE-MINUTES.TITLE'|translate">
 
-                            <div class="row justify-content-center" *ngIf="!loadingTimeSeries">
-                                <ngx-gauge [type]="'full'"
-                                           [thick]="10"
-                                           [min]="goal && goal.active_minutes?0:-1"
-                                           [cap]="'round'"
-                                           [max]="goal && goal.active_minutes?goal.active_minutes:0"
-                                           [foregroundColor]="'#A6F355'"
-                                           [duration]="200"
-                                           [value]="activeMinutesValue">
+                            <div class="row justify-content-center" *ngIf="!loadingTimeSeries" #activeMinutesDiv>
+                                <ngx-gauge
+                                        [size]="activeMinutesSize"
+                                        [type]="'full'"
+                                        [thick]="10"
+                                        [min]="goal && goal.active_minutes?0:-1"
+                                        [cap]="'round'"
+                                        [max]="goal && goal.active_minutes?goal.active_minutes:0"
+                                        [foregroundColor]="'#A6F355'"
+                                        [duration]="200"
+                                        [value]="Math.max(0,activeMinutesValue)">
                                     <ngx-gauge-append *ngIf="!activeMinutesHover">
                                         <img class="fadeIn" src="../../../../assets/img/time-series/active_minutes.svg"
                                              width="30%"
                                              style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto">
                                     </ngx-gauge-append>
                                     <ngx-gauge-append *ngIf="activeMinutesHover">
-                                        <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto; display: flex; flex-direction: column;align-items: center;justify-content: center;text-align: center;">
-                                            <label style="font-size: 50px;color: unset; margin: 0 0; padding: 0 0">
-                                                {{goal && goal.active_minutes ? (Math.round((activeMinutesValue * 100) / goal.active_minutes)) : 100}}
-                                                %
+                                        <div class="container-flex-columm centralized-container">
+                                            <label class="label-time-series-percent">
+                                                {{goal && goal.active_minutes ? (Math.min(Math.round((activeMinutesValue * 100) / goal.active_minutes), 100)) : 100}}%
                                             </label>
-                                            <label style="font-size: 20px;font-weight: normal;color: unset;margin: 0 0; padding: 0 0">
+                                            <label class="label-time-series-goal">
                                                 {{'TIME-SERIES.OF-THE-GOAL'|translate}}
                                             </label>
                                         </div>
@@ -364,15 +361,21 @@
                                     <ngx-gauge-value>
                                     </ngx-gauge-value>
                                 </ngx-gauge>
-                                <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
-                                    <label style="font-size: 25px; font-weight: normal;max-width: 100%;color: unset">
-                                        {{activeMinutesValue|activeMinutes}} {{'SHARED.OF'|translate}} {{goal && goal.active_minutes ? (goal.active_minutes|activeMinutes) : 0}}
+                                <div class="container-flex" style="position: absolute;bottom:0%;width: 85%;">
+                                    <label class="label-time-series" style="max-width: 100%"
+                                           [innerHTML]="activeMinutesValue ? (activeMinutesValue|activeMinutes) : '0<small>min</small>'">
+                                    </label>
+                                    <label class="label-time-series" style="max-width: 100%;padding: 5px 5px">
+                                        {{'SHARED.OF'|translate}}
+                                    </label>
+                                    <label class="label-time-series" style="max-width: 100%;"
+                                           [innerHTML]="goal && goal.active_minutes ? (goal.active_minutes|activeMinutes) : '0<small>min</small>'">
                                     </label>
                                 </div>
                             </div>
 
-                            <div class="row justify-content-center"
-                                 style="height: 264px; padding: 0px 0px; display: flex; align-items: center; margin: auto"
+                            <div class="row justify-content-center container-flex"
+                                 style="height: 264px; padding: 0px 0px; margin: auto"
                                  *ngIf="loadingTimeSeries">
                                 <spinner [message]="'SHARED.LOADING'|translate"></spinner>
                             </div>
@@ -382,13 +385,14 @@
                     </div>
                     <!-- Distance -->
                     <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
-                         style="padding:0px 0px; padding-right: 7px;"
+                         style="padding:0px 0px; padding-right: 7px;min-height: 350px"
                          (mouseenter)="distanceEnterAndLeave(true)"
                          (mouseleave)="distanceEnterAndLeave(false)">
 
                         <dashboard-card [title]="'TIME-SERIES.DISTANCE.TITLE'|translate">
-                            <div class="row justify-content-center" *ngIf="!loadingTimeSeries">
+                            <div class="row justify-content-center" *ngIf="!loadingTimeSeries" #distanceDiv>
                                 <ngx-gauge
+                                        [size]="distanceSize"
                                         [type]="'full'"
                                         [thick]="10"
                                         [min]="goal && goal.distance?0:-1"
@@ -396,18 +400,18 @@
                                         [max]="goal && goal.distance?goal.distance:0"
                                         [foregroundColor]="'#5FCCCB'"
                                         [duration]="200"
-                                        [value]="distanceValue">
+                                        [value]="Math.max(0,distanceValue)">
                                     <ngx-gauge-append *ngIf="!distanceHover">
                                         <img class="fadeIn" src="../../../../assets/img/time-series/distance.svg"
                                              width="30%"
                                              style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto">
                                     </ngx-gauge-append>
                                     <ngx-gauge-append *ngIf="distanceHover">
-                                        <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto; display: flex; flex-direction: column;align-items: center;justify-content: center;text-align: center;">
-                                            <label style="font-size: 50px;color: unset; margin: 0 0; padding: 0 0">
-                                                {{goal && goal.distance ? (Math.round((distanceValue * 100) / goal.distance)) : 100}}%
+                                        <div class="container-flex-columm centralized-container">
+                                            <label class="label-time-series-percent">
+                                                {{goal && goal.distance ? (Math.min(Math.round((distanceValue * 100) / goal.distance), 100)) : 100}}%
                                             </label>
-                                            <label style="font-size: 20px;font-weight: normal;color: unset;margin: 0 0; padding: 0 0">
+                                            <label class="label-time-series-goal">
                                                 {{'TIME-SERIES.OF-THE-GOAL'|translate}}
                                             </label>
                                         </div>
@@ -415,14 +419,20 @@
                                     <ngx-gauge-value>
                                     </ngx-gauge-value>
                                 </ngx-gauge>
-                                <div style="position: absolute;bottom:0%;width: 85%; display: flex; align-items: center; justify-content: center">
-                                    <label style="font-size: 25px; font-weight: normal;color: unset">
-                                        {{distanceValue | distance}} {{'SHARED.OF'|translate}} {{goal && goal.distance ? (goal.distance|distance) : '0m'}}
+                                <div class="container-flex" style="position: absolute;bottom:0%;width: 85%;">
+                                    <label class="label-time-series"
+                                           [innerHTML]="distanceValue ? (distanceValue|distance) : '0<small>m</small>'">
+                                    </label>
+                                    <label class="label-time-series" style="padding: 5px 5px">
+                                        {{'SHARED.OF'|translate}}
+                                    </label>
+                                    <label class="label-time-series"
+                                           [innerHTML]="goal && goal.distance ? (goal.distance|distance) : '0<small>m</small>'">
                                     </label>
                                 </div>
                             </div>
-                            <div class="row justify-content-center"
-                                 style="height: 264px; padding: 0px 0px; display: flex; align-items: center; margin: auto"
+                            <div class="row justify-content-center container-flex"
+                                 style="height: 264px; padding: 0px 0px; margin: auto"
                                  *ngIf="loadingTimeSeries">
                                 <spinner [message]="'SHARED.LOADING'|translate"></spinner>
                             </div>

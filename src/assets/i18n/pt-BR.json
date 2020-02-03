@@ -37,15 +37,17 @@
       "VIEW-STAGES": "Visualizar estágios",
       "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono.",
       "REACHED-THE-IDEAL": "Atingiu o ideal",
-      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente o registro de sono?",
       "LOADING": "Carregando registro de sono...",
-      "SPINNER-MESSAGE": "Removendo registro de sono...",
-      "GOAL-ACHIEVED": "Meta Alcançada"
+      "GOAL-ACHIEVED": "Objetivo Alcançado!",
+      "MODAL-REMOVE": {
+        "SPINNER-MESSAGE": "Removendo registro de sono...",
+        "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover definitivamente o registro de sono?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover definitivamente",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "registros(s) de sono?"
+      }
     },
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Atividade Física",
-      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente a atividade?",
-      "SPINNER-MESSAGE": "Removendo atividade física...",
       "LOADING": "Carregando atividade física...",
       "HISTORY-TABLE": {
         "TITLE": "Histórico de atividades física",
@@ -53,7 +55,17 @@
         "ACTIVITY-NAME": "Atividade",
         "RESUME": "Resumo"
       },
+      "MODAL-REMOVE": {
+        "SPINNER-MESSAGE": "Removendo atividade física...",
+        "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover definitivamente a atividade?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover definitivamente",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "atividade(s)?"
+      },
       "DAILY-TOTAL": "Total diário",
+      "WEEKLY-TOTAL": "Total semanal",
+      "MONTHLY-TOTAL": "Total mensal",
+      "TOTAL-ANNUAL": "Total anual",
+      "TOTAL-PERIOD": "Total do período",
       "DURATION": "Duração da atividade",
       "STEPS": "Passos executados",
       "DISTANCE": "Distância percorrida",
@@ -573,7 +585,7 @@
       "WEEK": "Semana",
       "MONTH": "Mês",
       "YEAR": "Ano",
-      "PERIOD": "Periodo"
+      "PERIOD": "Período"
     },
     "LOG-MEASUREMENTS-CARD": {
       "TITLE": "Histórico dos registro de medições",
@@ -621,7 +633,8 @@
     "MIN": "MIN",
     "MAX": "MAX",
     "AVERAGE": "Média",
-    "AVERAGE-VALUE": "Valor médio"
+    "AVERAGE-VALUE": "Valor médio",
+    "BMI": "IMC"
   },
   "MYDATEPIPE": {
     "AT": "às",
@@ -800,7 +813,14 @@
     "HEALTHPROFESSIONALS": "Profissionais de Saúde",
     "SELECTED-STUDY": "Estudo Selecionado",
     "TOTAL-OF-PROFESSIONALS": "Total de Profissionais",
-    "TOTAL-OF-PATIENTS": "Total de Pacientes"
+    "TOTAL-OF-PATIENTS": "Total de Pacientes",
+    "DASHBOARD": "Dashboard",
+    "MEASUREMENTS": "Medições",
+    "QUESTIONNAIRES": "Questionários",
+    "MY-MEASUREMENTS": "Minhas Medições",
+    "MY-QUESTIONNAIRES": "Meus Questionários",
+    "EXPAND-MENU": "Expandir menu...",
+    "SHRINK-MENU": "Encolher menu..."
   },
   "SHARED": {
     "NAME": "Nome",
@@ -882,6 +902,9 @@
     "ONLY": "Apenas",
     "TIMES": "vezes",
     "TURN": "vez",
+    "DAY": "dia",
+    "DAYS": "dias",
+    "SELECT": "Selecionar",
     "PIPES": {
       "GENDER": {
         "MALE": "Masculino",
@@ -1049,7 +1072,7 @@
       "SUBTITLE": ""
     },
     "DISTANCE": {
-      "TITLE": "Distancia",
+      "TITLE": "Distância",
       "TOTAL-DISTANCE": "Distância total",
       "SUBTITLE": ""
     },

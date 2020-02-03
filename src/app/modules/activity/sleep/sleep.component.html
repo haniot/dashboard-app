@@ -21,7 +21,9 @@
                         </div>
                         <div class="nav-tabs-navigation" style="float:right">
                             <span class="nav-tabs-title">
-                                        <h4 class="card-title text-center">{{sleepSelected ? (sleepSelected.duration|millisecond) : '- -'}}</h4>
+                                        <h4 class="card-title text-center" title="Duração e eficiência do sono...">
+                                            {{sleepSelected ? (sleepSelected.duration|millisecond) : '- -'}} - {{(sleepEfficiency| number:'1.0-0') + '%'}}
+                                        </h4>
                                 <span *ngIf="sleepSelected && (sleepSelected.duration / 3600000)>=IDEAL_SLEEP_VALUE"
                                       class="text-center">
                                         <p class="card-category">
@@ -489,7 +491,7 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner [message]="'ACTIVITY.SLEEP.SPINNER-MESSAGE'|translate"></spinner>
+                                <spinner [message]="'ACTIVITY.SLEEP.MODAL-REMOVE.SPINNER-MESSAGE'|translate"></spinner>
                             </div>
                         </div>
                     </div>
@@ -502,6 +504,6 @@
     </div>
 </div>
 
-<modal-confirmation [message]="'ACTIVITY.SLEEP.DELETE-CONFIRMATION'|translate"
+<modal-confirmation [message]="'ACTIVITY.SLEEP.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
                     (confirmation)="removeSleep()"
                     (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

@@ -37,15 +37,17 @@
       "VIEW-STAGES": "View stages",
       "CLICK-TO-VIEW": "Click on the log to view the stages of sleep.",
       "REACHED-THE-IDEAL": "Reached the ideal",
-      "DELETE-CONFIRMATION": "Are you sure you want to permanently remove the sleep log?",
-      "SPINNER-MESSAGE": "Removing sleep log...",
       "LOADING": "Loading sleep record ...",
-      "GOAL-ACHIEVED": "Goal achieved"
+      "GOAL-ACHIEVED": "Goal achieved!",
+      "MODAL-REMOVE": {
+        "SPINNER-MESSAGE": "Removing sleep log...",
+        "CONFIRM-UNIQUE-REMOVE": "Are you sure you want to permanently remove the sleep log?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Are you sure you want to permanently remove",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "sleep records(s)?"
+      }
     },
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Physical Activity",
-      "DELETE-CONFIRMATION": "Are you sure you want to permanently remove the activity?",
-      "SPINNER-MESSAGE": "Removing physical activity ...",
       "LOADING": "Loading physical activity ...",
       "HISTORY-TABLE": {
         "TITLE": "Physical Activity History",
@@ -53,7 +55,17 @@
         "ACTIVITY-NAME": "Activity",
         "RESUME": "Resume"
       },
+      "MODAL-REMOVE": {
+        "SPINNER-MESSAGE": "Removing physical activity ...",
+        "CONFIRM-UNIQUE-REMOVE": "Are you sure you want to permanently remove the activity?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Are you sure you want to permanently remove",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "activity(ies)?"
+      },
       "DAILY-TOTAL": "Daily Total",
+      "WEEKLY-TOTAL": "Weekly total",
+      "MONTHLY-TOTAL": "Monthly total",
+      "TOTAL-ANNUAL": "Total annual",
+      "TOTAL-PERIOD": "Total for the period",
       "DURATION": "Activity duration",
       "STEPS": "Steps taken",
       "DISTANCE": "Travelled distance",
@@ -621,7 +633,8 @@
     "MIN": "MIN",
     "MAX": "MAX",
     "AVERAGE": "Average",
-    "AVERAGE-VALUE": "Average value"
+    "AVERAGE-VALUE": "Average value",
+    "BMI": "BMI"
   },
   "MYDATEPIPE": {
     "AT": "at",
@@ -800,7 +813,14 @@
     "HEALTHPROFESSIONALS": "Health professionals",
     "SELECTED-STUDY": "Selected study",
     "TOTAL-OF-PROFESSIONALS": "Total Professionals",
-    "TOTAL-OF-PATIENTS": "Total Patients"
+    "TOTAL-OF-PATIENTS": "Total Patients",
+    "DASHBOARD": "Dashboard",
+    "MEASUREMENTS": "Measurements",
+    "QUESTIONNAIRES": "Questionnaires",
+    "MY-MEASUREMENTS": "My Measurements",
+    "MY-QUESTIONNAIRES": "My Questionnaires",
+    "EXPAND-MENU": "Expand menu...",
+    "SHRINK-MENU": "Shrink menu..."
   },
   "SHARED": {
     "NAME": "Name",
@@ -882,6 +902,9 @@
     "ONLY": "Only",
     "TIMES": "times",
     "TURN": "turn",
+    "DAY": "day",
+    "DAYS": "days",
+    "SELECT": "Select",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",
