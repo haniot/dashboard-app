@@ -233,9 +233,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return item.id;
     }
 
-    calcAge(birth_date: Date) {
-        const date_current: Date = new Date();
-        return date_current.getFullYear() - birth_date.getFullYear();
+    calcAge(birth_date: string) {
+        const dateCurrent: Date = new Date();
+        const birthDate =  new Date(birth_date)
+        return dateCurrent.getFullYear() - birthDate.getFullYear();
     }
 
 
