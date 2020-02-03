@@ -89,46 +89,6 @@
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="includeLogs">
 
-            <div class=" text-center"
-                 id="removeModalConfirmation"
-                 *ngIf="modalConfirmRemoveMeasurement">
-
-                <div class="" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header" *ngIf="!removingMeasurements">
-                                <label>{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.TITLE'|translate}}</label>
-                                <button type="button" class="close" aria-label="Close"
-                                        (click)="closeModalConfimation()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p *ngIf="cacheIdMeasurementRemove !== '' && !removingMeasurements">
-                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate}}
-                                </p>
-                                <p *ngIf="cacheIdMeasurementRemove === '' && !removingMeasurements">
-                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate}}
-                                    {{cacheListIdMeasurementRemove.length}}
-                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate}}
-                                </p>
-                                <spinner
-                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.SPINNER-MESSAGE'|translate"
-                                        *ngIf="removingMeasurements"></spinner>
-
-                            </div>
-                            <div class="modal-footer" *ngIf="!removingMeasurements">
-                                <button type="button" class="btn btn-haniot-secondary btn-sm"
-                                        (click)="closeModalConfimation()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.NO'|translate}}</button>
-                                <button type="button" class="btn btn-haniot-primary btn-sm"
-                                        (click)="removeMeasurement()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.YES'|translate}}</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <h3>
@@ -137,7 +97,7 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllMeasurements()"
-                                  [disabled]="!dataForGraph.length">
+                                  [disabled]="!dataForLogs.length">
                         {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
                     </mat-checkbox>
                 </div>

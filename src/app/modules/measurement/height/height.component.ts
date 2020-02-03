@@ -26,6 +26,7 @@ export class HeightComponent implements OnInit, OnChanges {
     @Input() includeLogs: boolean;
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
+    @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
@@ -38,9 +39,6 @@ export class HeightComponent implements OnInit, OnChanges {
     limit: number;
     length: number;
     loadingMeasurements: boolean;
-    modalConfirmRemoveMeasurement: boolean;
-    cacheIdMeasurementRemove: string;
-    cacheListIdMeasurementRemove: Array<any>;
     selectAll: boolean;
     listCheckMeasurements: Array<boolean>;
     stateButtonRemoveSelected: boolean;
@@ -58,17 +56,15 @@ export class HeightComponent implements OnInit, OnChanges {
         this.showSpinner = false;
         this.filterChange = new EventEmitter();
         this.listCheckMeasurements = new Array<boolean>();
-        this.cacheListIdMeasurementRemove = new Array<string>();
-        this.cacheIdMeasurementRemove = '';
         this.stateButtonRemoveSelected = false;
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
         this.filter = new SearchForPeriod();
         this.loadingMeasurements = false;
-        this.modalConfirmRemoveMeasurement = false;
         this.selectAll = false;
         this.logsIsEmpty = false;
+        this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>();
     }
 
     ngOnInit(): void {
@@ -204,11 +200,6 @@ export class HeightComponent implements OnInit, OnChanges {
         this.updateStateButtonRemoveSelected();
     }
 
-    closeModalConfimation() {
-        this.cacheIdMeasurementRemove = '';
-        this.modalConfirmRemoveMeasurement = false;
-    }
-
     loadMeasurements(): any {
         this.logsLoading = true;
         this.dataForLogs = [];
@@ -230,63 +221,26 @@ export class HeightComponent implements OnInit, OnChanges {
     }
 
     openModalConfirmation(measurementId: string) {
-        this.cacheIdMeasurementRemove = measurementId;
-        this.modalConfirmRemoveMeasurement = true;
+        this.remove.emit({ type: EnumMeasurementType.height, resourceId: measurementId })
     }
 
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
-        this.listCheckMeasurements = new Array<boolean>(this.dataForGraph.length);
+        this.listCheckMeasurements = new Array<boolean>(this.dataForLogs.length);
         for (let i = 0; i < this.listCheckMeasurements.length; i++) {
             this.listCheckMeasurements[i] = false;
         }
         this.updateStateButtonRemoveSelected();
     }
 
-    async removeMeasurement(): Promise<any> {
-        this.loadingMeasurements = true;
-        if (!this.cacheListIdMeasurementRemove || !this.cacheListIdMeasurementRemove.length) {
-            this.measurementService.remove(this.patientId, this.cacheIdMeasurementRemove)
-                .then(measurements => {
-                    this.applyFilter(this.filter);
-                    this.loadingMeasurements = false;
-                    this.modalConfirmRemoveMeasurement = false;
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
-                })
-                .catch(() => {
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'));
-                    this.loadingMeasurements = false;
-                    this.modalConfirmRemoveMeasurement = false;
-                })
-        } else {
-            let occuredError = false;
-            for (let i = 0; i < this.cacheListIdMeasurementRemove.length; i++) {
-                try {
-                    const measurementRemove = this.cacheListIdMeasurementRemove[i];
-                    await this.measurementService.remove(this.patientId, measurementRemove.id);
-                } catch (e) {
-                    occuredError = true;
-                }
-            }
-            occuredError ? this.toastService
-                    .error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'))
-                : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
-
-            this.applyFilter(this.filter);
-            this.loadingMeasurements = false;
-            this.modalConfirmRemoveMeasurement = false;
-        }
-    }
-
     removeSelected() {
         const measurementsIdSelected: Array<string> = new Array<string>();
         this.listCheckMeasurements.forEach((element, index) => {
             if (element) {
-                measurementsIdSelected.push(this.dataForGraph[index].id);
+                measurementsIdSelected.push(this.dataForLogs[index].id);
             }
         })
-        this.cacheListIdMeasurementRemove = measurementsIdSelected;
-        this.modalConfirmRemoveMeasurement = true;
+        this.remove.emit({ type: EnumMeasurementType.height, resourceId: measurementsIdSelected })
     }
 
     selectAllMeasurements(): void {
@@ -307,10 +261,12 @@ export class HeightComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if ((changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
+        if ((changes.dataForGraph && changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
-            (changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
+            (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
         }
+        this.logsIsEmpty = this.dataForLogs.length === 0;
+        this.initializeListCheckMeasurements();
     }
 }

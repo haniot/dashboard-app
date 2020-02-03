@@ -160,7 +160,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.listActivities = [];
         this.currentFilter = new TimeSeriesIntervalFilter();
         this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
-        this.currentFilter.interval = '1m';
+        this.currentFilter.interval = '15m';
         this.sleepSize = 250;
         this.stepSize = 200;
         this.caloriesSize = 200;
@@ -181,7 +181,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             const timeZoneOffset = new Date().getTimezoneOffset();
             this.currentDate = timeZoneOffset ? new Date(`${date}T0${timeZoneOffset / 60}:00:00Z`) : new Date(`${date}T00:00:00Z`);
             this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
-            this.currentFilter.interval = '1m';
+            this.currentFilter.interval = '15m';
         }
     }
 

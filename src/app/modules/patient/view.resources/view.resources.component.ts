@@ -13,6 +13,8 @@ import {
 import { TimeSeriesService } from '../../activity/services/time.series.service'
 import * as moment from 'moment'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { ToastrService } from 'ngx-toastr'
+import { TranslateService } from '@ngx-translate/core'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -25,6 +27,7 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
     patientId: string;
     typeOfMeasurement: EnumMeasurementType | TimeSeriesType;
     list: Array<any> | TimeSeries | any;
+    listForLogs: Array<any>;
     listIsEmpty: boolean;
     filter: SearchForPeriod | TimeSeriesSimpleFilter | any;
     allTypesOfMeasurement = EnumMeasurementType;
@@ -36,25 +39,27 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
     length: number;
     loadingMeasurements: boolean;
     modalConfirmRemoveMeasurement: boolean;
-    cacheIdMeasurementRemove: string;
     cacheListIdMeasurementRemove: Array<any>;
     selectAll: boolean;
     listCheckMeasurements: Array<boolean>;
     stateButtonRemoveSelected: boolean;
     removingResource: boolean;
+    lastResource: EnumMeasurementType;
 
     constructor(
         private activeRouter: ActivatedRoute,
         private router: Router,
         private measurementService: MeasurementService,
         private modalService: ModalService,
-        private timeSeriesService: TimeSeriesService) {
+        private timeSeriesService: TimeSeriesService,
+        private toastService: ToastrService,
+        private translateService: TranslateService) {
         this.list = new Array<any>();
+        this.listForLogs = new Array<any>();
         this.listIsEmpty = false;
         this.listCheckMeasurements = new Array<boolean>();
         this.listCheckMeasurements = new Array<boolean>();
         this.cacheListIdMeasurementRemove = new Array<string>();
-        this.cacheIdMeasurementRemove = '';
         this.stateButtonRemoveSelected = false;
         this.listIsEmpty = false;
 
@@ -67,7 +72,6 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
         this.selectAll = false;
         this.listCheckMeasurements = new Array<boolean>();
         this.cacheListIdMeasurementRemove = new Array<string>();
-        this.cacheIdMeasurementRemove = '';
         this.stateButtonRemoveSelected = false;
     }
 
@@ -135,16 +139,47 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
         }
     }
 
-    openModalConfirmation(event): void {
-        this.modalService.open('modalConfirmation');
+    openModalConfirmation(event: { type: EnumMeasurementType, resourceId: string | string[] }): void {
+        if (event) {
+            this.lastResource = event.type;
+            this.cacheListIdMeasurementRemove = typeof event.resourceId === 'string' ? [event.resourceId] : event.resourceId
+            this.modalService.open('modalConfirmation');
+        }
     }
 
     closeModalConfirmation(): void {
         this.modalService.close('modalConfirmation');
     }
 
-    removeResources(): void {
+    loadForLogs(): void {
+        this.listForLogs = new Array<any>();
+        this.measurementService.getAllByUserAndType(this.patientId, this.lastResource)
+            .then((httpResponse) => {
+                this.listForLogs = httpResponse.body;
+            })
+            .catch(() => {
+                this.listForLogs = []
+            });
 
+    }
+
+    async removeResources() {
+        this.removingResource = true;
+        this.closeModalConfirmation();
+        let occurredError = false;
+        for (let i = 0; i < this.cacheListIdMeasurementRemove.length; i++) {
+            try {
+                const measurementRemove = this.cacheListIdMeasurementRemove[i];
+                await this.measurementService.remove(this.patientId, measurementRemove);
+            } catch (e) {
+                occurredError = true;
+            }
+        }
+        occurredError ? this.toastService
+                .error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-REMOVED'))
+            : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-REMOVED'));
+        this.loadForLogs();
+        this.removingResource = false;
     }
 
     ngOnChanges(changes: SimpleChanges): void {

@@ -41,7 +41,7 @@ export class TimeSeriesCardComponent {
             const dateFormatted: string = moment(this.currentDate).format();
             filter = new TimeSeriesIntervalFilter()
             filter.date = dateFormatted.split('T')[0];
-            filter.interval = '1m';
+            filter.interval = '15m';
         } else {
             filter = new TimeSeriesSimpleFilter()
             const startFormatted: string = moment(this.startOfDate).format();
