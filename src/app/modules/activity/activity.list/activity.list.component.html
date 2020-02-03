@@ -53,18 +53,15 @@
                                     </div>
                                     <div class="p-2">
                                         <h4>
-                                            {{totals && totals.steps && totals.steps.summary && totals.steps.summary.total ? (totals.steps.summary.total|number:'1.0-0') : 0}}
-                                            <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
+                                            {{getStepsTotal()}}<small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                                         </h4>
                                     </div>
                                     <div class="p-2">
-                                        <h4 [innerHTML]="totals && totals.distance && totals.distance.summary && totals.distance.summary.total ? (totals.distance.summary.total|distance) : '0<small>m</small>'">
-                                        </h4>
+                                        <h4 [innerHTML]="getDistanceTotal()"></h4>
                                     </div>
                                     <div class="p-2">
                                         <h4>
-                                            {{totals && totals.calories && totals.calories.summary && totals.calories.summary.total ? (totals.calories.summary.total|number:'1.0-0') : 0}}
-                                            <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                            {{getCaloriesTotal()}}<small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                         </h4>
                                     </div>
                                 </div>

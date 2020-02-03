@@ -18,6 +18,8 @@ import { PhysicalActivitiesService } from '../services/physical.activities.servi
 import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
 import { TimeSeriesService } from '../services/time.series.service'
+import { DecimalPipe } from '@angular/common'
+import { DistancePipe } from '../pipes/distance.pipe'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -55,6 +57,8 @@ export class ActivityListComponent implements OnInit {
         private activityService: PhysicalActivitiesService,
         private timeSeriesService: TimeSeriesService,
         private router: Router,
+        private decimalPipe: DecimalPipe,
+        private distancePipe: DistancePipe,
         private modalService: ModalService,
         private toastService: ToastrService,
         private translateService: TranslateService) {
@@ -190,6 +194,30 @@ export class ActivityListComponent implements OnInit {
 
     viewActivityDetails(activityId: string): void {
         this.router.navigate(['/app/activities', this.patientId, 'physical_activity', activityId]);
+    }
+
+    getStepsTotal(): number | string {
+        if (this.totals && this.totals.steps && this.totals.steps.summary) {
+            const total = this.totals.steps.summary['total'];
+            return this.decimalPipe.transform(total, '1.0-0')
+        }
+        return 0;
+    }
+
+    getDistanceTotal(): string {
+        if (this.totals && this.totals.distance && this.totals.distance.summary) {
+            const total = this.totals.distance.summary['total'];
+            return this.distancePipe.transform(total);
+        }
+        return '0<small>m</small>';
+    }
+
+    getCaloriesTotal(): number | string {
+        if (this.totals && this.totals.calories && this.totals.calories.summary) {
+            const total = this.totals.calories.summary['total'];
+            return this.decimalPipe.transform(total, '1.0-0')
+        }
+        return 0;
     }
 
     openModalConfirmation(activityId: string): void {
