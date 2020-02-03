@@ -40,7 +40,7 @@ export class MeasurementLogsComponent implements OnInit {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.measurementTypeSelected = EnumMeasurementType.WEIGHT;
+        this.measurementTypeSelected = EnumMeasurementType.weight;
         this.measurementsTypes = Object.keys(EnumMeasurementType);
         this.listOfMeasurements = new Array<any>();
         this.loadingMeasurements = false;

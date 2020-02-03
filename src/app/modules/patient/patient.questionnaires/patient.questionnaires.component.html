@@ -1,0 +1,293 @@
+<div class="main-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <mat-tab-group mat-align-tabs="center" (selectedTabChange)="clickOnMatTab($event)">
+
+                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-NUTRITIONAL-QUESTIONNAIRE'|translate">
+
+                        <!--  Nutritional Questionnaires -->
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"
+                                     *ngIf="loadingNutritionalQuestionnaire">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="p-2">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="container">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6 text-center">
+                                                                    <spinner
+                                                                            [message]="'PATIENTS.VIEW-HABITS.LOADING-QUESTIONNAIRES'|translate"></spinner>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                                    <div class="card">
+                                        <div class="card-header card-header-tabs card-header-danger">
+                                            <div class="nav-tabs-navigation">
+                                                <div class="nav-tabs-wrapper">
+                                        <span class="nav-tabs-title">
+                                            <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.NUTRITIONAL-QUESTIONNAIRE'|translate}}</h4>
+                                        </span>
+                                                    <ul class="nav nav-tabs shared right" data-tabs="tabs">
+                                                        <li class="nav-item"
+                                                            [ngClass]="nutritionalQuestionnaireOptions.length?'actived':'disabled'">
+                                                            <button type="button"
+                                                                    class="borderNone"
+                                                                    [title]="'HABITS.DELETE-NUTRITIONAL-QUESTIONNAIRE'|translate"
+                                                                    [disabled]="!nutritionalQuestionnaireOptions.length"
+                                                                    (click)="openModalConfirmationRemoveNutritionalQuestionnaire()">
+                                                                <i class="material-icons remove-questionnaire disabled">delete</i>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="d-flex flex-row-reverse shared" style="height: 50px;">
+                                                <div class="p-2">
+                                                    <i class="material-icons" [title]="'PATIENTS.VIEW-HABITS.TOVIEW-EVALUATIONS'|translate"
+                                                       [routerLink]="['/app/evaluations/nutritional',patientId]">assignment</i>
+                                                </div>
+                                                <div class="p-2">
+                                                    {{'PATIENTS.VIEW-HABITS.NUTRITION-EVALUATIONS'|translate}}:
+                                                </div>
+                                            </div>
+
+                                            <div class="row justify-content-center">
+
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInNutritioalQuestionnaire">
+                                                    <haniot-subcard [title]="'HABITS.FEEDING.TITLE'|translate">
+                                                        <feeding-habits
+                                                                [feedingHabitsRecord]="nutritionalQuestionnaire.feeding_habits_record"></feeding-habits>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInNutritioalQuestionnaire">
+                                                    <haniot-subcard
+                                                            [title]="'HABITS.PHYSICAL-ACTIVITY.TITLE'|translate">
+                                                        <physical-activity-habits
+                                                                [physicalRecord]="nutritionalQuestionnaire.physical_activity_habits"></physical-activity-habits>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                                     [ngClass]="fadeInNutritioalQuestionnaire">
+                                                    <haniot-subcard [title]="'HABITS.SLEEP.TITLE'|translate">
+                                                        <sleep-habits
+                                                                [sleepHabit]="nutritionalQuestionnaire.sleep_habit"></sleep-habits>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                                     [ngClass]="fadeInNutritioalQuestionnaire">
+                                                    <haniot-subcard
+                                                            [title]="'HABITS.MEDICAL-RECORD.TITLE'|translate">
+                                                        <medical-record
+                                                                [medicalRecord]="nutritionalQuestionnaire.medical_record"></medical-record>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <small class="pull-right"
+                                                       *ngIf="nutritionalQuestionnaire.created_at">
+                                                    {{'HABITS.REGISTER-DATE'|translate}}:
+                                                    {{nutritionalQuestionnaire.created_at | myDate }}</small>
+                                                <small class="pull-right"
+                                                       *ngIf="!nutritionalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                                                    : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                                    <mat-paginator [length]="nutritionalQuestionnaireOptions.length"
+                                                   [pageSize]="nutritionalQuestionnaireOptions.limit"
+                                                   [pageSizeOptions]="nutritionalQuestionnaireOptions.pageSizeOptions"
+                                                   (page)="nutritionalQuestionnairePageEvent($event)">
+                                    </mat-paginator>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </mat-tab>
+
+                    <mat-tab [label]="'PATIENTS.VIEW-HABITS.TAB-ODONTOLOGICAL-QUESTIONNAIRE'|translate">
+                        <!--  Odontological Questionnaires -->
+                        <div class="container-fluid">
+                            <div class="row" style="position:relative;">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 backdropLoadingQuestionnaire">
+                                    <!--Fundo preto do modal-->
+                                    <!--                                <div class="modal-backdrop show backdropLoadingQuestionnaire"-->
+                                    <!--                                     *ngIf="loadingOdontologicalQuestionnaire">-->
+                                    <!--                                </div>-->
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 loadingQuestionnaire"
+                                     *ngIf="loadingOdontologicalQuestionnaire">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="p-2">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="container">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6 text-center">
+                                                                    <spinner
+                                                                            [message]="'PATIENTS.VIEW-HABITS.LOADING-QUESTIONNAIRES'|translate"></spinner>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header card-header-tabs card-header-danger">
+                                            <div class="nav-tabs-navigation">
+                                                <div class="nav-tabs-wrapper">
+                                        <span class="nav-tabs-title">
+                                            <h4 class="card-title">{{'PATIENTS.VIEW-HABITS.ODONTOLOGICAL-QUESTIONNAIRE'|translate}}</h4>
+                                        </span>
+                                                    <ul class="nav nav-tabs shared right" data-tabs="tabs">
+                                                        <li class="nav-item"
+                                                            [ngClass]="odontologicalQuestionnaireOptions.length?'actived':'disabled'">
+                                                            <button type="button"
+                                                                    class="borderNone"
+                                                                    [title]="'HABITS.DELETE-ODONTOLOGICAL-QUESTIONNAIRE'|translate"
+                                                                    [disabled]="!odontologicalQuestionnaireOptions.length"
+                                                                    (click)="openModalConfirmationRemoveOdontologicalQuestionnaire()">
+                                                                <i class="material-icons remove-questionnaire disabled">delete</i>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
+
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInOdontologicalQuestionnaire">
+                                                    <haniot-subcard
+                                                            [title]="'HABITS.FAMILY-COHESION.TITLE'|translate">
+                                                        <familycohesion-record
+                                                                [familyCohesionRecord]="odontologicalQuestionnaire.family_cohesion_record"></familycohesion-record>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInOdontologicalQuestionnaire">
+                                                    <haniot-subcard
+                                                            [title]="'HABITS.SOCIO-DEMOGRAPHIC.TITLE'|translate">
+                                                        <sociodemographic-record
+                                                                [socioDemographicRecord]="odontologicalQuestionnaire.sociodemographic_record"></sociodemographic-record>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                     [ngClass]="fadeInOdontologicalQuestionnaire">
+                                                    <haniot-subcard [title]="'HABITS.ORAL-HEALTH.TITLE'|translate">
+                                                        <oralhealth-record
+                                                                [oralHealthRecord]="odontologicalQuestionnaire.oral_health_record"></oralhealth-record>
+                                                    </haniot-subcard>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                 [ngClass]="fadeInOdontologicalQuestionnaire">
+                                                <small class="pull-right"
+                                                       *ngIf="odontologicalQuestionnaire.created_at">
+                                                    {{'HABITS.REGISTER-DATE'|translate}}:
+                                                    {{odontologicalQuestionnaire.created_at | myDate }}</small>
+                                                <small class="pull-right"
+                                                       *ngIf="!odontologicalQuestionnaire.created_at">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}
+                                                    : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <mat-paginator [length]="odontologicalQuestionnaireOptions.length"
+                                                   [pageSize]="odontologicalQuestionnaireOptions.limit"
+                                                   [pageSizeOptions]="odontologicalQuestionnaireOptions.pageSizeOptions"
+                                                   (page)="odontologicalQuestionnairePageEvent($event)">
+                                    </mat-paginator>
+                                </div>
+
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<modal-confirmation [id]="'confirmationRemoveNutritionalQuestionnaire'"
+                    [message]="'Tem certeza que deseja excluir definitivamente o questionário nutricional?'"
+                    (confirmation)="removeNutritionalQuestionnaires()"
+                    (noconfirmation)="closeModalConfirmationNutritionalQuestionnaire()"></modal-confirmation>
+
+<modal-confirmation [id]="'confirmationRemoveOdontologicalQuestionnaire'"
+                    [message]="'Tem certeza que deseja excluir definitivamente o questionário odontologico?'"
+                    (confirmation)="removeOdontologicalQuestionnaires()"
+                    (noconfirmation)="closeModalConfirmationOdontologicalQuestionnaire()"></modal-confirmation>
+
+
+<div *ngIf="removingQuestionnaire">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'PATIENTS.VIEW-HABITS.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>

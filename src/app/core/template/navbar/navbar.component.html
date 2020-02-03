@@ -4,7 +4,11 @@
 
 
         <div class="col navbar-wrapper">
-            <a class="navbar-brand">{{title | translate}}</a>
+            <a class="navbar-brand">
+                {{
+                title && titleComplement ? ((title | translate) + ' - ' + titleComplement) : (title | translate)
+                }}
+            </a>
         </div>
 
 
@@ -34,7 +38,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        {{'NAVBAR.WELCOME' | translate}}, <span id="userName">{{userName}}.</span><i class="material-icons">settings</i>
+                        {{'NAVBAR.WELCOME' | translate}}, <span id="userName">{{userName}}.</span><i
+                            class="material-icons">settings</i>
 
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">

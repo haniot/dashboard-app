@@ -1,0 +1,66 @@
+@import "../../../../assets/scss/template-colors";
+
+.material-icons {
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.badge-haniot {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: $primary-color;
+  margin: 1px 1px;
+}
+
+.dataset-timestamp {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 1px 1px;
+}
+
+#removeModalConfirmation {
+  position: absolute;
+  display: flex;
+  margin: auto;
+  z-index: 1025;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+// overwrite the checkbox background
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: $primary-color !important;
+}
+
+// overwrite the ripple overlay on hover and click
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $primary-color !important;
+}
+
+.externa {
+  position: fixed;
+  z-index: 2000;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}

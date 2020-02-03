@@ -1,0 +1,138 @@
+@import "../../../../assets/scss/template-colors";
+
+::ng-deep .mat-select-panel {
+  min-width: unset !important;
+}
+
+.card .card-header-danger:not(.card-header-icon):not(.card-header-text), .card.bg-danger, .card.card-rotate.bg-danger .front, .card.card-rotate.bg-danger .back {
+  background: $primary-color !important;
+}
+
+.card-title {
+  margin-left: 5px !important;
+  color: white !important;
+}
+
+#buttons {
+  position: relative;
+  margin-top: -30px;
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.right {
+  position: absolute;
+  right: 10px;
+}
+
+li {
+  margin: 0px 5px;
+}
+
+.hidden {
+  position: absolute;
+  visibility: hidden;
+}
+
+.dropdown-item:hover {
+  background-color: $primary-color;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #80CBC4;
+}
+
+@media(max-width: 400px) {
+  li {
+    margin: 0px 1px;
+  }
+  .nav-link-mobile .material-icons {
+    font-size: 20px;
+    margin: 0px 0px;
+  }
+
+  .nav-tabs .nav-item .nav-link {
+    padding: 5px 5px;
+  }
+  .right {
+    position: absolute;
+    right: 5px;
+  }
+  .dropdown-menu {
+    z-index: 1050 !important;
+  }
+}
+
+i:hover {
+  cursor: pointer;
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.navigation {
+  z-index: 1099;
+
+  .material-icons {
+    color: white;
+  }
+
+  i:hover {
+    border-radius: 20px;
+    color: $primary-color;
+    background: white;
+  }
+}
+
+.disabled {
+  color: #9e9e9e !important;
+
+  &:hover {
+    border-radius: 20px !important;
+    background: $primary-color !important;
+  }
+}
+
+/* satDatePicker*/
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;;
+}
+
+::ng-deep .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+.mat-datepicker-toggle {
+  color: white !important;
+}
+
+.activity-resume-item {
+  padding: 0px 0px;
+  margin: 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+
+  p {
+    margin: 0px 4px;
+  }
+}

@@ -17,7 +17,7 @@ import { Admin } from '../models/admin'
 const languagesConfig = LanguagesConfiguration;
 
 @Component({
-    selector: 'app-modal-user',
+    selector: 'modal-user',
     templateUrl: './modal.user.component.html',
     styleUrls: ['./modal.user.component.scss']
 })
@@ -82,11 +82,11 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
         this.subscriptions.push(
             this.modalService.eventActionNotExecuted.subscribe((res) => {
                 switch (this.typeUser) {
-                    case UserType.ADMIN:
+                    case UserType.admin:
                         this.loadAdminInForm(res.user);
                         break;
 
-                    case UserType.HEALTH_PROFESSIONAL:
+                    case UserType.health_professional:
                         this.loadHealthProfessionalInForm(res.user);
                         break;
                 }
@@ -132,7 +132,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
             password: ['', Validators.required],
             password_confirm: ['', Validators.required]
         });
-        if (this.typeUser === UserType.ADMIN) {
+        if (this.typeUser === UserType.admin) {
             this.userForm.removeControl('health_area');
         }
         if (this.userId) {
@@ -173,10 +173,8 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
 
     loadUserInForm() {
         if (this.userId) {
-            console.log('Carregando usuário com id: ', this.userId)
             switch (this.typeUser) {
-                case UserType.ADMIN:
-                    console.log('Admin')
+                case UserType.admin:
                     this.adminService.getById(this.userId)
                         .then(admin => {
                             this.user = admin;
@@ -185,8 +183,7 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
                         .catch(() => {
                         });
                     break;
-                case UserType.HEALTH_PROFESSIONAL:
-                    console.log('Healthprofessional')
+                case UserType.health_professional:
                     this.healthService.getById(this.userId)
                         .then(healthprofessional => {
                             this.user = healthprofessional;
@@ -200,7 +197,6 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     close() {
-        this.typeUser = undefined;
         this.userForm.reset();
         this.user = new GenericUser('');
         this.passwordNotMatch = false;

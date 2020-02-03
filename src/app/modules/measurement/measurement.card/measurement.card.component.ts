@@ -7,7 +7,8 @@ export const FilterOptions = {
     today: 'today',
     week: '1w',
     month: '1m',
-    year: '1y'
+    year: '1y',
+    period: 'period'
 }
 
 @Component({

@@ -1,0 +1,126 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SleepPipe } from './pipes/sleep.pipe'
+import { PhysicalActivitiesService } from './services/physical.activities.service'
+import { SleepService } from './services/sleep.service'
+import { StepsComponent } from './steps/steps.component'
+import { TimeSeriesPipe } from './pipes/time.series.pipe'
+import { CaloriesComponent } from './calories/calories.component'
+import { ViewTimeSeriesComponent } from './view.time.series/view.time.series.component'
+import { ActivesMinutesComponent } from './actives.minutes/actives.minutes.component'
+import { DistanceComponent } from './distance/distance.component'
+import { HeartRateComponent } from './heart.rate/heart.rate.component'
+import { TimeSeriesService } from './services/time.series.service'
+import { TranslateModule } from '@ngx-translate/core'
+import { SleepComponent } from './sleep/sleep.component'
+import { SharedModule } from '../../shared/shared.module'
+import { NgxEchartsModule } from 'ngx-echarts'
+import {
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatTabsModule
+} from '@angular/material'
+import { SatDatepickerModule } from 'saturn-datepicker'
+import { FormsModule } from '@angular/forms'
+import { Ng5SliderModule } from 'ng5-slider'
+import { MeasurementModule } from '../measurement/measurement.module';
+import { ActivityDetailsComponent } from './activity.details/activity.details.component'
+import { ActivityRoutingModule } from './activity.routing/activity.routing.module';
+import { ActivityDashboardComponent } from './activity.dashboard/activity.dashboard.component';
+import { PhysicalActivityPipe } from './pipes/physical.activity.pipe';
+import { ActivityLevelPipe } from './pipes/activity.level.pipe';
+import { MillisecondPipe } from './pipes/millisecond.pipe'
+import { NgxGaugeModule } from 'ngx-gauge';
+import { ActivityListComponent } from './activity.list/activity.list.component';
+import { SleepListComponent } from './sleep.list/sleep.list.component';
+import { DistancePipe } from './pipes/distance.pipe';
+import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
+import { FilterTypePipe } from './pipes/filter.type.pipe'
+import { TimeSeriesCardComponent } from './time.series.card/time.series.card.component'
+
+@NgModule({
+    declarations: [
+        ActivesMinutesComponent,
+        CaloriesComponent,
+        DistanceComponent,
+        HeartRateComponent,
+        StepsComponent,
+        ViewTimeSeriesComponent,
+        SleepComponent,
+        SleepPipe,
+        TimeSeriesPipe,
+        ActivityDetailsComponent,
+        ActivityDashboardComponent,
+        PhysicalActivityPipe,
+        ActivityLevelPipe,
+        MillisecondPipe,
+        ActivityListComponent,
+        SleepListComponent,
+        DistancePipe,
+        ActiveMinutesPipe,
+        FilterTypePipe,
+        TimeSeriesCardComponent
+    ],
+    exports: [
+        ActivityDashboardComponent,
+        ActivesMinutesComponent,
+        CaloriesComponent,
+        DistanceComponent,
+        HeartRateComponent,
+        StepsComponent,
+        ViewTimeSeriesComponent,
+        SleepComponent,
+        SleepPipe,
+        TimeSeriesPipe,
+        ActivityLevelPipe,
+        DistancePipe,
+        ActiveMinutesPipe,
+        FilterTypePipe,
+        TimeSeriesCardComponent
+    ],
+    providers: [
+        SleepPipe,
+        TimeSeriesPipe,
+        PhysicalActivitiesService,
+        SleepService,
+        TimeSeriesService,
+        MillisecondPipe,
+        DistancePipe,
+        ActiveMinutesPipe,
+        FilterTypePipe
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+
+        ActivityRoutingModule,
+        SharedModule,
+        MeasurementModule,
+
+
+        NgxEchartsModule,
+        TranslateModule,
+        SatDatepickerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatPaginatorModule,
+        Ng5SliderModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatTabsModule,
+        MatIconModule,
+        NgxGaugeModule
+    ]
+})
+export class ActivityModule {
+}

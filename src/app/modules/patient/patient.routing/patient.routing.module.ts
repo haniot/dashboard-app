@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PatientFormComponent } from '../patient.form/patient.form.component';
-import { ViewHabitsComponent } from '../view.habits/view.habits.component';
 import { PatientManagerComponent } from '../patient.manager/patient.manager.component';
 import { PatientComponent } from '../patient.component/patient.component'
 import { PatientConfigComponent } from '../configurations/configurations.component'
 import { PatientMypilotstudiesComponent } from '../mypilotstudies/mypilotstudies.component'
 import { PatientMyEvaluationsComponent } from '../myevaluations/myevaluations.component'
+import { ViewResourcesComponent } from '../view.resources/view.resources.component'
+import { PatientQuestionnairesComponent } from '../patient.questionnaires/patient.questionnaires.component'
+import { PatientMeasurementsComponent } from '../patient.measurements/patient.measurements.component'
+import { PatientDashboardComponent } from '../patient.dashboard/patient.dashboard.component'
 
 const routes = [
 
@@ -52,9 +55,24 @@ const routes = [
         data: { scope: 'patients:create' }
     },
     {
-        path: ':patientId/details',
-        component: ViewHabitsComponent,
-        data: { scope: 'patients:read forms:read measurements:read' }
+        path: ':patientId/dashboard',
+        component: PatientDashboardComponent,
+        data: { scope: 'patients:read patients:delete' }
+    },
+    {
+        path: ':patientId/measurements',
+        component: PatientMeasurementsComponent,
+        data: { scope: 'patients:read measurements:read' }
+    },
+    {
+        path: ':patientId/questionnaires',
+        component: PatientQuestionnairesComponent,
+        data: { scope: 'patients:read forms:read' }
+    },
+    {
+        path: ':patientId/:resource',
+        component: ViewResourcesComponent,
+        data: { scope: 'patients:read measurements:read' }
     },
     { path: '**', redirectTo: '/page-not-found' }
 ];

@@ -7,7 +7,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { TranslateModule } from '@ngx-translate/core';
 import { SatDatepickerModule } from 'saturn-datepicker';
-import { MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatPaginatorModule } from '@angular/material';
+import {
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule
+} from '@angular/material';
 
 import { MeasurementComponent } from './measurement.component/measurement.component';
 import { MeasurementService } from './services/measurement.service';
@@ -17,7 +23,6 @@ import { WaistCircumferenceComponent } from './waist.circunference/waist.circumf
 import { BodyTemperatureComponent } from './body.temperature/body.temperature.component';
 import { BloodGlucoseComponent } from './blood.glucose/blood.glucose.component';
 import { BloodPressureComponent } from './blood.pressure/blood.pressure.component';
-import { HeartRateComponent } from './heart.rate/heart.rate.component';
 import { MealPipe } from './pipes/meal.pipe';
 import { FatComponent } from './fat/fat.component';
 import { DeviceTypePipe } from './pipes/device.type.pipe';
@@ -29,8 +34,9 @@ import { MeasurementLogsComponent } from './measurement.logs/measurement.logs.co
 import { MeasurementTypePipe } from './pipes/measurement.type.pipe';
 import { SharedModule } from '../../shared/shared.module'
 import { Ng5SliderModule } from 'ng5-slider'
-import { SleepComponent } from './sleep/sleep.component';
-import { SleepPipe } from './pipes/sleep.pipe'
+import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
+import { MeasurementDashboardComponent } from './measurement.dashboard/measurement.dashboard.component';
+import { NgxGaugeModule } from 'ngx-gauge'
 
 @NgModule({
     declarations: [
@@ -41,8 +47,7 @@ import { SleepPipe } from './pipes/sleep.pipe'
         BodyTemperatureComponent,
         BloodGlucoseComponent,
         BloodPressureComponent,
-        HeartRateComponent,
-        SleepComponent,
+        ViewMeasurementsComponent,
         MealPipe,
         DeviceTypePipe,
         FatComponent,
@@ -51,7 +56,7 @@ import { SleepPipe } from './pipes/sleep.pipe'
         MeasurementCardComponent,
         MeasurementLogsComponent,
         MeasurementTypePipe,
-        SleepPipe
+        MeasurementDashboardComponent
     ],
     imports: [
         CommonModule,
@@ -68,7 +73,8 @@ import { SleepPipe } from './pipes/sleep.pipe'
         MatInputModule,
         MatCheckboxModule,
         MatPaginatorModule,
-        Ng5SliderModule
+        Ng5SliderModule,
+        NgxGaugeModule
     ],
     exports: [
         MeasurementComponent,
@@ -81,11 +87,12 @@ import { SleepPipe } from './pipes/sleep.pipe'
         BodyTemperatureComponent,
         BloodGlucoseComponent,
         BloodPressureComponent,
-        HeartRateComponent,
         FatComponent,
+        ViewMeasurementsComponent,
         DecimalFormatterPipe,
         MeasurementTypePipe,
-        SleepPipe
+        MeasurementCardComponent,
+        MeasurementDashboardComponent
     ],
     providers: [
         MeasurementService,
@@ -93,8 +100,7 @@ import { SleepPipe } from './pipes/sleep.pipe'
         DatePipe,
         MealPipe,
         DeviceTypePipe,
-        DecimalFormatterPipe,
-        SleepPipe
+        DecimalFormatterPipe
     ]
 })
 export class MeasurementModule {

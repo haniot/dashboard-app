@@ -1,9 +1,9 @@
 export enum AccessStatus {
-    VALID_TOKEN = 'valid_token',
-    INVALID_TOKEN = 'invalid_token',
-    EXPIRED_TOKEN = 'expired_token',
-    INVALID_REFRESH_TOKEN = 'invalid_refresh_token',
-    NONE = 'none'
+    valid_token = 'valid_token',
+    invalid_token = 'invalid_token',
+    expired_token = 'expired_token',
+    invalid_refresh_token = 'invalid_refresh_token',
+    none = 'none'
 }
 
 export class ExternalService {

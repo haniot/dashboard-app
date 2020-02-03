@@ -2,8 +2,8 @@ import { GenericUser } from '../../../shared/shared.models/generic.user';
 import { ExternalService } from './external.service'
 
 export enum Gender {
-    MALE = 'male',
-    FEMALE = 'female'
+    male = 'male',
+    female = 'female'
 }
 
 export class PatientBasic {
@@ -65,7 +65,6 @@ export class Patient extends GenericUser {
     /* required */
     private _gender: Gender;
     /* optional */
-    private _email?: string;
     private _password?: string;
     private _password_confirm?: string;
     private _address: string
@@ -79,14 +78,6 @@ export class Patient extends GenericUser {
 
     set gender(value: Gender) {
         this._gender = value
-    }
-
-    get email(): string {
-        return this._email
-    }
-
-    set email(value: string) {
-        this._email = value
     }
 
     get password(): string {

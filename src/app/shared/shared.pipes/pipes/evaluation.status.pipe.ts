@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
     name: 'evaluationStatus',
@@ -7,7 +7,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class EvaluationStatustPipe implements PipeTransform {
 
     transform(value: any, args?: any): any {
-        switch (value) {
+        switch (`${value}`.toLowerCase()) {
             case 'complete':
                 return 'EVALUATION.STATUS-COMPLETE';
 

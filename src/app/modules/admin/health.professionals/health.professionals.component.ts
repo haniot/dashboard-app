@@ -8,7 +8,7 @@ import { HealthProfessional } from '../models/health.professional';
 import { GenericUser, UserType } from '../../../shared/shared.models/generic.user';
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -18,19 +18,21 @@ const PaginatorConfig = ConfigurationBasic;
     styleUrls: ['./health.professionals.component.scss']
 })
 export class HealthProfessionalComponent implements OnInit {
-    typeUser = UserType.HEALTH_PROFESSIONAL;
+    typeUser = UserType.health_professional;
     userEdit: GenericUser;
     healthProfessionals: Array<GenericUser>;
     page: number;
     limit: number;
     length: number;
     search: string;
+    listIsEmpty: boolean;
 
     constructor(
         private healthService: HealthProfessionalService,
         private toastr: ToastrService,
         private modalService: ModalService,
         private activeRouter: ActivatedRoute,
+        private router: Router,
         private translateService: TranslateService) {
         this.userEdit = new HealthProfessional('');
         this.healthProfessionals = [];
@@ -63,6 +65,7 @@ export class HealthProfessionalComponent implements OnInit {
                 if (httpResponse.body && httpResponse.body.length) {
                     this.healthProfessionals = httpResponse.body;
                 }
+                this.listIsEmpty = this.healthProfessionals.length === 0;
                 // this.loadinService.close();
             })
             .catch(() => {

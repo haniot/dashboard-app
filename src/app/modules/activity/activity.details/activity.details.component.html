@@ -1,0 +1,260 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-danger">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">
+                                    <h4 class="card-title">{{physicalActivity ? (physicalActivity.name | physicalActivity | translate) : ''}}</h4>
+                                    <p class="card-category">
+                                            {{physicalActivity ? (physicalActivity.start_time | date) : ''}},
+                                        {{'ACTIVITY.BETWEEN'|translate}} {{physicalActivity ? ((physicalActivity.start_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate)) : ''}}
+                                        {{'SHARED.AND'|translate}}
+                                        {{physicalActivity ? ((physicalActivity.end_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate)) : ''}}
+                                    </p>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nav-tabs-navigation" style="float:right">
+                                    <span class="nav-tabs-title">
+                                        <h4 class="card-title" [innerHTML]="physicalActivity && physicalActivity.distance ? (physicalActivity.distance|distance) : '0<small>m</small>'">
+                                        </h4>
+                                    </span>
+                            <span class="nav-tabs-title">
+                                        <h4 class="card-title">{{physicalActivity && physicalActivity.duration ? (physicalActivity.duration|millisecond) : ''}}</h4>
+                                    </span>
+                            <!--                            <span class="nav-tabs-title">-->
+                            <!--                                        <h4 class="card-title">{{physicalActivity.calories}} {{'TIME-SERIES.CALORIES.CALORIES'|translate}}</h4>-->
+                            <!--                                    </span>-->
+                            <ul class="nav nav-tabs shared" data-tabs="tabs">
+                                <li class="nav-item">
+                                    <button type="button"
+                                            class="borderNone"
+                                            [title]="'ACTIVITY.REMOVE'|translate"
+                                            (click)="openModalConfirmation(physicalActivity.id)">
+                                        <i class="material-icons remove-register">delete</i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+
+                            <div class="divSpinner" *ngIf="loadingPhysicalActivity">
+                                <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.LOADING'|translate"></spinner>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center">
+                                <div class="col-sm-12 col-md-4 row justify-content-center">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <h4 class="float-left">
+                                            {{'ACTIVITY.CALORIC-EXPENDITURE'|translate}}
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                         style="padding: 0px 0px;margin-top: auto; margin-bottom: auto">
+                                        <div class="card card-stats">
+                                            <div class="card-header card-header-timer card-header-icon">
+                                                <div class="card-icon">
+                                                    <img src="../../../../assets/img/time-series/calories-white.png"
+                                                         width="30">
+                                                </div>
+                                                <p class="card-category">{{'ACTIVITY.TOTAL-CALORIES-BURNED'|translate}}
+                                                    : </p>
+                                                <h3 class="card-title">
+                                                    {{physicalActivity ? physicalActivity.calories : ''}}
+                                                    <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                                </h3>
+                                                <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                                                <!--                        {{lastData.value + '' + lastData.unit}}-->
+                                                <!--                    </h3>-->
+                                                <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                                                <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                                                <!--                    </h3>-->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                         style="padding: 0px 0px;margin-top: auto; margin-bottom: auto">
+                                        <div class="card card-stats">
+                                            <div class="card-header card-header-timer card-header-icon">
+                                                <div class="card-icon">
+                                                    <img src="../../../../assets/img/time-series/calories-white.png"
+                                                         width="30">
+                                                </div>
+                                                <p class="card-category">{{'ACTIVITY.CALORIES-BURNED-PER-MINUTES'|translate}}
+                                                    : </p>
+                                                <h3 class="card-title">
+                                                    {{physicalActivity ? (Math.floor(physicalActivity.calories / (physicalActivity.duration / 60000))) : ''}}
+                                                    <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}/min</small>
+                                                </h3>
+                                                <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                                                <!--                        {{lastData.value + '' + lastData.unit}}-->
+                                                <!--                    </h3>-->
+                                                <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                                                <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                                                <!--                    </h3>-->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 row justify-content-center">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <h4 class="float-left">
+                                            {{'ACTIVITY.INTENSITY-LEVELS'|translate}}
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 justify-content-center">
+                                        <div style="height: 350px" echarts [options]="intensityLevelsGraph"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row justify-content-center"
+                                 *ngIf="physicalActivity && physicalActivity.heart_rate_average && physicalActivity.heart_rate_link">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <h4 class="float-left">
+                                        {{'TIME-SERIES.PIPES.TIME-SERIES.HEART-RATE'|translate}}
+                                    </h4>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                                     style="margin-top: auto; margin-bottom: auto">
+                                    <!--                                    <div class="p-2"-->
+                                    <!--                                         style="display: flex; align-content: center; justify-content: center;">-->
+                                    <!--                                        <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">-->
+                                    <!--                                            <div style="width: 100%;height: 100%; display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #FF7373"></div>-->
+                                    <!--                                            <img src="../../../../assets/img/time-series/heart.svg" width="50%"-->
+                                    <!--                                                 style="position: absolute;">-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <h2>{{physicalActivity.heart_rate_average}}-->
+                                    <!--                                            <small style="font-size: 14px">bpm</small>-->
+                                    <!--                                        </h2>-->
+                                    <!--                                    </div>-->
+                                    <div class="card card-stats">
+                                        <div class="card-header card-header-timer card-header-icon">
+                                            <div class="card-icon">
+                                                <div class="bg-heart_rate"></div>
+                                            </div>
+                                            <p class="card-category">{{'ACTIVITY.HEART-RATE-AVG'|translate}}: </p>
+                                            <h3 class="card-title">
+                                                {{physicalActivity.heart_rate_average}}
+                                                <small>bpm</small>
+                                            </h3>
+                                            <!--                    <h3 class="card-title" *ngIf="lastData && lastData.value">-->
+                                            <!--                        {{lastData.value + '' + lastData.unit}}-->
+                                            <!--                    </h3>-->
+                                            <!--                    <h3 class="card-title" *ngIf="!lastData || !lastData.value">-->
+                                            <!--                        {{'MEASUREMENTS.VALUE'|translate}}-->
+                                            <!--                    </h3>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                    <div class="echarts-div-graph" echarts [options]="heartRateGraph"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div style="display: flex; ">
+
+                                    <div style="width: 20px; height: 20px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">
+                                        <div style="width: 77%;height: 77%; display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"></div>
+                                    </div>
+
+                                    <label class="p-2" style="font-weight: normal;">
+                                        {{'ACTIVITY.IMPACT'|translate}}
+                                    </label>
+
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="p-2"
+                                     style="display: flex; align-content: center; justify-content: center;">
+                                    <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">
+                                        <div style="display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"
+                                             [ngStyle]="{'width': Math.floor((physicalActivity.steps*100)/stepsValue)+'%','height': Math.floor((physicalActivity.steps*100)/stepsValue)+'%' }"
+                                        *ngIf="physicalActivity && physicalActivity.steps && stepsValue"></div>
+                                        <img src="../../../../assets/img/time-series/steps-black.svg" width="50%"
+                                             style="position: absolute;">
+                                    </div>
+                                    <h2 class="p-2">+{{physicalActivity ? physicalActivity.steps : ''}}</h2>
+                                    <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
+                                        {{'PAGINATOR.OF'|translate}} {{stepsValue ? (stepsValue|number:'1.0-0') : 0}} {{'ACTIVITY.STEPS-TAKEN'|translate}}
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="p-2"
+                                     style="display: flex; align-content: center; justify-content: center;">
+                                    <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">
+                                        <div style="display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"
+                                             [ngStyle]="{'width': Math.floor((physicalActivity.calories*100)/caloriesValue)+'%','height': Math.floor((physicalActivity.calories*100)/caloriesValue)+'%' }"
+                                             *ngIf="physicalActivity && physicalActivity.calories && caloriesValue"></div>
+                                        <img src="../../../../assets/img/time-series/calories-black.svg" width="45%"
+                                             style="position: absolute;">
+                                    </div>
+                                    <h2 class="p-2">+{{physicalActivity ? physicalActivity.calories : ''}}</h2>
+                                    <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
+                                        {{'PAGINATOR.OF'|translate}} {{caloriesValue ? (caloriesValue|number:'1.0-0') : 0}} {{'ACTIVITY.CALORIES-BURNED'|translate}}
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="p-2"
+                                     style="display: flex; align-content: center; justify-content: center;">
+                                    <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">
+                                        <div style="display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"
+                                             [ngStyle]="{'width': Math.floor(((physicalActivity.duration/ 60000)*100)/activeMinutesValue)+'%','height': Math.floor(((physicalActivity.duration/ 60000)*100)/activeMinutesValue)+'%' }"
+                                             *ngIf="physicalActivity && physicalActivity.duration && activeMinutesValue"></div>
+                                        <img src="../../../../assets/img/time-series/active_minutes.svg" width="50%"
+                                             style="position: absolute;">
+                                    </div>
+                                    <h2 class="p-2">
+                                        +{{physicalActivity ? (Math.floor(physicalActivity.duration / 60000)) : ''}}</h2>
+                                    <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
+                                        {{'PAGINATOR.OF'|translate}} {{activeMinutesValue ? (activeMinutesValue|number:'1.0-0') : 0}} {{'ACTIVITY.ACTIVE-MINUTES'|translate}}
+                                    </small>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="removingActivity">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<modal-confirmation [message]="'ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
+                    (confirmation)="removeActivity()"
+                    (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

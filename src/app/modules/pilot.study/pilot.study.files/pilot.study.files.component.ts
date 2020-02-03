@@ -19,6 +19,8 @@ import { Patient } from '../../patient/models/patient'
 import { PatientService } from '../../patient/services/patient.service'
 import { MeasurementType } from '../../measurement/models/measurement.types'
 import * as $ from 'jquery'
+import { AuthService } from '../../../security/auth/services/auth.service'
+import { VerifyScopeService } from '../../../security/services/verify.scope.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -64,6 +66,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
     patientLength: number;
 
     constructor(
+        private authService: AuthService,
         private pilotService: PilotStudyService,
         private paginatorService: PaginatorIntlService,
         private toastService: ToastrService,
@@ -72,6 +75,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         private translateService: TranslateService,
         private sanitizer: DomSanitizer,
         private measurementService: MeasurementService,
+        private verifyScopesService: VerifyScopeService,
         private questionnaireService: NutritionalQuestionnairesService,
         private patientService: PatientService
     ) {
@@ -146,7 +150,6 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         }
         return this.paginatorService.getIndex(this.pageEvent, this.limit, index);
     }
-
 
     generateFile(stepper) {
         this.closeModalFileConfig();
@@ -379,7 +382,7 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
 
             file.data_types.forEach(type => {
                 if (measurementsAllTypes.find(measurementType => {
-                    return type === measurementType
+                    return type.toUpperCase() === measurementType
                 })) {
                     dataReturn.measurement_type.push(type);
                 }
@@ -405,8 +408,11 @@ export class PilotStudyFilesComponent implements OnInit, OnChanges {
         return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    verifyScopes(routerScopes: Array<string>): boolean {
+        return this.verifyScopesService.verifyScopes(routerScopes);
+    }
 
+    ngOnChanges(changes: SimpleChanges) {
         if (changes.pilotStudy.currentValue !== changes.pilotStudy.previousValue) {
             this.getAllFiles();
         }

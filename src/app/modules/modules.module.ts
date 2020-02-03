@@ -21,7 +21,8 @@ import { PaginatorIntlService } from './config.matpaginator';
             },
             deps: [TranslateService]
         }
-    ]
+    ],
+    declarations: []
 })
 export class ModulesModule {
 }

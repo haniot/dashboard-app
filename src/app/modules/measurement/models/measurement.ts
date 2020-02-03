@@ -11,27 +11,60 @@ export class SearchForPeriod {
 }
 
 export enum EnumMeasurementType {
-    WEIGHT = 'weight',
-    BLOOD_GLUCOSE = 'blood_glucose',
-    BODY_FAT = 'body_fat',
-    BLOOD_PRESSURE = 'blood_pressure',
-    HEIGHT = 'height',
-    WAIST_CIRCUMFERENCE = 'waist_circumference',
-    BODY_TEMPERATURE = 'body_temperature'
+    weight = 'weight',
+    blood_glucose = 'blood_glucose',
+    body_fat = 'body_fat',
+    blood_pressure = 'blood_pressure',
+    height = 'height',
+    waist_circumference = 'waist_circumference',
+    body_temperature = 'body_temperature'
 }
 
 export class GenericMeasurement {
-    id: string;
-    unit: string;
-    type: EnumMeasurementType;
-    patient_id: string;
-    device_id?: string;
+    private _id: string;
+    private _unit: string;
+    private _type: EnumMeasurementType;
+    private _patient_id: string;
+    private _device_id?: string;
 
-    constructor() {
-        this.id = ''
-        this.unit = '';
-        this.patient_id = '';
-        this.device_id = '';
+    get id(): string {
+        return this._id
+    }
+
+    set id(value: string) {
+        this._id = value
+    }
+
+    get unit(): string {
+        return this._unit
+    }
+
+    set unit(value: string) {
+        this._unit = value
+    }
+
+    get type(): EnumMeasurementType {
+        return this._type
+    }
+
+    set type(value: EnumMeasurementType) {
+        this._type = value
+    }
+
+    get patient_id(): string {
+        return this._patient_id
+    }
+
+    set patient_id(value: string) {
+        this._patient_id = value
+    }
+
+    get device_id(): string {
+        return this._device_id
+    }
+
+    set device_id(value: string) {
+        this._device_id = value
     }
 }
 
@@ -46,7 +79,7 @@ export class GenericMeasurement {
 //     }
 // }
 
-export class Measurement extends GenericMeasurement {
+export class Measurement {
     /* required */
     private _value: number;
     private _unit: string;

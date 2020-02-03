@@ -1,0 +1,77 @@
+@import "../../../../assets/scss/template-colors";
+
+.card .card-header-danger:not(.card-header-icon):not(.card-header-text), .card.bg-danger, .card.card-rotate.bg-danger .front, .card.card-rotate.bg-danger .back {
+  background: $primary-color !important;
+}
+
+.right {
+  position: absolute;
+  right: 10px;
+}
+
+label {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.material-icons {
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.shared .material-icons {
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 30px;
+  -webkit-transition: font-size 500ms; /* Safari */
+  transition: font-size 500ms;
+}
+
+.shared .material-icons:hover {
+  font-size: 35px;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+}
+
+.remove-register {
+  color: white;
+  cursor: pointer;
+}
+
+.disabled .remove-register {
+  color: gray;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 30px;
+}
+
+.disabled .remove-register:hover {
+  box-shadow: none;
+  font-size: 30px;
+}
+
+.borderNone {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.main-content {
+  padding-top: 0px;
+}
+
+.bottom_aligner {
+  display: inline-block;
+  height: 100%;
+  vertical-align: bottom;
+  width: 0px;
+}

@@ -1,12 +1,12 @@
 import { Measurement } from './measurement';
 
 export enum MealType {
-    PREPRANDIAL = 'preprandial',
-    POSTPRANDIAL = 'postprandial',
-    FASTING = 'fasting',
-    CASUAL = 'casual',
-    BEDTIME = 'bedtime',
-    OTHER = 'other'
+    preprandial = 'preprandial',
+    postprandial = 'postprandial',
+    fasting = 'fasting',
+    casual = 'casual',
+    bedtime = 'bedtime',
+    other = 'other'
 }
 
 export class BloodGlucose extends Measurement {

@@ -64,7 +64,6 @@ export class HealthProfessionalConfigComponent implements OnInit {
         this.healthService.update(healthProfessional)
             .then((healthprofesional) => {
                 this.user = healthprofesional;
-                this.localStorageService.setItem('health_area', this.user.health_area);
                 this.toastr.info(this.translateService.instant('TOAST-MESSAGES.INFO-UPDATED'));
                 this.visibilityButtonSave = false;
                 this.disabledButtonEdit = false;

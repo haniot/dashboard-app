@@ -233,6 +233,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return item.id;
     }
 
+    calcAge(birth_date: string) {
+        const dateCurrent: Date = new Date();
+        const birthDate =  new Date(birth_date)
+        return dateCurrent.getFullYear() - birthDate.getFullYear();
+    }
+
+
     ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();

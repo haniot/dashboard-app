@@ -8,7 +8,7 @@
                     <haniot-table [(list)]="healthProfessionals" (onremove)="getAllHealthProfessionals()"
                                   (onedit)="editUser($event)" [userType]="'HealthProfessional'"
                                   (pagination)="paginationEvent($event)"
-                                  [(length)]="length" [pageSize]="limit"></haniot-table>
+                                  [length]="length" [listOfUserIsEmpty]="listIsEmpty" [pageSize]="limit"></haniot-table>
                 </haniot-card>
             </div>
             <div class="col-md">
@@ -22,11 +22,11 @@
 </div>
 
 <haniot-modal [modalId]="'modalUser'">
-    <app-modal-user [title]="'HEALTHPROFESSIONALS.TITLE-ADD'|translate" (onsubmit)="createHealthProfessinal($event)"
-                    [typeUser]="typeUser"></app-modal-user>
+    <modal-user [title]="'HEALTHPROFESSIONALS.TITLE-ADD'|translate" (onsubmit)="createHealthProfessinal($event)"
+                    [typeUser]="typeUser"></modal-user>
 </haniot-modal>
 
 <haniot-modal [modalId]="'modalUserEdit'">
-    <app-modal-user [title]="'HEALTHPROFESSIONALS.TITLE-EDIT'|translate" (onsubmit)="editHealthProfessinal($event)"
-                    [typeUser]="typeUser" [userId]="userEdit.id" (onclose)="cleanUser()"></app-modal-user>
+    <modal-user [title]="'HEALTHPROFESSIONALS.TITLE-EDIT'|translate" (onsubmit)="editHealthProfessinal($event)"
+                    [typeUser]="typeUser" [userId]="userEdit.id" (onclose)="cleanUser()"></modal-user>
 </haniot-modal>

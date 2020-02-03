@@ -10,6 +10,7 @@ import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study'
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service'
 import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service'
 import { GenericUser } from '../../../shared/shared.models/generic.user'
+import { EnumMeasurementType } from '../../../modules/measurement/models/measurement'
 
 declare const $: any;
 
@@ -57,18 +58,24 @@ export const configSideBar = [
 })
 export class SidebarComponent implements OnInit {
     userId: string;
+    patientSelected: string;
     configSideBar: { title: string, scopes: any[] }[];
     userName: String = '';
     iconUserMenu = 'keyboard_arrow_right';
     activeMyPilots: string;
     activeMyEvaluations: string;
-    activeDashboard: string;
+    activeHome: string;
     activePatients: string;
+    activeDashboardPatients: string;
+    activeMeasurementsPatients: string;
+    activeQuestionnairesPatients: string;
     activeEvaluations: string;
     study: PilotStudy;
     iconCollapse = 'keyboard_arrow_down';
     userLogged: GenericUser;
     loadUserTime: any
+    iconPatientMenu = 'keyboard_arrow_right';
+    statePatientMenu: string;
 
     constructor(
         private authService: AuthService,
@@ -86,6 +93,7 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getPatientSelected();
         this.configSideBar = configSideBar;
         this.getUserName();
         this.router.events.subscribe(event => this.updateMenu());
@@ -93,6 +101,15 @@ export class SidebarComponent implements OnInit {
         this.selectPilotService.pilotStudyUpdated.subscribe(() => {
             this.getPilotSelected();
         });
+        this.localStorageService.patientSelected.subscribe(() => {
+            this.getPatientSelected();
+        });
+    }
+
+    getPatientSelected(): void {
+        const patientSelectedLocal = JSON.parse(this.localStorageService.getItem('patientSelected'));
+        this.patientSelected = patientSelectedLocal && patientSelectedLocal.id ? patientSelectedLocal.id : '';
+        this.statePatientMenu = this.patientSelected ? 'show' : '';
     }
 
     isMobileMenu() {
@@ -107,12 +124,7 @@ export class SidebarComponent implements OnInit {
             return element.title === title;
         });
         const routerScopes = configRouter[0].scopes;
-        const scopes = this.authService.getScopeUser();
-        if (scopes) {
-            const userScopes: Array<String> = scopes.split(' ');
-            return this.verifyScopesService.verifyScopes(routerScopes, userScopes);
-        }
-        return false;
+        return this.verifyScopesService.verifyScopes(routerScopes);
     }
 
     getUserName() {
@@ -147,44 +159,23 @@ export class SidebarComponent implements OnInit {
 
     updateMenu() {
         const path_current = this.location.path();
+        this.activeHome = path_current.match('/app/dashboard\$') ? 'active' : '';
+        this.activeMyPilots = (path_current.match('mystudies\$') || path_current.match('pilotstudies')) ? 'active' : '';
+        this.activeMyEvaluations = (path_current.match('myevaluations\$')) ? 'active' : '';
+        this.activePatients = (path_current.match('patients') || path_current.match('activities')) ? 'active' : '';
+        this.activeEvaluations = (path_current.match('evaluations') && path_current.match('nutritional')) ? 'active' : '';
 
-        if (path_current.match('dashboard')) {
-            this.activeDashboard = 'active'
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = '';
-            this.activePatients = '';
-            this.activeEvaluations = '';
-        } else if (path_current.match('mystudies') || path_current.match('pilotstudies')) {
-            this.activeDashboard = ''
-            this.activeMyPilots = 'active';
-            this.activeMyEvaluations = '';
-            this.activePatients = '';
-            this.activeEvaluations = '';
-        } else if (path_current.match('myevaluations')) {
-            this.activeDashboard = ''
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = 'active';
-            this.activePatients = '';
-            this.activeEvaluations = '';
-        } else if (path_current.match('patients')) {
-            this.activeDashboard = ''
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = '';
-            this.activePatients = 'active';
-            this.activeEvaluations = '';
-        } else if (path_current.match('evaluations/nutritional')) {
-            this.activeDashboard = ''
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = '';
-            this.activePatients = '';
-            this.activeEvaluations = 'active';
-        } else {
-            this.activeDashboard = ''
-            this.activeMyPilots = '';
-            this.activeMyEvaluations = '';
-            this.activePatients = '';
-            this.activeEvaluations = '';
-        }
+        this.activeDashboardPatients = (
+            (path_current.match('patients') && path_current.match('dashboard\$')) ||
+            (path_current.match('activities') && path_current.match('physical_activity|sleep'))
+        ) ? 'active' : '';
+        const measurements = Object.keys(EnumMeasurementType);
+        const regex = measurements.join('\$|')
+        this.activeMeasurementsPatients = (
+            path_current.match('patients') &&
+            (path_current.match('measurements\$|' + regex + '\$'))
+        ) ? 'active' : '';
+        this.activeQuestionnairesPatients = (path_current.match('patients') && path_current.match('questionnaires\$')) ? 'active' : '';
     }
 
     myPilotStudies(): void {
@@ -226,8 +217,19 @@ export class SidebarComponent implements OnInit {
         this.authService.logout();
     }
 
-    onclickMenuUser(): void {
+    onClickMenuUser(): void {
         this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
+    }
+
+    changeIconMenuPatient(): void {
+        this.iconPatientMenu = this.iconPatientMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
+        this.statePatientMenu = this.iconPatientMenu === 'keyboard_arrow_right' ? 'show' : '';
+    }
+
+    onClickMenuPatient(event): void {
+        event.preventDefault();
+        event.stopPropagation();
+        this.router.navigate(['/app/patients']);
     }
 
     isNotAdmin(): boolean {

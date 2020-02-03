@@ -1,0 +1,121 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.weight">
+                    <weight [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
+                            [includeCard]="true" [includeLogs]="true"
+                            [showSpinner]="!list.length && !listIsEmpty"
+                            [dataForLogs]="listForLogs"
+                            (remove)="openModalConfirmation($event)"></weight>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_fat">
+                    <fat [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
+                         [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"
+                         [dataForLogs]="listForLogs" (remove)="openModalConfirmation($event)"></fat>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.height">
+                    <height [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
+                            [includeCard]="true" [includeLogs]="true"
+                            [showSpinner]="!list.length && !listIsEmpty"
+                            [dataForLogs]="listForLogs" (remove)="openModalConfirmation($event)"></height>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.waist_circumference">
+                    <waist-circunference [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
+                                         [includeCard]="true" [includeLogs]="true"
+                                         [showSpinner]="!list.length && !listIsEmpty"
+                                         [dataForLogs]="listForLogs"
+                                         (remove)="openModalConfirmation($event)"></waist-circunference>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_temperature">
+                    <body-temperature [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
+                                      [includeCard]="true" [includeLogs]="true"
+                                      [showSpinner]="!list.length && !listIsEmpty"
+                                      [dataForLogs]="listForLogs"
+                                      (remove)="openModalConfirmation($event)"></body-temperature>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.blood_glucose">
+                    <blood-glucose [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
+                                   [includeCard]="true" [includeLogs]="true"
+                                   [showSpinner]="!list.length && !listIsEmpty"
+                                   [dataForLogs]="listForLogs" (remove)="openModalConfirmation($event)"></blood-glucose>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.blood_pressure">
+                    <blood-pressure [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
+                                    [includeCard]="true" [includeLogs]="true"
+                                    [showSpinner]="!list.length && !listIsEmpty"
+                                    [dataForLogs]="listForLogs"
+                                    (remove)="openModalConfirmation($event)"></blood-pressure>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.steps">
+                    <steps [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
+                           [showSpinner]="!list && !listIsEmpty" [intraday]="true" [listIsEmpty]="listIsEmpty"></steps>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.calories">
+                    <calories [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
+                              [showSpinner]="!list && !listIsEmpty" [intraday]="true"
+                              [listIsEmpty]="listIsEmpty"></calories>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.distance">
+                    <distance [data]="list" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"
+                              [showSpinner]="!list && !listIsEmpty" [intraday]="true"
+                              [listIsEmpty]="listIsEmpty"></distance>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.active_minutes">
+                    <actives-minutes [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                                     [includeCard]="true" [intraday]="true" [listIsEmpty]="listIsEmpty"
+                                     [showSpinner]="!list && !listIsEmpty"></actives-minutes>
+                </div>
+
+                <div *ngIf="typeOfMeasurement.toString() === allTypesOfTimeSerie.heart_rate">
+                    <heart-rate [data]="list" [filterVisibility]="true" [patientId]="patientId"
+                                [includeCard]="true" [listIsEmpty]="listIsEmpty"
+                                [showSpinner]="!list && !listIsEmpty" [intraday]="true"></heart-rate>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="removingResource">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner
+                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<modal-confirmation
+        [message]="(cacheListIdMeasurementRemove && cacheListIdMeasurementRemove.length && cacheListIdMeasurementRemove.length>1)?('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate) +
+        ' '+cacheListIdMeasurementRemove.length+' ' + ('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
+        :'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
+        (confirmation)="removeResources()"
+        (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

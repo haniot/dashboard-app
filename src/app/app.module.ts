@@ -2,7 +2,7 @@ import { enableProdMode, LOCALE_ID, NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { CommonModule, DecimalPipe, registerLocaleData } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -23,6 +23,7 @@ import { SelectPilotStudyService } from './shared/shared.components/select.pilot
 import { environment } from '../environments/environment';
 import { LanguagesConfiguration } from '../assets/i18n/config.js';
 import { DashboardService } from './modules/dashboard/services/dashboard.service';
+import { LocalStorageService } from './shared/shared.services/local.storage.service'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -82,7 +83,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         { provide: LOCALE_ID, useClass: DynamicLocaleId, deps: [TranslateService] },
         { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
         SelectPilotStudyService,
-        DashboardService
+        DashboardService,
+        DecimalPipe,
+        LocalStorageService
     ],
     bootstrap: [AppComponent]
 })

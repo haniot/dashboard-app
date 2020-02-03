@@ -45,6 +45,11 @@ const routes = [
                 path: 'evaluations',
                 loadChildren: () => import('../../modules/evaluation/evaluation.module')
                     .then(m => m.EvaluationModule)
+            },
+            {
+                path: 'activities',
+                loadChildren: () => import('../../modules/activity/activity.module')
+                    .then(m => m.ActivityModule)
             }
         ]
     },

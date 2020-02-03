@@ -5,6 +5,7 @@ import { Patient } from '../models/patient';
 import { environment } from '../../../../environments/environment'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
 import { DashboardService } from '../../dashboard/services/dashboard.service'
+import { Goal } from '../models/goal'
 
 @Injectable()
 export class PatientService {
@@ -84,6 +85,11 @@ export class PatientService {
             .toPromise();
     }
 
+    getGoals(patientId: string): Promise<Goal> {
+        return this.http.get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/goals`)
+            .toPromise();
+    }
+
     create(patient: Patient): Promise<Patient> {
         return this.http.post<any>(`${environment.api_url}/${this.version}/patients`, patient)
             .toPromise()
@@ -95,6 +101,11 @@ export class PatientService {
 
     update(patient: Patient): Promise<Patient> {
         return this.http.patch<any>(`${environment.api_url}/${this.version}/patients/${patient.id}`, patient)
+            .toPromise();
+    }
+
+    updateGoal(patientId: string, goal: Goal): Promise<Patient> {
+        return this.http.patch<any>(`${environment.api_url}/${this.version}/patients/${patientId}/goals`, goal)
             .toPromise();
     }
 

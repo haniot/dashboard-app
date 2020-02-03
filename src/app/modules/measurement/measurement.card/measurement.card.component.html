@@ -10,25 +10,32 @@
                 <ul class="nav nav-tabs right" data-tabs="tabs" *ngIf="filter_visibility && !isMobile()">
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab"
+                           [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.TODAY'?'active':''"
                            (click)="filterChange(filterOptions.today)">
                             {{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}
                             <div class="ripple-container"></div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" (click)="filterChange(filterOptions.week)">
+                        <a class="nav-link" data-toggle="tab"
+                           [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.WEEK'?'active':''"
+                           (click)="filterChange(filterOptions.week)">
                             {{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}
                             <div class="ripple-container"></div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" (click)="filterChange(filterOptions.month)">
+                        <a class="nav-link" data-toggle="tab"
+                           [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.MONTH'?'active':''"
+                           (click)="filterChange(filterOptions.month)">
                             {{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}
                             <div class="ripple-container"></div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" (click)="filterChange(filterOptions.year)">
+                        <a class="nav-link" data-toggle="tab"
+                           [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.YEAR'?'active':''"
+                           (click)="filterChange(filterOptions.year)">
                             {{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}
                             <div class="ripple-container"></div>
                         </a>

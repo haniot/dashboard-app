@@ -9,7 +9,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-timer card-header-icon">
                     <div class="card-icon">
-                        <div class="bg-blood_pressure"></div>
+                        <img src="../../../../assets/img/blood-pressure-white.svg">
                     </div>
                     <span class="badge badge-haniot">{{'MEASUREMENTS.BLOOD-PRESSURE.SYSTOLIC'|translate}}</span>
                     <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}:</p>
@@ -27,7 +27,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-timer card-header-icon">
                     <div class="card-icon">
-                        <div class="bg-blood_pressure"></div>
+                        <img src="../../../../assets/img/blood-pressure-white.svg">
                     </div>
                     <span class="badge badge-haniot">{{'MEASUREMENTS.BLOOD-PRESSURE.DIASTOLIC'|translate}}</span>
                     <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}:</p>
@@ -45,7 +45,7 @@
             <div class="card card-stats">
                 <div class="card-header card-header-timer card-header-icon">
                     <div class="card-icon">
-                        <div class="bg-blood_pressure"></div>
+                        <img src="../../../../assets/img/pulse-white.svg">
                     </div>
                     <span class="badge badge-haniot">{{'MEASUREMENTS.BLOOD-PRESSURE.PULSE'|translate}}</span>
                     <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>
@@ -79,53 +79,86 @@
 
             <div class="unavailable-data">
                 <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-                <span *ngIf="data.length==0 && !showSpinner"
+                <span *ngIf="dataForGraph.length==0 && !showSpinner"
                       class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.BLOOD-PRESSURE.UNAVAILABLE-DATA'|translate}}</span>
             </div>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-
-            <div class=" text-center"
-                 id="removeModalConfirmation"
-                 *ngIf="modalConfirmRemoveMeasurement">
-
-                <div class="" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header" *ngIf="!loadingMeasurements">
-                                <label>{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.TITLE'|translate}}</label>
-                                <button type="button" class="close" aria-label="Close"
-                                        (click)="closeModalConfimation()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p *ngIf="cacheIdMeasurementRemove !== '' && !loadingMeasurements">
-                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate}}
-                                </p>
-                                <p *ngIf="cacheIdMeasurementRemove === '' && !loadingMeasurements">
-                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate}}
-                                    {{cacheListIdMeasurementRemove.length}}
-                                    {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate}}
-                                </p>
-                                <spinner
-                                        [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.SPINNER-MESSAGE'|translate"
-                                        *ngIf="loadingMeasurements"></spinner>
-
-                            </div>
-                            <div class="modal-footer" *ngIf="!loadingMeasurements">
-                                <button type="button" class="btn btn-haniot-secondary btn-sm"
-                                        (click)="closeModalConfimation()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.NO'|translate}}</button>
-                                <button type="button" class="btn btn-haniot-primary btn-sm"
-                                        (click)="removeMeasurement()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.YES'|translate}}</button>
-                            </div>
+        <!-- LEGEND -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 legend">
+            <div class="d-flex justify-content-around">
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'rgba(0,128,255,0.3)'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.HYPOTENSION'|translate}}
+                            </h4>
                         </div>
                     </div>
                 </div>
-
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'rgba(25,142,125,0.3)'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.NORMAL'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'#FFF6C0'}"></div>
+                            <h4 style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.HIGH'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="d-flex justify-content-around">
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'#FFE1BC'}"></div>
+                            <h4 class="text-center" style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.STAGE1'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'#FFCEB9'}"></div>
+                            <h4 class="text-center" style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.STAGE2'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <div style="display: flex;flex-direction: column">
+                        <div style="display: flex;">
+                            <div class="card-legend"
+                                 [ngStyle]="{'background-color':'#FF6B65'}"></div>
+                            <h4 class="text-center" style="padding-left: 5px">
+                                {{'MEASUREMENTS.BLOOD-PRESSURE.HYPERTENSIVE-URGENCY'|translate}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="includeLogs">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <h3>
@@ -134,7 +167,7 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllMeasurements()"
-                                  [disabled]="!data.length">
+                                  [disabled]="!dataForLogs.length">
                         {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
                     </mat-checkbox>
                 </div>
@@ -151,7 +184,7 @@
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
                 <!-- Table for type blood_pressure-->
-                <table class="table table-hover table-sm">
+                <table class="table table-hover table-sm rwd-table">
                     <thead>
                     <th>#</th>
                     <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.PRESSURE'|translate}}</th>
@@ -160,35 +193,35 @@
                     <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
                     </thead>
                     <tbody>
-                    <tr *ngIf="data.length==0">
-                        <td colspan="7" *ngIf="showSpinner">
+                    <tr *ngIf="dataForLogs.length==0">
+                        <td colspan="7" *ngIf="logsLoading && !logsIsEmpty">
                             <spinner
                                     [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
                         </td>
-                        <td colspan="7" *ngIf="!showSpinner">
+                        <td colspan="7" *ngIf="!logsLoading && logsIsEmpty">
                             <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
                                 <br>
                                 <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
                             </h4>
                         </td>
                     </tr>
-                    <tr *ngFor="let measurement of data;let i= index; trackBy: trackById">
-                        <td>
+                    <tr *ngFor="let measurement of dataForLogs;let i= index; trackBy: trackById">
+                        <td [attr.data-th]="'SHARED.SELECT'|translate">
                             <mat-checkbox (change)="changeOnMeasurement()"
                                           [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.PRESSURE'|translate">
                             {{measurement.systolic + '/' + measurement.diastolic + '' + measurement.unit}}
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.PULSE'|translate">
                             {{measurement.pulse}}bpm
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate">
                             {{measurement.timestamp | date : "mediumDate"}}
                             {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}
                             {{measurement.timestamp | date : "shortTime"}}
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate">
                             <a class="nav-link"
                                [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
                                (click)="openModalConfirmation(measurement.id)">
@@ -222,7 +255,7 @@
                 <div class="card card-stats">
                     <div class="card-header card-header-timer card-header-icon">
                         <div class="card-icon">
-                            <div class="bg-blood_pressure"></div>
+                            <img src="../../../../assets/img/blood-pressure-white.svg">
                         </div>
                         <span class="badge badge-haniot">{{'MEASUREMENTS.BLOOD-PRESSURE.SYSTOLIC'|translate}}</span>
                         <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}:</p>
@@ -240,7 +273,7 @@
                 <div class="card card-stats">
                     <div class="card-header card-header-timer card-header-icon">
                         <div class="card-icon">
-                            <div class="bg-blood_pressure"></div>
+                            <img src="../../../../assets/img/blood-pressure-white.svg">
                         </div>
                         <span class="badge badge-haniot">{{'MEASUREMENTS.BLOOD-PRESSURE.DIASTOLIC'|translate}}</span>
                         <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}:</p>
@@ -258,7 +291,7 @@
                 <div class="card card-stats">
                     <div class="card-header card-header-timer card-header-icon">
                         <div class="card-icon">
-                            <div class="bg-blood_pressure"></div>
+                            <img src="../../../../assets/img/pulse-white.svg">
                         </div>
                         <span class="badge badge-haniot">{{'MEASUREMENTS.BLOOD-PRESSURE.PULSE'|translate}}</span>
                         <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>
@@ -297,7 +330,7 @@
 
         <div class="unavailable-data">
             <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
-            <span *ngIf="data.length==0 && !showSpinner"
+            <span *ngIf="dataForGraph.length==0 && !showSpinner"
                   class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.BLOOD-PRESSURE.UNAVAILABLE-DATA'|translate}}</span>
         </div>
     </div>

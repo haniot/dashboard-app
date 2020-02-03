@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { EnumMeasurementType, GenericMeasurement, Measurement, SearchForPeriod } from '../models/measurement';
+import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 import { BloodPressure } from '../models/blood.pressure';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
@@ -8,9 +8,8 @@ import { Weight } from '../models/weight';
 import { BloodGlucose } from '../models/blood.glucose';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
 import { PilotStudy } from '../../pilot.study/models/pilot.study'
-import { HeartRate } from '../models/heart.rate'
-import { Pattern, Sleep, SleepStage } from '../models/sleep'
-import { TimeSeriesType } from '../models/time.series'
+import { TimeSeries } from '../../activity/models/time.series'
+import { Sleep } from '../../activity/models/sleep'
 
 class ConfigVisibility {
     weight: boolean;
@@ -41,7 +40,7 @@ class ConfigVisibility {
     templateUrl: './measurement.component.html',
     styleUrls: ['./measurement.component.scss']
 })
-export class MeasurementComponent implements OnInit, OnChanges {
+export class MeasurementComponent implements OnChanges {
     @Input() configVisibility: ConfigVisibility;
     @Input() patientId;
     listWeight: Array<Weight>;
@@ -51,9 +50,8 @@ export class MeasurementComponent implements OnInit, OnChanges {
     listBodyTemperature: Array<Measurement>;
     listBloodGlucose: Array<BloodGlucose>;
     listBloodPressure: Array<BloodPressure>;
-    listHeartRate: Array<GenericMeasurement>;
+    listHeartRate: Array<TimeSeries>;
     listSleep: Array<Sleep>;
-    userHealthArea: string;
     filter: SearchForPeriod;
     studySelected: PilotStudy;
     graphOrdem: Array<string>;
@@ -71,20 +69,12 @@ export class MeasurementComponent implements OnInit, OnChanges {
         this.listBodyTemperature = new Array<Measurement>();
         this.listBloodGlucose = new Array<BloodGlucose>();
         this.listBloodPressure = new Array<BloodPressure>();
-        this.listHeartRate = new Array<HeartRate>();
+        this.listHeartRate = new Array<TimeSeries>();
         this.listSleep = new Array<Sleep>();
         this.configVisibility = new ConfigVisibility();
         this.filter = { start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today' };
         this.studySelected = new PilotStudy();
         this.graphOrdem = new Array<string>();
-    }
-
-    ngOnInit() {
-        this.loadUserHealthArea();
-    }
-
-    loadUserHealthArea(): void {
-        this.userHealthArea = this.localStorageService.getItem('health_area');
     }
 
     loadPilotSelected(): Promise<any> {
@@ -97,7 +87,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
         if (this.configVisibility.weight) {
             this.graphOrdem.push('weight');
             if (!this.listWeight.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.WEIGHT, null, null, this.filter)
+                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, null, null, this.filter)
                     .then((httpResponse) => {
                         if (httpResponse.body && httpResponse.body.length) {
                             this.listWeight = httpResponse.body;
@@ -115,7 +105,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
         if (this.configVisibility.height) {
             this.graphOrdem.push('height');
             if (!this.listHeight.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.HEIGHT, null, null, this.filter)
+                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.height, null, null, this.filter)
                     .then((httpResponse) => {
                         if (httpResponse.body && httpResponse.body.length) {
                             this.listHeight = httpResponse.body;
@@ -133,7 +123,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
         if (this.configVisibility.fat) {
             this.graphOrdem.push('fat');
             if (!this.listFat.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.BODY_FAT, null, null, this.filter)
+                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, this.filter)
                     .then(httpResponse => {
                         if (httpResponse.body && httpResponse.body.length) {
                             this.listFat = httpResponse.body;
@@ -152,7 +142,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
             this.graphOrdem.push('circumference');
             if (!this.listWaistCircumference.length) {
                 this.measurementService
-                    .getAllByUserAndType(this.patientId, EnumMeasurementType.WAIST_CIRCUMFERENCE, null, null, this.filter)
+                    .getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, this.filter)
                     .then(httpResponse => {
                         if (httpResponse.body && httpResponse.body.length) {
                             this.listWaistCircumference = httpResponse.body;
@@ -170,7 +160,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
         if (this.configVisibility.temperature) {
             this.graphOrdem.push('temperature');
             if (!this.listBodyTemperature.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.BODY_TEMPERATURE, null, null, this.filter)
+                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, null, null, this.filter)
                     .then(httpResponse => {
                         if (httpResponse.body && httpResponse.body.length) {
                             this.listBodyTemperature = httpResponse.body;
@@ -188,7 +178,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
         if (this.configVisibility.glucose) {
             this.graphOrdem.push('glucose');
             if (!this.listBloodGlucose.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.BLOOD_GLUCOSE, null, null, this.filter)
+                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, this.filter)
                     .then(httpResponse => {
                         if (httpResponse.body && httpResponse.body.length) {
                             this.listBloodGlucose = httpResponse.body;
@@ -206,7 +196,7 @@ export class MeasurementComponent implements OnInit, OnChanges {
         if (this.configVisibility.pressure) {
             this.graphOrdem.push('pressure');
             if (!this.listBloodPressure.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.BLOOD_PRESSURE, null, null, this.filter)
+                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, null, null, this.filter)
                     .then(httpResponse => {
                         if (httpResponse.body && httpResponse.body.length) {
                             this.listBloodPressure = httpResponse.body;
@@ -217,36 +207,6 @@ export class MeasurementComponent implements OnInit, OnChanges {
             }
         } else {
             this.graphOrdem = this.graphOrdem.filter(item => item !== 'pressure')
-        }
-    }
-
-    loadHeartRate() {
-        if (this.configVisibility.heartRate) {
-            this.graphOrdem.push('heartRate');
-            if (!this.listHeartRate.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, TimeSeriesType.heart_rate, null, null, this.filter)
-                    .then(httpResponse => {
-                        this.listHeartRate = httpResponse.body;
-                    })
-                    .catch();
-            }
-        } else {
-            this.graphOrdem = this.graphOrdem.filter(item => item !== 'heartRate')
-        }
-    }
-
-    loadSleep() {
-        if (this.configVisibility.sleep) {
-            this.graphOrdem.push('sleep');
-            if (!this.listSleep.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, 'sleep', null, null, this.filter)
-                    .then(httpResponse => {
-                        this.listSleep = httpResponse.body;
-                    })
-                    .catch();
-            }
-        } else {
-            this.graphOrdem = this.graphOrdem.filter(item => item !== 'sleep')
         }
     }
 

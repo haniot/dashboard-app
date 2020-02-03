@@ -1,0 +1,235 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                <time-series-card [title]="'ACTIVITY.PHYSICAL-ACTIVITY.TITLE'|translate"
+                                  (filter_change)="applyFilter($event)">
+
+                    <div class="container-fluid">
+
+                        <div class="row justify-content-end">
+
+                            <div class="col" style="max-width: 50px; padding: 0px 0px; margin: 0px 0px">
+                                <mat-select class="form-control form-control-sm" style="border-radius: 10px"
+                                            id="selectMeasurement"
+                                            [(ngModel)]="timeSerieSelected">
+                                    <mat-select-trigger>
+                                        <mat-icon>
+                                            <img [src]="'../../../../assets/img/time-series/'+timeSerieSelected+'.png'">
+                                        </mat-icon>
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let type of timeSeriesTypes" [value]="type"
+                                                [title]="type | timeSeries | translate">
+                                        <img [src]="'../../../../assets/img/time-series/'+type+'.png'">
+                                    </mat-option>
+                                </mat-select>
+
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                 style="padding: 0px 0px; margin: 0px 0px">
+                                <view-time-series
+                                        [patientId]="patientId"
+                                        [typeOfTimeSeries]="timeSerieSelected"
+                                        [filter]="currentFilter" [intraday]="this.isIntraday"></view-time-series>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                 style="padding: 0px 0px; margin: 0px 0px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray">
+                                <div class="d-flex justify-content-between">
+                                    <div style="padding: 0.5rem 1.5rem">
+                                        <h4 *ngIf="currentFilterType==='today'">{{'ACTIVITY.PHYSICAL-ACTIVITY.DAILY-TOTAL'|translate}}
+                                            :</h4>
+                                        <h4 *ngIf="currentFilterType==='1w'">{{'ACTIVITY.PHYSICAL-ACTIVITY.WEEKLY-TOTAL'|translate}}
+                                            :</h4>
+                                        <h4 *ngIf="currentFilterType==='1m'">{{'ACTIVITY.PHYSICAL-ACTIVITY.MONTHLY-TOTAL'|translate}}
+                                            :</h4>
+                                        <h4 *ngIf="currentFilterType==='1y'">{{'ACTIVITY.PHYSICAL-ACTIVITY.TOTAL-ANNUAL'|translate}}
+                                            :</h4>
+                                        <h4 *ngIf="currentFilterType==='period'">{{'ACTIVITY.PHYSICAL-ACTIVITY.TOTAL-PERIOD'|translate}}
+                                            :</h4>
+                                    </div>
+                                    <div class="p-2">
+                                        <h4>
+                                            {{getStepsTotal()}}<small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
+                                        </h4>
+                                    </div>
+                                    <div class="p-2">
+                                        <h4 [innerHTML]="getDistanceTotal()"></h4>
+                                    </div>
+                                    <div class="p-2">
+                                        <h4>
+                                            {{getCaloriesTotal()}}<small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <h3>
+                                    {{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.TITLE'|translate}}
+                                </h3>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllActivities()"
+                                              [disabled]="!data.length">
+                                    {{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.SELECT-ALL'|translate}}
+                                </mat-checkbox>
+                            </div>
+
+                            <div class="col d-flex flex-row-reverse">
+                                <div class="p-2">
+                                    <button type="button" class="btn btn-haniot-primary btn-sm"
+                                            (click)="removeSelected()"
+                                            [disabled]="!stateButtonRemoveSelected">
+                                        {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.REMOVE-SELECTED'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
+                                <table class="table table-hover table-sm rwd-table">
+                                    <thead>
+                                    <th>#</th>
+                                    <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.ACTIVITY-NAME'|translate}}</th>
+                                    <th>{{'SHARED.DATE'|translate}}</th>
+                                    <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.RESUME'|translate}}</th>
+                                    <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngIf="data.length==0">
+                                        <td colspan="5" *ngIf="showSpinner">
+                                            <spinner
+                                                    [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                                        </td>
+                                        <td colspan="5" *ngIf="!showSpinner">
+                                            <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                                <br>
+                                                <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let activity of data;let i= index; trackBy: trackById">
+                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                            [attr.data-th]="'SHARED.SELECT'|translate">
+                                            <mat-checkbox (change)="changeOnActivity()"
+                                                          [(ngModel)]="listCheckActivities[i]"></mat-checkbox>
+                                        </td>
+                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                            [attr.data-th]="'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.ACTIVITY-NAME'|translate"
+                                            (click)="viewActivityDetails(activity.id)">
+                                            {{activity.name | physicalActivity | translate}}
+                                        </td>
+                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                            [attr.data-th]="'SHARED.DATE'|translate"
+                                            (click)="viewActivityDetails(activity.id)">
+                                            {{activity.start_time | date}}
+                                        </td>
+                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                            [attr.data-th]="'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.RESUME'|translate"
+                                            (click)="viewActivityDetails(activity.id)" style="max-width: 600px">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col activity-resume-item"
+                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DURATION'|translate">
+                                                        <p>
+                                                            {{Math.floor((activity.duration / 3600000)) ? Math.floor((activity.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) + ('SHARED.AND'|translate) + ' ' : ('')}}
+                                                            {{(activity.duration % 3600000) ?
+                                                            Math.floor((activity.duration % 3600000) / 60000) +
+                                                            ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
+                                                            }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col activity-resume-item"
+                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.STEPS'|translate">
+                                                        <p class="float-right">
+                                                            {{activity && activity.steps ? (activity.steps|number:'1.0-0') : 0}}
+                                                            <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col activity-resume-item"
+                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DISTANCE'|translate">
+                                                        <p class="float-right"
+                                                           [innerHTML]="activity && activity.distance ? (activity.distance|distance) : '0<small>m</small>'">
+                                                        </p>
+                                                    </div>
+                                                    <div class="col activity-resume-item"
+                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.CALORIES-BURNED'|translate">
+                                                        <p class="float-right">
+                                                            {{activity && activity.calories ? (activity.calories|number:'1.0-0') : 0}}
+                                                            <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td [attr.data-th]="'SHARED.ACTIONS'|translate">
+                                            <a class="nav-link"
+                                               [title]="'ACTIVITY.REMOVE'|translate"
+                                               (click)="openModalConfirmation(activity.id)">
+                                                <i class="material-icons">delete</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
+                                <mat-paginator [length]="length" [pageSize]="limit"
+                                               [pageSizeOptions]="pageSizeOptions"
+                                               (page)="clickPagination($event)">
+                                </mat-paginator>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </time-series-card>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="removingActivity">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner
+                                        [message]="'ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.SPINNER-MESSAGE'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<modal-confirmation
+        [message]="cacheListIdForRemove && cacheListIdForRemove.length && cacheListIdForRemove.length>1?('ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate) +
+        ' '+cacheListIdForRemove.length+' ' + ('ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
+        :'ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
+        (confirmation)="remove()"
+        (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

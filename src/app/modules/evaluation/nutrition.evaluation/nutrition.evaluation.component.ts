@@ -15,10 +15,10 @@ import { SendEmailService } from '../services/send.email.service';
 import { Patient } from '../../patient/models/patient'
 import { EnumMeasurementType, Measurement } from '../../measurement/models/measurement'
 import { BloodPressure } from '../../measurement/models/blood.pressure'
-import { HeartRate } from '../../measurement/models/heart.rate'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { PatientService } from '../../patient/services/patient.service'
 import { Weight } from '../../measurement/models/weight'
+import { TimeSeries } from '../../activity/models/time.series'
 
 const zones = [{
     preprandial: {
@@ -81,7 +81,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     listBodyTemperature: Array<Measurement>;
     listBloodGlucose: Array<Measurement>;
     listBloodPressure: Array<BloodPressure>;
-    listHeartRate: Array<HeartRate>;
+    listHeartRate: Array<TimeSeries>;
     newCounseling = '';
     newCounselingType = 'bmi_whr';
     finalingEvaluantion: boolean;
@@ -122,7 +122,7 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         this.listBodyTemperature = new Array<Measurement>();
         this.listBloodGlucose = new Array<Measurement>();
         this.listBloodPressure = new Array<BloodPressure>();
-        this.listHeartRate = new Array<HeartRate>();
+        this.listHeartRate = new Array<TimeSeries>();
         this.showZonesClassification = false;
         this.typeCousenling = [
             this.translateService.instant('EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.STATE-NUTRITION'),
@@ -172,9 +172,9 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
     }
 
     verifyVisibityZonesClassification(): void {
-        if (this.nutritionalEvaluation.blood_glucose.meal === MealType.PREPRANDIAL
-            || this.nutritionalEvaluation.blood_glucose.meal === MealType.POSTPRANDIAL
-            || this.nutritionalEvaluation.blood_glucose.meal === MealType.BEDTIME) {
+        if (this.nutritionalEvaluation.blood_glucose.meal === MealType.preprandial
+            || this.nutritionalEvaluation.blood_glucose.meal === MealType.postprandial
+            || this.nutritionalEvaluation.blood_glucose.meal === MealType.bedtime) {
             this.showZonesClassification = true;
         } else {
             this.showZonesClassification = false;
@@ -323,31 +323,31 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         const measurements: Array<any> = this.nutritionalEvaluation.measurements;
 
         this.listWeight = measurements.filter((element: Weight) => {
-            return element.type === EnumMeasurementType.WEIGHT
+            return element.type === EnumMeasurementType.weight
         });
 
         this.listHeight = measurements.filter((element: Measurement) => {
-            return element.type === EnumMeasurementType.HEIGHT
+            return element.type === EnumMeasurementType.height
         });
 
         this.listFat = measurements.filter((element: Measurement) => {
-            return element.type === EnumMeasurementType.BODY_FAT
+            return element.type === EnumMeasurementType.body_fat
         });
 
         this.listWaistCircunference = measurements.filter((element: Measurement) => {
-            return element.type === EnumMeasurementType.WAIST_CIRCUMFERENCE
+            return element.type === EnumMeasurementType.waist_circumference
         });
 
         this.listBodyTemperature = measurements.filter((element: Measurement) => {
-            return element.type === EnumMeasurementType.BODY_TEMPERATURE
+            return element.type === EnumMeasurementType.body_temperature
         });
 
         this.listBloodGlucose = measurements.filter((element: Measurement) => {
-            return element.type === EnumMeasurementType.BLOOD_GLUCOSE
+            return element.type === EnumMeasurementType.blood_glucose
         });
 
         this.listBloodPressure = measurements.filter((element: Measurement) => {
-            return element.type === EnumMeasurementType.BLOOD_PRESSURE
+            return element.type === EnumMeasurementType.blood_pressure
         });
 
         // this.listHeartRate = measurements.filter((element: Measurement) => {
@@ -424,14 +424,14 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         const meal = this.nutritionalEvaluation.blood_glucose.meal;
 
         switch (meal) {
-            case MealType.PREPRANDIAL:
-                return zones[0][MealType.PREPRANDIAL].good;
+            case MealType.preprandial:
+                return zones[0][MealType.preprandial].good;
 
-            case MealType.POSTPRANDIAL:
-                return zones[0][MealType.POSTPRANDIAL].good;
+            case MealType.postprandial:
+                return zones[0][MealType.postprandial].good;
 
-            case MealType.BEDTIME:
-                return zones[0][MealType.BEDTIME].good;
+            case MealType.bedtime:
+                return zones[0][MealType.bedtime].good;
 
             default:
                 return { min: 0, max: 0 }
@@ -442,14 +442,14 @@ export class NutritionEvaluationComponent implements OnInit, OnDestroy {
         const meal = this.nutritionalEvaluation.blood_glucose.meal;
 
         switch (meal) {
-            case MealType.PREPRANDIAL:
-                return zones[0][MealType.PREPRANDIAL].great;
+            case MealType.preprandial:
+                return zones[0][MealType.preprandial].great;
 
-            case MealType.POSTPRANDIAL:
-                return zones[0][MealType.POSTPRANDIAL].great;
+            case MealType.postprandial:
+                return zones[0][MealType.postprandial].great;
 
-            case MealType.BEDTIME:
-                return zones[0][MealType.BEDTIME].great;
+            case MealType.bedtime:
+                return zones[0][MealType.bedtime].great;
 
             default:
                 return { min: 0, max: 0 }
