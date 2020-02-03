@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { PhysicalActivity } from '../models/physical.activity'
 import { environment } from '../../../../environments/environment'
-import { TimeSeries } from '../models/time.series'
 
 @Injectable()
 export class PhysicalActivitiesService {

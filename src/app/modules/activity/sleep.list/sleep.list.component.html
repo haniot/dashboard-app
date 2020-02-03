@@ -71,46 +71,6 @@
 
                     <div class="row justify-content-center">
 
-                        <div class=" text-center"
-                             id="removeModalConfirmation"
-                             *ngIf="modalConfirmRemoveMeasurement">
-
-                            <div class="" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header" *ngIf="!loadingMeasurements">
-                                            <label>{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.TITLE'|translate}}</label>
-                                            <button type="button" class="close" aria-label="Close"
-                                                    (click)="closeModalConfirmation()">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p *ngIf="cacheIdMeasurementRemove !== '' && !loadingMeasurements">
-                                                {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate}}
-                                            </p>
-                                            <p *ngIf="cacheIdMeasurementRemove === '' && !loadingMeasurements">
-                                                {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate}}
-                                                {{cacheListIdMeasurementRemove.length}}
-                                                {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate}}
-                                            </p>
-                                            <spinner
-                                                    [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.SPINNER-MESSAGE'|translate"
-                                                    *ngIf="loadingMeasurements"></spinner>
-
-                                        </div>
-                                        <div class="modal-footer" *ngIf="!loadingMeasurements">
-                                            <button type="button" class="btn btn-haniot-secondary btn-sm"
-                                                    (click)="closeModalConfirmation()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.NO'|translate}}</button>
-                                            <button type="button" class="btn btn-haniot-primary btn-sm"
-                                                    (click)="removeMeasurement()">{{'SHARED.COMPONENTS.MODAL-CONFIRMATION.YES'|translate}}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 row">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <h3>
@@ -118,8 +78,8 @@
                                 </h3>
                             </div>
                             <div class="col-sm-4">
-                                <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllMeasurements()"
-                                              [disabled]="!listForGraph.length">
+                                <mat-checkbox [(ngModel)]="selectAll" (click)="selectAllSleeps()"
+                                              [disabled]="!listForLogs.length">
                                     {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
                                 </mat-checkbox>
                             </div>
@@ -158,10 +118,9 @@
                                     </td>
                                 </tr>
                                 <tr *ngFor="let sleep of listForLogs;let i= index; trackBy: trackById">
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
-                                        (click)="viewSleepDetails(sleep.id)">
-                                        <mat-checkbox (change)="changeOnMeasurement()"
-                                                      [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate">
+                                        <mat-checkbox (change)="changeOnSleep()"
+                                                      [(ngModel)]="listCheckSleeps[i]"></mat-checkbox>
                                     </td>
                                     <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                         (click)="viewSleepDetails(sleep.id)">
@@ -276,7 +235,7 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner [message]="'ACTIVITY.SLEEP.SPINNER-MESSAGE'|translate"></spinner>
+                                <spinner [message]="'ACTIVITY.SLEEP.MODAL-REMOVE.SPINNER-MESSAGE'|translate"></spinner>
                             </div>
                         </div>
                     </div>
@@ -290,8 +249,8 @@
 </div>
 
 <modal-confirmation
-        [message]="!cacheIdMeasurementRemove || cacheIdMeasurementRemove === ''?('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate) +
-        ' '+cacheListIdMeasurementRemove.length+' ' + ('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
-        :'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
-        (confirmation)="removeMeasurement()"
+        [message]="(cacheListIdSleepRemove && cacheListIdSleepRemove.length && cacheListIdSleepRemove.length>1)?('ACTIVITY.SLEEP.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate) +
+        ' '+cacheListIdSleepRemove.length+' ' + ('ACTIVITY.SLEEP.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
+        :'ACTIVITY.SLEEP.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
+        (confirmation)="removeSleep()"
         (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

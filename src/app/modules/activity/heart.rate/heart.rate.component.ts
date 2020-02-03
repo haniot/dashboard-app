@@ -112,17 +112,20 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 },
                 data: [{
                     label: {
-                        formatter: low
+                        formatter: low,
+                        position: 'middle'
                     },
                     yAxis: 50
                 }, {
                     label: {
-                        formatter: normal
+                        formatter: normal,
+                        position: 'middle'
                     },
                     yAxis: 100
                 }, {
                     label: {
-                        formatter: high
+                        formatter: high,
+                        position: 'middle'
                     },
                     yAxis: 200
                 }]
@@ -132,11 +135,6 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 label: {
                     color: '#FFFFFF',
                     fontSize: 12
-                },
-                tooltip: {
-                    formatter: function (params) {
-                        console.log(params)
-                    }
                 },
                 data: [
                     { type: 'max' },

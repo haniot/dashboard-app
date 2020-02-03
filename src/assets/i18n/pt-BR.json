@@ -37,21 +37,29 @@
       "VIEW-STAGES": "Visualizar estágios",
       "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono.",
       "REACHED-THE-IDEAL": "Atingiu o ideal",
-      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente o registro de sono?",
       "LOADING": "Carregando registro de sono...",
-      "SPINNER-MESSAGE": "Removendo registro de sono...",
-      "GOAL-ACHIEVED": "Objetivo Alcançado!"
+      "GOAL-ACHIEVED": "Objetivo Alcançado!",
+      "MODAL-REMOVE": {
+        "SPINNER-MESSAGE": "Removendo registro de sono...",
+        "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover definitivamente o registro de sono?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover definitivamente",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "registros(s) de sono?"
+      }
     },
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Atividade Física",
-      "DELETE-CONFIRMATION": "Tem certeza que deseja remover definitivamente a atividade?",
-      "SPINNER-MESSAGE": "Removendo atividade física...",
       "LOADING": "Carregando atividade física...",
       "HISTORY-TABLE": {
         "TITLE": "Histórico de atividades física",
         "SELECT-ALL": "Selecionar todas",
         "ACTIVITY-NAME": "Atividade",
         "RESUME": "Resumo"
+      },
+      "MODAL-REMOVE": {
+        "SPINNER-MESSAGE": "Removendo atividade física...",
+        "CONFIRM-UNIQUE-REMOVE": "Tem certeza que deseja remover definitivamente a atividade?",
+        "CONFIRM-MULTIPLE-REMOVE-PART1": "Tem certeza que deseja remover definitivamente",
+        "CONFIRM-MULTIPLE-REMOVE-PART2": "atividade(s)?"
       },
       "DAILY-TOTAL": "Total diário",
       "WEEKLY-TOTAL": "Total semanal",

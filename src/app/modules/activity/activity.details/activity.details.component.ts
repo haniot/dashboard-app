@@ -61,8 +61,7 @@ export class ActivityDetailsComponent implements OnInit {
                 this.loadHeartRate();
             })
             .catch(err => {
-                console.log(err)
-                // this.router.navigate(['/app/activities', this.patientId, 'physical_activity']);
+                this.router.navigate(['/app/activities', this.patientId, 'physical_activity']);
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-NOT-LOADED'))
                 this.loadingPhysicalActivity = false;
             })

@@ -43,7 +43,6 @@ export class ActivityListComponent implements OnInit {
     page: number;
     limit: number;
     length: number;
-    cacheIdForRemove: string;
     cacheListIdForRemove: Array<any>;
     removingActivity: boolean;
     currentFilter: TimeSeriesSimpleFilter | TimeSeriesIntervalFilter | TimeSeriesFullFilter | any;
@@ -138,7 +137,6 @@ export class ActivityListComponent implements OnInit {
     }
 
     closeModalConfirmation() {
-        this.cacheIdForRemove = '';
         this.modalService.close('modalConfirmation');
     }
 
@@ -162,34 +160,21 @@ export class ActivityListComponent implements OnInit {
     async remove(): Promise<any> {
         this.modalService.close('modalConfirmation');
         this.removingActivity = true;
-        if (this.cacheIdForRemove) {
-            this.activityService.remove(this.patientId, this.cacheIdForRemove)
-                .then(measurements => {
-                    this.applyFilter(this.filter);
-                    this.removingActivity = false;
-                    this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-REMOVED'));
-                })
-                .catch(() => {
-                    this.removingActivity = false;
-                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-NOT-REMOVED'));
-                })
-        } else {
-            let occuredError = false;
-            for (let i = 0; i < this.cacheListIdForRemove.length; i++) {
-                try {
-                    const activityRemove = this.cacheListIdForRemove[i];
-                    await this.activityService.remove(this.patientId, activityRemove);
-                } catch (e) {
-                    occuredError = true;
-                }
+        let occurredError = false;
+        for (let i = 0; i < this.cacheListIdForRemove.length; i++) {
+            try {
+                const activityRemove = this.cacheListIdForRemove[i];
+                await this.activityService.remove(this.patientId, activityRemove);
+            } catch (e) {
+                occurredError = true;
             }
-            occuredError ? this.toastService
-                    .error(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-NOT-REMOVED'))
-                : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-REMOVED'));
-
-            this.applyFilter(this.filter);
-            this.removingActivity = false;
         }
+        occurredError ? this.toastService
+                .error(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-NOT-REMOVED'))
+            : this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PHYSICAL-ACTIVITY-REMOVED'));
+
+        this.loadAllActivities();
+        this.removingActivity = false;
     }
 
     removeSelected(): void {
@@ -209,7 +194,9 @@ export class ActivityListComponent implements OnInit {
 
     openModalConfirmation(activityId: string): void {
         this.modalService.open('modalConfirmation');
-        this.cacheIdForRemove = activityId;
+        if (activityId && activityId !== '') {
+            this.cacheListIdForRemove = [activityId];
+        }
     }
 
     updateStateButtonRemoveSelected(): void {

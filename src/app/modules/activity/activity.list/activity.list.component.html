@@ -40,15 +40,21 @@
                                  style="padding: 0px 0px; margin: 0px 0px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray">
                                 <div class="d-flex justify-content-between">
                                     <div class="p-2">
-                                        <h4 *ngIf="currentFilterType==='today'">{{'ACTIVITY.PHYSICAL-ACTIVITY.DAILY-TOTAL'|translate}}:</h4>
-                                        <h4 *ngIf="currentFilterType==='1w'">{{'ACTIVITY.PHYSICAL-ACTIVITY.WEEKLY-TOTAL'|translate}}:</h4>
-                                        <h4 *ngIf="currentFilterType==='1m'">{{'ACTIVITY.PHYSICAL-ACTIVITY.MONTHLY-TOTAL'|translate}}:</h4>
-                                        <h4 *ngIf="currentFilterType==='1y'">{{'ACTIVITY.PHYSICAL-ACTIVITY.TOTAL-ANNUAL'|translate}}:</h4>
-                                        <h4 *ngIf="currentFilterType==='period'">{{'ACTIVITY.PHYSICAL-ACTIVITY.TOTAL-PERIOD'|translate}}:</h4>
+                                        <h4 *ngIf="currentFilterType==='today'">{{'ACTIVITY.PHYSICAL-ACTIVITY.DAILY-TOTAL'|translate}}
+                                            :</h4>
+                                        <h4 *ngIf="currentFilterType==='1w'">{{'ACTIVITY.PHYSICAL-ACTIVITY.WEEKLY-TOTAL'|translate}}
+                                            :</h4>
+                                        <h4 *ngIf="currentFilterType==='1m'">{{'ACTIVITY.PHYSICAL-ACTIVITY.MONTHLY-TOTAL'|translate}}
+                                            :</h4>
+                                        <h4 *ngIf="currentFilterType==='1y'">{{'ACTIVITY.PHYSICAL-ACTIVITY.TOTAL-ANNUAL'|translate}}
+                                            :</h4>
+                                        <h4 *ngIf="currentFilterType==='period'">{{'ACTIVITY.PHYSICAL-ACTIVITY.TOTAL-PERIOD'|translate}}
+                                            :</h4>
                                     </div>
                                     <div class="p-2">
                                         <h4>
-                                            {{totals && totals.steps && totals.steps.summary && totals.steps.summary.total ? (totals.steps.summary.total|number:'1.0-0') : 0}}<small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
+                                            {{totals && totals.steps && totals.steps.summary && totals.steps.summary.total ? (totals.steps.summary.total|number:'1.0-0') : 0}}
+                                            <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                                         </h4>
                                     </div>
                                     <div class="p-2">
@@ -57,7 +63,8 @@
                                     </div>
                                     <div class="p-2">
                                         <h4>
-                                            {{totals && totals.calories && totals.calories.summary && totals.calories.summary.total ? (totals.calories.summary.total|number:'1.0-0') : 0}}<small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                            {{totals && totals.calories && totals.calories.summary && totals.calories.summary.total ? (totals.calories.summary.total|number:'1.0-0') : 0}}
+                                            <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                         </h4>
                                     </div>
                                 </div>
@@ -117,8 +124,7 @@
                                     </td>
                                 </tr>
                                 <tr *ngFor="let activity of data;let i= index; trackBy: trackById">
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
-                                        (click)="viewActivityDetails(activity.id)">
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate">
                                         <mat-checkbox (change)="changeOnActivity()"
                                                       [(ngModel)]="listCheckActivities[i]"></mat-checkbox>
                                     </td>
@@ -217,7 +223,8 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.SPINNER-MESSAGE'|translate"></spinner>
+                                <spinner
+                                        [message]="'ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.SPINNER-MESSAGE'|translate"></spinner>
                             </div>
                         </div>
                     </div>
@@ -231,8 +238,8 @@
 </div>
 
 <modal-confirmation
-        [message]="!cacheIdForRemove || cacheIdForRemove === ''?('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate) +
-        ' '+cacheListIdForRemove.length+' ' + ('MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
-        :'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
+        [message]="cacheListIdForRemove && cacheListIdForRemove.length && cacheListIdForRemove.length>1?('ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART1'|translate) +
+        ' '+cacheListIdForRemove.length+' ' + ('ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
+        :'ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
         (confirmation)="remove()"
         (noconfirmation)="closeModalConfirmation()"></modal-confirmation>

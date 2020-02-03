@@ -242,7 +242,7 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.SPINNER-MESSAGE'|translate"></spinner>
+                                <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.SPINNER-MESSAGE'|translate"></spinner>
                             </div>
                         </div>
                     </div>
@@ -255,6 +255,6 @@
     </div>
 </div>
 
-<modal-confirmation [message]="'ACTIVITY.PHYSICAL-ACTIVITY.DELETE-CONFIRMATION'|translate"
+<modal-confirmation [message]="'ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
                     (confirmation)="removeActivity()"
                     (noconfirmation)="closeModalConfirmation()"></modal-confirmation>
