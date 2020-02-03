@@ -85,7 +85,7 @@
         </div>
 
         <!-- LEGEND -->
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 legend">
             <div class="d-flex justify-content-around">
                 <div class="p-2">
                     <div style="display: flex;flex-direction: column">
@@ -120,12 +120,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="d-flex justify-content-around">
                 <div class="p-2">
                     <div style="display: flex;flex-direction: column">
                         <div style="display: flex;">
                             <div class="card-legend"
                                  [ngStyle]="{'background-color':'#FFE1BC'}"></div>
-                            <h4 style="padding-left: 5px">
+                            <h4 class="text-center" style="padding-left: 5px">
                                 {{'MEASUREMENTS.BLOOD-PRESSURE.STAGE1'|translate}}
                             </h4>
                         </div>
@@ -136,7 +138,7 @@
                         <div style="display: flex;">
                             <div class="card-legend"
                                  [ngStyle]="{'background-color':'#FFCEB9'}"></div>
-                            <h4 style="padding-left: 5px">
+                            <h4 class="text-center" style="padding-left: 5px">
                                 {{'MEASUREMENTS.BLOOD-PRESSURE.STAGE2'|translate}}
                             </h4>
                         </div>
@@ -147,7 +149,7 @@
                         <div style="display: flex;">
                             <div class="card-legend"
                                  [ngStyle]="{'background-color':'#FF6B65'}"></div>
-                            <h4 style="padding-left: 5px">
+                            <h4 class="text-center" style="padding-left: 5px">
                                 {{'MEASUREMENTS.BLOOD-PRESSURE.HYPERTENSIVE-URGENCY'|translate}}
                             </h4>
                         </div>
@@ -223,7 +225,7 @@
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
                 <!-- Table for type blood_pressure-->
-                <table class="table table-hover table-sm">
+                <table class="table table-hover table-sm rwd-table">
                     <thead>
                     <th>#</th>
                     <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.PRESSURE'|translate}}</th>
@@ -245,22 +247,22 @@
                         </td>
                     </tr>
                     <tr *ngFor="let measurement of dataForLogs;let i= index; trackBy: trackById">
-                        <td>
+                        <td [attr.data-th]="'SHARED.SELECT'|translate">
                             <mat-checkbox (change)="changeOnMeasurement()"
                                           [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.PRESSURE'|translate">
                             {{measurement.systolic + '/' + measurement.diastolic + '' + measurement.unit}}
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.PRESSURE-TABLE.PULSE'|translate">
                             {{measurement.pulse}}bpm
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate">
                             {{measurement.timestamp | date : "mediumDate"}}
                             {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}
                             {{measurement.timestamp | date : "shortTime"}}
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate">
                             <a class="nav-link"
                                [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
                                (click)="openModalConfirmation(measurement.id)">

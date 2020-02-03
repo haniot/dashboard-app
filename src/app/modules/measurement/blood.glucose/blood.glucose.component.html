@@ -154,7 +154,7 @@
 
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
                 <!-- Table for type blood_glucose-->
-                <table class="table table-hover table-sm">
+                <table class="table table-hover table-sm rwd-table">
                     <thead>
                     <th></th>
                     <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.VALUE'|translate}}</th>
@@ -176,22 +176,22 @@
                         </td>
                     </tr>
                     <tr *ngFor="let measurement of dataForLogs;let i= index; trackBy: trackById">
-                        <td>
+                        <td [attr.data-th]="'SHARED.SELECT'|translate">
                             <mat-checkbox (change)="changeOnMeasurement()"
                                           [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.VALUE'|translate">
                             {{measurement.value + '' + measurement.unit}}
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GLUCOSE-TABLE.MEAL'|translate">
                             {{measurement.meal | meal | translate}}
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate">
                             {{measurement.timestamp | date : "mediumDate"}}
                             {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.AT'|translate}}
                             {{measurement.timestamp | date : "shortTime"}}
                         </td>
-                        <td>
+                        <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate">
                             <a class="nav-link"
                                [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
                                (click)="openModalConfirmation(measurement.id)">

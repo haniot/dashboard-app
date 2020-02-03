@@ -1,3 +1,15 @@
 .echarts-div-graph {
   height: 400px;
 }
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width:685px) {
+  .legend {
+    flex-direction: column;
+  }
+}
