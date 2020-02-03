@@ -904,6 +904,7 @@
     "TURN": "turn",
     "DAY": "day",
     "DAYS": "days",
+    "SELECT": "Select",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",

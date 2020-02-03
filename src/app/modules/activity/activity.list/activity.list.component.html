@@ -39,7 +39,7 @@
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                  style="padding: 0px 0px; margin: 0px 0px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray">
                                 <div class="d-flex justify-content-between">
-                                    <div class="p-2">
+                                    <div style="padding: 0.5rem 1.5rem">
                                         <h4 *ngIf="currentFilterType==='today'">{{'ACTIVITY.PHYSICAL-ACTIVITY.DAILY-TOTAL'|translate}}
                                             :</h4>
                                         <h4 *ngIf="currentFilterType==='1w'">{{'ACTIVITY.PHYSICAL-ACTIVITY.WEEKLY-TOTAL'|translate}}
@@ -101,100 +101,94 @@
 
                         <div class="row">
 
-                            <!-- Table for type sleep -->
-                            <table class="table table-hover table-sm">
-                                <thead>
-                                <th>#</th>
-                                <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.ACTIVITY-NAME'|translate}}</th>
-                                <th>{{'SHARED.DATE'|translate}}</th>
-                                <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.RESUME'|translate}}</th>
-                                <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
-                                </thead>
-                                <tbody>
-                                <tr *ngIf="data.length==0">
-                                    <td colspan="5" *ngIf="showSpinner">
-                                        <spinner
-                                                [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
-                                    </td>
-                                    <td colspan="5" *ngIf="!showSpinner">
-                                        <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
-                                            <br>
-                                            <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
-                                        </h4>
-                                    </td>
-                                </tr>
-                                <tr *ngFor="let activity of data;let i= index; trackBy: trackById">
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate">
-                                        <mat-checkbox (change)="changeOnActivity()"
-                                                      [(ngModel)]="listCheckActivities[i]"></mat-checkbox>
-                                    </td>
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
-                                        (click)="viewActivityDetails(activity.id)">
-                                        {{activity.name | physicalActivity | translate}}
-                                    </td>
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
-                                        (click)="viewActivityDetails(activity.id)">
-                                        {{activity.start_time | date}}
-                                    </td>
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
-                                        (click)="viewActivityDetails(activity.id)">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col text-center"
-                                                     style="padding: 0px 0px; margin: 0px 0px; display: flex"
-                                                     [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DURATION'|translate">
-                                                    <!--                                                    <img src="../../../../assets/img/time-series/duration.png"-->
-                                                    <!--                                                         style="position: absolute; top:-15px;margin-left: auto; margin-right: auto; left: 0; right: 0; width: 20%">-->
-                                                    <p
-                                                            style="margin: 0px 4px">{{Math.floor((activity.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
-                                                        {{(activity.duration % 3600000) ?
-                                                            ('SHARED.AND'|translate) + ' ' + Math.floor((activity.duration % 3600000) / 60000) +
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
+                                <table class="table table-hover table-sm rwd-table">
+                                    <thead>
+                                    <th>#</th>
+                                    <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.ACTIVITY-NAME'|translate}}</th>
+                                    <th>{{'SHARED.DATE'|translate}}</th>
+                                    <th>{{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.RESUME'|translate}}</th>
+                                    <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngIf="data.length==0">
+                                        <td colspan="5" *ngIf="showSpinner">
+                                            <spinner
+                                                    [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                                        </td>
+                                        <td colspan="5" *ngIf="!showSpinner">
+                                            <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                                <br>
+                                                <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let activity of data;let i= index; trackBy: trackById">
+                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                            [attr.data-th]="'SHARED.SELECT'|translate">
+                                            <mat-checkbox (change)="changeOnActivity()"
+                                                          [(ngModel)]="listCheckActivities[i]"></mat-checkbox>
+                                        </td>
+                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                            [attr.data-th]="'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.ACTIVITY-NAME'|translate"
+                                            (click)="viewActivityDetails(activity.id)">
+                                            {{activity.name | physicalActivity | translate}}
+                                        </td>
+                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                            [attr.data-th]="'SHARED.DATE'|translate"
+                                            (click)="viewActivityDetails(activity.id)">
+                                            {{activity.start_time | date}}
+                                        </td>
+                                        <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                            [attr.data-th]="'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.RESUME'|translate"
+                                            (click)="viewActivityDetails(activity.id)" style="max-width: 600px">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col activity-resume-item"
+                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DURATION'|translate">
+                                                        <p>
+                                                            {{Math.floor((activity.duration / 3600000)) ? Math.floor((activity.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) + ('SHARED.AND'|translate) + ' ' : ('')}}
+                                                            {{(activity.duration % 3600000) ?
+                                                            Math.floor((activity.duration % 3600000) / 60000) +
                                                             ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
-                                                        }}</p>
-                                                </div>
-                                                <div class="col text-center"
-                                                     style="padding: 0px 0px; margin: 0px 0px; display: flex"
-                                                     [title]="'ACTIVITY.PHYSICAL-ACTIVITY.STEPS'|translate">
-                                                    <!--                                                    <img src="../../../../assets/img/time-series/steps.png"-->
-                                                    <!--                                                         class="float-left">-->
-                                                    <p class="float-right" style="margin: 0px 4px">
-                                                        {{activity && activity.steps ? (activity.steps|number:'1.0-0') : 0}}
-                                                        <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
-                                                    </p>
-                                                </div>
-                                                <div class="col text-center"
-                                                     style="padding: 0px 0px; margin: 0px 0px; display: flex"
-                                                     [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DISTANCE'|translate">
-                                                    <!--                                                    <img src="../../../../assets/img/time-series/distance.png"-->
-                                                    <!--                                                         class="float-left">-->
-                                                    <p class="float-right" style="margin: 0px 4px"
-                                                       [innerHTML]="activity && activity.distance ? (activity.distance|distance) : '0<small>m</small>'">
-                                                    </p>
-                                                </div>
-                                                <div class="col text-center"
-                                                     style="padding: 0px 0px; margin: 0px 0px; display: flex"
-                                                     [title]="'ACTIVITY.PHYSICAL-ACTIVITY.CALORIES-BURNED'|translate">
-                                                    <!--                                                    <img src="../../../../assets/img/time-series/calories.png"-->
-                                                    <!--                                                         class="float-left">-->
-                                                    <p class="float-right" style="margin: 0px 4px">
-                                                        {{activity && activity.calories ? (activity.calories|number:'1.0-0') : 0}}
-                                                        <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
-                                                    </p>
+                                                            }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col activity-resume-item"
+                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.STEPS'|translate">
+                                                        <p class="float-right">
+                                                            {{activity && activity.steps ? (activity.steps|number:'1.0-0') : 0}}
+                                                            <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col activity-resume-item"
+                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DISTANCE'|translate">
+                                                        <p class="float-right"
+                                                           [innerHTML]="activity && activity.distance ? (activity.distance|distance) : '0<small>m</small>'">
+                                                        </p>
+                                                    </div>
+                                                    <div class="col activity-resume-item"
+                                                         [title]="'ACTIVITY.PHYSICAL-ACTIVITY.CALORIES-BURNED'|translate">
+                                                        <p class="float-right">
+                                                            {{activity && activity.calories ? (activity.calories|number:'1.0-0') : 0}}
+                                                            <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a class="nav-link"
-                                           [title]="'ACTIVITY.REMOVE'|translate"
-                                           (click)="openModalConfirmation(activity.id)">
-                                            <i class="material-icons">delete</i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td [attr.data-th]="'SHARED.ACTIONS'|translate">
+                                            <a class="nav-link"
+                                               [title]="'ACTIVITY.REMOVE'|translate"
+                                               (click)="openModalConfirmation(activity.id)">
+                                                <i class="material-icons">delete</i>
+                                            </a>
+                                        </td>
+                                    </tr>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
                                 <mat-paginator [length]="length" [pageSize]="limit"
@@ -202,7 +196,6 @@
                                                (page)="clickPagination($event)">
                                 </mat-paginator>
                             </div>
-
 
                         </div>
 

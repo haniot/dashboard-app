@@ -96,8 +96,7 @@
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-content-center">
-                            <!-- Table for type sleep -->
-                            <table class="table table-hover table-sm">
+                            <table class="table table-hover table-sm rwd-table">
                                 <thead>
                                 <th>#</th>
                                 <th>{{'ACTIVITY.SLEEP.PERIOD'|translate}}</th>
@@ -118,29 +117,32 @@
                                     </td>
                                 </tr>
                                 <tr *ngFor="let sleep of listForLogs;let i= index; trackBy: trackById">
-                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate">
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        [attr.data-th]="'SHARED.SELECT'|translate">
                                         <mat-checkbox (change)="changeOnSleep()"
                                                       [(ngModel)]="listCheckSleeps[i]"></mat-checkbox>
                                     </td>
                                     <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        [attr.data-th]="'ACTIVITY.SLEEP.PERIOD'|translate"
                                         (click)="viewSleepDetails(sleep.id)">
                                         {{sleep.start_time | date:'short'}} -
                                         {{sleep.end_time | date:'short'}}
                                     </td>
                                     <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        [attr.data-th]="'ACTIVITY.SLEEP.DURATION'|translate"
                                         (click)="viewSleepDetails(sleep.id)">
-                                        {{Math.floor((sleep.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
-                                        {{(sleep.duration % 3600000) ?
-                                        ('SHARED.AND'|translate) + ' ' + Math.floor((sleep.duration % 3600000) / 60000) +
-                                        ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
-                                        }}
-                                        <div class="float-left"
-                                             *ngIf="(sleep.duration / 3600000)>=IDEAL_SLEEP_VALUE">
-                                            <i class="material-icons"
-                                               [title]="'ACTIVITY.SLEEP.REACHED-THE-IDEAL'|translate">star</i>
+                                        <div style="display: flex; align-items: center; justify-content: center">
+                                            <i class="material-icons" style="padding-right: 5px"
+                                               [title]="'ACTIVITY.SLEEP.REACHED-THE-IDEAL'|translate"
+                                               *ngIf="(sleep.duration / 3600000)>=IDEAL_SLEEP_VALUE">star</i>
+                                            {{Math.floor((sleep.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) }}
+                                            {{(sleep.duration % 3600000) ?
+                                            ('SHARED.AND'|translate) + ' ' + Math.floor((sleep.duration % 3600000) / 60000) +
+                                            ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
+                                            }}
                                         </div>
                                     </td>
-                                    <td>
+                                    <td [attr.data-th]="'SHARED.ACTIONS'|translate">
                                         <a class="nav-link"
                                            [title]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.DELETE-MEASUREMENT'|translate"
                                            (click)="openModalConfirmation(sleep.id)">

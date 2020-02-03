@@ -904,6 +904,7 @@
     "TURN": "vez",
     "DAY": "dia",
     "DAYS": "dias",
+    "SELECT": "Selecionar",
     "PIPES": {
       "GENDER": {
         "MALE": "Masculino",
