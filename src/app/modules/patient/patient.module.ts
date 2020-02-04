@@ -28,7 +28,8 @@ import { ViewResourcesComponent } from './view.resources/view.resources.componen
 import { ActivityModule } from '../activity/activity.module';
 import { PatientQuestionnairesComponent } from './patient.questionnaires/patient.questionnaires.component';
 import { PatientDashboardComponent } from './patient.dashboard/patient.dashboard.component';
-import { PatientMeasurementsComponent } from './patient.measurements/patient.measurements.component'
+import { PatientMeasurementsComponent } from './patient.measurements/patient.measurements.component';
+import { CorrelationMeasurementsComponent } from './correlation.measurements/correlation.measurements.component'
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { PatientMeasurementsComponent } from './patient.measurements/patient.mea
         ViewResourcesComponent,
         PatientQuestionnairesComponent,
         PatientDashboardComponent,
-        PatientMeasurementsComponent
+        PatientMeasurementsComponent,
+        CorrelationMeasurementsComponent
     ],
     imports: [
         CommonModule,

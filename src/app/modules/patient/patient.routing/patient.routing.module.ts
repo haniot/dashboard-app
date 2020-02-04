@@ -11,6 +11,7 @@ import { PatientQuestionnairesComponent } from '../patient.questionnaires/patien
 import { PatientMeasurementsComponent } from '../patient.measurements/patient.measurements.component'
 import { PatientDashboardComponent } from '../patient.dashboard/patient.dashboard.component'
 import { MeasurementComponent } from '../../measurement/measurement.component/measurement.component'
+import { CorrelationMeasurementsComponent } from '../correlation.measurements/correlation.measurements.component'
 
 const routes = [
 
@@ -72,7 +73,7 @@ const routes = [
     },
     {
         path: ':patientId/correlation',
-        component: MeasurementComponent,
+        component: CorrelationMeasurementsComponent,
         data: { scope: 'patients:read' }
     },
     {

@@ -22,6 +22,8 @@ export class HeartRateComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Input() intraday: boolean;
     @Input() listIsEmpty: boolean;
+    @Input() onlyGraph: boolean;
+    @Input() filter: any;
     options: any;
     optionsIntraday: any;
     optionsInstance: any;
@@ -203,6 +205,8 @@ export class HeartRateComponent implements OnInit, OnChanges {
             }
         }
 
+        const yAxisMargin = this.onlyGraph ? -35 : 8;
+
         this.options = {
             tooltip: {
                 trigger: 'axis',
@@ -260,7 +264,8 @@ export class HeartRateComponent implements OnInit, OnChanges {
                     show: false
                 },
                 axisLabel: {
-                    formatter: '{value} bpm'
+                    formatter: '{value} bpm',
+                    margin: yAxisMargin
                 },
                 min: (min_value - 5)
             },
@@ -299,7 +304,6 @@ export class HeartRateComponent implements OnInit, OnChanges {
             },
             series: seriesOptionsLastDate
         };
-
     }
 
     applyFilter(event: any) {
@@ -335,7 +339,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     updateGraph(measurements: Array<TimeSeries>): void {
-
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -35 : 8;
         this.optionsIntraday.xAxis.data = [];
         this.optionsIntraday.series.data = [];
 
@@ -358,6 +362,11 @@ export class HeartRateComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.data && changes.data.currentValue !== changes.data.previousValue) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            this.applyFilter(this.filter);
         }
     }
 
