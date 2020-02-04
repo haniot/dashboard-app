@@ -18,6 +18,12 @@ import { SelectPilotstudyComponent } from './select.pilotstudy/select.pilotstudy
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SubcardComponent } from './subcard/subcard.component';
 import { DashboardCardComponent } from './dashboard.card/dashboard.card.component';
+import { TimeSeriesCardComponent } from './time.series.card/time.series.card.component'
+import { SatDatepickerModule } from 'saturn-datepicker'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatNativeDateModule } from '@angular/material/core'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatInputModule } from '@angular/material/input'
 
 @NgModule({
     declarations: [
@@ -29,17 +35,22 @@ import { DashboardCardComponent } from './dashboard.card/dashboard.card.componen
         SelectPilotstudyComponent,
         SpinnerComponent,
         SubcardComponent,
-        DashboardCardComponent
+        DashboardCardComponent,
+        TimeSeriesCardComponent
     ],
     imports: [
         CommonModule,
         FormsModule,
         MatPaginatorModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        SatDatepickerModule,
+        MatFormFieldModule,
         SharedPipesModule,
         MatStepperModule,
         TranslateModule,
         RouterModule
-
     ],
     exports: [
         CardTopComponent,
@@ -50,7 +61,8 @@ import { DashboardCardComponent } from './dashboard.card/dashboard.card.componen
         SelectPilotstudyComponent,
         SpinnerComponent,
         SubcardComponent,
-        DashboardCardComponent
+        DashboardCardComponent,
+        TimeSeriesCardComponent
     ],
     providers: [
         ModalService

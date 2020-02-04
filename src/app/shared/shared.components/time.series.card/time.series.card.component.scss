@@ -110,24 +110,24 @@ i:hover {
 /* satDatePicker*/
 ::ng-deep .mat-focused .mat-form-field-label {
   /*change color of label*/
-  color: white !important;
+  color: white;
 }
 
 ::ng-deep.mat-form-field-underline {
   /*change color of underline*/
-  background-color: white !important;
+  background-color: white;
 }
 
 ::ng-deep.mat-form-field-ripple {
   /*change color of underline when focused*/
-  background-color: white !important;;
+  background-color: white;
 }
 
 ::ng-deep .mat-form-field-label {
   /*change color of label*/
-  color: white !important;
+  color: white;
 }
 
 .mat-datepicker-toggle {
-  color: white !important;
+  color: white;
 }

@@ -132,6 +132,12 @@
                         <p>{{'SIDEBAR.MEASUREMENTS'|translate}}</p>
                     </a>
                 </li>
+                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients">
+                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'correlation']">
+                        <i class="material-icons">equalizer</i>
+                        <p>Correlacionar</p>
+                    </a>
+                </li>
                 <li class="nav-subitem" [ngClass]="activeQuestionnairesPatients">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'questionnaires']">
                         <i class="material-icons">receipt</i>

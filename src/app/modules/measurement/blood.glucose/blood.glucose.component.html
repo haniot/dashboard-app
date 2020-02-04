@@ -1,6 +1,6 @@
 <measurement-card [title]="'MEASUREMENTS.BLOOD-GLUCOSE.TITLE'|translate"
                   [subtitle]="'MEASUREMENTS.BLOOD-GLUCOSE.SUBTITLE'|translate" [filter_visibility]="filterVisibility"
-                  (filter_change)="applyFilter($event)" *ngIf="includeCard">
+                  (filter_change)="applyFilter($event)" *ngIf="includeCard && !onlyGraph">
 
     <div class="row justify-content-center">
 
@@ -175,7 +175,7 @@
 
 </measurement-card>
 
-<div class="row" *ngIf="!includeCard">
+<div class="row" *ngIf="!includeCard && !onlyGraph">
 
     <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center">
         <div class="card card-stats">
@@ -221,5 +221,16 @@
                   class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.BLOOD-GLUCOSE.UNAVAILABLE-DATA'|translate}}</span>
         </div>
     </div>
+</div>
 
+<div *ngIf="onlyGraph" style="width:100%;height:100%">
+    <div style="width:100%;height:100%" echarts
+         [options]="options" (chartInit)="onChartInit($event)">
+    </div>
+    <div  *ngIf="showSpinner || dataForGraph.length==0"
+          style="position: absolute; top:0; bottom: 0; left:0; right: 0; margin: auto; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
+        <span *ngIf="dataForGraph.length==0 && !showSpinner"
+              class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.BLOOD-GLUCOSE.UNAVAILABLE-DATA'|translate}}</span>
+    </div>
 </div>

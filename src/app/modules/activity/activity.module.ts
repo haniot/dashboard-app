@@ -18,14 +18,12 @@ import { NgxEchartsModule } from 'ngx-echarts'
 import {
     MatCheckboxModule,
     MatDatepickerModule,
-    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatNativeDateModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatSlideToggleModule,
     MatTabsModule
 } from '@angular/material'
 import { SatDatepickerModule } from 'saturn-datepicker'
@@ -43,8 +41,6 @@ import { ActivityListComponent } from './activity.list/activity.list.component';
 import { SleepListComponent } from './sleep.list/sleep.list.component';
 import { DistancePipe } from './pipes/distance.pipe';
 import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
-import { FilterTypePipe } from './pipes/filter.type.pipe'
-import { TimeSeriesCardComponent } from './time.series.card/time.series.card.component'
 
 @NgModule({
     declarations: [
@@ -65,9 +61,7 @@ import { TimeSeriesCardComponent } from './time.series.card/time.series.card.com
         ActivityListComponent,
         SleepListComponent,
         DistancePipe,
-        ActiveMinutesPipe,
-        FilterTypePipe,
-        TimeSeriesCardComponent
+        ActiveMinutesPipe
     ],
     exports: [
         ActivityDashboardComponent,
@@ -83,8 +77,6 @@ import { TimeSeriesCardComponent } from './time.series.card/time.series.card.com
         ActivityLevelPipe,
         DistancePipe,
         ActiveMinutesPipe,
-        FilterTypePipe,
-        TimeSeriesCardComponent
     ],
     providers: [
         SleepPipe,
@@ -94,8 +86,7 @@ import { TimeSeriesCardComponent } from './time.series.card/time.series.card.com
         TimeSeriesService,
         MillisecondPipe,
         DistancePipe,
-        ActiveMinutesPipe,
-        FilterTypePipe
+        ActiveMinutesPipe
     ],
     imports: [
         CommonModule,

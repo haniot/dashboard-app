@@ -1,71 +1,61 @@
 @import '../../../../assets/scss/template-colors';
 
-#config-graph {
-  padding: 5px 5px;
+.container-graph {
+  margin: 0px 0px;
+  padding: 0px 0px
 }
 
-.border-config {
-  align-items: center;
-  max-width: 200px;
-  margin-left: 5px;
-  margin-top: 5px;
-  border: 0;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.1);
-}
-
-.paddin55 {
-  padding: 5px 5px;
-}
-
-/* CSS to change Default/'Accent' color */
-
-::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: $primary-color; /*replace with your color*/
-}
-
-::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: $primary-color; /*replace with your color*/
-}
-
-.measurementsContent {
+.graph {
+  border: 1px dashed #c3c3c3;
+  border-radius: 3px;
+  height: 280px;
+  margin: 2px 2px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .material-icons {
+    color: $primary-color !important;
+    cursor: pointer;
+    &:hover{
+      border-radius: 20px;
+      background: rgb(212, 207, 207);
+    }
+  }
+
+  ::ng-deep .mat-select-placeholder {
+    color: black;
+  }
+
+  ::ng-deep .mat-selected {
+    color: $primary-color !important;
+  }
+
+  ::ng-deep .mat-select-arrow {
+    color: $primary-color !important;
+  }
+
+  ::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: $primary-color !important;
+  }
+
+  ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: $primary-color !important;
+  }
+
+  ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: $primary-color !important;
+  }
+
+  ::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    color: $primary-color !important;
+  }
 }
 
-.d1 {
-  order: 1;
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: $primary-color !important;
 }
-
-.d2 {
-  order: 2;
-}
-
-.d3 {
-  order: 3;
-}
-
-.d4 {
-  order: 4;
-}
-
-.d5 {
-  order: 5;
-}
-
-.d6 {
-  order: 6;
-}
-
-.d7 {
-  order: 7;
-}
-
-.d8 {
-  order: 8;
-}
-
-.d9 {
-  order: 9;
-}
-

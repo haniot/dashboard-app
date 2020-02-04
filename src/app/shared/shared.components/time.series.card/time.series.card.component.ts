@@ -3,14 +3,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as $ from 'jquery'
 import * as moment from 'moment'
 
-import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../models/time.series'
-import { DateRange } from '../../pilot.study/models/range-date'
-import { FilterOptions } from '../../measurement/measurement.card/measurement.card.component'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../../modules/activity/models/time.series'
+import { DateRange } from '../../../modules/pilot.study/models/range-date'
+import { FilterOptions } from '../../../modules/measurement/measurement.card/measurement.card.component'
 
 @Component({
     selector: 'time-series-card',
     templateUrl: './time.series.card.component.html',
-    styleUrls: ['../shared.style/shared.styles.scss', './time.series.card.component.scss']
+    styleUrls: ['../../../modules/activity/shared.style/shared.styles.scss', './time.series.card.component.scss']
 })
 export class TimeSeriesCardComponent {
     @Input() title: string;

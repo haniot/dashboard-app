@@ -486,6 +486,7 @@
     "SUBTITLE": "Selecione um estudo piloto para visualizar."
   },
   "MEASUREMENTS": {
+    "TITLE": "Medições",
     "BLOOD-GLUCOSE": {
       "TITLE": "Glicose no sangue",
       "SUBTITLE": "",
@@ -1057,6 +1058,7 @@
     "PHYSICAL-ACTIVITY-NOT-LOADED": "Não foi possível carregar a atividade selecionada!"
   },
   "TIME-SERIES": {
+    "TITLE": "Series Temporais",
     "ACTIVE-MINUTES": {
       "TITLE": "Minutos Ativos",
       "ACTIVE-MINUTES": "minutos ativos",

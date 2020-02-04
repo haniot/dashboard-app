@@ -25,14 +25,15 @@ export class WeightComponent implements OnInit, OnChanges {
     @Input() includeLogs: boolean;
     @Input() patientId: string;
     @Input() showSpinner: boolean;
+    @Input() onlyGraph: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() filter: SearchForPeriod;
     logsIsEmpty: boolean;
     lastData: Weight;
     weightGraph: any;
     echartsInstance: any;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -179,6 +180,8 @@ export class WeightComponent implements OnInit, OnChanges {
             }
         });
 
+        const yAxisMargin = this.onlyGraph ? -20 : 8;
+
         this.weightGraph = {
             tooltip: {
                 formatter: function (params) {
@@ -191,13 +194,14 @@ export class WeightComponent implements OnInit, OnChanges {
                 }
             },
             grid: [
-                { x: '3%', y: '7%', width: '100%' }
+                { x: '3%', y: '7%', width: '100%', height: '86%' }
             ],
             xAxis: xAxisWeight,
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value}'
+                    formatter: '{value}',
+                    margin: yAxisMargin
                 }
             },
             legend: {
@@ -205,7 +209,7 @@ export class WeightComponent implements OnInit, OnChanges {
             },
             dataZoom: [
                 {
-                    type: 'slider'
+                    type: 'inside'
                 }
             ],
             series: [
@@ -213,8 +217,6 @@ export class WeightComponent implements OnInit, OnChanges {
                 seriesFat
             ]
         };
-
-        this.initializeListCheckMeasurements();
     }
 
     loadMeasurements(): any {
@@ -273,6 +275,7 @@ export class WeightComponent implements OnInit, OnChanges {
 
     updateGraph(measurements: Array<any>): void {
         // clean weightGraph
+        this.weightGraph.yAxis.axisLabel.margin = this.onlyGraph ? -20 : 8;
         this.weightGraph.xAxis.data = new Array<any>();
         this.weightGraph.series[0].data = [];
         this.weightGraph.series[1].data = [];
@@ -284,7 +287,6 @@ export class WeightComponent implements OnInit, OnChanges {
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
             if (element.body_fat) {
-                this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
                 this.weightGraph.series[1].data.push({
                     value: element.body_fat,
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
@@ -309,6 +311,11 @@ export class WeightComponent implements OnInit, OnChanges {
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            this.applyFilter(this.filter);
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

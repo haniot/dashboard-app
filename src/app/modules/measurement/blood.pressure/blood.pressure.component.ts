@@ -27,12 +27,13 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() onlyGraph: boolean;
+    @Input() filter: SearchForPeriod;
     lastData: BloodPressure;
     options: any;
     echartsInstance: any;
     logsIsEmpty: boolean;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -371,6 +372,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
             }
         });
 
+        const yAxisMargin = this.onlyGraph ? -35 : 8;
+
         this.options = {
             tooltip: {
                 trigger: 'axis',
@@ -386,24 +389,23 @@ export class BloodPressureComponent implements OnInit, OnChanges {
                 data: [systolic, diastolic, pulse]
             },
             grid: [
-                { x: '3%', y: '7%', width: '100%' }
+                { x: '3%', y: '7%', width: '100%', height: '85%' }
             ],
             xAxis: xAxis,
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value}'
+                    formatter: '{value}',
+                    margin: yAxisMargin
                 }
             },
             dataZoom: [
                 {
-                    type: 'slider'
+                    type: 'inside'
                 }
             ],
             series: series
         };
-
-        this.initializeListCheckMeasurements();
     }
 
     applyFilter(filter: SearchForPeriod) {
@@ -422,6 +424,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
     updateGraph(measurements: Array<any>): void {
         // clean
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -35 : 8;
         this.options.xAxis.data = [];
         this.options.series.dataForGraph = [];
 
@@ -609,6 +612,11 @@ export class BloodPressureComponent implements OnInit, OnChanges {
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            this.applyFilter(this.filter);
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

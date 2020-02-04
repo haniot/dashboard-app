@@ -37,6 +37,7 @@ import { Ng5SliderModule } from 'ng5-slider'
 import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
 import { MeasurementDashboardComponent } from './measurement.dashboard/measurement.dashboard.component';
 import { NgxGaugeModule } from 'ngx-gauge'
+import { MatSelectModule } from '@angular/material/select'
 
 @NgModule({
     declarations: [
@@ -74,7 +75,8 @@ import { NgxGaugeModule } from 'ngx-gauge'
         MatCheckboxModule,
         MatPaginatorModule,
         Ng5SliderModule,
-        NgxGaugeModule
+        NgxGaugeModule,
+        MatSelectModule
     ],
     exports: [
         MeasurementComponent,
@@ -100,7 +102,8 @@ import { NgxGaugeModule } from 'ngx-gauge'
         DatePipe,
         MealPipe,
         DeviceTypePipe,
-        DecimalFormatterPipe
+        DecimalFormatterPipe,
+        MeasurementTypePipe
     ]
 })
 export class MeasurementModule {

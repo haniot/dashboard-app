@@ -1,182 +1,234 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <mat-expansion-panel expanded>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        {{'MEASUREMENTS.COMPONENT.CONFIG-GRAPH'|translate}}
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        {{'MEASUREMENTS.COMPONENT.EXPAND-COLLAPSE'|translate}}
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row measurementsContent">
 
-                <div class="row justify-content-around" id="config-graph">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="configVisibility.weight">
+                <time-series-card [title]="'Correlacionar gráficos'"
+                                  [subtitle]="''" (filter_change)="applyFilter($event)">
 
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
-                        <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="configVisibility.weight"
-                                              (change)="loadWeight()">
-                            </mat-slide-toggle>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 container-graph">
+                            <div class="graph">
+
+                                <div style="position:absolute; top:0;right:0;padding:5px;z-index:1000"
+                                     *ngIf="resource01Selected">
+                                    <i class="material-icons" (click)="openSelectGraph('selectGraph01')">settings</i>
+                                </div>
+
+                                <div [ngStyle]="resource01Selected?{position: 'absolute', top:'0', right: '0', padding: '5px', 'z-index': -1}:{}">
+                                    <mat-form-field>
+                                        <mat-label>{{'SHARED.SELECT'|translate}}</mat-label>
+                                        <mat-select #selectGraph01 [(ngModel)]="resource01Selected" (selectionChange)="selectResource()">
+                                            <mat-optgroup *ngFor="let group of resourceGroups" [label]="group.name"
+                                                          [disabled]="group.disabled">
+                                                <mat-option *ngFor="let resource of group.items"
+                                                            [value]="resource.value" [disabled]="resource.disabled">
+                                                    {{resource.viewValue}}
+                                                </mat-option>
+                                            </mat-optgroup>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <weight style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource01Selected===EnumMeasurementType.weight"
+                                        [filterVisibility]="false"
+                                        [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></weight>
+
+                                <waist-circunference style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource01Selected===EnumMeasurementType.waist_circumference"
+                                        [filterVisibility]="false"
+                                        [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></waist-circunference>
+
+                                <height style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource01Selected===EnumMeasurementType.height"
+                                                     [filterVisibility]="false"
+                                                     [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></height>
+
+                                <fat style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource01Selected===EnumMeasurementType.body_fat"
+                                        [filterVisibility]="false"
+                                        [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></fat>
+
+                                <body-temperature style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource01Selected===EnumMeasurementType.body_temperature"
+                                     [filterVisibility]="false"
+                                     [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></body-temperature>
+
+                                <blood-pressure style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource01Selected===EnumMeasurementType.blood_pressure"
+                                                  [filterVisibility]="false"
+                                                  [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></blood-pressure>
+
+                                <blood-glucose style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource01Selected===EnumMeasurementType.blood_glucose"
+                                                [filterVisibility]="false"
+                                                [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></blood-glucose>
+                            </div>
+
                         </div>
-                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.WEIGHT'|translate}}: </label></div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 container-graph">
+                            <div class="graph">
+
+                                <div style="position:absolute; top:0;right:0;padding:5px;z-index:1000"
+                                     *ngIf="resource02Selected">
+                                    <i class="material-icons" (click)="openSelectGraph('selectGraph02')">settings</i>
+                                </div>
+
+                                <div [ngStyle]="resource02Selected?{position: 'absolute', top:'0', right: '0', padding: '5px', 'z-index': -1}:{}">
+                                    <mat-form-field>
+                                        <mat-label>{{'SHARED.SELECT'|translate}}</mat-label>
+                                        <mat-select #selectGraph02 [(ngModel)]="resource02Selected" (selectionChange)="selectResource()">
+                                            <mat-optgroup *ngFor="let group of resourceGroups" [label]="group.name"
+                                                          [disabled]="group.disabled">
+                                                <mat-option *ngFor="let resource of group.items"
+                                                            [value]="resource.value" [disabled]="resource.disabled">
+                                                    {{resource.viewValue}}
+                                                </mat-option>
+                                            </mat-optgroup>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <weight style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource02Selected===EnumMeasurementType.weight"
+                                        [filterVisibility]="false"
+                                        [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></weight>
+
+                                <waist-circunference style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource02Selected===EnumMeasurementType.waist_circumference"
+                                                     [filterVisibility]="false"
+                                                     [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></waist-circunference>
+
+                                <height style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource02Selected===EnumMeasurementType.height"
+                                        [filterVisibility]="false"
+                                        [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></height>
+
+                                <fat style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource02Selected===EnumMeasurementType.body_fat"
+                                     [filterVisibility]="false"
+                                     [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></fat>
+
+                                <body-temperature style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource02Selected===EnumMeasurementType.body_temperature"
+                                                  [filterVisibility]="false"
+                                                  [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></body-temperature>
+
+                                <blood-pressure style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource02Selected===EnumMeasurementType.blood_pressure"
+                                                [filterVisibility]="false"
+                                                [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></blood-pressure>
+
+                                <blood-glucose style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource02Selected===EnumMeasurementType.blood_glucose"
+                                               [filterVisibility]="false"
+                                               [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></blood-glucose>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
-                        <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="configVisibility.fat"
-                                              (change)="loadFat()"></mat-slide-toggle>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 container-graph">
+                            <div class="graph">
+
+                                <div style="position:absolute; top:0;right:0;padding:5px;z-index:1000"
+                                     *ngIf="resource03Selected">
+                                    <i class="material-icons" (click)="openSelectGraph('selectGraph03')">settings</i>
+                                </div>
+
+                                <div [ngStyle]="resource03Selected?{position: 'absolute', top:'0', right: '0', padding: '5px', 'z-index': -1}:{}">
+                                    <mat-form-field>
+                                        <mat-label>{{'SHARED.SELECT'|translate}}</mat-label>
+                                        <mat-select #selectGraph03 [(ngModel)]="resource03Selected" (selectionChange)="selectResource()">
+                                            <mat-optgroup *ngFor="let group of resourceGroups" [label]="group.name"
+                                                          [disabled]="group.disabled">
+                                                <mat-option *ngFor="let resource of group.items"
+                                                            [value]="resource.value" [disabled]="resource.disabled">
+                                                    {{resource.viewValue}}
+                                                </mat-option>
+                                            </mat-optgroup>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <weight style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource03Selected===EnumMeasurementType.weight"
+                                        [filterVisibility]="false"
+                                        [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></weight>
+
+                                <waist-circunference style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource03Selected===EnumMeasurementType.waist_circumference"
+                                                     [filterVisibility]="false"
+                                                     [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></waist-circunference>
+
+                                <height style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource03Selected===EnumMeasurementType.height"
+                                        [filterVisibility]="false"
+                                        [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></height>
+
+                                <fat style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource03Selected===EnumMeasurementType.body_fat"
+                                     [filterVisibility]="false"
+                                     [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></fat>
+
+                                <body-temperature style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource03Selected===EnumMeasurementType.body_temperature"
+                                                  [filterVisibility]="false"
+                                                  [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></body-temperature>
+
+                                <blood-pressure style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource03Selected===EnumMeasurementType.blood_pressure"
+                                                [filterVisibility]="false"
+                                                [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></blood-pressure>
+
+                                <blood-glucose style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource03Selected===EnumMeasurementType.blood_glucose"
+                                               [filterVisibility]="false"
+                                               [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></blood-glucose>
+                            </div>
                         </div>
-                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.FAT'|translate}}: </label></div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 container-graph">
+                            <div class="graph">
+
+                                <div style="position:absolute; top:0;right:0;padding:5px;z-index:1000"
+                                     *ngIf="resource04Selected">
+                                    <i class="material-icons" (click)="openSelectGraph('selectGraph04')">settings</i>
+                                </div>
+
+                                <div [ngStyle]="resource04Selected?{position: 'absolute', top:'0', right: '0', padding: '5px', 'z-index': -1}:{}">
+                                    <mat-form-field>
+                                        <mat-label>{{'SHARED.SELECT'|translate}}</mat-label>
+                                        <mat-select #selectGraph04 [(ngModel)]="resource04Selected" (selectionChange)="selectResource()">
+                                            <mat-optgroup *ngFor="let group of resourceGroups" [label]="group.name"
+                                                          [disabled]="group.disabled">
+                                                <mat-option *ngFor="let resource of group.items"
+                                                            [value]="resource.value" [disabled]="resource.disabled">
+                                                    {{resource.viewValue}}
+                                                </mat-option>
+                                            </mat-optgroup>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <weight style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource04Selected===EnumMeasurementType.weight"
+                                        [filterVisibility]="false"
+                                        [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></weight>
+
+                                <waist-circunference style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource04Selected===EnumMeasurementType.waist_circumference"
+                                                     [filterVisibility]="false"
+                                                     [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></waist-circunference>
+
+                                <height style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource04Selected===EnumMeasurementType.height"
+                                        [filterVisibility]="false"
+                                        [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></height>
+
+                                <fat style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource04Selected===EnumMeasurementType.body_fat"
+                                     [filterVisibility]="false"
+                                     [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></fat>
+
+                                <body-temperature style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource04Selected===EnumMeasurementType.body_temperature"
+                                                  [filterVisibility]="false"
+                                                  [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></body-temperature>
+
+                                <blood-pressure style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource04Selected===EnumMeasurementType.blood_pressure"
+                                                [filterVisibility]="false"
+                                                [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></blood-pressure>
+
+                                <blood-glucose style="position: absolute; width: 100%; height: 88%; z-index: 999" *ngIf="resource04Selected===EnumMeasurementType.blood_glucose"
+                                               [filterVisibility]="false"
+                                               [patientId]="patientId" [onlyGraph]="true" [filter]="filterForMeasurement"></blood-glucose>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
-                        <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'" [(ngModel)]="configVisibility.height"
-                                              (change)="loadHeight()">
-                            </mat-slide-toggle>
-                        </div>
-                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.HEIGHT'|translate}}: </label></div>
-                    </div>
+                </time-series-card>
 
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
-                        <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="configVisibility.circumference"
-                                              (change)="loadWaistCircumference()"></mat-slide-toggle>
-                        </div>
-                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.WAIST-CIRCUMFERENCE'|translate}}: </label>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
-                        <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="configVisibility.temperature"
-                                              (change)="loadBodyTemperature()"></mat-slide-toggle>
-                        </div>
-                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.TEMPERATURE'|translate}}: </label></div>
-                    </div>
-
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
-                        <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="configVisibility.glucose"
-                                              (change)="loadBloodGlucose()">
-                            </mat-slide-toggle>
-                        </div>
-                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.GLUCOSE'|translate}}: </label></div>
-                    </div>
-
-                    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-2 d-flex flex-row-reverse border-config">
-                        <div class="p-2">
-                            <mat-slide-toggle class="paddin55" [color]="'accent'"
-                                              [(ngModel)]="configVisibility.pressure"
-                                              (change)="loadBloodPressure()">
-                            </mat-slide-toggle>
-                        </div>
-                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.PRESSURE'|translate}}: </label></div>
-                    </div>
-
-                    <!--                    <div class="col-sm-4 col-md-3 col-lg-4 col-xl d-flex flex-row-reverse border-config"-->
-                    <!--                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">-->
-                    <!--                        <div class="p-2">-->
-                    <!--                            <mat-slide-toggle class="paddin55" [color]="'accent'"-->
-                    <!--                                              [(ngModel)]="configVisibility.heartRate"-->
-                    <!--                                              (change)="loadHeartRate()">-->
-                    <!--                            </mat-slide-toggle>-->
-                    <!--                        </div>-->
-                    <!--                        <div class="p-2"><label>{{'MEASUREMENTS.HEART-RATE.TITLE'|translate}}: </label></div>-->
-                    <!--                    </div>-->
-
-<!--                    <div class="col-sm-4 col-md-3 col-lg-4 col-xl d-flex flex-row-reverse border-config">-->
-                    <!--                        <div class="p-2">-->
-                    <!--                            <mat-slide-toggle class="paddin55" [color]="'accent'"-->
-                    <!--                                              [(ngModel)]="configVisibility.sleep"-->
-                    <!--                                              (change)="loadSleep()">-->
-                    <!--                            </mat-slide-toggle>-->
-                    <!--                        </div>-->
-                    <!--                        <div class="p-2"><label> {{'ACTIVITY.SLEEP.SLEEP'|translate}}: </label></div>-->
-                    <!--                    </div>-->
-
-                    <!--                    <div class="col-sm col-md col-lg col-xl d-flex flex-row-reverse border-config"-->
-                    <!--                         *ngIf="userHealthArea === 'nutrition' || userHealthArea === 'admin'">-->
-                    <!--                        <div class="p-2">-->
-                    <!--                            <mat-slide-toggle class="paddin55" [color]="'accent'"-->
-                    <!--                                              [(ngModel)]="configVisibility.heartRate"></mat-slide-toggle>-->
-                    <!--                        </div>-->
-                    <!--                        <div class="p-2"><label> {{'MEASUREMENTS.COMPONENT.HEART-RATE'|translate}}: </label></div>-->
-                    <!--                    </div>-->
-
-                </div>
-            </mat-expansion-panel>
+            </div>
 
         </div>
-    </div>
-
-    <div class="row measurementsContent">
-
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('weight'))"
-             *ngIf="configVisibility.weight">
-            <weight [dataForGraph]="listWeight" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></weight>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('fat'))"
-             *ngIf="configVisibility.fat">
-            <fat [dataForGraph]="listFat" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></fat>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('height'))"
-             *ngIf="configVisibility.height">
-            <height [dataForGraph]="listHeight" [filterVisibility]="true" [patientId]="patientId" [includeCard]="true"></height>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('circumference'))"
-             *ngIf="configVisibility.circumference">
-            <waist-circunference [dataForGraph]="listWaistCircumference" [filterVisibility]="true"
-                                 [patientId]="patientId" [includeCard]="true"></waist-circunference>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('temperature'))"
-             *ngIf="configVisibility.temperature">
-            <body-temperature [dataForGraph]="listBodyTemperature" [filterVisibility]="true"
-                              [patientId]="patientId" [includeCard]="true"></body-temperature>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('glucose'))"
-             *ngIf="configVisibility.glucose">
-            <blood-glucose [dataForGraph]="listBloodGlucose" [filterVisibility]="true" [patientId]="patientId"
-                           [includeCard]="true"></blood-glucose>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
-             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('pressure'))"
-             *ngIf="configVisibility.pressure">
-            <blood-pressure [dataForGraph]="listBloodPressure" [filterVisibility]="true"
-                            [patientId]="patientId" [includeCard]="true"></blood-pressure>
-        </div>
-
-<!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
-<!--             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('sleep'))"-->
-<!--             *ngIf="configVisibility.sleep">-->
-<!--            <sleep [data]="listSleep" [filterVisibility]="true"-->
-<!--                   [patientId]="patientId" [includeCard]="true"></sleep>-->
-<!--        </div>-->
-
-        <!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"-->
-        <!--             [ngClass]="'d'+(measurementsLenght-graphOrdem.indexOf('heartRate'))"-->
-        <!--             *ngIf="configVisibility.heartRate">-->
-        <!--            <heart-rate [data]="listHeartRate" [filterVisibility]="true" [patientId]="patientId"-->
-        <!--                        [includeCard]="true"></heart-rate>-->
-        <!--        </div>-->
-
     </div>
 </div>

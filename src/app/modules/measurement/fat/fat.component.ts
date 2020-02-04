@@ -25,12 +25,13 @@ export class FatComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() onlyGraph: boolean;
+    @Input() filter: SearchForPeriod;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
     logsIsEmpty: boolean;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -102,7 +103,7 @@ export class FatComponent implements OnInit, OnChanges {
                 normal: {
                     show: true,
                     position: 'outside',
-                    offset: [0, -20],
+                    offset: [0, -5],
                     formatter: function (params) {
                         return `${params.value}% `;
                     },
@@ -138,6 +139,8 @@ export class FatComponent implements OnInit, OnChanges {
             xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
         });
 
+        const yAxisMargin = this.onlyGraph ? -40 : 8;
+        const gridX = this.onlyGraph ? '3%' : '5%';
 
         this.options = {
 
@@ -148,26 +151,24 @@ export class FatComponent implements OnInit, OnChanges {
                 }
             },
             grid: [
-                { x: '5%', y: '12%', width: '100%' }
+                { x: gridX, y: '12%', width: '100%', height: '80%' }
             ],
             xAxis: xAxis,
-            yAxis: [
-                {
+            yAxis: {
                     type: 'value',
                     axisLabel: {
-                        formatter: '{value} %'
+                        formatter: '{value} %',
+                        margin: yAxisMargin
                     }
                 }
-            ],
+            ,
             dataZoom: [
                 {
-                    type: 'slider'
+                    type: 'inside'
                 }
             ],
             series: series
         };
-
-        this.initializeListCheckMeasurements();
     }
 
     applyFilter(filter: SearchForPeriod) {
@@ -185,7 +186,7 @@ export class FatComponent implements OnInit, OnChanges {
     }
 
     updateGraph(measurements: Array<Measurement>): void {
-
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -40 : 8;
         this.options.xAxis.data = [];
         this.options.series.data = [];
 
@@ -278,6 +279,11 @@ export class FatComponent implements OnInit, OnChanges {
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            this.applyFilter(this.filter);
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

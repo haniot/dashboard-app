@@ -27,12 +27,13 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() onlyGraph: boolean;
+    @Input() filter: SearchForPeriod;
     lastData: BloodGlucose;
     options: any;
     echartsInstance: any;
     logsIsEmpty: boolean;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -338,6 +339,9 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             }
         });
 
+        const yAxisMargin = this.onlyGraph ? -45 : 8;
+        const gridX = this.onlyGraph ? '3%' : '8%';
+
         this.options = {
             tooltip: {
                 trigger: 'item',
@@ -359,26 +363,23 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 data: [preprandial, postprandial, fasting, casual, bedtime]
             },
             grid: [
-                { x: '8%', y: '9%', width: '100%' }
+                { x: gridX, y: '10%', width: '100%', height: '83%' }
             ],
             xAxis: xAxis,
-            yAxis: [
-                {
-                    type: 'value',
-                    axisLabel: {
-                        formatter: '{value}mg/dl'
-                    }
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}mg/dl',
+                    margin: yAxisMargin
                 }
-            ],
+            },
             dataZoom: [
                 {
-                    type: 'slider'
+                    type: 'inside'
                 }
             ],
             series: series
         };
-
-        this.initializeListCheckMeasurements();
     }
 
     applyFilter(filter: SearchForPeriod) {
@@ -413,6 +414,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         });
 
         // clean
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -45 : 8;
         this.options.xAxis.data = [];
         this.options.series[0].data = new Array(preprandials.length);
         this.options.series[1].data = new Array(preprandials.length + postprandials.length);
@@ -547,6 +549,11 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            this.applyFilter(this.filter);
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

@@ -25,12 +25,13 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() onlyGraph: boolean;
+    @Input() filter: SearchForPeriod;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
     logsIsEmpty: boolean;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -151,6 +152,8 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
             });
         });
 
+        const yAxisMargin = this.onlyGraph ? -35 : 8;
+        const gridX = this.onlyGraph ? '3%' : '5%';
 
         this.options = {
             color: ['#3398DB'],
@@ -165,31 +168,30 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
                 }
             },
             grid: [
-                { x: '5%', y: '7%', width: '100%' }
+                { x: gridX, y: '7%', width: '100%', height: '85%' }
             ],
             xAxis: xAxis,
-            yAxis: [
+            yAxis:
                 {
                     type: 'value',
                     axisLabel: {
-                        formatter: '{value}cm'
+                        formatter: '{value}cm',
+                        margin: yAxisMargin
                     }
                 }
-            ],
+            ,
             dataZoom: [
                 {
-                    type: 'slider'
+                    type: 'inside'
                 }
             ],
             series: series
         };
-
-        this.initializeListCheckMeasurements();
-
     }
 
     updateGraph(measurements: Array<any>): void {
         // clean
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -35 : 8;
         this.options.xAxis.data = [];
         this.options.series.data = [];
 
@@ -264,10 +266,15 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if ((changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
+        if ((changes.dataForGraph && changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
-            (changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
+            (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            this.applyFilter(this.filter);
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

@@ -1,15 +1,15 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
-import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
+import { EnumMeasurementType, SearchForPeriod } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
-import { BloodPressure } from '../models/blood.pressure';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { Weight } from '../models/weight';
-import { BloodGlucose } from '../models/blood.glucose';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
-import { PilotStudy } from '../../pilot.study/models/pilot.study'
-import { TimeSeries } from '../../activity/models/time.series'
-import { Sleep } from '../../activity/models/sleep'
+import { TimeSeriesType } from '../../activity/models/time.series'
+import { ActivatedRoute } from '@angular/router'
+import { TimeSeriesService } from '../../activity/services/time.series.service'
+import { TranslateService } from '@ngx-translate/core'
+import { MeasurementTypePipe } from '../pipes/measurement.type.pipe'
+import { TimeSeriesPipe } from '../../activity/pipes/time.series.pipe'
 
 class ConfigVisibility {
     weight: boolean;
@@ -35,194 +35,132 @@ class ConfigVisibility {
     }
 };
 
+export interface Item {
+    disabled?: boolean;
+    value: string;
+    viewValue: string;
+}
+
+export interface Group {
+    disabled?: boolean;
+    name: string;
+    items: Item[];
+}
+
 @Component({
     selector: 'measurement-component',
     templateUrl: './measurement.component.html',
     styleUrls: ['./measurement.component.scss']
 })
-export class MeasurementComponent implements OnChanges {
+export class MeasurementComponent implements OnInit {
+    @ViewChild('selectGraph01', { static: false }) selectGraph01;
+    @ViewChild('selectGraph02', { static: false }) selectGraph02;
+    @ViewChild('selectGraph03', { static: false }) selectGraph03;
+    @ViewChild('selectGraph04', { static: false }) selectGraph04;
     @Input() configVisibility: ConfigVisibility;
     @Input() patientId;
-    listWeight: Array<Weight>;
-    listHeight: Array<Measurement>;
-    listFat: Array<Measurement>;
-    listWaistCircumference: Array<Measurement>;
-    listBodyTemperature: Array<Measurement>;
-    listBloodGlucose: Array<BloodGlucose>;
-    listBloodPressure: Array<BloodPressure>;
-    listHeartRate: Array<TimeSeries>;
-    listSleep: Array<Sleep>;
-    filter: SearchForPeriod;
-    studySelected: PilotStudy;
-    graphOrdem: Array<string>;
-    measurementsLenght = Object.keys(EnumMeasurementType).length
+    EnumMeasurementType = EnumMeasurementType;
+    TimeSeriesType = TimeSeriesType;
+    filter: any;
+    filterForMeasurement: any;
+    resourceGroups: Group[];
+    resource01Selected: any;
+    resource02Selected: any;
+    resource03Selected: any;
+    resource04Selected: any;
 
     constructor(
         private studyService: PilotStudyService,
         private measurementService: MeasurementService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private activeRouter: ActivatedRoute,
+        private timeSeriesService: TimeSeriesService,
+        private translateService: TranslateService,
+        private measurementPipe: MeasurementTypePipe,
+        private timeSeriesPipe: TimeSeriesPipe
     ) {
-        this.listWeight = new Array<Weight>();
-        this.listHeight = new Array<Measurement>();
-        this.listFat = new Array<Measurement>();
-        this.listWaistCircumference = new Array<Measurement>();
-        this.listBodyTemperature = new Array<Measurement>();
-        this.listBloodGlucose = new Array<BloodGlucose>();
-        this.listBloodPressure = new Array<BloodPressure>();
-        this.listHeartRate = new Array<TimeSeries>();
-        this.listSleep = new Array<Sleep>();
         this.configVisibility = new ConfigVisibility();
-        this.filter = { start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today' };
-        this.studySelected = new PilotStudy();
-        this.graphOrdem = new Array<string>();
-    }
-
-    loadPilotSelected(): Promise<any> {
-        const userId = this.localStorageService.getItem('user');
-        const pilotId = this.localStorageService.getItem(userId);
-        return this.studyService.getById(pilotId);
-    }
-
-    loadWeight() {
-        if (this.configVisibility.weight) {
-            this.graphOrdem.push('weight');
-            if (!this.listWeight.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.weight, null, null, this.filter)
-                    .then((httpResponse) => {
-                        if (httpResponse.body && httpResponse.body.length) {
-                            this.listWeight = httpResponse.body;
-                        }
-                    })
-                    .catch(() => {
-                    });
+        this.filter = {
+            type: 'today',
+            filter: {
+                start_date: new Date().toISOString().split('T')[0],
+                end_date: new Date().toISOString().split('T')[0]
             }
-        } else {
-            this.graphOrdem = this.graphOrdem.filter(item => item !== 'weight')
-        }
+        };
+        this.filterForMeasurement = this.formatterFilter();
     }
 
-    loadHeight() {
-        if (this.configVisibility.height) {
-            this.graphOrdem.push('height');
-            if (!this.listHeight.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.height, null, null, this.filter)
-                    .then((httpResponse) => {
-                        if (httpResponse.body && httpResponse.body.length) {
-                            this.listHeight = httpResponse.body;
-                        }
-                    })
-                    .catch(() => {
-                    });
+    ngOnInit(): void {
+        this.activeRouter.paramMap.subscribe((params) => {
+            this.patientId = params.get('patientId');
+        });
+        this.initializeMeasurementsGroup();
+    }
+
+    initializeMeasurementsGroup(): void {
+        const measurement = this.translateService.instant('MEASUREMENTS.TITLE');
+        const timeSeries = this.translateService.instant('TIME-SERIES.TITLE');
+        const measurementsItems = Object.keys(EnumMeasurementType).map(item => {
+            return {
+                value: item,
+                viewValue: this.translateService.instant(this.measurementPipe.transform(item))
             }
-        } else {
-            this.graphOrdem = this.graphOrdem.filter(item => item !== 'height')
-        }
-    }
-
-    loadFat() {
-        if (this.configVisibility.fat) {
-            this.graphOrdem.push('fat');
-            if (!this.listFat.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, this.filter)
-                    .then(httpResponse => {
-                        if (httpResponse.body && httpResponse.body.length) {
-                            this.listFat = httpResponse.body;
-                        }
-                    })
-                    .catch(() => {
-                    });
+        })
+        const timeSeriesItems = Object.keys(TimeSeriesType).map(item => {
+            return {
+                value: item,
+                viewValue: this.translateService.instant(this.timeSeriesPipe.transform(item))
             }
-        } else {
-            this.graphOrdem = this.graphOrdem.filter(item => item !== 'fat')
-        }
-    }
-
-    loadWaistCircumference() {
-        if (this.configVisibility.circumference) {
-            this.graphOrdem.push('circumference');
-            if (!this.listWaistCircumference.length) {
-                this.measurementService
-                    .getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, this.filter)
-                    .then(httpResponse => {
-                        if (httpResponse.body && httpResponse.body.length) {
-                            this.listWaistCircumference = httpResponse.body;
-                        }
-                    })
-                    .catch(() => {
-                    });
+        })
+        this.resourceGroups = [
+            {
+                name: measurement,
+                items: measurementsItems
+            },
+            {
+                name: timeSeries,
+                items: timeSeriesItems
             }
-        } else {
-            this.graphOrdem = this.graphOrdem.filter(item => item !== 'circumference')
-        }
+        ];
     }
 
-    loadBodyTemperature() {
-        if (this.configVisibility.temperature) {
-            this.graphOrdem.push('temperature');
-            if (!this.listBodyTemperature.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, null, null, this.filter)
-                    .then(httpResponse => {
-                        if (httpResponse.body && httpResponse.body.length) {
-                            this.listBodyTemperature = httpResponse.body;
-                        }
-                    })
-                    .catch(() => {
-                    });
+    selectResource(): void {
+        this.resourceGroups[0].items = this.resourceGroups[0].items.map((item: Item) => {
+            item.disabled = (item.value === this.resource01Selected || item.value === this.resource02Selected ||
+                item.value === this.resource03Selected || item.value === this.resource04Selected);
+            return item
+        })
+
+        this.resourceGroups[1].items = this.resourceGroups[1].items.filter((item: Item) => {
+            item.disabled = (item.value === this.resource01Selected || item.value === this.resource02Selected ||
+                item.value === this.resource03Selected || item.value === this.resource04Selected);
+            return item
+        })
+    }
+
+    applyFilter(event: any) {
+        this.filter = event;
+        this.filterForMeasurement = this.formatterFilter();
+    }
+
+    formatterFilter(): SearchForPeriod {
+        if (this.filter) {
+            if (this.filter.period) {
+                return this.filter
             }
-        } else {
-            this.graphOrdem = this.graphOrdem.filter(item => item !== 'temperature')
+            const result: SearchForPeriod = {
+                period: this.filter['type'],
+                start_at: this.filter['filter']['start_date'],
+                end_at: this.filter['filter']['end_date']
+            };
+            return result;
         }
+        return this.filter
     }
 
-    loadBloodGlucose() {
-        if (this.configVisibility.glucose) {
-            this.graphOrdem.push('glucose');
-            if (!this.listBloodGlucose.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, this.filter)
-                    .then(httpResponse => {
-                        if (httpResponse.body && httpResponse.body.length) {
-                            this.listBloodGlucose = httpResponse.body;
-                        }
-                    })
-                    .catch(() => {
-                    });
-            }
-        } else {
-            this.graphOrdem = this.graphOrdem.filter(item => item !== 'glucose')
-        }
+    openSelectGraph(event): void {
+        this[event].open();
     }
 
-    loadBloodPressure() {
-        if (this.configVisibility.pressure) {
-            this.graphOrdem.push('pressure');
-            if (!this.listBloodPressure.length) {
-                this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, null, null, this.filter)
-                    .then(httpResponse => {
-                        if (httpResponse.body && httpResponse.body.length) {
-                            this.listBloodPressure = httpResponse.body;
-                        }
-                    })
-                    .catch(() => {
-                    });
-            }
-        } else {
-            this.graphOrdem = this.graphOrdem.filter(item => item !== 'pressure')
-        }
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (this.patientId && changes.patientId && changes.patientId.currentValue !== changes.patientId.previousValue) {
-            this.loadPilotSelected()
-                .then(study => {
-                    this.studySelected = study;
-                    this.filter.start_at = this.studySelected.start.split('T')[0];
-                    this.filter.end_at = this.studySelected.end.split('T')[0];
-                    this.loadWeight();
-                })
-                .catch(() => {
-                })
-
-        }
-    }
 
 }
