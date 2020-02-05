@@ -178,6 +178,9 @@ export class FatComponent implements OnInit, OnChanges {
             .then(httpResponse => {
                 this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
+                if (this.dataForGraph && this.dataForGraph.length) {
+                    this.dataForGraph = this.dataForGraph.reverse();
+                }
                 this.updateGraph(this.dataForGraph);
                 this.filterChange.emit(this.dataForGraph);
             })
@@ -223,7 +226,9 @@ export class FatComponent implements OnInit, OnChanges {
             .then((httpResponse) => {
                 this.dataForLogs = httpResponse.body;
                 this.logsIsEmpty = this.dataForLogs.length === 0;
-                this.lastData = httpResponse.body[0];
+                if (this.dataForLogs && this.dataForLogs.length) {
+                    this.lastData = this.dataForLogs[0];
+                }
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
                 this.logsLoading = false;

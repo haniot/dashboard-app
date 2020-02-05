@@ -83,6 +83,9 @@ export class WeightComponent implements OnInit, OnChanges {
             .then(httpResponse => {
                 this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
+                if (this.dataForGraph && this.dataForGraph.length) {
+                    this.dataForGraph = this.dataForGraph.reverse();
+                }
                 this.updateGraph(this.dataForGraph);
                 this.filterChange.emit(this.dataForGraph);
             })
@@ -175,7 +178,7 @@ export class WeightComponent implements OnInit, OnChanges {
             if (element.body_fat) {
                 xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
                 seriesFat.data.push({
-                    value: element.body_fat,
+                    value: this.decimalPipe.transform(element.body_fat),
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
                 });
             }
@@ -227,7 +230,9 @@ export class WeightComponent implements OnInit, OnChanges {
             .then((httpResponse) => {
                 this.dataForLogs = httpResponse.body;
                 this.logsIsEmpty = this.dataForLogs.length === 0;
-                this.lastData = this.dataForLogs[0];
+                if (this.dataForLogs && this.dataForLogs.length) {
+                    this.lastData = this.dataForLogs[0];
+                }
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
                 this.logsLoading = false;

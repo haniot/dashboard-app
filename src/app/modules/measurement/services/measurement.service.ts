@@ -81,7 +81,7 @@ export class MeasurementService {
             }
         }
 
-        myParams = myParams.append('sort', '+timestamp');
+        myParams = myParams.append('sort', '-timestamp');
 
         const url = `${environment.api_url}/${this.version}/patients/${userId}/measurements`;
 

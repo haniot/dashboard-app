@@ -118,10 +118,7 @@ export class SleepListComponent implements OnInit {
                 this.listForLogs = httpResponse && httpResponse.body ? httpResponse.body : [];
                 this.length = httpResponse && httpResponse.headers ? parseInt(httpResponse.headers.get('x-total-count'), 10) : 0;
                 this.showSpinnerLogs = false;
-                if (this.listForLogs.length > 1) {
-                    this.lastData = this.listForLogs[this.listForLogs.length - 1];
-                    this.listForLogs = this.listForLogs.reverse();
-                } else {
+                if (this.listForLogs && this.listForLogs.length) {
                     this.lastData = this.listForLogs[0];
                 }
                 this.initializeListChecks();
