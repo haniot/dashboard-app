@@ -5,10 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { MeasurementService } from '../services/measurement.service';
 import { BloodPressure } from '../models/blood.pressure';
-import { EnumMeasurementType, SearchForPeriod } from '../models/measurement'
+import { EnumMeasurementType } from '../models/measurement'
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ToastrService } from 'ngx-toastr'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -28,7 +29,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     @Input() onlyGraph: boolean;
-    @Input() filter: SearchForPeriod;
+    @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     lastData: BloodPressure;
     options: any;
     echartsInstance: any;
@@ -61,7 +62,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.loadingMeasurements = false;
         this.selectAll = false;
         this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>();
@@ -408,7 +409,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         };
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    applyFilter(filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, null, null, filter)
             .then(httpResponse => {

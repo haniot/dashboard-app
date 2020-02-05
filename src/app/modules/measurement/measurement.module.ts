@@ -15,7 +15,6 @@ import {
     MatPaginatorModule
 } from '@angular/material';
 
-import { MeasurementComponent } from './measurement.component/measurement.component';
 import { MeasurementService } from './services/measurement.service';
 import { WeightComponent } from './weight/weight.component';
 import { HeightComponent } from './height/height.component';
@@ -29,7 +28,6 @@ import { DeviceTypePipe } from './pipes/device.type.pipe';
 import { DeviceComponent } from './device/device.component';
 import { DeviceService } from './services/device.service';
 import { DecimalFormatterPipe } from './pipes/decimal.formatter.pipe';
-import { MeasurementCardComponent } from './measurement.card/measurement.card.component';
 import { MeasurementLogsComponent } from './measurement.logs/measurement.logs.component';
 import { MeasurementTypePipe } from './pipes/measurement.type.pipe';
 import { SharedModule } from '../../shared/shared.module'
@@ -41,7 +39,6 @@ import { MatSelectModule } from '@angular/material/select'
 
 @NgModule({
     declarations: [
-        MeasurementComponent,
         WeightComponent,
         HeightComponent,
         WaistCircumferenceComponent,
@@ -54,7 +51,6 @@ import { MatSelectModule } from '@angular/material/select'
         FatComponent,
         DeviceComponent,
         DecimalFormatterPipe,
-        MeasurementCardComponent,
         MeasurementLogsComponent,
         MeasurementTypePipe,
         MeasurementDashboardComponent
@@ -79,7 +75,6 @@ import { MatSelectModule } from '@angular/material/select'
         MatSelectModule
     ],
     exports: [
-        MeasurementComponent,
         MeasurementLogsComponent,
         DeviceComponent,
         MealPipe,
@@ -93,7 +88,6 @@ import { MatSelectModule } from '@angular/material/select'
         ViewMeasurementsComponent,
         DecimalFormatterPipe,
         MeasurementTypePipe,
-        MeasurementCardComponent,
         MeasurementDashboardComponent
     ],
     providers: [

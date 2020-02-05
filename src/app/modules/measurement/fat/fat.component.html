@@ -1,4 +1,4 @@
-<measurement-card [title]="'MEASUREMENTS.FAT.TITLE'|translate" [subtitle]="'MEASUREMENTS.FAT.SUBTITLE'|translate"
+<time-series-card [title]="'MEASUREMENTS.FAT.TITLE'|translate" [subtitle]="'MEASUREMENTS.FAT.SUBTITLE'|translate"
                   [filter_visibility]="filterVisibility" (filter_change)="applyFilter($event)" *ngIf="includeCard && !onlyGraph">
 
     <div class="row justify-content-center">
@@ -125,7 +125,7 @@
 
     </div>
 
-</measurement-card>
+</time-series-card>
 
 <div class="row" *ngIf="!includeCard && !onlyGraph">
 

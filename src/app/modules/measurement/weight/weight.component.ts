@@ -7,8 +7,9 @@ import { PageEvent } from '@angular/material'
 import { Weight } from '../models/weight';
 import { DecimalFormatterPipe } from '../pipes/decimal.formatter.pipe';
 import { MeasurementService } from '../services/measurement.service';
-import { EnumMeasurementType, SearchForPeriod } from '../models/measurement';
+import { EnumMeasurementType } from '../models/measurement';
 import { ConfigurationBasic } from '../../config.matpaginator';
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -28,7 +29,7 @@ export class WeightComponent implements OnInit, OnChanges {
     @Input() onlyGraph: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
-    @Input() filter: SearchForPeriod;
+    @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     logsIsEmpty: boolean;
     lastData: Weight;
     weightGraph: any;
@@ -61,7 +62,7 @@ export class WeightComponent implements OnInit, OnChanges {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.loadingMeasurements = false;
         this.selectAll = false;
         this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string }>();
@@ -74,7 +75,7 @@ export class WeightComponent implements OnInit, OnChanges {
         }
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    applyFilter(filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter) {
         this.showSpinner = true;
         this.dataForGraph = [];
         this.measurementService
@@ -307,6 +308,7 @@ export class WeightComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        console.log(changes)
         if ((changes.dataForGraph && changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {

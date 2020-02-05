@@ -9,8 +9,8 @@ import { LocalStorageService } from '../../../shared/shared.services/local.stora
 import { TimeSeriesService } from '../../activity/services/time.series.service'
 import { MeasurementTypePipe } from '../../measurement/pipes/measurement.type.pipe'
 import { TimeSeriesPipe } from '../../activity/pipes/time.series.pipe'
-import { EnumMeasurementType, SearchForPeriod } from '../../measurement/models/measurement'
-import { TimeSeriesType } from '../../activity/models/time.series'
+import { EnumMeasurementType } from '../../measurement/models/measurement'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter, TimeSeriesType } from '../../activity/models/time.series'
 
 class ConfigVisibility {
     weight: boolean;
@@ -49,18 +49,17 @@ export interface Group {
 }
 
 @Component({
-    selector: 'correlation-measurements',
-    templateUrl: './correlation.measurements.component.html',
-    styleUrls: ['./correlation.measurements.component.scss']
+    selector: 'correlate-measurements',
+    templateUrl: './correlate.measurements.component.html',
+    styleUrls: ['./correlate.measurements.component.scss']
 })
-export class CorrelationMeasurementsComponent implements OnInit {
+export class CorrelateMeasurementsComponent implements OnInit {
     @ViewChildren('selectGraph') selectGraphs: QueryList<any>;
     @Input() configVisibility: ConfigVisibility;
     @Input() patientId;
     EnumMeasurementType = EnumMeasurementType;
     TimeSeriesType = TimeSeriesType;
-    filter: any;
-    filterForMeasurement: any;
+    filter: TimeSeriesIntervalFilter;
     resourceGroups: Group[];
     resourcesSelected: any[];
     resourcesOptions: string[];
@@ -76,14 +75,9 @@ export class CorrelationMeasurementsComponent implements OnInit {
         private timeSeriesPipe: TimeSeriesPipe
     ) {
         this.configVisibility = new ConfigVisibility();
-        this.filter = {
-            type: 'today',
-            filter: {
-                date: new Date().toISOString().split('T')[0],
-                interval: '15m'
-            }
-        };
-        this.filterForMeasurement = this.formatterFilter();
+        this.filter = new TimeSeriesIntervalFilter();
+        this.filter.date = new Date().toISOString().split('T')[0];
+        this.filter.interval = '15m';
         this.resourcesSelected = new Array(1);
         this.resourcesOptions = ['hidden'];
     }
@@ -136,27 +130,11 @@ export class CorrelationMeasurementsComponent implements OnInit {
 
     applyFilter(event: any) {
         this.filter = event;
-        this.filterForMeasurement = this.formatterFilter();
     }
 
     add(): void {
         this.resourcesSelected.push(undefined);
         this.resourcesOptions.push('hidden');
-    }
-
-    formatterFilter(): SearchForPeriod {
-        if (this.filter) {
-            if (this.filter.period) {
-                return this.filter
-            }
-            const result: SearchForPeriod = {
-                period: this.filter['type'],
-                start_at: this.filter['filter']['start_date'],
-                end_at: this.filter['filter']['end_date']
-            };
-            return result;
-        }
-        return this.filter
     }
 
     openSelectGraph(indexSelected: number): void {
@@ -172,18 +150,4 @@ export class CorrelationMeasurementsComponent implements OnInit {
             return indexSelected !== index;
         });
     }
-
-    showOptions(indexSelected: number): void {
-        this.resourcesOptions = this.resourcesOptions.map((element, index) => {
-            return index === indexSelected ? 'show' : element;
-        })
-    }
-
-    hiddenOptions(indexSelected: number): void {
-        this.resourcesOptions = this.resourcesOptions.map((element, index) => {
-            return index === indexSelected ? 'hidden' : element;
-        })
-    }
-
-
 }

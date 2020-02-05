@@ -3,10 +3,11 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
+import { EnumMeasurementType, Measurement } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -26,7 +27,7 @@ export class FatComponent implements OnInit, OnChanges {
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     @Input() onlyGraph: boolean;
-    @Input() filter: SearchForPeriod;
+    @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
@@ -59,7 +60,7 @@ export class FatComponent implements OnInit, OnChanges {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.loadingMeasurements = false;
         this.selectAll = false;
         this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string }>();
@@ -155,12 +156,12 @@ export class FatComponent implements OnInit, OnChanges {
             ],
             xAxis: xAxis,
             yAxis: {
-                    type: 'value',
-                    axisLabel: {
-                        formatter: '{value} %',
-                        margin: yAxisMargin
-                    }
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} %',
+                    margin: yAxisMargin
                 }
+            }
             ,
             dataZoom: [
                 {
@@ -171,7 +172,7 @@ export class FatComponent implements OnInit, OnChanges {
         };
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    applyFilter(filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, filter)
             .then(httpResponse => {

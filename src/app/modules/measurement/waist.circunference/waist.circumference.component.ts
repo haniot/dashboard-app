@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
+import { EnumMeasurementType, Measurement } from '../models/measurement';
 import { TranslateService } from '@ngx-translate/core';
 import { Weight } from '../models/weight';
 import { MeasurementService } from '../services/measurement.service';
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -26,7 +27,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     @Input() onlyGraph: boolean;
-    @Input() filter: SearchForPeriod;
+    @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
@@ -58,7 +59,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.loadingMeasurements = false;
         this.selectAll = false;
         this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string }>();
@@ -71,7 +72,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         }
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    applyFilter(filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, filter)
             .then(httpResponse => {

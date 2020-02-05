@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sleep } from '../models/sleep'
-import { SearchForPeriod } from '../../measurement/models/measurement'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DatePipe } from '@angular/common'
 import { SleepFilter, SleepService } from '../services/sleep.service'
@@ -12,6 +11,7 @@ import * as echarts from 'echarts'
 import { PageEvent } from '@angular/material/paginator'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../models/time.series'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -34,7 +34,7 @@ export class SleepListComponent implements OnInit {
     Math: any;
     listGraphIsEmpty: boolean;
     listLogsIsEmpty: boolean;
-    filter: SearchForPeriod;
+    filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -74,7 +74,7 @@ export class SleepListComponent implements OnInit {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.loadingSleeps = false;
         this.selectAll = false;
         this.listGraphIsEmpty = false;
@@ -118,6 +118,12 @@ export class SleepListComponent implements OnInit {
                 this.listForLogs = httpResponse && httpResponse.body ? httpResponse.body : [];
                 this.length = httpResponse && httpResponse.headers ? parseInt(httpResponse.headers.get('x-total-count'), 10) : 0;
                 this.showSpinnerLogs = false;
+                if (this.listForLogs.length > 1) {
+                    this.lastData = this.listForLogs[this.listForLogs.length - 1];
+                    this.listForLogs = this.listForLogs.reverse();
+                } else {
+                    this.lastData = this.listForLogs[0];
+                }
                 this.initializeListChecks();
             })
             .catch(err => {
@@ -166,12 +172,6 @@ export class SleepListComponent implements OnInit {
         const and = this.translateService.instant('SHARED.AND');
         const minutes_abbreviation = this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION');
         const period = this.translateService.instant('MEASUREMENTS.MEASUREMENT-CARD.PERIOD');
-
-        if (this.listForLogs.length > 1) {
-            this.lastData = this.listForLogs[this.listForLogs.length - 1];
-        } else {
-            this.lastData = this.listForLogs[0];
-        }
 
         const xAxis = { data: [] };
 

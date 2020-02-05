@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { Measurement, SearchForPeriod } from '../models/measurement';
+import { Measurement } from '../models/measurement';
 import { BloodPressure } from '../models/blood.pressure';
 import { MeasurementType } from '../models/measurement.types'
 import { Weight } from '../models/weight';
@@ -45,7 +45,7 @@ export class MeasurementService {
     //         .toPromise();
     // }
 
-    getAllByUserAndType(userId: string, typeMeasurement: string, page?: number, limit?: number, search?: SearchForPeriod):
+    getAllByUserAndType(userId: string, typeMeasurement: string, page?: number, limit?: number, search?: any):
         Promise<HttpResponse<Array<Measurement | Weight | BloodPressure | TimeSeries> | any>> {
 
         let myParams = new HttpParams();
@@ -63,16 +63,22 @@ export class MeasurementService {
         }
 
         if (search) {
-            if (search.start_at) {
-                myParams = myParams.append('start_at', search.start_at);
+            const { filter } = search
+            if (filter) {
+                let start_time, end_time, nextday;
+                if (search.type === 'today') {
+                    const dateSelected = new Date(filter.date);
+                    start_time = dateSelected.toISOString().split('T')[0] + 'T03:00:00.000Z';
+                    nextday = new Date(dateSelected.getTime() + (24 * 60 * 60 * 1000));
+                    end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+                } else {
+                    start_time = search.filter.start_date + 'T03:00:00.000Z';
+                    nextday = new Date(new Date(search.filter.end_date).getTime() + (24 * 60 * 60 * 1000));
+                    end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+                }
+                myParams = myParams.append('timestamp', 'gte:' + start_time);
+                myParams = myParams.append('timestamp', 'lt:' + end_time);
             }
-            if (search.end_at) {
-                myParams = myParams.append('end_at', search.end_at);
-            }
-            if (search.period) {
-                myParams = myParams.append('period', search.period);
-            }
-
         }
 
         myParams = myParams.append('sort', '+timestamp');

@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
-import { EnumMeasurementType, SearchForPeriod } from '../../measurement/models/measurement'
+import { EnumMeasurementType } from '../../measurement/models/measurement'
 import { MeasurementService } from '../../measurement/services/measurement.service'
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
@@ -29,7 +29,7 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
     list: Array<any> | TimeSeries | any;
     listForLogs: Array<any>;
     listIsEmpty: boolean;
-    filter: SearchForPeriod | TimeSeriesSimpleFilter | any;
+    filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     allTypesOfMeasurement = EnumMeasurementType;
     allTypesOfTimeSerie = TimeSeriesType;
     pageSizeOptions: number[];
@@ -93,22 +93,19 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
     }
 
     startFilter(): void {
-        if (Object.keys(EnumMeasurementType).includes(this.typeOfMeasurement)) {
-            this.filter = { start_at: null, end_at: new Date().toISOString().split('T')[0], period: 'today' };
-        }
-        if (Object.keys(TimeSeriesType).includes(this.typeOfMeasurement)) {
-            this.filter = new TimeSeriesIntervalFilter();
-            const dateFormatted: string = moment(new Date()).format();
-            this.filter = new TimeSeriesIntervalFilter()
-            this.filter.date = dateFormatted.split('T')[0];
-            this.filter.interval = '1m';
-        }
+        const dateFormatted: string = moment(new Date()).format();
+        this.filter = new TimeSeriesIntervalFilter()
+        this.filter.date = dateFormatted.split('T')[0];
+        this.filter.interval = '1m';
     }
 
     loadResource(resource: EnumMeasurementType | TimeSeriesType | any): any {
         if (Object.keys(EnumMeasurementType).includes(resource)) {
             this.list = new Array<any>();
-            this.measurementService.getAllByUserAndType(this.patientId, resource, null, null, this.filter)
+            this.measurementService.getAllByUserAndType(this.patientId, resource, null, null, {
+                type: 'today',
+                filter: this.filter
+            })
                 .then((httpResponse) => {
                     this.list = httpResponse.body;
                     this.listIsEmpty = this.list.length === 0;

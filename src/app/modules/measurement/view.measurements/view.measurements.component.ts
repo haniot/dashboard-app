@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MeasurementService } from '../services/measurement.service'
-import { EnumMeasurementType, SearchForPeriod } from '../models/measurement'
+import { EnumMeasurementType } from '../models/measurement'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
 
 @Component({
     selector: 'view-measurements',
@@ -12,7 +13,7 @@ export class ViewMeasurementsComponent implements OnChanges {
     @Input() typeOfMeasurement: string;
     list: Array<any>;
     listIsEmpty: boolean;
-    filter: SearchForPeriod;
+    filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     allTypesOfMeasurement = EnumMeasurementType;
 
     constructor(private measurementService: MeasurementService) {

@@ -5,7 +5,14 @@ import * as moment from 'moment'
 
 import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../../modules/activity/models/time.series'
 import { DateRange } from '../../../modules/pilot.study/models/range-date'
-import { FilterOptions } from '../../../modules/measurement/measurement.card/measurement.card.component'
+
+export const FilterOptions = {
+    today: 'today',
+    week: '1w',
+    month: '1m',
+    year: '1y',
+    period: 'period'
+}
 
 @Component({
     selector: 'time-series-card',
@@ -16,6 +23,7 @@ export class TimeSeriesCardComponent {
     @Input() title: string;
     @Input() subtitle: string;
     @Output() filter_change: EventEmitter<any>;
+    @Input() filter_visibility: boolean;
     currentDate: Date;
     search: DateRange;
     filterOptions = FilterOptions;
@@ -29,6 +37,7 @@ export class TimeSeriesCardComponent {
         this.currentDate = new Date();
         this.filter_change = new EventEmitter();
         this.filterSelected = 'today';
+        this.filter_visibility = true;
     }
 
     isMobile(): boolean {

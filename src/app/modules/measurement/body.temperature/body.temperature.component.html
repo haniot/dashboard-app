@@ -1,4 +1,4 @@
-<measurement-card [title]="'MEASUREMENTS.BODY-TEMPERATURE.TITLE'|translate"
+<time-series-card [title]="'MEASUREMENTS.BODY-TEMPERATURE.TITLE'|translate"
                   [subtitle]="'MEASUREMENTS.BODY-TEMPERATURE.SUBTITLE'|translate"
                   [filter_visibility]="filterVisibility" (filter_change)="applyFilter($event)" *ngIf="includeCard && !onlyGraph">
 
@@ -126,7 +126,7 @@
 
     </div>
 
-</measurement-card>
+</time-series-card>
 
 <div class="row" *ngIf="!includeCard && !onlyGraph">
 

@@ -29,7 +29,7 @@ import { ActivityModule } from '../activity/activity.module';
 import { PatientQuestionnairesComponent } from './patient.questionnaires/patient.questionnaires.component';
 import { PatientDashboardComponent } from './patient.dashboard/patient.dashboard.component';
 import { PatientMeasurementsComponent } from './patient.measurements/patient.measurements.component';
-import { CorrelationMeasurementsComponent } from './correlation.measurements/correlation.measurements.component'
+import { CorrelateMeasurementsComponent } from './correlate.measurements/correlate.measurements.component'
 
 @NgModule({
     declarations: [
@@ -45,7 +45,7 @@ import { CorrelationMeasurementsComponent } from './correlation.measurements/cor
         PatientQuestionnairesComponent,
         PatientDashboardComponent,
         PatientMeasurementsComponent,
-        CorrelationMeasurementsComponent
+        CorrelateMeasurementsComponent
     ],
     imports: [
         CommonModule,

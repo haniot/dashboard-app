@@ -10,8 +10,7 @@ import { ViewResourcesComponent } from '../view.resources/view.resources.compone
 import { PatientQuestionnairesComponent } from '../patient.questionnaires/patient.questionnaires.component'
 import { PatientMeasurementsComponent } from '../patient.measurements/patient.measurements.component'
 import { PatientDashboardComponent } from '../patient.dashboard/patient.dashboard.component'
-import { MeasurementComponent } from '../../measurement/measurement.component/measurement.component'
-import { CorrelationMeasurementsComponent } from '../correlation.measurements/correlation.measurements.component'
+import { CorrelateMeasurementsComponent } from '../correlate.measurements/correlate.measurements.component'
 
 const routes = [
 
@@ -73,7 +72,7 @@ const routes = [
     },
     {
         path: ':patientId/correlate',
-        component: CorrelationMeasurementsComponent,
+        component: CorrelateMeasurementsComponent,
         data: { scope: 'patients:read' }
     },
     {
