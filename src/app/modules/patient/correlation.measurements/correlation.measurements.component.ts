@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
@@ -54,10 +54,7 @@ export interface Group {
     styleUrls: ['./correlation.measurements.component.scss']
 })
 export class CorrelationMeasurementsComponent implements OnInit {
-    @ViewChild('selectGraph01', { static: false }) selectGraph01;
-    @ViewChild('selectGraph02', { static: false }) selectGraph02;
-    @ViewChild('selectGraph03', { static: false }) selectGraph03;
-    @ViewChild('selectGraph04', { static: false }) selectGraph04;
+    @ViewChildren('selectGraph') selectGraphs: QueryList<any>;
     @Input() configVisibility: ConfigVisibility;
     @Input() patientId;
     EnumMeasurementType = EnumMeasurementType;
@@ -65,10 +62,8 @@ export class CorrelationMeasurementsComponent implements OnInit {
     filter: any;
     filterForMeasurement: any;
     resourceGroups: Group[];
-    resource01Selected: any;
-    resource02Selected: any;
-    resource03Selected: any;
-    resource04Selected: any;
+    resourcesSelected: any[];
+    resourcesOptions: string[];
 
     constructor(
         private studyService: PilotStudyService,
@@ -89,6 +84,8 @@ export class CorrelationMeasurementsComponent implements OnInit {
             }
         };
         this.filterForMeasurement = this.formatterFilter();
+        this.resourcesSelected = new Array(1);
+        this.resourcesOptions = ['hidden'];
     }
 
     ngOnInit(): void {
@@ -127,14 +124,12 @@ export class CorrelationMeasurementsComponent implements OnInit {
 
     selectResource(): void {
         this.resourceGroups[0].items = this.resourceGroups[0].items.map((item: Item) => {
-            item.disabled = (item.value === this.resource01Selected || item.value === this.resource02Selected ||
-                item.value === this.resource03Selected || item.value === this.resource04Selected);
+            item.disabled = this.resourcesSelected.includes(item.value);
             return item
         })
 
         this.resourceGroups[1].items = this.resourceGroups[1].items.filter((item: Item) => {
-            item.disabled = (item.value === this.resource01Selected || item.value === this.resource02Selected ||
-                item.value === this.resource03Selected || item.value === this.resource04Selected);
+            item.disabled = this.resourcesSelected.includes(item.value);
             return item
         })
     }
@@ -142,6 +137,11 @@ export class CorrelationMeasurementsComponent implements OnInit {
     applyFilter(event: any) {
         this.filter = event;
         this.filterForMeasurement = this.formatterFilter();
+    }
+
+    add(): void {
+        this.resourcesSelected.push(undefined);
+        this.resourcesOptions.push('hidden');
     }
 
     formatterFilter(): SearchForPeriod {
@@ -159,8 +159,30 @@ export class CorrelationMeasurementsComponent implements OnInit {
         return this.filter
     }
 
-    openSelectGraph(event): void {
-        this[event].open();
+    openSelectGraph(indexSelected: number): void {
+        this.selectGraphs.forEach((element, index) => {
+            if (index === indexSelected) {
+                element.open();
+            }
+        })
+    }
+
+    removeGraph(indexSelected: number): void {
+        this.resourcesSelected = this.resourcesSelected.filter((element, index) => {
+            return indexSelected !== index;
+        });
+    }
+
+    showOptions(indexSelected: number): void {
+        this.resourcesOptions = this.resourcesOptions.map((element, index) => {
+            return index === indexSelected ? 'show' : element;
+        })
+    }
+
+    hiddenOptions(indexSelected: number): void {
+        this.resourcesOptions = this.resourcesOptions.map((element, index) => {
+            return index === indexSelected ? 'hidden' : element;
+        })
     }
 
 
