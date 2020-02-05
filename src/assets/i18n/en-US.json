@@ -821,7 +821,8 @@
     "MY-MEASUREMENTS": "My Measurements",
     "MY-QUESTIONNAIRES": "My Questionnaires",
     "EXPAND-MENU": "Expand menu...",
-    "SHRINK-MENU": "Shrink menu..."
+    "SHRINK-MENU": "Shrink menu...",
+    "CORRELATE": "Relate charts"
   },
   "SHARED": {
     "NAME": "Name",

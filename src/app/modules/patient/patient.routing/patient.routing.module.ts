@@ -72,7 +72,7 @@ const routes = [
         data: { scope: 'patients:read forms:read' }
     },
     {
-        path: ':patientId/correlation',
+        path: ':patientId/correlate',
         component: CorrelationMeasurementsComponent,
         data: { scope: 'patients:read' }
     },

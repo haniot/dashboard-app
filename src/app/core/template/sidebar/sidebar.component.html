@@ -114,13 +114,14 @@
                     {{'SHARED.PATIENTS' | translate}}
                     <i class="material-icons">face</i>
                     <i id="arrowMenuPatient" class="material-icons float-right" (click)="changeIconMenuPatient()"
-                       [title]="iconPatientMenu==='keyboard_arrow_down'?('SIDEBAR.EXPAND-MENU'|translate):('SIDEBAR.SHRINK-MENU'|translate)" *ngIf="patientSelected">{{iconPatientMenu}}</i>
+                       [title]="iconPatientMenu==='keyboard_arrow_down'?('SIDEBAR.EXPAND-MENU'|translate):('SIDEBAR.SHRINK-MENU'|translate)"
+                       *ngIf="patientSelected">{{iconPatientMenu}}</i>
                 </p>
 
             </a>
             <ul class="collapse list-unstyled submenu" [ngClass]="statePatientMenu"
                 id="patientSubmenu">
-                <li class="nav-subitem" [ngClass]="activeDashboardPatients" [ngClass]="activeDashboardPatients">
+                <li class="nav-subitem" [ngClass]="activeDashboardPatients">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'dashboard']">
                         <i class="material-icons">view_quilt</i>
                         <p>{{'SIDEBAR.DASHBOARD'|translate}}</p>
@@ -132,10 +133,10 @@
                         <p>{{'SIDEBAR.MEASUREMENTS'|translate}}</p>
                     </a>
                 </li>
-                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients">
-                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'correlation']">
-                        <i class="material-icons">equalizer</i>
-                        <p>Correlacionar</p>
+                <li class="nav-subitem" [ngClass]="activeCorrelatePatients">
+                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'correlate']">
+                        <i class="material-icons">web</i>
+                        <p>{{'SIDEBAR.CORRELATE'|translate}}</p>
                     </a>
                 </li>
                 <li class="nav-subitem" [ngClass]="activeQuestionnairesPatients">

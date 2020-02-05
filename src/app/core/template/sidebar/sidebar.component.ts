@@ -68,6 +68,7 @@ export class SidebarComponent implements OnInit {
     activePatients: string;
     activeDashboardPatients: string;
     activeMeasurementsPatients: string;
+    activeCorrelatePatients: string;
     activeQuestionnairesPatients: string;
     activeEvaluations: string;
     study: PilotStudy;
@@ -176,6 +177,7 @@ export class SidebarComponent implements OnInit {
             (path_current.match('measurements\$|' + regex + '\$'))
         ) ? 'active' : '';
         this.activeQuestionnairesPatients = (path_current.match('patients') && path_current.match('questionnaires\$')) ? 'active' : '';
+        this.activeCorrelatePatients = (path_current.match('patients') && path_current.match('correlate\$')) ? 'active' : '';
     }
 
     myPilotStudies(): void {
