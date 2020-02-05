@@ -488,10 +488,10 @@
   "MEASUREMENTS": {
     "TITLE": "Medições",
     "BLOOD-GLUCOSE": {
-      "TITLE": "Glicose no sangue",
+      "TITLE": "Glicemia capilar",
       "SUBTITLE": "",
       "PERIOD": "Período da medição",
-      "GLUCOSE": "Glicose",
+      "GLUCOSE": "Glicemia capilar",
       "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
       "HYPOGLYCEMIA": "Hipoglicemia",
       "NORMAL": "Normal",
@@ -556,7 +556,7 @@
       "FAT-UNIT": "%",
       "WAIST-CIRCUMFERENCE": "Circunferência da cintura",
       "TEMPERATURE": "Temperatura corporal",
-      "GLUCOSE": "Glicose no sangue",
+      "GLUCOSE": "Glicemia capilar",
       "PRESSURE": "Pressão sanguínea",
       "HEART-RATE": "Frequência cardíaca"
     },
@@ -574,7 +574,7 @@
         "FAT": "Gordura Corporal",
         "WAIST-CIRCUMFERENCE": "Circunferência da Cintura",
         "BODY-TEMPERATURE": "Temperatura Corporal",
-        "BLOOD-GLUCOSE": "Glicose",
+        "BLOOD-GLUCOSE": "Glicemia Capilar",
         "BLOOD-PRESSURE": "Pressão Arterial"
       },
       "UNDEFINED": "Fora dos parâmetros",

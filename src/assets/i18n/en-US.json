@@ -488,9 +488,9 @@
   "MEASUREMENTS": {
     "TITLE": "Measurements",
     "BLOOD-GLUCOSE": {
-      "TITLE": "Blood glucose",
+      "TITLE": "Capillary Blood Glucose",
       "SUBTITLE": "",
-      "GLUCOSE": "Glucose",
+      "GLUCOSE": "Capillary blood glucose",
       "PERIOD": "Measurement period",
       "UNAVAILABLE-DATA": "No record of glucose enrolled!",
       "HYPOGLYCEMIA": "Hypoglycemia",
@@ -556,7 +556,7 @@
       "FAT-UNIT": "%",
       "WAIST-CIRCUMFERENCE": "Waist circumference",
       "TEMPERATURE": "Body temperature",
-      "GLUCOSE": "Blood Glucose",
+      "GLUCOSE": "Capillary Blood Glucose",
       "PRESSURE": "Blood pressure",
       "HEART-RATE": "Heart rate"
     },
@@ -574,7 +574,7 @@
         "FAT": "Body Fat",
         "WAIST-CIRCUMFERENCE": "Waist Circumference",
         "BODY-TEMPERATURE": "Body Temperature",
-        "BLOOD-GLUCOSE": "Glucose",
+        "BLOOD-GLUCOSE": "Capillary Blood Glucose",
         "BLOOD-PRESSURE": "Blood Pressure"
       },
       "UNDEFINED": "Out of parameters",
