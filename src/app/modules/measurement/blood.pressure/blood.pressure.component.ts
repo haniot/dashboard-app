@@ -484,13 +484,15 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     }
 
     setMax(index, max): void {
-        for (let i = 3; i <= 9; i++) {
-            if (i === index) {
-                this.options.series[i].data.push({ value: max });
-            } else {
-                this.options.series[i].data.push({ value: 0 });
-            }
+        if (this.options && this.options.series) {
+            for (let i = 3; i <= 9; i++) {
+                if (i === index) {
+                    this.options.series[i].data.push({ value: max });
+                } else {
+                    this.options.series[i].data.push({ value: 0 });
+                }
 
+            }
         }
     }
 
