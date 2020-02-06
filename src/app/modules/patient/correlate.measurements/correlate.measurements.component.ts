@@ -57,6 +57,7 @@ export class CorrelateMeasurementsComponent implements OnInit {
     @ViewChildren('selectGraph') selectGraphs: QueryList<any>;
     @Input() configVisibility: ConfigVisibility;
     @Input() patientId;
+    intraday: boolean;
     EnumMeasurementType = EnumMeasurementType;
     TimeSeriesType = TimeSeriesType;
     filter: TimeSeriesIntervalFilter;
@@ -80,6 +81,7 @@ export class CorrelateMeasurementsComponent implements OnInit {
         this.filter.interval = '15m';
         this.resourcesSelected = new Array(1);
         this.resourcesOptions = ['hidden'];
+        this.intraday = true;
     }
 
     ngOnInit(): void {
@@ -129,6 +131,7 @@ export class CorrelateMeasurementsComponent implements OnInit {
     }
 
     applyFilter(event: any) {
+        this.intraday = event.type === 'today';
         this.filter = event;
     }
 

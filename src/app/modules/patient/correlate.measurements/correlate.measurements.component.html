@@ -46,41 +46,48 @@
                                         *ngIf="resourcesSelected[i]===EnumMeasurementType.weight"
                                         [filterVisibility]="false"
                                         [patientId]="patientId" [onlyGraph]="true"
+                                        [intraday]="intraday"
                                         [filter]="filter"></weight>
 
                                 <waist-circunference class="fadeIn graphSelected"
                                                      *ngIf="resourcesSelected[i]===EnumMeasurementType.waist_circumference"
                                                      [filterVisibility]="false"
                                                      [patientId]="patientId" [onlyGraph]="true"
+                                                     [intraday]="intraday"
                                                      [filter]="filter"></waist-circunference>
 
                                 <height class="fadeIn graphSelected"
                                         *ngIf="resourcesSelected[i]===EnumMeasurementType.height"
                                         [filterVisibility]="false"
                                         [patientId]="patientId" [onlyGraph]="true"
+                                        [intraday]="intraday"
                                         [filter]="filter"></height>
 
                                 <fat class="fadeIn graphSelected"
                                      *ngIf="resourcesSelected[i]===EnumMeasurementType.body_fat"
                                      [filterVisibility]="false"
+                                     [intraday]="intraday"
                                      [patientId]="patientId" [onlyGraph]="true" [filter]="filter"></fat>
 
                                 <body-temperature class="fadeIn graphSelected"
                                                   *ngIf="resourcesSelected[i]===EnumMeasurementType.body_temperature"
                                                   [filterVisibility]="false"
                                                   [patientId]="patientId" [onlyGraph]="true"
+                                                  [intraday]="intraday"
                                                   [filter]="filter"></body-temperature>
 
                                 <blood-pressure class="fadeIn graphSelected"
                                                 *ngIf="resourcesSelected[i]===EnumMeasurementType.blood_pressure"
                                                 [filterVisibility]="false"
                                                 [patientId]="patientId" [onlyGraph]="true"
+                                                [intraday]="intraday"
                                                 [filter]="filter"></blood-pressure>
 
                                 <blood-glucose class="fadeIn graphSelected"
                                                *ngIf="resourcesSelected[i]===EnumMeasurementType.blood_glucose"
                                                [filterVisibility]="false"
                                                [patientId]="patientId" [onlyGraph]="true"
+                                               [intraday]="intraday"
                                                [filter]="filter"></blood-glucose>
 
                                 <calories class="fadeIn graphSelected"

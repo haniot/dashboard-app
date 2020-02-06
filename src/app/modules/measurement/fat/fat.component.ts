@@ -28,6 +28,7 @@ export class FatComponent implements OnInit, OnChanges {
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     @Input() onlyGraph: boolean;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
@@ -137,7 +138,8 @@ export class FatComponent implements OnInit, OnChanges {
                 value: element.value,
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
-            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            xAxis.data.push(this.datePipe.transform(element.timestamp, format));
         });
 
         const yAxisMargin = this.onlyGraph ? -40 : 8;
@@ -172,7 +174,7 @@ export class FatComponent implements OnInit, OnChanges {
         };
     }
 
-    applyFilter(filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter) {
+    applyFilter(filter: any) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, filter)
             .then(httpResponse => {
@@ -199,7 +201,8 @@ export class FatComponent implements OnInit, OnChanges {
                 value: element.value,
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
-            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
         });
 
         this.echartsInstance.setOption(this.options);
@@ -289,7 +292,12 @@ export class FatComponent implements OnInit, OnChanges {
         if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
             && changes.filter.currentValue !== changes.filter.previousValue) ||
             (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
-            this.applyFilter(this.filter);
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

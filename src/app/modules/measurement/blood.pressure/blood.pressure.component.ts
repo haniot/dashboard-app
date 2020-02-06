@@ -30,6 +30,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     @Input() onlyGraph: boolean;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
     lastData: BloodPressure;
     options: any;
     echartsInstance: any;
@@ -330,8 +331,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
         this.dataForGraph.forEach((element: BloodPressure) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
-
-            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             const result = this.classificate(element);
             series[0].data.push({
                 value: element.systolic,
@@ -409,7 +410,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         };
     }
 
-    applyFilter(filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter) {
+    applyFilter(filter: any) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_pressure, null, null, filter)
             .then(httpResponse => {
@@ -444,7 +445,8 @@ export class BloodPressureComponent implements OnInit, OnChanges {
 
         measurements.forEach((element: BloodPressure, i) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
-            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             const result = this.classificate(element);
 
             this.options.series[0].data.push({
@@ -624,7 +626,12 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
             && changes.filter.currentValue !== changes.filter.previousValue) ||
             (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
-            this.applyFilter(this.filter);
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

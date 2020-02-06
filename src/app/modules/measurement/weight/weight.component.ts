@@ -30,6 +30,7 @@ export class WeightComponent implements OnInit, OnChanges {
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
     logsIsEmpty: boolean;
     lastData: Weight;
     weightGraph: any;
@@ -75,7 +76,7 @@ export class WeightComponent implements OnInit, OnChanges {
         }
     }
 
-    applyFilter(filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter) {
+    applyFilter(filter: any) {
         this.showSpinner = true;
         this.dataForGraph = [];
         this.measurementService
@@ -170,13 +171,18 @@ export class WeightComponent implements OnInit, OnChanges {
         };
 
         this.dataForGraph.forEach((element: Weight) => {
-            xAxisWeight.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            xAxisWeight.data.push(this.datePipe.transform(element.timestamp, format));
             seriesWeight.data.push({
                 value: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
             if (element.body_fat) {
-                xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+                if (this.intraday) {
+                    xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'mediumTime'));
+                } else {
+                    xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+                }
                 seriesFat.data.push({
                     value: this.decimalPipe.transform(element.body_fat),
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
@@ -287,7 +293,8 @@ export class WeightComponent implements OnInit, OnChanges {
         this.weightGraph.series[1].data = [];
 
         measurements.forEach((element: Weight) => {
-            this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             this.weightGraph.series[0].data.push({
                 value: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
@@ -313,7 +320,6 @@ export class WeightComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes)
         if ((changes.dataForGraph && changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
@@ -322,7 +328,12 @@ export class WeightComponent implements OnInit, OnChanges {
         if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
             && changes.filter.currentValue !== changes.filter.previousValue) ||
             (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
-            this.applyFilter(this.filter);
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

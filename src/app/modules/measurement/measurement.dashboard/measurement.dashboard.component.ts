@@ -160,7 +160,6 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
             .catch(err => {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-SAVED'));
                 this.savingMeasurement = false;
-                console.log(err)
             })
     }
 
@@ -172,9 +171,8 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
                 this.loading = false;
                 this.bmi = (this.measurementLast.weight.value * 10000) / Math.pow(this.measurementLast.height.value, 2);
             })
-            .catch(err => {
+            .catch(() => {
                 this.loading = false;
-                console.log(err)
             })
     }
 
@@ -186,9 +184,10 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
         this.timeSeriesService.getWithResourceAndInterval(this.patientId, TimeSeriesType.heart_rate, filter)
             .then(heartRate => {
                 this.heartRate = heartRate
+                this.loadingHeartRate = false;
             })
-            .catch(err => {
-                console.log(err);
+            .catch(() => {
+                this.loadingHeartRate = false;
             })
     }
 

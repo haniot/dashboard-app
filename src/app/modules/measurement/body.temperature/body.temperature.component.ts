@@ -31,6 +31,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     @Input() onlyGraph: boolean;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
@@ -139,7 +140,8 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         };
 
         this.dataForGraph.forEach((element: Measurement) => {
-            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             series.data.push({
                 value: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
@@ -208,7 +210,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         };
     }
 
-    applyFilter(filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter) {
+    applyFilter(filter: any) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_temperature, null, null, filter)
             .then(httpResponse => {
@@ -232,7 +234,8 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.options.series.data = [];
 
         measurements.forEach((element: Weight) => {
-            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             this.options.series.data.push({
                 value: element.value,
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
@@ -325,7 +328,12 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
             && changes.filter.currentValue !== changes.filter.previousValue) ||
             (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
-            this.applyFilter(this.filter);
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

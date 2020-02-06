@@ -30,6 +30,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     @Input() onlyGraph: boolean;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
     lastData: BloodGlucose;
     options: any;
     echartsInstance: any;
@@ -295,7 +296,8 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
         this.dataForGraph.forEach((element: BloodGlucose, index) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
-            const newDate = this.datePipe.transform(element.timestamp, 'short');
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            const newDate = this.datePipe.transform(element.timestamp, format);
             const findDate = xAxis.data.find(currentDate => {
                 return currentDate === newDate
             })
@@ -383,7 +385,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         };
     }
 
-    applyFilter(filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter) {
+    applyFilter(filter: any) {
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, filter)
             .then(httpResponse => {
@@ -428,7 +430,8 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
         measurements.forEach((element: BloodGlucose, index) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
-            const newDate = this.datePipe.transform(element.timestamp, 'shortDate');
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            const newDate = this.datePipe.transform(element.timestamp, format);
             const findDate = this.options.xAxis.data.find(currentDate => {
                 return currentDate === newDate
             })
@@ -559,7 +562,12 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
             && changes.filter.currentValue !== changes.filter.previousValue) ||
             (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
-            this.applyFilter(this.filter);
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();
