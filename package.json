@@ -54,6 +54,7 @@
     "ng5-slider": "^1.2.4",
     "ngx-echarts": "^4.2.2",
     "ngx-gauge": "^1.0.0-beta.11",
+    "ngx-mat-datetime-picker": "^1.0.2",
     "ngx-toastr": "^10.0.4",
     "node-sass": "^4.13.1",
     "perfect-scrollbar": "^1.5.0",

@@ -1,5 +1,5 @@
 import { enableProdMode, LOCALE_ID, NgModule } from '@angular/core';
-
+import { MAT_DATE_LOCALE } from '@angular/material/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { CommonModule, DecimalPipe, registerLocaleData } from '@angular/common';
@@ -23,7 +23,7 @@ import { SelectPilotStudyService } from './shared/shared.components/select.pilot
 import { environment } from '../environments/environment';
 import { LanguagesConfiguration } from '../assets/i18n/config.js';
 import { DashboardService } from './modules/dashboard/services/dashboard.service';
-import { LocalStorageService } from './shared/shared.services/local.storage.service'
+import { LocalStorageService } from './shared/shared.services/local.storage.service';
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -80,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppComponent
     ],
     providers: [
+        { provide: MAT_DATE_LOCALE, useClass: DynamicLocaleId, deps: [TranslateService] },
         { provide: LOCALE_ID, useClass: DynamicLocaleId, deps: [TranslateService] },
         { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
         SelectPilotStudyService,

@@ -1,8 +1,15 @@
 import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import * as Muuri from 'muuri';
-import { EnumMeasurementType } from '../models/measurement'
+import { EnumMeasurementType, GenericMeasurement } from '../models/measurement'
 import { MeasurementService } from '../services/measurement.service'
 import { MeasurementLast } from '../models/measurement.last'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { MealType } from '../models/blood.glucose'
+import { ActivatedRoute } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
+import { TranslateService } from '@ngx-translate/core'
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 
 @Component({
     selector: 'measurement-dashboard',
@@ -11,22 +18,22 @@ import { MeasurementLast } from '../models/measurement.last'
 })
 export class MeasurementDashboardComponent implements OnInit, OnChanges {
     @Input() patientId: string;
+    measurementForm: FormGroup;
     EnumMeasurementType = EnumMeasurementType;
+    measurementTypes: string[];
+    mealTypes: string[];
     measurementLast: MeasurementLast;
     gridDivRef: ElementRef;
     gridDivWidth: number;
     loading: boolean;
-    temperatureThreshold = {
-        '0': { color: '#1b3863' },
-        '35.7': { color: '#2d6357' },
-        '37.5': { color: 'red' }
-    };
     fatThreshold = {
         '0': { color: '#00a594' },
         '25': { color: '#FBA53E' },
         '30': { color: 'red' }
     };
     bmi: number;
+    nameOfPatientSelected: string;
+    savingMeasurement: boolean;
 
     @ViewChild('gridDiv', { static: false })
     set gridDiv(element: ElementRef) {
@@ -43,8 +50,16 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
         this.gridDivWidth = this.gridDivRef.nativeElement.offsetWidth;
     }
 
-    constructor(private measurementService: MeasurementService) {
-
+    constructor(
+        private fb: FormBuilder,
+        private activeRouter: ActivatedRoute,
+        private measurementService: MeasurementService,
+        private modalService: ModalService,
+        private toastService: ToastrService,
+        private translateService: TranslateService,
+        private localStorageService: LocalStorageService) {
+        this.measurementTypes = Object.keys(EnumMeasurementType);
+        this.mealTypes = Object.keys(MealType);
     }
 
     ngOnInit() {
@@ -63,6 +78,84 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
                 return [grid1]
             }
         });
+        this.activeRouter.paramMap.subscribe((params) => {
+            this.patientId = params.get('patientId');
+            this.createForm(EnumMeasurementType.weight);
+            this.getPatientSelected();
+        });
+    }
+
+    createForm(typeSelected?: any) {
+        if (typeSelected && typeSelected.target && typeSelected.target.value) {
+            typeSelected = typeSelected.target.value;
+        }
+        switch (typeSelected) {
+            case EnumMeasurementType.blood_pressure:
+                this.measurementForm = this.fb.group({
+                    systolic: [0, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+                    diastolic: [0, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+                    pulse: [0, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+                    unit: ['mmHg', Validators.required],
+                    type: [EnumMeasurementType.blood_pressure, Validators.required],
+                    timestamp: [new Date(), Validators.required]
+                });
+                break;
+
+            case EnumMeasurementType.weight:
+                this.measurementForm = this.fb.group({
+                    value: [0, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+                    body_fat: [undefined, Validators.pattern(/^\d+(\.\d{1,2})?$/)],
+                    unit: ['', Validators.required],
+                    type: [typeSelected, Validators.required],
+                    timestamp: [new Date(), Validators.required]
+                });
+                break;
+
+            case EnumMeasurementType.blood_glucose:
+                this.measurementForm = this.fb.group({
+                    value: [0, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+                    meal: [MealType, Validators.required],
+                    unit: ['', Validators.required],
+                    type: [typeSelected, Validators.required],
+                    timestamp: [new Date(), Validators.required]
+                });
+                break;
+
+            default:
+                this.measurementForm = this.fb.group({
+                    value: [0, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+                    unit: ['', Validators.required],
+                    type: [typeSelected, Validators.required],
+                    timestamp: [new Date(), Validators.required]
+                });
+                break;
+        }
+
+    }
+
+    getPatientSelected(): void {
+        const patientSelected = JSON.parse(this.localStorageService.getItem('patientSelected'));
+        if (patientSelected && patientSelected.name) {
+            this.nameOfPatientSelected = patientSelected.name
+        }
+    }
+
+    saveMeasurement(): void {
+        this.savingMeasurement = true;
+        const measurement = this.measurementForm.getRawValue();
+        measurement.timestamp = measurement.timestamp.toISOString();
+        this.measurementService.create(this.patientId, measurement)
+            .then(() => {
+                this.loadMeasurements();
+                this.measurementForm.reset();
+                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-SAVED'));
+                this.savingMeasurement = false;
+            })
+            .catch(err => {
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.MEASUREMENT-NOT-SAVED'));
+                this.savingMeasurement = false;
+                console.log(err)
+            })
     }
 
     loadMeasurements(): void {
@@ -77,6 +170,15 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
                 this.loading = false;
                 console.log(err)
             })
+    }
+
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
+    }
+
+    closeModalNewMeasurement(): void {
+        this.createForm(EnumMeasurementType.weight);
+        this.modalService.close('newMeasurement');
     }
 
     ngOnChanges(changes: SimpleChanges): void {

@@ -72,7 +72,7 @@ export class SidebarComponent implements OnInit {
     activeQuestionnairesPatients: string;
     activeEvaluations: string;
     study: PilotStudy;
-    iconCollapse = 'keyboard_arrow_down';
+    iconCollapse = 'keyboard_arrow_up';
     userLogged: GenericUser;
     loadUserTime: any
     iconPatientMenu = 'keyboard_arrow_right';

@@ -268,4 +268,236 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <button type="button" class="btn btn-haniot-primary btn-sm" (click)="openModalNewMeasurement()">
+                <i class="material-icons" style="color: white">add</i>
+                {{'MEASUREMENTS.BUTTON-ADD'|translate}}
+            </button>
+        </div>
+    </div>
+
 </div>
+
+<haniot-modal [modalId]="'newMeasurement'" [styleDialog]="savingMeasurement?'modal-sm':'modal-dialog'">
+    <div class="modal-content">
+        <div class="modal-header" *ngIf="!savingMeasurement">
+            <h5 class="modal-title">{{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.TITLE'|translate}}</h5>
+            <button type="button" class="close" aria-label="Close" (click)="closeModalNewMeasurement()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row justify-content-center" *ngIf="!savingMeasurement">
+
+                    <div class="col-12">
+                        <form [formGroup]="measurementForm" id="newMeasurmentForm">
+
+                            <div class="row">
+
+                                <div class="form-group has-feedback col-6"
+                                     [ngClass]="{'has-success': measurementForm.controls.type.valid,
+            'has-error': measurementForm.controls.type.invalid && (measurementForm.controls.type.touched || measurementForm.controls.type.dirty)}">
+                                    <label for="type">{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.MEASUREMENT-TYPE'|translate}}:</label>
+                                    <select class="form-control form-control-sm" formControlName="type" name="type" id="type" (change)="createForm($event)">
+                                        <option *ngFor="let measurement of measurementTypes; index as i" [value]="measurement">{{ measurement|measurementType|translate }}</option>
+                                    </select>
+
+                                    <span *ngIf="measurementForm.controls.type.valid" class="glyphicon glyphicon-ok form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span
+                                            *ngIf="measurementForm.controls.type.invalid && (measurementForm.controls.type.touched || measurementForm.controls.type.dirty)">
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        <span class="text-danger">{{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.INVALID-TYPE'|translate}}</span>
+                    </span>
+                                </div>
+
+                                <div class="form-group has-feedback col-6"
+                                     [ngClass]="{'has-success': measurementForm.controls.timestamp.valid,
+            'has-error': measurementForm.controls.timestamp.invalid && (measurementForm.controls.timestamp.touched || measurementForm.controls.timestamp.dirty)}">
+                                    <label>
+                                        {{'SHARED.DATE'|translate}}:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <input class="form-control form-control-sm" matInput [ngxMatDatetimePicker]="pickerBirthDate"
+                                                   formControlName="timestamp" name="timestamp"
+                                                   (focus)="pickerBirthDate.open()">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <mat-datepicker-toggle matSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
+                                            <ngx-mat-datetime-picker #pickerBirthDate></ngx-mat-datetime-picker>
+                                        </div>
+                                    </div>
+                                    <span *ngIf="measurementForm.controls.timestamp.valid"
+                                          class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                    <span
+                                            *ngIf="measurementForm.controls.timestamp.invalid && (measurementForm.controls.timestamp.touched || measurementForm.controls.timestamp.dirty)">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'SHARED.INVALID-BIRTH-DATE'|translate}}.</span>
+                                </span>
+                                </div>
+
+                                <div class="form-group has-feedback col-6" *ngIf="measurementForm.get('type').value !== EnumMeasurementType.blood_pressure"
+                                     [ngClass]="{'has-success': measurementForm.controls.value.valid,
+              'has-error': measurementForm.controls.value.invalid && (measurementForm.controls.value.touched || measurementForm.controls.value.dirty)}">
+                                    <label for="value">
+                                        {{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.VALUE'|translate}}:
+                                    </label>
+                                    <input class="form-control form-control-sm" type="number" formControlName="value" id="value">
+                                    <span *ngIf="measurementForm.controls.value.valid"
+                                          class="glyphicon glyphicon-ok form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span
+                                            *ngIf="measurementForm.controls.value.invalid && (measurementForm.controls.value.touched || measurementForm.controls.value.dirty)">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.INVALID-VALUE'|translate}}</span>
+                                </span>
+                                </div>
+
+                                <div class="form-group has-feedback col-6" *ngIf="measurementForm.get('type').value === EnumMeasurementType.blood_pressure"
+                                     [ngClass]="{'has-success': measurementForm.controls.systolic.valid,
+              'has-error': measurementForm.controls.systolic.invalid && (measurementForm.controls.systolic.touched || measurementForm.controls.systolic.dirty)}">
+                                    <label for="systolic">
+                                        {{'MEASUREMENTS.BLOOD-PRESSURE.SYSTOLIC'|translate}}:
+                                    </label>
+                                    <input class="form-control form-control-sm" type="number" formControlName="systolic" id="systolic">
+                                    <span style="position: absolute; right: 35px; bottom: 15px;color: #c3c3c3">{{measurementForm.get('unit').value}}</span>
+                                    <span *ngIf="measurementForm.controls.systolic.valid"
+                                          class="glyphicon glyphicon-ok form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span
+                                            *ngIf="measurementForm.controls.systolic.invalid && (measurementForm.controls.systolic.touched || measurementForm.controls.systolic.dirty)">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.INVALID-VALUE'|translate}}</span>
+                                </span>
+                                </div>
+
+                                <div class="form-group has-feedback col-6" *ngIf="measurementForm.get('type').value === EnumMeasurementType.blood_pressure"
+                                     [ngClass]="{'has-success': measurementForm.controls.diastolic.valid,
+              'has-error': measurementForm.controls.diastolic.invalid && (measurementForm.controls.diastolic.touched || measurementForm.controls.diastolic.dirty)}">
+                                    <label for="diastolic">
+                                        {{'MEASUREMENTS.BLOOD-PRESSURE.DIASTOLIC'|translate}}:
+                                    </label>
+                                    <input class="form-control form-control-sm" type="number" formControlName="diastolic" id="diastolic">
+                                    <span style="position: absolute; right: 35px; bottom: 15px;color: #c3c3c3">{{measurementForm.get('unit').value}}</span>
+                                    <span *ngIf="measurementForm.controls.diastolic.valid"
+                                          class="glyphicon glyphicon-ok form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span
+                                            *ngIf="measurementForm.controls.diastolic.invalid && (measurementForm.controls.diastolic.touched || measurementForm.controls.diastolic.dirty)">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.INVALID-VALUE'|translate}}</span>
+                                </span>
+                                </div>
+
+                                <div class="form-group has-feedback col-6"
+                                     [ngClass]="{'has-success': measurementForm.controls.unit.valid,
+              'has-error': measurementForm.controls.unit.invalid && (measurementForm.controls.unit.touched || measurementForm.controls.unit.dirty)}">
+                                    <label for="unit">
+                                        {{'MEASUREMENTS.UNIT'|translate}}:
+                                    </label>
+                                    <input class="form-control form-control-sm" type="text" formControlName="unit"
+                                           id="unit">
+                                    <span *ngIf="measurementForm.controls.unit.valid"
+                                          class="glyphicon glyphicon-ok form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span
+                                            *ngIf="measurementForm.controls.unit.invalid && (measurementForm.controls.unit.touched || measurementForm.controls.unit.dirty)">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.INVALID-VALUE'|translate}}</span>
+                                </span>
+                                </div>
+
+                                <div class="form-group has-feedback col-6" *ngIf="measurementForm.get('type').value === EnumMeasurementType.blood_pressure"
+                                     [ngClass]="{'has-success': measurementForm.controls.pulse.valid,
+              'has-error': measurementForm.controls.pulse.invalid && (measurementForm.controls.pulse.touched || measurementForm.controls.pulse.dirty)}">
+                                    <label for="pulse">
+                                        {{'MEASUREMENTS.BLOOD-PRESSURE.PULSE'|translate}}:
+                                    </label>
+                                    <input class="form-control form-control-sm" type="number" formControlName="pulse" id="pulse">
+                                    <span style="position: absolute; right: 35px; bottom: 15px;color: #c3c3c3">rpm</span>
+                                    <span *ngIf="measurementForm.controls.pulse.valid"
+                                          class="glyphicon glyphicon-ok form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span
+                                            *ngIf="measurementForm.controls.pulse.invalid && (measurementForm.controls.pulse.touched || measurementForm.controls.pulse.dirty)">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.INVALID-VALUE'|translate}}</span>
+                                </span>
+                                </div>
+
+                                <div class="form-group has-feedback col-12" *ngIf="measurementForm.get('type').value === EnumMeasurementType.blood_glucose"
+                                     [ngClass]="{'has-success': measurementForm.controls.meal.valid,
+              'has-error': measurementForm.controls.meal.invalid && (measurementForm.controls.meal.touched || measurementForm.controls.meal.dirty)}">
+                                    <label for="meal">
+                                        {{'EVALUATION.CARD-NUTRITION.TYPE-OF-MEAL'|translate}}:
+                                    </label>
+                                    <select class="form-control form-control-sm" formControlName="meal" name="meal" id="meal">
+                                        <option *ngFor="let meal of mealTypes; index as i" [value]="meal">{{ meal|meal|translate }}</option>
+                                    </select>
+
+                                    <span *ngIf="measurementForm.controls.meal.valid"
+                                          class="glyphicon glyphicon-ok form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span
+                                            *ngIf="measurementForm.controls.meal.invalid && (measurementForm.controls.meal.touched || measurementForm.controls.meal.dirty)">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.INVALID-VALUE'|translate}}</span>
+                                </span>
+                                </div>
+
+                                <div class="form-group has-feedback col-12" *ngIf="measurementForm.get('type').value === EnumMeasurementType.weight"
+                                     [ngClass]="{'has-success': measurementForm.controls.body_fat.valid,
+              'has-error': measurementForm.controls.body_fat.invalid && (measurementForm.controls.body_fat.touched || measurementForm.controls.body_fat.dirty)}">
+                                    <label for="body_fat">
+                                        {{'MEASUREMENTS.FAT.TITLE'|translate}}:
+                                    </label>
+                                    <input class="form-control form-control-sm" type="number" formControlName="body_fat" id="body_fat">
+                                    <span style="position: absolute; right: 35px; bottom: 15px;color: #c3c3c3">%</span>
+                                    <span *ngIf="measurementForm.controls.body_fat.valid"
+                                          class="glyphicon glyphicon-ok form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span
+                                            *ngIf="measurementForm.controls.body_fat.invalid && (measurementForm.controls.body_fat.touched || measurementForm.controls.body_fat.dirty)">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'MEASUREMENTS.MODAL-NEW-MEASUREMENT.INVALID-VALUE'|translate}}</span>
+                                </span>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+                <div class="row justify-content-center" *ngIf="savingMeasurement">
+                    <spinner [message]="'MEASUREMENTS.MODAL-NEW-MEASUREMENT.SPINNER-MESSAGE'|translate"></spinner>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" *ngIf="!savingMeasurement">
+                    <div class="d-flex justify-content-between" style="width: 100%">
+                        <div class="p-2">
+                            <button type="button" class="btn btn-haniot-secondary btn-sm" (click)="closeModalNewMeasurement()">
+                                {{'SHARED.CANCEL'|translate}}
+                            </button>
+                        </div>
+                        <div class="p-2">
+                            <button type="button" class="btn btn-haniot-primary btn-sm" [disabled]="!measurementForm.valid" (click)="saveMeasurement()">
+                                {{'SHARED.SAVE'|translate}}
+                            </button>
+                        </div>
+                    </div>
+        </div>
+    </div>
+</haniot-modal>

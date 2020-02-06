@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -69,9 +69,6 @@ import { CorrelateMeasurementsComponent } from './correlate.measurements/correla
         MeasurementModule,
         ActivityModule,
         SettingsModule
-    ],
-    providers: [
-        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
     ],
     exports: [
         PatientTableComponent,

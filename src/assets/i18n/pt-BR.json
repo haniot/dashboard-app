@@ -626,6 +626,14 @@
         "CONFIRM-MULTIPLE-REMOVE-PART2": "medição(es)?"
       }
     },
+    "MODAL-NEW-MEASUREMENT": {
+      "TITLE": "Adicionar medição",
+      "INVALID-TYPE": "Tipo inválido",
+      "VALUE": "Valor",
+      "INVALID-VALUE": "Valor inválido",
+      "SPINNER-MESSAGE": "Salvando medição..."
+    },
+    "BUTTON-ADD": "Medição Manual",
     "LAST-REGISTER": "Último registro",
     "LAST-REGISTER-DATE": "Data do último registro",
     "PATTERN-DATE": "dia/mês/ano horário",
@@ -1048,6 +1056,8 @@
     "NOT-CHANGE-LANGUAGE": "Não foi possível alterar o idioma!",
     "QUESTIONNAIRE-DELETED": "Questionário removido com sucesso!",
     "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!",
+    "MEASUREMENT-SAVED": "Medição salva com sucesso!",
+    "MEASUREMENT-NOT-SAVED": "Não foi possível salvar medição!",
     "MEASUREMENT-REMOVED": "Medição removida com sucesso!",
     "MEASUREMENT-NOT-REMOVED": "Não foi possível remover medição!",
     "ACCOUNT-NOT-DELETED": "Não foi possível excluir conta, tente novamente!",

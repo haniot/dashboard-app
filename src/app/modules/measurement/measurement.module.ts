@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
@@ -36,6 +36,7 @@ import { ViewMeasurementsComponent } from './view.measurements/view.measurements
 import { MeasurementDashboardComponent } from './measurement.dashboard/measurement.dashboard.component';
 import { NgxGaugeModule } from 'ngx-gauge'
 import { MatSelectModule } from '@angular/material/select'
+import { NgxMatDatetimePickerModule } from 'ngx-mat-datetime-picker'
 
 @NgModule({
     declarations: [
@@ -72,7 +73,9 @@ import { MatSelectModule } from '@angular/material/select'
         MatPaginatorModule,
         Ng5SliderModule,
         NgxGaugeModule,
-        MatSelectModule
+        MatSelectModule,
+        ReactiveFormsModule,
+        NgxMatDatetimePickerModule
     ],
     exports: [
         MeasurementLogsComponent,

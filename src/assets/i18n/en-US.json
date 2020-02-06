@@ -626,6 +626,14 @@
         "CONFIRM-MULTIPLE-REMOVE-PART2": "measurement(s)?"
       }
     },
+    "MODAL-NEW-MEASUREMENT": {
+      "TITLE": "Add measurement",
+      "INVALID-TYPE": "Invalid type",
+      "VALUE": "Value",
+      "INVALID-VALUE": "Invalid value",
+      "SPINNER-MESSAGE": "Saving measurement..."
+    },
+    "BUTTON-ADD": "Manual Measurement",
     "LAST-REGISTER": "Last register",
     "LAST-REGISTER-DATE": "Date of last record",
     "PATTERN-DATE": "month/day/year hour",
@@ -1048,6 +1056,8 @@
     "NOT-CHANGE-LANGUAGE": "Could not change language!",
     "QUESTIONNAIRE-DELETED": "Questionnaire successfully removed!",
     "QUESTIONNAIRE-NOT-DELETED": "Unable to remove questionnaire!",
+    "MEASUREMENT-SAVED": "Measurement saved successfully!",
+    "MEASUREMENT-NOT-SAVED": "Could not save measurement!",
     "MEASUREMENT-REMOVED": "Measurement successfully removed!",
     "MEASUREMENT-NOT-REMOVED": "Could not remove measurement!",
     "ACCOUNT-NOT-DELETED": "Unable to delete account, please try again!",
