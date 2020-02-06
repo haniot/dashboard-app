@@ -161,8 +161,8 @@ export class ActivityDetailsComponent implements OnInit {
                 .then(resource => {
                     this.loadHeartRateGraph(resource);
                 })
-                .catch(err => {
-                    console.log(err)
+                .catch(() => {
+
                 })
         }
     }

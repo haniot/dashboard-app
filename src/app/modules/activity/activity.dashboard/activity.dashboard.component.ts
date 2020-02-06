@@ -342,8 +342,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                         this.activityGraph.push(activityHearRateGraph);
 
                     })
-                    .catch(err => {
-                        console.log(err)
+                    .catch(() => {
+
                     })
             } else {
                 this.timeSeriesService.getByLink(activity.calories_link)
@@ -423,8 +423,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                         this.activityGraph.push(activityCalorieGraph);
 
                     })
-                    .catch(err => {
-                        console.log(err)
+                    .catch(() => {
+
                     })
             }
         })

@@ -119,8 +119,8 @@ export class ActivityListComponent implements OnInit {
             .then(totals => {
                 this.totals = totals;
             })
-            .catch(err => {
-                console.log(err)
+            .catch(() => {
+
             })
     }
 

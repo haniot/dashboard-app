@@ -104,8 +104,7 @@ export class SleepListComponent implements OnInit {
                 this.listForGraph.reverse();
                 this.loadGraph();
             })
-            .catch(err => {
-                console.log(err);
+            .catch(() => {
                 this.showSpinner = false;
             })
     }
