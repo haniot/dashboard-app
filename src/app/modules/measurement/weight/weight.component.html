@@ -129,7 +129,7 @@
                             {{(measurement.value | decimalFormatter) + '' + measurement.unit}}
                         </td>
                         <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.BODY-FAT'|translate">
-                            <span *ngIf="measurement.body_fat">{{measurement.body_fat + '' + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}</span>
+                            <span *ngIf="measurement.body_fat">{{(measurement.body_fat|decimalFormatter) + '' + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}</span>
                             <span *ngIf="!measurement.body_fat">{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.NOT-COLLECTED'|translate}}</span>
                         </td>
                         <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate">

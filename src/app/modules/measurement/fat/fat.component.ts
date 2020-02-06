@@ -175,6 +175,7 @@ export class FatComponent implements OnInit, OnChanges {
     }
 
     applyFilter(filter: any) {
+        this.intraday = filter['type'] && filter['type'] === 'today';
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, filter)
             .then(httpResponse => {

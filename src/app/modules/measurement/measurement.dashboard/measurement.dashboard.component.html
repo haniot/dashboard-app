@@ -13,15 +13,13 @@
                             <div class="p-2" style="display: flex; align-items: baseline">
                                 <img src="../../../../assets/img/weight.svg">
                                 <h2 class="p-2">
-                                    {{measurementLast.weight.value ? (measurementLast.weight.value|number:'1.0-0') : ' - - '}}
-                                    <small>{{this.measurementLast.weight.unit}}</small>
+                                    {{measurementLast.weight.value ? (measurementLast.weight.value|number:'1.0-0') : ' - - '}}<small>{{this.measurementLast.weight.unit}}</small>
                                 </h2>
                             </div>
                             <div class="p-2" style="display: flex; align-items: baseline">
                                 <img src="../../../../assets/img/fat.svg">
                                 <h2 class="p-2">
-                                    {{measurementLast.weight.body_fat ? (measurementLast.weight.body_fat|number:'1.0-0') : ' - - '}}
-                                    <small *ngIf="this.measurementLast.weight.body_fat">%</small>
+                                    {{measurementLast.weight.body_fat ? (measurementLast.weight.body_fat|number:'1.0-0') : ' - - '}}<small *ngIf="this.measurementLast.weight.body_fat">%</small>
                                 </h2>
                             </div>
                         </div>
@@ -73,8 +71,7 @@
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/height.svg">
                             <h2 class="p-2">
-                                {{measurementLast.height.value ? measurementLast.height.value : ' - - '}}
-                                <small>{{this.measurementLast.height.unit}}</small>
+                                {{measurementLast.height.value ? measurementLast.height.value : ' - - '}}<small>{{this.measurementLast.height.unit}}</small>
                             </h2>
                         </div>
                     </div>
@@ -105,8 +102,7 @@
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/waist-circumference.svg">
                             <h2 class="p-2">
-                                {{measurementLast.waist_circumference.value ? measurementLast.waist_circumference.value : ' - - '}}
-                                <small>{{measurementLast.waist_circumference.unit}}</small>
+                                {{measurementLast.waist_circumference.value ? measurementLast.waist_circumference.value : ' - - '}}<small>{{measurementLast.waist_circumference.unit}}</small>
                             </h2>
                         </div>
                         <!--                        <div class="card-content" *ngIf="!measurementLast.waist_circumference.value">-->
@@ -140,8 +136,7 @@
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/fat.svg">
                             <h2 class="p-2">
-                                {{measurementLast.body_fat.value ? (measurementLast.body_fat.value|number:'1.0-0') : ' - - '}}
-                                <small>{{measurementLast.body_fat.unit}}</small>
+                                {{measurementLast.body_fat.value ? (measurementLast.body_fat.value|number:'1.0-0') : ' - - '}}<small>{{measurementLast.body_fat.unit}}</small>
                             </h2>
                         </div>
                     </div>
@@ -176,8 +171,7 @@
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/temperature.svg">
                             <h2 class="p-2">
-                                {{measurementLast.body_temperature.value ? (measurementLast.body_temperature.value|number:'2.1-1') : ' - - '}}
-                                <small>{{measurementLast.body_temperature.unit}}</small>
+                                {{measurementLast.body_temperature.value ? (measurementLast.body_temperature.value|number:'2.1-1') : ' - - '}}<small>{{measurementLast.body_temperature.unit}}</small>
                             </h2>
                         </div>
                         <!--                        <ngx-gauge-->
@@ -227,16 +221,13 @@
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/blood-pressure.svg">
                             <h2 class="p-2" *ngIf="measurementLast.blood_pressure">
-                                {{measurementLast.blood_pressure.systolic ? (measurementLast.blood_pressure.systolic|number:'1.0-0') : ' - - '}}
-                                /{{measurementLast.blood_pressure.diastolic ? (measurementLast.blood_pressure.diastolic|number:'1.0-0') : ' - - '}}
-                                <small>{{measurementLast.blood_pressure.unit}}</small>
+                                {{measurementLast.blood_pressure.systolic ? (measurementLast.blood_pressure.systolic|number:'1.0-0') : ' - - '}}/{{measurementLast.blood_pressure.diastolic ? (measurementLast.blood_pressure.diastolic|number:'1.0-0') : ' - - '}}<small>{{measurementLast.blood_pressure.unit}}</small>
                             </h2>
                         </div>
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/pulse.svg">
                             <h2 class="p-2">
-                                {{measurementLast.blood_pressure.pulse ? (measurementLast.blood_pressure.pulse|number:'1.0-0') : ' - - '}}
-                                <small *ngIf="measurementLast.blood_pressure.pulse">bpm</small>
+                                {{measurementLast.blood_pressure.pulse ? (measurementLast.blood_pressure.pulse|number:'1.0-0') : ' - - '}}<small *ngIf="measurementLast.blood_pressure.pulse">bpm</small>
                             </h2>
                         </div>
                     </div>
@@ -267,8 +258,7 @@
                         <div class="p-2" style="display: flex; align-items: baseline">
                             <img src="../../../../assets/img/blood-glucose.svg">
                             <h2 class="p-2">
-                                {{measurementLast.blood_glucose.value ? (measurementLast.blood_glucose.value|number:'1.0-0') : ' - - '}}
-                                <small *ngIf="measurementLast.blood_glucose.value">{{measurementLast.blood_glucose.unit}}</small>
+                                {{measurementLast.blood_glucose.value ? (measurementLast.blood_glucose.value|number:'1.0-0') : ' - - '}}<small *ngIf="measurementLast.blood_glucose.value">{{measurementLast.blood_glucose.unit}}</small>
                             </h2>
                         </div>
                         <span class="badge badge-haniot"

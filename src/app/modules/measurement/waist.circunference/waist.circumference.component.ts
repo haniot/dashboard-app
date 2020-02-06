@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 import { EnumMeasurementType, Measurement } from '../models/measurement';
 import { TranslateService } from '@ngx-translate/core';
@@ -46,6 +46,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
+        private decimalPipe: DecimalPipe,
         private measurementService: MeasurementService,
         private translateService: TranslateService
     ) {
@@ -74,6 +75,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
     }
 
     applyFilter(filter: any) {
+        this.intraday = filter['type'] && filter['type'] === 'today';
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, filter)
             .then(httpResponse => {
@@ -154,6 +156,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
             xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             series.data.push({
                 value: element.value,
+                formatted: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
         });
@@ -165,7 +168,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
             color: ['#3398DB'],
             tooltip: {
                 formatter: function (params) {
-                    return `${circumference}: ${params[0].data.value}cm` +
+                    return `${circumference}: ${params[0].data.formatted}cm` +
                         `<br ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
                 },
                 trigger: 'axis',
@@ -206,6 +209,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
             this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             this.options.series.data.push({
                 value: element.value,
+                formatted: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
         });

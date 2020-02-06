@@ -386,6 +386,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     }
 
     applyFilter(filter: any) {
+        this.intraday = filter['type'] && filter['type'] === 'today';
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, filter)
             .then(httpResponse => {

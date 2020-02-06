@@ -12,7 +12,7 @@
                     </div>
                     <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>
                     <h3 class="card-title" *ngIf="lastData && lastData.value">
-                        {{lastData.value + '' + lastData.unit}}
+                        {{(lastData.value|decimalFormatter) + '' + lastData.unit}}
                     </h3>
                     <h3 class="card-title" *ngIf="!lastData || !lastData.value">
                         {{'MEASUREMENTS.VALUE'|translate}}
@@ -142,7 +142,7 @@
                 </div>
                 <p class="card-category">{{'MEASUREMENTS.LAST-REGISTER'|translate}}: </p>
                 <h3 class="card-title" *ngIf="lastData && lastData.value">
-                    {{lastData.value + '' + lastData.unit}}
+                    {{(lastData.value|decimalFormatter)+ '' + lastData.unit}}
                 </h3>
                 <h3 class="card-title" *ngIf="!lastData || !lastData.value">
                     {{'MEASUREMENTS.VALUE'|translate}}

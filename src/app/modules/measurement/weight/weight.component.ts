@@ -77,6 +77,7 @@ export class WeightComponent implements OnInit, OnChanges {
     }
 
     applyFilter(filter: any) {
+        this.intraday = filter['type'] && filter['type'] === 'today';
         this.showSpinner = true;
         this.dataForGraph = [];
         this.measurementService
@@ -174,17 +175,15 @@ export class WeightComponent implements OnInit, OnChanges {
             const format = this.intraday ? 'mediumTime' : 'shortDate';
             xAxisWeight.data.push(this.datePipe.transform(element.timestamp, format));
             seriesWeight.data.push({
-                value: this.decimalPipe.transform(element.value),
+                value: element.value,
+                formatted: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
             if (element.body_fat) {
-                if (this.intraday) {
-                    xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'mediumTime'));
-                } else {
-                    xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
-                }
+                xAxisFat.data.push(this.datePipe.transform(element.timestamp, format));
                 seriesFat.data.push({
                     value: this.decimalPipe.transform(element.body_fat),
+                    formatted: this.decimalPipe.transform(element.body_fat),
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
                 });
             }
@@ -197,10 +196,10 @@ export class WeightComponent implements OnInit, OnChanges {
                 formatter: function (params) {
                     if (params.seriesName === weigth) {
                         return weigth +
-                            `: ${params.data.value}Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                            `: ${params.data.formatted}Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                     }
                     return body_fat +
-                        `: ${params.data.value}% <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                        `: ${params.data.formatted}% <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
             grid: [
@@ -297,11 +296,13 @@ export class WeightComponent implements OnInit, OnChanges {
             this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             this.weightGraph.series[0].data.push({
                 value: this.decimalPipe.transform(element.value),
+                formatted: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
             if (element.body_fat) {
                 this.weightGraph.series[1].data.push({
-                    value: element.body_fat,
+                    value: this.decimalPipe.transform(element.body_fat),
+                    formatted: this.decimalPipe.transform(element.body_fat),
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
                 });
             }
