@@ -12,6 +12,25 @@
                         </div>
 
                         <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                 style="padding-top: 0px; padding-bottom: 0px; margin-top: 0px; margin-bottom: 0px"
+                                 *ngIf="patientForm && (patientForm.get('created_at').value||patientForm.get('last_login').value)">
+                                <div class="d-flex" [ngClass]="patientForm && patientForm.get('last_login').value?'justify-content-between':'justify-content-end'">
+                                    <div *ngIf="patientForm && patientForm.get('created_at').value">
+                                        <small style="font-size: 12px">{{'SHARED.CREATED-AT'|translate}}
+                                            : {{patientForm.get('created_at').value|date:'shortDate'}}
+                                        </small>
+                                    </div>
+
+                                    <div *ngIf="patientForm && patientForm.get('last_login').value">
+                                        <small style="font-size: 12px">{{'SHARED.LAST-LOGIN'|translate}}
+                                            : {{patientForm.get('last_login').value|date:'fullDate'}}
+                                            {{'SHARED.AT'|translate}}
+                                            {{patientForm.get('last_login').value|date:'mediumTime'}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
                                  [ngClass]="{'has-success': patientForm.controls.name.valid,
               'has-error': patientForm.controls.name.invalid && (patientForm.controls.name.touched || patientForm.controls.name.dirty)}">
@@ -151,7 +170,6 @@
                                     <span class="text-danger">{{'SHARED.INVALID-LANGUAGE'|translate}}.</span>
                                 </span>
                             </div>
-
 
                         </div>
 
