@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import * as Muuri from 'muuri';
-import { EnumMeasurementType, GenericMeasurement } from '../models/measurement'
+import { EnumMeasurementType } from '../models/measurement'
 import { MeasurementService } from '../services/measurement.service'
 import { MeasurementLast } from '../models/measurement.last'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
@@ -10,6 +10,8 @@ import { ActivatedRoute } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { TranslateService } from '@ngx-translate/core'
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
+import { TimeSeries, TimeSeriesIntervalFilter, TimeSeriesType } from '../../activity/models/time.series'
+import { TimeSeriesService } from '../../activity/services/time.series.service'
 
 @Component({
     selector: 'measurement-dashboard',
@@ -20,12 +22,14 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
     @Input() patientId: string;
     measurementForm: FormGroup;
     EnumMeasurementType = EnumMeasurementType;
+    TimeSeriesType = TimeSeriesType;
     measurementTypes: string[];
     mealTypes: string[];
     measurementLast: MeasurementLast;
     gridDivRef: ElementRef;
     gridDivWidth: number;
     loading: boolean;
+    loadingHeartRate: boolean;
     fatThreshold = {
         '0': { color: '#00a594' },
         '25': { color: '#FBA53E' },
@@ -34,6 +38,7 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
     bmi: number;
     nameOfPatientSelected: string;
     savingMeasurement: boolean;
+    heartRate: TimeSeries;
 
     @ViewChild('gridDiv', { static: false })
     set gridDiv(element: ElementRef) {
@@ -57,7 +62,8 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
         private modalService: ModalService,
         private toastService: ToastrService,
         private translateService: TranslateService,
-        private localStorageService: LocalStorageService) {
+        private localStorageService: LocalStorageService,
+        private timeSeriesService: TimeSeriesService) {
         this.measurementTypes = Object.keys(EnumMeasurementType);
         this.mealTypes = Object.keys(MealType);
     }
@@ -172,6 +178,20 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
             })
     }
 
+    loadHeartRate(): void {
+        const filter = new TimeSeriesIntervalFilter();
+        filter.date = new Date().toISOString().split('T')[0];
+        filter.interval = '15m';
+        this.loadingHeartRate = true;
+        this.timeSeriesService.getWithResourceAndInterval(this.patientId, TimeSeriesType.heart_rate, filter)
+            .then(heartRate => {
+                this.heartRate = heartRate
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     openModalNewMeasurement(): void {
         this.modalService.open('newMeasurement');
     }
@@ -184,6 +204,7 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes && changes.patientId) {
             this.loadMeasurements();
+            this.loadHeartRate();
         }
     }
 }

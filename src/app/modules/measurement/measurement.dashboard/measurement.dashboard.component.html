@@ -2,7 +2,7 @@
 
     <div class="grid grid-1" #gridDiv>
         <!-- Weight -->
-        <div class="item" style="width: 32.5%;height: 406px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+        <div class="item" style="width: 32.5%;height: 366px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
 
                 <dashboard-card [title]="'MEASUREMENTS.WEIGHT.TITLE'|translate"
@@ -60,7 +60,7 @@
             </div>
         </div>
         <!-- Height -->
-        <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+        <div class="item" style="width: 32.5%;height: 180px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
 
                 <dashboard-card [title]="'MEASUREMENTS.HEIGHT.TITLE'|translate"
@@ -88,7 +88,7 @@
             </div>
         </div>
         <!-- Waist Circumference -->
-        <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+        <div class="item" style="width: 32.5%;height: 180px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
 
                 <dashboard-card [title]="'MEASUREMENTS.WAIST-CIRCUMFERENCE.TITLE'|translate"
@@ -121,7 +121,7 @@
             </div>
         </div>
         <!-- Body Fat -->
-        <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+        <div class="item" style="width: 32.5%;height: 180px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
                 <dashboard-card [title]="'MEASUREMENTS.FAT.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.body_fat]">
@@ -149,7 +149,7 @@
             </div>
         </div>
         <!-- Body Temperature -->
-        <div class="item" style="width: 32.5%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
+        <div class="item" style="width: 32.5%;height: 180px;" [ngStyle]="{'width':(gridDivWidth*0.325)+'px'}">
             <div class="item-content">
                 <dashboard-card [title]="'MEASUREMENTS.BODY-TEMPERATURE.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.body_temperature]">
@@ -201,7 +201,7 @@
             </div>
         </div>
         <!-- Blood Pressure -->
-        <div class="item" style="width: 49%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.49)+'px'}">
+        <div class="item" style="width: 49%;height: 180px;" [ngStyle]="{'width':(gridDivWidth*0.49)+'px'}">
             <div class="item-content">
 
                 <dashboard-card [title]="'MEASUREMENTS.BLOOD-PRESSURE.TITLE'|translate"
@@ -236,7 +236,7 @@
             </div>
         </div>
         <!-- Blood Glucose -->
-        <div class="item" style="width: 49%;height: 200px;" [ngStyle]="{'width':(gridDivWidth*0.49)+'px'}">
+        <div class="item" style="width: 49%;height: 180px;" [ngStyle]="{'width':(gridDivWidth*0.49)+'px'}">
             <div class="item-content">
 
                 <dashboard-card [title]="'MEASUREMENTS.BLOOD-GLUCOSE.TITLE'|translate"
@@ -262,6 +262,22 @@
                                *ngIf="!measurementLast ||!measurementLast.blood_glucose || !measurementLast.blood_glucose.timestamp">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}: {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>
                     </div>
                     <!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.blood_pressure && measurementLast.blood_pressure.timestamp) ? (measurementLast.blood_pressure.timestamp|date:'fullDate') : ' - -'}}</small>-->
+                </dashboard-card>
+
+            </div>
+        </div>
+        <!-- Heart Rate-->
+        <div class="item" style="width: 98.5%;height: 300px;" [ngStyle]="{'width':(gridDivWidth*0.985)+'px'}">
+            <div class="item-content">
+
+                <dashboard-card [title]="'TIME-SERIES.HEART-RATE.TITLE'|translate"
+                                [urlAction]="['/app/patients',patientId,TimeSeriesType.heart_rate]">
+                    <div style="width: 100%; height: 250px;">
+                        <heart-rate [data]="heartRate" [filterVisibility]="true" [patientId]="patientId"
+                                    [includeCard]="true" [listIsEmpty]="!heartRate || !heartRate.data_set || !heartRate.data_set.length"
+                                    [intraday]="true" [onlyGraph]="true" [hiddenYAxis]="true">
+                        </heart-rate>
+                    </div>
                 </dashboard-card>
 
             </div>

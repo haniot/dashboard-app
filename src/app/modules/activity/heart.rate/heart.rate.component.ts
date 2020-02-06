@@ -23,6 +23,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
     @Input() intraday: boolean;
     @Input() listIsEmpty: boolean;
     @Input() onlyGraph: boolean;
+    @Input() hiddenYAxis: boolean;
     @Input() filter: any;
     options: any;
     optionsIntraday: any;
@@ -240,6 +241,14 @@ export class HeartRateComponent implements OnInit, OnChanges {
             series: seriesOptions
         };
 
+        const yAxisVisibility = !this.hiddenYAxis;
+        const grid = this.hiddenYAxis ? [{ x: '1%', y: '10%', width: '98%', height: '80%' }] : [{
+            x: '7%',
+            y: '8%',
+            width: '93%',
+            height: '86%'
+        }];
+
         this.optionsIntraday = {
             tooltip: {
                 trigger: 'axis',
@@ -260,6 +269,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
             },
             xAxis: xAxisOptionsLastDate,
             yAxis: {
+                show: yAxisVisibility,
                 splitLine: {
                     show: false
                 },
@@ -269,7 +279,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 },
                 min: (min_value - 5)
             },
-            grid: [{ x: '7%', y: '8%', width: '93%', height: '86%' }],
+            grid: grid,
             dataZoom: {
                 show: true,
                 type: 'inside'

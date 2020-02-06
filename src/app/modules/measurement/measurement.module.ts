@@ -37,6 +37,7 @@ import { MeasurementDashboardComponent } from './measurement.dashboard/measureme
 import { NgxGaugeModule } from 'ngx-gauge'
 import { MatSelectModule } from '@angular/material/select'
 import { NgxMatDatetimePickerModule } from 'ngx-mat-datetime-picker'
+import { ActivityModule } from '../activity/activity.module'
 
 @NgModule({
     declarations: [
@@ -75,7 +76,8 @@ import { NgxMatDatetimePickerModule } from 'ngx-mat-datetime-picker'
         NgxGaugeModule,
         MatSelectModule,
         ReactiveFormsModule,
-        NgxMatDatetimePickerModule
+        NgxMatDatetimePickerModule,
+        ActivityModule
     ],
     exports: [
         MeasurementLogsComponent,

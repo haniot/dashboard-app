@@ -29,7 +29,6 @@ import {
 import { SatDatepickerModule } from 'saturn-datepicker'
 import { FormsModule } from '@angular/forms'
 import { Ng5SliderModule } from 'ng5-slider'
-import { MeasurementModule } from '../measurement/measurement.module';
 import { ActivityDetailsComponent } from './activity.details/activity.details.component'
 import { ActivityRoutingModule } from './activity.routing/activity.routing.module';
 import { ActivityDashboardComponent } from './activity.dashboard/activity.dashboard.component';
@@ -94,8 +93,6 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
 
         ActivityRoutingModule,
         SharedModule,
-        MeasurementModule,
-
 
         NgxEchartsModule,
         TranslateModule,

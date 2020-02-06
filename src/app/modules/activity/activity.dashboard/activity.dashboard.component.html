@@ -18,7 +18,7 @@
             </div>
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 navigation"
-                 style="padding: 0px 0px" *ngIf="patient && patient.external_services">
+                 style="padding: 0px 0px" *ngIf="patient && patient.external_services && patient.external_services.fitbit_last_sync">
 
                 <label style="position: absolute; right:5px;padding-right:10px;font-weight: normal; font-size: 12px">
                     {{'ACTIVITY.LAST-SYNC'|translate}}

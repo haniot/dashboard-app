@@ -172,6 +172,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.innerWidth = window.innerWidth;
         this.activeRouter.params.subscribe((params) => {
             this.getQueryParams();
+            this.getPatientSelected()
         });
     }
 
@@ -183,6 +184,16 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
             this.currentFilter.interval = '15m';
         }
+    }
+
+    getPatientSelected(): void {
+        const interval = setInterval(() => {
+            const patientSelected = JSON.parse(this.localStorageService.getItem('patientSelected'));
+            if (patientSelected && patientSelected.id === this.patientId) {
+                this.patient = patientSelected
+                clearInterval(interval);
+            }
+        }, 1500);
     }
 
     loadGoals(): void {
