@@ -167,17 +167,17 @@ export class SidebarComponent implements OnInit {
         this.activeEvaluations = (path_current.match('evaluations') && path_current.match('nutritional')) ? 'active' : '';
 
         this.activeDashboardPatients = (
-            (path_current.match('patients') && path_current.match('dashboard\$')) ||
+            (path_current.match('patients') && path_current.match('dashboard')) ||
             (path_current.match('activities') && path_current.match('physical_activity|sleep'))
         ) ? 'active' : '';
         const measurements = Object.keys(EnumMeasurementType);
-        const regex = measurements.join('\$|')
+        const regex = measurements.join('|')
         this.activeMeasurementsPatients = (
             path_current.match('patients') &&
-            (path_current.match('measurements\$|' + regex + '\$'))
+            (path_current.match('measurements\$|' + regex))
         ) ? 'active' : '';
         this.activeQuestionnairesPatients = (path_current.match('patients') && path_current.match('questionnaires\$')) ? 'active' : '';
-        this.activeCorrelatePatients = (path_current.match('patients') && path_current.match('correlate\$')) ? 'active' : '';
+        this.activeCorrelatePatients = (path_current.match('patients') && path_current.match('correlate')) ? 'active' : '';
     }
 
     myPilotStudies(): void {

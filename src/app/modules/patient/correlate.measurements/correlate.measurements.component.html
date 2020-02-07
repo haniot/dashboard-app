@@ -23,7 +23,8 @@
                                 <div class="fadeIn options"
                                      style="position:absolute; top:0;right:0;padding:5px;z-index:1000"
                                      *ngIf="resourcesSelected.length!==1">
-                                    <i class="material-icons" (click)="removeGraph(i)" [title]="'SHARED.CLOSE'|translate">close</i>
+                                    <i class="material-icons" (click)="removeGraph(i)"
+                                       [title]="'SHARED.CLOSE'|translate">close</i>
                                 </div>
 
                                 <div [ngStyle]="resourcesSelected[i]?{position: 'absolute', top:'0', left: '0', padding: '5px', 'z-index': -1}:{}">
@@ -124,16 +125,16 @@
 
                     </div>
 
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 justify-content-end container-graph">
-                            <div class="float-right">
-                                <button type="button" class="btn btn-haniot-primary btn-sm" (click)="add()">
-                                    <i class="material-icons">add</i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </time-series-card>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <button type="button" class="btn btn-haniot-primary" (click)="add()">
+                            {{'SHARED.ADD'|translate}}
+                            <i class="material-icons">add</i>
+                        </button>
+                    </div>
+                </div>
 
             </div>
 
