@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTabsModule } from '@angular/material';
@@ -78,7 +78,6 @@ import { SatDatepickerModule } from 'saturn-datepicker'
         GeneratePdfService,
         SendEmailService,
         /** pipes */
-        DatePipe,
         NutritionClassificationtPipe,
         OverweigthClassificationPipe,
         BloodglucoseClassificationPipe,

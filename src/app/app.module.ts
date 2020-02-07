@@ -2,7 +2,7 @@ import { enableProdMode, LOCALE_ID, NgModule } from '@angular/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { CommonModule, DecimalPipe, registerLocaleData } from '@angular/common';
+import { CommonModule, DatePipe, DecimalPipe, registerLocaleData } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -86,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         SelectPilotStudyService,
         DashboardService,
         DecimalPipe,
+        DatePipe,
         LocalStorageService
     ],
     bootstrap: [AppComponent]

@@ -20,6 +20,7 @@ export const FilterOptions = {
     styleUrls: ['../../../modules/activity/shared.style/shared.styles.scss', './time.series.card.component.scss']
 })
 export class TimeSeriesCardComponent {
+    readonly today: Date = new Date();
     @Input() title: string;
     @Input() subtitle: string;
     @Output() filter_change: EventEmitter<any>;
