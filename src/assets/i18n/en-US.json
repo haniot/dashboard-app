@@ -566,7 +566,8 @@
         "POSTPRANDIAL": "Pos-prandial",
         "FASTING": "Fasting",
         "CASUAL": "Casual",
-        "BEDTIME": "Before bedtime"
+        "BEDTIME": "Before bedtime",
+        "OTHER": "Other"
       },
       "MEASUREMENT-TYPE": {
         "WEIGHT": "Weight",
@@ -631,7 +632,9 @@
       "INVALID-TYPE": "Invalid type",
       "VALUE": "Value",
       "INVALID-VALUE": "Invalid value",
-      "SPINNER-MESSAGE": "Saving measurement..."
+      "SPINNER-MESSAGE": "Saving measurement...",
+      "KILOGRAM": "Kilograms",
+      "POUNDS": "Pounds"
     },
     "BUTTON-ADD": "Manual Measurement",
     "LAST-REGISTER": "Last register",
@@ -830,7 +833,7 @@
     "MY-QUESTIONNAIRES": "My Questionnaires",
     "EXPAND-MENU": "Expand menu...",
     "SHRINK-MENU": "Shrink menu...",
-    "CORRELATE": "Relate charts"
+    "CORRELATE": "Graphic study"
   },
   "SHARED": {
     "NAME": "Name",

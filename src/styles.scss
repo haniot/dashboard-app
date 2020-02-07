@@ -198,6 +198,9 @@ label {
   overflow: hidden;
 }
 
+.main-content {
+  overflow: hidden !important;
+}
 
 @media (max-width: 900px) {
   .main-panel .main-content {

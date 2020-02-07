@@ -10,6 +10,7 @@ import { MeasurementService } from '../services/measurement.service';
 import { EnumMeasurementType } from '../models/measurement';
 import { ConfigurationBasic } from '../../config.matpaginator';
 import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -31,6 +32,7 @@ export class WeightComponent implements OnInit, OnChanges {
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     logsIsEmpty: boolean;
     lastData: Weight;
     weightGraph: any;
@@ -49,6 +51,7 @@ export class WeightComponent implements OnInit, OnChanges {
     constructor(
         private datePipe: DatePipe,
         private decimalPipe: DecimalFormatterPipe,
+        private modalService: ModalService,
         private measurementService: MeasurementService,
         private translateService: TranslateService
     ) {
@@ -257,6 +260,10 @@ export class WeightComponent implements OnInit, OnChanges {
         this.remove.emit({ type: EnumMeasurementType.weight, resourceId: measurementId })
     }
 
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
+    }
+
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
         this.listCheckMeasurements = new Array<boolean>(this.dataForLogs.length);
@@ -282,6 +289,11 @@ export class WeightComponent implements OnInit, OnChanges {
         }
         this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
+    }
+
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
     }
 
     updateGraph(measurements: Array<any>): void {

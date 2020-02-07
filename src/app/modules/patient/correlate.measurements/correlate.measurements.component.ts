@@ -64,6 +64,7 @@ export class CorrelateMeasurementsComponent implements OnInit {
     resourceGroups: Group[];
     resourcesSelected: any[];
     resourcesOptions: string[];
+    stateButtonAdd: string;
 
     constructor(
         private studyService: PilotStudyService,
@@ -82,6 +83,7 @@ export class CorrelateMeasurementsComponent implements OnInit {
         this.resourcesSelected = new Array(1);
         this.resourcesOptions = ['hidden'];
         this.intraday = true;
+        this.stateButtonAdd = 'display-show';
     }
 
     ngOnInit(): void {
@@ -146,6 +148,10 @@ export class CorrelateMeasurementsComponent implements OnInit {
                 element.open();
             }
         })
+    }
+
+    setStateButtonAdd(state): void {
+        this.stateButtonAdd = state;
     }
 
     removeGraph(indexSelected: number): void {

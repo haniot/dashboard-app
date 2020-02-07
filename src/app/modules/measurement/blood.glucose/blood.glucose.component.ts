@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ToastrService } from 'ngx-toastr'
 import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -31,6 +32,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     @Input() onlyGraph: boolean;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     lastData: BloodGlucose;
     options: any;
     echartsInstance: any;
@@ -50,7 +52,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         private datePipe: DatePipe,
         private measurementService: MeasurementService,
         private translateService: TranslateService,
-        private toastService: ToastrService
+        private modalService: ModalService
     ) {
         this.dataForGraph = new Array<BloodGlucose>();
         this.dataForLogs = new Array<BloodGlucose>();
@@ -88,6 +90,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const fasting = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.FASTING');
         const casual = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.CASUAL');
         const bedtime = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.BEDTIME');
+        const other = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.OTHER');
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
         const glucose = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.GLUCOSE');
@@ -274,6 +277,15 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 barMaxWidth: 100,
                 color: '#D2B48C',
                 markPoint: markPoint
+            },
+            {
+                name: other,
+                label: labelOption,
+                type: 'bar',
+                data: [],
+                barMaxWidth: 100,
+                color: '#c3c3c3',
+                markPoint: markPoint
             }
         ];
 
@@ -339,6 +351,12 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                         time: mediumTime
                     };
                     break;
+                case MealType.other:
+                    series[5].data[index] = {
+                        value: element.value,
+                        time: mediumTime
+                    };
+                    break;
             }
         });
 
@@ -363,7 +381,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 }
             },
             legend: {
-                data: [preprandial, postprandial, fasting, casual, bedtime]
+                data: [preprandial, postprandial, fasting, casual, bedtime, other]
             },
             grid: [
                 { x: gridX, y: '10%', width: '100%', height: '83%' }
@@ -419,6 +437,9 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const bedtimes = measurements.filter((measurement: BloodGlucose) => {
             return measurement.meal === MealType.bedtime;
         });
+        const others = measurements.filter((measurement: BloodGlucose) => {
+            return measurement.meal === MealType.other;
+        });
 
         // clean
         this.options.yAxis.axisLabel.margin = this.onlyGraph ? -45 : 8;
@@ -428,6 +449,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.options.series[2].data = new Array(postprandials.length + fastings.length);
         this.options.series[3].data = new Array(fastings.length + casuals.length);
         this.options.series[4].data = new Array(casuals.length + bedtimes.length);
+        this.options.series[5].data = new Array(bedtimes.length + others.length);
 
         measurements.forEach((element: BloodGlucose, index) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
@@ -470,6 +492,12 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                     break;
                 case MealType.bedtime:
                     this.options.series[4].data[index] = {
+                        value: element.value,
+                        time: mediumTime
+                    };
+                    break;
+                case MealType.other:
+                    this.options.series[5].data[index] = {
                         value: element.value,
                         time: mediumTime
                     };
@@ -518,6 +546,10 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.remove.emit({ type: EnumMeasurementType.blood_glucose, resourceId: measurementId })
     }
 
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
+    }
+
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
         this.listCheckMeasurements = new Array<boolean>(this.dataForLogs.length);
@@ -543,6 +575,11 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         }
         this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
+    }
+
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
     }
 
     updateStateButtonRemoveSelected(): void {

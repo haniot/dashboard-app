@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ToastrService } from 'ngx-toastr'
 import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -31,6 +32,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
     @Input() onlyGraph: boolean;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     lastData: BloodPressure;
     options: any;
     echartsInstance: any;
@@ -50,7 +52,7 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         private datePipe: DatePipe,
         private measurementService: MeasurementService,
         private translateService: TranslateService,
-        private toastService: ToastrService
+        private modalService: ModalService
     ) {
         this.dataForGraph = new Array<BloodPressure>();
         this.dataForLogs = new Array<BloodPressure>();
@@ -582,6 +584,10 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         this.remove.emit({ type: EnumMeasurementType.blood_pressure, resourceId: measurementId });
     }
 
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
+    }
+
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
         this.listCheckMeasurements = new Array<boolean>(this.dataForLogs.length);
@@ -607,6 +613,11 @@ export class BloodPressureComponent implements OnInit, OnChanges {
         }
         this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
+    }
+
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
     }
 
     updateStateButtonRemoveSelected(): void {

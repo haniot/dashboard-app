@@ -8,6 +8,7 @@ import { MeasurementService } from '../services/measurement.service';
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -29,6 +30,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
     @Input() onlyGraph: boolean;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
@@ -48,7 +50,8 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         private datePipe: DatePipe,
         private decimalPipe: DecimalPipe,
         private measurementService: MeasurementService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private modalService: ModalService
     ) {
         this.dataForGraph = new Array<Measurement>();
         this.dataForLogs = new Array<Measurement>();
@@ -242,6 +245,10 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         this.remove.emit({ type: EnumMeasurementType.waist_circumference, resourceId: measurementId });
     }
 
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
+    }
+
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
         this.listCheckMeasurements = new Array<boolean>(this.dataForLogs.length);
@@ -267,6 +274,11 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         }
         this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
+    }
+
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
     }
 
     updateStateButtonRemoveSelected(): void {

@@ -23,6 +23,9 @@ export class MealPipe implements PipeTransform {
       case 'bedtime':
         return 'MEASUREMENTS.PIPES.MEAL.BEDTIME';
 
+      case 'other':
+        return 'MEASUREMENTS.PIPES.MEAL.OTHER';
+
       case undefined:
         return 'MEASUREMENTS.PIPES.UNDEFINED';
 

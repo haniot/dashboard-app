@@ -8,8 +8,8 @@ import { Weight } from '../models/weight';
 import { MeasurementService } from '../services/measurement.service';
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
-import { ToastrService } from 'ngx-toastr'
 import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -31,6 +31,7 @@ export class HeightComponent implements OnInit, OnChanges {
     @Input() onlyGraph: boolean;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
@@ -50,7 +51,7 @@ export class HeightComponent implements OnInit, OnChanges {
         private datePipe: DatePipe,
         private measurementService: MeasurementService,
         private translateService: TranslateService,
-        private toastService: ToastrService
+        private modalService: ModalService
     ) {
         this.dataForGraph = new Array<Measurement>();
         this.dataForLogs = new Array<Measurement>();
@@ -237,6 +238,10 @@ export class HeightComponent implements OnInit, OnChanges {
         this.remove.emit({ type: EnumMeasurementType.height, resourceId: measurementId })
     }
 
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
+    }
+
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
         this.listCheckMeasurements = new Array<boolean>(this.dataForLogs.length);
@@ -271,6 +276,11 @@ export class HeightComponent implements OnInit, OnChanges {
 
     trackById(index, item) {
         return item.id;
+    }
+
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
     }
 
     ngOnChanges(changes: SimpleChanges) {

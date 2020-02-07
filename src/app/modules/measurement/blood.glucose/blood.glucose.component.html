@@ -108,6 +108,12 @@
                             {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.REMOVE-SELECTED'|translate}}
                         </button>
                     </div>
+                    <div class="p-2">
+                        <button type="button" class="btn btn-haniot-primary btn-sm" (click)="openModalNewMeasurement()">
+                            {{'MEASUREMENTS.BUTTON-ADD'|translate}}
+                            <i class="material-icons" style="color: white">add</i>
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -234,3 +240,7 @@
               class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.BLOOD-GLUCOSE.UNAVAILABLE-DATA'|translate}}</span>
     </div>
 </div>
+
+<new-measurements [patientId]="patientId" (save)="savedSuccessfully()" [type]="EnumMeasurementType.blood_glucose">
+
+</new-measurements>

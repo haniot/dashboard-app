@@ -134,6 +134,7 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
                     this.listIsEmpty = true;
                 })
         }
+        this.list = this.list.reverse();
     }
 
     openModalConfirmation(event: { type: EnumMeasurementType, resourceId: string | string[] }): void {

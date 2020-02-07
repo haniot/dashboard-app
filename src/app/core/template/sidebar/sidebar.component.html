@@ -113,7 +113,7 @@
                 <p>
                     {{'SHARED.PATIENTS' | translate}}
                     <i class="material-icons">face</i>
-                    <i id="arrowMenuPatient" class="material-icons float-right" (click)="changeIconMenuPatient()"
+                    <i class="material-icons arrowMenu float-right" (click)="changeIconMenuPatient($event)"
                        [title]="iconPatientMenu==='keyboard_arrow_down'?('SIDEBAR.EXPAND-MENU'|translate):('SIDEBAR.SHRINK-MENU'|translate)"
                        *ngIf="patientSelected">{{iconPatientMenu}}</i>
                 </p>
@@ -127,18 +127,28 @@
                         <p>{{'SIDEBAR.DASHBOARD'|translate}}</p>
                     </a>
                 </li>
-                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients">
-                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'measurements']">
-                        <i class="material-icons">equalizer</i>
-                        <p>{{'SIDEBAR.MEASUREMENTS'|translate}}</p>
+                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients || activeCorrelatePatients">
+                    <a class="nav-link"
+                       [routerLink]="['/app/patients',patientSelected,'measurements']">
+                        <p>
+                        <p>{{'SIDEBAR.MEASUREMENTS'|translate}}
+                            <i class="material-icons">equalizer</i>
+                        <i class="material-icons arrowMenu float-right" (click)="changeIconMenuMeasurement($event)"
+                           [title]="iconMeasurementMenu==='keyboard_arrow_down'?('SIDEBAR.EXPAND-MENU'|translate):('SIDEBAR.SHRINK-MENU'|translate)"
+                           *ngIf="patientSelected">{{iconMeasurementMenu}}</i>
+                        </p>
+
                     </a>
+                    <ul class="collapse list-unstyled submenu" [ngClass]="stateMeasurementMenu">
+                        <li class="nav-subitem" [ngClass]="activeCorrelatePatients">
+                            <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'correlate']">
+                                <i class="material-icons">web</i>
+                                <p>{{'SIDEBAR.CORRELATE'|translate}}</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="nav-subitem" [ngClass]="activeCorrelatePatients">
-                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'correlate']">
-                        <i class="material-icons">web</i>
-                        <p>{{'SIDEBAR.CORRELATE'|translate}}</p>
-                    </a>
-                </li>
+
                 <li class="nav-subitem" [ngClass]="activeQuestionnairesPatients">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'questionnaires']">
                         <i class="material-icons">receipt</i>

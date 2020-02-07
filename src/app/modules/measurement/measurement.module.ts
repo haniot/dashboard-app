@@ -37,7 +37,8 @@ import { MeasurementDashboardComponent } from './measurement.dashboard/measureme
 import { NgxGaugeModule } from 'ngx-gauge'
 import { MatSelectModule } from '@angular/material/select'
 import { NgxMatDatetimePickerModule } from 'ngx-mat-datetime-picker'
-import { ActivityModule } from '../activity/activity.module'
+import { ActivityModule } from '../activity/activity.module';
+import { NewMeasurementsComponent } from './new.measurements/new.measurements.component'
 
 @NgModule({
     declarations: [
@@ -52,10 +53,10 @@ import { ActivityModule } from '../activity/activity.module'
         DeviceTypePipe,
         FatComponent,
         DeviceComponent,
-        DecimalFormatterPipe,
         MeasurementLogsComponent,
         MeasurementTypePipe,
-        MeasurementDashboardComponent
+        MeasurementDashboardComponent,
+        NewMeasurementsComponent
     ],
     imports: [
         CommonModule,
@@ -93,7 +94,8 @@ import { ActivityModule } from '../activity/activity.module'
         ViewMeasurementsComponent,
         DecimalFormatterPipe,
         MeasurementTypePipe,
-        MeasurementDashboardComponent
+        MeasurementDashboardComponent,
+        NewMeasurementsComponent
     ],
     providers: [
         MeasurementService,
@@ -101,7 +103,6 @@ import { ActivityModule } from '../activity/activity.module'
         DatePipe,
         MealPipe,
         DeviceTypePipe,
-        DecimalFormatterPipe,
         MeasurementTypePipe
     ]
 })

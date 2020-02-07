@@ -12,7 +12,7 @@
                              *ngFor="let resourceSelected of resourcesSelected;index as i;"
                              [ngClass]="(!(resourcesSelected.length%2==0) && i ===(resourcesSelected.length-1))?'col':'col-sm-12 col-md-6 col-lg-6 col-xl-6'">
 
-                            <div class="graph">
+                            <div class="graph border-dashed">
 
                                 <div class="fadeIn options"
                                      style="position:absolute; top:0;left:0;padding:5px;z-index:1000"
@@ -21,8 +21,7 @@
                                 </div>
 
                                 <div class="fadeIn options"
-                                     style="position:absolute; top:0;right:0;padding:5px;z-index:1000"
-                                     *ngIf="resourcesSelected.length!==1">
+                                     style="position:absolute; top:0;right:0;padding:5px;z-index:1000">
                                     <i class="material-icons" (click)="removeGraph(i)"
                                        [title]="'SHARED.CLOSE'|translate">close</i>
                                 </div>
@@ -123,18 +122,20 @@
 
                         </div>
 
+                        <div class="container-graph col">
+
+                            <div class="graph border-dashed">
+
+                                <button type="button" class="btn btn-haniot-primary add" (click)="add()">
+                                    {{'SHARED.ADD'|translate}}
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
 
                 </time-series-card>
-
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <button type="button" class="btn btn-haniot-primary" (click)="add()">
-                            {{'SHARED.ADD'|translate}}
-                            <i class="material-icons">add</i>
-                        </button>
-                    </div>
-                </div>
 
             </div>
 

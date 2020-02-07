@@ -81,3 +81,19 @@
   height: 88%;
   z-index: 999
 }
+
+.border-dashed {
+  border: 1px dashed #c3c3c3;
+  border-radius: 5px;
+}
+
+.add {
+  .material-icons {
+    color: white !important;
+
+    &:hover {
+      border-radius: unset;
+      background: unset;
+    }
+  }
+}

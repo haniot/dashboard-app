@@ -75,7 +75,7 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
         TimeSeriesPipe,
         ActivityLevelPipe,
         DistancePipe,
-        ActiveMinutesPipe,
+        ActiveMinutesPipe
     ],
     providers: [
         SleepPipe,

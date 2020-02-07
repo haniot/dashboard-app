@@ -56,20 +56,3 @@
     font-weight: normal;
   }
 }
-
-::ng-deep .cdk-overlay-container {
-  z-index: 2000;
-}
-
-::ng-deep .mat-datepicker-content .time-container {
-  table, th, tr, td {
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-  }
-}
-
-::ng-deep .mat-button.mat-primary, .mat-icon-button.mat-primary {
-  color: $primary-color;
-}

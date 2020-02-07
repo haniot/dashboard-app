@@ -76,7 +76,9 @@ export class SidebarComponent implements OnInit {
     userLogged: GenericUser;
     loadUserTime: any
     iconPatientMenu = 'keyboard_arrow_right';
+    iconMeasurementMenu = 'keyboard_arrow_right';
     statePatientMenu: string;
+    stateMeasurementMenu: string;
 
     constructor(
         private authService: AuthService,
@@ -178,6 +180,14 @@ export class SidebarComponent implements OnInit {
         ) ? 'active' : '';
         this.activeQuestionnairesPatients = (path_current.match('patients') && path_current.match('questionnaires\$')) ? 'active' : '';
         this.activeCorrelatePatients = (path_current.match('patients') && path_current.match('correlate')) ? 'active' : '';
+        this.stateMeasurementMenu = (this.activeMeasurementsPatients || this.activeCorrelatePatients) ? 'show' : 'hidden';
+        this.activePatients = (this.activeDashboardPatients === 'active' ||
+            this.activeQuestionnairesPatients === 'active' || this.activeMeasurementsPatients === 'active' ||
+            this.activeCorrelatePatients === 'active'
+        ) ?
+            'active parent-active' : this.activePatients;
+        this.activeMeasurementsPatients = this.activeCorrelatePatients === 'active' ?
+            'active parent-active' : this.activeMeasurementsPatients;
     }
 
     myPilotStudies(): void {
@@ -223,9 +233,18 @@ export class SidebarComponent implements OnInit {
         this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
     }
 
-    changeIconMenuPatient(): void {
+    changeIconMenuPatient(event): void {
+        event.preventDefault();
+        event.stopPropagation();
         this.iconPatientMenu = this.iconPatientMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
         this.statePatientMenu = this.iconPatientMenu === 'keyboard_arrow_right' ? 'show' : '';
+    }
+
+    changeIconMenuMeasurement(event): void {
+        event.preventDefault();
+        event.stopPropagation();
+        this.iconMeasurementMenu = this.iconMeasurementMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
+        this.stateMeasurementMenu = this.iconMeasurementMenu === 'keyboard_arrow_right' ? 'show' : 'hidden';
     }
 
     onClickMenuPatient(event): void {

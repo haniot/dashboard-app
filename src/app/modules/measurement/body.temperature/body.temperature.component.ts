@@ -11,6 +11,7 @@ import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ToastrService } from 'ngx-toastr'
 import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -32,6 +33,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
     @Input() onlyGraph: boolean;
     @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
@@ -52,7 +54,7 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         private decimalPipe: DecimalFormatterPipe,
         private measurementService: MeasurementService,
         private translateService: TranslateService,
-        private toastService: ToastrService
+        private modalService: ModalService
     ) {
         this.dataForGraph = new Array<Measurement>();
         this.dataForLogs = new Array<Measurement>();
@@ -284,6 +286,10 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         this.remove.emit({ type: EnumMeasurementType.body_temperature, resourceId: measurementId });
     }
 
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
+    }
+
     initializeListCheckMeasurements(): void {
         this.selectAll = false;
         this.listCheckMeasurements = new Array<boolean>(this.dataForLogs.length);
@@ -309,6 +315,11 @@ export class BodyTemperatureComponent implements OnInit, OnChanges {
         }
         this.listCheckMeasurements = this.listCheckMeasurements.map(attribSelectAll);
         this.updateStateButtonRemoveSelected();
+    }
+
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
     }
 
     updateStateButtonRemoveSelected(): void {
