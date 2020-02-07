@@ -24,6 +24,7 @@ import { SleepFilter, SleepService } from '../services/sleep.service'
     styleUrls: ['./activity.dashboard.component.scss']
 })
 export class ActivityDashboardComponent implements OnInit, OnChanges {
+    readonly today: Date = new Date()
     @Input() patientId: string;
     patient: Patient;
     activityGraph: any[];
@@ -180,9 +181,12 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         const { date } = this.activeRouter.snapshot.queryParams;
         if (date) {
             const timeZoneOffset = new Date().getTimezoneOffset();
-            this.currentDate = timeZoneOffset ? new Date(`${date}T0${timeZoneOffset / 60}:00:00Z`) : new Date(`${date}T00:00:00Z`);
+
+            const dateSelected = timeZoneOffset ? new Date(`${date}T0${timeZoneOffset / 60}:00:00Z`) : new Date(`${date}T00:00:00Z`);
+            this.currentDate = dateSelected.getTime() <= new Date().getTime() ? dateSelected : new Date();
             this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
             this.currentFilter.interval = '15m';
+            this.updateQueryParams();
         }
     }
 
@@ -487,6 +491,14 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                 relativeTo: this.activeRouter,
                 queryParams: queryParams
             });
+    }
+
+    changeDate(): void {
+        this.loadGoals();
+        this.loadActivities();
+        this.loadTimeSeries();
+        this.loadSleep();
+        this.updateQueryParams();
     }
 
     ngOnChanges(changes: SimpleChanges): void {

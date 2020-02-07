@@ -88,7 +88,7 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
                 }
                 this.patientId = patientId;
                 this.startFilter();
-                this.loadResource(this.typeOfMeasurement);
+                // this.loadResource(this.typeOfMeasurement);
             })
     }
 

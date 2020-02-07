@@ -12,8 +12,17 @@
                 <i class="material-icons float-left" [ngClass]="isToday(currentDate)?'disabled':''" (click)="nextDate()"
                    [title]="'ACTIVITY.NEXT-DAY'|translate">keyboard_arrow_right</i>
 
-                <label class="float-left"
-                       style="color: unset; font-weight: normal">{{isToday(currentDate) ? ('MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate) + ' - ' : (currentDate|date:'EEEE') + ' - '}}{{currentDate | date}}</label>
+                <label class="float-left" (click)="pickerBirthDate.open()"
+                       style="color: unset; font-weight: normal; cursor:pointer;">{{isToday(currentDate) ? ('MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate) + ' - ' : (currentDate|date:'EEEE') + ' - '}}{{currentDate | date}}</label>
+                <input matInput class="form-control" [matDatepicker]="pickerBirthDate"
+                       name="currentDate"
+                       data-date-format="yyyy-MM-dd"
+                       [max]="today"
+                       [(ngModel)]="currentDate"
+                       (dateChange)="changeDate()"
+                       style="visibility: hidden; position: absolute">
+                <mat-datepicker #pickerBirthDate>
+                </mat-datepicker>
 
             </div>
 

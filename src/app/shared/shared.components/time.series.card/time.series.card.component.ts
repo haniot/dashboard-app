@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import * as $ from 'jquery'
 import * as moment from 'moment'
 
 import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../../modules/activity/models/time.series'
 import { DateRange } from '../../../modules/pilot.study/models/range-date'
+import { ActivatedRoute, Params, Router } from '@angular/router'
 
 export const FilterOptions = {
     today: 'today',
@@ -19,7 +20,7 @@ export const FilterOptions = {
     templateUrl: './time.series.card.component.html',
     styleUrls: ['../../../modules/activity/shared.style/shared.styles.scss', './time.series.card.component.scss']
 })
-export class TimeSeriesCardComponent {
+export class TimeSeriesCardComponent implements OnInit {
     readonly today: Date = new Date();
     @Input() title: string;
     @Input() subtitle: string;
@@ -34,11 +35,17 @@ export class TimeSeriesCardComponent {
     startOfDate: Date;
     endOfDate: Date;
 
-    constructor() {
+    constructor(
+        private activeRouter: ActivatedRoute,
+        private router: Router) {
         this.currentDate = new Date();
         this.filter_change = new EventEmitter();
         this.filterSelected = 'today';
         this.filter_visibility = true;
+    }
+
+    ngOnInit(): void {
+        this.getQueryParams()
     }
 
     isMobile(): boolean {
@@ -46,6 +53,7 @@ export class TimeSeriesCardComponent {
     }
 
     emitChangeFilter(): void {
+        this.updateQueryParams();
         let filter: any;
         if (this.filterSelected === 'today') {
             const dateFormatted: string = moment(this.currentDate).format();
@@ -113,6 +121,10 @@ export class TimeSeriesCardComponent {
     }
 
     next(): void {
+        if ((this.filterSelected === 'today' && this.isToday(this.currentDate)) ||
+            (this.filterSelected !== 'today' && this.endOfDate.getTime() > this.currentDate.getTime())) {
+            return null;
+        }
         switch (this.filterSelected) {
             case 'today':
                 if (!this.isToday(this.currentDate)) {
@@ -144,10 +156,48 @@ export class TimeSeriesCardComponent {
         this.emitChangeFilter();
     }
 
+    getQueryParams(): void {
+        const { date, start_date, end_date } = this.activeRouter.snapshot.queryParams;
+        if (date) {
+            const timeZoneOffset = new Date().getTimezoneOffset();
+            const dateSelected = timeZoneOffset ? new Date(`${date}T0${timeZoneOffset / 60}:00:00Z`) : new Date(`${date}T00:00:00Z`);
+            this.currentDate = dateSelected.getTime() <= new Date().getTime() ? dateSelected : new Date();
+        }
+        if (start_date && end_date) {
+            this.filterSelected = 'period';
+            const timeZoneOffset = new Date().getTimezoneOffset();
+            const startSelected: Date = timeZoneOffset ? new Date(`${start_date}T0${timeZoneOffset / 60}:00:00Z`) :
+                new Date(`${start_date}T00:00:00Z`);
+            const endSelected: Date = timeZoneOffset ? new Date(`${end_date}T0${timeZoneOffset / 60}:00:00Z`) :
+                new Date(`${end_date}T00:00:00Z`);
+            this.startOfDate = startSelected.getTime() < endSelected.getTime() ? startSelected : endSelected;
+            this.endOfDate = endSelected.getTime() >= startSelected.getTime() ? endSelected : startSelected;
+        }
+        this.emitChangeFilter();
+    }
+
+    updateQueryParams(): void {
+        let queryParams: Params;
+        if (this.filterSelected === 'today') {
+            const date = this.currentDate.toISOString().split('T')[0];
+            queryParams = { date };
+        } else {
+            const start_date = this.startOfDate.toISOString().split('T')[0];
+            const end_date = this.endOfDate.toISOString().split('T')[0];
+            queryParams = { start_date, end_date };
+        }
+        this.router.navigate(
+            [],
+            {
+                relativeTo: this.activeRouter,
+                queryParams: queryParams
+            });
+    }
+
+
     isToday(date: Date): boolean {
         const today = new Date();
         return date.toISOString().split('T')[0] === today.toISOString().split('T')[0];
     }
-
 
 }
