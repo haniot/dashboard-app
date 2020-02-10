@@ -3,6 +3,12 @@ import * as Muuri from 'muuri';
 import { EnumMeasurementType } from '../models/measurement'
 import { MeasurementService } from '../services/measurement.service'
 import { MeasurementLast } from '../models/measurement.last'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { ActivatedRoute } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
+import { TimeSeries, TimeSeriesIntervalFilter, TimeSeriesType } from '../../activity/models/time.series'
+import { TimeSeriesService } from '../../activity/services/time.series.service'
 
 @Component({
     selector: 'measurement-dashboard',
@@ -12,21 +18,22 @@ import { MeasurementLast } from '../models/measurement.last'
 export class MeasurementDashboardComponent implements OnInit, OnChanges {
     @Input() patientId: string;
     EnumMeasurementType = EnumMeasurementType;
+    TimeSeriesType = TimeSeriesType;
+
     measurementLast: MeasurementLast;
     gridDivRef: ElementRef;
     gridDivWidth: number;
     loading: boolean;
-    temperatureThreshold = {
-        '0': { color: '#1b3863' },
-        '35.7': { color: '#2d6357' },
-        '37.5': { color: 'red' }
-    };
+    loadingHeartRate: boolean;
     fatThreshold = {
         '0': { color: '#00a594' },
         '25': { color: '#FBA53E' },
         '30': { color: 'red' }
     };
     bmi: number;
+    nameOfPatientSelected: string;
+    heartRate: TimeSeries;
+
 
     @ViewChild('gridDiv', { static: false })
     set gridDiv(element: ElementRef) {
@@ -43,8 +50,13 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
         this.gridDivWidth = this.gridDivRef.nativeElement.offsetWidth;
     }
 
-    constructor(private measurementService: MeasurementService) {
-
+    constructor(
+        private activeRouter: ActivatedRoute,
+        private measurementService: MeasurementService,
+        private modalService: ModalService,
+        private toastService: ToastrService,
+        private localStorageService: LocalStorageService,
+        private timeSeriesService: TimeSeriesService) {
     }
 
     ngOnInit() {
@@ -63,7 +75,21 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
                 return [grid1]
             }
         });
+        this.activeRouter.paramMap.subscribe((params) => {
+            this.patientId = params.get('patientId');
+            this.getPatientSelected();
+        });
     }
+
+
+    getPatientSelected(): void {
+        const patientSelected = JSON.parse(this.localStorageService.getItem('patientSelected'));
+        if (patientSelected && patientSelected.name) {
+            this.nameOfPatientSelected = patientSelected.name
+        }
+    }
+
+
 
     loadMeasurements(): void {
         this.loading = true;
@@ -73,15 +99,34 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
                 this.loading = false;
                 this.bmi = (this.measurementLast.weight.value * 10000) / Math.pow(this.measurementLast.height.value, 2);
             })
-            .catch(err => {
+            .catch(() => {
                 this.loading = false;
-                console.log(err)
             })
+    }
+
+    loadHeartRate(): void {
+        const filter = new TimeSeriesIntervalFilter();
+        filter.date = new Date().toISOString().split('T')[0];
+        filter.interval = '15m';
+        this.loadingHeartRate = true;
+        this.timeSeriesService.getWithResourceAndInterval(this.patientId, TimeSeriesType.heart_rate, filter)
+            .then(heartRate => {
+                this.heartRate = heartRate
+                this.loadingHeartRate = false;
+            })
+            .catch(() => {
+                this.loadingHeartRate = false;
+            })
+    }
+
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes && changes.patientId) {
             this.loadMeasurements();
+            this.loadHeartRate();
         }
     }
 }

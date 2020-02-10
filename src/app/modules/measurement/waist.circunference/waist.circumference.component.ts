@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
-import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
+import { EnumMeasurementType, Measurement } from '../models/measurement';
 import { TranslateService } from '@ngx-translate/core';
 import { Weight } from '../models/weight';
 import { MeasurementService } from '../services/measurement.service';
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -25,12 +27,15 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() onlyGraph: boolean;
+    @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
     logsIsEmpty: boolean;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -43,8 +48,10 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
+        private decimalPipe: DecimalPipe,
         private measurementService: MeasurementService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private modalService: ModalService
     ) {
         this.dataForGraph = new Array<Measurement>();
         this.dataForLogs = new Array<Measurement>();
@@ -57,7 +64,7 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.loadingMeasurements = false;
         this.selectAll = false;
         this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string }>();
@@ -70,12 +77,16 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         }
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    applyFilter(filter: any) {
+        this.intraday = filter['type'] && filter['type'] === 'today';
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, null, null, filter)
             .then(httpResponse => {
                 this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
+                if (this.dataForGraph && this.dataForGraph.length) {
+                    this.dataForGraph = this.dataForGraph.reverse();
+                }
                 this.updateGraph(this.dataForGraph);
                 this.filterChange.emit(this.dataForGraph);
             })
@@ -144,19 +155,23 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
 
         this.dataForGraph.forEach((element: Measurement) => {
-            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             series.data.push({
                 value: element.value,
+                formatted: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
         });
 
+        const yAxisMargin = this.onlyGraph ? -35 : 8;
+        const gridX = this.onlyGraph ? '3%' : '5%';
 
         this.options = {
             color: ['#3398DB'],
             tooltip: {
                 formatter: function (params) {
-                    return `${circumference}: ${params[0].data.value}cm` +
+                    return `${circumference}: ${params[0].data.formatted}cm` +
                         `<br ${date}: <br> ${params[0].name} ${at} ${params[0].data.time}`
                 },
                 trigger: 'axis',
@@ -165,38 +180,39 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
                 }
             },
             grid: [
-                { x: '5%', y: '7%', width: '100%' }
+                { x: gridX, y: '7%', width: '100%', height: '85%' }
             ],
             xAxis: xAxis,
-            yAxis: [
+            yAxis:
                 {
                     type: 'value',
                     axisLabel: {
-                        formatter: '{value}cm'
+                        formatter: '{value}cm',
+                        margin: yAxisMargin
                     }
                 }
-            ],
+            ,
             dataZoom: [
                 {
-                    type: 'slider'
+                    type: 'inside'
                 }
             ],
             series: series
         };
-
-        this.initializeListCheckMeasurements();
-
     }
 
     updateGraph(measurements: Array<any>): void {
         // clean
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -35 : 8;
         this.options.xAxis.data = [];
         this.options.series.data = [];
 
         measurements.forEach((element: Weight) => {
-            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             this.options.series.data.push({
                 value: element.value,
+                formatted: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
         });
@@ -210,7 +226,9 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
             .getAllByUserAndType(this.patientId, EnumMeasurementType.waist_circumference, this.page, this.limit)
             .then((httpResponse) => {
                 this.dataForLogs = httpResponse.body;
-                this.lastData = httpResponse.body[0];
+                if (this.dataForLogs && this.dataForLogs.length) {
+                    this.lastData = this.dataForLogs[0];
+                }
                 this.logsIsEmpty = this.dataForLogs.length === 0;
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
@@ -225,6 +243,10 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
 
     openModalConfirmation(measurementId: string) {
         this.remove.emit({ type: EnumMeasurementType.waist_circumference, resourceId: measurementId });
+    }
+
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
     }
 
     initializeListCheckMeasurements(): void {
@@ -254,6 +276,11 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
         this.updateStateButtonRemoveSelected();
     }
 
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
+    }
+
     updateStateButtonRemoveSelected(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
         this.stateButtonRemoveSelected = !!measurementsSelected.length;
@@ -264,10 +291,20 @@ export class WaistCircumferenceComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if ((changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
+        if ((changes.dataForGraph && changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
-            (changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
+            (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

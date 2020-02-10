@@ -9,12 +9,14 @@
                             [includeCard]="true" [includeLogs]="true"
                             [showSpinner]="!list.length && !listIsEmpty"
                             [dataForLogs]="listForLogs"
+                            [intraday]="true"
                             (remove)="openModalConfirmation($event)"></weight>
                 </div>
 
                 <div *ngIf="typeOfMeasurement.toString() === allTypesOfMeasurement.body_fat">
                     <fat [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                          [includeCard]="true" [includeLogs]="true" [showSpinner]="!list.length && !listIsEmpty"
+                         [intraday]="true"
                          [dataForLogs]="listForLogs" (remove)="openModalConfirmation($event)"></fat>
                 </div>
 
@@ -22,6 +24,7 @@
                     <height [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                             [includeCard]="true" [includeLogs]="true"
                             [showSpinner]="!list.length && !listIsEmpty"
+                            [intraday]="true"
                             [dataForLogs]="listForLogs" (remove)="openModalConfirmation($event)"></height>
                 </div>
 
@@ -30,6 +33,7 @@
                                          [includeCard]="true" [includeLogs]="true"
                                          [showSpinner]="!list.length && !listIsEmpty"
                                          [dataForLogs]="listForLogs"
+                                         [intraday]="true"
                                          (remove)="openModalConfirmation($event)"></waist-circunference>
                 </div>
 
@@ -38,6 +42,7 @@
                                       [includeCard]="true" [includeLogs]="true"
                                       [showSpinner]="!list.length && !listIsEmpty"
                                       [dataForLogs]="listForLogs"
+                                      [intraday]="true"
                                       (remove)="openModalConfirmation($event)"></body-temperature>
                 </div>
 
@@ -45,6 +50,7 @@
                     <blood-glucose [dataForGraph]="list" [filterVisibility]="true" [patientId]="patientId"
                                    [includeCard]="true" [includeLogs]="true"
                                    [showSpinner]="!list.length && !listIsEmpty"
+                                   [intraday]="true"
                                    [dataForLogs]="listForLogs" (remove)="openModalConfirmation($event)"></blood-glucose>
                 </div>
 
@@ -53,6 +59,7 @@
                                     [includeCard]="true" [includeLogs]="true"
                                     [showSpinner]="!list.length && !listIsEmpty"
                                     [dataForLogs]="listForLogs"
+                                    [intraday]="true"
                                     (remove)="openModalConfirmation($event)"></blood-pressure>
                 </div>
 

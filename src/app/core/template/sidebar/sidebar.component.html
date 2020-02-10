@@ -113,25 +113,42 @@
                 <p>
                     {{'SHARED.PATIENTS' | translate}}
                     <i class="material-icons">face</i>
-                    <i id="arrowMenuPatient" class="material-icons float-right" (click)="changeIconMenuPatient()"
-                       [title]="iconPatientMenu==='keyboard_arrow_down'?('SIDEBAR.EXPAND-MENU'|translate):('SIDEBAR.SHRINK-MENU'|translate)" *ngIf="patientSelected">{{iconPatientMenu}}</i>
+                    <i class="material-icons arrowMenu float-right" (click)="changeIconMenuPatient($event)"
+                       [title]="iconPatientMenu==='keyboard_arrow_down'?('SIDEBAR.EXPAND-MENU'|translate):('SIDEBAR.SHRINK-MENU'|translate)"
+                       *ngIf="patientSelected">{{iconPatientMenu}}</i>
                 </p>
 
             </a>
             <ul class="collapse list-unstyled submenu" [ngClass]="statePatientMenu"
                 id="patientSubmenu">
-                <li class="nav-subitem" [ngClass]="activeDashboardPatients" [ngClass]="activeDashboardPatients">
+                <li class="nav-subitem" [ngClass]="activeDashboardPatients">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'dashboard']">
                         <i class="material-icons">view_quilt</i>
                         <p>{{'SIDEBAR.DASHBOARD'|translate}}</p>
                     </a>
                 </li>
-                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients">
-                    <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'measurements']">
-                        <i class="material-icons">equalizer</i>
-                        <p>{{'SIDEBAR.MEASUREMENTS'|translate}}</p>
+                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients || activeGraphicStudy">
+                    <a class="nav-link"
+                       [routerLink]="['/app/patients',patientSelected,'measurements']">
+                        <p>
+                        <p>{{'SIDEBAR.MEASUREMENTS'|translate}}
+                            <i class="material-icons">equalizer</i>
+                        <i class="material-icons arrowMenu float-right" (click)="changeIconMenuMeasurement($event)"
+                           [title]="iconMeasurementMenu==='keyboard_arrow_down'?('SIDEBAR.EXPAND-MENU'|translate):('SIDEBAR.SHRINK-MENU'|translate)"
+                           *ngIf="patientSelected">{{iconMeasurementMenu}}</i>
+                        </p>
+
                     </a>
+                    <ul class="collapse list-unstyled submenu" [ngClass]="stateMeasurementMenu">
+                        <li class="nav-subitem" [ngClass]="activeGraphicStudy">
+                            <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'graphic-study']">
+                                <i class="material-icons">web</i>
+                                <p>{{'SIDEBAR.GRAPHIC-STUDY'|translate}}</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li class="nav-subitem" [ngClass]="activeQuestionnairesPatients">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'questionnaires']">
                         <i class="material-icons">receipt</i>
@@ -176,7 +193,7 @@
             </p>
         </div>
 
-        <div class="collapse show" id="collapseStudy" style="padding: 5px 10px">
+        <div class="collapse" id="collapseStudy" style="padding: 5px 10px">
             <hr style="margin: 0px 0px">
             <p class="card-title">{{'SIDEBAR.TOTAL-OF-PROFESSIONALS'|translate}}
                 : {{study.total_health_professionals}}</p>

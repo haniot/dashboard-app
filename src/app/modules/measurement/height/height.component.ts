@@ -3,12 +3,13 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
+import { EnumMeasurementType, Measurement } from '../models/measurement';
 import { Weight } from '../models/weight';
 import { MeasurementService } from '../services/measurement.service';
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
-import { ToastrService } from 'ngx-toastr'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -27,12 +28,15 @@ export class HeightComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() onlyGraph: boolean;
+    @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
     logsIsEmpty: boolean;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -47,7 +51,7 @@ export class HeightComponent implements OnInit, OnChanges {
         private datePipe: DatePipe,
         private measurementService: MeasurementService,
         private translateService: TranslateService,
-        private toastService: ToastrService
+        private modalService: ModalService
     ) {
         this.dataForGraph = new Array<Measurement>();
         this.dataForLogs = new Array<Measurement>();
@@ -60,7 +64,7 @@ export class HeightComponent implements OnInit, OnChanges {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.loadingMeasurements = false;
         this.selectAll = false;
         this.logsIsEmpty = false;
@@ -119,13 +123,16 @@ export class HeightComponent implements OnInit, OnChanges {
         };
 
         this.dataForGraph.forEach((element: Measurement) => {
-            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             series.data.push({
                 value: element.value,
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
         });
 
+        const yAxisMargin = this.onlyGraph ? -40 : 8;
+        const gridX = this.onlyGraph ? '3%' : '5%';
 
         this.options = {
             tooltip: {
@@ -142,28 +149,31 @@ export class HeightComponent implements OnInit, OnChanges {
                 }
             },
             grid: [
-                { x: '5%', y: '7%', width: '100%' }
+                { x: gridX, y: '7%', width: '100%', height: '85%' }
             ],
             xAxis: xAxis,
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value}cm'
+                    formatter: '{value}cm',
+                    margin: yAxisMargin
                 }
             },
-            dataZoom: [{ type: 'slider' }],
+            dataZoom: [{ type: 'inside' }],
             series: series
         };
-
-        this.initializeListCheckMeasurements();
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    applyFilter(filter: any) {
+        this.intraday = filter['type'] && filter['type'] === 'today';
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.height, null, null, filter)
             .then(httpResponse => {
                 this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
+                if (this.dataForGraph && this.dataForGraph.length) {
+                    this.dataForGraph = this.dataForGraph.reverse();
+                }
                 this.updateGraph(this.dataForGraph);
                 this.filterChange.emit(this.dataForGraph);
             })
@@ -174,11 +184,13 @@ export class HeightComponent implements OnInit, OnChanges {
 
     updateGraph(measurements: Array<any>): void {
         // clean weightGraph
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -40 : 8;
         this.options.xAxis.data = [];
         this.options.series.data = [];
 
         measurements.forEach((element: Weight) => {
-            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             this.options.series.data.push({
                 value: element.value,
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
@@ -208,7 +220,9 @@ export class HeightComponent implements OnInit, OnChanges {
             .then((httpResponse) => {
                 this.dataForLogs = httpResponse.body;
                 this.logsIsEmpty = this.dataForLogs.length === 0;
-                this.lastData = httpResponse.body[0];
+                if (this.dataForLogs && this.dataForLogs.length) {
+                    this.lastData = this.dataForLogs[0];
+                }
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
                 this.logsLoading = false;
@@ -222,6 +236,10 @@ export class HeightComponent implements OnInit, OnChanges {
 
     openModalConfirmation(measurementId: string) {
         this.remove.emit({ type: EnumMeasurementType.height, resourceId: measurementId })
+    }
+
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
     }
 
     initializeListCheckMeasurements(): void {
@@ -260,11 +278,26 @@ export class HeightComponent implements OnInit, OnChanges {
         return item.id;
     }
 
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if ((changes.dataForGraph && changes.dataForGraph.currentValue && changes.dataForGraph.previousValue
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

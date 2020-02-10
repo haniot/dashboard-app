@@ -486,10 +486,11 @@
     "SUBTITLE": "Select a pilot study to view."
   },
   "MEASUREMENTS": {
+    "TITLE": "Measurements",
     "BLOOD-GLUCOSE": {
-      "TITLE": "Blood glucose",
+      "TITLE": "Capillary Blood Glucose",
       "SUBTITLE": "",
-      "GLUCOSE": "Glucose",
+      "GLUCOSE": "Capillary blood glucose",
       "PERIOD": "Measurement period",
       "UNAVAILABLE-DATA": "No record of glucose enrolled!",
       "HYPOGLYCEMIA": "Hypoglycemia",
@@ -555,7 +556,7 @@
       "FAT-UNIT": "%",
       "WAIST-CIRCUMFERENCE": "Waist circumference",
       "TEMPERATURE": "Body temperature",
-      "GLUCOSE": "Blood Glucose",
+      "GLUCOSE": "Capillary Blood Glucose",
       "PRESSURE": "Blood pressure",
       "HEART-RATE": "Heart rate"
     },
@@ -565,7 +566,8 @@
         "POSTPRANDIAL": "Pos-prandial",
         "FASTING": "Fasting",
         "CASUAL": "Casual",
-        "BEDTIME": "Before bedtime"
+        "BEDTIME": "Before bedtime",
+        "OTHER": "Other"
       },
       "MEASUREMENT-TYPE": {
         "WEIGHT": "Weight",
@@ -573,7 +575,7 @@
         "FAT": "Body Fat",
         "WAIST-CIRCUMFERENCE": "Waist Circumference",
         "BODY-TEMPERATURE": "Body Temperature",
-        "BLOOD-GLUCOSE": "Glucose",
+        "BLOOD-GLUCOSE": "Capillary Blood Glucose",
         "BLOOD-PRESSURE": "Blood Pressure"
       },
       "UNDEFINED": "Out of parameters",
@@ -625,6 +627,16 @@
         "CONFIRM-MULTIPLE-REMOVE-PART2": "measurement(s)?"
       }
     },
+    "MODAL-NEW-MEASUREMENT": {
+      "TITLE": "Add measurement",
+      "INVALID-TYPE": "Invalid type",
+      "VALUE": "Value",
+      "INVALID-VALUE": "Invalid value",
+      "SPINNER-MESSAGE": "Saving measurement...",
+      "KILOGRAM": "Kilograms",
+      "POUNDS": "Pounds"
+    },
+    "BUTTON-ADD": "Manual Measurement",
     "LAST-REGISTER": "Last register",
     "LAST-REGISTER-DATE": "Date of last record",
     "PATTERN-DATE": "month/day/year hour",
@@ -820,7 +832,8 @@
     "MY-MEASUREMENTS": "My Measurements",
     "MY-QUESTIONNAIRES": "My Questionnaires",
     "EXPAND-MENU": "Expand menu...",
-    "SHRINK-MENU": "Shrink menu..."
+    "SHRINK-MENU": "Shrink menu...",
+    "GRAPHIC-STUDY": "Graphic study"
   },
   "SHARED": {
     "NAME": "Name",
@@ -1046,6 +1059,8 @@
     "NOT-CHANGE-LANGUAGE": "Could not change language!",
     "QUESTIONNAIRE-DELETED": "Questionnaire successfully removed!",
     "QUESTIONNAIRE-NOT-DELETED": "Unable to remove questionnaire!",
+    "MEASUREMENT-SAVED": "Measurement saved successfully!",
+    "MEASUREMENT-NOT-SAVED": "Could not save measurement!",
     "MEASUREMENT-REMOVED": "Measurement successfully removed!",
     "MEASUREMENT-NOT-REMOVED": "Could not remove measurement!",
     "ACCOUNT-NOT-DELETED": "Unable to delete account, please try again!",
@@ -1057,6 +1072,7 @@
     "PHYSICAL-ACTIVITY-NOT-LOADED": "Unable to load selected activity!"
   },
   "TIME-SERIES": {
+    "TITLE": "Time series",
     "ACTIVE-MINUTES": {
       "TITLE": "Active minutes",
       "ACTIVE-MINUTES": "active minutes",

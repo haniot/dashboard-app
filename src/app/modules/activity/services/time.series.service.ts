@@ -49,7 +49,7 @@ export class TimeSeriesService {
             .toPromise();
     }
 
-    getWithResourceAndInterval(patientId: string, resource: TimeSeriesType, filter: TimeSeriesIntervalFilter): Promise<TimeSeries> {
+    getWithResourceAndInterval(patientId: string, resource: TimeSeriesType, filter: any): Promise<TimeSeries> {
         return this.http
             .get<any>(`${environment.api_url}/${this.version}/patients/${patientId}/${resource}/date/` +
                 `${filter.date}/interval/${filter.interval}/timeseries`)

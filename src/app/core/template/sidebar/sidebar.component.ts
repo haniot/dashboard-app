@@ -68,14 +68,17 @@ export class SidebarComponent implements OnInit {
     activePatients: string;
     activeDashboardPatients: string;
     activeMeasurementsPatients: string;
+    activeGraphicStudy: string;
     activeQuestionnairesPatients: string;
     activeEvaluations: string;
     study: PilotStudy;
-    iconCollapse = 'keyboard_arrow_down';
+    iconCollapse = 'keyboard_arrow_up';
     userLogged: GenericUser;
     loadUserTime: any
     iconPatientMenu = 'keyboard_arrow_right';
+    iconMeasurementMenu = 'keyboard_arrow_right';
     statePatientMenu: string;
+    stateMeasurementMenu: string;
 
     constructor(
         private authService: AuthService,
@@ -166,16 +169,25 @@ export class SidebarComponent implements OnInit {
         this.activeEvaluations = (path_current.match('evaluations') && path_current.match('nutritional')) ? 'active' : '';
 
         this.activeDashboardPatients = (
-            (path_current.match('patients') && path_current.match('dashboard\$')) ||
+            (path_current.match('patients') && path_current.match('dashboard')) ||
             (path_current.match('activities') && path_current.match('physical_activity|sleep'))
         ) ? 'active' : '';
         const measurements = Object.keys(EnumMeasurementType);
-        const regex = measurements.join('\$|')
+        const regex = measurements.join('|')
         this.activeMeasurementsPatients = (
             path_current.match('patients') &&
-            (path_current.match('measurements\$|' + regex + '\$'))
+            (path_current.match('measurements\$|' + regex))
         ) ? 'active' : '';
         this.activeQuestionnairesPatients = (path_current.match('patients') && path_current.match('questionnaires\$')) ? 'active' : '';
+        this.activeGraphicStudy = (path_current.match('patients') && path_current.match('graphic-study')) ? 'active' : '';
+        this.stateMeasurementMenu = (this.activeMeasurementsPatients || this.activeGraphicStudy) ? 'show' : 'hidden';
+        this.activePatients = (this.activeDashboardPatients === 'active' ||
+            this.activeQuestionnairesPatients === 'active' || this.activeMeasurementsPatients === 'active' ||
+            this.activeGraphicStudy === 'active'
+        ) ?
+            'active parent-active' : this.activePatients;
+        this.activeMeasurementsPatients = this.activeGraphicStudy === 'active' ?
+            'active parent-active' : this.activeMeasurementsPatients;
     }
 
     myPilotStudies(): void {
@@ -221,9 +233,18 @@ export class SidebarComponent implements OnInit {
         this.iconUserMenu = this.iconUserMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
     }
 
-    changeIconMenuPatient(): void {
+    changeIconMenuPatient(event): void {
+        event.preventDefault();
+        event.stopPropagation();
         this.iconPatientMenu = this.iconPatientMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
         this.statePatientMenu = this.iconPatientMenu === 'keyboard_arrow_right' ? 'show' : '';
+    }
+
+    changeIconMenuMeasurement(event): void {
+        event.preventDefault();
+        event.stopPropagation();
+        this.iconMeasurementMenu = this.iconMeasurementMenu === 'keyboard_arrow_down' ? 'keyboard_arrow_right' : 'keyboard_arrow_down';
+        this.stateMeasurementMenu = this.iconMeasurementMenu === 'keyboard_arrow_right' ? 'show' : 'hidden';
     }
 
     onClickMenuPatient(event): void {

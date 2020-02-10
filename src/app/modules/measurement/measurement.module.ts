@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
@@ -15,7 +15,6 @@ import {
     MatPaginatorModule
 } from '@angular/material';
 
-import { MeasurementComponent } from './measurement.component/measurement.component';
 import { MeasurementService } from './services/measurement.service';
 import { WeightComponent } from './weight/weight.component';
 import { HeightComponent } from './height/height.component';
@@ -29,7 +28,6 @@ import { DeviceTypePipe } from './pipes/device.type.pipe';
 import { DeviceComponent } from './device/device.component';
 import { DeviceService } from './services/device.service';
 import { DecimalFormatterPipe } from './pipes/decimal.formatter.pipe';
-import { MeasurementCardComponent } from './measurement.card/measurement.card.component';
 import { MeasurementLogsComponent } from './measurement.logs/measurement.logs.component';
 import { MeasurementTypePipe } from './pipes/measurement.type.pipe';
 import { SharedModule } from '../../shared/shared.module'
@@ -37,10 +35,13 @@ import { Ng5SliderModule } from 'ng5-slider'
 import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
 import { MeasurementDashboardComponent } from './measurement.dashboard/measurement.dashboard.component';
 import { NgxGaugeModule } from 'ngx-gauge'
+import { MatSelectModule } from '@angular/material/select'
+import { NgxMatDatetimePickerModule } from 'ngx-mat-datetime-picker'
+import { ActivityModule } from '../activity/activity.module';
+import { NewMeasurementsComponent } from './new.measurements/new.measurements.component'
 
 @NgModule({
     declarations: [
-        MeasurementComponent,
         WeightComponent,
         HeightComponent,
         WaistCircumferenceComponent,
@@ -52,11 +53,10 @@ import { NgxGaugeModule } from 'ngx-gauge'
         DeviceTypePipe,
         FatComponent,
         DeviceComponent,
-        DecimalFormatterPipe,
-        MeasurementCardComponent,
         MeasurementLogsComponent,
         MeasurementTypePipe,
-        MeasurementDashboardComponent
+        MeasurementDashboardComponent,
+        NewMeasurementsComponent
     ],
     imports: [
         CommonModule,
@@ -74,10 +74,13 @@ import { NgxGaugeModule } from 'ngx-gauge'
         MatCheckboxModule,
         MatPaginatorModule,
         Ng5SliderModule,
-        NgxGaugeModule
+        NgxGaugeModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        NgxMatDatetimePickerModule,
+        ActivityModule
     ],
     exports: [
-        MeasurementComponent,
         MeasurementLogsComponent,
         DeviceComponent,
         MealPipe,
@@ -91,8 +94,8 @@ import { NgxGaugeModule } from 'ngx-gauge'
         ViewMeasurementsComponent,
         DecimalFormatterPipe,
         MeasurementTypePipe,
-        MeasurementCardComponent,
-        MeasurementDashboardComponent
+        MeasurementDashboardComponent,
+        NewMeasurementsComponent
     ],
     providers: [
         MeasurementService,
@@ -100,7 +103,7 @@ import { NgxGaugeModule } from 'ngx-gauge'
         DatePipe,
         MealPipe,
         DeviceTypePipe,
-        DecimalFormatterPipe
+        MeasurementTypePipe
     ]
 })
 export class MeasurementModule {

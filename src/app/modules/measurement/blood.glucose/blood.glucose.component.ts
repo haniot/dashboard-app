@@ -5,10 +5,12 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { BloodGlucose, MealType } from '../models/blood.glucose';
 import { MeasurementService } from '../services/measurement.service';
-import { EnumMeasurementType, SearchForPeriod } from '../models/measurement'
+import { EnumMeasurementType } from '../models/measurement'
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { ToastrService } from 'ngx-toastr'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -27,12 +29,15 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() onlyGraph: boolean;
+    @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     lastData: BloodGlucose;
     options: any;
     echartsInstance: any;
     logsIsEmpty: boolean;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -47,7 +52,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         private datePipe: DatePipe,
         private measurementService: MeasurementService,
         private translateService: TranslateService,
-        private toastService: ToastrService
+        private modalService: ModalService
     ) {
         this.dataForGraph = new Array<BloodGlucose>();
         this.dataForLogs = new Array<BloodGlucose>();
@@ -61,7 +66,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.removingMeasurements = false;
         this.selectAll = false;
         this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>();
@@ -85,6 +90,7 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const fasting = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.FASTING');
         const casual = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.CASUAL');
         const bedtime = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.BEDTIME');
+        const other = this.translateService.instant('MEASUREMENTS.PIPES.MEAL.OTHER');
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
         const glucose = this.translateService.instant('MEASUREMENTS.BLOOD-GLUCOSE.GLUCOSE');
@@ -271,6 +277,15 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 barMaxWidth: 100,
                 color: '#D2B48C',
                 markPoint: markPoint
+            },
+            {
+                name: other,
+                label: labelOption,
+                type: 'bar',
+                data: [],
+                barMaxWidth: 100,
+                color: '#c3c3c3',
+                markPoint: markPoint
             }
         ];
 
@@ -293,7 +308,8 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
         this.dataForGraph.forEach((element: BloodGlucose, index) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
-            const newDate = this.datePipe.transform(element.timestamp, 'short');
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            const newDate = this.datePipe.transform(element.timestamp, format);
             const findDate = xAxis.data.find(currentDate => {
                 return currentDate === newDate
             })
@@ -335,8 +351,17 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                         time: mediumTime
                     };
                     break;
+                case MealType.other:
+                    series[5].data[index] = {
+                        value: element.value,
+                        time: mediumTime
+                    };
+                    break;
             }
         });
+
+        const yAxisMargin = this.onlyGraph ? -45 : 8;
+        const gridX = this.onlyGraph ? '3%' : '8%';
 
         this.options = {
             tooltip: {
@@ -356,37 +381,38 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                 }
             },
             legend: {
-                data: [preprandial, postprandial, fasting, casual, bedtime]
+                data: [preprandial, postprandial, fasting, casual, bedtime, other]
             },
             grid: [
-                { x: '8%', y: '9%', width: '100%' }
+                { x: gridX, y: '10%', width: '100%', height: '83%' }
             ],
             xAxis: xAxis,
-            yAxis: [
-                {
-                    type: 'value',
-                    axisLabel: {
-                        formatter: '{value}mg/dl'
-                    }
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}mg/dl',
+                    margin: yAxisMargin
                 }
-            ],
+            },
             dataZoom: [
                 {
-                    type: 'slider'
+                    type: 'inside'
                 }
             ],
             series: series
         };
-
-        this.initializeListCheckMeasurements();
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    applyFilter(filter: any) {
+        this.intraday = filter['type'] && filter['type'] === 'today';
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.blood_glucose, null, null, filter)
             .then(httpResponse => {
                 this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
+                if (this.dataForGraph && this.dataForGraph.length) {
+                    this.dataForGraph = this.dataForGraph.reverse();
+                }
                 this.updateGraph(this.dataForGraph);
                 this.filterChange.emit(this.dataForGraph);
             })
@@ -411,18 +437,24 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         const bedtimes = measurements.filter((measurement: BloodGlucose) => {
             return measurement.meal === MealType.bedtime;
         });
+        const others = measurements.filter((measurement: BloodGlucose) => {
+            return measurement.meal === MealType.other;
+        });
 
         // clean
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -45 : 8;
         this.options.xAxis.data = [];
         this.options.series[0].data = new Array(preprandials.length);
         this.options.series[1].data = new Array(preprandials.length + postprandials.length);
         this.options.series[2].data = new Array(postprandials.length + fastings.length);
         this.options.series[3].data = new Array(fastings.length + casuals.length);
         this.options.series[4].data = new Array(casuals.length + bedtimes.length);
+        this.options.series[5].data = new Array(bedtimes.length + others.length);
 
         measurements.forEach((element: BloodGlucose, index) => {
             const mediumTime = this.datePipe.transform(element.timestamp, 'mediumTime');
-            const newDate = this.datePipe.transform(element.timestamp, 'shortDate');
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            const newDate = this.datePipe.transform(element.timestamp, format);
             const findDate = this.options.xAxis.data.find(currentDate => {
                 return currentDate === newDate
             })
@@ -464,6 +496,12 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
                         time: mediumTime
                     };
                     break;
+                case MealType.other:
+                    this.options.series[5].data[index] = {
+                        value: element.value,
+                        time: mediumTime
+                    };
+                    break;
             }
         });
         this.echartsInstance.setOption(this.options);
@@ -490,7 +528,9 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             .then((httpResponse) => {
                 this.dataForLogs = httpResponse.body;
                 this.logsIsEmpty = this.dataForLogs.length === 0;
-                this.lastData = httpResponse.body[0];
+                if (this.dataForLogs && this.dataForLogs.length) {
+                    this.lastData = this.dataForLogs[0];
+                }
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
                 this.logsLoading = false;
@@ -504,6 +544,10 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
 
     openModalConfirmation(measurementId: string) {
         this.remove.emit({ type: EnumMeasurementType.blood_glucose, resourceId: measurementId })
+    }
+
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
     }
 
     initializeListCheckMeasurements(): void {
@@ -533,6 +577,11 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
         this.updateStateButtonRemoveSelected();
     }
 
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
+    }
+
     updateStateButtonRemoveSelected(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
         this.stateButtonRemoveSelected = !!measurementsSelected.length;
@@ -547,6 +596,16 @@ export class BloodGlucoseComponent implements OnInit, OnChanges {
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

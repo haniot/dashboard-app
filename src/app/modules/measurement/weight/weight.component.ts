@@ -7,8 +7,10 @@ import { PageEvent } from '@angular/material'
 import { Weight } from '../models/weight';
 import { DecimalFormatterPipe } from '../pipes/decimal.formatter.pipe';
 import { MeasurementService } from '../services/measurement.service';
-import { EnumMeasurementType, SearchForPeriod } from '../models/measurement';
+import { EnumMeasurementType } from '../models/measurement';
 import { ConfigurationBasic } from '../../config.matpaginator';
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -25,14 +27,17 @@ export class WeightComponent implements OnInit, OnChanges {
     @Input() includeLogs: boolean;
     @Input() patientId: string;
     @Input() showSpinner: boolean;
+    @Input() onlyGraph: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     logsIsEmpty: boolean;
     lastData: Weight;
     weightGraph: any;
     echartsInstance: any;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -46,6 +51,7 @@ export class WeightComponent implements OnInit, OnChanges {
     constructor(
         private datePipe: DatePipe,
         private decimalPipe: DecimalFormatterPipe,
+        private modalService: ModalService,
         private measurementService: MeasurementService,
         private translateService: TranslateService
     ) {
@@ -60,7 +66,7 @@ export class WeightComponent implements OnInit, OnChanges {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.loadingMeasurements = false;
         this.selectAll = false;
         this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string }>();
@@ -73,7 +79,8 @@ export class WeightComponent implements OnInit, OnChanges {
         }
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    applyFilter(filter: any) {
+        this.intraday = filter['type'] && filter['type'] === 'today';
         this.showSpinner = true;
         this.dataForGraph = [];
         this.measurementService
@@ -81,6 +88,9 @@ export class WeightComponent implements OnInit, OnChanges {
             .then(httpResponse => {
                 this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
+                if (this.dataForGraph && this.dataForGraph.length) {
+                    this.dataForGraph = this.dataForGraph.reverse();
+                }
                 this.updateGraph(this.dataForGraph);
                 this.filterChange.emit(this.dataForGraph);
             })
@@ -165,39 +175,45 @@ export class WeightComponent implements OnInit, OnChanges {
         };
 
         this.dataForGraph.forEach((element: Weight) => {
-            xAxisWeight.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            xAxisWeight.data.push(this.datePipe.transform(element.timestamp, format));
             seriesWeight.data.push({
-                value: this.decimalPipe.transform(element.value),
+                value: element.value,
+                formatted: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
             if (element.body_fat) {
-                xAxisFat.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+                xAxisFat.data.push(this.datePipe.transform(element.timestamp, format));
                 seriesFat.data.push({
-                    value: element.body_fat,
+                    value: this.decimalPipe.transform(element.body_fat),
+                    formatted: this.decimalPipe.transform(element.body_fat),
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
                 });
             }
         });
+
+        const yAxisMargin = this.onlyGraph ? -20 : 8;
 
         this.weightGraph = {
             tooltip: {
                 formatter: function (params) {
                     if (params.seriesName === weigth) {
                         return weigth +
-                            `: ${params.data.value}Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                            `: ${params.data.formatted}Kg <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                     }
                     return body_fat +
-                        `: ${params.data.value}% <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
+                        `: ${params.data.formatted}% <br> ${date}: <br> ${params.name} ${at} ${params.data.time}`;
                 }
             },
             grid: [
-                { x: '3%', y: '7%', width: '100%' }
+                { x: '3%', y: '7%', width: '100%', height: '86%' }
             ],
             xAxis: xAxisWeight,
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value}'
+                    formatter: '{value}',
+                    margin: yAxisMargin
                 }
             },
             legend: {
@@ -205,7 +221,7 @@ export class WeightComponent implements OnInit, OnChanges {
             },
             dataZoom: [
                 {
-                    type: 'slider'
+                    type: 'inside'
                 }
             ],
             series: [
@@ -213,8 +229,6 @@ export class WeightComponent implements OnInit, OnChanges {
                 seriesFat
             ]
         };
-
-        this.initializeListCheckMeasurements();
     }
 
     loadMeasurements(): any {
@@ -224,7 +238,9 @@ export class WeightComponent implements OnInit, OnChanges {
             .then((httpResponse) => {
                 this.dataForLogs = httpResponse.body;
                 this.logsIsEmpty = this.dataForLogs.length === 0;
-                this.lastData = this.dataForLogs[0];
+                if (this.dataForLogs && this.dataForLogs.length) {
+                    this.lastData = this.dataForLogs[0];
+                }
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
                 this.logsLoading = false;
@@ -242,6 +258,10 @@ export class WeightComponent implements OnInit, OnChanges {
 
     openModalConfirmation(measurementId: string) {
         this.remove.emit({ type: EnumMeasurementType.weight, resourceId: measurementId })
+    }
+
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
     }
 
     initializeListCheckMeasurements(): void {
@@ -271,22 +291,30 @@ export class WeightComponent implements OnInit, OnChanges {
         this.updateStateButtonRemoveSelected();
     }
 
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
+    }
+
     updateGraph(measurements: Array<any>): void {
         // clean weightGraph
+        this.weightGraph.yAxis.axisLabel.margin = this.onlyGraph ? -20 : 8;
         this.weightGraph.xAxis.data = new Array<any>();
         this.weightGraph.series[0].data = [];
         this.weightGraph.series[1].data = [];
 
         measurements.forEach((element: Weight) => {
-            this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
             this.weightGraph.series[0].data.push({
                 value: this.decimalPipe.transform(element.value),
+                formatted: this.decimalPipe.transform(element.value),
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
             if (element.body_fat) {
-                this.weightGraph.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
                 this.weightGraph.series[1].data.push({
-                    value: element.body_fat,
+                    value: this.decimalPipe.transform(element.body_fat),
+                    formatted: this.decimalPipe.transform(element.body_fat),
                     time: this.datePipe.transform(element.timestamp, 'mediumTime')
                 });
             }
@@ -309,6 +337,16 @@ export class WeightComponent implements OnInit, OnChanges {
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -28,7 +28,9 @@ import { ViewResourcesComponent } from './view.resources/view.resources.componen
 import { ActivityModule } from '../activity/activity.module';
 import { PatientQuestionnairesComponent } from './patient.questionnaires/patient.questionnaires.component';
 import { PatientDashboardComponent } from './patient.dashboard/patient.dashboard.component';
-import { PatientMeasurementsComponent } from './patient.measurements/patient.measurements.component'
+import { PatientMeasurementsComponent } from './patient.measurements/patient.measurements.component';
+import { GraphicStudyComponent } from './graphic.study/graphic.study.component'
+import { GridsterModule } from 'angular-gridster2'
 
 @NgModule({
     declarations: [
@@ -43,7 +45,8 @@ import { PatientMeasurementsComponent } from './patient.measurements/patient.mea
         ViewResourcesComponent,
         PatientQuestionnairesComponent,
         PatientDashboardComponent,
-        PatientMeasurementsComponent
+        PatientMeasurementsComponent,
+        GraphicStudyComponent
     ],
     imports: [
         CommonModule,
@@ -61,15 +64,13 @@ import { PatientMeasurementsComponent } from './patient.measurements/patient.mea
         NgxEchartsModule,
         MatCheckboxModule,
         MatIconModule,
+        GridsterModule,
 
         PatientRoutingModule,
         HabitsModule,
         MeasurementModule,
         ActivityModule,
         SettingsModule
-    ],
-    providers: [
-        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
     ],
     exports: [
         PatientTableComponent,

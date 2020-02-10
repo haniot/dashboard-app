@@ -1,6 +1,6 @@
 <time-series-card [title]="'TIME-SERIES.STEPS.TITLE'|translate"
                   [subtitle]="'TIME-SERIES.STEPS.SUBTITLE'|translate"
-                  (filter_change)="applyFilter($event)" *ngIf="includeCard">
+                  (filter_change)="applyFilter($event)" *ngIf="includeCard && !onlyGraph">
 
     <div class="row justify-content-center">
 
@@ -36,7 +36,7 @@
 
 </time-series-card>
 
-<div class="row justify-content-center" *ngIf="!includeCard">
+<div class="row justify-content-center" *ngIf="!includeCard && !onlyGraph">
 
     <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="padding-bottom: 0px">
         <div class="card card-stats">
@@ -66,4 +66,16 @@
         </div>
     </div>
 
+</div>
+
+<div *ngIf="onlyGraph" style="width:100%;height:100%">
+    <div style="width:100%;height:100%" echarts
+         [options]="options" (chartInit)="onChartInit($event)">
+    </div>
+    <div  *ngIf="showSpinner || !data || listIsEmpty"
+          style="position: absolute; top:0; bottom: 0; left:0; right: 0; margin: auto; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <spinner *ngIf="showSpinner" style="position: absolute; left: 0; right: 0; margin: auto"></spinner>
+        <span *ngIf="(!data && !showSpinner) || listIsEmpty"
+              class="badge badge-warning badge-12 ellipsis">{{'TIME-SERIES.UNAVAILABLE-DATA'|translate}}</span>
+    </div>
 </div>

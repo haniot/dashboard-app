@@ -3,10 +3,12 @@ import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { EnumMeasurementType, Measurement, SearchForPeriod } from '../models/measurement';
+import { EnumMeasurementType, Measurement } from '../models/measurement';
 import { MeasurementService } from '../services/measurement.service';
 import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
+import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -25,12 +27,15 @@ export class FatComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Output() filterChange: EventEmitter<any>;
     @Output() remove: EventEmitter<{ type: EnumMeasurementType, resourceId: string | string[] }>;
+    @Input() onlyGraph: boolean;
+    @Input() filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    @Input() intraday: boolean;
+    EnumMeasurementType = EnumMeasurementType;
     lastData: Measurement;
     options: any;
     echartsInstance: any;
     logsIsEmpty: boolean;
     logsLoading: boolean;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -44,7 +49,8 @@ export class FatComponent implements OnInit, OnChanges {
     constructor(
         private datePipe: DatePipe,
         private measurementService: MeasurementService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private modalService: ModalService
     ) {
         this.dataForGraph = new Array<Measurement>();
         this.dataForLogs = new Array<Measurement>();
@@ -58,7 +64,7 @@ export class FatComponent implements OnInit, OnChanges {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
+        this.filter = new TimeSeriesIntervalFilter();
         this.loadingMeasurements = false;
         this.selectAll = false;
         this.remove = new EventEmitter<{ type: EnumMeasurementType, resourceId: string }>();
@@ -102,7 +108,7 @@ export class FatComponent implements OnInit, OnChanges {
                 normal: {
                     show: true,
                     position: 'outside',
-                    offset: [0, -20],
+                    offset: [0, -5],
                     formatter: function (params) {
                         return `${params.value}% `;
                     },
@@ -135,9 +141,12 @@ export class FatComponent implements OnInit, OnChanges {
                 value: element.value,
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
-            xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            xAxis.data.push(this.datePipe.transform(element.timestamp, format));
         });
 
+        const yAxisMargin = this.onlyGraph ? -40 : 8;
+        const gridX = this.onlyGraph ? '3%' : '5%';
 
         this.options = {
 
@@ -148,34 +157,36 @@ export class FatComponent implements OnInit, OnChanges {
                 }
             },
             grid: [
-                { x: '5%', y: '12%', width: '100%' }
+                { x: gridX, y: '12%', width: '100%', height: '80%' }
             ],
             xAxis: xAxis,
-            yAxis: [
-                {
-                    type: 'value',
-                    axisLabel: {
-                        formatter: '{value} %'
-                    }
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} %',
+                    margin: yAxisMargin
                 }
-            ],
+            }
+            ,
             dataZoom: [
                 {
-                    type: 'slider'
+                    type: 'inside'
                 }
             ],
             series: series
         };
-
-        this.initializeListCheckMeasurements();
     }
 
-    applyFilter(filter: SearchForPeriod) {
+    applyFilter(filter: any) {
+        this.intraday = filter['type'] && filter['type'] === 'today';
         this.showSpinner = true;
         this.measurementService.getAllByUserAndType(this.patientId, EnumMeasurementType.body_fat, null, null, filter)
             .then(httpResponse => {
                 this.dataForGraph = httpResponse.body;
                 this.showSpinner = false;
+                if (this.dataForGraph && this.dataForGraph.length) {
+                    this.dataForGraph = this.dataForGraph.reverse();
+                }
                 this.updateGraph(this.dataForGraph);
                 this.filterChange.emit(this.dataForGraph);
             })
@@ -185,7 +196,7 @@ export class FatComponent implements OnInit, OnChanges {
     }
 
     updateGraph(measurements: Array<Measurement>): void {
-
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -40 : 8;
         this.options.xAxis.data = [];
         this.options.series.data = [];
 
@@ -194,7 +205,8 @@ export class FatComponent implements OnInit, OnChanges {
                 value: element.value,
                 time: this.datePipe.transform(element.timestamp, 'mediumTime')
             });
-            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, 'shortDate'));
+            const format = this.intraday ? 'mediumTime' : 'shortDate';
+            this.options.xAxis.data.push(this.datePipe.transform(element.timestamp, format));
         });
 
         this.echartsInstance.setOption(this.options);
@@ -221,7 +233,9 @@ export class FatComponent implements OnInit, OnChanges {
             .then((httpResponse) => {
                 this.dataForLogs = httpResponse.body;
                 this.logsIsEmpty = this.dataForLogs.length === 0;
-                this.lastData = httpResponse.body[0];
+                if (this.dataForLogs && this.dataForLogs.length) {
+                    this.lastData = this.dataForLogs[0];
+                }
                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                 this.initializeListCheckMeasurements();
                 this.logsLoading = false;
@@ -235,6 +249,10 @@ export class FatComponent implements OnInit, OnChanges {
 
     openModalConfirmation(measurementId: string) {
         this.remove.emit({ type: EnumMeasurementType.body_fat, resourceId: measurementId })
+    }
+
+    openModalNewMeasurement(): void {
+        this.modalService.open('newMeasurement');
     }
 
     initializeListCheckMeasurements(): void {
@@ -264,6 +282,11 @@ export class FatComponent implements OnInit, OnChanges {
         this.updateStateButtonRemoveSelected();
     }
 
+    savedSuccessfully(): void {
+        this.loadMeasurements();
+        this.applyFilter(this.filter);
+    }
+
     updateStateButtonRemoveSelected(): void {
         const measurementsSelected = this.listCheckMeasurements.filter(element => element === true);
         this.stateButtonRemoveSelected = !!measurementsSelected.length;
@@ -278,6 +301,16 @@ export class FatComponent implements OnInit, OnChanges {
             && changes.dataForGraph.currentValue.length !== changes.dataForGraph.previousValue.length) ||
             (changes.dataForGraph && changes.dataForGraph.currentValue.length && !changes.dataForGraph.previousValue)) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            if (!this.filter['type']) {
+                const type = this.filter['interval'] ? 'today' : '';
+                this.applyFilter({ type, filter: this.filter });
+            } else {
+                this.applyFilter(this.filter);
+            }
         }
         this.logsIsEmpty = this.dataForLogs.length === 0;
         this.initializeListCheckMeasurements();
