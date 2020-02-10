@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../admin/services/users.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { LanguagesConfiguration } from '../../../../assets/i18n/config.js';
+import { DateAdapter } from '@angular/material/core'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -23,7 +24,8 @@ export class LanguageSettingsComponent implements OnInit {
         private userService: UserService,
         private localStorageService: LocalStorageService,
         private toastService: ToastrService,
-        private translate: TranslateService) {
+        private translate: TranslateService,
+        private datePickerAdapter: DateAdapter<any>) {
         this.listOfLanguages = new Array<String>();
     }
 
@@ -45,6 +47,7 @@ export class LanguageSettingsComponent implements OnInit {
             .then(() => {
                 this.localStorageService.setItem('language', language)
                 this.translate.use(language);
+                this.datePickerAdapter.setLocale(language);
             })
             .catch(() => {
                 this.toastService.error(this.translate.instant('TOAST-MESSAGES.NOT-CHANGE-LANGUAGE'));

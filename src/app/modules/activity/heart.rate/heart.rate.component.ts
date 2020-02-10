@@ -22,6 +22,9 @@ export class HeartRateComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Input() intraday: boolean;
     @Input() listIsEmpty: boolean;
+    @Input() onlyGraph: boolean;
+    @Input() hiddenYAxis: boolean;
+    @Input() filter: any;
     options: any;
     optionsIntraday: any;
     optionsInstance: any;
@@ -203,6 +206,8 @@ export class HeartRateComponent implements OnInit, OnChanges {
             }
         }
 
+        const yAxisMargin = this.onlyGraph ? -35 : 8;
+
         this.options = {
             tooltip: {
                 trigger: 'axis',
@@ -236,6 +241,14 @@ export class HeartRateComponent implements OnInit, OnChanges {
             series: seriesOptions
         };
 
+        const yAxisVisibility = !this.hiddenYAxis;
+        const grid = this.hiddenYAxis ? [{ x: '1%', y: '10%', width: '98%', height: '80%' }] : [{
+            x: '7%',
+            y: '8%',
+            width: '93%',
+            height: '86%'
+        }];
+
         this.optionsIntraday = {
             tooltip: {
                 trigger: 'axis',
@@ -256,15 +269,17 @@ export class HeartRateComponent implements OnInit, OnChanges {
             },
             xAxis: xAxisOptionsLastDate,
             yAxis: {
+                show: yAxisVisibility,
                 splitLine: {
                     show: false
                 },
                 axisLabel: {
-                    formatter: '{value} bpm'
+                    formatter: '{value} bpm',
+                    margin: yAxisMargin
                 },
                 min: (min_value - 5)
             },
-            grid: [{ x: '7%', y: '8%', width: '93%', height: '86%' }],
+            grid: grid,
             dataZoom: {
                 show: true,
                 type: 'inside'
@@ -299,7 +314,6 @@ export class HeartRateComponent implements OnInit, OnChanges {
             },
             series: seriesOptionsLastDate
         };
-
     }
 
     applyFilter(event: any) {
@@ -335,7 +349,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     updateGraph(measurements: Array<TimeSeries>): void {
-
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -35 : 8;
         this.optionsIntraday.xAxis.data = [];
         this.optionsIntraday.series.data = [];
 
@@ -358,6 +372,11 @@ export class HeartRateComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.data && changes.data.currentValue !== changes.data.previousValue) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            this.applyFilter(this.filter);
         }
     }
 

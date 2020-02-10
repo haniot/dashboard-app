@@ -9,7 +9,7 @@
                      <p class="card-category">{{subtitle}}</p>
                 </span>
 
-                <ul class="nav nav-tabs right navigation" data-tabs="tabs">
+                <ul class="nav nav-tabs right navigation" data-tabs="tabs" *ngIf="filter_visibility">
                     <li class="nav-item">
                         <a class="nav-link" [ngClass]="filterSelected===filterOptions.today?'active':''"
                            data-toggle="tab"
@@ -67,10 +67,19 @@
                            [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
                     </li>
                     <li class="nav-item text-center" *ngIf="filterSelected === 'today'">
-                        <label style="color:white">
+                        <input matInput class="form-control" [matDatepicker]="pickerBirthDate"
+                               name="currentDate"
+                               data-date-format="yyyy-MM-dd"
+                               [max]="today"
+                               [(ngModel)]="currentDate"
+                               (dateChange)="emitChangeFilter()"
+                               (focus)="pickerBirthDate.open()" style="visibility: hidden; position: absolute">
+                        <label style="color:white; cursor: pointer" (click)="pickerBirthDate.open()">
                             {{isToday(currentDate) ? ('MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate) : currentDate | date:'EEEE'}}
                         </label><br>
                         <label style="color:white">{{currentDate | date}}</label>
+                        <mat-datepicker #pickerBirthDate>
+                        </mat-datepicker>
                     </li>
                     <li class="nav-item text-center" *ngIf="filterSelected !== 'today'"
                         style="display: grid">
@@ -105,7 +114,7 @@
                         <p class="card-category">{{subtitle}}</p>
                 </span>
 
-                <ul class="nav nav-tabs right navigation" data-tabs="tabs" *ngIf="isMobile()">
+                <ul class="nav nav-tabs right navigation" data-tabs="tabs" *ngIf="filter_visibility && isMobile()">
                     <li class="nav-item">
                         <div class="dropdown">
                             <a class="dropdown-toggle nav-link active" id="dropdownMenuButton"
@@ -151,7 +160,7 @@
                     </li>
                 </ul>
 
-                <ul class="nav nav-tabs navigation" data-tabs="tabs"
+                <ul class="nav nav-tabs navigation" data-tabs="tabs" *ngIf="filter_visibility"
                     style="position: absolute; bottom: 0; left: 0; right: 0;justify-content:space-around;">
                     <li class="nav-item" (click)="previous()">
                         <i class="material-icons float-left" style="margin: 10px 0px;"

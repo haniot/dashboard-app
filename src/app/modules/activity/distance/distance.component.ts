@@ -19,6 +19,8 @@ export class DistanceComponent implements OnInit, OnChanges {
     @Input() showSpinner: boolean;
     @Input() intraday: boolean;
     @Input() listIsEmpty: boolean;
+    @Input() onlyGraph: boolean;
+    @Input() filter: any;
     options: any;
     echartsInstance: any;
 
@@ -116,7 +118,8 @@ export class DistanceComponent implements OnInit, OnChanges {
         }
 
         const grid = this.intraday ? [{ x: '5%', y: '7%', width: '100%', height: '90%' }] :
-            [{ x: '5%', y: '5%', width: '100%', height: '88%' }]
+            [{ x: '5%', y: '5%', width: '100%', height: '88%' }];
+        const yAxisMargin = this.onlyGraph ? -35 : 8;
 
         this.options = {
             legend: {
@@ -142,14 +145,18 @@ export class DistanceComponent implements OnInit, OnChanges {
                 type: 'inside'
             },
             xAxis: xAxisOptions,
-            yAxis: {},
+            yAxis: {
+                axisLabel: {
+                    margin: yAxisMargin
+                }
+            },
             series: seriesOptions
         };
-
+        this.listIsEmpty = !!seriesOptions.data.length;
     }
 
     updateGraph(measurements: Array<TimeSeries>): void {
-
+        this.options.yAxis.axisLabel.margin = this.onlyGraph ? -35 : 8;
         this.options.xAxis.data = [];
         this.options.series.data = [];
 
@@ -166,12 +173,18 @@ export class DistanceComponent implements OnInit, OnChanges {
 
         });
 
+        this.listIsEmpty = !!this.options.data.length;
         this.echartsInstance.setOption(this.options);
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.data && changes.data.currentValue !== changes.data.previousValue) {
             this.loadGraph();
+        }
+        if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
+            && changes.filter.currentValue !== changes.filter.previousValue) ||
+            (changes.filter && changes.filter.currentValue && !changes.filter.previousValue)) {
+            this.applyFilter(this.filter);
         }
     }
 

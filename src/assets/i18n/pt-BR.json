@@ -486,11 +486,12 @@
     "SUBTITLE": "Selecione um estudo piloto para visualizar."
   },
   "MEASUREMENTS": {
+    "TITLE": "Medições",
     "BLOOD-GLUCOSE": {
-      "TITLE": "Glicose no sangue",
+      "TITLE": "Glicemia capilar",
       "SUBTITLE": "",
       "PERIOD": "Período da medição",
-      "GLUCOSE": "Glicose",
+      "GLUCOSE": "Glicemia capilar",
       "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
       "HYPOGLYCEMIA": "Hipoglicemia",
       "NORMAL": "Normal",
@@ -555,7 +556,7 @@
       "FAT-UNIT": "%",
       "WAIST-CIRCUMFERENCE": "Circunferência da cintura",
       "TEMPERATURE": "Temperatura corporal",
-      "GLUCOSE": "Glicose no sangue",
+      "GLUCOSE": "Glicemia capilar",
       "PRESSURE": "Pressão sanguínea",
       "HEART-RATE": "Frequência cardíaca"
     },
@@ -565,7 +566,8 @@
         "POSTPRANDIAL": "Pós-prandial",
         "FASTING": "Jejum",
         "CASUAL": "Casual",
-        "BEDTIME": "Antes de dormir"
+        "BEDTIME": "Antes de dormir",
+        "OTHER": "Outro"
       },
       "MEASUREMENT-TYPE": {
         "WEIGHT": "Peso",
@@ -573,7 +575,7 @@
         "FAT": "Gordura Corporal",
         "WAIST-CIRCUMFERENCE": "Circunferência da Cintura",
         "BODY-TEMPERATURE": "Temperatura Corporal",
-        "BLOOD-GLUCOSE": "Glicose",
+        "BLOOD-GLUCOSE": "Glicemia Capilar",
         "BLOOD-PRESSURE": "Pressão Arterial"
       },
       "UNDEFINED": "Fora dos parâmetros",
@@ -625,6 +627,16 @@
         "CONFIRM-MULTIPLE-REMOVE-PART2": "medição(es)?"
       }
     },
+    "MODAL-NEW-MEASUREMENT": {
+      "TITLE": "Adicionar medição",
+      "INVALID-TYPE": "Tipo inválido",
+      "VALUE": "Valor",
+      "INVALID-VALUE": "Valor inválido",
+      "SPINNER-MESSAGE": "Salvando medição...",
+      "KILOGRAM": "Quilogramas",
+      "POUNDS": "Libras"
+    },
+    "BUTTON-ADD": "Medição Manual",
     "LAST-REGISTER": "Último registro",
     "LAST-REGISTER-DATE": "Data do último registro",
     "PATTERN-DATE": "dia/mês/ano horário",
@@ -820,7 +832,8 @@
     "MY-MEASUREMENTS": "Minhas Medições",
     "MY-QUESTIONNAIRES": "Meus Questionários",
     "EXPAND-MENU": "Expandir menu...",
-    "SHRINK-MENU": "Encolher menu..."
+    "SHRINK-MENU": "Encolher menu...",
+    "GRAPHIC-STUDY": "Estudo gráfico"
   },
   "SHARED": {
     "NAME": "Nome",
@@ -1046,6 +1059,8 @@
     "NOT-CHANGE-LANGUAGE": "Não foi possível alterar o idioma!",
     "QUESTIONNAIRE-DELETED": "Questionário removido com sucesso!",
     "QUESTIONNAIRE-NOT-DELETED": "Não foi possivel remover o questionário!",
+    "MEASUREMENT-SAVED": "Medição salva com sucesso!",
+    "MEASUREMENT-NOT-SAVED": "Não foi possível salvar medição!",
     "MEASUREMENT-REMOVED": "Medição removida com sucesso!",
     "MEASUREMENT-NOT-REMOVED": "Não foi possível remover medição!",
     "ACCOUNT-NOT-DELETED": "Não foi possível excluir conta, tente novamente!",
@@ -1057,6 +1072,7 @@
     "PHYSICAL-ACTIVITY-NOT-LOADED": "Não foi possível carregar a atividade selecionada!"
   },
   "TIME-SERIES": {
+    "TITLE": "Séries Temporais",
     "ACTIVE-MINUTES": {
       "TITLE": "Minutos Ativos",
       "ACTIVE-MINUTES": "minutos ativos",

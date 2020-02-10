@@ -1,15 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageEvent } from '@angular/material/paginator';
 
 import { PhysicalActivity } from '../models/physical.activity';
-import { SearchForPeriod } from '../../measurement/models/measurement';
 import {
-    TimeSeries,
     TimeSeriesFullFilter,
     TimeSeriesIntervalFilter,
-    TimeSeriesSimpleFilter, TimeSeriesTotals,
+    TimeSeriesSimpleFilter,
+    TimeSeriesTotals,
     TimeSeriesType
 } from '../models/time.series';
 import { ConfigurationBasic } from '../../config.matpaginator';
@@ -39,7 +38,6 @@ export class ActivityListComponent implements OnInit {
     showSpinner: boolean;
     listCheckActivities: boolean[];
     Math = Math;
-    filter: SearchForPeriod;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
     page: number;
@@ -65,7 +63,6 @@ export class ActivityListComponent implements OnInit {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
-        this.filter = new SearchForPeriod();
         this.cacheListIdForRemove = new Array<string>();
         this.timeSeriesTypes = [TimeSeriesType.steps, TimeSeriesType.calories, TimeSeriesType.distance];
         this.timeSerieSelected = TimeSeriesType.steps;
@@ -122,8 +119,8 @@ export class ActivityListComponent implements OnInit {
             .then(totals => {
                 this.totals = totals;
             })
-            .catch(err => {
-                console.log(err)
+            .catch(() => {
+
             })
     }
 

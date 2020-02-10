@@ -1,5 +1,6 @@
-<measurement-card [title]="'MEASUREMENTS.WEIGHT.TITLE'|translate" [subtitle]="'MEASUREMENTS.WEIGHT.SUBTITLE'|translate"
-                  [filter_visibility]="filterVisibility" (filter_change)="applyFilter($event)" *ngIf="includeCard">
+<time-series-card [title]="'MEASUREMENTS.WEIGHT.TITLE'|translate" [subtitle]="'MEASUREMENTS.WEIGHT.SUBTITLE'|translate"
+                  [filter_visibility]="filterVisibility" (filter_change)="applyFilter($event)"
+                  *ngIf="includeCard && !onlyGraph">
 
     <div class="row justify-content-center">
 
@@ -92,6 +93,12 @@
                             {{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.REMOVE-SELECTED'|translate}}
                         </button>
                     </div>
+                    <div class="p-2">
+                        <button type="button" class="btn btn-haniot-primary btn-sm" (click)="openModalNewMeasurement()">
+                            {{'MEASUREMENTS.BUTTON-ADD'|translate}}
+                            <i class="material-icons" style="color: white">add</i>
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -128,7 +135,7 @@
                             {{(measurement.value | decimalFormatter) + '' + measurement.unit}}
                         </td>
                         <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.BODY-FAT'|translate">
-                            <span *ngIf="measurement.body_fat">{{measurement.body_fat + '' + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}</span>
+                            <span *ngIf="measurement.body_fat">{{(measurement.body_fat|decimalFormatter) + '' + ('MEASUREMENTS.COMPONENT.FAT-UNIT'|translate)}}</span>
                             <span *ngIf="!measurement.body_fat">{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.WEIGHT-TABLE.NOT-COLLECTED'|translate}}</span>
                         </td>
                         <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate">
@@ -158,9 +165,9 @@
 
     </div>
 
-</measurement-card>
+</time-series-card>
 
-<div class="row" *ngIf="!includeCard">
+<div class="row" *ngIf="!includeCard && !onlyGraph">
 
     <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-center row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">
@@ -229,3 +236,19 @@
     </div>
 
 </div>
+
+<div *ngIf="onlyGraph" style="width:100%;height:100%">
+    <div style="width:100%;height:100%" echarts
+         [options]="weightGraph" (chartInit)="onChartInit($event)">
+    </div>
+    <div  *ngIf="showSpinner || dataForGraph.length==0"
+            style="position: absolute; top:0; bottom: 0; left:0; right: 0; margin: auto; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <spinner *ngIf="showSpinner" style="position: absolute"></spinner>
+        <span *ngIf="dataForGraph.length==0 && !showSpinner"
+              class="badge badge-warning badge-12 ellipsis">{{'MEASUREMENTS.WEIGHT.UNAVAILABLE-DATA'|translate}}</span>
+    </div>
+</div>
+
+<new-measurements [patientId]="patientId" (save)="savedSuccessfully()" [type]="EnumMeasurementType.weight">
+
+</new-measurements>

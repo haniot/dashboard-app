@@ -10,6 +10,7 @@ import { ViewResourcesComponent } from '../view.resources/view.resources.compone
 import { PatientQuestionnairesComponent } from '../patient.questionnaires/patient.questionnaires.component'
 import { PatientMeasurementsComponent } from '../patient.measurements/patient.measurements.component'
 import { PatientDashboardComponent } from '../patient.dashboard/patient.dashboard.component'
+import { GraphicStudyComponent } from '../graphic.study/graphic.study.component'
 
 const routes = [
 
@@ -68,6 +69,11 @@ const routes = [
         path: ':patientId/questionnaires',
         component: PatientQuestionnairesComponent,
         data: { scope: 'patients:read forms:read' }
+    },
+    {
+        path: ':patientId/graphic-study',
+        component: GraphicStudyComponent,
+        data: { scope: 'patients:read' }
     },
     {
         path: ':patientId/:resource',

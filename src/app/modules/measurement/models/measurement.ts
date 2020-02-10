@@ -1,15 +1,3 @@
-export class SearchForPeriod {
-    start_at: string;
-    end_at: string;
-    period?: string;
-
-    constructor() {
-        this.start_at = '';
-        this.end_at = '';
-        this.period = '';
-    }
-}
-
 export enum EnumMeasurementType {
     weight = 'weight',
     blood_glucose = 'blood_glucose',
