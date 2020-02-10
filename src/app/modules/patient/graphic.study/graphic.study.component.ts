@@ -1,16 +1,17 @@
-import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router'
-import { TranslateService } from '@ngx-translate/core'
+import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { GridsterConfig, GridsterItem } from 'angular-gridster2';
 
-import { PilotStudyService } from '../../pilot.study/services/pilot.study.service'
-import { MeasurementService } from '../../measurement/services/measurement.service'
-import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
-import { TimeSeriesService } from '../../activity/services/time.series.service'
-import { MeasurementTypePipe } from '../../measurement/pipes/measurement.type.pipe'
-import { TimeSeriesPipe } from '../../activity/pipes/time.series.pipe'
-import { EnumMeasurementType } from '../../measurement/models/measurement'
-import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter, TimeSeriesType } from '../../activity/models/time.series'
+import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
+import { MeasurementService } from '../../measurement/services/measurement.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
+import { TimeSeriesService } from '../../activity/services/time.series.service';
+import { MeasurementTypePipe } from '../../measurement/pipes/measurement.type.pipe';
+import { TimeSeriesPipe } from '../../activity/pipes/time.series.pipe';
+import { EnumMeasurementType } from '../../measurement/models/measurement';
+import { TimeSeriesIntervalFilter, TimeSeriesType } from '../../activity/models/time.series';
 
 class ConfigVisibility {
     weight: boolean;
@@ -49,11 +50,24 @@ export interface Group {
 }
 
 @Component({
-    selector: 'correlate-measurements',
-    templateUrl: './correlate.measurements.component.html',
-    styleUrls: ['./correlate.measurements.component.scss']
+    selector: 'graphic-study',
+    templateUrl: './graphic.study.component.html',
+    styleUrls: ['./graphic.study.component.scss']
 })
-export class CorrelateMeasurementsComponent implements OnInit {
+export class GraphicStudyComponent implements OnInit {
+    mainContentWidth: number;
+
+    @ViewChild('mainContent', { static: false })
+    set mainContent(element: ElementRef) {
+        if (element) {
+            setTimeout(() => {
+                this.mainContentWidth = element.nativeElement.offsetWidth;
+            })
+        }
+    };
+
+    Math = Math;
+    public options: GridsterConfig;
     @ViewChildren('selectGraph') selectGraphs: QueryList<any>;
     @Input() configVisibility: ConfigVisibility;
     @Input() patientId;
@@ -62,9 +76,10 @@ export class CorrelateMeasurementsComponent implements OnInit {
     TimeSeriesType = TimeSeriesType;
     filter: TimeSeriesIntervalFilter;
     resourceGroups: Group[];
-    resourcesSelected: any[];
+    resourcesSelected: { x: number, y: number, rows: number, cols: number, resource: EnumMeasurementType }[];
     resourcesOptions: string[];
-    stateButtonAdd: string;
+    select: string;
+    grid: any;
 
     constructor(
         private studyService: PilotStudyService,
@@ -80,10 +95,29 @@ export class CorrelateMeasurementsComponent implements OnInit {
         this.filter = new TimeSeriesIntervalFilter();
         this.filter.date = new Date().toISOString().split('T')[0];
         this.filter.interval = '15m';
-        this.resourcesSelected = new Array(1);
-        this.resourcesOptions = ['hidden'];
+        this.resourcesSelected = [];
+        this.resourcesOptions = [];
         this.intraday = true;
-        this.stateButtonAdd = 'display-show';
+
+
+        this.options = {
+            pushItems: true,
+            margin: 2,
+            minCols: 1,
+            maxCols: 2,
+            displayGrid: 'always',
+            minRows: 1,
+            setGridSize: true,
+            mobileBreakpoint: 0,
+            gridType: 'fit',
+            resizable: {
+                enabled: true
+            },
+            draggable: {
+                enabled: true
+            }
+        };
+
     }
 
     ngOnInit(): void {
@@ -120,26 +154,31 @@ export class CorrelateMeasurementsComponent implements OnInit {
         ];
     }
 
-    selectResource(): void {
+    selectResource(event): void {
+        this.add(event.value);
+        // let indexSelected = 0;
+        // this.resourcesSelected.forEach((element, index) => {
+        //     if (!element) {
+        //         indexSelected = index
+        //     }
+        // })
+        // this.resourcesSelected[indexSelected] = event.value;
         this.resourceGroups[0].items = this.resourceGroups[0].items.map((item: Item) => {
-            item.disabled = this.resourcesSelected.includes(item.value);
+            item.disabled = !!this.resourcesSelected.find(element => {
+                return element.resource === item.value
+            })
             return item
         })
 
         this.resourceGroups[1].items = this.resourceGroups[1].items.filter((item: Item) => {
-            item.disabled = this.resourcesSelected.includes(item.value);
+            item.disabled = !!this.resourcesSelected.find(element => {
+                return element.resource === item.value
+            })
             return item
         })
-    }
-
-    applyFilter(event: any) {
-        this.intraday = event.type === 'today';
-        this.filter = event;
-    }
-
-    add(): void {
-        this.resourcesSelected.push(undefined);
-        this.resourcesOptions.push('hidden');
+        setTimeout(() => {
+            this.select = ''
+        }, 300)
     }
 
     openSelectGraph(indexSelected: number): void {
@@ -150,8 +189,19 @@ export class CorrelateMeasurementsComponent implements OnInit {
         })
     }
 
-    setStateButtonAdd(state): void {
-        this.stateButtonAdd = state;
+    changeSelected(selected, index): void {
+        this.resourcesSelected[index].resource = selected.value;
+    }
+
+    applyFilter(event: any) {
+        this.intraday = event.type === 'today';
+        this.filter = event;
+    }
+
+    add(resource: EnumMeasurementType): void {
+        const x = this.resourcesSelected.length % 2 === 0 ? 0 : 1;
+        this.resourcesSelected.push({ x: x, y: 0, rows: 6, cols: 1, resource: resource });
+        this.resourcesOptions.push('hidden');
     }
 
     removeGraph(indexSelected: number): void {

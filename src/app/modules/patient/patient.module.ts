@@ -29,7 +29,8 @@ import { ActivityModule } from '../activity/activity.module';
 import { PatientQuestionnairesComponent } from './patient.questionnaires/patient.questionnaires.component';
 import { PatientDashboardComponent } from './patient.dashboard/patient.dashboard.component';
 import { PatientMeasurementsComponent } from './patient.measurements/patient.measurements.component';
-import { CorrelateMeasurementsComponent } from './correlate.measurements/correlate.measurements.component'
+import { GraphicStudyComponent } from './graphic.study/graphic.study.component'
+import { GridsterModule } from 'angular-gridster2'
 
 @NgModule({
     declarations: [
@@ -45,7 +46,7 @@ import { CorrelateMeasurementsComponent } from './correlate.measurements/correla
         PatientQuestionnairesComponent,
         PatientDashboardComponent,
         PatientMeasurementsComponent,
-        CorrelateMeasurementsComponent
+        GraphicStudyComponent
     ],
     imports: [
         CommonModule,
@@ -63,6 +64,7 @@ import { CorrelateMeasurementsComponent } from './correlate.measurements/correla
         NgxEchartsModule,
         MatCheckboxModule,
         MatIconModule,
+        GridsterModule,
 
         PatientRoutingModule,
         HabitsModule,

@@ -1,0 +1,148 @@
+<div class="main-content" #mainContent>
+    <div class="container-fluid">
+        <div class="row measurementsContent">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <time-series-card [title]="'SIDEBAR.GRAPHIC-STUDY'|translate"
+                                  [subtitle]="''" (filter_change)="applyFilter($event)">
+
+                    <div class="row justify-content-end">
+
+                        <gridster [options]="options"
+                                  [ngStyle]="{'height':(mainContentWidth?mainContentWidth*0.5:288)+ 'px'}">
+                            <gridster-item *ngFor="let itemResource of resourcesSelected; index as i;"
+                                           [item]="itemResource">
+                                <div class="graph border-dashed">
+                                    <div class="fadeIn options"
+                                         style="position:absolute; top:0;left:0;padding:5px;z-index:1000"
+                                         *ngIf="resourcesSelected[i].resource">
+                                        <i class="material-icons" (click)="openSelectGraph(i)">settings</i>
+                                    </div>
+
+                                    <div class="fadeIn options"
+                                         style="position:absolute; top:0;right:0;padding:5px;z-index:1000">
+                                        <i class="material-icons" (click)="removeGraph(i)"
+                                           [title]="'SHARED.CLOSE'|translate">close</i>
+                                    </div>
+
+                                    <div style="position:absolute;top:0;left:0;padding: 5px; opacity: 0;">
+                                        <mat-form-field>
+                                            <mat-label>{{'SHARED.SELECT'|translate}}</mat-label>
+                                            <mat-select #selectGraph [(ngModel)]="resourcesSelected[i].resource"
+                                                        (selectionChange)="changeSelected($event, i)">
+                                                <mat-optgroup *ngFor="let group of resourceGroups" [label]="group.name"
+                                                              [disabled]="group.disabled">
+                                                    <mat-option *ngFor="let resource of group.items"
+                                                                [value]="resource.value" [disabled]="resource.disabled">
+                                                        {{resource.viewValue}}
+                                                    </mat-option>
+                                                </mat-optgroup>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <weight class="fadeIn graphSelected"
+                                            *ngIf="resourcesSelected[i].resource===EnumMeasurementType.weight"
+                                            [filterVisibility]="false"
+                                            [patientId]="patientId" [onlyGraph]="true"
+                                            [intraday]="intraday"
+                                            [filter]="filter"></weight>
+
+                                    <waist-circunference class="fadeIn graphSelected"
+                                                         *ngIf="resourcesSelected[i].resource===EnumMeasurementType.waist_circumference"
+                                                         [filterVisibility]="false"
+                                                         [patientId]="patientId" [onlyGraph]="true"
+                                                         [intraday]="intraday"
+                                                         [filter]="filter"></waist-circunference>
+
+                                    <height class="fadeIn graphSelected"
+                                            *ngIf="resourcesSelected[i].resource===EnumMeasurementType.height"
+                                            [filterVisibility]="false"
+                                            [patientId]="patientId" [onlyGraph]="true"
+                                            [intraday]="intraday"
+                                            [filter]="filter"></height>
+
+                                    <fat class="fadeIn graphSelected"
+                                         *ngIf="resourcesSelected[i].resource===EnumMeasurementType.body_fat"
+                                         [filterVisibility]="false"
+                                         [intraday]="intraday"
+                                         [patientId]="patientId" [onlyGraph]="true" [filter]="filter"></fat>
+
+                                    <body-temperature class="fadeIn graphSelected"
+                                                      *ngIf="resourcesSelected[i].resource===EnumMeasurementType.body_temperature"
+                                                      [filterVisibility]="false"
+                                                      [patientId]="patientId" [onlyGraph]="true"
+                                                      [intraday]="intraday"
+                                                      [filter]="filter"></body-temperature>
+
+                                    <blood-pressure class="fadeIn graphSelected"
+                                                    *ngIf="resourcesSelected[i].resource===EnumMeasurementType.blood_pressure"
+                                                    [filterVisibility]="false"
+                                                    [patientId]="patientId" [onlyGraph]="true"
+                                                    [intraday]="intraday"
+                                                    [filter]="filter"></blood-pressure>
+
+                                    <blood-glucose class="fadeIn graphSelected"
+                                                   *ngIf="resourcesSelected[i].resource===EnumMeasurementType.blood_glucose"
+                                                   [filterVisibility]="false"
+                                                   [patientId]="patientId" [onlyGraph]="true"
+                                                   [intraday]="intraday"
+                                                   [filter]="filter"></blood-glucose>
+
+                                    <calories class="fadeIn graphSelected"
+                                              *ngIf="resourcesSelected[i].resource===TimeSeriesType.calories"
+                                              [filterVisibility]="false"
+                                              [patientId]="patientId" [onlyGraph]="true" [filter]="filter"></calories>
+
+                                    <actives-minutes class="fadeIn graphSelected"
+                                                     *ngIf="resourcesSelected[i].resource===TimeSeriesType.active_minutes"
+                                                     [filterVisibility]="false"
+                                                     [patientId]="patientId" [onlyGraph]="true"
+                                                     [filter]="filter"></actives-minutes>
+
+                                    <distance class="fadeIn graphSelected"
+                                              *ngIf="resourcesSelected[i].resource===TimeSeriesType.distance"
+                                              [filterVisibility]="false"
+                                              [patientId]="patientId" [onlyGraph]="true"
+                                              [filter]="filter"></distance>
+
+                                    <steps class="fadeIn graphSelected"
+                                           *ngIf="resourcesSelected[i].resource===TimeSeriesType.steps"
+                                           [filterVisibility]="false"
+                                           [patientId]="patientId" [onlyGraph]="true"
+                                           [filter]="filter"></steps>
+
+                                    <heart-rate class="fadeIn graphSelected"
+                                                *ngIf="resourcesSelected[i].resource===TimeSeriesType.heart_rate"
+                                                [filterVisibility]="false"
+                                                [patientId]="patientId" [onlyGraph]="true"
+                                                [filter]="filter"></heart-rate>
+                                </div>
+                            </gridster-item>
+                        </gridster>
+
+                        <div class="select-graph">
+                            <mat-form-field>
+                                <mat-label>{{'SHARED.ADD'|translate}}</mat-label>
+                                <mat-select [(ngModel)]="select"
+                                            (selectionChange)="selectResource($event)">
+                                    <mat-optgroup *ngFor="let group of resourceGroups" [label]="group.name"
+                                                  [disabled]="group.disabled">
+                                        <mat-option *ngFor="let resource of group.items"
+                                                    [value]="resource.value" [disabled]="resource.disabled">
+                                            {{resource.viewValue}}
+                                        </mat-option>
+                                    </mat-optgroup>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                </time-series-card>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

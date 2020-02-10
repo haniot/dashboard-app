@@ -127,7 +127,7 @@
                         <p>{{'SIDEBAR.DASHBOARD'|translate}}</p>
                     </a>
                 </li>
-                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients || activeCorrelatePatients">
+                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients || activeGraphicStudy">
                     <a class="nav-link"
                        [routerLink]="['/app/patients',patientSelected,'measurements']">
                         <p>
@@ -140,10 +140,10 @@
 
                     </a>
                     <ul class="collapse list-unstyled submenu" [ngClass]="stateMeasurementMenu">
-                        <li class="nav-subitem" [ngClass]="activeCorrelatePatients">
-                            <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'correlate']">
+                        <li class="nav-subitem" [ngClass]="activeGraphicStudy">
+                            <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'graphic-study']">
                                 <i class="material-icons">web</i>
-                                <p>{{'SIDEBAR.CORRELATE'|translate}}</p>
+                                <p>{{'SIDEBAR.GRAPHIC-STUDY'|translate}}</p>
                             </a>
                         </li>
                     </ul>

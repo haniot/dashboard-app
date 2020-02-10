@@ -68,7 +68,7 @@ export class SidebarComponent implements OnInit {
     activePatients: string;
     activeDashboardPatients: string;
     activeMeasurementsPatients: string;
-    activeCorrelatePatients: string;
+    activeGraphicStudy: string;
     activeQuestionnairesPatients: string;
     activeEvaluations: string;
     study: PilotStudy;
@@ -179,14 +179,14 @@ export class SidebarComponent implements OnInit {
             (path_current.match('measurements\$|' + regex))
         ) ? 'active' : '';
         this.activeQuestionnairesPatients = (path_current.match('patients') && path_current.match('questionnaires\$')) ? 'active' : '';
-        this.activeCorrelatePatients = (path_current.match('patients') && path_current.match('correlate')) ? 'active' : '';
-        this.stateMeasurementMenu = (this.activeMeasurementsPatients || this.activeCorrelatePatients) ? 'show' : 'hidden';
+        this.activeGraphicStudy = (path_current.match('patients') && path_current.match('graphic-study')) ? 'active' : '';
+        this.stateMeasurementMenu = (this.activeMeasurementsPatients || this.activeGraphicStudy) ? 'show' : 'hidden';
         this.activePatients = (this.activeDashboardPatients === 'active' ||
             this.activeQuestionnairesPatients === 'active' || this.activeMeasurementsPatients === 'active' ||
-            this.activeCorrelatePatients === 'active'
+            this.activeGraphicStudy === 'active'
         ) ?
             'active parent-active' : this.activePatients;
-        this.activeMeasurementsPatients = this.activeCorrelatePatients === 'active' ?
+        this.activeMeasurementsPatients = this.activeGraphicStudy === 'active' ?
             'active parent-active' : this.activeMeasurementsPatients;
     }
 
