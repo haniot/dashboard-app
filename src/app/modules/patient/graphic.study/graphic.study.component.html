@@ -9,7 +9,8 @@
                     <div class="row justify-content-end">
 
                         <gridster [options]="options"
-                                  [ngStyle]="{'height':(mainContentWidth?mainContentWidth*0.5:288)+ 'px'}">
+                                  [ngClass]="!resourcesSelected.length?'border-dashed':''"
+                                  [ngStyle]="{'height':(widthGridSister?widthGridSister:288)+ 'px'}">
                             <gridster-item *ngFor="let itemResource of resourcesSelected; index as i;"
                                            [item]="itemResource">
                                 <div class="graph border-dashed">

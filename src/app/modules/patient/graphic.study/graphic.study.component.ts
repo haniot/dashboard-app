@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -55,17 +55,6 @@ export interface Group {
     styleUrls: ['./graphic.study.component.scss']
 })
 export class GraphicStudyComponent implements OnInit {
-    mainContentWidth: number;
-
-    @ViewChild('mainContent', { static: false })
-    set mainContent(element: ElementRef) {
-        if (element) {
-            setTimeout(() => {
-                this.mainContentWidth = element.nativeElement.offsetWidth;
-            })
-        }
-    };
-
     Math = Math;
     public options: GridsterConfig;
     @ViewChildren('selectGraph') selectGraphs: QueryList<any>;
@@ -76,10 +65,11 @@ export class GraphicStudyComponent implements OnInit {
     TimeSeriesType = TimeSeriesType;
     filter: TimeSeriesIntervalFilter;
     resourceGroups: Group[];
-    resourcesSelected: { x: number, y: number, rows: number, cols: number, resource: EnumMeasurementType }[];
+    resourcesSelected: GridsterItem[];
     resourcesOptions: string[];
     select: string;
     grid: any;
+    widthGridSister = 288;
 
     constructor(
         private studyService: PilotStudyService,
@@ -99,16 +89,19 @@ export class GraphicStudyComponent implements OnInit {
         this.resourcesOptions = [];
         this.intraday = true;
 
-
         this.options = {
             pushItems: true,
+            outerMargin: true,
             margin: 2,
             minCols: 1,
             maxCols: 2,
             displayGrid: 'always',
             minRows: 1,
+            maxRows: 2,
+            swap: true,
+            swapWhileDragging: true,
             setGridSize: true,
-            mobileBreakpoint: 0,
+            mobileBreakpoint: 640,
             gridType: 'fit',
             resizable: {
                 enabled: true
@@ -156,13 +149,6 @@ export class GraphicStudyComponent implements OnInit {
 
     selectResource(event): void {
         this.add(event.value);
-        // let indexSelected = 0;
-        // this.resourcesSelected.forEach((element, index) => {
-        //     if (!element) {
-        //         indexSelected = index
-        //     }
-        // })
-        // this.resourcesSelected[indexSelected] = event.value;
         this.resourceGroups[0].items = this.resourceGroups[0].items.map((item: Item) => {
             item.disabled = !!this.resourcesSelected.find(element => {
                 return element.resource === item.value
@@ -200,8 +186,26 @@ export class GraphicStudyComponent implements OnInit {
 
     add(resource: EnumMeasurementType): void {
         const x = this.resourcesSelected.length % 2 === 0 ? 0 : 1;
-        this.resourcesSelected.push({ x: x, y: 0, rows: 6, cols: 1, resource: resource });
+        this.resourcesSelected.push({
+            x: x,
+            y: 0,
+            rows: 1,
+            cols: 1,
+            resource: resource
+        });
         this.resourcesOptions.push('hidden');
+        this.updateWidthGridSister();
+    }
+
+    updateWidthGridSister(): void {
+        if (this.resourcesSelected && this.resourcesSelected.length) {
+            const round = Math.round(this.resourcesSelected.length / 2);
+            if (round) {
+                this.options.maxRows = round;
+                this.options.api.optionsChanged();
+            }
+            this.widthGridSister = round ? round * 288 : 288;
+        }
     }
 
     removeGraph(indexSelected: number): void {
