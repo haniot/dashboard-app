@@ -9,6 +9,7 @@
     "TITLE": "Acesso negado"
   },
   "ACTIVITY": {
+    "ACTIVITIES": "Atividades",
     "BETWEEN": "entre",
     "SPINNER": "Carregando atividades...",
     "LAST-SYNC": "Última sincronização",
@@ -729,6 +730,29 @@
     "MY-EVALUATIONS": {
       "TITLE": "Lista de estudos piloto",
       "SUBTITLE": "Você possui permissão apenas de visualização."
+    },
+    "EXTERNAL-SERVICES": {
+      "TITLE": "Serviços externos",
+      "LAST-SYNC": "Última sincronização",
+      "STATUS-TOKEN": "Token de Acesso",
+      "NOT-SYNCHRONIZED": "Não sincronizado!",
+      "VIEW-DETAILS": "Visualizar detalhes...",
+      "SYNCHRONIZE": "Sincronizar",
+      "REVOKE": "Revogar",
+      "REVOKE-ACCESS": "Revogar acesso...",
+      "SUMMARY-UPDATED": "Resumo dos registros atualizados",
+      "SYNCHRONIZE-SUCCESSFULLY": "Dados sincronizados com sucesso",
+      "SYNCHRONIZING": "Sincronizando...",
+      "REVOKING": "Revogando acesso...",
+      "CONFIRM-REVOKE": "Tem certeza que deseja revogar o acesso?",
+      "PIPE": {
+        "VALID-TOKEN": "Token válido!",
+        "INVALID-TOKEN": "Token inválido!",
+        "EXPIRED-TOKEN": "Token expirado!",
+        "INVALID-REFRESH-TOKEN": "Refresh Token Inválido",
+        "NONE": " - - ",
+        "UNDEFINED": "Fora dos parâmetros"
+      }
     }
   },
   "PILOT-STUDY": {
@@ -836,6 +860,8 @@
     "GRAPHIC-STUDY": "Estudo gráfico"
   },
   "SHARED": {
+    "ADDRESS": "Endereço",
+    "INVALID-ADDRESS": "Endereço inválido",
     "NAME": "Nome",
     "INVALID-NAME": "Nome inválido",
     "EMAIL": "Email",
@@ -1069,7 +1095,11 @@
     "SLEEP-NOT-LOADED": "Não foi possível carregar o registro de sono!",
     "PHYSICAL-ACTIVITY-REMOVED": "Atividade removida com sucesso!",
     "PHYSICAL-ACTIVITY-NOT-REMOVED": "Não foi possível remover a atividade física!",
-    "PHYSICAL-ACTIVITY-NOT-LOADED": "Não foi possível carregar a atividade selecionada!"
+    "PHYSICAL-ACTIVITY-NOT-LOADED": "Não foi possível carregar a atividade selecionada!",
+    "SYNCHRONIZE-SUCCESSFULLY": "Dados sincronizados com sucesso!",
+    "COULD-NOT-SYNC": "Não foi possivel sincronizar!",
+    "REVOKED-SUCCESSFULLY": "Acesso aos dados revogado com sucesso!",
+    "COULD-NOT-REVOKE": "Não foi possivel revogar acesso!"
   },
   "TIME-SERIES": {
     "TITLE": "Séries Temporais",
@@ -1077,7 +1107,9 @@
       "TITLE": "Minutos Ativos",
       "ACTIVE-MINUTES": "minutos ativos",
       "TOTAL-ACTIVE-MINUTES": "Total de minutos ativos",
-      "SUBTITLE": ""
+      "SUBTITLE": "",
+      "LIGHTLY-ACTIVE-MINUTES": "Minutos Levemente Ativos",
+      "SEDENTARY-MINUTES": "Minutos Sedentários"
     },
     "BEAT-YESTERDAY": "Executados ontem",
     "AVERAGE-WEEK": "Média dos últimos 7 dias",

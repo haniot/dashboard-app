@@ -10,6 +10,7 @@ import { AdminService } from '../../modules/admin/services/admin.service'
 import { HealthProfessionalService } from '../../modules/admin/services/health.professional.service'
 import { PatientService } from '../../modules/patient/services/patient.service'
 import { NutritionEvaluationService } from '../../modules/evaluation/services/nutrition.evaluation.service'
+import { FitbitService } from './fitbit.service'
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { NutritionEvaluationService } from '../../modules/evaluation/services/nu
         HealthProfessionalService,
         PatientService,
         NutritionEvaluationService,
-        NotificationService
+        NotificationService,
+        FitbitService
     ]
 })
 export class SharedServicesModule {

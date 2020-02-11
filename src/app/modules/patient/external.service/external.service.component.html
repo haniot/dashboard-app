@@ -1,0 +1,156 @@
+<haniot-card
+        [title]="'PATIENTS.EXTERNAL-SERVICES.TITLE'|translate"
+        [subtitle]="'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.SUBTITLE'|translate">
+    <form [formGroup]="patientForm">
+
+        <div class="divSpinner" *ngIf="!patientForm.get(['external_services','fitbit_status']).value">
+            <spinner></spinner>
+        </div>
+
+        <small style="font-size: 12px; float: right"
+               *ngIf="patientForm.get(['external_services','fitbit_last_sync']).value===' - - '">
+            {{'PATIENTS.EXTERNAL-SERVICES.NOT-SYNCHRONIZED'|translate}}
+        </small>
+
+        <div class="row" formGroupName="external_services">
+            <div class="form-group has-feedback col-6">
+                <label for="fitbit_last_sync">
+                    {{'PATIENTS.EXTERNAL-SERVICES.LAST-SYNC'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="fitbit_last_sync"
+                       id="fitbit_last_sync">
+            </div>
+            <div class="form-group has-feedback col-6">
+                <label for="fitbit_status">
+                    {{'PATIENTS.EXTERNAL-SERVICES.STATUS-TOKEN'|translate}}:
+                </label>
+                <input class="form-control" type="text" formControlName="fitbit_status"
+                       id="fitbit_status">
+            </div>
+        </div>
+
+
+        <div class="d-flex justify-content-between">
+            <div class="p-2">
+                <button type="button" class="btn btn-haniot-primary"
+                        (click)="synchronize()">
+                    {{'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZE'|translate}}
+                    <i class="material-icons">cached</i>
+                </button>
+            </div>
+            <div class="p-2" style="display: flex; align-items: flex-end">
+                <a href="JavaScript:void(0);" style="color: red;"
+                   [title]="'PATIENTS.EXTERNAL-SERVICES.REVOKE-ACCESS'|translate"
+                   (click)="openModalRevoke()">{{'PATIENTS.EXTERNAL-SERVICES.REVOKE'|translate}}</a>
+            </div>
+        </div>
+
+    </form>
+</haniot-card>
+
+<haniot-modal [modalId]="'synchronized'" [styleDialog]="'modal-dialog'" (close)="closeModalSynchronized()">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                {{'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZE-SUCCESSFULLY'|translate}}
+            </h5>
+            <button type="button" class="close" aria-label="Close" (click)="closeModalSynchronized()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <hr class="separator"
+                            [attr.data-label]="'PATIENTS.EXTERNAL-SERVICES.SUMMARY-UPDATED'|translate">
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'ACTIVITY.ACTIVITIES'|translate}}
+                        </label>
+                        <h4>{{synchronizeData.activities ? (synchronizeData.activities|number:'1.0-0') : 0}}</h4>
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'ACTIVITY.SLEEP.SLEEP'|translate}}
+                        </label>
+                        <h4>{{synchronizeData.sleep ? (synchronizeData.sleep|number:'1.0-0') : 0}}</h4>
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'MEASUREMENTS.WEIGHT.TITLE'|translate}}
+                        </label>
+                        <h4>{{synchronizeData.weights ? (synchronizeData.weights|number:'1.0-0') : 0}}</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr class="separator" [attr.data-label]="'TIME-SERIES.TITLE'|translate">
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'TIME-SERIES.STEPS.TITLE'|translate}}
+                        </label>
+                        <h4>{{synchronizeData.logs && synchronizeData.logs.steps ? (synchronizeData.logs.steps|number:'1.0-0') : 0}}</h4>
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'TIME-SERIES.CALORIES.TITLE'|translate}}
+                        </label>
+                        <h4>{{synchronizeData.logs && synchronizeData.logs.calories ? (synchronizeData.logs.calories|number:'1.0-0') : 0}}</h4>
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'TIME-SERIES.ACTIVE-MINUTES.TITLE'|translate}}
+                        </label>
+                        <h4>{{synchronizeData.logs && synchronizeData.logs.active_minutes ? (synchronizeData.logs.active_minutes|number:'1.0-0') : 0}}</h4>
+                    </div>
+                    <div class="form-group col-6 text-center">
+                        <label style="font-weight: normal">
+                            {{'TIME-SERIES.ACTIVE-MINUTES.LIGHTLY-ACTIVE-MINUTES'|translate}}
+                        </label>
+                        <h4>{{synchronizeData.logs && synchronizeData.logs.lightly_active_minutes ? (synchronizeData.logs.lightly_active_minutes|number:'1.0-0') : 0}}</h4>
+                    </div>
+                    <div class="form-group col-6 text-center">
+                        <label style="font-weight: normal">
+                            {{'TIME-SERIES.ACTIVE-MINUTES.SEDENTARY-MINUTES'|translate}}
+                        </label>
+                        <h4>{{synchronizeData.logs && synchronizeData.logs.sedentary_minutes ? (synchronizeData.logs.sedentary_minutes|number:'1.0-0') : 0}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</haniot-modal>
+
+<div id="synchronizing" *ngIf="synchronizing || revoking">
+    <div id="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZING'|translate"
+                                         *ngIf="synchronizing">
+                                </spinner>
+                                <spinner [message]="'PATIENTS.EXTERNAL-SERVICES.REVOKING'|translate"
+                                         *ngIf="revoking">
+                                </spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<modal-confirmation [message]="'PATIENTS.EXTERNAL-SERVICES.CONFIRM-REVOKE'|translate" (confirmation)="revoke()"
+                    (close)="closeModalRevoke()"
+                    (noconfirmation)="closeModalRevoke()"></modal-confirmation>

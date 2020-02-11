@@ -1,7 +1,7 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <haniot-card
                         [title]="(patientId)?('PATIENTS.PATIENTS-FORM.TITLE-EDIT'|translate):('PATIENTS.PATIENTS-FORM.TITLE-CREATE'|translate)"
                         [subtitle]="'PATIENTS.PATIENTS-FORM.SUBTITLE'|translate">
@@ -15,7 +15,8 @@
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                  style="padding-top: 0px; padding-bottom: 0px; margin-top: 0px; margin-bottom: 0px"
                                  *ngIf="patientForm && (patientForm.get('created_at').value||patientForm.get('last_login').value)">
-                                <div class="d-flex" [ngClass]="patientForm && patientForm.get('last_login').value?'justify-content-between':'justify-content-end'">
+                                <div class="d-flex"
+                                     [ngClass]="patientForm && patientForm.get('last_login').value?'justify-content-between':'justify-content-end'">
                                     <div *ngIf="patientForm && patientForm.get('created_at').value">
                                         <small style="font-size: 12px">{{'SHARED.CREATED-AT'|translate}}
                                             : {{patientForm.get('created_at').value|date:'shortDate'}}
@@ -68,7 +69,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
                                  [ngClass]="{'has-success': patientForm.controls.email.valid,
               'has-error': patientForm.controls.email.invalid && (patientForm.controls.email.touched || patientForm.controls.email.dirty)}">
                                 <label for="email">
@@ -89,6 +90,23 @@
                                     <span class="glyphicon glyphicon-remove form-control-feedback"
                                           aria-hidden="true"></span>
                                     <span class="text-danger">{{'TOAST-MESSAGES.EMAIL-REGISTRED'|translate}}.</span>
+                                </span>
+                            </div>
+
+                            <div class="form-group has-feedback col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                                 [ngClass]="{'has-success': patientForm.controls.address.valid,
+              'has-error': patientForm.controls.address.invalid && (patientForm.controls.address.touched || patientForm.controls.address.dirty)}">
+                                <label for="email">
+                                    {{'SHARED.ADDRESS'|translate}}:
+                                </label>
+                                <input class="form-control" type="text" formControlName="address" id="address">
+                                <span *ngIf="patientForm.controls.address.valid"
+                                      class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                <span
+                                        *ngIf="patientForm.controls.address.invalid && (patientForm.controls.address.touched || patientForm.controls.address.dirty)">
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"
+                                          aria-hidden="true"></span>
+                                    <span class="text-danger">{{'SHARED.INVALID-ADDRESS'|translate}}.</span>
                                 </span>
                             </div>
                         </div>
@@ -280,6 +298,10 @@
 
                     </form>
                 </haniot-card>
+            </div>
+            <div class="col-12" *ngIf="visibilityExternalServices">
+                <external-service [patientId]="patientId"
+                                  [externalService]="patientForm.get('external_services').value"></external-service>
             </div>
         </div>
     </div>

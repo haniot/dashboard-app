@@ -30,7 +30,8 @@ import { PatientQuestionnairesComponent } from './patient.questionnaires/patient
 import { PatientDashboardComponent } from './patient.dashboard/patient.dashboard.component';
 import { PatientMeasurementsComponent } from './patient.measurements/patient.measurements.component';
 import { GraphicStudyComponent } from './graphic.study/graphic.study.component'
-import { GridsterModule } from 'angular-gridster2'
+import { GridsterModule } from 'angular-gridster2';
+import { ExternalServiceComponent } from './external.service/external.service.component'
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { GridsterModule } from 'angular-gridster2'
         PatientQuestionnairesComponent,
         PatientDashboardComponent,
         PatientMeasurementsComponent,
-        GraphicStudyComponent
+        GraphicStudyComponent,
+        ExternalServiceComponent
     ],
     imports: [
         CommonModule,
@@ -74,7 +76,8 @@ import { GridsterModule } from 'angular-gridster2'
     ],
     exports: [
         PatientTableComponent,
-        ListPilotstudiesComponent
+        ListPilotstudiesComponent,
+        ExternalServiceComponent
     ]
 })
 export class PatientModule {

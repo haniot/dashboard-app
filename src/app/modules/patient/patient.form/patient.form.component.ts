@@ -1,7 +1,7 @@
 import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
@@ -14,6 +14,11 @@ import { LanguagesConfiguration } from '../../../../assets/i18n/config';
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
 import { AuthService } from '../../../security/auth/services/auth.service';
+import { FitbitStatusPipe } from '../../../shared/shared.pipes/pipes/fitbit.status.pipe'
+import { VerifyScopeService } from '../../../security/services/verify.scope.service'
+import { FitbitService } from '../../../shared/shared.services/fitbit.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { SynchronizeData, SynchronizeLog } from '../models/external.service'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -39,7 +44,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
     matchTimer: any;
     errorEmailConflit: boolean;
     passwordGenerated: string;
-
+    visibilityExternalServices: boolean;
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -51,7 +56,10 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         private location: Location,
         private authService: AuthService,
         private localStorageService: LocalStorageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private datePipe: DatePipe,
+        private fitbitStatusPipe: FitbitStatusPipe,
+        private verifyScopeService: VerifyScopeService
     ) {
         this.min_birth_date = new Date();
         this.subscriptions = new Array<ISubscription>();
@@ -65,6 +73,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             this.patientId = params.get('patientId');
             this.createForm();
             this.loadPatientInForm();
+            this.verifyScopes();
         }));
         if (!this.patientId) {
             this.calMinBirthDate();
@@ -87,12 +96,16 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             gender: ['', Validators.required],
             email: ['', Validators.compose([Validators.email])],
             phone_number: [''],
+            address: [''],
             selected_pilot_study: [''],
             language: [this.translateService.defaultLang],
             password: [''],
             password_confirm: [''],
             last_login: [''],
-            last_sync: ['']
+            external_services: this.fb.group({
+                fitbit_status: [{ value: '', disabled: true }],
+                fitbit_last_sync: [{ value: '', disabled: true }]
+            })
         });
     }
 
@@ -105,12 +118,16 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
             gender: [patient.gender],
             email: [patient.email],
             phone_number: [patient.phone_number],
+            address: [patient.address],
             selected_pilot_study: [patient.selected_pilot_study],
             language: [patient.language],
             password: [''],
             password_confirm: [''],
             last_login: [patient.last_login],
-            // last_sync: [patient.last_sync]
+            external_services: this.fb.group({
+                fitbit_status: [patient.external_services.fitbit_status],
+                fitbit_last_sync: [patient.external_services.fitbit_last_sync]
+            })
         });
     }
 
@@ -262,6 +279,10 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         this.passwordGenerated = this.authService.generatePassword();
         this.patientForm.get('password').patchValue(this.passwordGenerated);
         this.patientForm.get('password_confirm').patchValue(this.passwordGenerated);
+    }
+
+    verifyScopes(): void {
+        this.visibilityExternalServices = this.verifyScopeService.verifyScopes(['external:sync']);
     }
 
     cleanEmailConflit(): void {

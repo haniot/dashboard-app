@@ -42,8 +42,24 @@
             <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                 class="max-width-60"
                 [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
-            <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
-                [attr.data-th]="'SHARED.NAME-OF-PATIENT'|translate">{{patient.name}}</td>
+            <td
+                [attr.data-th]="'SHARED.NAME-OF-PATIENT'|translate">
+                <div class="row">
+                    <div class="col-12">
+                        {{patient.name}}
+                        <img class="external-service disabled"
+                             src="../../../../assets/img/fitbit-not-sync.svg" width="22"
+                             [title]="'PATIENTS.EXTERNAL-SERVICES.NOT-SYNCHRONIZED'|translate"
+                             *ngIf="!patient.external_services || !patient.external_services.fitbit_last_sync"/>
+                        <img class="external-service" [ngClass]="!externalServiceVisibility?'disabled':''"
+                             src="../../../../assets/img/fitbit-sync.svg"
+                             width="22"
+                             [title]="!externalServiceVisibility?('PATIENTS.EXTERNAL-SERVICES.VIEW-DETAILS'|translate):''"
+                             (click)="viewDetailsFitbit($event, patient.external_services)"
+                             *ngIf="patient.external_services && patient.external_services.fitbit_last_sync && externalServiceVisibility"/>
+                    </div>
+                </div>
+            </td>
             <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                 class="max-width-150"
                 [attr.data-th]="'SHARED.GENDER'|translate">{{patient.gender | gender | translate}}</td>
@@ -110,3 +126,31 @@
                     [observation]="'PATIENTS.PATIENTS-TABLE.DELETE-CONFIRMATION-OBS'|translate"
                     (confirmation)="removePatient()"
                     (noconfirmation)="closeModalConfimation()"></modal-confirmation>
+
+<haniot-modal [modalId]="'externalServices'" [styleDialog]="'modal-sm'" (close)="closeModalExternalServices()">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{'PATIENTS.EXTERNAL-SERVICES.TITLE'|translate}}</h5>
+            <button type="button" class="close" aria-label="Close" (click)="closeModalExternalServices()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <p>{{'PATIENTS.EXTERNAL-SERVICES.LAST-SYNC'|translate}}:</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p class="text-center">{{externalServiceSelected.fitbit_last_sync|date}}</p>
+                </div>
+                <div class="row">
+                    <p>{{'PATIENTS.EXTERNAL-SERVICES.STATUS-TOKEN'|translate}}:</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p class="text-center">{{externalServiceSelected.fitbit_status}}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</haniot-modal>

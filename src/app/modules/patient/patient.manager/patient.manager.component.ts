@@ -12,6 +12,8 @@ import { HttpResponse } from '@angular/common/http'
 import { AuthService } from '../../../security/auth/services/auth.service'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
+import { ExternalService } from '../models/external.service'
+import { VerifyScopeService } from '../../../security/services/verify.scope.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -31,6 +33,8 @@ export class PatientManagerComponent implements OnInit {
     search: string;
     searchTime;
     cacheIdPatientRemove: string;
+    externalServiceSelected: ExternalService;
+    externalServiceVisibility: boolean;
 
     constructor(
         private patientService: PatientService,
@@ -40,17 +44,20 @@ export class PatientManagerComponent implements OnInit {
         private modalService: ModalService,
         private localStorageService: LocalStorageService,
         private router: Router,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private verifyScopeService: VerifyScopeService
     ) {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
         this.limit = PaginatorConfig.limit;
         this.listOfPatientsIsEmpty = false;
         this.listOfPatients = new Array<Patient>();
+        this.externalServiceSelected = new ExternalService();
     }
 
     ngOnInit() {
         this.getAllPatients();
+        this.verifyScopes();
     }
 
     searchOnSubmit() {
@@ -124,6 +131,19 @@ export class PatientManagerComponent implements OnInit {
             });
     }
 
+    viewDetailsFitbit(event: any, externalService: ExternalService): void {
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.externalServiceVisibility) {
+            this.externalServiceSelected = externalService;
+            this.modalService.open('externalServices');
+        }
+    }
+
+    verifyScopes(): void {
+        this.externalServiceVisibility = this.verifyScopeService.verifyScopes(['external:sync']);
+    }
+
     getIndex(index: number): number {
         if (this.search) {
             return null;
@@ -137,6 +157,11 @@ export class PatientManagerComponent implements OnInit {
 
     newPatient() {
         this.router.navigate(['/app/patients', 'new']);
+    }
+
+    closeModalExternalServices(): void {
+        this.externalServiceSelected = new ExternalService();
+        this.modalService.close('externalServices');
     }
 
     trackById(index, item) {

@@ -17,6 +17,7 @@ import { Patient } from '../../patient/models/patient'
 import { PhysicalActivitiesService } from '../services/physical.activities.service'
 import { TimeSeriesService } from '../services/time.series.service'
 import { SleepFilter, SleepService } from '../services/sleep.service'
+import { VerifyScopeService } from '../../../security/services/verify.scope.service'
 
 @Component({
     selector: 'activity-dashboard',
@@ -57,6 +58,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     Math = Math;
     currentFilter: TimeSeriesIntervalFilter;
     sleepDivRef: ElementRef;
+    visibilityFitBitSync: boolean;
 
     @ViewChild('sleepDiv', { static: false })
     set sleepDiv(element: ElementRef) {
@@ -151,7 +153,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         private activeRouter: ActivatedRoute,
         private localStorageService: LocalStorageService,
         private translateService: TranslateService,
-        private timeSeriesService: TimeSeriesService
+        private timeSeriesService: TimeSeriesService,
+        private verifyScopeService: VerifyScopeService
     ) {
         this.currentDate = new Date();
         this.activityGraph = [];
@@ -173,7 +176,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.innerWidth = window.innerWidth;
         this.activeRouter.params.subscribe((params) => {
             this.getQueryParams();
-            this.getPatientSelected()
+            this.getPatientSelected();
+            this.verifyScopes();
         });
     }
 
@@ -499,6 +503,10 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.loadTimeSeries();
         this.loadSleep();
         this.updateQueryParams();
+    }
+
+    verifyScopes(): void {
+        this.visibilityFitBitSync = this.verifyScopeService.verifyScopes(['external:sync']);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
