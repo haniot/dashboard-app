@@ -46,7 +46,7 @@
     "echarts": "^4.6.0",
     "hammerjs": "^2.0.8",
     "jquery": "^3.4.1",
-    "jspdf": "git+https://github.com/MrRio/jsPDF.git#b7a1d8239c596292ce86dafa77f05987bcfa2e6e",
+    "jspdf": "git+https://github.com/MrRio/jsPDF.git#6e08bf693ce8fd0ad026f3553faf13307ad86ab4",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "mustache": "^3.2.1",
