@@ -15,6 +15,10 @@ export class TokenInterceptor implements HttpInterceptor {
         const token = this.localStorageService.getItem('token');
 
         if (token) {
+            if (request.url.match('api.fitbit.com')) {
+                console.log(request.headers)
+                return next.handle(request);
+            }
             const newRequest = request.clone({
                 setHeaders: {
                     'Authorization': `Bearer ${token}`,

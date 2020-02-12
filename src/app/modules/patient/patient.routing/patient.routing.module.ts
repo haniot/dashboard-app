@@ -45,6 +45,10 @@ const routes = [
         data: { scope: 'patients:read patients:delete' }
     },
     {
+        path: 'fitbit',
+        component: PatientFormComponent
+    },
+    {
         path: ':patientId',
         component: PatientFormComponent,
         data: { scope: 'patients:update' }

@@ -53,6 +53,7 @@ export class PatientTableComponent implements OnInit, OnChanges, OnDestroy {
         this.listOfPatientsIsEmpty = false;
         this.subscriptions = new Array<ISubscription>();
         this.listOfPatients = new Array<Patient>();
+        this.externalServiceSelected = new ExternalService();
     }
 
     ngOnInit() {

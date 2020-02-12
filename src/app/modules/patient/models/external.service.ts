@@ -136,7 +136,7 @@ export class FitBitClient {
     }
 }
 
-export class FitBitUser {
+export class OAuthUser {
     private _access_token: string;
     private _refresh_token: string;
 

@@ -33,9 +33,16 @@
         <div class="d-flex justify-content-between">
             <div class="p-2">
                 <button type="button" class="btn btn-haniot-primary"
+                        *ngIf="patientForm.get(['external_services','fitbit_last_sync']).value!==' - - '"
                         (click)="synchronize()">
                     {{'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZE'|translate}}
                     <i class="material-icons">cached</i>
+                </button>
+                <button type="button" class="btn btn-haniot-primary"
+                        *ngIf="patientForm.get(['external_services','fitbit_last_sync']).value===' - - '"
+                        (click)="provideAccess()">
+                    Fornecer Acesso
+                    <i class="material-icons">security</i>
                 </button>
             </div>
             <div class="p-2" style="display: flex; align-items: flex-end">
@@ -126,7 +133,7 @@
 </haniot-modal>
 
 <div id="synchronizing" *ngIf="synchronizing || revoking">
-    <div id="externa">
+    <div class="externa">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -139,6 +146,27 @@
                                 <spinner [message]="'PATIENTS.EXTERNAL-SERVICES.REVOKING'|translate"
                                          *ngIf="revoking">
                                 </spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fundo preto do modal-->
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<div id="providingAccess" *ngIf="providingAccess">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'Aguarde...'"></spinner>
                             </div>
                         </div>
                     </div>

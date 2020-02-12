@@ -300,7 +300,7 @@
                 </haniot-card>
             </div>
             <div class="col-12" *ngIf="visibilityExternalServices">
-                <external-service [patientId]="patientId"
+                <external-service [patientId]="patientId" (promotedAccess)="loadPatientInForm()"
                                   [externalService]="patientForm.get('external_services').value"></external-service>
             </div>
         </div>

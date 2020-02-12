@@ -1,14 +1,15 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { FormBuilder, FormGroup } from '@angular/forms'
 
 import { TranslateService } from '@ngx-translate/core'
+import { ToastrService } from 'ngx-toastr';
 
-import { ExternalService, SynchronizeData } from '../models/external.service'
-import { FitbitStatusPipe } from '../../../shared/shared.pipes/pipes/fitbit.status.pipe'
-import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
-import { FitbitService } from '../../../shared/shared.services/fitbit.service'
-import { ToastrService } from 'ngx-toastr'
+import { ExternalService, OAuthUser, SynchronizeData } from '../models/external.service';
+import { FitbitStatusPipe } from '../../../shared/shared.pipes/pipes/fitbit.status.pipe';
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
+import { FitbitService } from '../../../shared/shared.services/fitbit.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
 
 @Component({
     selector: 'external-service',
@@ -18,9 +19,11 @@ import { ToastrService } from 'ngx-toastr'
 export class ExternalServiceComponent implements OnInit, OnChanges {
     @Input() patientId: string;
     @Input() externalService: ExternalService;
+    @Output() promotedAccess: EventEmitter<any>;
     patientForm: FormGroup;
     synchronizing: boolean;
     revoking: boolean;
+    providingAccess: boolean;
     synchronizeData: SynchronizeData;
 
     constructor(
@@ -30,10 +33,12 @@ export class ExternalServiceComponent implements OnInit, OnChanges {
         private datePipe: DatePipe,
         private modalService: ModalService,
         private fitbitService: FitbitService,
-        private toastService: ToastrService
+        private toastService: ToastrService,
+        private localStorageService: LocalStorageService
     ) {
         this.patientForm = new FormGroup({});
         this.synchronizeData = new SynchronizeData();
+        this.promotedAccess = new EventEmitter<any>();
     }
 
     ngOnInit() {
@@ -106,6 +111,45 @@ export class ExternalServiceComponent implements OnInit, OnChanges {
 
     closeModalRevoke(): void {
         this.modalService.close('modalConfirmation');
+    }
+
+    async finalizeProvideAccess(fitbitUser: OAuthUser): Promise<void> {
+        try {
+            await this.fitbitService.createUser(this.patientId, fitbitUser);
+            this.toastService.info('Acesso fornecido com sucesso!');
+            this.promotedAccess.emit();
+        } catch (err) {
+            console.log(err)
+            this.toastService.error('Não foi possivel fornecer acesso!');
+        } finally {
+            this.localStorageService.removeItem('fitbitUser');
+            this.providingAccess = false;
+        }
+    }
+
+    async provideAccess(): Promise<any> {
+        this.providingAccess = true;
+        const interval = setInterval(() => {
+            try {
+                const fitbitUser: OAuthUser = JSON.parse(this.localStorageService.getItem('fitbitUser'));
+                if (fitbitUser) {
+                    this.finalizeProvideAccess(fitbitUser);
+                    clearInterval(interval)
+                }
+            } catch (err) {
+                console.log('Não foi possivel fornecer acesso!', err);
+                this.toastService.error('Não foi possivel fornecer acesso!');
+            }
+        }, 3000)
+
+        try {
+            await this.fitbitService.getAuthorizeUrlCode();
+        } catch (e) {
+            this.toastService.error('Não foi possivel fornecer acesso!');
+            this.providingAccess = false;
+            clearInterval(interval)
+        }
+
     }
 
     ngOnChanges(changes: SimpleChanges): void {
