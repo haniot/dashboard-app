@@ -33,8 +33,6 @@ export class PatientManagerComponent implements OnInit {
     search: string;
     searchTime;
     cacheIdPatientRemove: string;
-    externalServiceSelected: ExternalService;
-    externalServiceVisibility: boolean;
 
     constructor(
         private patientService: PatientService,
@@ -52,12 +50,10 @@ export class PatientManagerComponent implements OnInit {
         this.limit = PaginatorConfig.limit;
         this.listOfPatientsIsEmpty = false;
         this.listOfPatients = new Array<Patient>();
-        this.externalServiceSelected = new ExternalService();
     }
 
     ngOnInit() {
         this.getAllPatients();
-        this.verifyScopes();
     }
 
     searchOnSubmit() {
@@ -131,19 +127,6 @@ export class PatientManagerComponent implements OnInit {
             });
     }
 
-    viewDetailsFitbit(event: any, externalService: ExternalService): void {
-        event.preventDefault();
-        event.stopPropagation();
-        if (this.externalServiceVisibility) {
-            this.externalServiceSelected = externalService;
-            this.modalService.open('externalServices');
-        }
-    }
-
-    verifyScopes(): void {
-        this.externalServiceVisibility = this.verifyScopeService.verifyScopes(['external:sync']);
-    }
-
     getIndex(index: number): number {
         if (this.search) {
             return null;
@@ -157,11 +140,6 @@ export class PatientManagerComponent implements OnInit {
 
     newPatient() {
         this.router.navigate(['/app/patients', 'new']);
-    }
-
-    closeModalExternalServices(): void {
-        this.externalServiceSelected = new ExternalService();
-        this.modalService.close('externalServices');
     }
 
     trackById(index, item) {

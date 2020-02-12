@@ -43,19 +43,3 @@ $breakpoint-alpha: 480px;
   height: 48px;
   background: url('assets/img/questionnaires.png') -360px -150px;
 }
-
-
-.external-service {
-  padding: 2px;
-  float: right;
-
-  &:hover {
-    border-radius: 20px;
-    background: rgb(212, 207, 207);
-  }
-}
-
-.disabled:hover {
-  border-radius: 20px;
-  background: unset;
-}

@@ -47,16 +47,7 @@
                 <div class="row">
                     <div class="col-12">
                         {{patient.name}}
-                        <img class="external-service disabled"
-                             src="../../../../assets/img/fitbit-not-sync.svg" width="22"
-                             [title]="'PATIENTS.EXTERNAL-SERVICES.NOT-SYNCHRONIZED'|translate"
-                             *ngIf="!patient.external_services || !patient.external_services.fitbit_last_sync"/>
-                        <img class="external-service" [ngClass]="!externalServiceVisibility?'disabled':''"
-                             src="../../../../assets/img/fitbit-sync.svg"
-                             width="22"
-                             [title]="!externalServiceVisibility?('PATIENTS.EXTERNAL-SERVICES.VIEW-DETAILS'|translate):''"
-                             (click)="viewDetailsFitbit($event, patient.external_services)"
-                             *ngIf="patient.external_services && patient.external_services.fitbit_last_sync && externalServiceVisibility"/>
+
                     </div>
                 </div>
             </td>

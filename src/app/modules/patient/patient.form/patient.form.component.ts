@@ -16,9 +16,6 @@ import { PilotStudyService } from '../../pilot.study/services/pilot.study.servic
 import { AuthService } from '../../../security/auth/services/auth.service';
 import { FitbitStatusPipe } from '../../../shared/shared.pipes/pipes/fitbit.status.pipe'
 import { VerifyScopeService } from '../../../security/services/verify.scope.service'
-import { FitbitService } from '../../../shared/shared.services/fitbit.service'
-import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
-import { OAuthUser, SynchronizeData, SynchronizeLog } from '../models/external.service'
 
 const languagesConfig = LanguagesConfiguration;
 
@@ -59,8 +56,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         private translateService: TranslateService,
         private datePipe: DatePipe,
         private fitbitStatusPipe: FitbitStatusPipe,
-        private verifyScopeService: VerifyScopeService,
-        private fitbitService: FitbitService
+        private verifyScopeService: VerifyScopeService
     ) {
         this.min_birth_date = new Date();
         this.subscriptions = new Array<ISubscription>();
@@ -76,26 +72,12 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
                 this.createForm();
                 this.loadPatientInForm();
                 this.verifyScopes();
-            }),
-            this.activeRouter.queryParams.subscribe(async params => {
-                const code = params['code'];
-                if (code) {
-                    try {
-                        const result: OAuthUser = await this.fitbitService.getAccessToken(code);
-                        this.localStorageService.setItem('fitbitUser', JSON.stringify(result));
-                    } catch (e) {
-                        this.localStorageService.setItem('fitbitUser', JSON.stringify({}));
-                        this.toastService.error('Não foi possivel fornecer acesso!')
-                    } finally {
-                        window.close();
-                    }
-                }
             })
         );
         if (!this.patientId) {
             this.calMinBirthDate();
             this.createForm();
-            // this.getAllPilotStudies();
+            this.getAllPilotStudies();
         }
     }
 
@@ -152,11 +134,9 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         if (this.patientId) {
             this.patientService.getById(this.patientId)
                 .then(patient => {
-                    console.log(patient)
                     patient.password = '';
                     patient.password_confirm = '';
                     this.setPatientInForm(patient);
-                    // this.getAllPilotStudies();
                 })
                 .catch(() => {
                     this.toastService.error(this.translateService.instant('TOAST-MESSAGES.PATIENT-NOT-FIND'));
@@ -179,9 +159,9 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
                 .then(async (user) => {
                     const pilotId = this.patientForm.get('selected_pilot_study').value;
                     try {
-                        const associate = await this.pilotStudiesService.addPatientToPilotStudy(pilotId, user.id);
+                        await this.pilotStudiesService.addPatientToPilotStudy(pilotId, user.id);
                     } catch (e) {
-                        this.toastService.error('Error ao associar paciente ao estudo!');
+                        this.toastService.error(this.translateService.instant('TOAST-MESSAGES.UNASSOCIATED-PATIENT'));
                     }
                     this.patientForm.reset();
                     this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PATIENT-CREATED'));
@@ -213,29 +193,29 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         this.location.back();
     }
 
-    // getAllPilotStudies() {
-    //     if (this.authService.decodeToken().sub_type === 'admin') {
-    //
-    //         this.pilotStudiesService.getAll()
-    //             .then(httpResponse => {
-    //                 if (httpResponse.body && httpResponse.body.length) {
-    //                     this.listPilots = httpResponse.body;
-    //                 }
-    //
-    //             })
-    //             .catch();
-    //     } else {
-    //         const userId = this.localStorageService.getItem('user');
-    //         this.pilotStudiesService.getAllByUserId(userId)
-    //             .then(httpResponse => {
-    //                 if (httpResponse.body && httpResponse.body.length) {
-    //                     this.listPilots = httpResponse.body;
-    //                 }
-    //
-    //             })
-    //             .catch();
-    //     }
-    // }
+    getAllPilotStudies() {
+        if (this.authService.decodeToken().sub_type === 'admin') {
+
+            this.pilotStudiesService.getAll()
+                .then(httpResponse => {
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listPilots = httpResponse.body;
+                    }
+
+                })
+                .catch();
+        } else {
+            const userId = this.localStorageService.getItem('user');
+            this.pilotStudiesService.getAllByUserId(userId)
+                .then(httpResponse => {
+                    if (httpResponse.body && httpResponse.body.length) {
+                        this.listPilots = httpResponse.body;
+                    }
+
+                })
+                .catch();
+        }
+    }
 
     validatePassword(): void {
         clearTimeout(this.validateTimer);

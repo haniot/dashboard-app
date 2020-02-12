@@ -734,9 +734,9 @@
     "EXTERNAL-SERVICES": {
       "TITLE": "Fitbit details",
       "LAST-SYNC": "Last sync",
-      "STATUS-TOKEN": "Access Token",
+      "STATUS-TOKEN": "Status",
       "NOT-SYNCHRONIZED": "Not synchronized!",
-      "VIEW-DETAILS": "View details...",
+      "PROVIDER-SUCCESSFULLY": "Access provided",
       "SYNCHRONIZE": "Synchronize",
       "REVOKE": "Revoke",
       "REVOKE-ACCESS": "Revoke access...",
@@ -1062,6 +1062,7 @@
     "PATIENT-REMOVED": "Patient removed successfully!",
     "PATIENT-NOT-REMOVED": "Could not remove patient!",
     "PATIENT-NOT-FIND": "Could not find patient!",
+    "UNASSOCIATED-PATIENT": "Não foi possível associar paciente!",
     "FILE-REMOVED": "File removed successfully!",
     "FILE-NOT-REMOVED": "Could not remove file!",
     "STUDY-NOT-FIND": "Could not find pilot study!",
@@ -1099,7 +1100,10 @@
     "SYNCHRONIZE-SUCCESSFULLY": "Data synchronized successfully!",
     "COULD-NOT-SYNC": "Couldn't sync!",
     "REVOKED-SUCCESSFULLY": "Data access revoked successfully!",
-    "COULD-NOT-REVOKE": "It was not possible to revoke access!"
+    "COULD-NOT-REVOKE": "It was not possible to revoke access!",
+    "PROVIDER-SUCCESSFULLY": "Access provided successfully!",
+    "COULD-NOT-PROVIDER-ACCESS": "Could not provide access!",
+    "ACCESS-DENIED": "Access denied!"
   },
   "TIME-SERIES": {
     "TITLE": "Time series",

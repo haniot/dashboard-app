@@ -37,7 +37,8 @@ import { FitbitStatusPipe } from './pipes/fitbit.status.pipe'
         PilotStudySituationPipe,
         EvaluationStatustPipe,
         FilterTypePipe,
-        DecimalFormatterPipe
+        DecimalFormatterPipe,
+        FitbitStatusPipe
     ],
     providers: [
         HealthAreaPipe,

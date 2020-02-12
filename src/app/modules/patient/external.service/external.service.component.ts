@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { FormBuilder, FormGroup } from '@angular/forms'
 
@@ -10,23 +10,26 @@ import { FitbitStatusPipe } from '../../../shared/shared.pipes/pipes/fitbit.stat
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
 import { FitbitService } from '../../../shared/shared.services/fitbit.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
     selector: 'external-service',
     templateUrl: './external.service.component.html',
     styleUrls: ['./external.service.component.scss']
 })
-export class ExternalServiceComponent implements OnInit, OnChanges {
+export class ExternalServiceComponent implements OnInit, OnDestroy {
     @Input() patientId: string;
-    @Input() externalService: ExternalService;
+    @Input() externalServices: ExternalService[];
     @Output() promotedAccess: EventEmitter<any>;
     patientForm: FormGroup;
     synchronizing: boolean;
     revoking: boolean;
     providingAccess: boolean;
     synchronizeData: SynchronizeData;
+    intervalSync: any;
 
     constructor(
+        private activeRouter: ActivatedRoute,
         private fb: FormBuilder,
         private translateService: TranslateService,
         private fitbitStatusPipe: FitbitStatusPipe,
@@ -42,48 +45,38 @@ export class ExternalServiceComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.createForm();
+        this.activeRouter.queryParams.subscribe(async params => {
+            const code = params['code'];
+            const error = params['error_description'];
+            if (code || error) {
+                this.providingAccess = true;
+                try {
+                    if (error) {
+                        throw new Error('Not Authorized');
+                    }
+                    const result: OAuthUser = await this.fitbitService.getAccessToken(code);
+                    this.localStorageService.setItem('fitbitUser', JSON.stringify(result));
+                } catch (e) {
+                    this.localStorageService.setItem('fitbitUser', JSON.stringify(e.message));
+                } finally {
+                    this.providingAccess = false;
+                    window.close();
+                }
+            }
+        })
     }
 
-    createForm() {
-        this.patientForm = this.fb.group({
-            external_services: this.fb.group({
-                fitbit_status: [{ value: '', disabled: true }],
-                fitbit_last_sync: [{ value: '', disabled: true }]
-            })
-        });
-    }
-
-    setPatientInForm() {
-        this.patientForm = this.fb.group({
-            external_services: this.fb.group({
-                fitbit_status: [
-                    this.translateService.instant(
-                        this.fitbitStatusPipe.transform(this.externalService.fitbit_status)
-                    )
-                ],
-                fitbit_last_sync: this.externalService.fitbit_last_sync ? [
-                    this.datePipe.transform(this.externalService.fitbit_last_sync) +
-                    ' ' + this.translateService.instant('SHARED.AT') + ' ' +
-                    this.datePipe.transform(this.externalService.fitbit_last_sync, 'mediumTime')
-                ] : [' - - ']
-            })
-        });
-    }
-
-    synchronize(): void {
+    async synchronize(): Promise<void> {
         this.synchronizing = true;
-        this.fitbitService.synchronize(this.patientId)
-            .then(synchronizeData => {
-                this.synchronizeData = synchronizeData;
-                this.synchronizing = false;
-                this.modalService.open('synchronized');
-                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.SYNCHRONIZE-SUCCESSFULLY'))
-            })
-            .catch(() => {
-                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-SYNC'))
-                this.synchronizing = false;
-            })
+        try {
+            const synchronizeData = await this.fitbitService.synchronize(this.patientId);
+            this.synchronizeData = synchronizeData;
+            this.modalService.open('synchronized');
+        } catch (e) {
+            this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-SYNC'))
+        } finally {
+            this.synchronizing = false;
+        }
     }
 
     openModalRevoke(): void {
@@ -115,12 +108,15 @@ export class ExternalServiceComponent implements OnInit, OnChanges {
 
     async finalizeProvideAccess(fitbitUser: OAuthUser): Promise<void> {
         try {
+            if (!fitbitUser || !fitbitUser.refresh_token || !fitbitUser.access_token) {
+                throw new Error('Not Authorized')
+            }
             await this.fitbitService.createUser(this.patientId, fitbitUser);
-            this.toastService.info('Acesso fornecido com sucesso!');
+            this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PROVIDER-SUCCESSFULLY'));
+            await this.synchronize();
             this.promotedAccess.emit();
         } catch (err) {
-            console.log(err)
-            this.toastService.error('Não foi possivel fornecer acesso!');
+            throw err;
         } finally {
             this.localStorageService.removeItem('fitbitUser');
             this.providingAccess = false;
@@ -128,31 +124,34 @@ export class ExternalServiceComponent implements OnInit, OnChanges {
     }
 
     async provideAccess(): Promise<any> {
-        this.providingAccess = true;
-        const interval = setInterval(() => {
+        this.intervalSync = setInterval(async () => {
             try {
-                const fitbitUser: OAuthUser = JSON.parse(this.localStorageService.getItem('fitbitUser'));
+                const fitbitUser = JSON.parse(this.localStorageService.getItem('fitbitUser'));
                 if (fitbitUser) {
-                    this.finalizeProvideAccess(fitbitUser);
-                    clearInterval(interval)
+                    await this.finalizeProvideAccess(fitbitUser);
+                    clearInterval(this.intervalSync)
                 }
             } catch (err) {
-                console.log('Não foi possivel fornecer acesso!', err);
-                this.toastService.error('Não foi possivel fornecer acesso!');
+                if (err && err.message === 'Not Authorized') {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.ACCESS-DENIED'));
+                } else {
+                    this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-PROVIDER-ACCESS'));
+                }
+                clearInterval(this.intervalSync);
             }
-        }, 3000)
+        }, 1000)
 
         try {
             await this.fitbitService.getAuthorizeUrlCode();
         } catch (e) {
-            this.toastService.error('Não foi possivel fornecer acesso!');
+            this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-PROVIDER-ACCESS'));
             this.providingAccess = false;
-            clearInterval(interval)
+            clearInterval(this.intervalSync)
         }
 
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        this.setPatientInForm()
+    ngOnDestroy(): void {
+        clearInterval(this.intervalSync)
     }
 }

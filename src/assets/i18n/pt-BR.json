@@ -734,9 +734,9 @@
     "EXTERNAL-SERVICES": {
       "TITLE": "Serviços externos",
       "LAST-SYNC": "Última sincronização",
-      "STATUS-TOKEN": "Token de Acesso",
-      "NOT-SYNCHRONIZED": "Não sincronizado!",
-      "VIEW-DETAILS": "Visualizar detalhes...",
+      "STATUS-TOKEN": "Estado",
+      "NOT-SYNCHRONIZED": "Acesso não fornecido!",
+      "PROVIDER-SUCCESSFULLY": "Acesso fornecido",
       "SYNCHRONIZE": "Sincronizar",
       "REVOKE": "Revogar",
       "REVOKE-ACCESS": "Revogar acesso...",
@@ -1062,6 +1062,7 @@
     "PATIENT-REMOVED": "Paciente removido com sucesso!",
     "PATIENT-NOT-REMOVED": "Não foi possível remover paciente!",
     "PATIENT-NOT-FIND": "Não foi possível buscar paciente!",
+    "UNASSOCIATED-PATIENT": "Não foi possível associar paciente!",
     "FILE-REMOVED": "Arquivo removido com sucesso!",
     "FILE-NOT-REMOVED": "Não foi possível remover arquivo!",
     "STUDY-NOT-FIND": "Não foi possível buscar estudo piloto!",
@@ -1099,7 +1100,10 @@
     "SYNCHRONIZE-SUCCESSFULLY": "Dados sincronizados com sucesso!",
     "COULD-NOT-SYNC": "Não foi possivel sincronizar!",
     "REVOKED-SUCCESSFULLY": "Acesso aos dados revogado com sucesso!",
-    "COULD-NOT-REVOKE": "Não foi possivel revogar acesso!"
+    "COULD-NOT-REVOKE": "Não foi possivel revogar acesso!",
+    "PROVIDER-SUCCESSFULLY": "Acesso fornecido com sucesso!",
+    "COULD-NOT-PROVIDER-ACCESS": "Não foi possivel fornecer acesso!",
+    "ACCESS-DENIED": "Acesso negado!"
   },
   "TIME-SERIES": {
     "TITLE": "Séries Temporais",

@@ -1,3 +1,21 @@
+@import "../../../../assets/scss/template-colors";
+
+.material-icons {
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.disabled {
+  i {
+    color: rgb(212, 207, 207);
+  }
+}
+
 .externa {
   position: absolute;
   z-index: 2000;
