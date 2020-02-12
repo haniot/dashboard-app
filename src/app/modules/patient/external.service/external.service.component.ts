@@ -72,8 +72,12 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
             const synchronizeData = await this.fitbitService.synchronize(this.patientId);
             this.synchronizeData = synchronizeData;
             this.modalService.open('synchronized');
-        } catch (e) {
-            this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-SYNC'))
+        } catch (err) {
+            if (err && err.status === 429) {
+                this.toastService.error(this.translateService.instant('SECURITY.FORGOT.TOO-MANY-ATTEMPTS'))
+            } else {
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-SYNC'))
+            }
         } finally {
             this.synchronizing = false;
         }
@@ -128,8 +132,8 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
             try {
                 const fitbitUser = JSON.parse(this.localStorageService.getItem('fitbitUser'));
                 if (fitbitUser) {
-                    await this.finalizeProvideAccess(fitbitUser);
                     clearInterval(this.intervalSync)
+                    await this.finalizeProvideAccess(fitbitUser);
                 }
             } catch (err) {
                 if (err && err.message === 'Not Authorized') {

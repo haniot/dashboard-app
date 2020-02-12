@@ -16,7 +16,6 @@ export class TokenInterceptor implements HttpInterceptor {
 
         if (token) {
             if (request.url.match('api.fitbit.com')) {
-                console.log(request.headers)
                 return next.handle(request);
             }
             const newRequest = request.clone({
@@ -26,9 +25,7 @@ export class TokenInterceptor implements HttpInterceptor {
                 }
             });
             return next.handle(newRequest);
-        } else {
-            return next.handle(request);
         }
-
+        return next.handle(request);
     }
 }

@@ -151,7 +151,7 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
                 return idx * 5;
             }
         };
-        this.listIsEmpty = !!seriesOptions.data.length;
+        this.listIsEmpty = !seriesOptions.data.length;
     }
 
     updateGraph(measurements: Array<TimeSeries>): void {
@@ -171,7 +171,7 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
             }
 
         });
-
+        this.listIsEmpty = !this.options.data.length;
         this.echartsInstance.setOption(this.options);
     }
 

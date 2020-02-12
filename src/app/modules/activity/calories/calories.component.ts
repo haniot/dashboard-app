@@ -148,7 +148,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
                 return idx * 5;
             }
         };
-        this.listIsEmpty = !!seriesOptions.data.length;
+        this.listIsEmpty = !seriesOptions.data.length;
     }
 
     updateGraph(measurements: Array<TimeSeries>): void {
@@ -169,7 +169,7 @@ export class CaloriesComponent implements OnInit, OnChanges {
 
         });
 
-        this.listIsEmpty = !!this.options.data.length;
+        this.listIsEmpty = !this.options.data.length;
         this.echartsInstance.setOption(this.options);
     }
 

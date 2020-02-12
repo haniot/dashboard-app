@@ -22,12 +22,12 @@
                     <img class="external-service disabled"
                          src="../../../../assets/img/fitbit-not-sync.svg" width="20"
                          [title]="'PATIENTS.EXTERNAL-SERVICES.NOT-SYNCHRONIZED'|translate"
-                         *ngIf="!externalService || !externalService.fitbit_last_sync"/>
+                         *ngIf="!externalService || !externalService.fitbit_last_sync || externalService.fitbit_status==='none'"/>
                     <img class="external-service"
                          src="../../../../assets/img/fitbit-sync.svg"
                          width="20"
                          [title]="('PATIENTS.EXTERNAL-SERVICES.PROVIDER-SUCCESSFULLY'|translate)"
-                         *ngIf="externalService && externalService.fitbit_last_sync"/>
+                         *ngIf="externalService && externalService.fitbit_status!=='none'"/>
                 </td>
                 <td class="max-width-60"
                     [attr.data-th]="'PATIENTS.EXTERNAL-SERVICES.LAST-SYNC'|translate">
@@ -45,20 +45,21 @@
                         <div class="row">
                             <div class="col">
                                 <a class="nav-link"
-                                   [ngClass]="(!externalService || !externalService.fitbit_last_sync)?'disabled':''"
+                                   [ngClass]="(!externalService || externalService.fitbit_status==='none')?'disabled':''"
                                    (click)="synchronize()" [title]="'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZE'|translate">
                                     <i class="material-icons">cached</i>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="nav-link" (click)="provideAccess()"
+                                   [ngClass]="(!externalService || externalService.fitbit_status==='none')?'':'disabled'"
                                    [title]="'PATIENTS.EXTERNAL-SERVICES.PROVIDER-ACCESS'|translate">
                                     <i class="material-icons">security</i>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="nav-link"
-                                   [ngClass]="(!externalService || !externalService.fitbit_last_sync)?'disabled':''"
+                                   [ngClass]="(!externalService || externalService.fitbit_status==='none')?'disabled':''"
                                    (click)="openModalRevoke()"
                                    [title]="'PATIENTS.EXTERNAL-SERVICES.REVOKE-ACCESS'|translate">
                                     <i class="material-icons">not_interested</i>
@@ -95,19 +96,19 @@
                         <label style="font-weight: normal">
                             {{'ACTIVITY.ACTIVITIES'|translate}}
                         </label>
-                        <h4>{{synchronizeData.activities ? (synchronizeData.activities|number:'1.0-0') : 0}}</h4>
+                        <h4>{{(synchronizeData.activities|number:'1.0-0')}}</h4>
                     </div>
                     <div class="form-group col-4 text-center">
                         <label style="font-weight: normal">
                             {{'ACTIVITY.SLEEP.SLEEP'|translate}}
                         </label>
-                        <h4>{{synchronizeData.sleep ? (synchronizeData.sleep|number:'1.0-0') : 0}}</h4>
+                        <h4>{{(synchronizeData.sleep|number:'1.0-0')}}</h4>
                     </div>
                     <div class="form-group col-4 text-center">
                         <label style="font-weight: normal">
                             {{'MEASUREMENTS.WEIGHT.TITLE'|translate}}
                         </label>
-                        <h4>{{synchronizeData.weights ? (synchronizeData.weights|number:'1.0-0') : 0}}</h4>
+                        <h4>{{(synchronizeData.weights|number:'1.0-0')}}</h4>
                     </div>
                 </div>
             </div>
