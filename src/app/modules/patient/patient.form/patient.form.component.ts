@@ -134,6 +134,7 @@ export class PatientFormComponent implements OnInit, AfterViewChecked, OnDestroy
         if (this.patientId) {
             this.patientService.getById(this.patientId)
                 .then(patient => {
+                    this.localStorageService.selectedPatient(patient);
                     patient.password = '';
                     patient.password_confirm = '';
                     this.setPatientInForm(patient);

@@ -736,10 +736,11 @@
       "LAST-SYNC": "Last sync",
       "STATUS-TOKEN": "Status",
       "NOT-SYNCHRONIZED": "Not synchronized!",
+      "PROVIDER-ACCESS": "Provide access",
       "PROVIDER-SUCCESSFULLY": "Access provided",
       "SYNCHRONIZE": "Synchronize",
       "REVOKE": "Revoke",
-      "REVOKE-ACCESS": "Revoke access...",
+      "REVOKE-ACCESS": "Revoke access",
       "SUMMARY-UPDATED": "Summary of updated records",
       "SYNCHRONIZE-SUCCESSFULLY": "Data successfully synced",
       "SYNCHRONIZING": "Synchronizing...",
@@ -944,6 +945,7 @@
     "DAY": "day",
     "DAYS": "days",
     "SELECT": "Select",
+    "WAIT": "Wait...",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",

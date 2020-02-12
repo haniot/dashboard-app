@@ -52,7 +52,7 @@
                             </div>
                             <div class="col">
                                 <a class="nav-link" (click)="provideAccess()"
-                                   [title]="'Fornecer Acesso'">
+                                   [title]="'PATIENTS.EXTERNAL-SERVICES.PROVIDER-ACCESS'|translate">
                                     <i class="material-icons">security</i>
                                 </a>
                             </div>
@@ -110,41 +110,6 @@
                         <h4>{{synchronizeData.weights ? (synchronizeData.weights|number:'1.0-0') : 0}}</h4>
                     </div>
                 </div>
-                <!--                <div class="row">-->
-                <!--                    <div class="col-12">-->
-                <!--                        <hr class="separator" [attr.data-label]="'TIME-SERIES.TITLE'|translate">-->
-                <!--                    </div>-->
-                <!--                    <div class="form-group col-4 text-center">-->
-                <!--                        <label style="font-weight: normal">-->
-                <!--                            {{'TIME-SERIES.STEPS.TITLE'|translate}}-->
-                <!--                        </label>-->
-                <!--                        <h4>{{synchronizeData.logs && synchronizeData.logs.steps ? (synchronizeData.logs.steps|number:'1.0-0') : 0}}</h4>-->
-                <!--                    </div>-->
-                <!--                    <div class="form-group col-4 text-center">-->
-                <!--                        <label style="font-weight: normal">-->
-                <!--                            {{'TIME-SERIES.CALORIES.TITLE'|translate}}-->
-                <!--                        </label>-->
-                <!--                        <h4>{{synchronizeData.logs && synchronizeData.logs.calories ? (synchronizeData.logs.calories|number:'1.0-0') : 0}}</h4>-->
-                <!--                    </div>-->
-                <!--                    <div class="form-group col-4 text-center">-->
-                <!--                        <label style="font-weight: normal">-->
-                <!--                            {{'TIME-SERIES.ACTIVE-MINUTES.TITLE'|translate}}-->
-                <!--                        </label>-->
-                <!--                        <h4>{{synchronizeData.logs && synchronizeData.logs.active_minutes ? (synchronizeData.logs.active_minutes|number:'1.0-0') : 0}}</h4>-->
-                <!--                    </div>-->
-                <!--                    <div class="form-group col-6 text-center">-->
-                <!--                        <label style="font-weight: normal">-->
-                <!--                            {{'TIME-SERIES.ACTIVE-MINUTES.LIGHTLY-ACTIVE-MINUTES'|translate}}-->
-                <!--                        </label>-->
-                <!--                        <h4>{{synchronizeData.logs && synchronizeData.logs.lightly_active_minutes ? (synchronizeData.logs.lightly_active_minutes|number:'1.0-0') : 0}}</h4>-->
-                <!--                    </div>-->
-                <!--                    <div class="form-group col-6 text-center">-->
-                <!--                        <label style="font-weight: normal">-->
-                <!--                            {{'TIME-SERIES.ACTIVE-MINUTES.SEDENTARY-MINUTES'|translate}}-->
-                <!--                        </label>-->
-                <!--                        <h4>{{synchronizeData.logs && synchronizeData.logs.sedentary_minutes ? (synchronizeData.logs.sedentary_minutes|number:'1.0-0') : 0}}</h4>-->
-                <!--                    </div>-->
-                <!--                </div>-->
             </div>
         </div>
 
@@ -184,7 +149,7 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                                <spinner [message]="'Aguarde...'"></spinner>
+                                <spinner [message]="'SHARED.WAIT'|translate"></spinner>
                             </div>
                         </div>
                     </div>
