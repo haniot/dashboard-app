@@ -299,7 +299,7 @@
                     </form>
                 </haniot-card>
             </div>
-            <div class="col-12" *ngIf="visibilityExternalServices">
+            <div class="col-12" *ngIf="patientId && visibilityExternalServices">
                 <external-service [patientId]="patientId" (change)="loadPatientInForm()"
                                   [externalServices]="[patientForm.get('external_services').value]"
                                   [loading]="patientId && !patientForm.get('id').value"

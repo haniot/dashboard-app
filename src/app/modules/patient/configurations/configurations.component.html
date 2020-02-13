@@ -148,6 +148,12 @@
 
                 </haniot-card>
             </div>
+            <div class="col-12" *ngIf="visibilityExternalServices">
+                <external-service [patientId]="user.id" (change)="getUser()"
+                                  [externalServices]="[user.external_services]"
+                                  [loading]="userId && !user.id"
+                ></external-service>
+            </div>
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <access-settings [userId]="userId"></access-settings>
             </div>

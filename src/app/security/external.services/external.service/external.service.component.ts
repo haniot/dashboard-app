@@ -100,7 +100,7 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
     }
 
     openModalRevoke(): void {
-        this.modalService.open('modalConfirmation');
+        this.modalService.open('confirmRevoke');
     }
 
     async revoke(): Promise<void> {
@@ -123,7 +123,7 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
     }
 
     closeModalRevoke(): void {
-        this.modalService.close('modalConfirmation');
+        this.modalService.close('confirmRevoke');
     }
 
     async finalizeProvideAccess(fitbitUser: OAuthUser): Promise<void> {

@@ -164,6 +164,7 @@
     </div>
 </div>
 
-<modal-confirmation [message]="'PATIENTS.EXTERNAL-SERVICES.CONFIRM-REVOKE'|translate" (confirmation)="revoke()"
+<modal-confirmation [id]="'confirmRevoke'"
+        [message]="'PATIENTS.EXTERNAL-SERVICES.CONFIRM-REVOKE'|translate" (confirmation)="revoke()"
                     (close)="closeModalRevoke()"
                     (noconfirmation)="closeModalRevoke()"></modal-confirmation>

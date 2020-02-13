@@ -42,7 +42,7 @@
             <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                 class="max-width-60"
                 [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
-            <td
+            <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                 [attr.data-th]="'SHARED.NAME-OF-PATIENT'|translate">
                 <div class="row">
                     <div class="col-12">
