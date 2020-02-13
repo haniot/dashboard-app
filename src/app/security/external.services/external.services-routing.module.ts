@@ -4,7 +4,7 @@ import { ExternalServiceComponent } from './external.service/external.service.co
 import { EscapeComponent } from './escape/escape.component'
 
 const routes = [
-    { path: 'fitbit', component: ExternalServiceComponent },
+    { path: 'fitbit', component: ExternalServiceComponent, data: { scope: 'external:sync' } },
     { path: 'invalid', component: EscapeComponent },
     { path: '**', redirectTo: 'invalid' }
 ];

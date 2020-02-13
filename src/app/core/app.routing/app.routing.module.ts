@@ -15,6 +15,7 @@ const routes = [
     },
     {
         path: 'oauth',
+        canActivate: [AuthGuard, ScopeGuard], canActivateChild: [AuthGuard, ScopeGuard],
         loadChildren: () => import('../../security/external.services/external.services.module')
             .then(m => m.ExternalServicesModule)
     },
