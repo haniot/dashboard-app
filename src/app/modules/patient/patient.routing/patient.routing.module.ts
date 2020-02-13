@@ -11,7 +11,7 @@ import { PatientQuestionnairesComponent } from '../patient.questionnaires/patien
 import { PatientMeasurementsComponent } from '../patient.measurements/patient.measurements.component'
 import { PatientDashboardComponent } from '../patient.dashboard/patient.dashboard.component'
 import { GraphicStudyComponent } from '../graphic.study/graphic.study.component'
-import { ExternalServiceComponent } from '../external.service/external.service.component'
+import { ExternalServiceComponent } from '../../../security/external.services/external.service/external.service.component'
 
 const routes = [
 

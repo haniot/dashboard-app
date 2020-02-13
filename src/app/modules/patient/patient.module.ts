@@ -9,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule, MatIconModule, MatTabsModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { GridsterModule } from 'angular-gridster2';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import { PatientFormComponent } from './patient.form/patient.form.component';
 import { PatientTableComponent } from './patient.table/patient.table.component';
@@ -23,15 +25,13 @@ import { PatientConfigComponent } from './configurations/configurations.componen
 import { PatientMypilotstudiesComponent } from './mypilotstudies/mypilotstudies.component'
 import { SettingsModule } from '../settings/settings.module'
 import { PatientMyEvaluationsComponent } from './myevaluations/myevaluations.component'
-import { NgxEchartsModule } from 'ngx-echarts';
 import { ViewResourcesComponent } from './view.resources/view.resources.component';
 import { ActivityModule } from '../activity/activity.module';
 import { PatientQuestionnairesComponent } from './patient.questionnaires/patient.questionnaires.component';
 import { PatientDashboardComponent } from './patient.dashboard/patient.dashboard.component';
 import { PatientMeasurementsComponent } from './patient.measurements/patient.measurements.component';
 import { GraphicStudyComponent } from './graphic.study/graphic.study.component'
-import { GridsterModule } from 'angular-gridster2';
-import { ExternalServiceComponent } from './external.service/external.service.component'
+import { ExternalServicesModule } from '../../security/external.services/external.services.module'
 
 @NgModule({
     declarations: [
@@ -47,8 +47,7 @@ import { ExternalServiceComponent } from './external.service/external.service.co
         PatientQuestionnairesComponent,
         PatientDashboardComponent,
         PatientMeasurementsComponent,
-        GraphicStudyComponent,
-        ExternalServiceComponent
+        GraphicStudyComponent
     ],
     imports: [
         CommonModule,
@@ -72,12 +71,12 @@ import { ExternalServiceComponent } from './external.service/external.service.co
         HabitsModule,
         MeasurementModule,
         ActivityModule,
-        SettingsModule
+        SettingsModule,
+        ExternalServicesModule
     ],
     exports: [
         PatientTableComponent,
-        ListPilotstudiesComponent,
-        ExternalServiceComponent
+        ListPilotstudiesComponent
     ]
 })
 export class PatientModule {

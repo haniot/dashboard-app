@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
 import { NotificationService } from './notification.service';
 import { PilotStudyService } from '../../modules/pilot.study/services/pilot.study.service'
 import { AuthService } from '../../security/auth/services/auth.service'
@@ -10,11 +9,12 @@ import { AdminService } from '../../modules/admin/services/admin.service'
 import { HealthProfessionalService } from '../../modules/admin/services/health.professional.service'
 import { PatientService } from '../../modules/patient/services/patient.service'
 import { NutritionEvaluationService } from '../../modules/evaluation/services/nutrition.evaluation.service'
-import { FitbitService } from './fitbit.service'
+import { SecurityModule } from '../../security/security.module'
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        SecurityModule
     ],
     providers: [
         PilotStudyService,
@@ -24,8 +24,7 @@ import { FitbitService } from './fitbit.service'
         HealthProfessionalService,
         PatientService,
         NutritionEvaluationService,
-        NotificationService,
-        FitbitService
+        NotificationService
     ]
 })
 export class SharedServicesModule {

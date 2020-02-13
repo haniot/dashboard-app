@@ -1010,6 +1010,13 @@
       "TRY-AGAIN": "Try again after 24 hours",
       "TOO-MANY-ATTEMPTS": "Too many attempts!",
       "UNDERSTOOD": "UNDERSTOOD"
+    },
+    "EXTERNAL-SERVICES": {
+      "ESCAPE": {
+        "TITLE": "Operation failed!",
+        "MESSAGE": "You are accessing an authorization page with third party services using invalid data.",
+        "TRY-AGAIN": "Please check the data and try again!"
+      }
     }
   },
   "TABLE-USER": {

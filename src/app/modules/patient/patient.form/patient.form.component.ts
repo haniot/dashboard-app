@@ -14,7 +14,7 @@ import { LanguagesConfiguration } from '../../../../assets/i18n/config';
 import { PilotStudy } from '../../pilot.study/models/pilot.study';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
 import { AuthService } from '../../../security/auth/services/auth.service';
-import { FitbitStatusPipe } from '../../../shared/shared.pipes/pipes/fitbit.status.pipe'
+import { FitbitStatusPipe } from '../../../security/external.services/pipes/fitbit.status.pipe'
 import { VerifyScopeService } from '../../../security/services/verify.scope.service'
 
 const languagesConfig = LanguagesConfiguration;

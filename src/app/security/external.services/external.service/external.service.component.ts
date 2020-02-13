@@ -1,16 +1,21 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DatePipe } from '@angular/common'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { FormGroup } from '@angular/forms'
 
 import { TranslateService } from '@ngx-translate/core'
 import { ToastrService } from 'ngx-toastr';
 
-import { ExternalService, OAuthUser, SynchronizeData } from '../models/external.service';
-import { FitbitStatusPipe } from '../../../shared/shared.pipes/pipes/fitbit.status.pipe';
+import { ExternalService, OAuthUser, SynchronizeData } from '../../../modules/patient/models/external.service';
+import { FitbitStatusPipe } from '../pipes/fitbit.status.pipe';
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
-import { FitbitService } from '../../../shared/shared.services/fitbit.service';
+import { FitbitService } from '../services/fitbit.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
+
+export enum ChangeExternalService {
+    providedAccess = 'providedAccess',
+    revokedAccess = 'revokedAccess'
+}
 
 @Component({
     selector: 'external-service',
@@ -20,7 +25,8 @@ import { ActivatedRoute } from '@angular/router'
 export class ExternalServiceComponent implements OnInit, OnDestroy {
     @Input() patientId: string;
     @Input() externalServices: ExternalService[];
-    @Output() promotedAccess: EventEmitter<any>;
+    @Output() change: EventEmitter<ChangeExternalService>;
+    @Input() loading: boolean;
     patientForm: FormGroup;
     synchronizing: boolean;
     revoking: boolean;
@@ -30,18 +36,18 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
 
     constructor(
         private activeRouter: ActivatedRoute,
-        private fb: FormBuilder,
         private translateService: TranslateService,
         private fitbitStatusPipe: FitbitStatusPipe,
         private datePipe: DatePipe,
         private modalService: ModalService,
         private fitbitService: FitbitService,
         private toastService: ToastrService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private router: Router
     ) {
         this.patientForm = new FormGroup({});
         this.synchronizeData = new SynchronizeData();
-        this.promotedAccess = new EventEmitter<any>();
+        this.change = new EventEmitter<ChangeExternalService>();
     }
 
     ngOnInit() {
@@ -58,12 +64,22 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
                     this.localStorageService.setItem('fitbitUser', JSON.stringify(result));
                 } catch (e) {
                     this.localStorageService.setItem('fitbitUser', JSON.stringify(e.message));
+                    this.redirectToEscapePage();
                 } finally {
                     this.providingAccess = false;
                     window.close();
                 }
             }
+
+            if (!code && !error && !this.externalServices && !this.loading) {
+                this.redirectToEscapePage();
+            }
         })
+    }
+
+    redirectToEscapePage(): void {
+        this.providingAccess = true;
+        this.router.navigate(['/oauth/invalid']);
     }
 
     async synchronize(): Promise<void> {
@@ -87,19 +103,19 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
         this.modalService.open('modalConfirmation');
     }
 
-    revoke(): void {
+    async revoke(): Promise<void> {
         this.closeModalRevoke();
         this.revoking = true;
-        this.fitbitService.revoke(this.patientId)
-            .then(() => {
-                this.modalService.close('modalConfirmation');
-                this.toastService.info(this.translateService.instant('TOAST-MESSAGES.REVOKED-SUCCESSFULLY'));
-                this.revoking = false;
-            })
-            .catch(() => {
-                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-REVOKE'));
-                this.revoking = false;
-            })
+        try {
+            await this.fitbitService.revoke(this.patientId)
+            this.modalService.close('modalConfirmation');
+            this.toastService.info(this.translateService.instant('TOAST-MESSAGES.REVOKED-SUCCESSFULLY'));
+            this.change.emit(ChangeExternalService.revokedAccess);
+        } catch (e) {
+            this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-REVOKE'));
+        } finally {
+            this.revoking = false;
+        }
     }
 
     closeModalSynchronized(): void {
@@ -118,7 +134,7 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
             await this.fitbitService.createUser(this.patientId, fitbitUser);
             this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PROVIDER-SUCCESSFULLY'));
             await this.synchronize();
-            this.promotedAccess.emit();
+            this.change.emit(ChangeExternalService.providedAccess);
         } catch (err) {
             throw err;
         } finally {

@@ -11,12 +11,14 @@
                 <th colspan="3" scope="col">{{'SHARED.ACTIONS'|translate}}</th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngIf="externalServices.length==0">
+            <tbody *ngIf="loading">
+            <tr>
                 <td colspan="6">
                     <spinner></spinner>
                 </td>
             </tr>
+            </tbody>
+            <tbody *ngIf="!loading">
             <tr *ngFor="let externalService of externalServices; index as i;">
                 <td class="max-width-60" [attr.data-th]="'#'">
                     <img class="external-service disabled"

@@ -12,7 +12,6 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 import { EvaluationStatustPipe } from './pipes/evaluation.status.pipe'
 import { FilterTypePipe } from './pipes/filter.type.pipe'
 import { DecimalFormatterPipe } from '../../modules/measurement/pipes/decimal.formatter.pipe';
-import { FitbitStatusPipe } from './pipes/fitbit.status.pipe'
 
 @NgModule({
     declarations: [
@@ -23,8 +22,7 @@ import { FitbitStatusPipe } from './pipes/fitbit.status.pipe'
         PilotStudySituationPipe,
         EvaluationStatustPipe,
         FilterTypePipe,
-        DecimalFormatterPipe,
-        FitbitStatusPipe
+        DecimalFormatterPipe
     ],
     imports: [
         CommonModule
@@ -37,8 +35,7 @@ import { FitbitStatusPipe } from './pipes/fitbit.status.pipe'
         PilotStudySituationPipe,
         EvaluationStatustPipe,
         FilterTypePipe,
-        DecimalFormatterPipe,
-        FitbitStatusPipe
+        DecimalFormatterPipe
     ],
     providers: [
         HealthAreaPipe,
@@ -49,7 +46,6 @@ import { FitbitStatusPipe } from './pipes/fitbit.status.pipe'
         EvaluationStatustPipe,
         FilterTypePipe,
         DecimalFormatterPipe,
-        FitbitStatusPipe,
         MatDatepickerModule,
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }

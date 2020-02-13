@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { environment } from '../../../environments/environment'
-import { FitBitClient, OAuthUser, SynchronizeData } from '../../modules/patient/models/external.service'
+import { environment } from '../../../../environments/environment'
+import { FitBitClient, OAuthUser, SynchronizeData } from '../../../modules/patient/models/external.service'
 import { Router } from '@angular/router'
 
 @Injectable()
@@ -27,7 +27,7 @@ export class FitbitService {
         this.getClientUser()
             .then(clientUser => {
                 const url = `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=${clientUser.client_id}` +
-                    `&redirect_uri=${environment.dashboard_host}/app/patients/fitbit&prompt=login consent&scope=activity%20heartrate%20` +
+                    `&redirect_uri=${environment.dashboard_host}/oauth/fitbit&prompt=login consent&scope=activity%20heartrate%20` +
                     `sleep%20weight`;
                 return window.open(url, '_blank');
             })
@@ -45,7 +45,7 @@ export class FitbitService {
                     })
                 };
                 const url = `https://api.fitbit.com/oauth2/token?client_id=${client_id}&grant_type=authorization_code` +
-                    `&redirect_uri=${environment.dashboard_host}/app/patients/fitbit&code=${code}`;
+                    `&redirect_uri=${environment.dashboard_host}/oauth/fitbit&code=${code}`;
                 return this.http.post<any>(url, {}, httpOptions)
                     .toPromise();
             })

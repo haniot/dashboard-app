@@ -1010,6 +1010,13 @@
       "TRY-AGAIN": "Tente novamente após 24 horas",
       "TOO-MANY-ATTEMPTS": "Excesso de tentativas!",
       "UNDERSTOOD": "ENTENDIDO"
+    },
+    "EXTERNAL-SERVICES": {
+      "ESCAPE": {
+        "TITLE": "Operação falhou!",
+        "MESSAGE": "Você está acessando uma página de autorização com serviços terceiros utilizando dados inválidos.",
+        "TRY-AGAIN": "Por favor, verifique os dados e tente novamente!"
+      }
     }
   },
   "TABLE-USER": {

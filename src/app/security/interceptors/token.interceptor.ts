@@ -12,12 +12,11 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (request.url.match('api.fitbit.com')) {
+            return next.handle(request);
+        }
         const token = this.localStorageService.getItem('token');
-
         if (token) {
-            if (request.url.match('api.fitbit.com')) {
-                return next.handle(request);
-            }
             const newRequest = request.clone({
                 setHeaders: {
                     'Authorization': `Bearer ${token}`,
