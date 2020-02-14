@@ -9,6 +9,7 @@ import { AuthService } from '../../../security/auth/services/auth.service'
 import { Gender, Patient } from '../models/patient'
 import { PatientService } from '../services/patient.service'
 import { FormBuilder, FormGroup } from '@angular/forms'
+import { VerifyScopeService } from '../../../security/services/verify.scope.service'
 
 @Component({
     selector: 'health-professional-configurations',
@@ -26,6 +27,7 @@ export class PatientConfigComponent implements OnInit {
     user: Patient;
     email: string;
     password: string;
+    visibilityExternalServices: boolean;
 
     constructor(
         private fb: FormBuilder,
@@ -34,7 +36,8 @@ export class PatientConfigComponent implements OnInit {
         private authService: AuthService,
         private toastr: ToastrService,
         private localStorageService: LocalStorageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private verifyScopeService: VerifyScopeService
     ) {
         this.min_birth_date = new Date();
         this.user = new Patient('');
@@ -58,6 +61,7 @@ export class PatientConfigComponent implements OnInit {
             password_confirm: ['']
         });
         this.getUser();
+        this.verifyScopes();
     }
 
     calMinBirthDate(): void {
@@ -90,6 +94,7 @@ export class PatientConfigComponent implements OnInit {
             .then(patient => {
                 this.user = patient;
                 this.createForm(this.user);
+                this.localStorageService.selectedPatient(patient);
             })
             .catch(() => {
                 this.toastr.error(this.translateService.instant('TOAST-MESSAGES.NOT-FIND-USER'));
@@ -112,6 +117,11 @@ export class PatientConfigComponent implements OnInit {
         this.disabledButtonEdit = true;
         this.visibilityButtonSave = true;
     }
+
+    verifyScopes(): void {
+        this.visibilityExternalServices = this.verifyScopeService.verifyScopes(['external:sync']);
+    }
+
 
     onSubmit(form) {
         const patient = form.value;

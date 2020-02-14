@@ -10,6 +10,8 @@ import { PatientService } from '../services/patient.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { ConfigurationBasic, PaginatorIntlService } from '../../config.matpaginator'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { ExternalService } from '../models/external.service'
+import { VerifyScopeService } from '../../../security/services/verify.scope.service'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -31,7 +33,8 @@ export class PatientTableComponent implements OnInit, OnChanges, OnDestroy {
     searchTime;
     cacheIdPatientRemove: string;
     userId: string;
-
+    externalServiceSelected: ExternalService;
+    externalServiceVisibility: boolean;
     private subscriptions: Array<ISubscription>;
 
     constructor(
@@ -41,7 +44,8 @@ export class PatientTableComponent implements OnInit, OnChanges, OnDestroy {
         private modalService: ModalService,
         private selectStudyService: SelectPilotStudyService,
         private localStorageService: LocalStorageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private verifyScopeService: VerifyScopeService
     ) {
         this.page = PaginatorConfig.page;
         this.pageSizeOptions = PaginatorConfig.pageSizeOptions;
@@ -49,24 +53,22 @@ export class PatientTableComponent implements OnInit, OnChanges, OnDestroy {
         this.listOfPatientsIsEmpty = false;
         this.subscriptions = new Array<ISubscription>();
         this.listOfPatients = new Array<Patient>();
+        this.externalServiceSelected = new ExternalService();
     }
 
     ngOnInit() {
         this.subscriptions.push(this.selectStudyService.pilotStudyUpdated.subscribe(() => {
             this.loadPilotSelected();
             this.getAllPacients();
+            this.verifyScopes();
         }));
     }
 
-    loadUser()
-        :
-        void {
+    loadUser(): void {
         this.userId = this.localStorageService.getItem('user');
     }
 
-    loadPilotSelected()
-        :
-        void {
+    loadPilotSelected(): void {
         if (!
             this.userId
         ) {
@@ -154,18 +156,31 @@ export class PatientTableComponent implements OnInit, OnChanges, OnDestroy {
         return item.id;
     }
 
-    ngOnChanges(changes
-                    :
-                    SimpleChanges
-    ) {
+    viewDetailsFitbit(event: any, externalService: ExternalService): void {
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.externalServiceVisibility) {
+            this.externalServiceSelected = externalService;
+            this.modalService.open('externalServices');
+        }
+    }
+
+    closeModalExternalServices(): void {
+        this.externalServiceSelected = new ExternalService();
+        this.modalService.close('externalServices');
+    }
+
+    verifyScopes(): void {
+        this.externalServiceVisibility = this.verifyScopeService.verifyScopes(['external:sync']);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
         if ((this.pilotStudyId && changes.pilotStudyId.currentValue !== changes.pilotStudyId.previousValue)) {
             this.getAllPacients();
         }
     }
 
-    ngOnDestroy()
-        :
-        void {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => {
             subscription.unsubscribe();
         });

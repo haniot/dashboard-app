@@ -14,11 +14,6 @@ table tr {
   cursor: pointer;
 }
 
-td img {
-  width: 2%;
-}
-
-
 $breakpoint-alpha: 480px;
 
 @media (min-width: $breakpoint-alpha) {

@@ -9,6 +9,7 @@
     "TITLE": "Acesso negado"
   },
   "ACTIVITY": {
+    "ACTIVITIES": "Atividades",
     "BETWEEN": "entre",
     "SPINNER": "Carregando atividades...",
     "LAST-SYNC": "Última sincronização",
@@ -729,6 +730,30 @@
     "MY-EVALUATIONS": {
       "TITLE": "Lista de estudos piloto",
       "SUBTITLE": "Você possui permissão apenas de visualização."
+    },
+    "EXTERNAL-SERVICES": {
+      "TITLE": "Serviços externos",
+      "LAST-SYNC": "Última sincronização",
+      "STATUS-TOKEN": "Estado",
+      "NOT-SYNCHRONIZED": "Acesso não fornecido!",
+      "PROVIDER-ACCESS": "Fornecer Acesso",
+      "PROVIDER-SUCCESSFULLY": "Acesso fornecido",
+      "SYNCHRONIZE": "Sincronizar",
+      "REVOKE": "Revogar",
+      "REVOKE-ACCESS": "Revogar acesso",
+      "SUMMARY-UPDATED": "Resumo dos registros atualizados",
+      "SYNCHRONIZE-SUCCESSFULLY": "Dados sincronizados com sucesso",
+      "SYNCHRONIZING": "Sincronizando...",
+      "REVOKING": "Revogando acesso...",
+      "CONFIRM-REVOKE": "Tem certeza que deseja revogar o acesso?",
+      "PIPE": {
+        "VALID-TOKEN": "Token válido!",
+        "INVALID-TOKEN": "Token inválido!",
+        "EXPIRED-TOKEN": "Token expirado!",
+        "INVALID-REFRESH-TOKEN": "Refresh Token Inválido",
+        "NONE": " - - ",
+        "UNDEFINED": "Fora dos parâmetros"
+      }
     }
   },
   "PILOT-STUDY": {
@@ -836,6 +861,8 @@
     "GRAPHIC-STUDY": "Estudo gráfico"
   },
   "SHARED": {
+    "ADDRESS": "Endereço",
+    "INVALID-ADDRESS": "Endereço inválido",
     "NAME": "Nome",
     "INVALID-NAME": "Nome inválido",
     "EMAIL": "Email",
@@ -918,6 +945,7 @@
     "DAY": "dia",
     "DAYS": "dias",
     "SELECT": "Selecionar",
+    "WAIT": "Aguarde...",
     "PIPES": {
       "GENDER": {
         "MALE": "Masculino",
@@ -982,6 +1010,13 @@
       "TRY-AGAIN": "Tente novamente após 24 horas",
       "TOO-MANY-ATTEMPTS": "Excesso de tentativas!",
       "UNDERSTOOD": "ENTENDIDO"
+    },
+    "EXTERNAL-SERVICES": {
+      "ESCAPE": {
+        "TITLE": "Operação falhou!",
+        "MESSAGE": "Você está acessando uma página de autorização com serviços terceiros utilizando dados inválidos.",
+        "TRY-AGAIN": "Por favor, verifique os dados e tente novamente!"
+      }
     }
   },
   "TABLE-USER": {
@@ -1036,6 +1071,7 @@
     "PATIENT-REMOVED": "Paciente removido com sucesso!",
     "PATIENT-NOT-REMOVED": "Não foi possível remover paciente!",
     "PATIENT-NOT-FIND": "Não foi possível buscar paciente!",
+    "UNASSOCIATED-PATIENT": "Não foi possível associar paciente!",
     "FILE-REMOVED": "Arquivo removido com sucesso!",
     "FILE-NOT-REMOVED": "Não foi possível remover arquivo!",
     "STUDY-NOT-FIND": "Não foi possível buscar estudo piloto!",
@@ -1069,7 +1105,14 @@
     "SLEEP-NOT-LOADED": "Não foi possível carregar o registro de sono!",
     "PHYSICAL-ACTIVITY-REMOVED": "Atividade removida com sucesso!",
     "PHYSICAL-ACTIVITY-NOT-REMOVED": "Não foi possível remover a atividade física!",
-    "PHYSICAL-ACTIVITY-NOT-LOADED": "Não foi possível carregar a atividade selecionada!"
+    "PHYSICAL-ACTIVITY-NOT-LOADED": "Não foi possível carregar a atividade selecionada!",
+    "SYNCHRONIZE-SUCCESSFULLY": "Dados sincronizados com sucesso!",
+    "COULD-NOT-SYNC": "Não foi possivel sincronizar!",
+    "REVOKED-SUCCESSFULLY": "Acesso aos dados revogado com sucesso!",
+    "COULD-NOT-REVOKE": "Não foi possivel revogar acesso!",
+    "PROVIDER-SUCCESSFULLY": "Acesso fornecido com sucesso!",
+    "COULD-NOT-PROVIDER-ACCESS": "Não foi possivel fornecer acesso!",
+    "ACCESS-DENIED": "Acesso negado!"
   },
   "TIME-SERIES": {
     "TITLE": "Séries Temporais",
@@ -1077,7 +1120,9 @@
       "TITLE": "Minutos Ativos",
       "ACTIVE-MINUTES": "minutos ativos",
       "TOTAL-ACTIVE-MINUTES": "Total de minutos ativos",
-      "SUBTITLE": ""
+      "SUBTITLE": "",
+      "LIGHTLY-ACTIVE-MINUTES": "Minutos Levemente Ativos",
+      "SEDENTARY-MINUTES": "Minutos Sedentários"
     },
     "BEAT-YESTERDAY": "Executados ontem",
     "AVERAGE-WEEK": "Média dos últimos 7 dias",

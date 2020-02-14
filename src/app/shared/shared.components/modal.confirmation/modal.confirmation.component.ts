@@ -11,8 +11,10 @@ export class ModalConfirmationComponent {
     @Input() observation;
     @Output() confirmation = new EventEmitter();
     @Output() noconfirmation = new EventEmitter();
+    @Output() close: EventEmitter<any>;
 
     constructor() {
+        this.close = new EventEmitter<any>();
     }
 
     yes() {
@@ -21,5 +23,9 @@ export class ModalConfirmationComponent {
 
     no() {
         this.noconfirmation.emit();
+    }
+
+    closeEmit(): void {
+        this.close.emit();
     }
 }

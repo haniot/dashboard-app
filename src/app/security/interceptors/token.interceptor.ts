@@ -12,8 +12,10 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (request.url.match('api.fitbit.com')) {
+            return next.handle(request);
+        }
         const token = this.localStorageService.getItem('token');
-
         if (token) {
             const newRequest = request.clone({
                 setHeaders: {
@@ -22,9 +24,7 @@ export class TokenInterceptor implements HttpInterceptor {
                 }
             });
             return next.handle(newRequest);
-        } else {
-            return next.handle(request);
         }
-
+        return next.handle(request);
     }
 }

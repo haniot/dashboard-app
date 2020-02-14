@@ -1,0 +1,170 @@
+<haniot-card
+        [title]="'PATIENTS.EXTERNAL-SERVICES.TITLE'|translate"
+        [subtitle]="'PATIENTS.VIEW-HABITS.CARD-PERSONAL-INFO.SUBTITLE'|translate" *ngIf="!providingAccess">
+    <div class="table-responsive">
+        <table class="table table-sm table-hover rwd-table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{'PATIENTS.EXTERNAL-SERVICES.LAST-SYNC'|translate}}</th>
+                <th scope="col">{{'PATIENTS.EXTERNAL-SERVICES.STATUS-TOKEN'|translate}}</th>
+                <th colspan="3" scope="col">{{'SHARED.ACTIONS'|translate}}</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="loading">
+            <tr>
+                <td colspan="6">
+                    <spinner></spinner>
+                </td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="!loading">
+            <tr *ngFor="let externalService of externalServices; index as i;">
+                <td class="max-width-60" [attr.data-th]="'#'">
+                    <img class="external-service disabled"
+                         src="../../../../assets/img/fitbit-not-sync.svg" width="20"
+                         [title]="'PATIENTS.EXTERNAL-SERVICES.NOT-SYNCHRONIZED'|translate"
+                         *ngIf="!externalService || !externalService.fitbit_last_sync || externalService.fitbit_status==='none'"/>
+                    <img class="external-service"
+                         src="../../../../assets/img/fitbit-sync.svg"
+                         width="20"
+                         [title]="('PATIENTS.EXTERNAL-SERVICES.PROVIDER-SUCCESSFULLY'|translate)"
+                         *ngIf="externalService && externalService.fitbit_status!=='none'"/>
+                </td>
+                <td class="max-width-60"
+                    [attr.data-th]="'PATIENTS.EXTERNAL-SERVICES.LAST-SYNC'|translate">
+                    {{
+                    externalService.fitbit_last_sync ? (externalService.fitbit_last_sync|date) + ' ' +
+                        ('SHARED.AT'|translate) + ' ' + (externalService.fitbit_last_sync|date:'mediumTime') : ' - - '
+                    }}
+                </td>
+                <td class="max-width-60"
+                    [attr.data-th]="'PATIENTS.EXTERNAL-SERVICES.STATUS-TOKEN'|translate">
+                    {{externalService.fitbit_status|fitbitStatus|translate}}
+                </td>
+                <td class="max-width-200" [attr.data-th]="'SHARED.ACTIONS'|translate">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <a class="nav-link"
+                                   [ngClass]="(!externalService || externalService.fitbit_status==='none')?'disabled':''"
+                                   (click)="synchronize()" [title]="'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZE'|translate">
+                                    <i class="material-icons">cached</i>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="nav-link" (click)="provideAccess()"
+                                   [ngClass]="(!externalService || externalService.fitbit_status==='none')?'':'disabled'"
+                                   [title]="'PATIENTS.EXTERNAL-SERVICES.PROVIDER-ACCESS'|translate">
+                                    <i class="material-icons">security</i>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="nav-link"
+                                   [ngClass]="(!externalService || externalService.fitbit_status==='none')?'disabled':''"
+                                   (click)="openModalRevoke()"
+                                   [title]="'PATIENTS.EXTERNAL-SERVICES.REVOKE-ACCESS'|translate">
+                                    <i class="material-icons">not_interested</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</haniot-card>
+
+<haniot-modal [modalId]="'synchronized'" [styleDialog]="'modal-dialog'" (close)="closeModalSynchronized()">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                {{'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZE-SUCCESSFULLY'|translate}}
+            </h5>
+            <button type="button" class="close" aria-label="Close" (click)="closeModalSynchronized()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <hr class="separator"
+                            [attr.data-label]="'PATIENTS.EXTERNAL-SERVICES.SUMMARY-UPDATED'|translate">
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'ACTIVITY.ACTIVITIES'|translate}}
+                        </label>
+                        <h4>{{(synchronizeData.activities|number:'1.0-0')}}</h4>
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'ACTIVITY.SLEEP.SLEEP'|translate}}
+                        </label>
+                        <h4>{{(synchronizeData.sleep|number:'1.0-0')}}</h4>
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'MEASUREMENTS.WEIGHT.TITLE'|translate}}
+                        </label>
+                        <h4>{{(synchronizeData.weights|number:'1.0-0')}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</haniot-modal>
+
+<div id="synchronizing" *ngIf="synchronizing || revoking">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZING'|translate"
+                                         *ngIf="synchronizing">
+                                </spinner>
+                                <spinner [message]="'PATIENTS.EXTERNAL-SERVICES.REVOKING'|translate"
+                                         *ngIf="revoking">
+                                </spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<div id="providingAccess" *ngIf="providingAccess">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'SHARED.WAIT'|translate"></spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop show">
+    </div>
+</div>
+
+<modal-confirmation [id]="'confirmRevoke'"
+        [message]="'PATIENTS.EXTERNAL-SERVICES.CONFIRM-REVOKE'|translate" (confirmation)="revoke()"
+                    (close)="closeModalRevoke()"
+                    (noconfirmation)="closeModalRevoke()"></modal-confirmation>

@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row" id="div-body">
+    <div class="row">
         <div id="top" class="col-md-12">
             <div class="d-flex justify-content-center">
                 <span id="haniotTitle">{{'APP.TITLE' | translate}}</span>
@@ -16,24 +16,19 @@
 
                     </div>
                     <div class="col-md-8 tabcontent" id="div-message">
-                        <h2 class="text-center">{{'ACCESS-DENIED.TITLE' | translate}}!</h2>
+                        <h2 class="text-center">
+                            {{'SECURITY.EXTERNAL-SERVICES.ESCAPE.TITLE'|translate}}
+                        </h2>
                         <p class="text-center">
-                            {{'ACCESS-DENIED.MESSAGE' | translate}}.
+                            {{'SECURITY.EXTERNAL-SERVICES.ESCAPE.MESSAGE'|translate}}
                         </p>
-                        <p class="text-center">{{'ACCESS-DENIED.MESSAGE-GO-BACK' | translate}}!</p>
-                        <div class="d-flex justify-content-center">
-                            <button class="btn btn-haniot-primary" (click)="onBack()">
-                                {{'SHARED.HOME-PAGE' | translate}}
-                            </button>
-                        </div>
-
+                        <p class="text-center">{{'SECURITY.EXTERNAL-SERVICES.ESCAPE.TRY-AGAIN'|translate}}</p>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
-
     <div class="row" id="div-footer">
         <app-footer></app-footer>
     </div>

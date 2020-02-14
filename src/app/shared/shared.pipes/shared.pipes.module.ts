@@ -11,7 +11,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from 'saturn-datepicke
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter'
 import { EvaluationStatustPipe } from './pipes/evaluation.status.pipe'
 import { FilterTypePipe } from './pipes/filter.type.pipe'
-import { DecimalFormatterPipe } from '../../modules/measurement/pipes/decimal.formatter.pipe'
+import { DecimalFormatterPipe } from '../../modules/measurement/pipes/decimal.formatter.pipe';
 
 @NgModule({
     declarations: [

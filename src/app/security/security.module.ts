@@ -8,7 +8,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { RefreshTokenInterceptor } from './interceptors/refresh.token.interceptor';
 import { AccessDeniedInterceptor } from './interceptors/access.denied.interceptor';
 import { VerifyScopeService } from './services/verify.scope.service';
-import { AplicationErrorHandle } from '../app.error-handle'
+import { AplicationErrorHandle } from '../app.error-handle';
 
 @NgModule({
     declarations: [],

@@ -1,0 +1,50 @@
+@import "../../../../assets/scss/template-colors";
+
+.material-icons {
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.nav-link i:hover {
+  border-radius: 20px;
+  background: rgb(212, 207, 207);
+}
+
+.disabled {
+  i {
+    color: rgb(212, 207, 207);
+  }
+}
+
+.externa {
+  position: absolute;
+  z-index: 2000;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.separator {
+  overflow: visible; /* For IE */
+  padding: 0;
+  border: none;
+  border-top: medium double #333;
+  color: #333;
+  text-align: center;
+
+  &:after {
+    content: attr(data-label);
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1em;
+    padding: 0 0.25em;
+    background: white;
+  }
+}

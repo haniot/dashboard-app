@@ -152,7 +152,7 @@ export class DistanceComponent implements OnInit, OnChanges {
             },
             series: seriesOptions
         };
-        this.listIsEmpty = !!seriesOptions.data.length;
+        this.listIsEmpty = !seriesOptions.data.length;
     }
 
     updateGraph(measurements: Array<TimeSeries>): void {
@@ -173,7 +173,7 @@ export class DistanceComponent implements OnInit, OnChanges {
 
         });
 
-        this.listIsEmpty = !!this.options.data.length;
+        this.listIsEmpty = !this.options.data.length;
         this.echartsInstance.setOption(this.options);
     }
 

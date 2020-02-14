@@ -67,7 +67,7 @@ export class Patient extends GenericUser {
     /* optional */
     private _password?: string;
     private _password_confirm?: string;
-    private _address: string
+    private _address?: string
     /* readonly */
     private readonly _external_services: ExternalService
 

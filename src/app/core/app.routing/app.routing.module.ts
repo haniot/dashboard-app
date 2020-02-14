@@ -14,6 +14,12 @@ const routes = [
             .then(m => m.AuthModule)
     },
     {
+        path: 'oauth',
+        canActivate: [AuthGuard, ScopeGuard], canActivateChild: [AuthGuard, ScopeGuard],
+        loadChildren: () => import('../../security/external.services/external.services.module')
+            .then(m => m.ExternalServicesModule)
+    },
+    {
         path: 'app',
         component: TemplateComponent, canActivate: [AuthGuard, ScopeGuard], canActivateChild: [AuthGuard, ScopeGuard],
         children: [

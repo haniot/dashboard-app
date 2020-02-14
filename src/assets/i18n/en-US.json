@@ -9,6 +9,7 @@
     "TITLE": "Access denied"
   },
   "ACTIVITY": {
+    "ACTIVITIES": "Activities",
     "BETWEEN": "between",
     "SPINNER": "Loading activities ...",
     "LAST-SYNC": "Last Sync",
@@ -729,6 +730,30 @@
     "MY-EVALUATIONS": {
       "TITLE": "List Evaluations",
       "SUBTITLE": "You have view only permission."
+    },
+    "EXTERNAL-SERVICES": {
+      "TITLE": "Fitbit details",
+      "LAST-SYNC": "Last sync",
+      "STATUS-TOKEN": "Status",
+      "NOT-SYNCHRONIZED": "Not synchronized!",
+      "PROVIDER-ACCESS": "Provide access",
+      "PROVIDER-SUCCESSFULLY": "Access provided",
+      "SYNCHRONIZE": "Synchronize",
+      "REVOKE": "Revoke",
+      "REVOKE-ACCESS": "Revoke access",
+      "SUMMARY-UPDATED": "Summary of updated records",
+      "SYNCHRONIZE-SUCCESSFULLY": "Data successfully synced",
+      "SYNCHRONIZING": "Synchronizing...",
+      "REVOKING": "Revoking access...",
+      "CONFIRM-REVOKE": "Are you sure you want to revoke access?",
+      "PIPE": {
+        "VALID-TOKEN": "Valid token!",
+        "INVALID-TOKEN": "Invalid token!",
+        "EXPIRED-TOKEN": "Expired token!",
+        "INVALID-REFRESH-TOKEN": "Invalid Refresh Token!",
+        "NONE": " - - ",
+        "UNDEFINED": "Out of parameters"
+      }
     }
   },
   "PILOT-STUDY": {
@@ -836,6 +861,8 @@
     "GRAPHIC-STUDY": "Graphic study"
   },
   "SHARED": {
+    "ADDRESS": "Address",
+    "INVALID-ADDRESS": "Invalid address",
     "NAME": "Name",
     "INVALID-NAME": "Invalid name",
     "EMAIL": "Email",
@@ -918,6 +945,7 @@
     "DAY": "day",
     "DAYS": "days",
     "SELECT": "Select",
+    "WAIT": "Wait...",
     "PIPES": {
       "GENDER": {
         "MALE": "Male",
@@ -982,6 +1010,13 @@
       "TRY-AGAIN": "Try again after 24 hours",
       "TOO-MANY-ATTEMPTS": "Too many attempts!",
       "UNDERSTOOD": "UNDERSTOOD"
+    },
+    "EXTERNAL-SERVICES": {
+      "ESCAPE": {
+        "TITLE": "Operation failed!",
+        "MESSAGE": "You are accessing an authorization page with third party services using invalid data.",
+        "TRY-AGAIN": "Please check the data and try again!"
+      }
     }
   },
   "TABLE-USER": {
@@ -1036,6 +1071,7 @@
     "PATIENT-REMOVED": "Patient removed successfully!",
     "PATIENT-NOT-REMOVED": "Could not remove patient!",
     "PATIENT-NOT-FIND": "Could not find patient!",
+    "UNASSOCIATED-PATIENT": "Não foi possível associar paciente!",
     "FILE-REMOVED": "File removed successfully!",
     "FILE-NOT-REMOVED": "Could not remove file!",
     "STUDY-NOT-FIND": "Could not find pilot study!",
@@ -1069,7 +1105,14 @@
     "SLEEP-NOT-LOADED": "Unable to load sleep log!",
     "PHYSICAL-ACTIVITY-REMOVED": "Activity successfully removed!",
     "PHYSICAL-ACTIVITY-NOT-REMOVED": "Unable to remove physical activity!",
-    "PHYSICAL-ACTIVITY-NOT-LOADED": "Unable to load selected activity!"
+    "PHYSICAL-ACTIVITY-NOT-LOADED": "Unable to load selected activity!",
+    "SYNCHRONIZE-SUCCESSFULLY": "Data synchronized successfully!",
+    "COULD-NOT-SYNC": "Couldn't sync!",
+    "REVOKED-SUCCESSFULLY": "Data access revoked successfully!",
+    "COULD-NOT-REVOKE": "It was not possible to revoke access!",
+    "PROVIDER-SUCCESSFULLY": "Access provided successfully!",
+    "COULD-NOT-PROVIDER-ACCESS": "Could not provide access!",
+    "ACCESS-DENIED": "Access denied!"
   },
   "TIME-SERIES": {
     "TITLE": "Time series",
@@ -1077,7 +1120,9 @@
       "TITLE": "Active minutes",
       "ACTIVE-MINUTES": "active minutes",
       "TOTAL-ACTIVE-MINUTES": "Total active minutes",
-      "SUBTITLE": ""
+      "SUBTITLE": "",
+      "LIGHTLY-ACTIVE-MINUTES": "Lightly Active Minutes",
+      "SEDENTARY-MINUTES": "Sedentary Minutes"
     },
     "BEAT-YESTERDAY": "Beat yesterday",
     "AVERAGE-WEEK": "Last 7 days average",
