@@ -102,13 +102,16 @@ export class AuthService {
     }
 
     saveUserInLocalStorage(token: string): void {
+        const typeUser = this.decodeTokenJWT(token).sub_type;
         const userId = this.decodeTokenJWT(token).sub;
         this.getUserById(userId, token)
             .then(user => {
                 if (user) {
-                    const health_area = user.health_area ? user.health_area : 'admin';
                     this.localStorageService.setItem('userLogged', JSON.stringify(user));
                     this.localStorageService.setItem('email', user.email);
+                    if (typeUser === 'patient') {
+                        this.localStorageService.selectedPatient(user);
+                    }
                 }
             })
             .catch(() => {

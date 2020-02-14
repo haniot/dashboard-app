@@ -7,7 +7,8 @@
                 <haniot-card [title]="'PATIENTS.PATIENTS-COMPONENT.TITLE'|translate"
                              [subtitle]="'PATIENTS.PATIENTS-COMPONENT.SUBTITLE'|translate">
                     <div class="input-group no-border">
-                        <input type="text" class="form-control" id="search" name="search" [(ngModel)]="search"
+                        <input type="text" class="form-control" id="searchPatient" name="searchPatient"
+                               [(ngModel)]="search"
                                [placeholder]="'PATIENTS.PATIENTS-TABLE.PLACEHOLDER-SEARCH'|translate"
                                (keyup)="searchOnSubmit()">
                         <button mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon"
@@ -48,7 +49,9 @@
                                     [attr.data-th]="'SHARED.POSITION'|translate">{{getIndex(i)}}</td>
                                 <td colspan="2"
                                     [routerLink]="['/app/patients',patient.id, 'dashboard']"
-                                    [attr.data-th]="'SHARED.NAME-OF-PATIENT'|translate">{{patient.name}}</td>
+                                    [attr.data-th]="'SHARED.NAME-OF-PATIENT'|translate">
+                                    {{patient.name}}
+                                </td>
                                 <td [routerLink]="['/app/patients',patient.id, 'dashboard']"
                                     class="max-width-150"
                                     [attr.data-th]="'SHARED.GENDER'|translate">{{patient.gender | gender |translate}}</td>
