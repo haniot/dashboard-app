@@ -1,5 +1,6 @@
 import { MatPaginatorIntl, PageEvent } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
+import { Injectable } from "@angular/core";
 
 export const ConfigurationBasic = {
     pageSizeOptions: [10, 25, 100],
@@ -7,6 +8,7 @@ export const ConfigurationBasic = {
     limit: 10
 }
 
+@Injectable()
 export class PaginatorIntlService extends MatPaginatorIntl {
     translate: TranslateService;
     itemsPerPageLabel: string;

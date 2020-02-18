@@ -35,7 +35,7 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
     heartRate: TimeSeries;
 
 
-    @ViewChild('gridDiv', { static: false })
+    @ViewChild('gridDiv')
     set gridDiv(element: ElementRef) {
         if (element) {
             setTimeout(() => {

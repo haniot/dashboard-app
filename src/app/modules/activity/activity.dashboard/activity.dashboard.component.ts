@@ -60,7 +60,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     sleepDivRef: ElementRef;
     visibilityFitBitSync: boolean;
 
-    @ViewChild('sleepDiv', { static: false })
+    @ViewChild('sleepDiv')
     set sleepDiv(element: ElementRef) {
         if (element) {
             setTimeout(() => {
@@ -72,7 +72,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
 
     stepDivRef: ElementRef;
 
-    @ViewChild('stepsDiv', { static: false })
+    @ViewChild('stepsDiv')
     set stepsDiv(element: ElementRef) {
         if (element) {
             setTimeout(() => {
@@ -84,7 +84,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
 
     caloriesCardRef: ElementRef;
 
-    @ViewChild('caloriesDiv', { static: false })
+    @ViewChild('caloriesDiv')
     set caloriesDiv(element: ElementRef) {
         if (element) {
             setTimeout(() => {
@@ -96,7 +96,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
 
     distanceCardRef: ElementRef;
 
-    @ViewChild('distanceDiv', { static: false })
+    @ViewChild('distanceDiv')
     set distanceDiv(element: ElementRef) {
         setTimeout(() => {
             this.distanceCardRef = element;
@@ -106,7 +106,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
 
     activeMinutesCardRef: ElementRef;
 
-    @ViewChild('activeMinutesDiv', { static: false })
+    @ViewChild('activeMinutesDiv')
     set activeMinutesDiv(element: ElementRef) {
         if (element) {
             setTimeout(() => {
