@@ -185,6 +185,12 @@ i:hover {
   padding: 0 0
 }
 
+::ng-deep .reading-block {
+  font-size: 44px !important;
+  transform: unset !important;
+  line-height: 200px !important;
+}
+
 @media(min-width: 576px) {
   #activitiesDiv {
     padding: 5px 7px;

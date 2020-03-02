@@ -31,7 +31,6 @@ import { DecimalFormatterPipe } from './pipes/decimal.formatter.pipe';
 import { MeasurementLogsComponent } from './measurement.logs/measurement.logs.component';
 import { MeasurementTypePipe } from './pipes/measurement.type.pipe';
 import { SharedModule } from '../../shared/shared.module'
-import { Ng5SliderModule } from 'ng5-slider'
 import { ViewMeasurementsComponent } from './view.measurements/view.measurements.component';
 import { MeasurementDashboardComponent } from './measurement.dashboard/measurement.dashboard.component';
 import { NgxGaugeModule } from 'ngx-gauge'
@@ -73,7 +72,6 @@ import { NewMeasurementsComponent } from './new.measurements/new.measurements.co
         MatInputModule,
         MatCheckboxModule,
         MatPaginatorModule,
-        Ng5SliderModule,
         NgxGaugeModule,
         MatSelectModule,
         ReactiveFormsModule,
