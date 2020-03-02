@@ -39,6 +39,7 @@ import { ActivityListComponent } from './activity.list/activity.list.component';
 import { SleepListComponent } from './sleep.list/sleep.list.component';
 import { DistancePipe } from './pipes/distance.pipe';
 import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
+import { DurationPipe } from './pipes/duration.pipe';
 
 @NgModule({
     declarations: [
@@ -59,7 +60,8 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
         ActivityListComponent,
         SleepListComponent,
         DistancePipe,
-        ActiveMinutesPipe
+        ActiveMinutesPipe,
+        DurationPipe
     ],
     exports: [
         ActivityDashboardComponent,
@@ -74,7 +76,8 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
         TimeSeriesPipe,
         ActivityLevelPipe,
         DistancePipe,
-        ActiveMinutesPipe
+        ActiveMinutesPipe,
+        DurationPipe
     ],
     providers: [
         SleepPipe,
@@ -84,7 +87,8 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
         TimeSeriesService,
         MillisecondPipe,
         DistancePipe,
-        ActiveMinutesPipe
+        ActiveMinutesPipe,
+        DurationPipe
     ],
     imports: [
         CommonModule,

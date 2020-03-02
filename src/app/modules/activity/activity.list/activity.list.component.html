@@ -61,7 +61,8 @@
                                     </div>
                                     <div class="p-2">
                                         <h4>
-                                            {{getCaloriesTotal()}}<small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                            {{getCaloriesTotal()}}
+                                            <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                         </h4>
                                     </div>
                                 </div>
@@ -144,11 +145,7 @@
                                                     <div class="col activity-resume-item"
                                                          [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DURATION'|translate">
                                                         <p>
-                                                            {{Math.floor((activity.duration / 3600000)) ? Math.floor((activity.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) + ('SHARED.AND'|translate) + ' ' : ('')}}
-                                                            {{(activity.duration % 3600000) ?
-                                                            Math.floor((activity.duration % 3600000) / 60000) +
-                                                            ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
-                                                            }}
+                                                            {{activity.duration|duration}}
                                                         </p>
                                                     </div>
                                                     <div class="col activity-resume-item"
