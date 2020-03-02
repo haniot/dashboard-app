@@ -267,8 +267,8 @@ export class ModalUserComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges() {
+        this.createForm();
         if (this.userId && this.userId !== 'FLAG') {
-            this.createForm();
             this.loadUserInForm();
         }
     }
