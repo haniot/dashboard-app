@@ -163,8 +163,8 @@
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div style="display: flex; ">
 
-                                    <div style="width: 20px; height: 20px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">
-                                        <div style="width: 77%;height: 77%; display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"></div>
+                                    <div class="impact-extern" style="width: 20px; height: 20px;">
+                                        <div class="impact-inner" style="width: 77%;height: 77%;"></div>
                                     </div>
 
                                     <label class="p-2" style="font-weight: normal;">
@@ -175,11 +175,9 @@
                             </div>
 
                             <div class="col">
-                                <div class="p-2"
-                                     style="display: flex; align-content: center; justify-content: center;">
-                                    <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">
-                                        <div style="display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"
-                                             [ngStyle]="{'width': Math.floor((physicalActivity.steps*100)/stepsValue)+'%','height': Math.floor((physicalActivity.steps*100)/stepsValue)+'%' }"
+                                <div class="p-2 flex-center">
+                                    <div class="impact-extern">
+                                        <div class="impact-inner" [ngStyle]="{'width': impactOfSteps+'%','height': impactOfSteps+'%' }"
                                         *ngIf="physicalActivity && physicalActivity.steps && stepsValue"></div>
                                         <img src="../../../../assets/img/time-series/steps-black.svg" width="50%"
                                              style="position: absolute;">
@@ -192,11 +190,10 @@
                             </div>
 
                             <div class="col">
-                                <div class="p-2"
-                                     style="display: flex; align-content: center; justify-content: center;">
-                                    <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">
-                                        <div style="display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"
-                                             [ngStyle]="{'width': Math.floor((physicalActivity.calories*100)/caloriesValue)+'%','height': Math.floor((physicalActivity.calories*100)/caloriesValue)+'%' }"
+                                <div class="p-2 flex-center">
+                                    <div class="impact-extern">
+                                        <div class="impact-inner"
+                                             [ngStyle]="{'width': impactOfCalories+'%','height': impactOfCalories+'%' }"
                                              *ngIf="physicalActivity && physicalActivity.calories && caloriesValue"></div>
                                         <img src="../../../../assets/img/time-series/calories-black.svg" width="45%"
                                              style="position: absolute;">
@@ -209,11 +206,10 @@
                             </div>
 
                             <div class="col">
-                                <div class="p-2"
-                                     style="display: flex; align-content: center; justify-content: center;">
-                                    <div style="width: 60px; height: 60px; border: 1px dashed black; display: flex; align-items: center; justify-content: center; border-radius: 50px; position: relative">
-                                        <div style="display: flex; position: absolute; align-items: center; justify-content: center; border-radius: 50px; background-color: #B7D331"
-                                             [ngStyle]="{'width': Math.floor(((physicalActivity.duration/ 60000)*100)/activeMinutesValue)+'%','height': Math.floor(((physicalActivity.duration/ 60000)*100)/activeMinutesValue)+'%' }"
+                                <div class="p-2 flex-center">
+                                    <div class="impact-extern">
+                                        <div class="impact-inner"
+                                             [ngStyle]="{'width': impactOfActiveMinutes+'%','height': impactOfActiveMinutes+'%' }"
                                              *ngIf="physicalActivity && physicalActivity.duration && activeMinutesValue"></div>
                                         <img src="../../../../assets/img/time-series/active_minutes.svg" width="50%"
                                              style="position: absolute;">

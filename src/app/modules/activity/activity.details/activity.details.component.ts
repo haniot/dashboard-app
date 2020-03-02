@@ -29,6 +29,9 @@ export class ActivityDetailsComponent implements OnInit {
     caloriesValue: number;
     activeMinutesValue: number;
     distanceValue: number;
+    impactOfSteps: number;
+    impactOfCalories: number;
+    impactOfActiveMinutes: number;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -48,6 +51,12 @@ export class ActivityDetailsComponent implements OnInit {
             const activityId = params.get('activityId');
             this.loadActivity(activityId);
         })
+    }
+
+    calcImpact(): void {
+        this.impactOfSteps = Math.min(Math.floor((this.physicalActivity.steps * 100) / this.stepsValue), 100);
+        this.impactOfCalories = Math.min(Math.floor((this.physicalActivity.calories * 100) / this.caloriesValue), 100);
+        this.impactOfActiveMinutes = Math.min(Math.floor(((this.physicalActivity.duration / 60000) * 100) / this.activeMinutesValue));
     }
 
     loadActivity(activityId: string): void {
@@ -321,6 +330,7 @@ export class ActivityDetailsComponent implements OnInit {
                 this.caloriesValue = timeSeries.calories.summary.total;
                 this.activeMinutesValue = timeSeries.active_minutes.summary.total;
                 this.distanceValue = timeSeries.distance.summary.total;
+                this.calcImpact();
             })
             .catch(err => {
                 this.stepsValue = 0;

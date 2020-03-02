@@ -75,3 +75,29 @@ i:hover {
   vertical-align: bottom;
   width: 0px;
 }
+
+.impact-extern{
+  border: 1px dashed black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.impact-inner{
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  background-color: #B7D331;
+}
+
+.flex-center{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
