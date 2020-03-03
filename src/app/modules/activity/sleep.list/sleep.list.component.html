@@ -106,13 +106,12 @@
                                 <tbody>
                                 <tr *ngIf="listForLogs.length==0">
                                     <td colspan="4" *ngIf="showSpinnerLogs">
-                                        <spinner
-                                                [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                                        <spinner [message]="'ACTIVITY.SLEEP.LOADING'|translate"></spinner>
                                     </td>
-                                    <td colspan="4" *ngIf="!showSpinnerLogs && listLogsIsEmpty">
-                                        <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                    <td colspan="4" *ngIf="!showSpinnerLogs">
+                                        <h4>{{'ACTIVITY.SLEEP.LIST-EMPTY'|translate}}
                                             <br>
-                                            <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                            <small>{{'ACTIVITY.SLEEP.LIST-EMPTY-MESSAGE'|translate}}</small>
                                         </h4>
                                     </td>
                                 </tr>

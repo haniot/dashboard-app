@@ -111,13 +111,12 @@
                                     <tbody>
                                     <tr *ngIf="data.length==0">
                                         <td colspan="5" *ngIf="showSpinner">
-                                            <spinner
-                                                    [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                                            <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.LOADING'|translate"></spinner>
                                         </td>
                                         <td colspan="5" *ngIf="!showSpinner">
-                                            <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                            <h4>{{'ACTIVITY.PHYSICAL-ACTIVITY.LIST-EMPTY'|translate}}
                                                 <br>
-                                                <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                                <small>{{'ACTIVITY.NO-RECENT-EXERCISES-MESSAGE'|translate}}</small>
                                             </h4>
                                         </td>
                                     </tr>

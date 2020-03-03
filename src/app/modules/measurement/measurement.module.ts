@@ -38,6 +38,7 @@ import { MatSelectModule } from '@angular/material/select'
 import { NgxMatDatetimePickerModule } from 'ngx-mat-datetime-picker'
 import { ActivityModule } from '../activity/activity.module';
 import { NewMeasurementsComponent } from './new.measurements/new.measurements.component'
+import { GridsterModule } from 'angular-gridster2'
 
 @NgModule({
     declarations: [
@@ -76,7 +77,8 @@ import { NewMeasurementsComponent } from './new.measurements/new.measurements.co
         MatSelectModule,
         ReactiveFormsModule,
         NgxMatDatetimePickerModule,
-        ActivityModule
+        ActivityModule,
+        GridsterModule
     ],
     exports: [
         MeasurementLogsComponent,

@@ -33,7 +33,6 @@ export class SleepListComponent implements OnInit {
     echartSleepInstance: any;
     Math: any;
     listGraphIsEmpty: boolean;
-    listLogsIsEmpty: boolean;
     filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -158,13 +157,9 @@ export class SleepListComponent implements OnInit {
 
     loadGraph() {
         const MAX_SLEEP_VALUE = 12;
-        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
-        const at = this.translateService.instant('SHARED.AT');
-        const hours = this.translateService.instant('MYDATEPIPE.HOURS');
         const hours_abbreviation = this.translateService.instant('HABITS.SLEEP.TIME-ABBREVIATION');
         const duration = this.translateService.instant('ACTIVITY.SLEEP.DURATION');
         const title = this.translateService.instant('ACTIVITY.SLEEP.CLICK-TO-VIEW');
-        const viewStages = this.translateService.instant('ACTIVITY.SLEEP.VIEW-STAGES');
         const and = this.translateService.instant('SHARED.AND');
         const minutes_abbreviation = this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION');
         const period = this.translateService.instant('MEASUREMENTS.MEASUREMENT-CARD.PERIOD');
@@ -264,12 +259,13 @@ export class SleepListComponent implements OnInit {
                 subtext: title
             },
             tooltip: {
+                trigger: 'axis',
                 formatter: function (params) {
-                    const hours_trucate = Math.floor(params.data.value);
-                    const minutes = Math.floor(((params.data.value * 3600000) % 3600000) / 60000);
-                    return `${params.name}<br>${duration}: ${hours_trucate + hours_abbreviation} ${minutes ? and + ' '
+                    const hours_trucate = Math.floor(params[1].data.value);
+                    const minutes = Math.floor(((params[1].data.value * 3600000) % 3600000) / 60000);
+                    return `${params[1].name}<br>${duration}: ${hours_trucate + hours_abbreviation} ${minutes ? and + ' '
                         + minutes + minutes_abbreviation : ''}  <br>` +
-                        `${period}: ${params.data.start_time} - ${params.data.end_time}`;
+                        `${period}: ${params[1].data.start_time} - ${params[1].data.end_time}`;
                 }
             },
             xAxis,

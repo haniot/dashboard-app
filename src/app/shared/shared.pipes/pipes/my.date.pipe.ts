@@ -11,7 +11,8 @@ export class MyDatePipe implements PipeTransform {
     transform(value: any, args?: any): any {
         const date = new Date(value);
         const currentLang = this.translateService.currentLang;
-        return date.toLocaleDateString(currentLang) + ' ' + this.translateService.instant('MYDATEPIPE.AT') + ' ' + date.toLocaleTimeString(currentLang) + ' ' + this.translateService.instant('MYDATEPIPE.HOURS');
+        return date.toLocaleDateString(currentLang) + ' ' + this.translateService.instant('MYDATEPIPE.AT') +
+            ' ' + date.toLocaleTimeString(currentLang) + ' ' + this.translateService.instant('MYDATEPIPE.HOURS');
     }
 
 }

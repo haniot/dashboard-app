@@ -34,6 +34,8 @@
       "PERIOD": "Measurement period",
       "SLEEP": "Sleep",
       "DURATION": "Duration",
+      "LIST-EMPTY": "No records found.",
+      "LIST-EMPTY-MESSAGE": "Record your sleep to follow the stages of it!",
       "UNAVAILABLE-DATA": "No records within selected period!",
       "VIEW-STAGES": "View stages",
       "CLICK-TO-VIEW": "Click on the log to view the stages of sleep.",
@@ -50,6 +52,7 @@
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Physical Activity",
       "LOADING": "Loading physical activity ...",
+      "LIST-EMPTY": "No exercises found.",
       "HISTORY-TABLE": {
         "TITLE": "Physical Activity History",
         "SELECT-ALL": "Select all",
