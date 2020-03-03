@@ -77,7 +77,7 @@ export class MypilotstudiesComponent implements OnInit {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.list = [];
-            this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
+            this.pilotStudyService.getAllByUserId(this.userId, null, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                     if (httpResponse.body && httpResponse.body.length) {

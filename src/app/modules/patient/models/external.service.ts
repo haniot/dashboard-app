@@ -3,6 +3,8 @@ export enum AccessStatus {
     invalid_token = 'invalid_token',
     expired_token = 'expired_token',
     invalid_refresh_token = 'invalid_refresh_token',
+    invalid_client = 'invalid_client',
+    too_many_requests = 'rate_limit',
     none = 'none'
 }
 

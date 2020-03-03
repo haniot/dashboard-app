@@ -68,7 +68,7 @@
 
                                 <label class="float-right" style="font-weight: normal; color: unset"
                                        *ngIf="activity.calories">
-                                    {{activity.calories|number:'1.0-0'}}<small>calls</small>
+                                    {{activity.calories|number:'1.0-0'}}<small>cals</small>
                                 </label>
 
                                 <label class="float-right" style="font-weight: normal; color: unset"
@@ -163,11 +163,8 @@
                                         </div>
                                     </div>
                                     <div class="container-flex" style="position: absolute;bottom:15%;width: 85%;">
-                                        <label style="font-size: 35px; color: unset">
-                                            {{Math.floor((sleepSelected.duration / 3600000))}}
-                                            <small>{{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}</small>
-                                            {{Math.floor((sleepSelected.duration % 3600000) / 60000)}}
-                                            <small>{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}</small>
+                                        <label style="font-weight: normal; font-size: 35px; color: unset">
+                                            {{sleepSelected.duration|duration}}
                                         </label>
                                     </div>
                                     <div class="text-center container-flex"
@@ -179,12 +176,11 @@
                                                 {{'HABITS.SLEEP.TIME-ABBREVIATION'|translate}}
                                             </span>
                                             <span *ngIf="Math.floor((sleepSelected.pattern.summary.awake.duration % 3600000) / 60000)">
-                                                {{Math.floor((sleepSelected.pattern.summary.awake.duration % 3600000) / 60000)}}
-                                                {{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}
+                                                {{Math.floor((sleepSelected.pattern.summary.awake.duration % 3600000) / 60000)}}{{'HABITS.SLEEP.MINUTES-ABBREVIATION'|translate}}
                                                 {{'ACTIVITY.PIPES.SLEEP.AWAKE'|translate}}
                                             </span>
                                         </label>
-                                        <label class="label-time-series"
+                                        <label class="ellipsis label-time-series"
                                                *ngIf="sleepHover && goal.sleep > (sleepSelected.duration / 60000)">
                                             {{
                                             Math.floor((goal.sleep - (sleepSelected.duration / 60000)) / 60) ?
@@ -250,8 +246,7 @@
                                     <ngx-gauge-append *ngIf="stepsHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.steps ? (Math.min(Math.round((stepsValue * 100) / goal.steps), 100)) : 100}}
-                                                %
+                                                {{goal && goal.steps ? (Math.min(Math.round((stepsValue * 100) / goal.steps), 100)) : 100}}%
                                             </label>
                                             <label class="label-time-series-goal">
                                                 {{'TIME-SERIES.OF-THE-GOAL'|translate}}
@@ -263,9 +258,8 @@
                                 </ngx-gauge>
                                 <div class="text-center container-flex"
                                      style="position: absolute;bottom:0%;width: 85%;">
-                                    <label class="label-time-series">
-                                        {{stepsValue | number:'1.0-0'}} {{'SHARED.OF'|translate}} {{goal && goal.steps ? (goal.steps| number:'1.0-0') : 0}}
-                                        <small>pas</small>
+                                    <label class="ellipsis label-time-series">
+                                        {{stepsValue | number:'1.0-0'}} {{'SHARED.OF'|translate}} {{goal && goal.steps ? (goal.steps| number:'1.0-0') : 0}}<small>pas</small>
                                     </label>
                                 </div>
                             </div>
@@ -307,8 +301,7 @@
                                     <ngx-gauge-append *ngIf="caloriesHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.calories ? (Math.min(Math.round((caloriesValue * 100) / goal.calories), 100)) : 100}}
-                                                %
+                                                {{goal && goal.calories ? (Math.min(Math.round((caloriesValue * 100) / goal.calories), 100)) : 100}}%
                                             </label>
                                             <label class="label-time-series-goal">
                                                 {{'TIME-SERIES.OF-THE-GOAL'|translate}}
@@ -321,8 +314,7 @@
                                 <div class="text-center container-flex"
                                      style="position: absolute;bottom:0%;width: 85%;">
                                     <label class="label-time-series">
-                                        {{caloriesValue | number:'1.0-0'}} {{'SHARED.OF'|translate}} {{goal && goal.calories ? (goal.calories|number:'1.0-0') : 0}}
-                                        <small>calls</small>
+                                        {{caloriesValue | number:'1.0-0'}} {{'SHARED.OF'|translate}} {{goal && goal.calories ? (goal.calories|number:'1.0-0') : 0}}<small>cals</small>
                                     </label>
                                 </div>
                             </div>
@@ -363,8 +355,7 @@
                                     <ngx-gauge-append *ngIf="activeMinutesHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.active_minutes ? (Math.min(Math.round((activeMinutesValue * 100) / goal.active_minutes), 100)) : 100}}
-                                                %
+                                                {{goal && goal.active_minutes ? (Math.min(Math.round((activeMinutesValue * 100) / goal.active_minutes), 100)) : 100}}%
                                             </label>
                                             <label class="label-time-series-goal">
                                                 {{'TIME-SERIES.OF-THE-GOAL'|translate}}
@@ -374,7 +365,7 @@
                                     <ngx-gauge-value>
                                     </ngx-gauge-value>
                                 </ngx-gauge>
-                                <div class="container-flex" style="position: absolute;bottom:0%;width: 85%;">
+                                <div class="text-center" style="position: absolute;bottom:0%;width: 85%;">
                                     <label class="label-time-series" style="max-width: 100%"
                                            [innerHTML]="activeMinutesValue ? (activeMinutesValue|activeMinutes) : '0<small>min</small>'">
                                     </label>
@@ -422,8 +413,7 @@
                                     <ngx-gauge-append *ngIf="distanceHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.distance ? (Math.min(Math.round((distanceValue * 100) / goal.distance), 100)) : 100}}
-                                                %
+                                                {{goal && goal.distance ? (Math.min(Math.round((distanceValue * 100) / goal.distance), 100)) : 100}}%
                                             </label>
                                             <label class="label-time-series-goal">
                                                 {{'TIME-SERIES.OF-THE-GOAL'|translate}}

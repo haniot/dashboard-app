@@ -5,7 +5,12 @@ import { FormGroup } from '@angular/forms'
 import { TranslateService } from '@ngx-translate/core'
 import { ToastrService } from 'ngx-toastr';
 
-import { ExternalService, OAuthUser, SynchronizeData } from '../../../modules/patient/models/external.service';
+import {
+    AccessStatus,
+    ExternalService,
+    OAuthUser,
+    SynchronizeData
+} from '../../../modules/patient/models/external.service';
 import { FitbitStatusPipe } from '../pipes/fitbit.status.pipe';
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
 import { FitbitService } from '../services/fitbit.service';
@@ -33,6 +38,7 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
     providingAccess: boolean;
     synchronizeData: SynchronizeData;
     intervalSync: any;
+    AccessStatus = AccessStatus;
 
     constructor(
         private activeRouter: ActivatedRoute,

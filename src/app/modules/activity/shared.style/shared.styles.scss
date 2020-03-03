@@ -7,6 +7,22 @@ h3 {
   }
 }
 
+canvas {
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+table tr {
+  cursor: pointer;
+}
+
+label {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .echarts-div-graph {
   height: 400px;
 }
@@ -64,12 +80,6 @@ h3 {
   background-color: #FF9800;
 }
 
-canvas {
-  width: 100%;
-  margin-left: 0px;
-  margin-right: 0px;
-}
-
 .bg-height {
   width: 48px;
   height: 48px;
@@ -106,9 +116,6 @@ canvas {
   background-color: $primary-color !important;
 }
 
-table tr {
-  cursor: pointer;
-}
 
 .card-legend {
   border-radius: 3px;
@@ -129,4 +136,47 @@ table tr {
   right: 0;
   left: 0;
   bottom: 0;
+}
+
+.card .card-header-danger:not(.card-header-icon):not(.card-header-text), .card.bg-danger, .card.card-rotate.bg-danger .front, .card.card-rotate.bg-danger .back {
+  background: $primary-color !important;
+}
+
+.right {
+  position: absolute;
+  right: 10px;
+}
+
+
+.material-icons {
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.shared .material-icons {
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 30px;
+  -webkit-transition: font-size 500ms; /* Safari */
+  transition: font-size 500ms;
+}
+
+.shared .material-icons:hover {
+  font-size: 35px;
+}
+
+.remove-register {
+  color: white;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.borderNone {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }

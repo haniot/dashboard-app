@@ -55,7 +55,7 @@ export class NutritionEvaluationTableComponent implements OnInit, OnChanges {
             clearInterval(this.searchTime);
             this.searchTime = setTimeout(() => {
                 this.listOfEvaluations = [];
-                this.nutritionService.getAllByPatient(this.patientId, this.page, this.limit, this.search)
+                this.nutritionService.getAllByPatient(this.patientId, null, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                         this.listOfEvaluations = new Array<NutritionEvaluation>();

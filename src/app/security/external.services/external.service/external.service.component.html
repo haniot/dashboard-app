@@ -47,21 +47,21 @@
                         <div class="row">
                             <div class="col">
                                 <a class="nav-link"
-                                   [ngClass]="(!externalService || externalService.fitbit_status==='none')?'disabled':''"
+                                   [ngClass]="(!externalService || (externalService.fitbit_status!==AccessStatus.valid_token))?'disabled':''"
                                    (click)="synchronize()" [title]="'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZE'|translate">
                                     <i class="material-icons">cached</i>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="nav-link" (click)="provideAccess()"
-                                   [ngClass]="(!externalService || externalService.fitbit_status==='none')?'':'disabled'"
+                                   [ngClass]="(!externalService || (externalService.fitbit_status===AccessStatus.valid_token || externalService.fitbit_status===AccessStatus.too_many_requests))?'disabled':''"
                                    [title]="'PATIENTS.EXTERNAL-SERVICES.PROVIDER-ACCESS'|translate">
                                     <i class="material-icons">security</i>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="nav-link"
-                                   [ngClass]="(!externalService || externalService.fitbit_status==='none')?'disabled':''"
+                                   [ngClass]="(!externalService || (externalService.fitbit_status!==AccessStatus.valid_token && externalService.fitbit_status!==AccessStatus.too_many_requests))?'disabled':''"
                                    (click)="openModalRevoke()"
                                    [title]="'PATIENTS.EXTERNAL-SERVICES.REVOKE-ACCESS'|translate">
                                     <i class="material-icons">not_interested</i>
@@ -165,6 +165,5 @@
 </div>
 
 <modal-confirmation [id]="'confirmRevoke'"
-        [message]="'PATIENTS.EXTERNAL-SERVICES.CONFIRM-REVOKE'|translate" (confirmation)="revoke()"
-                    (close)="closeModalRevoke()"
-                    (noconfirmation)="closeModalRevoke()"></modal-confirmation>
+                    [message]="'PATIENTS.EXTERNAL-SERVICES.CONFIRM-REVOKE'|translate" (confirmation)="revoke()"
+                    (close)="closeModalRevoke()"></modal-confirmation>

@@ -61,7 +61,7 @@ export class PatientMyEvaluationsComponent implements OnInit, OnChanges {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.listOfEvaluations = [];
-            this.nutritionService.getAllByPatient(this.userId, this.page, this.limit, this.search)
+            this.nutritionService.getAllByPatient(this.userId, null, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                     this.listOfEvaluations = new Array<NutritionEvaluation>();

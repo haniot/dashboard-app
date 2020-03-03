@@ -132,3 +132,8 @@ i:hover {
 .mat-datepicker-toggle {
   color: white;
 }
+
+.dropdown-menu{
+  position: absolute;
+  z-index: 9999 !important;
+}

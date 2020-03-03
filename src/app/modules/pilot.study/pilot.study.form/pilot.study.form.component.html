@@ -327,11 +327,11 @@
 
 <modal-confirmation [id]="'confirmRemovePatient'" [message]="'Tem certeza que deseja remover paciente?'"
                     (confirmation)="dissociatePatient()"
-                    (noconfirmation)="closeAndCleanConfirmationRemovePatient()"></modal-confirmation>
+                    (close)="closeAndCleanConfirmationRemovePatient()"></modal-confirmation>
 
 <modal-confirmation [id]="'confirmRemoveProfessional'" [message]="'Tem certeza que deseja remover profissional?'"
                     (confirmation)="dissociateHealthProfessional()"
-                    (noconfirmation)="closeAndCleanConfirmationRemoveProfessional()"></modal-confirmation>
+                    (close)="closeAndCleanConfirmationRemoveProfessional()"></modal-confirmation>
 
 <div *ngIf="removing">
     <div class="externa">

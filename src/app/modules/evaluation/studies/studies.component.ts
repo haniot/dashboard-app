@@ -92,7 +92,7 @@ export class StudiesComponent implements OnInit {
         this.searchTime = setTimeout(() => {
             this.list = [];
             if (this.authService.decodeToken().sub_type) {
-                this.pilotStudyService.getAll(this.page, this.limit, this.search)
+                this.pilotStudyService.getAll(null, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                         if (httpResponse.body && httpResponse.body.length) {
@@ -101,7 +101,7 @@ export class StudiesComponent implements OnInit {
                     })
                     .catch();
             } else {
-                this.pilotStudyService.getAllByUserId(this.userId, this.page, this.limit, this.search)
+                this.pilotStudyService.getAllByUserId(this.userId, null, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                         if (httpResponse.body && httpResponse.body.length) {

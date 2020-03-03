@@ -754,6 +754,8 @@
         "INVALID-TOKEN": "Token inválido!",
         "EXPIRED-TOKEN": "Token expirado!",
         "INVALID-REFRESH-TOKEN": "Refresh Token Inválido",
+        "INVALID-CLIENT": "Cliente inválido!",
+        "RATE-LIMIT": "Limite de sincronização atingindo!",
         "NONE": " - - ",
         "UNDEFINED": "Fora dos parâmetros"
       }
