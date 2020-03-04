@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { PhysicalActivity } from '../models/physical.activity'
-import { TimeSeries, TimeSeriesItem, TimeSeriesItemIntraday, TimeSeriesSimpleFilter } from '../models/time.series'
-import { TranslateService } from '@ngx-translate/core'
-import { DatePipe } from '@angular/common'
-import { ActivityLevel, Levels } from '../models/activity'
-import { MillisecondPipe } from '../pipes/millisecond.pipe'
-import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
-import { PhysicalActivitiesService } from '../services/physical.activities.service'
-import { ActivatedRoute, Router } from '@angular/router'
-import { ToastrService } from 'ngx-toastr'
-import { TimeSeriesService } from '../services/time.series.service'
-import * as echarts from 'echarts'
-import { getSortHeaderNotContainedWithinSortError } from '@angular/material/sort/typings/sort-errors'
+import { HeartRateZone, TimeSeries, TimeSeriesItemIntraday, TimeSeriesSimpleFilter } from '../models/time.series'
+import { TranslateService } from '@ngx-translate/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { ActivityLevel, Levels } from '../models/activity';
+import { MillisecondPipe } from '../pipes/millisecond.pipe';
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
+import { PhysicalActivitiesService } from '../services/physical.activities.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { TimeSeriesService } from '../services/time.series.service';
+import * as echarts from 'echarts';
 
 @Component({
     selector: 'activity.details',
@@ -23,8 +22,6 @@ export class ActivityDetailsComponent implements OnInit {
     physicalActivity: PhysicalActivity;
     cacheIdForRemove: string;
     intensityLevelsGraph: any;
-    heartRateGraph: any;
-    caloriesGraph: any;
     Math = Math;
     removingActivity: boolean;
     loadingPhysicalActivity: boolean;
@@ -35,10 +32,16 @@ export class ActivityDetailsComponent implements OnInit {
     impactOfSteps: number;
     impactOfCalories: number;
     impactOfActiveMinutes: number;
+    caloriesGraph: any;
+    caloriesError: boolean;
+    heartRateGraph: any;
+    heartRateError: boolean;
+    zones: HeartRateZone;
 
     constructor(
         private activeRouter: ActivatedRoute,
         private datePipe: DatePipe,
+        private decimalPipe: DecimalPipe,
         private millisecondPipe: MillisecondPipe,
         private translateService: TranslateService,
         private modalService: ModalService,
@@ -46,6 +49,7 @@ export class ActivityDetailsComponent implements OnInit {
         private timeSeriesService: TimeSeriesService,
         private router: Router,
         private toastService: ToastrService) {
+        this.zones = new HeartRateZone();
     }
 
     ngOnInit() {
@@ -53,13 +57,13 @@ export class ActivityDetailsComponent implements OnInit {
             this.patientId = params.get('patientId');
             const activityId = params.get('activityId');
             this.loadActivity(activityId);
-        })
+        });
     }
 
     calcImpact(): void {
         this.impactOfSteps = Math.min(Math.floor((this.physicalActivity.steps * 100) / this.stepsValue), 100);
         this.impactOfCalories = Math.min(Math.floor((this.physicalActivity.calories * 100) / this.caloriesValue), 100);
-        this.impactOfActiveMinutes = Math.min(Math.floor(((this.physicalActivity.duration / 60000) * 100) / this.activeMinutesValue));
+        this.impactOfActiveMinutes = Math.min(Math.floor(((this.physicalActivity.duration / 60000) * 100) / this.activeMinutesValue), 100);
     }
 
     loadActivity(activityId: string): void {
@@ -116,11 +120,13 @@ export class ActivityDetailsComponent implements OnInit {
                         `${duration}: ${params.data.duration}<br>${percent}: ${params.percent}%`
                 }
             },
-            // grid: [
-            //     { x: '7%', y: '7%', width: '90%', height: '90%' }
-            // ],
+            grid: [
+                { x: '7%', y: '7%', width: '90%', height: '95%' }
+            ],
             legend: {
                 orient: 'horizontal',
+                top: 10,
+                left: 10,
                 selected: {
                     [sedentary]: !!sedentaryData[0].duration,
                     [light]: !!lightData[0].duration,
@@ -169,19 +175,22 @@ export class ActivityDetailsComponent implements OnInit {
         if (this.physicalActivity && this.physicalActivity.calories_link) {
             this.timeSeriesService.getByLink(this.physicalActivity.calories_link)
                 .then(resource => {
-                    this.loadCaloriesGraph(resource);
+                    this.caloriesError = false;
+                    this.updateCalories(resource);
                 })
-                .catch(() => {
-
+                .catch((err) => {
+                    console.log(err)
+                    this.caloriesError = true;
                 })
         }
     }
 
-    loadCaloriesGraph(resource: TimeSeries) {
+    updateCalories(resource: TimeSeries) {
+        const labelCalories = this.translateService.instant('TIME-SERIES.CALORIES.TITLE');
+        const hour = this.translateService.instant('SHARED.HOUR');
+
         const series = {
             type: 'line',
-            symbol: 'none',
-            sampling: 'average',
             step: true,
             itemStyle: {
                 color: '#FBA53E'
@@ -192,76 +201,118 @@ export class ActivityDetailsComponent implements OnInit {
                     color: '#FFF2F2'
                 }, {
                     offset: 1,
-                    color: '#FBA53E'
+                    color: 'rgba(251,165,62,0.1)'
                 }])
             },
-            data: resource.data_set.map((elementCalorie) => {
-                return elementCalorie.value;
-            })
+            data: []
         };
 
         const xAxisLength = resource.data_set.length;
 
-        this.caloriesGraph = {
-            tooltip: {
-                trigger: 'axis'
-            },
-            grid: [{ x: '3%', y: '10%', width: '93%', height: '80%' }],
-            xAxis: {
-                data: resource.data_set.map((elementCalorie) => {
-                    return elementCalorie.time;
-                }),
-                maxInterval: 10,
-                axisLabel: {
-                    formatter: function (value, index) {
-                        console.log(value)
-                        return index === 0 || index === xAxisLength - 1 ? value : '';
-                    }
+        const xAxis = {
+            data: [],
+            axisLabel: {
+                formatter: (value, index) => {
+                    return (index === 0) || (index === xAxisLength - 1) ? value : '';
                 },
-                axisTick: {
-                    show: false
-                },
-                axisLine: {
-                    show: false
-                }
+                showMinLabel: true,
+                showMaxLabel: true
             },
-            yAxis: {
-                type: 'value',
-                splitNumber: 2
+            axisTick: {
+                show: false
             },
-            series
+            axisLine: {
+                show: false
+            },
+            boundaryGap: false
         }
 
+        const yAxis = {
+            type: 'value',
+            splitNumber: 1,
+            splitLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: false
+            }
+        };
+
+        if (resource && resource.data_set) {
+            resource.data_set.forEach((calorie: TimeSeriesItemIntraday) => {
+                xAxis.data.push(calorie.time);
+                series.data.push({
+                    value: calorie.value,
+                    time: calorie.time
+                });
+            });
+        }
+
+        this.caloriesGraph = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: (params) => {
+                    const { data: { value, time } } = params[0];
+                    const valueFormatted = this.decimalPipe.transform(value, '1.2-3');
+                    return `${labelCalories} : ${valueFormatted} cals <br> ${hour}: ${time}`
+                }
+            },
+            grid: [{ x: '3%', y: '10%', width: '94%', height: '80%' }],
+            xAxis,
+            yAxis,
+            series
+        }
     }
 
     loadHeartRate(): void {
         if (this.physicalActivity && this.physicalActivity.heart_rate_link) {
             this.timeSeriesService.getByLink(this.physicalActivity.heart_rate_link)
-                .then(resource => {
+                .then((resource: any) => {
+                    this.heartRateError = false;
+                    this.zones = resource.summary && resource.summary.zones ? resource.summary.zones : new HeartRateZone();
                     this.loadHeartRateGraph(resource);
                 })
                 .catch(() => {
-
+                    this.heartRateError = true;
                 })
         }
     }
 
     loadHeartRateGraph(resource: TimeSeries) {
         const frequency = this.translateService.instant('TIME-SERIES.HEART-RATE.FREQUENCY');
-
         const hour = this.translateService.instant('SHARED.HOUR');
-        const at = this.translateService.instant('SHARED.AT');
-
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
+        const name_fat_burn = this.translateService.instant('TIME-SERIES.HEART-RATE.FAT-BURN');
+        const name_cardio = this.translateService.instant('TIME-SERIES.HEART-RATE.CARDIO');
+        const name_peak = this.translateService.instant('TIME-SERIES.HEART-RATE.PEAK');
+        const name_out_of_range = this.translateService.instant('TIME-SERIES.HEART-RATE.OUT-OF-RANGE');
 
-        const low = this.translateService.instant('TIME-SERIES.HEART-RATE.LOW');
-        const normal = this.translateService.instant('TIME-SERIES.HEART-RATE.NORMAL');
-        const high = this.translateService.instant('TIME-SERIES.HEART-RATE.HIGH');
+        const xAxisLenght = resource && resource.data_set ? resource.data_set.length : 0;
+
+        const xAxisOptionsLastDate = {
+            data: [],
+            axisLabel: {
+                formatter: (value, index) => {
+                    return (index === 0) || (index === xAxisLenght - 1) ? value : '';
+                },
+                showMinLabel: true,
+                showMaxLabel: true
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: false
+            },
+            boundaryGap: false
+        };
 
         const seriesOptionsLastDate = {
             type: 'line',
-            symbol: 'none',
             data: [],
             color: '#7F7F7F',
             lineStyle: {
@@ -289,25 +340,6 @@ export class ActivityDetailsComponent implements OnInit {
             }
         };
 
-        const xAxisLength = resource.data_set.length;
-
-        const xAxisOptionsLastDate = {
-            data: [],
-            maxInterval: 10,
-            axisLabel: {
-                formatter: function (value, index) {
-                    return index === 0 || index === xAxisLength - 1 ? value : '';
-                }
-            },
-            axisTick: {
-                show: false
-            },
-            axisLine: {
-                show: false
-            }
-        };
-
-
         if (resource && resource.data_set) {
             resource.data_set.forEach((heartRate: TimeSeriesItemIntraday) => {
                 xAxisOptionsLastDate.data.push(heartRate.time);
@@ -327,7 +359,7 @@ export class ActivityDetailsComponent implements OnInit {
                             return currenHeartRate.value === params[0].value;
                         });
                         if (t) {
-                            return `${frequency} : ${t.value} bpm <br> ${hour}: <br> ${t.date} ${at} ${t.time}`
+                            return `${frequency} : ${t.value} bpm <br> ${hour}:${t.time}`
                         }
 
                     }
@@ -335,38 +367,53 @@ export class ActivityDetailsComponent implements OnInit {
                     return `${frequency} : ${value} bpm <br> ${hour}: ${time}`
                 }
             },
+            grid: [
+                { x: '4%', y: '5%', width: '93%', height: '80%' }
+            ],
+            dataZoom: {
+                type: 'inside'
+            },
             xAxis: xAxisOptionsLastDate,
             yAxis: {
                 type: 'value',
-                splitNumber: 2
+                splitNumber: 1,
+                splitLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                }
             },
-            dataZoom: {
-                show: true,
-                type: 'inside'
-            },
-            grid: [{ x: '3%', y: '10%', width: '93%', height: '80%' }],
             visualMap: {
                 orient: 'horizontal',
                 top: 20,
-                right: 0,
+                left: '30%',
+                right: '30%',
                 pieces: [{
-                    gt: 0,
-                    lte: 50,
-                    label: low,
-                    color: '#236399'
+                    gt: this.zones.fat_burn.min,
+                    lte: this.zones.fat_burn.max,
+                    label: name_fat_burn,
+                    color: '#FFC023'
                 }, {
-                    gt: 50,
-                    lte: 100,
-                    label: normal,
-                    color: '#ffde33'
+                    gt: this.zones.cardio.min,
+                    lte: this.zones.cardio.max,
+                    label: name_cardio,
+                    color: '#FD8518'
                 }, {
-                    gt: 100,
-                    label: high,
-                    color: '#7e0023'
-                }],
-                outOfRange: {
-                    color: '#999'
+                    gt: this.zones.peak.min,
+                    lte: this.zones.peak.max,
+                    label: name_peak,
+                    color: '#E60013'
+                }, {
+                    gt: this.zones.out_of_range.min,
+                    lte: this.zones.out_of_range.max,
+                    label: name_out_of_range,
+                    color: '#4EC5C5'
                 }
+                ]
             },
             series: seriesOptionsLastDate
         };

@@ -17,7 +17,7 @@
     "TOTAL-CALORIES-BURNED": "Total de Calorias Queimadas",
     "CALORIES-BURNED-PER-MINUTES": "Calorias Queimadas por Minuto",
     "INTENSITY-LEVELS": "Nìveis de Intensidade",
-    "HEART-RATE-AVG": "Frequência Cardíaca Média",
+    "HEART-RATE-AVG": "Frequência Média",
     "IMPACT": "IMPACTO",
     "STEPS-TAKEN": "passos dados",
     "CALORIES-BURNED": "calorias queimadas",
@@ -93,8 +93,8 @@
       "ACTIVITY-LEVEL": {
         "SEDENTARY": "Sedentário",
         "LIGHT": "Leve",
-        "FAIRLY": "Bastante",
-        "VERY": "Avançado"
+        "FAIRLY": "Razoavel",
+        "VERY": "Intenso"
       },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"

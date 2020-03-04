@@ -1,8 +1,8 @@
-<article class="card">
+<article class="card" [routerLink]="urlAction">
     <span class="card__link" [ngClass]="urlAction?'cursorPointer':'cursorNormal'">
 
         <!-- Header -->
-        <div class="card__header" [routerLink]="urlAction">
+        <div class="card__header">
             <h3 class="ellipsis card__header-title">{{title}}</h3>
             <p class="ellipsis card__header-meta">{{subtitle}}</p>
 

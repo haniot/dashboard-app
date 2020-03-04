@@ -18,6 +18,9 @@ import { PhysicalActivitiesService } from '../services/physical.activities.servi
 import { TimeSeriesService } from '../services/time.series.service'
 import { SleepFilter, SleepService } from '../services/sleep.service'
 import { VerifyScopeService } from '../../../security/services/verify.scope.service'
+import { AccessStatus, SynchronizeData } from '../../patient/models/external.service'
+import { FitbitService } from '../../../security/external.services/services/fitbit.service'
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
 
 @Component({
     selector: 'activity-dashboard',
@@ -59,6 +62,9 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     currentFilter: TimeSeriesIntervalFilter;
     sleepDivRef: ElementRef;
     visibilityFitBitSync: boolean;
+    synchronizing: boolean;
+    synchronizeData: SynchronizeData;
+    AccessStatus = AccessStatus;
 
     @ViewChild('sleepDiv')
     set sleepDiv(element: ElementRef) {
@@ -154,10 +160,12 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         private localStorageService: LocalStorageService,
         private translateService: TranslateService,
         private timeSeriesService: TimeSeriesService,
-        private verifyScopeService: VerifyScopeService
+        private verifyScopeService: VerifyScopeService,
+        private fitbitService: FitbitService,
+        private modalService: ModalService
     ) {
         this.currentDate = new Date();
-        this.activityGraph = [];
+        this.activityGraph = new Array(3);
         this.timeSeriesTypes = Object.keys(TimeSeriesType);
         this.measurementSelected = TimeSeriesType.steps;
         this.loadingTimeSeries = true;
@@ -170,6 +178,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.caloriesSize = 200;
         this.distanceSize = 200;
         this.activeMinutesSize = 200;
+        this.synchronizeData = new SynchronizeData();
     }
 
     ngOnInit() {
@@ -270,7 +279,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     }
 
     loadActivitiesGraph(): void {
-        this.listActivities.forEach(activity => {
+        this.listActivities.forEach((activity, index) => {
             if (activity.heart_rate_average) {
                 this.timeSeriesService.getByLink(activity.heart_rate_link)
                     .then(heartRate => {
@@ -347,7 +356,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                             series
                         };
 
-                        this.activityGraph.push(activityHearRateGraph);
+                        this.activityGraph[index] = activityHearRateGraph;
 
                     })
                     .catch(() => {
@@ -428,7 +437,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                             series
                         }
 
-                        this.activityGraph.push(activityCalorieGraph);
+                        this.activityGraph[index] = activityCalorieGraph;
 
                     })
                     .catch(() => {
@@ -503,6 +512,31 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.loadTimeSeries();
         this.loadSleep();
         this.updateQueryParams();
+    }
+
+    async synchronize(): Promise<void> {
+        this.synchronizing = true;
+        try {
+            this.synchronizeData = await this.fitbitService.synchronize(this.patientId);
+            this.currentDate = new Date();
+            this.loadGoals();
+            this.loadActivities();
+            this.loadTimeSeries();
+            this.loadSleep();
+            this.modalService.open('synchronized');
+        } catch (err) {
+            if (err && err.status === 429) {
+                this.toastService.error(this.translateService.instant('SECURITY.FORGOT.TOO-MANY-ATTEMPTS'))
+            } else {
+                this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-SYNC'))
+            }
+        } finally {
+            this.synchronizing = false;
+        }
+    }
+
+    closeModalSynchronized(): void {
+        this.modalService.close('synchronized');
     }
 
     verifyScopes(): void {

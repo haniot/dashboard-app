@@ -5,7 +5,7 @@
         <div class="row" style="padding: 0px 7px;">
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 navigation"
-                 style="padding: 0px 0px; z-index: 1099;">
+                 style="padding: 0px 0px; z-index: 1030;">
                 <i class="material-icons float-left" (click)="previousDate()"
                    [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
 
@@ -27,11 +27,18 @@
             </div>
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 navigation"
-                 style="padding: 0px 0px" *ngIf="visibilityFitBitSync">
-                <label style="position: absolute; right:5px;padding-right:10px;font-weight: normal; font-size: 12px">
+                 style="display: flex; align-items: center; justify-content: flex-end; padding: 0px 0px;"
+                 *ngIf="visibilityFitBitSync">
+                <label style="padding-right:10px;font-weight: normal; font-size: 12px;">
                     {{'ACTIVITY.LAST-SYNC'|translate}}
                     : {{patient && patient.external_services && patient.external_services.fitbit_last_sync ? (patient.external_services.fitbit_last_sync | date) : ' - - '}}
+                    {{'SHARED.AT'|translate}} {{patient && patient.external_services && patient.external_services.fitbit_last_sync ? (patient.external_services.fitbit_last_sync | date : 'mediumTime') : ' - - '}}
                 </label>
+                <a class="nav-link" [title]="'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZE'|translate"
+                   [ngClass]="(!patient || !patient.external_services || (patient.external_services.fitbit_status!==AccessStatus.valid_token && patient.external_services.fitbit_status!==AccessStatus.too_many_requests))?'disabled':''"
+                   (click)="synchronize()">
+                    <i class="material-icons">cached</i>
+                </a>
             </div>
 
         </div>
@@ -163,8 +170,8 @@
                                         </div>
                                     </div>
                                     <div class="container-flex" style="position: absolute;bottom:15%;width: 85%;">
-                                        <label style="font-weight: normal; font-size: 35px; color: unset">
-                                            {{sleepSelected.duration|duration}}
+                                        <label style="font-weight: normal; font-size: 35px; color: unset"
+                                               [innerHTML]="sleepSelected && sleepSelected.duration?(sleepSelected.duration|duration):'0<small>min</small>'">
                                         </label>
                                     </div>
                                     <div class="text-center container-flex"
@@ -246,10 +253,13 @@
                                     <ngx-gauge-append *ngIf="stepsHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.steps ? (Math.min(Math.round((stepsValue * 100) / goal.steps), 100)) : 100}}%
+                                                {{goal && goal.steps ? (Math.min(Math.round((stepsValue * 100) / goal.steps), 100)) : 100}}
+                                                %
                                             </label>
                                             <label class="label-time-series-goal">
-                                                {{'TIME-SERIES.OF-THE-GOAL'|translate}}
+                                                {{'SHARED.OF'|translate}}
+                                                {{goal && goal.steps ? (goal.steps| number:'1.0-0') : 0}}
+                                                <small>pas</small>
                                             </label>
                                         </div>
                                     </ngx-gauge-append>
@@ -259,7 +269,8 @@
                                 <div class="text-center container-flex"
                                      style="position: absolute;bottom:0%;width: 85%;">
                                     <label class="ellipsis label-time-series">
-                                        {{stepsValue | number:'1.0-0'}} {{'SHARED.OF'|translate}} {{goal && goal.steps ? (goal.steps| number:'1.0-0') : 0}}<small>pas</small>
+                                        {{stepsValue | number:'1.0-0'}}
+                                        <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                                     </label>
                                 </div>
                             </div>
@@ -301,10 +312,12 @@
                                     <ngx-gauge-append *ngIf="caloriesHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.calories ? (Math.min(Math.round((caloriesValue * 100) / goal.calories), 100)) : 100}}%
+                                                {{goal && goal.calories ? (Math.min(Math.round((caloriesValue * 100) / goal.calories), 100)) : 100}}
+                                                %
                                             </label>
                                             <label class="label-time-series-goal">
-                                                {{'TIME-SERIES.OF-THE-GOAL'|translate}}
+                                                {{'SHARED.OF'|translate}} {{goal && goal.calories ? (goal.calories|number:'1.0-0') : 0}}
+                                                <small>cals</small>
                                             </label>
                                         </div>
                                     </ngx-gauge-append>
@@ -314,7 +327,8 @@
                                 <div class="text-center container-flex"
                                      style="position: absolute;bottom:0%;width: 85%;">
                                     <label class="label-time-series">
-                                        {{caloriesValue | number:'1.0-0'}} {{'SHARED.OF'|translate}} {{goal && goal.calories ? (goal.calories|number:'1.0-0') : 0}}<small>cals</small>
+                                        {{caloriesValue | number:'1.0-0'}}
+                                        <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                     </label>
                                 </div>
                             </div>
@@ -355,11 +369,17 @@
                                     <ngx-gauge-append *ngIf="activeMinutesHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.active_minutes ? (Math.min(Math.round((activeMinutesValue * 100) / goal.active_minutes), 100)) : 100}}%
+                                                {{goal && goal.active_minutes ? (Math.min(Math.round((activeMinutesValue * 100) / goal.active_minutes), 100)) : 100}}
+                                                %
                                             </label>
-                                            <label class="label-time-series-goal">
-                                                {{'TIME-SERIES.OF-THE-GOAL'|translate}}
-                                            </label>
+                                            <div style="display: flex; align-items: baseline; justify-content: center">
+                                                <label class="label-time-series-goal" style="padding: 0px 5px">
+                                                    {{'SHARED.OF'|translate}}
+                                                </label>
+                                                <label class="label-time-series" style="max-width: 100%;"
+                                                       [innerHTML]="goal && goal.active_minutes ? (goal.active_minutes|activeMinutes) : '0<small>min</small>'">
+                                                </label>
+                                            </div>
                                         </div>
                                     </ngx-gauge-append>
                                     <ngx-gauge-value>
@@ -368,12 +388,6 @@
                                 <div class="text-center" style="position: absolute;bottom:0%;width: 85%;">
                                     <label class="label-time-series" style="max-width: 100%"
                                            [innerHTML]="activeMinutesValue ? (activeMinutesValue|activeMinutes) : '0<small>min</small>'">
-                                    </label>
-                                    <label class="label-time-series" style="max-width: 100%;padding: 5px 5px">
-                                        {{'SHARED.OF'|translate}}
-                                    </label>
-                                    <label class="label-time-series" style="max-width: 100%;"
-                                           [innerHTML]="goal && goal.active_minutes ? (goal.active_minutes|activeMinutes) : '0<small>min</small>'">
                                     </label>
                                 </div>
                             </div>
@@ -413,11 +427,17 @@
                                     <ngx-gauge-append *ngIf="distanceHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.distance ? (Math.min(Math.round((distanceValue * 100) / goal.distance), 100)) : 100}}%
+                                                {{goal && goal.distance ? (Math.min(Math.round((distanceValue * 100) / goal.distance), 100)) : 100}}
+                                                %
                                             </label>
-                                            <label class="label-time-series-goal">
-                                                {{'TIME-SERIES.OF-THE-GOAL'|translate}}
-                                            </label>
+                                            <div style="display: flex; align-items: baseline; justify-content: center">
+                                                <label class="label-time-series-goal" style="padding: 0px 5px">
+                                                    {{'SHARED.OF'|translate}}
+                                                </label>
+                                                <label class="label-time-series" style="max-width: 100%;"
+                                                       [innerHTML]="goal && goal.distance ? (goal.distance|distance) : '0<small>m</small>'">
+                                                </label>
+                                            </div>
                                         </div>
                                     </ngx-gauge-append>
                                     <ngx-gauge-value>
@@ -426,12 +446,6 @@
                                 <div class="container-flex" style="position: absolute;bottom:0%;width: 85%;">
                                     <label class="label-time-series"
                                            [innerHTML]="distanceValue ? (distanceValue|distance) : '0<small>m</small>'">
-                                    </label>
-                                    <label class="label-time-series" style="padding: 5px 5px">
-                                        {{'SHARED.OF'|translate}}
-                                    </label>
-                                    <label class="label-time-series"
-                                           [innerHTML]="goal && goal.distance ? (goal.distance|distance) : '0<small>m</small>'">
                                     </label>
                                 </div>
                             </div>
@@ -496,4 +510,68 @@
 
     </div>
 
+</div>
+
+<haniot-modal [modalId]="'synchronized'" [styleDialog]="'modal-dialog'" (close)="closeModalSynchronized()">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                {{'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZE-SUCCESSFULLY'|translate}}
+            </h5>
+            <button type="button" class="close" aria-label="Close" (click)="closeModalSynchronized()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <hr class="separator"
+                            [attr.data-label]="'PATIENTS.EXTERNAL-SERVICES.SUMMARY-UPDATED'|translate">
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'ACTIVITY.ACTIVITIES'|translate}}
+                        </label>
+                        <h4>{{(synchronizeData.activities|number:'1.0-0')}}</h4>
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'ACTIVITY.SLEEP.SLEEP'|translate}}
+                        </label>
+                        <h4>{{(synchronizeData.sleep|number:'1.0-0')}}</h4>
+                    </div>
+                    <div class="form-group col-4 text-center">
+                        <label style="font-weight: normal">
+                            {{'MEASUREMENTS.WEIGHT.TITLE'|translate}}
+                        </label>
+                        <h4>{{(synchronizeData.weights|number:'1.0-0')}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</haniot-modal>
+
+<div id="synchronizing" *ngIf="synchronizing">
+    <div class="externa">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                                <spinner [message]="'PATIENTS.EXTERNAL-SERVICES.SYNCHRONIZING'|translate"
+                                         *ngIf="synchronizing">
+                                </spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop show">
+    </div>
 </div>

@@ -143,8 +143,7 @@
                                                 <div class="row">
                                                     <div class="col activity-resume-item"
                                                          [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DURATION'|translate">
-                                                        <p>
-                                                            {{activity.duration|duration}}
+                                                        <p [innerHTML]="activity && activity.duration?(activity.duration|duration):'0<small>min</small>'">
                                                         </p>
                                                     </div>
                                                     <div class="col activity-resume-item"

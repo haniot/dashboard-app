@@ -1,12 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core'
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Pipe({
     name: 'duration'
 })
 export class DurationPipe implements PipeTransform {
 
-    constructor(private translateService: TranslateService) {
+    constructor(
+        private translateService: TranslateService,
+        private sanitizer: DomSanitizer) {
     }
 
     transform(value: number, ...args: any[]): any {
@@ -17,8 +20,10 @@ export class DurationPipe implements PipeTransform {
         const minutes_abbreviation = minutes > 1 ? this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION') : 'min';
         const and = this.translateService.instant('SHARED.AND');
 
-        return (hours ? hours + time_abbreviation + ' ' + and + ' ' : '') +
-            (time_rest ? minutes + minutes_abbreviation : '')
+        const html = `${(hours ? hours + '<small>' + time_abbreviation + '</small>' + ' ' + and + ' ' : '')} 
+            ${(time_rest ? minutes + '<small>' + minutes_abbreviation + '</small>' : '')}`
+
+        return this.sanitizer.bypassSecurityTrustHtml(html);
 
     }
 
