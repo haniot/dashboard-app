@@ -29,7 +29,7 @@ export class ViewResourcesComponent implements OnInit, OnChanges {
     list: Array<any> | TimeSeries | any;
     listForLogs: Array<any>;
     listIsEmpty: boolean;
-    filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
+    filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter | any;
     allTypesOfMeasurement = EnumMeasurementType;
     allTypesOfTimeSerie = TimeSeriesType;
     pageSizeOptions: number[];

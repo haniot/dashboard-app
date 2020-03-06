@@ -47,7 +47,7 @@
                                                             [ngClass]="nutritionalQuestionnaireOptions.length?'actived':'disabled'">
                                                             <button type="button"
                                                                     class="borderNone"
-                                                                    [title]="'HABITS.DELETE-NUTRITIONAL-QUESTIONNAIRE'|translate"
+                                                                    [title]="nutritionalQuestionnaireOptions.length?('HABITS.DELETE-NUTRITIONAL-QUESTIONNAIRE'|translate):''"
                                                                     [disabled]="!nutritionalQuestionnaireOptions.length"
                                                                     (click)="openModalConfirmationRemoveNutritionalQuestionnaire()">
                                                                 <i class="material-icons remove-questionnaire disabled">delete</i>
@@ -183,7 +183,7 @@
                                                             [ngClass]="odontologicalQuestionnaireOptions.length?'actived':'disabled'">
                                                             <button type="button"
                                                                     class="borderNone"
-                                                                    [title]="'HABITS.DELETE-ODONTOLOGICAL-QUESTIONNAIRE'|translate"
+                                                                    [title]="odontologicalQuestionnaireOptions.length?('HABITS.DELETE-ODONTOLOGICAL-QUESTIONNAIRE'|translate):''"
                                                                     [disabled]="!odontologicalQuestionnaireOptions.length"
                                                                     (click)="openModalConfirmationRemoveOdontologicalQuestionnaire()">
                                                                 <i class="material-icons remove-questionnaire disabled">delete</i>
@@ -263,12 +263,15 @@
 <modal-confirmation [id]="'confirmationRemoveNutritionalQuestionnaire'"
                     [message]="'Tem certeza que deseja excluir definitivamente o questionário nutricional?'"
                     (confirmation)="removeNutritionalQuestionnaires()"
-                    (noconfirmation)="closeModalConfirmationNutritionalQuestionnaire()"></modal-confirmation>
+                    (close)="closeModalConfirmationNutritionalQuestionnaire()"
+></modal-confirmation>
 
 <modal-confirmation [id]="'confirmationRemoveOdontologicalQuestionnaire'"
                     [message]="'Tem certeza que deseja excluir definitivamente o questionário odontologico?'"
                     (confirmation)="removeOdontologicalQuestionnaires()"
-                    (noconfirmation)="closeModalConfirmationOdontologicalQuestionnaire()"></modal-confirmation>
+                    (close)="closeModalConfirmationOdontologicalQuestionnaire()">
+
+</modal-confirmation>
 
 
 <div *ngIf="removingQuestionnaire">

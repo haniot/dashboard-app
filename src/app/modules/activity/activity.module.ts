@@ -31,7 +31,6 @@ import { FormsModule } from '@angular/forms'
 import { ActivityDetailsComponent } from './activity.details/activity.details.component'
 import { ActivityRoutingModule } from './activity.routing/activity.routing.module';
 import { ActivityDashboardComponent } from './activity.dashboard/activity.dashboard.component';
-import { PhysicalActivityPipe } from './pipes/physical.activity.pipe';
 import { ActivityLevelPipe } from './pipes/activity.level.pipe';
 import { MillisecondPipe } from './pipes/millisecond.pipe'
 import { NgxGaugeModule } from 'ngx-gauge';
@@ -39,6 +38,7 @@ import { ActivityListComponent } from './activity.list/activity.list.component';
 import { SleepListComponent } from './sleep.list/sleep.list.component';
 import { DistancePipe } from './pipes/distance.pipe';
 import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
+import { DurationPipe } from './pipes/duration.pipe';
 
 @NgModule({
     declarations: [
@@ -53,13 +53,13 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
         TimeSeriesPipe,
         ActivityDetailsComponent,
         ActivityDashboardComponent,
-        PhysicalActivityPipe,
         ActivityLevelPipe,
         MillisecondPipe,
         ActivityListComponent,
         SleepListComponent,
         DistancePipe,
-        ActiveMinutesPipe
+        ActiveMinutesPipe,
+        DurationPipe
     ],
     exports: [
         ActivityDashboardComponent,
@@ -74,7 +74,8 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
         TimeSeriesPipe,
         ActivityLevelPipe,
         DistancePipe,
-        ActiveMinutesPipe
+        ActiveMinutesPipe,
+        DurationPipe
     ],
     providers: [
         SleepPipe,
@@ -84,7 +85,8 @@ import { ActiveMinutesPipe } from './pipes/active.minutes.pipe';
         TimeSeriesService,
         MillisecondPipe,
         DistancePipe,
-        ActiveMinutesPipe
+        ActiveMinutesPipe,
+        DurationPipe
     ],
     imports: [
         CommonModule,

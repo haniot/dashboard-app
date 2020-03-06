@@ -1,15 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { PhysicalActivity } from '../models/physical.activity'
-import { TimeSeries, TimeSeriesItem, TimeSeriesSimpleFilter } from '../models/time.series'
-import { TranslateService } from '@ngx-translate/core'
-import { DatePipe } from '@angular/common'
-import { ActivityLevel, Levels } from '../models/activity'
-import { MillisecondPipe } from '../pipes/millisecond.pipe'
-import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
-import { PhysicalActivitiesService } from '../services/physical.activities.service'
-import { ActivatedRoute, Router } from '@angular/router'
-import { ToastrService } from 'ngx-toastr'
-import { TimeSeriesService } from '../services/time.series.service'
+import {
+    HeartRateZone,
+    TimeSeries,
+    TimeSeriesFullFilter,
+    TimeSeriesItemIntraday,
+    TimeSeriesSimpleFilter, TimeSeriesType
+} from '../models/time.series'
+import { TranslateService } from '@ngx-translate/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { ActivityLevel, Levels } from '../models/activity';
+import { MillisecondPipe } from '../pipes/millisecond.pipe';
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
+import { PhysicalActivitiesService } from '../services/physical.activities.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { TimeSeriesService } from '../services/time.series.service';
+import * as echarts from 'echarts';
 
 @Component({
     selector: 'activity.details',
@@ -21,7 +28,6 @@ export class ActivityDetailsComponent implements OnInit {
     physicalActivity: PhysicalActivity;
     cacheIdForRemove: string;
     intensityLevelsGraph: any;
-    heartRateGraph: any;
     Math = Math;
     removingActivity: boolean;
     loadingPhysicalActivity: boolean;
@@ -29,10 +35,19 @@ export class ActivityDetailsComponent implements OnInit {
     caloriesValue: number;
     activeMinutesValue: number;
     distanceValue: number;
+    impactOfSteps: number;
+    impactOfCalories: number;
+    impactOfActiveMinutes: number;
+    caloriesGraph: any;
+    caloriesError: boolean;
+    heartRateGraph: any;
+    heartRateError: boolean;
+    zones: HeartRateZone;
 
     constructor(
         private activeRouter: ActivatedRoute,
         private datePipe: DatePipe,
+        private decimalPipe: DecimalPipe,
         private millisecondPipe: MillisecondPipe,
         private translateService: TranslateService,
         private modalService: ModalService,
@@ -40,6 +55,7 @@ export class ActivityDetailsComponent implements OnInit {
         private timeSeriesService: TimeSeriesService,
         private router: Router,
         private toastService: ToastrService) {
+        this.zones = new HeartRateZone();
     }
 
     ngOnInit() {
@@ -47,7 +63,13 @@ export class ActivityDetailsComponent implements OnInit {
             this.patientId = params.get('patientId');
             const activityId = params.get('activityId');
             this.loadActivity(activityId);
-        })
+        });
+    }
+
+    calcImpact(): void {
+        this.impactOfSteps = Math.min(Math.floor((this.physicalActivity.steps * 100) / this.stepsValue), 100);
+        this.impactOfCalories = Math.min(Math.floor((this.physicalActivity.calories * 100) / this.caloriesValue), 100);
+        this.impactOfActiveMinutes = Math.min(Math.floor(((this.physicalActivity.duration / 60000) * 100) / this.activeMinutesValue), 100);
     }
 
     loadActivity(activityId: string): void {
@@ -58,6 +80,7 @@ export class ActivityDetailsComponent implements OnInit {
                 this.physicalActivity = physicalActivity;
                 this.loadTimeSeries();
                 this.loadIntensityLevelsGraph();
+                this.loadCalories();
                 this.loadHeartRate();
             })
             .catch(err => {
@@ -77,9 +100,6 @@ export class ActivityDetailsComponent implements OnInit {
         const light = this.translateService.instant('ACTIVITY.PIPES.ACTIVITY-LEVEL.LIGHT');
         const fairly = this.translateService.instant('ACTIVITY.PIPES.ACTIVITY-LEVEL.FAIRLY');
         const very = this.translateService.instant('ACTIVITY.PIPES.ACTIVITY-LEVEL.VERY');
-
-        const startTimes = this.datePipe.transform(this.physicalActivity.start_time, 'shortTime').split(':')
-        const endTimes = this.datePipe.transform(this.physicalActivity.end_time, 'shortTime').split(':')
 
         const sedentaryData = this.physicalActivity.levels.filter((element: ActivityLevel) => {
             return element.name === Levels.sedentary
@@ -106,11 +126,13 @@ export class ActivityDetailsComponent implements OnInit {
                         `${duration}: ${params.data.duration}<br>${percent}: ${params.percent}%`
                 }
             },
-            // grid: [
-            //     { x: '7%', y: '7%', width: '90%', height: '90%' }
-            // ],
+            grid: [
+                { x: '7%', y: '7%', width: '90%', height: '95%' }
+            ],
             legend: {
                 orient: 'horizontal',
+                top: 10,
+                left: 10,
                 selected: {
                     [sedentary]: !!sedentaryData[0].duration,
                     [light]: !!lightData[0].duration,
@@ -155,34 +177,196 @@ export class ActivityDetailsComponent implements OnInit {
 
     }
 
-    loadHeartRate(): void {
-        if (this.physicalActivity && this.physicalActivity.heart_rate_link) {
-            this.timeSeriesService.getByLink(this.physicalActivity.heart_rate_link)
+    loadCalories(): void {
+        if (this.physicalActivity && this.physicalActivity.calories) {
+            const start_zone = this.physicalActivity.start_time.split('.')[1]
+            const start_date = new Date(this.datePipe.transform(this.physicalActivity.start_time, 'shortDate', start_zone, 'en-us'));
+            const end_zone = this.physicalActivity.end_time.split('.')[1]
+            const end_date = new Date(this.datePipe.transform(this.physicalActivity.end_time, 'shortDate', end_zone, 'en-us'));
+            const filter = new TimeSeriesFullFilter();
+            filter.start_date = start_date.toISOString().split('T')[0];
+            filter.end_date = end_date.toISOString().split('T')[0];
+            filter.start_time = this.datePipe.transform(this.physicalActivity.start_time, 'HH:mm:ss');
+            filter.end_time = this.datePipe.transform(this.physicalActivity.end_time, 'HH:mm:ss');
+            filter.interval = '1s';
+            this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.calories, filter)
                 .then(resource => {
+                    this.caloriesError = false;
+                    this.updateCalories(resource);
+                })
+                .catch(() => {
+                    this.caloriesError = true;
+                })
+        }
+    }
+
+    updateCalories(resource: TimeSeries) {
+        const labelCalories = this.translateService.instant('TIME-SERIES.CALORIES.TITLE');
+        const hour = this.translateService.instant('SHARED.HOUR');
+
+        const series = {
+            type: 'line',
+            step: true,
+            itemStyle: {
+                color: '#FBA53E'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: '#FFF2F2'
+                }, {
+                    offset: 1,
+                    color: 'rgba(251,165,62,0.1)'
+                }])
+            },
+            data: []
+        };
+
+        const xAxisLength = resource.data_set.length;
+
+        const xAxis = {
+            data: [],
+            axisLabel: {
+                formatter: (value, index) => {
+                    return (index === 0) || (index === xAxisLength - 1) ? value : '';
+                },
+                showMinLabel: true,
+                showMaxLabel: true
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: false
+            },
+            boundaryGap: false
+        }
+
+        const yAxis = {
+            type: 'value',
+            splitNumber: 1,
+            splitLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: false
+            }
+        };
+
+        if (resource && resource.data_set) {
+            resource.data_set.forEach((calorie: TimeSeriesItemIntraday) => {
+                xAxis.data.push(calorie.time);
+                series.data.push({
+                    value: calorie.value,
+                    time: calorie.time
+                });
+            });
+        }
+
+        const total = resource.data_set.reduce((previous, current) => {
+            return previous + current.value;
+        }, 0);
+
+        if (!total) {
+            series.data = [];
+        }
+
+        this.caloriesGraph = {
+            title: {
+                show: !series.data || !series.data.length || !total,
+                text: this.translateService.instant('ACTIVITY.PHYSICAL-ACTIVITY.TIME-SERIES-UNAVAILABLE'),
+                top: 'center',
+                left: 'center',
+                textStyle: {
+                    fontSize: 12
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                formatter: (params) => {
+                    const { data: { value, time } } = params[0];
+                    const valueFormatted = this.decimalPipe.transform(value, '1.2-3');
+                    return `${labelCalories} : ${valueFormatted} cals <br> ${hour}: ${time}`
+                }
+            },
+            graphic: {
+                type: 'image',
+                id: 'logo',
+                left: 25,
+                top: 2,
+                z: -10,
+                bounding: 'raw',
+                origin: [0, 0],
+                style: {
+                    image: 'https://image.flaticon.com/icons/png/512/2117/premium/2117139.png',
+                    width: 25,
+                    height: 25,
+                    opacity: 0.7
+                }
+            },
+            grid: [{ x: '3%', y: '10%', width: '94%', height: '80%' }],
+            xAxis,
+            yAxis,
+            series
+        }
+    }
+
+    loadHeartRate(): void {
+        if (this.physicalActivity && this.physicalActivity.heart_rate_average) {
+            const start_zone = this.physicalActivity.start_time.split('.')[1]
+            const start_date = new Date(this.datePipe.transform(this.physicalActivity.start_time, 'shortDate', start_zone, 'en-us'));
+            const end_zone = this.physicalActivity.end_time.split('.')[1]
+            const end_date = new Date(this.datePipe.transform(this.physicalActivity.end_time, 'shortDate', end_zone, 'en-us'));
+            const filter = new TimeSeriesFullFilter();
+            filter.start_date = start_date.toISOString().split('T')[0];
+            filter.end_date = end_date.toISOString().split('T')[0];
+            filter.start_time = this.datePipe.transform(this.physicalActivity.start_time, 'HH:mm:ss');
+            filter.end_time = this.datePipe.transform(this.physicalActivity.end_time, 'HH:mm:ss');
+            filter.interval = '1s';
+            this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.heart_rate, filter)
+                .then((resource: any) => {
+                    this.heartRateError = false;
+                    this.zones = resource.summary && resource.summary.zones ? resource.summary.zones : new HeartRateZone();
                     this.loadHeartRateGraph(resource);
                 })
                 .catch(() => {
-
+                    this.heartRateError = true;
                 })
         }
     }
 
     loadHeartRateGraph(resource: TimeSeries) {
         const frequency = this.translateService.instant('TIME-SERIES.HEART-RATE.FREQUENCY');
-
-        const dateAndHour = this.translateService.instant('SHARED.DATE-AND-HOUR');
-        const at = this.translateService.instant('SHARED.AT');
-
+        const hour = this.translateService.instant('SHARED.HOUR');
         const max = this.translateService.instant('MEASUREMENTS.MAX');
         const min = this.translateService.instant('MEASUREMENTS.MIN');
+        const name_fat_burn = this.translateService.instant('TIME-SERIES.HEART-RATE.FAT-BURN');
+        const name_cardio = this.translateService.instant('TIME-SERIES.HEART-RATE.CARDIO');
+        const name_peak = this.translateService.instant('TIME-SERIES.HEART-RATE.PEAK');
+        const name_out_of_range = this.translateService.instant('TIME-SERIES.HEART-RATE.OUT-OF-RANGE');
 
-        const low = this.translateService.instant('TIME-SERIES.HEART-RATE.LOW');
-        const normal = this.translateService.instant('TIME-SERIES.HEART-RATE.NORMAL');
-        const high = this.translateService.instant('TIME-SERIES.HEART-RATE.HIGH');
-        const upperLimit = this.translateService.instant('SHARED.UPPER-LIMIT');
-        const classification = this.translateService.instant('SHARED.CLASSIFICATION');
+        const xAxisLenght = resource && resource.data_set ? resource.data_set.length : 0;
 
-        const xAxisOptionsLastDate = { data: [] };
+        const xAxisOptionsLastDate = {
+            data: [],
+            axisLabel: {
+                formatter: (value, index) => {
+                    return (index === 0) || (index === xAxisLenght - 1) ? value : '';
+                },
+                showMinLabel: true,
+                showMaxLabel: true
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: false
+            },
+            boundaryGap: false
+        };
 
         const seriesOptionsLastDate = {
             type: 'line',
@@ -192,35 +376,6 @@ export class ActivityDetailsComponent implements OnInit {
                 normal: {
                     width: 4
                 }
-            },
-            markLine: {
-                silent: false,
-                tooltip: {
-                    trigger: 'item',
-                    formatter: function (params) {
-                        try {
-                            const { data: { label: { formatter } }, value } = params
-                            return `${upperLimit}: ${value}bpm<br>${classification}: ${formatter}`;
-                        } catch (e) {
-                        }
-                    }
-                },
-                data: [{
-                    label: {
-                        formatter: low
-                    },
-                    yAxis: 50
-                }, {
-                    label: {
-                        formatter: normal
-                    },
-                    yAxis: 100
-                }, {
-                    label: {
-                        formatter: high
-                    },
-                    yAxis: 200
-                }]
             },
             markPoint: {
                 label: {
@@ -242,19 +397,26 @@ export class ActivityDetailsComponent implements OnInit {
             }
         };
 
-
         if (resource && resource.data_set) {
-            resource.data_set.forEach((heartRate: TimeSeriesItem) => {
-                xAxisOptionsLastDate.data.push(this.datePipe.transform(heartRate.date, 'shortDate'));
+            resource.data_set.forEach((heartRate: TimeSeriesItemIntraday) => {
+                xAxisOptionsLastDate.data.push(heartRate.time);
                 seriesOptionsLastDate.data.push({
                     value: heartRate.value,
-                    time: this.datePipe.transform(heartRate.date, 'mediumTime'),
-                    date: this.datePipe.transform(heartRate.date, 'shortDate')
+                    time: heartRate.time
                 });
             });
         }
 
         this.heartRateGraph = {
+            title: {
+                show: !seriesOptionsLastDate.data || !seriesOptionsLastDate.data.length,
+                text: this.translateService.instant('ACTIVITY.PHYSICAL-ACTIVITY.TIME-SERIES-UNAVAILABLE'),
+                top: 'center',
+                left: 'center',
+                textStyle: {
+                    fontSize: 12
+                }
+            },
             tooltip: {
                 trigger: 'axis',
                 formatter: function (params) {
@@ -263,47 +425,76 @@ export class ActivityDetailsComponent implements OnInit {
                             return currenHeartRate.value === params[0].value;
                         });
                         if (t) {
-                            return `${frequency} : ${t.value} bpm <br> ${dateAndHour}: <br> ${t.date} ${at} ${t.time}`
+                            return `${frequency} : ${t.value} bpm <br> ${hour}:${t.time}`
                         }
 
                     }
-                    const { value, date, time } = params[0].data
-                    return `${frequency} : ${value} bpm <br> ${dateAndHour}: <br> ${date} ${at} ${time}`
+                    const { value, time } = params[0].data
+                    return `${frequency} : ${value} bpm <br> ${hour}: ${time}`
+                }
+            },
+            grid: [
+                { x: '4%', y: '15%', width: '93%', height: '75%' }
+            ],
+            dataZoom: {
+                type: 'inside'
+            },
+            graphic: {
+                type: 'image',
+                id: 'logo',
+                left: 30,
+                top: 2,
+                z: -10,
+                bounding: 'raw',
+                origin: [0, 0],
+                style: {
+                    image: 'https://image.flaticon.com/icons/png/512/226/226986.png',
+                    width: 25,
+                    height: 25,
+                    opacity: 0.4
                 }
             },
             xAxis: xAxisOptionsLastDate,
             yAxis: {
+                type: 'value',
+                splitNumber: 1,
                 splitLine: {
                     show: false
                 },
-                axisLabel: {
-                    formatter: '{value} bpm'
+                axisTick: {
+                    show: false
                 },
-                min: 0,
-                max: 200
+                axisLine: {
+                    show: false
+                }
             },
             visualMap: {
                 orient: 'horizontal',
-                top: 20,
-                right: 0,
+                bottom: 20,
+                left: '30%',
+                right: '30%',
                 pieces: [{
-                    gt: 0,
-                    lte: 50,
-                    label: low,
-                    color: '#236399'
+                    gt: this.zones.fat_burn.min,
+                    lte: this.zones.fat_burn.max,
+                    label: name_fat_burn,
+                    color: '#FFC023'
                 }, {
-                    gt: 50,
-                    lte: 100,
-                    label: normal,
-                    color: '#ffde33'
+                    gt: this.zones.cardio.min,
+                    lte: this.zones.cardio.max,
+                    label: name_cardio,
+                    color: '#FD8518'
                 }, {
-                    gt: 100,
-                    label: high,
-                    color: '#7e0023'
-                }],
-                outOfRange: {
-                    color: '#999'
+                    gt: this.zones.peak.min,
+                    lte: this.zones.peak.max,
+                    label: name_peak,
+                    color: '#E60013'
+                }, {
+                    gt: this.zones.out_of_range.min,
+                    lte: this.zones.out_of_range.max,
+                    label: name_out_of_range,
+                    color: '#4EC5C5'
                 }
+                ]
             },
             series: seriesOptionsLastDate
         };
@@ -321,6 +512,7 @@ export class ActivityDetailsComponent implements OnInit {
                 this.caloriesValue = timeSeries.calories.summary.total;
                 this.activeMinutesValue = timeSeries.active_minutes.summary.total;
                 this.distanceValue = timeSeries.distance.summary.total;
+                this.calcImpact();
             })
             .catch(err => {
                 this.stepsValue = 0;

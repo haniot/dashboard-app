@@ -114,6 +114,31 @@
                         <p class="card-category">{{subtitle}}</p>
                 </span>
 
+                <ul class="nav nav-tabs navigation" data-tabs="tabs" *ngIf="filter_visibility"
+                    style="position: absolute; bottom: 0; left: 0; right: 0;justify-content:space-around;">
+                    <li class="nav-item" (click)="previous()">
+                        <i class="material-icons float-left" style="margin: 10px 0px;"
+                           [ngClass]="filterSelected==='period'?'disabled':''"
+                           [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
+                    </li>
+                    <li class="nav-item text-center" *ngIf="filterSelected === 'today'">
+                        <label style="color:white; margin: 10px 0px">
+                            {{isToday(currentDate) ? ('MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate) : currentDate | date:'EEEE'}}
+                            , {{currentDate | date}}
+                        </label>
+                    </li>
+                    <li class="nav-item text-center" *ngIf="filterSelected !== 'today'">
+                        <label style="color:white;  margin: 10px 0px">
+                            {{startOfDate | date: 'mediumDate'}} - {{endOfDate | date: 'mediumDate'}}
+                        </label>
+                    </li>
+                    <li class="nav-item" (click)="next()">
+                        <i class="material-icons float-left" style="margin: 10px 0px"
+                           [ngClass]="(isToday(currentDate) && filterSelected==='today') || (filterSelected!=='today' && endOfDate.getTime() >= currentDate.getTime()) || filterSelected==='period'?'disabled':''"
+                           [title]="isToday(currentDate)?'':'ACTIVITY.NEXT-DAY'|translate">keyboard_arrow_right</i>
+                    </li>
+                </ul>
+
                 <ul class="nav nav-tabs right navigation" data-tabs="tabs" *ngIf="filter_visibility && isMobile()">
                     <li class="nav-item">
                         <div class="dropdown">
@@ -124,16 +149,16 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item"
-                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.TODAY'?'active':''"
+                                   [ngClass]="filterSelected === filterOptions.today?'active':''"
                                    (click)="filterChange(filterOptions.today)">{{'MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate}}</a>
                                 <a class="dropdown-item"
-                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.WEEK'?'active':''"
+                                   [ngClass]="filterSelected === filterOptions.week?'active':''"
                                    (click)="filterChange(filterOptions.week)">{{'MEASUREMENTS.MEASUREMENT-CARD.WEEK'|translate}}</a>
                                 <a class="dropdown-item"
-                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.MONTH'?'active':''"
+                                   [ngClass]="filterSelected === filterOptions.month?'active':''"
                                    (click)="filterChange(filterOptions.month)">{{'MEASUREMENTS.MEASUREMENT-CARD.MONTH'|translate}}</a>
                                 <a class="dropdown-item "
-                                   [ngClass]="filterSelected === 'MEASUREMENTS.MEASUREMENT-CARD.YEAR'?'active':''"
+                                   [ngClass]="filterSelected === filterOptions.year?'active':''"
                                    (click)="filterChange(filterOptions.year)">{{'MEASUREMENTS.MEASUREMENT-CARD.YEAR'|translate}}</a>
                             </div>
                         </div>
@@ -157,31 +182,6 @@
                             <i class="material-icons">date_range</i>
                         </a>
 
-                    </li>
-                </ul>
-
-                <ul class="nav nav-tabs navigation" data-tabs="tabs" *ngIf="filter_visibility"
-                    style="position: absolute; bottom: 0; left: 0; right: 0;justify-content:space-around;">
-                    <li class="nav-item" (click)="previous()">
-                        <i class="material-icons float-left" style="margin: 10px 0px;"
-                           [ngClass]="filterSelected==='period'?'disabled':''"
-                           [title]="'ACTIVITY.PREVIOUS-DAY'|translate">keyboard_arrow_left</i>
-                    </li>
-                    <li class="nav-item text-center" *ngIf="filterSelected === 'today'">
-                        <label style="color:white; margin: 10px 0px">
-                            {{isToday(currentDate) ? ('MEASUREMENTS.MEASUREMENT-CARD.TODAY'|translate) : currentDate | date:'EEEE'}}
-                            , {{currentDate | date}}
-                        </label>
-                    </li>
-                    <li class="nav-item text-center" *ngIf="filterSelected !== 'today'">
-                        <label style="color:white;  margin: 10px 0px">
-                            {{startOfDate | date: 'mediumDate'}} - {{endOfDate | date: 'mediumDate'}}
-                        </label>
-                    </li>
-                    <li class="nav-item" (click)="next()">
-                        <i class="material-icons float-left" style="margin: 10px 0px"
-                           [ngClass]="(isToday(currentDate) && filterSelected==='today') || (filterSelected!=='today' && endOfDate.getTime() >= currentDate.getTime()) || filterSelected==='period'?'disabled':''"
-                           [title]="isToday(currentDate)?'':'ACTIVITY.NEXT-DAY'|translate">keyboard_arrow_right</i>
                     </li>
                 </ul>
 

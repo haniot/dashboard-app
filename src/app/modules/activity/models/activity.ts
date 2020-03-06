@@ -3,14 +3,10 @@ export abstract class Activity {
     private _start_time: string;
     private _end_time: string;
     private _duration: number;
-    /* TODO: Adicionar o readonly ao id
-    readonly */
-    private _id: string
+    private readonly _id: string
     private readonly _patient_id: string
 
     constructor() {
-        /* TODO: Remover */
-        this.id = Math.random() + 'a';
         this._start_time = '2019-12-19T19:51:45.888Z';
         this._end_time = '2019-12-19T20:51:45.888Z';
         this._duration = 5602000;
@@ -18,10 +14,6 @@ export abstract class Activity {
 
     get id(): string {
         return this._id
-    }
-
-    set id(id: string) {
-        this._id = id;
     }
 
     get patient_id(): string {

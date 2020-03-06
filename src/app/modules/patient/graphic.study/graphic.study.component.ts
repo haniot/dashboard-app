@@ -149,6 +149,13 @@ export class GraphicStudyComponent implements OnInit {
 
     selectResource(event): void {
         this.add(event.value);
+        this.updateResourceGroups();
+        setTimeout(() => {
+            this.select = ''
+        }, 300)
+    }
+
+    updateResourceGroups(): void {
         this.resourceGroups[0].items = this.resourceGroups[0].items.map((item: Item) => {
             item.disabled = !!this.resourcesSelected.find(element => {
                 return element.resource === item.value
@@ -162,9 +169,6 @@ export class GraphicStudyComponent implements OnInit {
             })
             return item
         })
-        setTimeout(() => {
-            this.select = ''
-        }, 300)
     }
 
     openSelectGraph(indexSelected: number): void {
@@ -208,9 +212,17 @@ export class GraphicStudyComponent implements OnInit {
         }
     }
 
+    getTitle(resource: EnumMeasurementType | TimeSeriesType): string {
+        if (Object.keys(EnumMeasurementType).includes(resource)) {
+            return this.translateService.instant(this.measurementPipe.transform(resource));
+        }
+        return this.translateService.instant(this.timeSeriesPipe.transform(resource));
+    }
+
     removeGraph(indexSelected: number): void {
         this.resourcesSelected = this.resourcesSelected.filter((element, index) => {
             return indexSelected !== index;
         });
+        this.updateResourceGroups();
     }
 }

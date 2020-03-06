@@ -1,18 +1,16 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { ISubscription } from 'rxjs-compat/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
 import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study';
-import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
-import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { AuthService } from '../../../security/auth/services/auth.service'
-import { UserService } from '../../../modules/admin/services/users.service'
-import { Title } from '@angular/platform-browser'
-import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service'
+import { AuthService } from '../../../security/auth/services/auth.service';
+import { UserService } from '../../../modules/admin/services/users.service';
+import { LoadingService } from '../../../shared/shared.components/loading.component/service/loading.service';
 
 
 export declare interface RouteInfo {
@@ -82,8 +80,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private router: Router,
         private authService: AuthService,
         private userService: UserService,
-        private pilotStudyService: PilotStudyService,
-        private selectPilotService: SelectPilotStudyService,
         private localStorageService: LocalStorageService,
         private loadingService: LoadingService,
         private translateService: TranslateService,
@@ -226,15 +222,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getUserName() {
         this.loadUserTime = setInterval(() => {
-            const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
-            const language = this.localStorageService.getItem('language');
             try {
+                const localUserLogged = JSON.parse(this.localStorageService.getItem('userLogged'));
+                const language = localUserLogged ? localUserLogged.language : '';
                 this.userLogged = localUserLogged;
                 this.userName = this.userLogged.name ? this.userLogged.name : this.userLogged.email;
                 this.configLanguage(language);
                 clearInterval(this.loadUserTime);
             } catch (e) {
-
             }
         }, 1000)
     }

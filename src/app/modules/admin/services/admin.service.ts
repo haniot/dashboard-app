@@ -31,7 +31,7 @@ export class AdminService {
         }
 
         if (search) {
-            myParams = myParams.append('?email', '*' + search + '*');
+            myParams = myParams.append('?name', '*' + search + '*');
         }
 
         const url = `${environment.api_url}/${this.version}/admins`;

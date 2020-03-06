@@ -61,7 +61,8 @@
                                     </div>
                                     <div class="p-2">
                                         <h4>
-                                            {{getCaloriesTotal()}}<small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                            {{getCaloriesTotal()}}
+                                            <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                         </h4>
                                     </div>
                                 </div>
@@ -110,13 +111,12 @@
                                     <tbody>
                                     <tr *ngIf="data.length==0">
                                         <td colspan="5" *ngIf="showSpinner">
-                                            <spinner
-                                                    [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                                            <spinner [message]="'ACTIVITY.PHYSICAL-ACTIVITY.LOADING'|translate"></spinner>
                                         </td>
                                         <td colspan="5" *ngIf="!showSpinner">
-                                            <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                            <h4>{{'ACTIVITY.PHYSICAL-ACTIVITY.LIST-EMPTY'|translate}}
                                                 <br>
-                                                <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                                <small>{{'ACTIVITY.NO-RECENT-EXERCISES-MESSAGE'|translate}}</small>
                                             </h4>
                                         </td>
                                     </tr>
@@ -129,26 +129,21 @@
                                         <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                             [attr.data-th]="'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.ACTIVITY-NAME'|translate"
                                             (click)="viewActivityDetails(activity.id)">
-                                            {{activity.name | physicalActivity | translate}}
+                                            {{activity.name}}
                                         </td>
                                         <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                             [attr.data-th]="'SHARED.DATE'|translate"
                                             (click)="viewActivityDetails(activity.id)">
-                                            {{activity.start_time | date}}
+                                            {{activity.start_time | date: 'shortDate'}} {{activity.start_time | date: 'mediumTime'}} - {{activity.end_time | date: 'mediumTime'}}
                                         </td>
                                         <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                             [attr.data-th]="'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.RESUME'|translate"
-                                            (click)="viewActivityDetails(activity.id)" style="max-width: 600px">
+                                            (click)="viewActivityDetails(activity.id)" style="max-width: 500px">
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col activity-resume-item"
                                                          [title]="'ACTIVITY.PHYSICAL-ACTIVITY.DURATION'|translate">
-                                                        <p>
-                                                            {{Math.floor((activity.duration / 3600000)) ? Math.floor((activity.duration / 3600000)) + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate) + ('SHARED.AND'|translate) + ' ' : ('')}}
-                                                            {{(activity.duration % 3600000) ?
-                                                            Math.floor((activity.duration % 3600000) / 60000) +
-                                                            ('HABITS.SLEEP.MINUTES-ABBREVIATION'|translate) : undefined
-                                                            }}
+                                                        <p [innerHTML]="activity && activity.duration?(activity.duration|duration):'0<small>min</small>'">
                                                         </p>
                                                     </div>
                                                     <div class="col activity-resume-item"
@@ -232,4 +227,4 @@
         ' '+cacheListIdForRemove.length+' ' + ('ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
         :'ACTIVITY.PHYSICAL-ACTIVITY.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
         (confirmation)="remove()"
-        (noconfirmation)="closeModalConfirmation()"></modal-confirmation>
+        (close)="closeModalConfirmation()"></modal-confirmation>

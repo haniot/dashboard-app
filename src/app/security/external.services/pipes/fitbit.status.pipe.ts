@@ -19,6 +19,12 @@ export class FitbitStatusPipe implements PipeTransform {
             case 'invalid_refresh_token':
                 return 'PATIENTS.EXTERNAL-SERVICES.PIPE.INVALID-REFRESH-TOKEN';
 
+            case 'invalid_client':
+                return 'PATIENTS.EXTERNAL-SERVICES.PIPE.INVALID-CLIENT';
+
+            case 'rate_limit':
+                return 'PATIENTS.EXTERNAL-SERVICES.PIPE.RATE-LIMIT';
+
             case 'none':
                 return 'PATIENTS.EXTERNAL-SERVICES.PIPE.NONE';
 

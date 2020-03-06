@@ -108,7 +108,7 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
         if (this.pilotStudyId) {
             return this.pilotStudyService.getById(this.pilotStudyId)
                 .then(res => {
-                    this.pilotStudyForm.setValue(res);
+                    this.pilotStudyForm.patchValue(res);
                     return res;
                 })
                 .catch(() => {

@@ -21,12 +21,12 @@
     </div>
 </div>
 
-<haniot-modal [modalId]="'modalUser'">
+<haniot-modal [modalId]="'modalUser'" (close)="closeModalNew()">
     <modal-user [title]="'HEALTHPROFESSIONALS.TITLE-ADD'|translate" (onsubmit)="createHealthProfessinal($event)"
                     [typeUser]="typeUser"></modal-user>
 </haniot-modal>
 
-<haniot-modal [modalId]="'modalUserEdit'">
+<haniot-modal [modalId]="'modalUserEdit'" (close)="closeModalEdit()">
     <modal-user [title]="'HEALTHPROFESSIONALS.TITLE-EDIT'|translate" (onsubmit)="editHealthProfessinal($event)"
-                    [typeUser]="typeUser" [userId]="userEdit.id" (onclose)="cleanUser()"></modal-user>
+                    [typeUser]="typeUser" [userId]="userEdit.id" (onclose)="closeModalEdit()"></modal-user>
 </haniot-modal>

@@ -40,13 +40,13 @@ export class NutritionalEvaluationListComponent implements OnInit {
 
     selectStudy(pilotstudy_id, stepper) {
         this.patientForm.reset();
-        this.pilotForm.get('pilotstudyId').setValue(pilotstudy_id);
+        this.pilotForm.get('pilotstudyId').patchValue(pilotstudy_id);
         this.pilotstudy_id = pilotstudy_id;
         stepper.next();
     }
 
     selectPatient(patient_id) {
-        this.patientForm.get('patientId').setValue(patient_id);
+        this.patientForm.get('patientId').patchValue(patient_id);
         this.patient_id = patient_id;
         this.router.navigate(['/app/evaluations/nutritional', patient_id]);
     }

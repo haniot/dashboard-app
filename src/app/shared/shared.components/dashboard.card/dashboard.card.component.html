@@ -1,14 +1,14 @@
-<article class="card">
+<article class="card" [routerLink]="urlAction">
     <span class="card__link" [ngClass]="urlAction?'cursorPointer':'cursorNormal'">
 
         <!-- Header -->
-        <div class="card__header" [routerLink]="urlAction">
-            <h3 class="card__header-title">{{title}}</h3>
-            <p class="card__header-meta">{{subtitle}}</p>
+        <div class="card__header">
+            <h3 class="ellipsis card__header-title">{{title}}</h3>
+            <p class="ellipsis card__header-meta">{{subtitle}}</p>
 
             <div class="card__header-icon" *ngIf="urlAction"
                  [title]="'SHARED.VIEW-MORE'|translate">
-                <svg viewbox="0 0 28 25">
+                <svg>
                     <path fill="#333333"
                           d="M13.145 2.13l1.94-1.867 12.178 12-12.178 12-1.94-1.867 8.931-8.8H.737V10.93h21.339z"/>
                 </svg>

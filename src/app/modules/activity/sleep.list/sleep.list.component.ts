@@ -33,7 +33,6 @@ export class SleepListComponent implements OnInit {
     echartSleepInstance: any;
     Math: any;
     listGraphIsEmpty: boolean;
-    listLogsIsEmpty: boolean;
     filter: TimeSeriesIntervalFilter | TimeSeriesSimpleFilter;
     pageSizeOptions: number[];
     pageEvent: PageEvent;
@@ -93,9 +92,9 @@ export class SleepListComponent implements OnInit {
     getAllSleeps(): void {
         this.showSpinner = true;
         const currentDate = new Date();
-        const start_time = currentDate.toISOString().split('T')[0] + 'T03:00:00.000Z';
+        const start_time = currentDate.toISOString().split('T')[0] ;
         const nextday: Date = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
-        const end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+        const end_time = nextday.toISOString().split('T')[0] ;
         const filter = new SleepFilter('today', start_time, end_time);
         this.sleepService.getAll(this.patientId, null, null, filter)
             .then(httpResponse => {
@@ -134,13 +133,13 @@ export class SleepListComponent implements OnInit {
         let nextday: Date;
         let end_time: string;
         if (event.type === 'today') {
-            start_time = event.filter.date + 'T03:00:00.000Z';
+            start_time = event.filter.date ;
             nextday = new Date(new Date(event.filter.date).getTime() + (24 * 60 * 60 * 1000));
-            end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+            end_time = nextday.toISOString().split('T')[0] ;
         } else {
-            start_time = event.filter.start_date + 'T03:00:00.000Z';
+            start_time = event.filter.start_date ;
             nextday = new Date(new Date(event.filter.end_date).getTime() + (24 * 60 * 60 * 1000));
-            end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+            end_time = nextday.toISOString().split('T')[0];
         }
         filter = new SleepFilter(event.type, start_time, end_time)
         this.sleepService.getAll(this.patientId, null, null, filter)
@@ -158,13 +157,9 @@ export class SleepListComponent implements OnInit {
 
     loadGraph() {
         const MAX_SLEEP_VALUE = 12;
-        const date = this.translateService.instant('SHARED.DATE-AND-HOUR');
-        const at = this.translateService.instant('SHARED.AT');
-        const hours = this.translateService.instant('MYDATEPIPE.HOURS');
         const hours_abbreviation = this.translateService.instant('HABITS.SLEEP.TIME-ABBREVIATION');
         const duration = this.translateService.instant('ACTIVITY.SLEEP.DURATION');
         const title = this.translateService.instant('ACTIVITY.SLEEP.CLICK-TO-VIEW');
-        const viewStages = this.translateService.instant('ACTIVITY.SLEEP.VIEW-STAGES');
         const and = this.translateService.instant('SHARED.AND');
         const minutes_abbreviation = this.translateService.instant('HABITS.SLEEP.MINUTES-ABBREVIATION');
         const period = this.translateService.instant('MEASUREMENTS.MEASUREMENT-CARD.PERIOD');
@@ -236,7 +231,7 @@ export class SleepListComponent implements OnInit {
         ];
 
         this.listForGraph.forEach((element: Sleep) => {
-            xAxis.data.push(this.datePipe.transform(element.start_time, 'shortDate'));
+            xAxis.data.push(this.datePipe.transform(element.end_time, 'shortDate'));
             series[0].data.push(MAX_SLEEP_VALUE);
             series[1].data.push({
                 value: element.duration / 3600000,
@@ -264,12 +259,13 @@ export class SleepListComponent implements OnInit {
                 subtext: title
             },
             tooltip: {
+                trigger: 'axis',
                 formatter: function (params) {
-                    const hours_trucate = Math.floor(params.data.value);
-                    const minutes = Math.floor(((params.data.value * 3600000) % 3600000) / 60000);
-                    return `${params.name}<br>${duration}: ${hours_trucate + hours_abbreviation} ${minutes ? and + ' '
+                    const hours_trucate = Math.floor(params[1].data.value);
+                    const minutes = Math.floor(((params[1].data.value * 3600000) % 3600000) / 60000);
+                    return `${params[1].name}<br>${duration}: ${hours_trucate + hours_abbreviation} ${minutes ? and + ' '
                         + minutes + minutes_abbreviation : ''}  <br>` +
-                        `${period}: ${params.data.start_time} - ${params.data.end_time}`;
+                        `${period}: ${params[1].data.start_time} - ${params[1].data.end_time}`;
                 }
             },
             xAxis,
@@ -301,7 +297,7 @@ export class SleepListComponent implements OnInit {
         this.options.series[1].data = [];
 
         measurements.forEach((element: Sleep) => {
-            this.options.xAxis.data.push(this.datePipe.transform(element.start_time, 'shortDate'));
+            this.options.xAxis.data.push(this.datePipe.transform(element.end_time, 'shortDate'));
             this.options.series[0].data.push(MAX_SLEEP_VALUE);
             this.options.series[1].data.push({
                 value: parseFloat(this.decimalFormatter.transform(element.duration / 3600000)),

@@ -76,6 +76,14 @@ label {
 .disabled .remove-questionnaire:hover {
   box-shadow: none;
   font-size: 30px;
+  border-radius: unset;
+  background: unset;
+  cursor: default;
+}
+
+.actived .remove-questionnaire:hover {
+  box-shadow: none;
+  background: unset;
 }
 
 .borderNone {

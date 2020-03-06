@@ -125,8 +125,13 @@ export class AdministratorsComponent implements OnInit {
             });
     }
 
-    openModal() {
+    openModalNew() {
         this.modalService.open('modalUser');
+        this.userEdit = new Admin('');
+    }
+
+    closeModalNew() {
+        this.modalService.close('modalUser');
         this.userEdit = new Admin('');
     }
 
@@ -135,7 +140,8 @@ export class AdministratorsComponent implements OnInit {
         this.userEdit = event;
     }
 
-    cleanUser(): void {
+    closeModalEdit(): void {
+        this.modalService.close('modalUserEdit');
         this.userEdit = new Admin('FLAG');
     }
 

@@ -9,8 +9,6 @@ export class PhysicalActivity extends Activity {
     private _steps?: number;
     private _distance?: number;
     private _levels?: ActivityLevel[];
-    private _calories_link: string;
-    private _heart_rate_link: string;
     private _heart_rate_average: number;
     private _heart_rate_zones: HeartRateZone;
 
@@ -52,22 +50,6 @@ export class PhysicalActivity extends Activity {
 
     set levels(value: ActivityLevel[]) {
         this._levels = value
-    }
-
-    get calories_link(): string {
-        return this._calories_link
-    }
-
-    set calories_link(value: string) {
-        this._calories_link = value
-    }
-
-    get heart_rate_link(): string {
-        return this._heart_rate_link
-    }
-
-    set heart_rate_link(value: string) {
-        this._heart_rate_link = value
     }
 
     get heart_rate_average(): number {

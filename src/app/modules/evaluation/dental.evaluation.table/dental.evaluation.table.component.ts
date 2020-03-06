@@ -65,7 +65,7 @@ export class DentalEvaluationTableComponent implements OnInit, OnChanges {
         if (this.pilotStudy && this.pilotStudy.id) {
             clearInterval(this.searchTime);
             this.searchTime = setTimeout(() => {
-                this.dentalService.getAllByPilotstudy(this.pilotStudy.id, this.page, this.limit, this.search)
+                this.dentalService.getAllByPilotstudy(this.pilotStudy.id, null, this.limit, this.search)
                     .then(dentalsEvaluations => {
                         this.listOfEvaluations = dentalsEvaluations;
                         this.calcLenghtNutritionEvaluations();

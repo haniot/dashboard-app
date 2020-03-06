@@ -89,8 +89,6 @@ export class PatientQuestionnairesComponent implements OnInit, OnDestroy {
             pageEvent: undefined
         };
         this.removingQuestionnaire = false;
-        this.loadingNutritionalQuestionnaire = true;
-        this.loadingOdontologicalQuestionnaire = true;
     }
 
 
@@ -168,6 +166,7 @@ export class PatientQuestionnairesComponent implements OnInit, OnDestroy {
     }
 
     getAllNutritionalQuestionnaires(): void {
+        this.loadingNutritionalQuestionnaire = true;
         this.nutritionalQuestionnaireService
             .getAll(this.patientId, this.nutritionalQuestionnaireOptions.page, this.nutritionalQuestionnaireOptions.limit)
             .then(httpResponse => {
@@ -220,6 +219,7 @@ export class PatientQuestionnairesComponent implements OnInit, OnDestroy {
     }
 
     getAllOdontologicalQuestionnaires(): void {
+        this.loadingOdontologicalQuestionnaire = true;
         this.odontologicalQuestionnaireService
             .getAll(this.patientId, this.odontologicalQuestionnaireOptions.page, this.odontologicalQuestionnaireOptions.limit)
             .then(httpResponse => {

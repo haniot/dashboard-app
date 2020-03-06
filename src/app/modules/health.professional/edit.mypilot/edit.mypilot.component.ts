@@ -51,7 +51,7 @@ export class EditMypilotComponent implements OnInit, OnChanges, OnDestroy {
         if (this.pilotStudyId) {
             this.pilotStudyService.getById(this.pilotStudyId)
                 .then(res => {
-                    this.pilotStudyForm.setValue(res);
+                    this.pilotStudyForm.patchValue(res);
                 })
                 .catch()
         }
