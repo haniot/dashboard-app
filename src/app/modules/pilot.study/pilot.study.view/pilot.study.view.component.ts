@@ -97,8 +97,7 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
                     this.selectPilotStudy();
                     this.loadHealthProfessionals();
                     this.loadPatients();
-                }).catch((err) => {
-                console.log(err)
+                }).catch(() => {
                 const userId = this.localStorageService.getItem('user');
                 const localPilotSelected = this.localStorageService.getItem(userId);
                 this.selectPilotService.pilotStudyHasUpdated(localPilotSelected);

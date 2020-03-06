@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.selectPilotService.pilotStudyUpdated.subscribe((pilotIdSelected) => {
-            if (this.pilotStudyId !== pilotIdSelected) {
+            if (pilotIdSelected && this.pilotStudyId !== pilotIdSelected) {
                 this.loadPilotSelected();
             }
         })
@@ -117,27 +117,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this.selectPilotService.open();
                 }
             })
-            .catch((e) => {
-                this.selectPilotService.open();
-            });
 
     }
 
-    loadUser(): Promise<any> {
+    loadUser(): any {
         if (!this.userId || !this.userLogged) {
-            const interval = setInterval(() => {
-                this.userId = this.localStorageService.getItem('user');
-                const localUserLogged = this.localStorageService.getItem('userLogged');
-                try {
-                    this.userLogged = JSON.parse(localUserLogged);
-                    if (!localUserLogged) {
-                        throw new Error();
-                    }
-                    clearInterval(interval)
-                    return Promise.resolve(this.userLogged);
-                } catch (e) {
-                }
-            }, 1000)
+            const taskResolution = () => {
+                return new Promise((resolve, reject) => {
+                    const interval = setInterval(() => {
+                        this.userId = this.localStorageService.getItem('user');
+                        const localUserLogged = this.localStorageService.getItem('userLogged');
+                        try {
+                            this.userLogged = JSON.parse(localUserLogged);
+                            if (!localUserLogged) {
+                                throw new Error();
+                            }
+                            clearInterval(interval)
+                            return resolve(this.userLogged);
+                        } catch (e) {
+                        }
+                    }, 1000)
+                });
+            };
+            return taskResolution();
         }
         return Promise.resolve(this.userLogged);
     }
@@ -149,7 +151,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this.userId = user.id;
                     this.userLogged = user;
                     this.localStorageService.setItem('userLogged', JSON.stringify(user));
-                    // this.localStorageService.setItem(this.userLogged.id, this.userLogged.selected_pilot_study);
                     this.selectPilotService.pilotStudyHasUpdated(this.userLogged.selected_pilot_study);
                 }
             })
@@ -225,17 +226,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return this.authService.decodeToken().sub_type;
     }
 
-    openLoading(): void {
-        // this.loadinService.open();
-    }
-
     trackById(index, item) {
         return item.id;
     }
 
     calcAge(birth_date: string) {
         const dateCurrent: Date = new Date();
-        const birthDate =  new Date(birth_date)
+        const birthDate = new Date(birth_date)
         return dateCurrent.getFullYear() - birthDate.getFullYear();
     }
 

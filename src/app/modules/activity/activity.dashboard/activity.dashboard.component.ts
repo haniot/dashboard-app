@@ -1,26 +1,32 @@
 import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import * as echarts from 'echarts'
 
-import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter, TimeSeriesType } from '../models/time.series';
+import {
+    TimeSeriesFullFilter,
+    TimeSeriesIntervalFilter,
+    TimeSeriesSimpleFilter,
+    TimeSeriesType
+} from '../models/time.series';
 import { Sleep } from '../models/sleep';
 import { PatientService } from '../../patient/services/patient.service';
 import { PilotStudyService } from '../../pilot.study/services/pilot.study.service';
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
-import { PhysicalActivity } from '../models/physical.activity'
-import { Goal } from '../../patient/models/goal'
-import { Patient } from '../../patient/models/patient'
-import { PhysicalActivitiesService } from '../services/physical.activities.service'
-import { TimeSeriesService } from '../services/time.series.service'
-import { SleepFilter, SleepService } from '../services/sleep.service'
-import { VerifyScopeService } from '../../../security/services/verify.scope.service'
-import { AccessStatus, SynchronizeData } from '../../patient/models/external.service'
-import { FitbitService } from '../../../security/external.services/services/fitbit.service'
-import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { PhysicalActivity } from '../models/physical.activity';
+import { Goal } from '../../patient/models/goal';
+import { Patient } from '../../patient/models/patient';
+import { PhysicalActivitiesService } from '../services/physical.activities.service';
+import { TimeSeriesService } from '../services/time.series.service';
+import { SleepFilter, SleepService } from '../services/sleep.service';
+import { VerifyScopeService } from '../../../security/services/verify.scope.service';
+import { AccessStatus, SynchronizeData } from '../../patient/models/external.service';
+import { FitbitService } from '../../../security/external.services/services/fitbit.service';
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
 
 @Component({
     selector: 'activity-dashboard',
@@ -162,7 +168,8 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         private timeSeriesService: TimeSeriesService,
         private verifyScopeService: VerifyScopeService,
         private fitbitService: FitbitService,
-        private modalService: ModalService
+        private modalService: ModalService,
+        private datePipe: DatePipe
     ) {
         this.currentDate = new Date();
         this.activityGraph = new Array(3);
@@ -232,16 +239,16 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
                 this.listActivitiesIsEmpty = this.listActivities.length === 0;
                 this.loadActivitiesGraph();
             })
-            .catch(err => {
+            .catch(() => {
                 this.listActivitiesIsEmpty = this.listActivities.length === 0;
             })
     }
 
     loadSleep(): void {
         this.loadingSleep = true;
-        const start_time = this.currentDate.toISOString().split('T')[0] + 'T03:00:00.000Z';
+        const start_time = this.currentDate.toISOString().split('T')[0];
         const nextday: Date = new Date(this.currentDate.getTime() + (24 * 60 * 60 * 1000));
-        const end_time = nextday.toISOString().split('T')[0] + 'T02:59:59.000Z';
+        const end_time = nextday.toISOString().split('T')[0];
         const filter = new SleepFilter('today', start_time, end_time);
         this.sleepService.getAll(this.patientId, 1, 1, filter)
             .then(httpResponse => {
@@ -281,170 +288,209 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
     loadActivitiesGraph(): void {
         this.listActivities.forEach((activity, index) => {
             if (activity.heart_rate_average) {
-                this.timeSeriesService.getByLink(activity.heart_rate_link)
-                    .then(heartRate => {
-
-                        const series = {
-                            type: 'line',
-                            smooth: true,
-                            symbol: 'none',
-                            sampling: 'average',
-                            itemStyle: {
-                                color: '#FF7373'
-                            },
-                            areaStyle: {
-                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                    offset: 0,
-                                    color: '#FFF2F2'
-                                }, {
-                                    offset: 1,
-                                    color: '#FF7373'
-                                }])
-                            },
-                            data: heartRate.data_set.map((elementHeart) => {
-                                return elementHeart.value;
-                            })
-                        };
-
-                        const activityHearRateGraph = {
-                            tooltip: {
-                                trigger: 'axis',
-                                position: function (pt) {
-                                    return [pt[0], '10%'];
-                                }
-                            },
-                            graphic: {
-                                type: 'image',
-                                id: 'logo',
-                                left: 5,
-                                top: 2,
-                                z: -10,
-                                bounding: 'raw',
-                                origin: [0, 0],
-                                style: {
-                                    image: 'https://image.flaticon.com/icons/png/512/226/226986.png',
-                                    width: 25,
-                                    height: 25,
-                                    opacity: 0.4
-                                }
-                            },
-                            grid: [
-                                { x: '0', y: '7%', width: '100%', height: '95%' }
-                            ],
-                            xAxis: {
-                                show: false,
-                                type: 'category',
-                                boundaryGap: false,
-                                data: []
-                            },
-                            yAxis: {
-                                type: 'value',
-                                axisLine: {
-                                    show: false
-                                },
-                                axisLabel: {
-                                    formatter: ''
-                                },
-                                axisTick: {
-                                    show: false
-                                },
-                                splitLine: {
-                                    show: false
-                                },
-                                boundaryGap: [0, '100%']
-                            },
-                            series
-                        };
-
-                        this.activityGraph[index] = activityHearRateGraph;
-
-                    })
-                    .catch(() => {
-
-                    })
+                this.insertHeartRateGraph(activity, index);
             } else {
-                this.timeSeriesService.getByLink(activity.calories_link)
-                    .then(calories => {
-                        const series = {
-                            type: 'line',
-                            symbol: 'none',
-                            sampling: 'average',
-                            itemStyle: {
-                                color: '#FBA53E'
-                            },
-                            areaStyle: {
-                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                    offset: 0,
-                                    color: '#FFF2F2'
-                                }, {
-                                    offset: 1,
-                                    color: '#FBA53E'
-                                }])
-                            },
-                            data: calories.data_set.map((elementCalorie) => {
-                                return elementCalorie.value;
-                            })
-                        };
-
-                        const activityCalorieGraph = {
-                            tooltip: {
-                                trigger: 'axis',
-                                position: function (pt) {
-                                    return [pt[0], '10%'];
-                                }
-                            },
-                            graphic: {
-                                type: 'image',
-                                id: 'logo',
-                                left: 5,
-                                top: 2,
-                                z: -10,
-                                bounding: 'raw',
-                                origin: [0, 0],
-                                style: {
-                                    image: 'https://image.flaticon.com/icons/png/512/2117/premium/2117139.png',
-                                    width: 25,
-                                    height: 25,
-                                    opacity: 0.7
-                                }
-                            },
-                            grid: [
-                                { x: '0', y: '7%', width: '100%', height: '95%' }
-                            ],
-                            xAxis: {
-                                show: false,
-                                type: 'category',
-                                boundaryGap: false,
-                                data: []
-                            },
-                            yAxis: {
-                                type: 'value',
-                                axisLine: {
-                                    show: false
-                                },
-                                axisLabel: {
-                                    formatter: ''
-                                },
-                                axisTick: {
-                                    show: false
-                                },
-                                splitLine: {
-                                    show: false
-                                },
-                                max: 200,
-                                boundaryGap: [0, '100%']
-                            },
-                            series
-                        }
-
-                        this.activityGraph[index] = activityCalorieGraph;
-
-                    })
-                    .catch(() => {
-
-                    })
+                this.insertCaloriesGraph(activity, index);
             }
         })
+    }
+
+    insertCaloriesGraph(activity: PhysicalActivity, index: number): void {
+        const start_zone = activity.start_time.split('.')[1]
+        const start_date = new Date(this.datePipe.transform(activity.start_time, 'shortDate', start_zone, 'en-us'));
+        const end_zone = activity.end_time.split('.')[1]
+        const end_date = new Date(this.datePipe.transform(activity.end_time, 'shortDate', end_zone, 'en-us'));
+        const filter = new TimeSeriesFullFilter();
+        filter.start_date = start_date.toISOString().split('T')[0];
+        filter.end_date = end_date.toISOString().split('T')[0];
+        filter.start_time = this.datePipe.transform(activity.start_time, 'HH:mm:ss');
+        filter.end_time = this.datePipe.transform(activity.end_time, 'HH:mm:ss');
+        filter.interval = '1s';
+        this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.calories, filter)
+            .then(calories => {
+                const series = {
+                    type: 'line',
+                    symbol: 'none',
+                    sampling: 'average',
+                    step: true,
+                    itemStyle: {
+                        color: '#FBA53E'
+                    },
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#FFF2F2'
+                        }, {
+                            offset: 1,
+                            color: '#FBA53E'
+                        }])
+                    },
+                    data: calories.data_set.map((elementCalorie) => {
+                        return elementCalorie.value;
+                    })
+                };
+
+                const total = calories.data_set.reduce((previous, current) => {
+                    return previous + current.value;
+                }, 0);
+
+                this.activityGraph[index] = {
+                    title: {
+                        show: !series.data || !series.data.length || !total,
+                        text: this.translateService.instant('ACTIVITY.PHYSICAL-ACTIVITY.TIME-SERIES-UNAVAILABLE'),
+                        top: 'center',
+                        left: 'center',
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        position: function (pt) {
+                            return [pt[0], '10%'];
+                        }
+                    },
+                    graphic: {
+                        type: 'image',
+                        id: 'logo',
+                        left: 5,
+                        top: 2,
+                        z: -10,
+                        bounding: 'raw',
+                        origin: [0, 0],
+                        style: {
+                            image: 'https://image.flaticon.com/icons/png/512/2117/premium/2117139.png',
+                            width: 25,
+                            height: 25,
+                            opacity: 0.7
+                        }
+                    },
+                    grid: [
+                        { x: '0', y: '7%', width: '100%', height: '95%' }
+                    ],
+                    xAxis: {
+                        show: false,
+                        type: 'category',
+                        boundaryGap: false,
+                        data: []
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLine: {
+                            show: false
+                        },
+                        axisLabel: {
+                            formatter: ''
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        boundaryGap: [0, '100%']
+                    },
+                    series
+                }
+            });
+    }
+
+    insertHeartRateGraph(activity: PhysicalActivity, index: number): void {
+        const start_zone = activity.start_time.split('.')[1]
+        const start_date = new Date(this.datePipe.transform(activity.start_time, 'shortDate', start_zone, 'en-us'));
+        const end_zone = activity.end_time.split('.')[1]
+        const end_date = new Date(this.datePipe.transform(activity.end_time, 'shortDate', end_zone, 'en-us'));
+        const filter = new TimeSeriesFullFilter();
+        filter.start_date = start_date.toISOString().split('T')[0];
+        filter.end_date = end_date.toISOString().split('T')[0];
+        filter.start_time = this.datePipe.transform(activity.start_time, 'HH:mm:ss');
+        filter.end_time = this.datePipe.transform(activity.end_time, 'HH:mm:ss');
+        filter.interval = '1s';
+        this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.heart_rate, filter)
+            .then(heartRate => {
+
+                const series = {
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'none',
+                    sampling: 'average',
+                    itemStyle: {
+                        color: '#FF7373'
+                    },
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#FFF2F2'
+                        }, {
+                            offset: 1,
+                            color: '#FF7373'
+                        }])
+                    },
+                    data: heartRate.data_set.map((elementHeart) => {
+                        return elementHeart.value;
+                    })
+                };
+
+                this.activityGraph[index] = {
+                    title: {
+                        show: !series.data || !series.data.length,
+                        text: this.translateService.instant('ACTIVITY.PHYSICAL-ACTIVITY.TIME-SERIES-UNAVAILABLE'),
+                        top: 'center',
+                        left: 'center',
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        position: function (pt) {
+                            return [pt[0], '10%'];
+                        }
+                    },
+                    graphic: {
+                        type: 'image',
+                        id: 'logo',
+                        left: 5,
+                        top: 2,
+                        z: -10,
+                        bounding: 'raw',
+                        origin: [0, 0],
+                        style: {
+                            image: 'https://image.flaticon.com/icons/png/512/226/226986.png',
+                            width: 25,
+                            height: 25,
+                            opacity: 0.4
+                        }
+                    },
+                    grid: [
+                        { x: '0', y: '7%', width: '100%', height: '95%' }
+                    ],
+                    xAxis: {
+                        show: false,
+                        type: 'category',
+                        boundaryGap: false,
+                        data: []
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLine: {
+                            show: false
+                        },
+                        axisLabel: {
+                            formatter: ''
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        boundaryGap: [0, '100%']
+                    },
+                    series
+                };
+
+            });
     }
 
     sleepEnterAndLeave(value: boolean): void {
@@ -541,6 +587,11 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
 
     verifyScopes(): void {
         this.visibilityFitBitSync = this.verifyScopeService.verifyScopes(['external:sync']);
+    }
+
+    stopPropagation(event): void {
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     ngOnChanges(changes: SimpleChanges): void {

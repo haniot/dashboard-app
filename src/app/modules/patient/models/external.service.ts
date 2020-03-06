@@ -9,16 +9,8 @@ export enum AccessStatus {
 }
 
 export class ExternalService {
-    /* readonly */
-    /* TODO: adicionar readonly */
-    private _fitbit_status: AccessStatus;
-    private _fitbit_last_sync: string;
-
-    /* TODO: remover */
-    constructor() {
-        this._fitbit_status = AccessStatus.expired_token;
-        this._fitbit_last_sync = new Date().toISOString();
-    }
+    private readonly _fitbit_status: AccessStatus;
+    private readonly _fitbit_last_sync: string;
 
     get fitbit_status(): AccessStatus {
         return this._fitbit_status

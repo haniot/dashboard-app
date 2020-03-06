@@ -36,7 +36,7 @@ export class SelectPilotstudyComponent implements OnInit {
         private pilotStudyService: PilotStudyService,
         private paginatorService: PaginatorIntlService,
         private activeRouter: ActivatedRoute,
-        private selecPilotService: SelectPilotStudyService,
+        private selectPilotService: SelectPilotStudyService,
         private selectPilot: SelectPilotStudyService,
         private authService: AuthService,
         private userService: UserService,
@@ -50,17 +50,11 @@ export class SelectPilotstudyComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.authService.decodeToken().sub_type === 'admin') {
-            // this.selecPilotService.close();
-        }
         this.getUser();
     }
 
     loadUser(): void {
-        const user_id = this.localStorageService.getItem('user');
-        if (user_id) {
-            this.userId = user_id;
-        }
+        this.userId = this.localStorageService.getItem('user');
     }
 
     getAllPilotStudies() {
@@ -118,7 +112,7 @@ export class SelectPilotstudyComponent implements OnInit {
         if (!this.userId) {
             this.loadUser();
         }
-        this.selecPilotService.pilotStudyHasUpdated(pilotstudy_id);
+        this.selectPilotService.pilotStudyHasUpdated(pilotstudy_id);
         this.closeModal();
     }
 
@@ -137,31 +131,14 @@ export class SelectPilotstudyComponent implements OnInit {
                     } else {
                         this.getAllPilotStudies();
                     }
-                } catch (e) {
-                    // this.userService.getUserById(this.localStorageService.getItem('user'))
-                    //     .then(user => {
-                    //         if (user) {
-                    //             this.userId = user.id;
-                    //             this.userName = user.name ? user.name : user.email;
-                    //             const health_area = user.health_area ? user.health_area : 'admin';
-                    //             this.localStorageService.setItem('userLogged', JSON.stringify(user));
-                    //             this.localStorageService.setItem('email', user.email);
-                    //             this.localStorageService.setItem('health_area', health_area);
-                    //             if (user.selected_pilot_study) {
-                    //                 this.selectPilotStudy(user.selected_pilot_study);
-                    //             }
-                    //         }
-                    //     })
-                    //     .catch(() => {
-                    //     });
-                }
+                } catch (e) {}
             }
         }, 1000);
 
     }
 
     closeModal() {
-        this.selecPilotService.close();
+        this.selectPilotService.close();
     }
 
     trackById(index, item) {

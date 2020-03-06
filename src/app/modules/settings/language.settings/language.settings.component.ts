@@ -44,8 +44,8 @@ export class LanguageSettingsComponent implements OnInit {
         }
 
         this.userService.changeLanguage(this.userId, language)
-            .then(() => {
-                this.localStorageService.setItem('language', language)
+            .then((user) => {
+                this.localStorageService.setItem('userLogged', JSON.stringify(user))
                 this.translate.use(language);
                 this.datePickerAdapter.setLocale(language);
             })

@@ -115,6 +115,12 @@ i:hover {
     border-radius: 20px;
     background: rgb(212, 207, 207);
   }
+
+  .disabled:hover{
+    border-radius: unset;
+    background: none;
+    cursor: default;
+  }
 }
 
 .disabled {
@@ -243,4 +249,8 @@ i:hover {
   i {
     color: rgb(212, 207, 207);
   }
+}
+
+.nav-link{
+  padding: 0px 10px 10px 0px;
 }

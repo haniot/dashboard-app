@@ -129,16 +129,16 @@
                                         <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                             [attr.data-th]="'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.ACTIVITY-NAME'|translate"
                                             (click)="viewActivityDetails(activity.id)">
-                                            {{activity.name | physicalActivity | translate}}
+                                            {{activity.name}}
                                         </td>
                                         <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                             [attr.data-th]="'SHARED.DATE'|translate"
                                             (click)="viewActivityDetails(activity.id)">
-                                            {{activity.start_time | date}}
+                                            {{activity.start_time | date: 'shortDate'}} {{activity.start_time | date: 'mediumTime'}} - {{activity.end_time | date: 'mediumTime'}}
                                         </td>
                                         <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                             [attr.data-th]="'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.RESUME'|translate"
-                                            (click)="viewActivityDetails(activity.id)" style="max-width: 600px">
+                                            (click)="viewActivityDetails(activity.id)" style="max-width: 500px">
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col activity-resume-item"

@@ -73,7 +73,8 @@
       "DURATION": "Activity duration",
       "STEPS": "Steps taken",
       "DISTANCE": "Travelled distance",
-      "CALORIES-BURNED": "Calories burned"
+      "CALORIES-BURNED": "Calories burned",
+      "TIME-SERIES-UNAVAILABLE": "Time series unavailable!"
     },
     "PIPES": {
       "SLEEP": {

@@ -7,7 +7,7 @@
                         <div class="nav-tabs-navigation">
                             <div class="nav-tabs-wrapper">
                                 <span class="nav-tabs-title">
-                                    <h4 class="card-title">{{physicalActivity ? (physicalActivity.name | physicalActivity | translate) : ''}}</h4>
+                                    <h4 class="card-title">{{physicalActivity ? physicalActivity.name  : ''}}</h4>
                                     <p class="card-category">
                                             {{physicalActivity ? (physicalActivity.start_time | date) : ''}},
                                         {{'ACTIVITY.BETWEEN'|translate}} {{physicalActivity ? ((physicalActivity.start_time | date:'shortTime') + ('HABITS.SLEEP.TIME-ABBREVIATION'|translate)) : ''}}
@@ -129,7 +129,8 @@
                                         <img src="../../../../assets/img/time-series/steps-black.svg" width="50%"
                                              style="position: absolute;">
                                     </div>
-                                    <h2 class="p-2">+{{physicalActivity ? physicalActivity.steps : ''}}</h2>
+                                    <p class="text-center percent-impact">{{impactOfSteps ? impactOfSteps : 0}}%</p>
+                                    <h2 class="p-2">+{{physicalActivity && physicalActivity.steps? physicalActivity.steps : '0'}}</h2>
                                     <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
                                         {{'PAGINATOR.OF'|translate}} {{stepsValue ? (stepsValue|number:'1.0-0') : 0}} {{'ACTIVITY.STEPS-TAKEN'|translate}}
                                     </small>
@@ -145,7 +146,8 @@
                                         <img src="../../../../assets/img/time-series/calories-black.svg" width="45%"
                                              style="position: absolute;">
                                     </div>
-                                    <h2 class="p-2">+{{physicalActivity ? physicalActivity.calories : ''}}</h2>
+                                    <p class="text-center percent-impact">{{impactOfCalories ? impactOfCalories : 0}}%</p>
+                                    <h2 class="p-2">+{{physicalActivity && physicalActivity.calories ? physicalActivity.calories : '0'}}</h2>
                                     <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
                                         {{'PAGINATOR.OF'|translate}} {{caloriesValue ? (caloriesValue|number:'1.0-0') : 0}} {{'ACTIVITY.CALORIES-BURNED'|translate}}
                                     </small>
@@ -161,8 +163,9 @@
                                         <img src="../../../../assets/img/time-series/active_minutes.svg" width="50%"
                                              style="position: absolute;">
                                     </div>
+                                    <p class="text-center percent-impact">{{impactOfActiveMinutes ? impactOfActiveMinutes : 0}}%</p>
                                     <h2 class="p-2">
-                                        +{{physicalActivity ? (Math.floor(physicalActivity.duration / 60000)) : ''}}</h2>
+                                        +{{physicalActivity && physicalActivity.duration ? (Math.floor(physicalActivity.duration / 60000)) : '0'}}</h2>
                                     <small style="font-size: 16px;position: absolute; display: flex; bottom: 2px;">
                                         {{'PAGINATOR.OF'|translate}} {{activeMinutesValue ? (activeMinutesValue|number:'1.0-0') : 0}} {{'ACTIVITY.ACTIVE-MINUTES'|translate}}
                                     </small>

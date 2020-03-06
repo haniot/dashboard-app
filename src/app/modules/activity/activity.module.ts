@@ -31,7 +31,6 @@ import { FormsModule } from '@angular/forms'
 import { ActivityDetailsComponent } from './activity.details/activity.details.component'
 import { ActivityRoutingModule } from './activity.routing/activity.routing.module';
 import { ActivityDashboardComponent } from './activity.dashboard/activity.dashboard.component';
-import { PhysicalActivityPipe } from './pipes/physical.activity.pipe';
 import { ActivityLevelPipe } from './pipes/activity.level.pipe';
 import { MillisecondPipe } from './pipes/millisecond.pipe'
 import { NgxGaugeModule } from 'ngx-gauge';
@@ -54,7 +53,6 @@ import { DurationPipe } from './pipes/duration.pipe';
         TimeSeriesPipe,
         ActivityDetailsComponent,
         ActivityDashboardComponent,
-        PhysicalActivityPipe,
         ActivityLevelPipe,
         MillisecondPipe,
         ActivityListComponent,

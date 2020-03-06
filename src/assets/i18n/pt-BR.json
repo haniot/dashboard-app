@@ -16,7 +16,7 @@
     "CALORIC-EXPENDITURE": "Gasto Calórico",
     "TOTAL-CALORIES-BURNED": "Total de Calorias Queimadas",
     "CALORIES-BURNED-PER-MINUTES": "Calorias Queimadas por Minuto",
-    "INTENSITY-LEVELS": "Nìveis de Intensidade",
+    "INTENSITY-LEVELS": "Níveis de Intensidade",
     "HEART-RATE-AVG": "Frequência Média",
     "IMPACT": "IMPACTO",
     "STEPS-TAKEN": "passos dados",
@@ -73,7 +73,8 @@
       "DURATION": "Duração da atividade",
       "STEPS": "Passos executados",
       "DISTANCE": "Distância percorrida",
-      "CALORIES-BURNED": "Calorias queimadas"
+      "CALORIES-BURNED": "Calorias queimadas",
+      "TIME-SERIES-UNAVAILABLE": "Serie temporal indisponível!"
     },
     "PIPES": {
       "SLEEP": {

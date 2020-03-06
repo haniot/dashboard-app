@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 navigation"
-                 style="display: flex; align-items: center; justify-content: flex-end; padding: 0px 0px;"
+                 style="display: flex; align-items: center; justify-content: flex-end; padding: 0px 0px; z-index: 1028;"
                  *ngIf="visibilityFitBitSync">
                 <label style="padding-right:10px;font-weight: normal; font-size: 12px;">
                     {{'ACTIVITY.LAST-SYNC'|translate}}
@@ -53,7 +53,7 @@
                          [routerLink]="['/app/activities',patientId,'physical_activity', activity.id]">
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding-left: 0px">
                             <label class="float-left"
-                                   style="font-weight: normal;font-size: 20px; color: unset">{{activity.name|physicalActivity|translate}}</label>
+                                   style="font-weight: normal;font-size: 20px; color: unset">{{activity.name}}</label>
                             <i class="material-icons float-right">keyboard_arrow_right</i>
                             <small class="float-right">{{activity.start_time|date:'mediumDate'}}</small>
                         </div>
@@ -470,10 +470,11 @@
 
                         <div class="row justify-content-end" *ngIf="!loadingTimeSeries">
 
-                            <div class="col" style="max-width: 50px; padding: 0px 0px; margin: 0px 0px">
+                            <div class="col" style="position: absolute;max-width: 50px; padding: 0px 0px; margin: 0px 0px; z-index: 3000">
                                 <mat-select class="form-control form-control-sm" style="border-radius: 10px"
                                             id="selectMeasurement"
-                                            [(ngModel)]="measurementSelected">
+                                            [(ngModel)]="measurementSelected"
+                                (click)="stopPropagation($event)">
                                     <mat-select-trigger>
                                         <mat-icon>
                                             <img [src]="'../../../../assets/img/time-series/'+measurementSelected+'.png'">

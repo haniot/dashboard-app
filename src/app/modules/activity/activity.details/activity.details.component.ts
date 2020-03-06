@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PhysicalActivity } from '../models/physical.activity'
-import { HeartRateZone, TimeSeries, TimeSeriesItemIntraday, TimeSeriesSimpleFilter } from '../models/time.series'
+import {
+    HeartRateZone,
+    TimeSeries,
+    TimeSeriesFullFilter,
+    TimeSeriesItemIntraday,
+    TimeSeriesSimpleFilter, TimeSeriesType
+} from '../models/time.series'
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { ActivityLevel, Levels } from '../models/activity';
@@ -172,14 +178,23 @@ export class ActivityDetailsComponent implements OnInit {
     }
 
     loadCalories(): void {
-        if (this.physicalActivity && this.physicalActivity.calories_link) {
-            this.timeSeriesService.getByLink(this.physicalActivity.calories_link)
+        if (this.physicalActivity && this.physicalActivity.calories) {
+            const start_zone = this.physicalActivity.start_time.split('.')[1]
+            const start_date = new Date(this.datePipe.transform(this.physicalActivity.start_time, 'shortDate', start_zone, 'en-us'));
+            const end_zone = this.physicalActivity.end_time.split('.')[1]
+            const end_date = new Date(this.datePipe.transform(this.physicalActivity.end_time, 'shortDate', end_zone, 'en-us'));
+            const filter = new TimeSeriesFullFilter();
+            filter.start_date = start_date.toISOString().split('T')[0];
+            filter.end_date = end_date.toISOString().split('T')[0];
+            filter.start_time = this.datePipe.transform(this.physicalActivity.start_time, 'HH:mm:ss');
+            filter.end_time = this.datePipe.transform(this.physicalActivity.end_time, 'HH:mm:ss');
+            filter.interval = '1s';
+            this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.calories, filter)
                 .then(resource => {
                     this.caloriesError = false;
                     this.updateCalories(resource);
                 })
-                .catch((err) => {
-                    console.log(err)
+                .catch(() => {
                     this.caloriesError = true;
                 })
         }
@@ -251,13 +266,45 @@ export class ActivityDetailsComponent implements OnInit {
             });
         }
 
+        const total = resource.data_set.reduce((previous, current) => {
+            return previous + current.value;
+        }, 0);
+
+        if (!total) {
+            series.data = [];
+        }
+
         this.caloriesGraph = {
+            title: {
+                show: !series.data || !series.data.length || !total,
+                text: this.translateService.instant('ACTIVITY.PHYSICAL-ACTIVITY.TIME-SERIES-UNAVAILABLE'),
+                top: 'center',
+                left: 'center',
+                textStyle: {
+                    fontSize: 12
+                }
+            },
             tooltip: {
                 trigger: 'axis',
                 formatter: (params) => {
                     const { data: { value, time } } = params[0];
                     const valueFormatted = this.decimalPipe.transform(value, '1.2-3');
                     return `${labelCalories} : ${valueFormatted} cals <br> ${hour}: ${time}`
+                }
+            },
+            graphic: {
+                type: 'image',
+                id: 'logo',
+                left: 25,
+                top: 2,
+                z: -10,
+                bounding: 'raw',
+                origin: [0, 0],
+                style: {
+                    image: 'https://image.flaticon.com/icons/png/512/2117/premium/2117139.png',
+                    width: 25,
+                    height: 25,
+                    opacity: 0.7
                 }
             },
             grid: [{ x: '3%', y: '10%', width: '94%', height: '80%' }],
@@ -268,8 +315,18 @@ export class ActivityDetailsComponent implements OnInit {
     }
 
     loadHeartRate(): void {
-        if (this.physicalActivity && this.physicalActivity.heart_rate_link) {
-            this.timeSeriesService.getByLink(this.physicalActivity.heart_rate_link)
+        if (this.physicalActivity && this.physicalActivity.heart_rate_average) {
+            const start_zone = this.physicalActivity.start_time.split('.')[1]
+            const start_date = new Date(this.datePipe.transform(this.physicalActivity.start_time, 'shortDate', start_zone, 'en-us'));
+            const end_zone = this.physicalActivity.end_time.split('.')[1]
+            const end_date = new Date(this.datePipe.transform(this.physicalActivity.end_time, 'shortDate', end_zone, 'en-us'));
+            const filter = new TimeSeriesFullFilter();
+            filter.start_date = start_date.toISOString().split('T')[0];
+            filter.end_date = end_date.toISOString().split('T')[0];
+            filter.start_time = this.datePipe.transform(this.physicalActivity.start_time, 'HH:mm:ss');
+            filter.end_time = this.datePipe.transform(this.physicalActivity.end_time, 'HH:mm:ss');
+            filter.interval = '1s';
+            this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.heart_rate, filter)
                 .then((resource: any) => {
                     this.heartRateError = false;
                     this.zones = resource.summary && resource.summary.zones ? resource.summary.zones : new HeartRateZone();
@@ -351,6 +408,15 @@ export class ActivityDetailsComponent implements OnInit {
         }
 
         this.heartRateGraph = {
+            title: {
+                show: !seriesOptionsLastDate.data || !seriesOptionsLastDate.data.length,
+                text: this.translateService.instant('ACTIVITY.PHYSICAL-ACTIVITY.TIME-SERIES-UNAVAILABLE'),
+                top: 'center',
+                left: 'center',
+                textStyle: {
+                    fontSize: 12
+                }
+            },
             tooltip: {
                 trigger: 'axis',
                 formatter: function (params) {
@@ -368,10 +434,25 @@ export class ActivityDetailsComponent implements OnInit {
                 }
             },
             grid: [
-                { x: '4%', y: '5%', width: '93%', height: '80%' }
+                { x: '4%', y: '15%', width: '93%', height: '75%' }
             ],
             dataZoom: {
                 type: 'inside'
+            },
+            graphic: {
+                type: 'image',
+                id: 'logo',
+                left: 30,
+                top: 2,
+                z: -10,
+                bounding: 'raw',
+                origin: [0, 0],
+                style: {
+                    image: 'https://image.flaticon.com/icons/png/512/226/226986.png',
+                    width: 25,
+                    height: 25,
+                    opacity: 0.4
+                }
             },
             xAxis: xAxisOptionsLastDate,
             yAxis: {
@@ -389,7 +470,7 @@ export class ActivityDetailsComponent implements OnInit {
             },
             visualMap: {
                 orient: 'horizontal',
-                top: 20,
+                bottom: 20,
                 left: '30%',
                 right: '30%',
                 pieces: [{
