@@ -1,6 +1,6 @@
 {
   "name": "haniot-dashboard",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "license": "Apache 2.0",
   "autor": "NUTES/UEPB",
   "scripts": {
@@ -50,7 +50,6 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "mustache": "^3.2.1",
-    "muuri": "^0.8.0",
     "ng-recaptcha": "^5.0.0",
     "ngx-echarts": "^4.2.2",
     "ngx-gauge": "^1.1.0",

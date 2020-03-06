@@ -52,6 +52,28 @@ export class TimeSeriesItem {
     }
 }
 
+export class TimeSeriesItemIntraday {
+    /* required */
+    private _value: number;
+    private _time: string;
+
+    get value(): number {
+        return this._value
+    }
+
+    set value(value: number) {
+        this._value = value
+    }
+
+    get time(): string {
+        return this._time
+    }
+
+    set time(value: string) {
+        this._time = value
+    }
+}
+
 export class Summary {
     /* readonly */
     private readonly _total: number

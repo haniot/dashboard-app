@@ -56,17 +56,6 @@
                             </div>
                         </div>
 
-                        <!--        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 align-self-center">-->
-                        <!--            <div class="d-flex flex-row-reverse">-->
-                        <!--                <div class="p-2">-->
-                        <!--                    <small class="pull-right" *ngIf="lastData && lastData.dataset">-->
-                        <!--                        {{'MEASUREMENTS.LAST-REGISTER'|translate}}: {{lastData.dataset[0].timestamp | date}}</small>-->
-                        <!--                    <small class="pull-right" *ngIf="!lastData">{{'MEASUREMENTS.LAST-REGISTER-DATE'|translate}}-->
-                        <!--                        : {{'MEASUREMENTS.PATTERN-DATE'|translate}}</small>-->
-                        <!--                </div>-->
-                        <!--            </div>-->
-                        <!--        </div>-->
-
                     </div>
 
                     <div class="row justify-content-center">
@@ -99,6 +88,7 @@
                             <table class="table table-hover table-sm rwd-table">
                                 <thead>
                                 <th>#</th>
+                                <th>{{'SHARED.DATE'|translate}}</th>
                                 <th>{{'ACTIVITY.SLEEP.PERIOD'|translate}}</th>
                                 <th>{{'ACTIVITY.SLEEP.DURATION'|translate}}</th>
                                 <th>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.ACTIONS'|translate}}</th>
@@ -106,13 +96,12 @@
                                 <tbody>
                                 <tr *ngIf="listForLogs.length==0">
                                     <td colspan="4" *ngIf="showSpinnerLogs">
-                                        <spinner
-                                                [message]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LOADING-MEASUREMENTS'|translate"></spinner>
+                                        <spinner [message]="'ACTIVITY.SLEEP.LOADING'|translate"></spinner>
                                     </td>
-                                    <td colspan="4" *ngIf="!showSpinnerLogs && listLogsIsEmpty">
-                                        <h4>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY'|translate}}
+                                    <td colspan="4" *ngIf="!showSpinnerLogs">
+                                        <h4>{{'ACTIVITY.SLEEP.LIST-EMPTY'|translate}}
                                             <br>
-                                            <small>{{'MEASUREMENTS.LOG-MEASUREMENTS-CARD.LIST-EMPTY-MESSAGE'|translate}}</small>
+                                            <small>{{'ACTIVITY.SLEEP.LIST-EMPTY-MESSAGE'|translate}}</small>
                                         </h4>
                                     </td>
                                 </tr>
@@ -123,10 +112,16 @@
                                                       [(ngModel)]="listCheckSleeps[i]"></mat-checkbox>
                                     </td>
                                     <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
+                                        [attr.data-th]="'SHARED.DATE'|translate"
+                                        (click)="viewSleepDetails(sleep.id)">
+                                        {{sleep.end_time | date:'shortDate'}}
+                                    </td>
+                                    <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                         [attr.data-th]="'ACTIVITY.SLEEP.PERIOD'|translate"
                                         (click)="viewSleepDetails(sleep.id)">
-                                        {{sleep.start_time | date:'short'}} -
-                                        {{sleep.end_time | date:'short'}}
+                                        {{sleep.start_time | date:'EEEE'}}, {{sleep.start_time | date:'mediumTime'}}
+                                        {{'SHARED.AT'|translate}}
+                                        {{sleep.end_time | date:'EEEE'}}, {{sleep.end_time | date:'mediumTime'}}
                                     </td>
                                     <td [title]="'ACTIVITY.VIEW-DETAILS'|translate"
                                         [attr.data-th]="'ACTIVITY.SLEEP.DURATION'|translate"
@@ -255,4 +250,4 @@
         ' '+cacheListIdSleepRemove.length+' ' + ('ACTIVITY.SLEEP.MODAL-REMOVE.CONFIRM-MULTIPLE-REMOVE-PART2'|translate)
         :'ACTIVITY.SLEEP.MODAL-REMOVE.CONFIRM-UNIQUE-REMOVE'|translate"
         (confirmation)="removeSleep()"
-        (noconfirmation)="closeModalConfirmation()"></modal-confirmation>
+        (close)="closeModalConfirmation()"></modal-confirmation>

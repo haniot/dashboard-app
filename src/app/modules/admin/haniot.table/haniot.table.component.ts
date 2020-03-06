@@ -93,7 +93,7 @@ export class HaniotTableComponent {
             switch (this.userType) {
                 case 'Admin':
                     if (this.search && this.search !== '') {
-                        this.adminService.getAll(page + 1, limit, this.search)
+                        this.adminService.getAll(null, limit, this.search)
                             .then(httpResponse => {
                                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                                 if (httpResponse.body && httpResponse.body.length) {
@@ -102,7 +102,7 @@ export class HaniotTableComponent {
                             })
                             .catch();
                     } else {
-                        this.adminService.getAll(page + 1, limit)
+                        this.adminService.getAll(null, limit)
                             .then(httpResponse => {
                                 this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                                 if (httpResponse.body && httpResponse.body.length) {

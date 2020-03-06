@@ -5,7 +5,12 @@ import { FormGroup } from '@angular/forms'
 import { TranslateService } from '@ngx-translate/core'
 import { ToastrService } from 'ngx-toastr';
 
-import { ExternalService, OAuthUser, SynchronizeData } from '../../../modules/patient/models/external.service';
+import {
+    AccessStatus,
+    ExternalService,
+    OAuthUser,
+    SynchronizeData
+} from '../../../modules/patient/models/external.service';
 import { FitbitStatusPipe } from '../pipes/fitbit.status.pipe';
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
 import { FitbitService } from '../services/fitbit.service';
@@ -33,6 +38,7 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
     providingAccess: boolean;
     synchronizeData: SynchronizeData;
     intervalSync: any;
+    AccessStatus = AccessStatus;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -82,11 +88,10 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
         this.router.navigate(['/oauth/invalid']);
     }
 
-    async synchronize(): Promise<void> {
+    async synchronize(delay: number = 0): Promise<void> {
         this.synchronizing = true;
         try {
-            const synchronizeData = await this.fitbitService.synchronize(this.patientId);
-            this.synchronizeData = synchronizeData;
+            this.synchronizeData = await this.fitbitService.synchronize(this.patientId);
             this.modalService.open('synchronized');
         } catch (err) {
             if (err && err.status === 429) {
@@ -95,6 +100,7 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.COULD-NOT-SYNC'))
             }
         } finally {
+            this.delay(delay);
             this.synchronizing = false;
         }
     }
@@ -109,6 +115,7 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
         try {
             await this.fitbitService.revoke(this.patientId)
             this.modalService.close('modalConfirmation');
+            await this.delay(5000);
             this.toastService.info(this.translateService.instant('TOAST-MESSAGES.REVOKED-SUCCESSFULLY'));
             this.change.emit(ChangeExternalService.revokedAccess);
         } catch (e) {
@@ -127,13 +134,14 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
     }
 
     async finalizeProvideAccess(fitbitUser: OAuthUser): Promise<void> {
+        clearInterval(this.intervalSync);
         try {
             if (!fitbitUser || !fitbitUser.refresh_token || !fitbitUser.access_token) {
                 throw new Error('Not Authorized')
             }
             await this.fitbitService.createUser(this.patientId, fitbitUser);
+            await this.synchronize(5000);
             this.toastService.info(this.translateService.instant('TOAST-MESSAGES.PROVIDER-SUCCESSFULLY'));
-            await this.synchronize();
             this.change.emit(ChangeExternalService.providedAccess);
         } catch (err) {
             throw err;
@@ -148,7 +156,7 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
             try {
                 const fitbitUser = JSON.parse(this.localStorageService.getItem('fitbitUser'));
                 if (fitbitUser) {
-                    clearInterval(this.intervalSync)
+                    clearInterval(this.intervalSync);
                     await this.finalizeProvideAccess(fitbitUser);
                 }
             } catch (err) {
@@ -169,6 +177,14 @@ export class ExternalServiceComponent implements OnInit, OnDestroy {
             clearInterval(this.intervalSync)
         }
 
+    }
+
+    private delay(ms: number): Promise<boolean> {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(true);
+            }, ms);
+        });
     }
 
     ngOnDestroy(): void {

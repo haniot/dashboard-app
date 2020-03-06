@@ -42,11 +42,11 @@ export class SleepService {
         }
 
         if (search && search.start_time && search.end_time) {
-            myParams = myParams.append('start_time', 'gte:' + search.start_time);
-            myParams = myParams.append('start_time', 'lt:' + search.end_time);
+            myParams = myParams.append('end_time', 'gte:' + search.start_time);
+            myParams = myParams.append('end_time', 'lt:' + search.end_time);
         }
 
-        myParams = myParams.append('sort', '-start_time');
+        myParams = myParams.append('sort', '-end_time');
 
         const url = `${environment.api_url}/${this.version}/patients/${patientId}/sleep`;
 

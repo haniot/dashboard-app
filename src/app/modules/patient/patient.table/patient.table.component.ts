@@ -84,7 +84,7 @@ export class PatientTableComponent implements OnInit, OnChanges, OnDestroy {
         clearInterval(this.searchTime);
         this.searchTime = setTimeout(() => {
             this.listOfPatients = [];
-            this.patientService.getAllByPilotStudy(this.pilotStudyId, this.page, this.limit, this.search)
+            this.patientService.getAllByPilotStudy(this.pilotStudyId, null, this.limit, this.search)
                 .then(httpResponse => {
                     this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                     if (httpResponse.body && httpResponse.body.length) {

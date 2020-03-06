@@ -1,14 +1,27 @@
-import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import * as Muuri from 'muuri';
-import { EnumMeasurementType } from '../models/measurement'
-import { MeasurementService } from '../services/measurement.service'
-import { MeasurementLast } from '../models/measurement.last'
-import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
-import { ActivatedRoute } from '@angular/router'
-import { ToastrService } from 'ngx-toastr'
-import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
-import { TimeSeries, TimeSeriesIntervalFilter, TimeSeriesType } from '../../activity/models/time.series'
-import { TimeSeriesService } from '../../activity/services/time.series.service'
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { ToastrService } from 'ngx-toastr';
+import { GridsterConfig, GridsterItem } from 'angular-gridster2';
+
+import { EnumMeasurementType } from '../models/measurement';
+import { MeasurementService } from '../services/measurement.service';
+import { MeasurementLast } from '../models/measurement.last';
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
+import { TimeSeries, TimeSeriesIntervalFilter, TimeSeriesType } from '../../activity/models/time.series';
+import { TimeSeriesService } from '../../activity/services/time.series.service';
+
+const gridConfig = [
+    { key: EnumMeasurementType.weight, value: { x: 0, y: 0, rows: 4, cols: 2 } },
+    { key: EnumMeasurementType.height, value: { x: 0, y: 0, rows: 2, cols: 2 } },
+    { key: EnumMeasurementType.waist_circumference, value: { x: 0, y: 0, rows: 2, cols: 2 } },
+    { key: EnumMeasurementType.body_fat, value: { x: 0, y: 0, rows: 2, cols: 2 } },
+    { key: EnumMeasurementType.body_temperature, value: { x: 0, y: 0, rows: 2, cols: 2 } },
+    { key: EnumMeasurementType.blood_pressure, value: { x: 0, y: 0, rows: 2, cols: 3 } },
+    { key: EnumMeasurementType.blood_glucose, value: { x: 0, y: 0, rows: 2, cols: 3 } },
+    { key: TimeSeriesType.heart_rate, value: { x: 0, y: 0, rows: 4, cols: 6 } }
+]
 
 @Component({
     selector: 'measurement-dashboard',
@@ -19,10 +32,8 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
     @Input() patientId: string;
     EnumMeasurementType = EnumMeasurementType;
     TimeSeriesType = TimeSeriesType;
-
+    public options: GridsterConfig;
     measurementLast: MeasurementLast;
-    gridDivRef: ElementRef;
-    gridDivWidth: number;
     loading: boolean;
     loadingHeartRate: boolean;
     fatThreshold = {
@@ -33,22 +44,7 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
     bmi: number;
     nameOfPatientSelected: string;
     heartRate: TimeSeries;
-
-
-    @ViewChild('gridDiv')
-    set gridDiv(element: ElementRef) {
-        if (element) {
-            setTimeout(() => {
-                this.gridDivRef = element;
-                this.gridDivWidth = this.gridDivRef.nativeElement.offsetWidth;
-            })
-        }
-    };
-
-    @HostListener('window:resize', ['$event'])
-    onResize() {
-        this.gridDivWidth = this.gridDivRef.nativeElement.offsetWidth;
-    }
+    configItems: Map<string, GridsterItem>;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -57,24 +53,30 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
         private toastService: ToastrService,
         private localStorageService: LocalStorageService,
         private timeSeriesService: TimeSeriesService) {
+        this.options = {
+            margin: 5,
+            minCols: 6,
+            maxCols: 6,
+            displayGrid: 'none',
+            minRows: 10,
+            maxRows: 10,
+            swap: true,
+            swapWhileDragging: true,
+            setGridSize: true,
+            mobileBreakpoint: 640,
+            gridType: 'fit',
+            resizable: {
+                enabled: false
+            },
+            draggable: {
+                enabled: false
+            }
+        };
+        this.configItems = new Map<string, GridsterItem>();
+        gridConfig.forEach(item => this.configItems.set(item.key, item.value))
     }
 
     ngOnInit() {
-        const grid1 = new Muuri('.grid-1', {
-            dragEnabled: false,
-            dragPlaceholder: {
-                enabled: true,
-                duration: 300,
-                easing: 'ease',
-                createElement: null,
-                onCreate: null,
-                onRemove: null
-            },
-            dragContainer: document.body,
-            dragSort: function () {
-                return [grid1]
-            }
-        });
         this.activeRouter.paramMap.subscribe((params) => {
             this.patientId = params.get('patientId');
             this.getPatientSelected();
@@ -88,7 +90,6 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
             this.nameOfPatientSelected = patientSelected.name
         }
     }
-
 
 
     loadMeasurements(): void {

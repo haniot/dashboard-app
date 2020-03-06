@@ -63,7 +63,7 @@ export class PatientManagerComponent implements OnInit {
                 const userId = this.localStorageService.getItem('user');
                 const studyId = this.localStorageService.getItem(userId);
                 this.listOfPatients = [];
-                this.patientService.getAllByPilotStudy(studyId, this.page, this.limit, this.search)
+                this.patientService.getAllByPilotStudy(studyId, null, this.limit, this.search)
                     .then(httpResponse => {
                         this.length = parseInt(httpResponse.headers.get('x-total-count'), 10);
                         if (httpResponse.body) {

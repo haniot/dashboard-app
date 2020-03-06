@@ -18,7 +18,7 @@ export const FilterOptions = {
 @Component({
     selector: 'time-series-card',
     templateUrl: './time.series.card.component.html',
-    styleUrls: ['../../../modules/activity/shared.style/shared.styles.scss', './time.series.card.component.scss']
+    styleUrls: ['./time.series.card.component.scss']
 })
 export class TimeSeriesCardComponent implements OnInit {
     readonly today: Date = new Date();
@@ -164,7 +164,7 @@ export class TimeSeriesCardComponent implements OnInit {
             this.currentDate = dateSelected.getTime() <= new Date().getTime() ? dateSelected : new Date();
         }
         if (start_date && end_date) {
-            this.filterSelected = 'period';
+            this.filterSelected = this.filterOptions.period;
             const timeZoneOffset = new Date().getTimezoneOffset();
             const startSelected: Date = timeZoneOffset ? new Date(`${start_date}T0${timeZoneOffset / 60}:00:00Z`) :
                 new Date(`${start_date}T00:00:00Z`);

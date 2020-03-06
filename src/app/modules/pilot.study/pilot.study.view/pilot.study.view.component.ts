@@ -92,7 +92,7 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
         if (this.pilotStudyId) {
             this.pilotStudyService.getById(this.pilotStudyId)
                 .then(res => {
-                    this.pilotStudyForm.setValue(res);
+                    this.pilotStudyForm.patchValue(res);
                     this.pilotStudy = res;
                     this.selectPilotStudy();
                     this.loadHealthProfessionals();
@@ -139,31 +139,17 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
     }
 
     createForm() {
-        if (this.pilotStudyId) {
-            this.pilotStudyForm = this.fb.group({
-                id: [''],
-                created_at: [''],
-                name: [''],
-                location: [''],
-                start: [''],
-                end: [''],
-                total_health_professionals: [''],
-                total_patients: [''],
-                is_active: [{ value: true, disabled: true }]
-            });
-        } else {
-            this.pilotStudyForm = this.fb.group({
-                id: [''],
-                created_at: [''],
-                name: [''],
-                location: [''],
-                start: [''],
-                end: [''],
-                total_health_professionals: [''],
-                total_patients: [''],
-                is_active: [{ value: true, disabled: true }]
-            });
-        }
+        this.pilotStudyForm = this.fb.group({
+            id: [''],
+            created_at: [''],
+            name: [''],
+            location: [''],
+            start: [''],
+            end: [''],
+            total_health_professionals: [''],
+            total_patients: [''],
+            is_active: [{ value: true, disabled: true }]
+        });
     }
 
     clickProfessionalPagination(event): void {

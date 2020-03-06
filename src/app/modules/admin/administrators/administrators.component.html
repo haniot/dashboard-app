@@ -12,7 +12,7 @@
                 </haniot-card>
             </div>
             <div class="col-md">
-                <button type="submit" class="btn btn-haniot-primary" (click)="openModal()">
+                <button type="submit" class="btn btn-haniot-primary" (click)="openModalNew()">
                     {{'SHARED.ADD' | translate}}
                     <i class="material-icons">add</i>
                 </button>
@@ -21,13 +21,13 @@
     </div>
 </div>
 
-<haniot-modal [modalId]="'modalUser'">
+<haniot-modal [modalId]="'modalUser'" (close)="closeModalNew()">
     <modal-user [title]="'ADMINISTRADORS.TITLE-ADD'|translate" (onsubmit)="createAdmin($event)"
                     [typeUser]="typeUser">
     </modal-user>
 </haniot-modal>
 
-<haniot-modal [modalId]="'modalUserEdit'">
+<haniot-modal [modalId]="'modalUserEdit'" (close)="closeModalEdit()">
     <modal-user [title]="'ADMINISTRADORS.TITLE-EDIT'|translate" (onsubmit)="editAdmin($event)"
-                    [userId]="userEdit.id" [typeUser]="typeUser" (onclose)="cleanUser()"></modal-user>
+                    [userId]="userEdit.id" [typeUser]="typeUser" (onclose)="closeModalEdit()"></modal-user>
 </haniot-modal>

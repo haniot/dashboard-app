@@ -6,4 +6,6 @@
 <modal-confirmation [message]="'CONFIG.CONFIG-MYDATES-DELETE-MY-ACCOUNT-MESSAGE'|translate"
                     [observation]="'CONFIG.CONFIG-MYDATES-DELETE-MY-ACCOUNT-OBSERVATION'|translate"
                     (confirmation)="deleteAccount()"
-                    (noconfirmation)="closeModalDeleteAccount()"></modal-confirmation>
+                    (close)="closeModalDeleteAccount()">
+
+</modal-confirmation>

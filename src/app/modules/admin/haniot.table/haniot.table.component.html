@@ -61,4 +61,4 @@
 </mat-paginator>
 
 <modal-confirmation [message]="'TABLE-USER.DELETE-CONFIRMATION'|translate" (confirmation)="removeUser()"
-                    (noconfirmation)="closeModalConfirmRemove()"></modal-confirmation>
+                    (close)="closeModalConfirmRemove()"></modal-confirmation>

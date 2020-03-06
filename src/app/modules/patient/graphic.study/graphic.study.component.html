@@ -7,7 +7,6 @@
                                   [subtitle]="''" (filter_change)="applyFilter($event)">
 
                     <div class="row justify-content-end">
-
                         <gridster [options]="options"
                                   [ngClass]="!resourcesSelected.length?'border-dashed':''"
                                   [ngStyle]="{'height':(widthGridSister?widthGridSister:288)+ 'px'}">
@@ -18,6 +17,11 @@
                                          style="position:absolute; top:0;left:0;padding:5px;z-index:1000"
                                          *ngIf="resourcesSelected[i].resource">
                                         <i class="material-icons" (click)="openSelectGraph(i)">settings</i>
+                                    </div>
+                                    <div class="fadeIn"
+                                         style="position:absolute; top:0;left:25px;padding:5px;z-index:1000"
+                                         *ngIf="resourcesSelected[i].resource">
+                                        {{getTitle(itemResource.resource)}}
                                     </div>
 
                                     <div class="fadeIn options"
@@ -121,7 +125,8 @@
                                 </div>
                             </gridster-item>
                         </gridster>
-
+                    </div>
+                    <div class="row justify-content-end">
                         <div class="select-graph">
                             <mat-form-field>
                                 <mat-label>{{'SHARED.ADD'|translate}}</mat-label>

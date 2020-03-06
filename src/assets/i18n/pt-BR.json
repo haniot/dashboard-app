@@ -16,8 +16,8 @@
     "CALORIC-EXPENDITURE": "Gasto Calórico",
     "TOTAL-CALORIES-BURNED": "Total de Calorias Queimadas",
     "CALORIES-BURNED-PER-MINUTES": "Calorias Queimadas por Minuto",
-    "INTENSITY-LEVELS": "Nìveis de Intensidade",
-    "HEART-RATE-AVG": "Frequência Cardíaca Média",
+    "INTENSITY-LEVELS": "Níveis de Intensidade",
+    "HEART-RATE-AVG": "Frequência Média",
     "IMPACT": "IMPACTO",
     "STEPS-TAKEN": "passos dados",
     "CALORIES-BURNED": "calorias queimadas",
@@ -34,7 +34,9 @@
       "PERIOD": "Período da medição",
       "SLEEP": "Sono",
       "DURATION": "Duração",
-      "UNAVAILABLE-DATA": "Nenhum registro dentro período selecionado!",
+      "LIST-EMPTY": "Nenhum registro encontrado.",
+      "LIST-EMPTY-MESSAGE": "Registre seu sono para acompanhar os estagios do mesmo!",
+      "UNAVAILABLE-DATA": "Nenhum registro dentro do período selecionado!",
       "VIEW-STAGES": "Visualizar estágios",
       "CLICK-TO-VIEW": "Clique sobre o registro para visualizar os estágios do sono.",
       "REACHED-THE-IDEAL": "Atingiu o ideal",
@@ -50,6 +52,7 @@
     "PHYSICAL-ACTIVITY": {
       "TITLE": "Atividade Física",
       "LOADING": "Carregando atividade física...",
+      "LIST-EMPTY": "Nenhum exercício encontrado.",
       "HISTORY-TABLE": {
         "TITLE": "Histórico de atividades física",
         "SELECT-ALL": "Selecionar todas",
@@ -70,7 +73,8 @@
       "DURATION": "Duração da atividade",
       "STEPS": "Passos executados",
       "DISTANCE": "Distância percorrida",
-      "CALORIES-BURNED": "Calorias queimadas"
+      "CALORIES-BURNED": "Calorias queimadas",
+      "TIME-SERIES-UNAVAILABLE": "Serie temporal indisponível!"
     },
     "PIPES": {
       "SLEEP": {
@@ -90,8 +94,8 @@
       "ACTIVITY-LEVEL": {
         "SEDENTARY": "Sedentário",
         "LIGHT": "Leve",
-        "FAIRLY": "Bastante",
-        "VERY": "Avançado"
+        "FAIRLY": "Razoavel",
+        "VERY": "Intenso"
       },
       "UNDEFINED": "Fora dos parâmetros",
       "NOTFOUND": "NÃO ENCONTRADO"
@@ -751,6 +755,8 @@
         "INVALID-TOKEN": "Token inválido!",
         "EXPIRED-TOKEN": "Token expirado!",
         "INVALID-REFRESH-TOKEN": "Refresh Token Inválido",
+        "INVALID-CLIENT": "Cliente inválido!",
+        "RATE-LIMIT": "Limite de sincronização atingindo!",
         "NONE": " - - ",
         "UNDEFINED": "Fora dos parâmetros"
       }

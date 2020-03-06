@@ -286,7 +286,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
             },
             visualMap: {
                 orient: 'horizontal',
-                top: 20,
+                bottom: 20,
                 left: '30%',
                 right: '30%',
                 pieces: [{

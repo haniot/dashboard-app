@@ -70,10 +70,6 @@ export class UserService {
                 break;
         }
         return service.update({ id: user.id, language: user.language })
-            .then(userUpdated => {
-                return !!userUpdated;
-            })
-            .catch(() => false);
     }
 
     changePilotStudySelected(userId: string, pilotStudyId: string): Promise<boolean> {

@@ -96,6 +96,7 @@ i:hover {
   &:hover {
     border-radius: 20px !important;
     background: $primary-color !important;
+    cursor: default;
   }
 }
 
@@ -130,4 +131,9 @@ i:hover {
 
 .mat-datepicker-toggle {
   color: white;
+}
+
+.dropdown-menu{
+  position: absolute;
+  z-index: 9999 !important;
 }

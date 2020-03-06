@@ -32,7 +32,7 @@ export class DentalEvaluationListComponent implements OnInit {
     }
 
     selectStudy(pilotstudy_id) {
-        this.pilotForm.get('pilotstudyId').setValue(pilotstudy_id);
+        this.pilotForm.get('pilotstudyId').patchValue(pilotstudy_id);
         this.pilotstudy_id = pilotstudy_id;
     }
 

@@ -128,12 +128,18 @@ export class HealthProfessionalComponent implements OnInit {
         this.userEdit = new HealthProfessional('');
     }
 
+    closeModalNew() {
+        this.modalService.close('modalUser');
+        this.userEdit = new HealthProfessional('');
+    }
+
     editUser(event) {
         this.modalService.open('modalUserEdit');
         this.userEdit = event;
     }
 
-    cleanUser(): void {
+    closeModalEdit(): void {
+        this.modalService.close('modalUserEdit');
         this.userEdit = new HealthProfessional('FLAG');
     }
 
