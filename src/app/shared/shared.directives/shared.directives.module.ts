@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IncludeDataTypeDirective } from './include.data.type.directive'
 
 @NgModule({
-    declarations: [],
+    declarations: [IncludeDataTypeDirective],
     imports: [
         CommonModule
     ],
-    exports: []
+    exports: [IncludeDataTypeDirective]
 })
 export class SharedDirectivesModule {
 }

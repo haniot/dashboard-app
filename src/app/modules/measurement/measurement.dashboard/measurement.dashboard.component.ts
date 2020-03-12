@@ -11,6 +11,8 @@ import { ModalService } from '../../../shared/shared.components/modal/service/mo
 import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
 import { TimeSeries, TimeSeriesIntervalFilter, TimeSeriesType } from '../../activity/models/time.series';
 import { TimeSeriesService } from '../../activity/services/time.series.service';
+import { EnumPilotStudyDataTypes } from '../../pilot.study/models/pilot.study'
+import { LogicalStrategy } from '../../../shared/shared.directives/include.data.type.directive'
 
 const gridConfig = [
     { key: EnumMeasurementType.weight, value: { x: 0, y: 0, rows: 4, cols: 2 } },
@@ -45,6 +47,7 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
     nameOfPatientSelected: string;
     heartRate: TimeSeries;
     configItems: Map<string, GridsterItem>;
+    LogicalStrategy = LogicalStrategy;
 
     constructor(
         private activeRouter: ActivatedRoute,
@@ -69,7 +72,7 @@ export class MeasurementDashboardComponent implements OnInit, OnChanges {
                 enabled: false
             },
             draggable: {
-                enabled: false
+                enabled: true
             }
         };
         this.configItems = new Map<string, GridsterItem>();

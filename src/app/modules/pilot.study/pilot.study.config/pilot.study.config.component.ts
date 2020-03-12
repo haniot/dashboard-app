@@ -28,7 +28,7 @@ export class PilotStudyConfigComponent implements OnChanges {
     activitiesAll: boolean;
 
     constructor() {
-        this.measurementsTypes = Object.keys(EnumMeasurementType);
+        this.measurementsTypes = Object.keys(EnumMeasurementType).filter(measuremt => measuremt !== EnumMeasurementType.body_fat);
         this.questionnairesTypes = [EnumPilotStudyDataTypes.quest_nutritional, EnumPilotStudyDataTypes.quest_odontological];
         this.activitiesTypes = [EnumPilotStudyDataTypes.physical_activity, EnumPilotStudyDataTypes.sleep];
         this.timeSeriesTypes = Object.keys(TimeSeriesType);

@@ -3,7 +3,7 @@
     <div class="row">
 
         <gridster [options]="options">
-            <gridster-item [item]="configItems.get('weight')">
+            <gridster-item [item]="configItems.get('weight')" includeDataType [dataTypes]="[EnumMeasurementType.weight]" [strategy]="LogicalStrategy.and">
                 <!-- Weight -->
                 <dashboard-card [title]="'MEASUREMENTS.WEIGHT.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.weight]">
@@ -60,7 +60,7 @@
                     <!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.weight && measurementLast.weight.timestamp) ? (measurementLast.weight.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
             </gridster-item>
-            <gridster-item [item]="configItems.get('height')">
+            <gridster-item [item]="configItems.get('height')" includeDataType [dataTypes]="[EnumMeasurementType.height]" [strategy]="LogicalStrategy.and">
                 <!-- Height -->
                 <dashboard-card [title]="'MEASUREMENTS.HEIGHT.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.height]">
@@ -88,7 +88,7 @@
                     <!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.height && measurementLast.height.timestamp) ? (measurementLast.height.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
             </gridster-item>
-            <gridster-item [item]="configItems.get('waist_circumference')">
+            <gridster-item [item]="configItems.get('waist_circumference')" includeDataType [dataTypes]="[EnumMeasurementType.waist_circumference]" [strategy]="LogicalStrategy.and">
                 <!-- Waist Circumference -->
                 <dashboard-card [title]="'MEASUREMENTS.WAIST-CIRCUMFERENCE.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.waist_circumference]">
@@ -121,7 +121,7 @@
                     <!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.waist_circumference && measurementLast.waist_circumference.timestamp) ? (measurementLast.waist_circumference.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
             </gridster-item>
-            <gridster-item [item]="configItems.get('body_fat')">
+            <gridster-item [item]="configItems.get('body_fat')" includeDataType [dataTypes]="[EnumMeasurementType.weight]" [strategy]="LogicalStrategy.and">
                 <!-- Body Fat -->
                 <dashboard-card [title]="'MEASUREMENTS.FAT.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.body_fat]">
@@ -151,7 +151,7 @@
                     <!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.body_fat && measurementLast.body_fat.timestamp) ? (measurementLast.body_fat.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
             </gridster-item>
-            <gridster-item [item]="configItems.get('body_temperature')">
+            <gridster-item [item]="configItems.get('body_temperature')" includeDataType [dataTypes]="[EnumMeasurementType.body_temperature]" [strategy]="LogicalStrategy.and">
                 <!-- Body Temperature -->
                 <dashboard-card [title]="'MEASUREMENTS.BODY-TEMPERATURE.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.body_temperature]">
@@ -186,7 +186,7 @@
                     <!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.body_temperature && measurementLast.body_temperature.timestamp) ? (measurementLast.body_temperature.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
             </gridster-item>
-            <gridster-item [item]="configItems.get('blood_pressure')">
+            <gridster-item [item]="configItems.get('blood_pressure')" includeDataType [dataTypes]="[EnumMeasurementType.blood_pressure]" [strategy]="LogicalStrategy.and">
                 <!-- Blood Pressure -->
                 <dashboard-card [title]="'MEASUREMENTS.BLOOD-PRESSURE.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.blood_pressure]">
@@ -222,7 +222,7 @@
                     <!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.blood_pressure && measurementLast.blood_pressure.timestamp) ? (measurementLast.blood_pressure.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
             </gridster-item>
-            <gridster-item [item]="configItems.get('blood_glucose')">
+            <gridster-item [item]="configItems.get('blood_glucose')" includeDataType [dataTypes]="[EnumMeasurementType.blood_glucose]" [strategy]="LogicalStrategy.and">
                 <!-- Blood Glucose -->
                 <dashboard-card [title]="'MEASUREMENTS.BLOOD-GLUCOSE.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,EnumMeasurementType.blood_glucose]">
@@ -254,7 +254,7 @@
                     <!--                    <small style="position: absolute; bottom: 10px">{{(measurementLast && measurementLast.blood_pressure && measurementLast.blood_pressure.timestamp) ? (measurementLast.blood_pressure.timestamp|date:'fullDate') : ' - -'}}</small>-->
                 </dashboard-card>
             </gridster-item>
-            <gridster-item [item]="configItems.get('heart_rate')">
+            <gridster-item [item]="configItems.get('heart_rate')" includeDataType [dataTypes]="[TimeSeriesType.heart_rate]" [strategy]="LogicalStrategy.and">
                 <!-- Heart Rate-->
                 <dashboard-card [title]="'TIME-SERIES.HEART-RATE.TITLE'|translate"
                                 [urlAction]="['/app/patients',patientId,TimeSeriesType.heart_rate]">

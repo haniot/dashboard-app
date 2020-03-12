@@ -29,7 +29,6 @@ import { ActivityModule } from '../activity/activity.module';
 import { PilotStudyConfigComponent } from './pilot.study.config/pilot.study.config.component';
 import { DataTypesPipe } from './pipes/data.types.pipe'
 
-
 @NgModule({
     declarations: [
         PilotStudyFormComponent,
