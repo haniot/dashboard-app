@@ -1,9 +1,24 @@
+import { TimeSeriesType } from '../../activity/models/time.series'
+import { EnumMeasurementType } from '../../measurement/models/measurement'
+
+export enum EnumPilotStudyDataTypes {
+    physical_activity = 'physical_activity',
+    sleep = 'sleep',
+    quest_nutritional = 'quest_nutritional',
+    quest_odontological = 'quest_odontological'
+}
+
+const mergeEnum = { ...EnumMeasurementType, ...TimeSeriesType, ...EnumPilotStudyDataTypes };
+
+export type PilotStudyDataTypes = typeof mergeEnum;
+
 export class PilotStudy {
     /* required */
     private _name: string;
     private _start: string;
     private _end: string;
     private _is_active: boolean;
+    private _data_types: PilotStudyDataTypes[];
     /* optional */
     private _location?: string;
     /* readonly */
@@ -68,6 +83,12 @@ export class PilotStudy {
     get total_patients(): number {
         return this._total_patients
     }
+
+    get data_types(): PilotStudyDataTypes[] {
+        return this._data_types
+    }
+
+    set data_types(value: PilotStudyDataTypes[]) {
+        this._data_types = value
+    }
 }
-
-

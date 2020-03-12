@@ -1,27 +1,37 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 import { ISubscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 
 import { PilotStudyService } from '../services/pilot.study.service';
-import { Patient } from '../../patient/models/patient'
-import { GenericUser } from '../../../shared/shared.models/generic.user'
-import { PatientService } from '../../patient/services/patient.service'
-import { HealthProfessional } from '../../admin/models/health.professional'
-import { HealthProfessionalService } from '../../admin/services/health.professional.service'
-import { AuthService } from '../../../security/auth/services/auth.service'
-import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
-import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service'
-import { LocalStorageService } from '../../../shared/shared.services/local.storage.service'
+import { Patient } from '../../patient/models/patient';
+import { GenericUser } from '../../../shared/shared.models/generic.user';
+import { PatientService } from '../../patient/services/patient.service';
+import { HealthProfessional } from '../../admin/models/health.professional';
+import { HealthProfessionalService } from '../../admin/services/health.professional.service';
+import { AuthService } from '../../../security/auth/services/auth.service';
+import { ModalService } from '../../../shared/shared.components/modal/service/modal.service';
+import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service';
+import { LocalStorageService } from '../../../shared/shared.services/local.storage.service';
+
+export class FormValidatorUtils {
+
+    static nonEmpty(control: any) {
+        if (!control.value || control.value.length === 0) {
+            return { 'noElements': true };
+        }
+        return null;
+    }
+}
 
 @Component({
     selector: 'pilot-study-form',
     templateUrl: './pilot.study.form.component.html',
-    styleUrls: ['./pilot.study.form.component.scss']
+    styleUrls: ['../shared.style/shared.style.scss', './pilot.study.form.component.scss']
 })
 export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pilotStudyId: string;
@@ -121,31 +131,18 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     createForm() {
-        if (this.pilotStudyId) {
-            this.pilotStudyForm = this.fb.group({
-                id: [''],
-                created_at: [''],
-                name: ['', Validators.required],
-                location: ['', Validators.required],
-                start: ['', Validators.required],
-                end: ['', Validators.required],
-                total_health_professionals: ['0'],
-                total_patients: ['0'],
-                is_active: [true, Validators.required]
-            });
-        } else {
-            this.pilotStudyForm = this.fb.group({
-                id: [''],
-                created_at: [''],
-                name: ['', Validators.required],
-                location: [''],
-                start: ['', Validators.required],
-                end: [{ value: '', disabled: true }, Validators.required],
-                total_health_professionals: ['0'],
-                total_patients: ['0'],
-                is_active: [true, Validators.required]
-            });
-        }
+        this.pilotStudyForm = this.fb.group({
+            id: [''],
+            created_at: [''],
+            name: ['', Validators.required],
+            location: [''],
+            start: ['', Validators.required],
+            end: ['', Validators.required],
+            total_health_professionals: ['0'],
+            total_patients: ['0'],
+            is_active: [true, Validators.required],
+            data_types: this.fb.array([], FormValidatorUtils.nonEmpty)
+        });
         this.professionalsForm = this.fb.group({
             health_professionals_id_add: ['', Validators.required]
         });
@@ -350,6 +347,14 @@ export class PilotStudyFormComponent implements OnInit, OnChanges, OnDestroy {
     closeAndCleanConfirmationRemoveProfessional(): void {
         this.cacheIdProfessionalRemove = '';
         this.closeConfirmationRemoveProfessional();
+    }
+
+    updateDataTypes(resources: Set<string>): void {
+        const dataTypes = this.pilotStudyForm.get('data_types') as FormArray;
+        dataTypes.clear();
+        Array.from(resources).forEach(resource => {
+            dataTypes.push(new FormControl(resource));
+        });
     }
 
     private search(list: Array<GenericUser>, item: GenericUser): boolean {

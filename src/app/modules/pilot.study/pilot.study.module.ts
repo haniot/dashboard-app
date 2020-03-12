@@ -25,6 +25,9 @@ import { MeasurementModule } from '../measurement/measurement.module'
 import { MatCheckboxModule, MatExpansionModule, MatInputModule, MatStepperModule } from '@angular/material'
 import { HabitsModule } from '../habits/habits.module'
 import { SharedModule } from '../../shared/shared.module'
+import { ActivityModule } from '../activity/activity.module';
+import { PilotStudyConfigComponent } from './pilot.study.config/pilot.study.config.component';
+import { DataTypesPipe } from './pipes/data.types.pipe'
 
 
 @NgModule({
@@ -34,7 +37,9 @@ import { SharedModule } from '../../shared/shared.module'
         PilotStudyComponent,
         ViewHealthProfessionalComponent,
         PilotStudyViewComponent,
-        PilotStudyFilesComponent
+        PilotStudyFilesComponent,
+        PilotStudyConfigComponent,
+        DataTypesPipe
     ],
     imports: [
         CommonModule,
@@ -59,7 +64,8 @@ import { SharedModule } from '../../shared/shared.module'
         MatExpansionModule,
         MatStepperModule,
         HabitsModule,
-        MatInputModule
+        MatInputModule,
+        ActivityModule
     ],
     providers: [
         PilotStudyService

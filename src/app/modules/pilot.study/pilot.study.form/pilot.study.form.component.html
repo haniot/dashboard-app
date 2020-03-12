@@ -97,7 +97,7 @@
                                 <label for="end">
                                     {{'PILOT-STUDY.SITUATION'|translate}}:
                                 </label>
-                                <div class="container">
+                                <div class="container row justify-content-center">
                                     <mat-slide-toggle class="example-margin" [color]="color" formControlName="is_active"
                                                       id="is_active">
                                         {{pilotStudyForm.controls.is_active.value | pilotStudySituation | translate}}
@@ -106,7 +106,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" *ngIf="pilotStudyForm && pilotStudyForm.get('id').value">
                             <div class="form-group has-feedback col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                 <label>
                                     {{'PILOT-STUDY.CARD-PILOT-STUDY.TOTAL-PROFESSIONALS'|translate}}:
@@ -119,31 +119,17 @@
                                     <label class="label-description">{{pilotStudyForm.get('total_patients').value}}</label>
                                 </label>
                             </div>
-                            <!--              <div class="form-group has-feedback col-sm-12 col-md-12 col-lg-12 col-xl-12" [ngClass]="{'has-success': pilotStudyForm.controls.health_professionals_id.valid,-->
-                            <!--            'has-error': pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)}"-->
-                            <!--                *ngIf="!pilotStudyId">-->
-                            <!--                <mat-form-field>-->
-                            <!--                  <mat-label>{{'PILOT-STUDY.PROFESSIONALS'|translate}}:</mat-label>-->
-                            <!--                  <mat-select formControlName="health_professionals_id" name="health_professionals_id" id="health_professionals_id" multiple>-->
-                            <!--                    <mat-option *ngFor="let prof of listProf;trackBy: trackById" [value]="prof.id">{{prof.name}}, {{prof.health_area | healthArea}}</mat-option>-->
-                            <!--                  </mat-select>-->
-                            <!--                </mat-form-field>-->
-                            <!--                <span *ngIf="pilotStudyForm.controls.health_professionals_id.valid" class="glyphicon glyphicon-ok form-control-feedback"-->
-                            <!--                  aria-hidden="true"></span>-->
-                            <!--                <span *ngIf="pilotStudyForm.controls.health_professionals_id.invalid && (pilotStudyForm.controls.health_professionals_id.touched || pilotStudyForm.controls.health_professionals_id.dirty)">-->
-                            <!--                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>-->
-                            <!--                  <span class="text-danger">{{'PILOT-STUDY.SELECT-PROFESSIONALS'|translate}}.</span>-->
-                            <!--                </span>-->
-                            <!--              </div>-->
                         </div>
 
+
+                        <pilot-study-config
+                                [dataTypes]="pilotStudyForm.get('data_types').value"
+                                (change)="updateDataTypes($event)">
+
+                        </pilot-study-config>
+
+
                         <div class="d-flex justify-content-end">
-                            <!--                            <div class="p-2">-->
-                            <!--                                <button type="button" class="btn btn-haniot-secondary" (click)="onBack()">-->
-                            <!--                                    <i class="material-icons" id="iconBack">arrow_back</i>-->
-                            <!--                                    {{'SHARED.TOBACK'|translate}}-->
-                            <!--                                </button>-->
-                            <!--                            </div>-->
                             <div class="p-2">
                                 <button type="button" class="btn btn-haniot-primary" (click)="onSubmit()"
                                         [disabled]="!pilotStudyForm.valid">

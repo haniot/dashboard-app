@@ -22,7 +22,7 @@ const PaginatorConfig = ConfigurationBasic;
 @Component({
     selector: 'app-pilot-study-view',
     templateUrl: './pilot.study.view.component.html',
-    styleUrls: ['./pilot.study.view.component.scss']
+    styleUrls: ['../shared.style/shared.style.scss', './pilot.study.view.component.scss']
 })
 export class PilotStudyViewComponent implements OnInit, OnDestroy {
     @Input() pilotStudyId: string;
