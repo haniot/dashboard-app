@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series';
 import { TimeSeriesService } from '../services/time.series.service'
+import * as echarts from 'echarts'
 
 @Component({
     selector: 'actives-minutes',
@@ -38,7 +39,7 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.loadGraph();
+        this.completeDataSet();
     }
 
     onChartInit(event) {
@@ -57,7 +58,7 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
             .then((activeMinutes: TimeSeries) => {
                 if (activeMinutes && activeMinutes.data_set) {
                     this.data = activeMinutes;
-                    this.loadGraph();
+                    this.completeDataSet();
                 }
                 this.listIsEmpty = !(this.data) || (!this.data.summary || !this.data.summary.total);
                 this.showSpinner = false;
@@ -69,57 +70,105 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
             });
     }
 
+    completeDataSet(): void {
+        if (this.intraday && this.data && this.data.data_set) {
+            const completeDataSet = new TimeSeries().completeDataSet();
+            this.data.data_set = this.data.data_set.concat(completeDataSet.slice(this.data.data_set.length));
+        }
+        this.loadGraph();
+    }
 
     loadGraph() {
 
         const activeMinutes = this.translateService.instant('TIME-SERIES.ACTIVE-MINUTES.ACTIVE-MINUTES');
 
-        const xAxisOptions = {
-            show: !this.intraday,
-            data: [],
-            silent: false,
-            splitLine: {
-                show: false
+        if (this.intraday && this.data && this.data.data_set) {
+            this.data.data_set.push({ time: '23:59:59' });
+        }
+
+        const xAxisLenght = this.data && this.data.data_set ? this.data.data_set.length : 0;
+
+        const xAxisOptions = this.intraday ? {
+                data: [],
+                axisLabel: {
+                    formatter: (value, index) => {
+                        return (index === 0) || (index === xAxisLenght - 1) ? value : '';
+                    },
+                    showMinLabel: true,
+                    showMaxLabel: true
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                boundaryGap: false
             }
-        };
-        const seriesOptions = {
-            type: 'bar',
-            color: '#AFE42C',
-            data: [],
-            barMaxWidth: '30%',
-            animationDelay: function (idx) {
-                return idx * 10;
-            }
-        };
+            : {
+                show: !this.intraday,
+                data: [],
+                silent: false,
+                splitLine: {
+                    show: false
+                }
+            };
+
+        const seriesOptions = this.intraday ?
+            {
+                type: 'line',
+                step: true,
+                itemStyle: {
+                    color: '#AFE42C'
+                },
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#AFE42C'
+                    }, {
+                        offset: 1,
+                        color: '#AFE42C'
+                    }])
+                },
+                data: []
+            } : {
+                type: 'bar',
+                color: '#AFE42C',
+                data: [],
+                barMaxWidth: '30%',
+                animationDelay: function (idx) {
+                    return idx * 10;
+                }
+            };
 
         if (this.data && this.data.data_set) {
             if (this.intraday) {
                 this.data.data_set.forEach((element: { time: string, value: number }) => {
-                    if (element.value) {
-                        xAxisOptions.data.push(element.time);
-                        seriesOptions.data.push({
-                            value: element.value,
-                            formatted: element.value,
-                            time: element.time
-                        });
-                    }
+
+                    xAxisOptions.data.push(element.time);
+                    seriesOptions.data.push({
+                        value: element.value,
+                        formatted: element.value,
+                        time: element.time
+                    });
+
                 });
             } else {
                 this.data.data_set.forEach((element: TimeSeriesItem) => {
-                    if (element.value) {
-                        xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
-                        seriesOptions.data.push({
-                            value: element.value,
-                            formatted: element.value,
-                            time: this.datePipe.transform(element.date, 'mediumTime')
-                        });
-                    }
+
+                    xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
+                    seriesOptions.data.push({
+                        value: element.value,
+                        formatted: element.value,
+                        time: this.datePipe.transform(element.date, 'mediumTime')
+                    });
+
                 });
             }
         }
 
-        const grid = this.intraday ? [{ x: '5%', y: '7%', width: '100%', height: '90%' }] :
-            [{ x: '5%', y: '5%', width: '100%', height: '88%' }]
+        const grid = [{ x: '5%', y: '7%', width: '92%', height: '88%' }];
+
         const yAxisMargin = this.onlyGraph ? -20 : 8;
 
         this.options = {
@@ -130,8 +179,11 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
             tooltip: {
                 trigger: 'axis',
                 formatter: function (params) {
-                    return `${params[0].name}<br>` +
-                        `${params[0].marker} ${params[0].data.formatted} ${activeMinutes}`;
+                    if (params[0] && params[0].data && params[0].data.formatted !== undefined) {
+                        return `${params[0].name}<br>` +
+                            `${params[0].marker} ${params[0].data.formatted} ${activeMinutes}`;
+                    }
+                    return `${params[0].name}`;
                 }
             },
             grid,
@@ -177,7 +229,7 @@ export class ActivesMinutesComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.data && changes.data.currentValue !== changes.data.previousValue) {
-            this.loadGraph();
+            this.completeDataSet();
         }
         if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
             && changes.filter.currentValue !== changes.filter.previousValue) ||

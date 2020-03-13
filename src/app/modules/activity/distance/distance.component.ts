@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series';
 import { TimeSeriesService } from '../services/time.series.service'
 import { DistancePipe } from '../pipes/distance.pipe'
+import * as echarts from 'echarts'
 
 @Component({
     selector: 'distance',
@@ -39,7 +40,7 @@ export class DistanceComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.loadGraph();
+        this.completeDataSet();
     }
 
     onChartInit(event) {
@@ -58,7 +59,7 @@ export class DistanceComponent implements OnInit, OnChanges {
             .then((distance: TimeSeries) => {
                 if (distance && distance.data_set) {
                     this.data = distance;
-                    this.loadGraph();
+                    this.completeDataSet();
                 }
                 this.listIsEmpty = !(this.data) || (!this.data.summary || !this.data.summary.total);
                 this.showSpinner = false;
@@ -70,55 +71,103 @@ export class DistanceComponent implements OnInit, OnChanges {
             });
     }
 
+    completeDataSet(): void {
+        if (this.intraday && this.data && this.data.data_set) {
+            const completeDataSet = new TimeSeries().completeDataSet();
+            this.data.data_set = this.data.data_set.concat(completeDataSet.slice(this.data.data_set.length));
+        }
+        this.loadGraph();
+    }
+
     loadGraph() {
 
-        const xAxisOptions = {
-            show: !this.intraday,
-            data: [],
-            silent: false,
-            splitLine: {
-                show: false
-            }
-        };
+        if (this.intraday && this.data && this.data.data_set) {
+            this.data.data_set.push({ time: '23:59:59' });
+        }
 
-        const seriesOptions = {
-            type: 'bar',
-            color: '#ffc04d',
-            data: [],
-            barMaxWidth: '50px',
-            animationDelay: function (idx) {
-                return idx * 10;
+        const xAxisLenght = this.data && this.data.data_set ? this.data.data_set.length : 0;
+
+        const xAxisOptions = this.intraday ? {
+                data: [],
+                axisLabel: {
+                    formatter: (value, index) => {
+                        return (index === 0) || (index === xAxisLenght - 1) ? value : '';
+                    },
+                    showMinLabel: true,
+                    showMaxLabel: true
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                boundaryGap: false
             }
-        };
+            : {
+                show: !this.intraday,
+                data: [],
+                silent: false,
+                splitLine: {
+                    show: false
+                }
+            };
+
+        const seriesOptions = this.intraday ?
+            {
+                type: 'line',
+                step: true,
+                itemStyle: {
+                    color: '#ffc04d'
+                },
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#ffc04d'
+                    }, {
+                        offset: 1,
+                        color: '#ffc04d'
+                    }])
+                },
+                data: []
+            }
+            : {
+                type: 'bar',
+                color: '#ffc04d',
+                data: [],
+                barMaxWidth: '50px',
+                animationDelay: function (idx) {
+                    return idx * 10;
+                }
+            };
 
         if (this.data && this.data.data_set) {
             if (this.intraday) {
                 this.data.data_set.forEach((element: { time: string, value: string }) => {
-                    if (element.value) {
-                        xAxisOptions.data.push(element.time);
-                        seriesOptions.data.push({
-                            value: element.value,
-                            formatted: this.decimalPipe.transform(element.value, '1.1-3') + 'm',
-                            time: element.time
-                        });
-                    }
+
+                    xAxisOptions.data.push(element.time);
+                    seriesOptions.data.push({
+                        value: element.value,
+                        formatted: this.decimalPipe.transform(element.value, '1.1-3') + 'm',
+                        time: element.time
+                    });
+
                 });
             } else {
                 this.data.data_set.forEach((element: TimeSeriesItem) => {
-                    if (element.value) {
-                        xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
-                        seriesOptions.data.push({
-                            value: element.value,
-                            formatted: this.distancePipe.transform(element.value),
-                            time: this.datePipe.transform(element.date, 'mediumTime')
-                        });
-                    }
+
+                    xAxisOptions.data.push(this.datePipe.transform(element.date, 'shortDate'));
+                    seriesOptions.data.push({
+                        value: element.value,
+                        formatted: this.distancePipe.transform(element.value),
+                        time: this.datePipe.transform(element.date, 'mediumTime')
+                    });
+
                 });
             }
         }
 
-        const grid = this.intraday ? [{ x: '5%', y: '7%', width: '100%', height: '90%' }] :
-            [{ x: '5%', y: '5%', width: '100%', height: '88%' }];
+        const grid = [{ x: '5%', y: '7%', width: '92%', height: '88%' }];
         const yAxisMargin = this.onlyGraph ? -35 : 8;
 
         this.options = {
@@ -129,14 +178,18 @@ export class DistanceComponent implements OnInit, OnChanges {
             tooltip: {
                 trigger: 'axis',
                 formatter: function (params) {
-                    const { changingThisBreaksApplicationSecurity } = params[0].data.formatted;
-                    if (changingThisBreaksApplicationSecurity) {
+                    if (params[0] && params[0].data && params[0].data.value) {
+                        const { changingThisBreaksApplicationSecurity } = params[0].data.formatted;
+                        if (changingThisBreaksApplicationSecurity) {
+                            return `${params[0].name}<br>` +
+                                `${params[0].marker}` +
+                                `${params[0].data.value > 1 ? changingThisBreaksApplicationSecurity : params[0].data.value + 'm'}`;
+                        }
                         return `${params[0].name}<br>` +
                             `${params[0].marker}` +
-                            `${params[0].data.value > 1 ? changingThisBreaksApplicationSecurity : params[0].data.value + 'm'}`;
+                            `${params[0].data.value > 1 ? params[0].data.formatted : params[0].data.value + 'm'}`;
                     }
-                    return `${params[0].name}<br>` +
-                        `${params[0].marker} ${params[0].data.formatted}`;
+                    return `${params[0].name}`;
                 }
             },
             grid,
@@ -179,7 +232,7 @@ export class DistanceComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.data && changes.data.currentValue !== changes.data.previousValue) {
-            this.loadGraph();
+            this.completeDataSet();
         }
         if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
             && changes.filter.currentValue !== changes.filter.previousValue) ||

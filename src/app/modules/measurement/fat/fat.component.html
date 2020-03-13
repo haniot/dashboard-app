@@ -102,7 +102,7 @@
                                           [(ngModel)]="listCheckMeasurements[i]"></mat-checkbox>
                         </td>
                         <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.VALUE'|translate">
-                            {{(measurement.value | decimalFormatter) + '' + measurement.unit}}
+                            {{(measurement.value | number: '1.2-2') + '' + measurement.unit}}
                         </td>
                         <td [attr.data-th]="'MEASUREMENTS.LOG-MEASUREMENTS-CARD.GENERIC-TABLE.COLLECTION-DATE'|translate">
                             {{measurement.timestamp | date : "mediumDate"}}

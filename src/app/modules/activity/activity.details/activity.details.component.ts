@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PhysicalActivity } from '../models/physical.activity'
 import {
-    HeartRateZone,
+    HeartRateZone, Intervals,
     TimeSeries,
     TimeSeriesFullFilter,
     TimeSeriesItemIntraday,
@@ -188,7 +188,7 @@ export class ActivityDetailsComponent implements OnInit {
             filter.end_date = end_date.toISOString().split('T')[0];
             filter.start_time = this.datePipe.transform(this.physicalActivity.start_time, 'HH:mm:ss');
             filter.end_time = this.datePipe.transform(this.physicalActivity.end_time, 'HH:mm:ss');
-            filter.interval = '1s';
+            filter.interval = Intervals._1s;
             this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.calories, filter)
                 .then(resource => {
                     this.caloriesError = false;
@@ -325,7 +325,7 @@ export class ActivityDetailsComponent implements OnInit {
             filter.end_date = end_date.toISOString().split('T')[0];
             filter.start_time = this.datePipe.transform(this.physicalActivity.start_time, 'HH:mm:ss');
             filter.end_time = this.datePipe.transform(this.physicalActivity.end_time, 'HH:mm:ss');
-            filter.interval = '1s';
+            filter.interval = Intervals._1s;
             this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.heart_rate, filter)
                 .then((resource: any) => {
                     this.heartRateError = false;

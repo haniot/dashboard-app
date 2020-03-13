@@ -4,6 +4,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { TimeSeries, TimeSeriesItem, TimeSeriesType } from '../models/time.series'
 import { TimeSeriesService } from '../services/time.series.service'
+import * as echarts from 'echarts'
 
 @Component({
     selector: 'steps',
@@ -37,7 +38,7 @@ export class StepsComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.loadGraph();
+        this.completeDataSet();
     }
 
     onChartInit(event) {
@@ -56,7 +57,7 @@ export class StepsComponent implements OnInit, OnChanges {
             .then((step: TimeSeries) => {
                 if (step && step.data_set) {
                     this.data = step;
-                    this.loadGraph();
+                    this.completeDataSet();
                 }
                 this.listIsEmpty = !(this.data) || (!this.data.summary || !this.data.summary.total);
                 this.showSpinner = false;
@@ -68,57 +69,111 @@ export class StepsComponent implements OnInit, OnChanges {
             });
     }
 
+    completeDataSet(): void {
+        if (this.intraday && this.data && this.data.data_set) {
+            const completeDataSet = new TimeSeries().completeDataSet();
+            this.data.data_set = this.data.data_set.concat(completeDataSet.slice(this.data.data_set.length));
+        }
+        this.loadGraph();
+    }
+
     loadGraph() {
 
         const steps = this.translateService.instant('TIME-SERIES.STEPS.STEPS');
 
-        const xAxisOptions = {
-            show: !this.intraday,
-            data: [],
-            silent: false,
-            splitLine: {
-                show: false
-            }
-        };
+        if (this.intraday && this.data && this.data.data_set) {
+            this.data.data_set.push({ time: '23:59:59' });
+        }
 
-        const seriesOptions = {
-            type: 'bar',
-            data: [],
-            color: '#E97493',
-            barMaxWidth: '50px',
-            animationDelay: function (idx) {
-                return idx * 10;
+        const xAxisLenght = this.data && this.data.data_set ? this.data.data_set.length : 0;
+
+        const xAxisOptions = this.intraday ? {
+                data: [],
+                axisLabel: {
+                    formatter: (value, index) => {
+                        return (index === 0) || (index === xAxisLenght - 1) ? value : '';
+                    },
+                    showMinLabel: true,
+                    showMaxLabel: true
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                boundaryGap: false
             }
-        };
+            :
+            {
+                show: true,
+                data: [],
+                axisLabel: {
+                    showMinLabel: true,
+                    showMaxLabel: true
+                },
+                silent: false,
+                splitLine: {
+                    show: false
+                }
+            }
+        ;
+
+        const seriesOptions = this.intraday ?
+            {
+                type: 'line',
+                step: true,
+                itemStyle: {
+                    color: '#E97493'
+                },
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#E97493'
+                    }, {
+                        offset: 1,
+                        color: '#E97493'
+                    }])
+                },
+                data: []
+            }
+            : {
+                type: 'bar',
+                data: [],
+                color: '#E97493',
+                barMaxWidth: '50px',
+                animationDelay: function (idx) {
+                    return idx * 10;
+                }
+            };
 
         if (this.data && this.data.data_set) {
             if (this.intraday) {
                 this.data.data_set.forEach((elementStep: { time: string, value: string }) => {
-                    if (elementStep.value) {
-                        xAxisOptions.data.push(elementStep.time);
-                        seriesOptions.data.push({
-                            value: elementStep.value,
-                            formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
-                            time: elementStep.time
-                        });
-                    }
+
+                    xAxisOptions.data.push(elementStep.time);
+                    seriesOptions.data.push({
+                        value: elementStep.value,
+                        formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
+                        time: elementStep.time
+                    });
+
                 });
             } else {
                 this.data.data_set.forEach((elementStep: TimeSeriesItem) => {
-                    if (elementStep.value) {
-                        xAxisOptions.data.push(this.datePipe.transform(elementStep.date, 'shortDate'));
-                        seriesOptions.data.push({
-                            value: elementStep.value,
-                            formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
-                            time: this.datePipe.transform(elementStep.date, 'mediumTime')
-                        });
-                    }
+
+                    xAxisOptions.data.push(this.datePipe.transform(elementStep.date, 'shortDate'));
+                    seriesOptions.data.push({
+                        value: elementStep.value,
+                        formatted: this.numberPipe.transform(elementStep.value, '1.0-0'),
+                        time: this.datePipe.transform(elementStep.date, 'mediumTime')
+                    });
+
                 });
             }
         }
 
-        const grid = this.intraday ? [{ x: '5%', y: '7%', width: '100%', height: '90%' }] :
-            [{ x: '5%', y: '5%', width: '100%', height: '88%' }];
+        const grid = [{ x: '5%', y: '7%', width: '92%', height: '88%' }];
         const yAxisMargin = this.onlyGraph ? -35 : 8;
 
         this.options = {
@@ -129,8 +184,11 @@ export class StepsComponent implements OnInit, OnChanges {
             tooltip: {
                 trigger: 'axis',
                 formatter: function (params) {
-                    return `${params[0].name}<br>` +
-                        `${params[0].marker} ${params[0].data.formatted} ${steps}`;
+                    if (params[0] && params[0].data && params[0].data.formatted) {
+                        return `${params[0].name}<br>` +
+                            `${params[0].marker} ${params[0].data.formatted} ${steps}`;
+                    }
+                    return  `${params[0].name}`;
                 }
             },
             grid,
@@ -173,7 +231,7 @@ export class StepsComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.data && changes.data.currentValue !== changes.data.previousValue) {
-            this.loadGraph();
+            this.completeDataSet();
         }
         if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
             && changes.filter.currentValue !== changes.filter.previousValue) ||
