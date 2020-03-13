@@ -25,7 +25,7 @@ export class LocalStorageService {
         const old: PilotStudy = JSON.parse(this.getItem('selectedPilotStudy'));
         this.setItem('selectedPilotStudy', JSON.stringify(pilotStudy));
         this.pilotStudySelected.emit(pilotStudy);
-        if (old.id !== pilotStudy.id) {
+        if (old && (old.id !== pilotStudy.id)) {
             this.removeItem('patientSelected');
             this.patientSelected.emit();
         }

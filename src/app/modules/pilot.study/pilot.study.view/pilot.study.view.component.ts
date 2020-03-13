@@ -84,8 +84,9 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
         this.createForm();
     }
 
-    selectPilotStudy(): void {
-        this.selectPilotService.pilotStudyHasUpdated(this.pilotStudyId);
+    selectPilotStudy(pilotStudy: PilotStudy): void {
+        this.selectPilotService.pilotStudyHasUpdated(pilotStudy);
+        this.localStorageService.selectedPilotStudy(pilotStudy);
     }
 
     getPilotStudy() {
@@ -94,13 +95,13 @@ export class PilotStudyViewComponent implements OnInit, OnDestroy {
                 .then(res => {
                     this.pilotStudyForm.patchValue(res);
                     this.pilotStudy = res;
-                    this.selectPilotStudy();
+                    this.selectPilotStudy(res);
                     this.loadHealthProfessionals();
                     this.loadPatients();
                 }).catch(() => {
                 const userId = this.localStorageService.getItem('user');
-                const localPilotSelected = this.localStorageService.getItem(userId);
-                this.selectPilotService.pilotStudyHasUpdated(localPilotSelected);
+                const localPilotSelectedId = this.localStorageService.getItem(userId);
+                this.selectPilotService.pilotStudyHasUpdated(localPilotSelectedId);
                 this.toastService.error(this.translateService.instant('TOAST-MESSAGES.STUDY-NOT-FIND'));
                 this.listOfProfessionalIsEmpty = true;
                 this.listOfPatientsIsEmpty = true;

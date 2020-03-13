@@ -107,8 +107,8 @@ export class SidebarComponent implements OnInit {
         this.getUserName();
         this.router.events.subscribe(event => this.updateMenu());
         this.activedRoute.paramMap.subscribe(() => this.updateMenu());
-        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
-            this.getPilotSelected();
+        this.selectPilotService.pilotStudyUpdated.subscribe((study) => {
+            this.setPilotSelected(study);
         });
         this.localStorageService.patientSelected.subscribe(() => {
             this.getPatientSelected();
@@ -152,19 +152,8 @@ export class SidebarComponent implements OnInit {
         }, 1000)
     }
 
-    getPilotSelected(): void {
-        const pilotselected = this.localStorageService.getItem(this.userId);
-        if (pilotselected) {
-            this.studyService.getById(pilotselected)
-                .then(study => {
-                    this.study = study;
-                    this.localStorageService.selectedPilotStudy(study);
-                })
-                .catch(() => {
-
-                });
-        }
-
+    setPilotSelected(pilotStudy: PilotStudy): void {
+        this.study = pilotStudy;
     }
 
     updateMenu() {
