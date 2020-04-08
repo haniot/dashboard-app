@@ -848,7 +848,8 @@
       "REQUEST": "Request",
       "REFERENCE-WORKSHEET": "Reference worksheet",
       "OPEN-REFERENCE-WORKSHEET": "Open reference worksheet..."
-    }
+    },
+    "PARAMETERS-OF-INTEREST": "Parameters of interest"
   },
   "SIDEBAR": {
     "USERS": "Users",

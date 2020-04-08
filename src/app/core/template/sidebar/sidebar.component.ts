@@ -6,11 +6,13 @@ import { AuthService } from '../../../security/auth/services/auth.service'
 import { VerifyScopeService } from '../../../security/services/verify.scope.service'
 import { UserService } from '../../../modules/admin/services/users.service'
 import { Location } from '@angular/common'
-import { PilotStudy } from '../../../modules/pilot.study/models/pilot.study'
+import { EnumPilotStudyDataTypes, PilotStudy } from '../../../modules/pilot.study/models/pilot.study'
 import { SelectPilotStudyService } from '../../../shared/shared.components/select.pilotstudy/service/select.pilot.study.service'
 import { PilotStudyService } from '../../../modules/pilot.study/services/pilot.study.service'
 import { GenericUser } from '../../../shared/shared.models/generic.user'
 import { EnumMeasurementType } from '../../../modules/measurement/models/measurement'
+import { TimeSeriesType } from '../../../modules/activity/models/time.series'
+import { LogicalStrategy } from '../../../shared/shared.directives/include.data.type.directive'
 
 declare const $: any;
 
@@ -79,6 +81,10 @@ export class SidebarComponent implements OnInit {
     iconMeasurementMenu = 'keyboard_arrow_right';
     statePatientMenu: string;
     stateMeasurementMenu: string;
+    EnumMeasurementType = EnumMeasurementType;
+    TimeSeriesType = TimeSeriesType;
+    EnumPilotStudyDataTypes = EnumPilotStudyDataTypes;
+    LogicalStrategy = LogicalStrategy;
 
     constructor(
         private authService: AuthService,
@@ -101,8 +107,8 @@ export class SidebarComponent implements OnInit {
         this.getUserName();
         this.router.events.subscribe(event => this.updateMenu());
         this.activedRoute.paramMap.subscribe(() => this.updateMenu());
-        this.selectPilotService.pilotStudyUpdated.subscribe(() => {
-            this.getPilotSelected();
+        this.selectPilotService.pilotStudyUpdated.subscribe((study) => {
+            this.setPilotSelected(study);
         });
         this.localStorageService.patientSelected.subscribe(() => {
             this.getPatientSelected();
@@ -146,18 +152,8 @@ export class SidebarComponent implements OnInit {
         }, 1000)
     }
 
-    getPilotSelected(): void {
-        const pilotselected = this.localStorageService.getItem(this.userId);
-        if (pilotselected) {
-            this.studyService.getById(pilotselected)
-                .then(study => {
-                    this.study = study;
-                })
-                .catch(() => {
-
-                });
-        }
-
+    setPilotSelected(pilotStudy: PilotStudy): void {
+        this.study = pilotStudy;
     }
 
     updateMenu() {

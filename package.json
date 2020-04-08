@@ -1,6 +1,6 @@
 {
   "name": "haniot-dashboard",
-  "version": "3.3.1",
+  "version": "3.3.2",
   "license": "Apache 2.0",
   "autor": "NUTES/UEPB",
   "scripts": {
@@ -33,7 +33,7 @@
     "@angular/router": "^9.0.1",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
-    "acorn": "^6.4.0",
+    "acorn": "^6.4.1",
     "angular-gridster2": "^9.0.0",
     "bootstrap": "^4.4.1",
     "bootstrap-material-design": "^4.1.2",

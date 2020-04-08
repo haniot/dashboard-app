@@ -27,7 +27,7 @@ const PaginatorConfig = ConfigurationBasic;
 @Component({
     selector: 'pilot-study-files',
     templateUrl: './pilot.study.files.component.html',
-    styleUrls: ['./pilot.study.files.component.scss']
+    styleUrls: ['../shared.style/shared.style.scss', './pilot.study.files.component.scss']
 })
 export class PilotStudyFilesComponent implements OnInit, OnChanges {
     LengthDataTypes = 2;

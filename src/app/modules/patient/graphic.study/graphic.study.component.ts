@@ -11,7 +11,12 @@ import { TimeSeriesService } from '../../activity/services/time.series.service';
 import { MeasurementTypePipe } from '../../measurement/pipes/measurement.type.pipe';
 import { TimeSeriesPipe } from '../../activity/pipes/time.series.pipe';
 import { EnumMeasurementType } from '../../measurement/models/measurement';
-import { TimeSeriesIntervalFilter, TimeSeriesType } from '../../activity/models/time.series';
+import {
+    defaultIntervalIntraday,
+    Intervals,
+    TimeSeriesIntervalFilter,
+    TimeSeriesType
+} from '../../activity/models/time.series';
 
 class ConfigVisibility {
     weight: boolean;
@@ -84,7 +89,7 @@ export class GraphicStudyComponent implements OnInit {
         this.configVisibility = new ConfigVisibility();
         this.filter = new TimeSeriesIntervalFilter();
         this.filter.date = new Date().toISOString().split('T')[0];
-        this.filter.interval = '15m';
+        this.filter.interval = defaultIntervalIntraday;
         this.resourcesSelected = [];
         this.resourcesOptions = [];
         this.intraday = true;

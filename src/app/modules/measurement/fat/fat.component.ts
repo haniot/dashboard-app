@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -9,6 +9,7 @@ import { PageEvent } from '@angular/material'
 import { ConfigurationBasic } from '../../config.matpaginator'
 import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../activity/models/time.series'
 import { ModalService } from '../../../shared/shared.components/modal/service/modal.service'
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable'
 
 const PaginatorConfig = ConfigurationBasic;
 
@@ -48,6 +49,7 @@ export class FatComponent implements OnInit, OnChanges {
 
     constructor(
         private datePipe: DatePipe,
+        private decimalPipe: DecimalPipe,
         private measurementService: MeasurementService,
         private translateService: TranslateService,
         private modalService: ModalService
@@ -110,7 +112,7 @@ export class FatComponent implements OnInit, OnChanges {
                     position: 'outside',
                     offset: [0, -5],
                     formatter: function (params) {
-                        return `${params.value}% `;
+                        return `${params.value.toFixed(2)}% `;
                     },
                     textStyle: {
                         fontSize: 18,

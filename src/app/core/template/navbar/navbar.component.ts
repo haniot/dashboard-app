@@ -103,7 +103,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 this.getTitle();
             }),
             this.localStorageService.patientSelected.subscribe(event => {
-                this.titleComplement = event.name;
+                this.titleComplement = event && event.name ? event.name : '';
             })
         );
         this.pilotStudyId = this.localStorageService.getItem('pilotstudy_id');

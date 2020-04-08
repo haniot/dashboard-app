@@ -848,7 +848,8 @@
       "REQUEST": "Solicitar",
       "REFERENCE-WORKSHEET": "Planilha de Referência",
       "OPEN-REFERENCE-WORKSHEET": "Abrir planilha de referência..."
-    }
+    },
+    "PARAMETERS-OF-INTEREST": "Parâmetros de interesse"
   },
   "SIDEBAR": {
     "USERS": "Usuários",

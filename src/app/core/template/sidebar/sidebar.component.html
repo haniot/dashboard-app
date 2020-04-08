@@ -121,13 +121,17 @@
             </a>
             <ul class="collapse list-unstyled submenu" [ngClass]="statePatientMenu"
                 id="patientSubmenu">
-                <li class="nav-subitem" [ngClass]="activeDashboardPatients">
+                <li class="nav-subitem" [ngClass]="activeDashboardPatients" includeDataType
+                    [dataTypes]="[EnumPilotStudyDataTypes.physical_activity, TimeSeriesType.calories, TimeSeriesType.steps, TimeSeriesType.active_minutes, TimeSeriesType.heart_rate]"
+                    [strategy]="LogicalStrategy.or">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'dashboard']">
                         <i class="material-icons">view_quilt</i>
                         <p>{{'SIDEBAR.DASHBOARD'|translate}}</p>
                     </a>
                 </li>
-                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients || activeGraphicStudy">
+                <li class="nav-subitem" [ngClass]="activeMeasurementsPatients || activeGraphicStudy" includeDataType
+                    [dataTypes]="[EnumMeasurementType.weight, EnumMeasurementType.height, EnumMeasurementType.waist_circumference, EnumMeasurementType.body_temperature, EnumMeasurementType.blood_glucose, EnumMeasurementType.blood_pressure,TimeSeriesType.heart_rate]"
+                    [strategy]="LogicalStrategy.or">
                     <a class="nav-link"
                        [routerLink]="['/app/patients',patientSelected,'measurements']">
                         <p>
@@ -149,7 +153,9 @@
                     </ul>
                 </li>
 
-                <li class="nav-subitem" [ngClass]="activeQuestionnairesPatients">
+                <li class="nav-subitem" [ngClass]="activeQuestionnairesPatients" includeDataType
+                    [dataTypes]="[EnumPilotStudyDataTypes.quest_nutritional, EnumPilotStudyDataTypes.quest_odontological]"
+                    [strategy]="LogicalStrategy.or">
                     <a class="nav-link" [routerLink]="['/app/patients',patientSelected,'questionnaires']">
                         <i class="material-icons">receipt</i>
                         <p>{{'SIDEBAR.QUESTIONNAIRES'|translate}}</p>

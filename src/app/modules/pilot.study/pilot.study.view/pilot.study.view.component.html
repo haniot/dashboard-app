@@ -96,6 +96,10 @@
                                 </div>
                             </div>
 
+                            <pilot-study-config [dataTypes]="pilotStudyForm && pilotStudyForm.get('data_types')?pilotStudyForm.get('data_types').value:[]" [readOnly]="true">
+
+                            </pilot-study-config>
+
                         </form>
 
                         <div class="row justify-content-center">

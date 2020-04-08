@@ -1,3 +1,15 @@
+import * as moment from 'moment'
+import { DurationInputArg2 } from 'moment'
+
+export enum Intervals {
+    _1s = '1s',
+    _15s = '15s',
+    _1m = '1m',
+    _15m = '15m'
+}
+
+export const defaultIntervalIntraday = Intervals._15m;
+
 export class TimeSeries {
     /* required */
     private _data_set: Array<TimeSeriesItem | HeartRateItem>;
@@ -19,6 +31,19 @@ export class TimeSeries {
 
     set data_set(value: Array<any>) {
         this._data_set = value
+    }
+
+    completeDataSet(): TimeSeriesItemIntraday[] {
+        const completeDataSet: TimeSeriesItemIntraday[] = [];
+        const start = moment().startOf('day');
+        const end = start.clone().endOf('day');
+        const interval = defaultIntervalIntraday.match(/\d+/g);
+        const intervalUnit: DurationInputArg2 = defaultIntervalIntraday.match(/\D+/g)[0] as DurationInputArg2;
+        while (start < end) {
+            completeDataSet.push({ time: start.format('HH:mm:ss')} as TimeSeriesItemIntraday);
+            start.add(parseInt(interval[0], 10), intervalUnit);
+        }
+        return completeDataSet;
     }
 }
 

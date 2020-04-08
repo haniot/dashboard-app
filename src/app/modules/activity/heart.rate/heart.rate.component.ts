@@ -49,7 +49,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.loadGraph();
+        this.completeDataSet();
     }
 
     onOptionsChartInit(instance) {
@@ -60,15 +60,21 @@ export class HeartRateComponent implements OnInit, OnChanges {
         this.intradayInstance = instance;
     }
 
+    completeDataSet(): void {
+        if (this.intraday && this.data && this.data.data_set) {
+            const completeDataSet = new TimeSeries().completeDataSet();
+            this.data.data_set = this.data.data_set.concat(completeDataSet.slice(this.data.data_set.length));
+        }
+        this.loadGraph();
+    }
+
+
     loadGraph() {
 
         const frequency = this.translateService.instant('TIME-SERIES.HEART-RATE.FREQUENCY');
 
         const hour = this.translateService.instant('SHARED.HOUR');
         const at = this.translateService.instant('SHARED.AT');
-
-        const max = this.translateService.instant('MEASUREMENTS.MAX');
-        const min = this.translateService.instant('MEASUREMENTS.MIN');
 
         const low = this.translateService.instant('TIME-SERIES.HEART-RATE.LOW');
         const normal = this.translateService.instant('TIME-SERIES.HEART-RATE.NORMAL');
@@ -90,7 +96,32 @@ export class HeartRateComponent implements OnInit, OnChanges {
             { name: name_peak, stack: 'stack', type: 'bar', data: [], barMaxWidth: '30%', color: '#E60013' }
         ];
 
-        const xAxisOptionsLastDate = { show: false, data: [] };
+        if (this.intraday && this.data && this.data.data_set) {
+            this.data.data_set.push({ time: '23:59:59', value: 0 });
+        }
+
+        const xAxisLenght = this.data && this.data.data_set ? this.data.data_set.length : 0;
+
+        const xAxisOptionsIntraday = this.intraday ? {
+                data: [],
+                axisLabel: {
+                    formatter: (value, index) => {
+                        return (index === 0) || (index === xAxisLenght - 1) ? value : '';
+                    },
+                    showMinLabel: true,
+                    showMaxLabel: true
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                boundaryGap: false
+            }
+            : {
+                show: false, data: []
+            };
 
         const seriesOptionsLastDate = {
             type: 'line',
@@ -155,13 +186,13 @@ export class HeartRateComponent implements OnInit, OnChanges {
             if (this.intraday) {
                 this.data.data_set.forEach((element: { time: string, value: number }) => {
                     min_value = element.value < min_value ? element.value : min_value;
-                    if (element.value) {
-                        xAxisOptionsLastDate.data.push(element.time);
-                        seriesOptionsLastDate.data.push({
-                            value: element.value,
-                            time: element.time
-                        });
-                    }
+
+                    xAxisOptionsIntraday.data.push(element.time);
+                    seriesOptionsLastDate.data.push({
+                        value: element.value,
+                        time: element.time
+                    });
+
                 });
             } else {
                 this.data.data_set.forEach((element: HeartRateItem) => {
@@ -245,7 +276,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
         const grid = this.hiddenYAxis ? [{ x: '1%', y: '10%', width: '98%', height: '80%' }] : [{
             x: '7%',
             y: '8%',
-            width: '93%',
+            width: '90%',
             height: '86%'
         }];
 
@@ -254,20 +285,24 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 trigger: 'axis',
                 formatter: function (params) {
                     params = params[0];
-                    if (params.data.type === 'max' || params.data.type === 'min') {
-                        const t = seriesOptionsLastDate.data.find(currenHeartRate => {
-                            return currenHeartRate.value === params.value;
-                        });
-                        if (t) {
-                            return `${frequency} : ${t.value} bpm <br> ${hour}: <br> ${t.date} ${at} ${t.time}`
-                        }
+                    if (params && params.value) {
+                        if (params.data.type === 'max' || params.data.type === 'min') {
+                            const t = seriesOptionsLastDate.data.find(currenHeartRate => {
+                                return currenHeartRate.value === params.value;
+                            });
+                            if (t) {
+                                return `${frequency} : ${t.value} bpm <br> ${hour}: <br> ${t.date} ${at} ${t.time}`
+                            }
 
+                        }
+                        const { value, date, time } = params.data
+                        return `${params.marker}<br>${frequency} : ${value} bpm <br> ${hour}: ${time}`
                     }
-                    const { value, date, time } = params.data
-                    return `${params.marker}<br>${frequency} : ${value} bpm <br> ${hour}: ${time}`
+                    return `${params.marker}<br>${params.data.time}`
+
                 }
             },
-            xAxis: xAxisOptionsLastDate,
+            xAxis: xAxisOptionsIntraday,
             yAxis: {
                 show: yAxisVisibility,
                 splitLine: {
@@ -329,7 +364,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
                 if (heartRate && heartRate.data_set) {
                     this.data = heartRate;
                     this.zones = heartRate.summary.zones ? heartRate.summary.zones : new HeartRateZone();
-                    this.loadGraph();
+                    this.completeDataSet();
                 }
                 if (this.intraday) {
                     this.listIsEmpty = !(this.data) || (!this.data.summary) ||
@@ -371,7 +406,7 @@ export class HeartRateComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.data && changes.data.currentValue !== changes.data.previousValue) {
-            this.loadGraph();
+            this.completeDataSet();
         }
         if ((changes.filter && changes.filter.currentValue && changes.filter.previousValue
             && changes.filter.currentValue !== changes.filter.previousValue) ||

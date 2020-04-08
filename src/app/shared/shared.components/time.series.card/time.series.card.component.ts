@@ -3,9 +3,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as $ from 'jquery'
 import * as moment from 'moment'
 
-import { TimeSeriesIntervalFilter, TimeSeriesSimpleFilter } from '../../../modules/activity/models/time.series'
+import {
+    defaultIntervalIntraday,
+    Intervals,
+    TimeSeriesIntervalFilter,
+    TimeSeriesSimpleFilter
+} from '../../../modules/activity/models/time.series'
 import { DateRange } from '../../../modules/pilot.study/models/range-date'
 import { ActivatedRoute, Params, Router } from '@angular/router'
+import { DatePipe } from '@angular/common'
 
 export const FilterOptions = {
     today: 'today',
@@ -37,6 +43,7 @@ export class TimeSeriesCardComponent implements OnInit {
 
     constructor(
         private activeRouter: ActivatedRoute,
+        private datePipe: DatePipe,
         private router: Router) {
         this.currentDate = new Date();
         this.filter_change = new EventEmitter();
@@ -59,7 +66,7 @@ export class TimeSeriesCardComponent implements OnInit {
             const dateFormatted: string = moment(this.currentDate).format();
             filter = new TimeSeriesIntervalFilter()
             filter.date = dateFormatted.split('T')[0];
-            filter.interval = '15m';
+            filter.interval = defaultIntervalIntraday;
         } else {
             filter = new TimeSeriesSimpleFilter()
             const startFormatted: string = moment(this.startOfDate).format();
@@ -182,8 +189,8 @@ export class TimeSeriesCardComponent implements OnInit {
             const date = this.currentDate.toISOString().split('T')[0];
             queryParams = { date };
         } else {
-            const start_date = this.startOfDate.toISOString().split('T')[0];
-            const end_date = this.endOfDate.toISOString().split('T')[0];
+            const start_date = this.datePipe.transform(this.startOfDate, 'yyyy-MM-dd');
+            const end_date = this.datePipe.transform(this.endOfDate, 'yyyy-MM-dd');
             queryParams = { start_date, end_date };
         }
         this.router.navigate(

@@ -253,13 +253,11 @@
                                     <ngx-gauge-append *ngIf="stepsHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.steps ? (Math.min(Math.round((stepsValue * 100) / goal.steps), 100)) : 100}}
-                                                %
+                                                {{goal && goal.steps ? (Math.min(Math.round((stepsValue * 100) / goal.steps), 100)) : 100}}%
                                             </label>
                                             <label class="label-time-series-goal">
                                                 {{'SHARED.OF'|translate}}
-                                                {{goal && goal.steps ? (goal.steps| number:'1.0-0') : 0}}
-                                                <small>pas</small>
+                                                {{goal && goal.steps ? (goal.steps| number:'1.0-0') : 0}} <small>pas.</small>
                                             </label>
                                         </div>
                                     </ngx-gauge-append>
@@ -269,8 +267,7 @@
                                 <div class="text-center container-flex"
                                      style="position: absolute;bottom:0%;width: 85%;">
                                     <label class="ellipsis label-time-series">
-                                        {{stepsValue | number:'1.0-0'}}
-                                        <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
+                                        {{stepsValue | number:'1.0-0'}} <small>{{'TIME-SERIES.STEPS.STEPS'|translate}}</small>
                                     </label>
                                 </div>
                             </div>
@@ -312,12 +309,10 @@
                                     <ngx-gauge-append *ngIf="caloriesHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.calories ? (Math.min(Math.round((caloriesValue * 100) / goal.calories), 100)) : 100}}
-                                                %
+                                                {{goal && goal.calories ? (Math.min(Math.round((caloriesValue * 100) / goal.calories), 100)) : 100}}%
                                             </label>
                                             <label class="label-time-series-goal">
-                                                {{'SHARED.OF'|translate}} {{goal && goal.calories ? (goal.calories|number:'1.0-0') : 0}}
-                                                <small>cals</small>
+                                                {{'SHARED.OF'|translate}} {{goal && goal.calories ? (goal.calories|number:'1.0-0') : 0}} <small>cals.</small>
                                             </label>
                                         </div>
                                     </ngx-gauge-append>
@@ -327,8 +322,7 @@
                                 <div class="text-center container-flex"
                                      style="position: absolute;bottom:0%;width: 85%;">
                                     <label class="label-time-series">
-                                        {{caloriesValue | number:'1.0-0'}}
-                                        <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
+                                        {{caloriesValue | number:'1.0-0'}} <small>{{'TIME-SERIES.CALORIES.CALORIES'|translate}}</small>
                                     </label>
                                 </div>
                             </div>
@@ -369,8 +363,7 @@
                                     <ngx-gauge-append *ngIf="activeMinutesHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.active_minutes ? (Math.min(Math.round((activeMinutesValue * 100) / goal.active_minutes), 100)) : 100}}
-                                                %
+                                                {{goal && goal.active_minutes ? (Math.min(Math.round((activeMinutesValue * 100) / goal.active_minutes), 100)) : 100}}%
                                             </label>
                                             <div style="display: flex; align-items: baseline; justify-content: center">
                                                 <label class="label-time-series-goal" style="padding: 0px 5px">
@@ -427,8 +420,7 @@
                                     <ngx-gauge-append *ngIf="distanceHover">
                                         <div class="container-flex-columm centralized-container">
                                             <label class="label-time-series-percent">
-                                                {{goal && goal.distance ? (Math.min(Math.round((distanceValue * 100) / goal.distance), 100)) : 100}}
-                                                %
+                                                {{goal && goal.distance ? (Math.min(Math.round((distanceValue * 100) / goal.distance), 100)) : 100}}%
                                             </label>
                                             <div style="display: flex; align-items: baseline; justify-content: center">
                                                 <label class="label-time-series-goal" style="padding: 0px 5px">

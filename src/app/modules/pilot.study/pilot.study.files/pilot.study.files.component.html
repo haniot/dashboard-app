@@ -190,13 +190,13 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                        <label>Tipos de Medições:</label>
+                        <label>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-MEASUREMENTS'|translate}}:</label>
                         <span *ngFor="let type of lastFile.data_types">
                             <p *ngIf="(type|measurementType)!=='MEASUREMENTS.PIPES.NOTFOUND'">{{type|measurementType|translate}}</p>
                         </span>
                     </div>
                     <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center">
-                        <label>Tipos de Questionários:</label>
+                        <label>{{'PILOT-STUDY.CARD-FILES.TYPES-OF-QUESTIONNAIRES'|translate}}:</label>
                         <span *ngFor="let type of lastFile.data_types">
                             <p *ngIf="(type|questionnaireType)!=='HABITS.PIPES.DO-NOT-KNOW'">{{type|questionnaireType|translate}}</p>
                         </span>

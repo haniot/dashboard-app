@@ -3,19 +3,32 @@ import { EventEmitter, Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js'
 import { environment } from '../../../environments/environment'
 import { Patient } from '../../modules/patient/models/patient'
+import { PilotStudy } from '../../modules/pilot.study/models/pilot.study'
 
 
 @Injectable()
 export class LocalStorageService {
     patientSelected: EventEmitter<any>;
+    pilotStudySelected: EventEmitter<any>;
 
     constructor() {
         this.patientSelected = new EventEmitter();
+        this.pilotStudySelected = new EventEmitter();
     }
 
     selectedPatient(patient: Patient): void {
         this.setItem('patientSelected', JSON.stringify(patient));
         this.patientSelected.emit(patient);
+    }
+
+    selectedPilotStudy(pilotStudy: PilotStudy): void {
+        const old: PilotStudy = JSON.parse(this.getItem('selectedPilotStudy'));
+        this.setItem('selectedPilotStudy', JSON.stringify(pilotStudy));
+        this.pilotStudySelected.emit(pilotStudy);
+        if (old && (old.id !== pilotStudy.id)) {
+            this.removeItem('patientSelected');
+            this.patientSelected.emit();
+        }
     }
 
     getItem(key: string): string {

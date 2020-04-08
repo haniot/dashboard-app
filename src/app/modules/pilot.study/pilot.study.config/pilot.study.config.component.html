@@ -1,0 +1,139 @@
+<div class="row">
+    <div class="col-12">
+        <label>{{'PILOT-STUDY.PARAMETERS-OF-INTEREST'|translate}}</label>
+    </div>
+
+    <div class="col-12">
+        <mat-accordion multi="true">
+            <mat-expansion-panel expanded="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{'SIDEBAR.MEASUREMENTS'|translate}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <div class="container">
+                            <div class="row justify-content-end">
+                                <mat-checkbox [(ngModel)]="measurementAll"
+                                              (click)="stopPropagation($event)"
+                                              [ngModelOptions]="{standalone: true}"
+                                              (change)="selectAllMeasurements($event)">
+                                    {{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.SELECT-ALL'|translate}}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center"
+                             *ngFor="let measurementType of measurementsTypes; index as i">
+                            <mat-checkbox [(ngModel)]="listCheckMeasurement[i]"
+                                          [ngModelOptions]="{standalone: true}"
+                                          (click)="stopPropagation($event)"
+                                          (change)="changeMeasurements()">
+                                {{measurementType|measurementType|translate}}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel expanded="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{'SIDEBAR.QUESTIONNAIRES'|translate}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <div class="container">
+                            <div class="row justify-content-end">
+                                <mat-checkbox [(ngModel)]="questionnairesAll"
+                                              [ngModelOptions]="{standalone: true}"
+                                              (click)="stopPropagation($event)"
+                                              (change)="selectAllQuestionnaires($event)">
+                                    {{'EVALUATION.NUTRITION-EVALUATION.CARD-NUTRITION.SELECT-ALL'|translate}}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center" *ngFor="let quest of questionnairesTypes; index as i">
+                            <mat-checkbox [(ngModel)]="listCheckQuestionnaries[i]"
+                                          [ngModelOptions]="{standalone: true}"
+                                          (click)="stopPropagation($event)"
+                                          (change)="changeQuestionnaries()">
+                                {{quest|dataTypes|translate}}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel expanded="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{'ACTIVITY.ACTIVITIES'|translate}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <div class="container">
+                            <div class="row justify-content-end">
+                                <mat-checkbox [(ngModel)]="activitiesAll"
+                                              [ngModelOptions]="{standalone: true}"
+                                              (click)="stopPropagation($event)"
+                                              (change)="selectAllActivities($event)">
+                                    {{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.SELECT-ALL'|translate}}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center" *ngFor="let activity of activitiesTypes; index as i">
+                            <mat-checkbox [(ngModel)]="listCheckActivities[i]"
+                                          [ngModelOptions]="{standalone: true}"
+                                          (click)="stopPropagation($event)"
+                                          (change)="changeActivities()">
+                                {{activity|dataTypes|translate}}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel expanded="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{'TIME-SERIES.TITLE'|translate}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <div class="container">
+                            <div class="row justify-content-end">
+                                <mat-checkbox [(ngModel)]="timeSeriesAll"
+                                              [ngModelOptions]="{standalone: true}"
+                                              (click)="stopPropagation($event)"
+                                              (change)="selectAllTimeSeries($event)">
+                                    {{'ACTIVITY.PHYSICAL-ACTIVITY.HISTORY-TABLE.SELECT-ALL'|translate}}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center"
+                             *ngFor="let timeSerieType of timeSeriesTypes; index as i">
+                            <mat-checkbox [(ngModel)]="listCheckTimeSerie[i]"
+                                          [ngModelOptions]="{standalone: true}"
+                                          (click)="stopPropagation($event)"
+                                          (change)="changeTimeSeries()">
+                                {{timeSerieType|timeSeries|translate}}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

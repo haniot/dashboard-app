@@ -8,6 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 import * as echarts from 'echarts'
 
 import {
+    defaultIntervalIntraday,
+    Intervals,
     TimeSeriesFullFilter,
     TimeSeriesIntervalFilter,
     TimeSeriesSimpleFilter,
@@ -179,7 +181,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         this.listActivities = [];
         this.currentFilter = new TimeSeriesIntervalFilter();
         this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
-        this.currentFilter.interval = '15m';
+        this.currentFilter.interval = defaultIntervalIntraday;
         this.sleepSize = 250;
         this.stepSize = 200;
         this.caloriesSize = 200;
@@ -205,7 +207,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
             const dateSelected = timeZoneOffset ? new Date(`${date}T0${timeZoneOffset / 60}:00:00Z`) : new Date(`${date}T00:00:00Z`);
             this.currentDate = dateSelected.getTime() <= new Date().getTime() ? dateSelected : new Date();
             this.currentFilter.date = this.currentDate.toISOString().split('T')[0];
-            this.currentFilter.interval = '15m';
+            this.currentFilter.interval = defaultIntervalIntraday;
             this.updateQueryParams();
         }
     }
@@ -305,7 +307,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         filter.end_date = end_date.toISOString().split('T')[0];
         filter.start_time = this.datePipe.transform(activity.start_time, 'HH:mm:ss');
         filter.end_time = this.datePipe.transform(activity.end_time, 'HH:mm:ss');
-        filter.interval = '1s';
+        filter.interval = Intervals._1s;
         this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.calories, filter)
             .then(calories => {
                 const series = {
@@ -405,7 +407,7 @@ export class ActivityDashboardComponent implements OnInit, OnChanges {
         filter.end_date = end_date.toISOString().split('T')[0];
         filter.start_time = this.datePipe.transform(activity.start_time, 'HH:mm:ss');
         filter.end_time = this.datePipe.transform(activity.end_time, 'HH:mm:ss');
-        filter.interval = '1s';
+        filter.interval = Intervals._1s;
         this.timeSeriesService.getWithResourceAndTime(this.patientId, TimeSeriesType.heart_rate, filter)
             .then(heartRate => {
 
