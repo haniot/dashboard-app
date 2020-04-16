@@ -1,6 +1,6 @@
 {
   "name": "haniot-dashboard",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "license": "Apache 2.0",
   "autor": "NUTES/UEPB",
   "scripts": {
@@ -70,7 +70,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.2",
     "@angular/cli": "~9.0.2",
-    "@angular/compiler-cli": "~9.0.1",
+    "@angular/compiler-cli": "~9.1.2",
     "@angular/language-service": "~9.0.1",
     "@types/bootstrap": "^4.3.0",
     "@types/chartist": "^0.9.47",
